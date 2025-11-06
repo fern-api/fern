@@ -23,6 +23,7 @@ import {
     PrimitiveTypeV1
 } from "@fern-api/ir-sdk";
 import { IdGenerator } from "@fern-api/ir-utils";
+import { ExampleViolation } from "../../examples/exampleViolation";
 import { validateTypeReferenceExample } from "../../examples/validateTypeReferenceExample";
 import { FernFileContext } from "../../FernFileContext";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
@@ -213,6 +214,10 @@ export function convertTypeExample({
             });
         },
         undiscriminatedUnion: (undiscriminatedUnion) => {
+            const hasFatalViolations = (violations: ExampleViolation[]): boolean => {
+                return violations.some((v) => v.severity === "fatal" || v.severity === undefined);
+            };
+
             for (const [index, variant] of undiscriminatedUnion.union.entries()) {
                 const violationsForMember = validateTypeReferenceExample({
                     rawTypeReference: typeof variant === "string" ? variant : variant.type,
@@ -224,7 +229,7 @@ export function convertTypeExample({
                     breadcrumbs: [],
                     depth: 0
                 });
-                if (violationsForMember.length === 0) {
+                if (violationsForMember.length === 0 || !hasFatalViolations(violationsForMember)) {
                     return ExampleTypeShape.undiscriminatedUnion({
                         index,
                         singleUnionType: convertTypeReferenceExample({
