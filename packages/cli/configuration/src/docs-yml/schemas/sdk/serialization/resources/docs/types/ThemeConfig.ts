@@ -8,12 +8,14 @@ import * as core from "../../../../core";
 import { SidebarThemeConfig } from "./SidebarThemeConfig";
 import { BodyThemeConfig } from "./BodyThemeConfig";
 import { TabsThemeConfig } from "./TabsThemeConfig";
+import { PageActionsThemeConfig } from "./PageActionsThemeConfig";
 
 export const ThemeConfig: core.serialization.ObjectSchema<serializers.ThemeConfig.Raw, FernDocsConfig.ThemeConfig> =
     core.serialization.object({
         sidebar: SidebarThemeConfig,
         body: BodyThemeConfig,
         tabs: TabsThemeConfig,
+        pageActions: core.serialization.property("page-actions", PageActionsThemeConfig.optional()),
     });
 
 export declare namespace ThemeConfig {
@@ -21,5 +23,6 @@ export declare namespace ThemeConfig {
         sidebar: SidebarThemeConfig.Raw;
         body: BodyThemeConfig.Raw;
         tabs: TabsThemeConfig.Raw;
+        "page-actions"?: PageActionsThemeConfig.Raw | null;
     }
 }

@@ -38,7 +38,7 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-api/fdr-sdk": "0.139.43-309880147",
+    "@fern-api/fdr-sdk": "0.139.44-efaa73d7e",
     "gray-matter": "^4.0.3"
   },
   "devDependencies": {

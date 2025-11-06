@@ -173,6 +173,7 @@ function convertService(
             auth: irEndpoint.auth,
             authV2: convertEndpointSecurity(irEndpoint.security),
             description: irEndpoint.docs ?? undefined,
+            includeInApiExplorer: undefined,
             method: convertHttpMethod(irEndpoint.method),
             defaultEnvironment:
                 ir.environments?.defaultEnvironment != null

@@ -29,7 +29,8 @@ it.skip("generates slug for endpoint", () => {
         examples: [],
         snippetTemplates: undefined,
         protocol: undefined,
-        availability: undefined
+        availability: undefined,
+        includeInApiExplorer: undefined
     };
     expect(
         getApiLatestToNavigationNodeUrlSlug({

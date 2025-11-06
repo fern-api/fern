@@ -79,6 +79,7 @@ it.skip("finds endpoint by id and by path/method", () => {
                 defaultEnvironment: FdrAPI.EnvironmentId("defaultEnvironment"),
                 description: "description",
                 availability: undefined,
+                includeInApiExplorer: undefined,
                 namespace: [],
                 pathParameters: [],
                 queryParameters: [],
