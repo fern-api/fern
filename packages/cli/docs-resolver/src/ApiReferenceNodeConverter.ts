@@ -244,7 +244,7 @@ export class ApiReferenceNodeConverter {
                 title:
                     pkg.title ??
                     (isSubpackage(subpackage)
-                        ? (subpackage.displayName ?? titleCase(subpackage.name))
+                        ? (subpackage.displayName ?? subpackage.name)
                         : this.apiSection.title),
                 slug: slug.get(),
                 icon: this.resolveIconFileId(pkg.icon),
@@ -404,7 +404,7 @@ export class ApiReferenceNodeConverter {
                 type: "apiPackage",
                 children: [],
                 title: isSubpackage(subpackage)
-                    ? (subpackage.displayName ?? titleCase(subpackage.name))
+                    ? (subpackage.displayName ?? subpackage.name)
                     : this.apiSection.title,
                 slug: slug.get(),
                 icon: undefined,
@@ -755,7 +755,7 @@ export class ApiReferenceNodeConverter {
                     type: "apiPackage",
                     children: subpackageChildren,
                     title: isSubpackage(subpackage)
-                        ? (subpackage.displayName ?? titleCase(subpackage.name))
+                        ? (subpackage.displayName ?? subpackage.name)
                         : this.apiSection.title,
                     slug: slug.get(),
                     icon: undefined,
