@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.28.1
+  changelogEntry:
+    - summary: |
+        Fix local GitHub generation to match remote generation.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-06"
+
 - version: 3.28.0
   changelogEntry:
     - summary: |
