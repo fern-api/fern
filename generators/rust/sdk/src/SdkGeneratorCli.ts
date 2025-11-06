@@ -3,10 +3,14 @@ import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractRustGeneratorCli, formatRustCode, RustFile } from "@fern-api/rust-base";
 import { Module, ModuleDeclaration, UseStatement } from "@fern-api/rust-codegen";
-import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
+import {
+    DynamicSnippetsGenerator,
+    DynamicSnippetsGeneratorContext,
+    EndpointSnippetGenerator
+} from "@fern-api/rust-dynamic-snippets";
 import { generateModels } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { HttpEndpoint, HttpRequestBody, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { dynamic, HttpEndpoint, HttpRequestBody, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { exec } from "child_process";
 import { promisify } from "util";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
@@ -799,53 +803,69 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         packageName: string,
         clientName: string
     ): string[] {
-        const snippet: string[] = [];
-        snippet.push("```rust");
+        const dynamicIr = context.ir.dynamic;
+        if (!dynamicIr) {
+            return this.generateFallbackSnippet(packageName, clientName);
+        }
 
-        snippet.push(`use ${packageName}::prelude::*;`);
-        snippet.push("");
+        let firstEndpointId: string | undefined;
+        let firstExample: dynamic.EndpointSnippetRequest | undefined;
 
-        const configFields: string[] = [];
-
-        configFields.push(`    base_url: "https://api.example.com".to_string(),`);
-
-        // Add auth fields based on auth schemes (using actual field names from ClientConfig)
-        if (context.ir.auth != null) {
-            const authSchemes = context.ir.auth.schemes;
-            for (const scheme of authSchemes) {
-                switch (scheme.type) {
-                    case "bearer":
-                        configFields.push(`    token: Some("YOUR_API_TOKEN".to_string()),`);
-                        break;
-                    case "basic":
-                        configFields.push(`    username: Some("username".to_string()),`);
-                        configFields.push(`    password: Some("password".to_string()),`);
-                        break;
-                    case "header":
-                        configFields.push(`    api_key: Some("YOUR_API_KEY".to_string()),`);
-                        break;
-                }
+        for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
+            if (endpoint.examples && endpoint.examples.length > 0) {
+                firstEndpointId = endpointId;
+                firstExample = endpoint.examples[0];
+                break;
             }
         }
 
-        // Build client initialization
-        snippet.push(`let client = ${clientName}::new(ClientConfig {`);
-        configFields.forEach((field) => snippet.push(field));
-        snippet.push(`    ..Default::default()`);
-        snippet.push(`}).expect("Failed to build client");`);
-
-        // Add a simple usage example if there are endpoints
-        const firstEndpoint = this.getFirstAvailableEndpoint(context);
-        if (firstEndpoint != null) {
-            snippet.push("");
-            snippet.push("// Example usage");
-            const methodPath = this.getEndpointMethodPath(firstEndpoint);
-            snippet.push(`let result = client.${methodPath}().await?;`);
+        if (!firstEndpointId || !firstExample) {
+            return this.generateFallbackSnippet(packageName, clientName);
         }
 
+        try {
+            const convertedIr = convertIr(dynamicIr);
+            const snippetRequest = convertDynamicEndpointSnippetRequest(firstExample);
+            const dynContext = new DynamicSnippetsGeneratorContext({
+                ir: convertedIr,
+                config: context.config
+            });
+            const generator = new EndpointSnippetGenerator({ context: dynContext });
+            const dynEndpoint = convertedIr.endpoints[firstEndpointId];
+
+            if (!dynEndpoint) {
+                return this.generateFallbackSnippet(packageName, clientName);
+            }
+
+            const code = generator.generateSnippetSync({
+                endpoint: dynEndpoint,
+                request: snippetRequest
+            });
+
+            const snippet: string[] = [];
+            snippet.push("```rust");
+            snippet.push(...code.trimEnd().split("\n"));
+            snippet.push("```");
+            snippet.push("");
+
+            return snippet;
+        } catch (error) {
+            context.logger.debug(`Failed to generate snippet using EndpointSnippetGenerator: ${error}`);
+            return this.generateFallbackSnippet(packageName, clientName);
+        }
+    }
+
+    private generateFallbackSnippet(packageName: string, clientName: string): string[] {
+        const snippet: string[] = [];
+        snippet.push("```rust");
+        snippet.push(`use ${packageName}::prelude::*;`);
+        snippet.push("");
+        snippet.push(`let client = ${clientName}::new(ClientConfig {`);
+        snippet.push(`    base_url: "https://api.example.com".to_string(),`);
+        snippet.push(`    ..Default::default()`);
+        snippet.push(`}).expect("Failed to build client");`);
         snippet.push("```");
         snippet.push("");
-
         return snippet;
     }
 
