@@ -367,12 +367,14 @@ function convertThemeConfig(
         return undefined;
     }
 
+    // biome-ignore lint/suspicious/noExplicitAny: Temporary workaround until SDK types are regenerated
     const result: any = {
         sidebar: theme.sidebar ?? "default",
         tabs: theme.tabs ?? "default",
         body: theme.body ?? "default"
     };
 
+    // biome-ignore lint/suspicious/noExplicitAny: Temporary workaround until SDK types are regenerated
     const themeAny = theme as any;
     if (themeAny && themeAny["page-actions"] != null) {
         result["page-actions"] = themeAny["page-actions"];
