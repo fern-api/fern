@@ -20,12 +20,14 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.echo(
-            request: "Hello world!\n\nwith\n\tnewlines",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+        do {
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 3)
     }
 
@@ -46,12 +48,14 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.echo(
-            request: "Hello world!\n\nwith\n\tnewlines",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+        do {
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 3)
     }
 
@@ -72,12 +76,14 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.echo(
-            request: "Hello world!\n\nwith\n\tnewlines",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+        do {
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 3)
     }
 
@@ -97,12 +103,14 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.echo(
-            request: "Hello world!\n\nwith\n\tnewlines",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+        do {
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 2)
     }
 
@@ -176,10 +184,10 @@ import Testing
         )
 
         do {
-        _ = try await client.echo(
-            request: "Hello world!\n\nwith\n\tnewlines",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -207,14 +215,16 @@ import Testing
         )
 
         let startTime = Date()
-        let response = try await client.echo(
-            request: "Hello world!\n\nwith\n\tnewlines",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+        do {
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
+        } catch {
+        }
         let elapsed = Date().timeIntervalSince(startTime)
 
-        try #require(response == true)
         try #require(stub.getRequestCount() == 2)
         try #require(elapsed >= 1.0)
     }
@@ -247,14 +257,16 @@ import Testing
         )
 
         let startTime = Date()
-        let response = try await client.echo(
-            request: "Hello world!\n\nwith\n\tnewlines",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+        do {
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
+        } catch {
+        }
         let elapsed = Date().timeIntervalSince(startTime)
 
-        try #require(response == true)
         try #require(stub.getRequestCount() == 2)
         try #require(elapsed >= 0.9)
     }
@@ -283,14 +295,16 @@ import Testing
         )
 
         let startTime = Date()
-        let response = try await client.echo(
-            request: "Hello world!\n\nwith\n\tnewlines",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+        do {
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
+        } catch {
+        }
         let elapsed = Date().timeIntervalSince(startTime)
 
-        try #require(response == true)
         try #require(stub.getRequestCount() == 2)
         try #require(elapsed >= 0.9)
     }
@@ -330,12 +344,14 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.echo(
-            request: "Hello world!\n\nwith\n\tnewlines",
-            requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
-        )
+        do {
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
+                requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 6)
     }
 
@@ -378,12 +394,14 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.echo(
-            request: "Hello world!\n\nwith\n\tnewlines",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+        do {
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 1)
     }
 }

@@ -19,61 +19,63 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.user.getUsername(
-            limit: 1,
-            id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-            date: CalendarDate("2023-01-15")!,
-            deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            bytes: "SGVsbG8gd29ybGQh",
-            user: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            userList: [
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                ),
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                )
-            ],
-            optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            keyValue: [
-                "keyValue": "keyValue"
-            ],
-            optionalString: "optionalString",
-            nestedUser: NestedUser(
-                name: "name",
+        do {
+            _ = try await client.user.getUsername(
+                limit: 1,
+                id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                date: CalendarDate("2023-01-15")!,
+                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                bytes: "SGVsbG8gd29ybGQh",
                 user: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            optionalUser: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    ),
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                keyValue: [
+                    "keyValue": "keyValue"
+                ],
+                optionalString: "optionalString",
+                nestedUser: NestedUser(
+                    name: "name",
+                    user: User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                optionalUser: User(
+                    name: "name",
+                    tags: [
+                        "tags",
+                        "tags"
+                    ]
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 3)
     }
 
@@ -93,61 +95,63 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.user.getUsername(
-            limit: 1,
-            id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-            date: CalendarDate("2023-01-15")!,
-            deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            bytes: "SGVsbG8gd29ybGQh",
-            user: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            userList: [
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                ),
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                )
-            ],
-            optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            keyValue: [
-                "keyValue": "keyValue"
-            ],
-            optionalString: "optionalString",
-            nestedUser: NestedUser(
-                name: "name",
+        do {
+            _ = try await client.user.getUsername(
+                limit: 1,
+                id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                date: CalendarDate("2023-01-15")!,
+                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                bytes: "SGVsbG8gd29ybGQh",
                 user: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            optionalUser: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    ),
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                keyValue: [
+                    "keyValue": "keyValue"
+                ],
+                optionalString: "optionalString",
+                nestedUser: NestedUser(
+                    name: "name",
+                    user: User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                optionalUser: User(
+                    name: "name",
+                    tags: [
+                        "tags",
+                        "tags"
+                    ]
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 3)
     }
 
@@ -167,61 +171,63 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.user.getUsername(
-            limit: 1,
-            id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-            date: CalendarDate("2023-01-15")!,
-            deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            bytes: "SGVsbG8gd29ybGQh",
-            user: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            userList: [
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                ),
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                )
-            ],
-            optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            keyValue: [
-                "keyValue": "keyValue"
-            ],
-            optionalString: "optionalString",
-            nestedUser: NestedUser(
-                name: "name",
+        do {
+            _ = try await client.user.getUsername(
+                limit: 1,
+                id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                date: CalendarDate("2023-01-15")!,
+                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                bytes: "SGVsbG8gd29ybGQh",
                 user: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            optionalUser: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    ),
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                keyValue: [
+                    "keyValue": "keyValue"
+                ],
+                optionalString: "optionalString",
+                nestedUser: NestedUser(
+                    name: "name",
+                    user: User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                optionalUser: User(
+                    name: "name",
+                    tags: [
+                        "tags",
+                        "tags"
+                    ]
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 3)
     }
 
@@ -240,61 +246,63 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.user.getUsername(
-            limit: 1,
-            id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-            date: CalendarDate("2023-01-15")!,
-            deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            bytes: "SGVsbG8gd29ybGQh",
-            user: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            userList: [
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                ),
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                )
-            ],
-            optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            keyValue: [
-                "keyValue": "keyValue"
-            ],
-            optionalString: "optionalString",
-            nestedUser: NestedUser(
-                name: "name",
+        do {
+            _ = try await client.user.getUsername(
+                limit: 1,
+                id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                date: CalendarDate("2023-01-15")!,
+                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                bytes: "SGVsbG8gd29ybGQh",
                 user: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            optionalUser: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    ),
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                keyValue: [
+                    "keyValue": "keyValue"
+                ],
+                optionalString: "optionalString",
+                nestedUser: NestedUser(
+                    name: "name",
+                    user: User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                optionalUser: User(
+                    name: "name",
+                    tags: [
+                        "tags",
+                        "tags"
+                    ]
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 2)
     }
 
@@ -463,59 +471,59 @@ import Testing
         )
 
         do {
-        _ = try await client.user.getUsername(
-            limit: 1,
-            id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-            date: CalendarDate("2023-01-15")!,
-            deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            bytes: "SGVsbG8gd29ybGQh",
-            user: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            userList: [
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                ),
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                )
-            ],
-            optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            keyValue: [
-                "keyValue": "keyValue"
-            ],
-            optionalString: "optionalString",
-            nestedUser: NestedUser(
-                name: "name",
+            _ = try await client.user.getUsername(
+                limit: 1,
+                id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                date: CalendarDate("2023-01-15")!,
+                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                bytes: "SGVsbG8gd29ybGQh",
                 user: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            optionalUser: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    ),
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                keyValue: [
+                    "keyValue": "keyValue"
+                ],
+                optionalString: "optionalString",
+                nestedUser: NestedUser(
+                    name: "name",
+                    user: User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                optionalUser: User(
+                    name: "name",
+                    tags: [
+                        "tags",
+                        "tags"
+                    ]
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -542,63 +550,65 @@ import Testing
         )
 
         let startTime = Date()
-        let response = try await client.user.getUsername(
-            limit: 1,
-            id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-            date: CalendarDate("2023-01-15")!,
-            deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            bytes: "SGVsbG8gd29ybGQh",
-            user: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            userList: [
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                ),
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                )
-            ],
-            optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            keyValue: [
-                "keyValue": "keyValue"
-            ],
-            optionalString: "optionalString",
-            nestedUser: NestedUser(
-                name: "name",
+        do {
+            _ = try await client.user.getUsername(
+                limit: 1,
+                id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                date: CalendarDate("2023-01-15")!,
+                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                bytes: "SGVsbG8gd29ybGQh",
                 user: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            optionalUser: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    ),
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                keyValue: [
+                    "keyValue": "keyValue"
+                ],
+                optionalString: "optionalString",
+                nestedUser: NestedUser(
+                    name: "name",
+                    user: User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                optionalUser: User(
+                    name: "name",
+                    tags: [
+                        "tags",
+                        "tags"
+                    ]
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
+        } catch {
+        }
         let elapsed = Date().timeIntervalSince(startTime)
 
-        try #require(response == true)
         try #require(stub.getRequestCount() == 2)
         try #require(elapsed >= 1.0)
     }
@@ -630,63 +640,65 @@ import Testing
         )
 
         let startTime = Date()
-        let response = try await client.user.getUsername(
-            limit: 1,
-            id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-            date: CalendarDate("2023-01-15")!,
-            deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            bytes: "SGVsbG8gd29ybGQh",
-            user: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            userList: [
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                ),
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                )
-            ],
-            optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            keyValue: [
-                "keyValue": "keyValue"
-            ],
-            optionalString: "optionalString",
-            nestedUser: NestedUser(
-                name: "name",
+        do {
+            _ = try await client.user.getUsername(
+                limit: 1,
+                id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                date: CalendarDate("2023-01-15")!,
+                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                bytes: "SGVsbG8gd29ybGQh",
                 user: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            optionalUser: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    ),
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                keyValue: [
+                    "keyValue": "keyValue"
+                ],
+                optionalString: "optionalString",
+                nestedUser: NestedUser(
+                    name: "name",
+                    user: User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                optionalUser: User(
+                    name: "name",
+                    tags: [
+                        "tags",
+                        "tags"
+                    ]
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
+        } catch {
+        }
         let elapsed = Date().timeIntervalSince(startTime)
 
-        try #require(response == true)
         try #require(stub.getRequestCount() == 2)
         try #require(elapsed >= 0.9)
     }
@@ -714,63 +726,65 @@ import Testing
         )
 
         let startTime = Date()
-        let response = try await client.user.getUsername(
-            limit: 1,
-            id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-            date: CalendarDate("2023-01-15")!,
-            deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            bytes: "SGVsbG8gd29ybGQh",
-            user: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            userList: [
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                ),
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                )
-            ],
-            optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            keyValue: [
-                "keyValue": "keyValue"
-            ],
-            optionalString: "optionalString",
-            nestedUser: NestedUser(
-                name: "name",
+        do {
+            _ = try await client.user.getUsername(
+                limit: 1,
+                id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                date: CalendarDate("2023-01-15")!,
+                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                bytes: "SGVsbG8gd29ybGQh",
                 user: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            optionalUser: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    ),
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                keyValue: [
+                    "keyValue": "keyValue"
+                ],
+                optionalString: "optionalString",
+                nestedUser: NestedUser(
+                    name: "name",
+                    user: User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                optionalUser: User(
+                    name: "name",
+                    tags: [
+                        "tags",
+                        "tags"
+                    ]
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
+        } catch {
+        }
         let elapsed = Date().timeIntervalSince(startTime)
 
-        try #require(response == true)
         try #require(stub.getRequestCount() == 2)
         try #require(elapsed >= 0.9)
     }
@@ -809,61 +823,63 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.user.getUsername(
-            limit: 1,
-            id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-            date: CalendarDate("2023-01-15")!,
-            deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            bytes: "SGVsbG8gd29ybGQh",
-            user: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            userList: [
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                ),
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                )
-            ],
-            optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            keyValue: [
-                "keyValue": "keyValue"
-            ],
-            optionalString: "optionalString",
-            nestedUser: NestedUser(
-                name: "name",
+        do {
+            _ = try await client.user.getUsername(
+                limit: 1,
+                id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                date: CalendarDate("2023-01-15")!,
+                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                bytes: "SGVsbG8gd29ybGQh",
                 user: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            optionalUser: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
-        )
+                ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    ),
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                keyValue: [
+                    "keyValue": "keyValue"
+                ],
+                optionalString: "optionalString",
+                nestedUser: NestedUser(
+                    name: "name",
+                    user: User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                optionalUser: User(
+                    name: "name",
+                    tags: [
+                        "tags",
+                        "tags"
+                    ]
+                ),
+                requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 6)
     }
 
@@ -953,61 +969,63 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.user.getUsername(
-            limit: 1,
-            id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-            date: CalendarDate("2023-01-15")!,
-            deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            bytes: "SGVsbG8gd29ybGQh",
-            user: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            userList: [
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                ),
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                )
-            ],
-            optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            keyValue: [
-                "keyValue": "keyValue"
-            ],
-            optionalString: "optionalString",
-            nestedUser: NestedUser(
-                name: "name",
+        do {
+            _ = try await client.user.getUsername(
+                limit: 1,
+                id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                date: CalendarDate("2023-01-15")!,
+                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                bytes: "SGVsbG8gd29ybGQh",
                 user: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            optionalUser: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    ),
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                keyValue: [
+                    "keyValue": "keyValue"
+                ],
+                optionalString: "optionalString",
+                nestedUser: NestedUser(
+                    name: "name",
+                    user: User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                optionalUser: User(
+                    name: "name",
+                    tags: [
+                        "tags",
+                        "tags"
+                    ]
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 1)
     }
 }

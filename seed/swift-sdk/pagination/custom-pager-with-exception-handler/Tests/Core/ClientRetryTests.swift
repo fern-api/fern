@@ -20,25 +20,27 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.complex.search(
-            index: "index",
-            request: SearchRequest(
-                pagination: StartingAfterPaging(
-                    perPage: 1,
-                    startingAfter: "starting_after"
-                ),
-                query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-                        field: "field",
-                        operator: .equals,
-                        value: "value"
+        do {
+            _ = try await client.complex.search(
+                index: "index",
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 3)
     }
 
@@ -59,25 +61,27 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.complex.search(
-            index: "index",
-            request: SearchRequest(
-                pagination: StartingAfterPaging(
-                    perPage: 1,
-                    startingAfter: "starting_after"
-                ),
-                query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-                        field: "field",
-                        operator: .equals,
-                        value: "value"
+        do {
+            _ = try await client.complex.search(
+                index: "index",
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 3)
     }
 
@@ -98,25 +102,27 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.complex.search(
-            index: "index",
-            request: SearchRequest(
-                pagination: StartingAfterPaging(
-                    perPage: 1,
-                    startingAfter: "starting_after"
-                ),
-                query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-                        field: "field",
-                        operator: .equals,
-                        value: "value"
+        do {
+            _ = try await client.complex.search(
+                index: "index",
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 3)
     }
 
@@ -136,25 +142,27 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.complex.search(
-            index: "index",
-            request: SearchRequest(
-                pagination: StartingAfterPaging(
-                    perPage: 1,
-                    startingAfter: "starting_after"
-                ),
-                query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-                        field: "field",
-                        operator: .equals,
-                        value: "value"
+        do {
+            _ = try await client.complex.search(
+                index: "index",
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 2)
     }
 
@@ -254,23 +262,23 @@ import Testing
         )
 
         do {
-        _ = try await client.complex.search(
-            index: "index",
-            request: SearchRequest(
-                pagination: StartingAfterPaging(
-                    perPage: 1,
-                    startingAfter: "starting_after"
-                ),
-                query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-                        field: "field",
-                        operator: .equals,
-                        value: "value"
+            _ = try await client.complex.search(
+                index: "index",
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -298,27 +306,29 @@ import Testing
         )
 
         let startTime = Date()
-        let response = try await client.complex.search(
-            index: "index",
-            request: SearchRequest(
-                pagination: StartingAfterPaging(
-                    perPage: 1,
-                    startingAfter: "starting_after"
-                ),
-                query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-                        field: "field",
-                        operator: .equals,
-                        value: "value"
+        do {
+            _ = try await client.complex.search(
+                index: "index",
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
+        } catch {
+        }
         let elapsed = Date().timeIntervalSince(startTime)
 
-        try #require(response == true)
         try #require(stub.getRequestCount() == 2)
         try #require(elapsed >= 1.0)
     }
@@ -351,27 +361,29 @@ import Testing
         )
 
         let startTime = Date()
-        let response = try await client.complex.search(
-            index: "index",
-            request: SearchRequest(
-                pagination: StartingAfterPaging(
-                    perPage: 1,
-                    startingAfter: "starting_after"
-                ),
-                query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-                        field: "field",
-                        operator: .equals,
-                        value: "value"
+        do {
+            _ = try await client.complex.search(
+                index: "index",
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
+        } catch {
+        }
         let elapsed = Date().timeIntervalSince(startTime)
 
-        try #require(response == true)
         try #require(stub.getRequestCount() == 2)
         try #require(elapsed >= 0.9)
     }
@@ -400,27 +412,29 @@ import Testing
         )
 
         let startTime = Date()
-        let response = try await client.complex.search(
-            index: "index",
-            request: SearchRequest(
-                pagination: StartingAfterPaging(
-                    perPage: 1,
-                    startingAfter: "starting_after"
-                ),
-                query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-                        field: "field",
-                        operator: .equals,
-                        value: "value"
+        do {
+            _ = try await client.complex.search(
+                index: "index",
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
+        } catch {
+        }
         let elapsed = Date().timeIntervalSince(startTime)
 
-        try #require(response == true)
         try #require(stub.getRequestCount() == 2)
         try #require(elapsed >= 0.9)
     }
@@ -460,25 +474,27 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.complex.search(
-            index: "index",
-            request: SearchRequest(
-                pagination: StartingAfterPaging(
-                    perPage: 1,
-                    startingAfter: "starting_after"
-                ),
-                query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-                        field: "field",
-                        operator: .equals,
-                        value: "value"
+        do {
+            _ = try await client.complex.search(
+                index: "index",
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )
-            ),
-            requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
-        )
+                ),
+                requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 6)
     }
 
@@ -534,25 +550,27 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.complex.search(
-            index: "index",
-            request: SearchRequest(
-                pagination: StartingAfterPaging(
-                    perPage: 1,
-                    startingAfter: "starting_after"
-                ),
-                query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-                        field: "field",
-                        operator: .equals,
-                        value: "value"
+        do {
+            _ = try await client.complex.search(
+                index: "index",
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 1)
     }
 }

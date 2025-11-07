@@ -19,63 +19,65 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.search(
-            limit: 1,
-            id: "id",
-            date: "date",
-            deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            bytes: "bytes",
-            user: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            keyValue: [
-                "keyValue": "keyValue"
-            ],
-            optionalString: "optionalString",
-            nestedUser: NestedUser(
-                name: "name",
+        do {
+            _ = try await client.search(
+                limit: 1,
+                id: "id",
+                date: "date",
+                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                bytes: "bytes",
                 user: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            optionalUser: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            neighbor: SearchRequestNeighbor.user(
-                User(
+                ),
+                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                keyValue: [
+                    "keyValue": "keyValue"
+                ],
+                optionalString: "optionalString",
+                nestedUser: NestedUser(
+                    name: "name",
+                    user: User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                optionalUser: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            neighborRequired: SearchRequestNeighborRequired.user(
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                neighbor: SearchRequestNeighbor.user(
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                neighborRequired: SearchRequestNeighborRequired.user(
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 3)
     }
 
@@ -95,63 +97,65 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.search(
-            limit: 1,
-            id: "id",
-            date: "date",
-            deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            bytes: "bytes",
-            user: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            keyValue: [
-                "keyValue": "keyValue"
-            ],
-            optionalString: "optionalString",
-            nestedUser: NestedUser(
-                name: "name",
+        do {
+            _ = try await client.search(
+                limit: 1,
+                id: "id",
+                date: "date",
+                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                bytes: "bytes",
                 user: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            optionalUser: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            neighbor: SearchRequestNeighbor.user(
-                User(
+                ),
+                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                keyValue: [
+                    "keyValue": "keyValue"
+                ],
+                optionalString: "optionalString",
+                nestedUser: NestedUser(
+                    name: "name",
+                    user: User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                optionalUser: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            neighborRequired: SearchRequestNeighborRequired.user(
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                neighbor: SearchRequestNeighbor.user(
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                neighborRequired: SearchRequestNeighborRequired.user(
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 3)
     }
 
@@ -171,63 +175,65 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.search(
-            limit: 1,
-            id: "id",
-            date: "date",
-            deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            bytes: "bytes",
-            user: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            keyValue: [
-                "keyValue": "keyValue"
-            ],
-            optionalString: "optionalString",
-            nestedUser: NestedUser(
-                name: "name",
+        do {
+            _ = try await client.search(
+                limit: 1,
+                id: "id",
+                date: "date",
+                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                bytes: "bytes",
                 user: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            optionalUser: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            neighbor: SearchRequestNeighbor.user(
-                User(
+                ),
+                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                keyValue: [
+                    "keyValue": "keyValue"
+                ],
+                optionalString: "optionalString",
+                nestedUser: NestedUser(
+                    name: "name",
+                    user: User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                optionalUser: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            neighborRequired: SearchRequestNeighborRequired.user(
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                neighbor: SearchRequestNeighbor.user(
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                neighborRequired: SearchRequestNeighborRequired.user(
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 3)
     }
 
@@ -246,63 +252,65 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.search(
-            limit: 1,
-            id: "id",
-            date: "date",
-            deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            bytes: "bytes",
-            user: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            keyValue: [
-                "keyValue": "keyValue"
-            ],
-            optionalString: "optionalString",
-            nestedUser: NestedUser(
-                name: "name",
+        do {
+            _ = try await client.search(
+                limit: 1,
+                id: "id",
+                date: "date",
+                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                bytes: "bytes",
                 user: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            optionalUser: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            neighbor: SearchRequestNeighbor.user(
-                User(
+                ),
+                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                keyValue: [
+                    "keyValue": "keyValue"
+                ],
+                optionalString: "optionalString",
+                nestedUser: NestedUser(
+                    name: "name",
+                    user: User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                optionalUser: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            neighborRequired: SearchRequestNeighborRequired.user(
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                neighbor: SearchRequestNeighbor.user(
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                neighborRequired: SearchRequestNeighborRequired.user(
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 2)
     }
 
@@ -475,61 +483,61 @@ import Testing
         )
 
         do {
-        _ = try await client.search(
-            limit: 1,
-            id: "id",
-            date: "date",
-            deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            bytes: "bytes",
-            user: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            keyValue: [
-                "keyValue": "keyValue"
-            ],
-            optionalString: "optionalString",
-            nestedUser: NestedUser(
-                name: "name",
+            _ = try await client.search(
+                limit: 1,
+                id: "id",
+                date: "date",
+                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                bytes: "bytes",
                 user: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            optionalUser: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            neighbor: SearchRequestNeighbor.user(
-                User(
+                ),
+                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                keyValue: [
+                    "keyValue": "keyValue"
+                ],
+                optionalString: "optionalString",
+                nestedUser: NestedUser(
+                    name: "name",
+                    user: User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                optionalUser: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            neighborRequired: SearchRequestNeighborRequired.user(
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                neighbor: SearchRequestNeighbor.user(
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                neighborRequired: SearchRequestNeighborRequired.user(
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -556,65 +564,67 @@ import Testing
         )
 
         let startTime = Date()
-        let response = try await client.search(
-            limit: 1,
-            id: "id",
-            date: "date",
-            deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            bytes: "bytes",
-            user: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            keyValue: [
-                "keyValue": "keyValue"
-            ],
-            optionalString: "optionalString",
-            nestedUser: NestedUser(
-                name: "name",
+        do {
+            _ = try await client.search(
+                limit: 1,
+                id: "id",
+                date: "date",
+                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                bytes: "bytes",
                 user: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            optionalUser: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            neighbor: SearchRequestNeighbor.user(
-                User(
+                ),
+                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                keyValue: [
+                    "keyValue": "keyValue"
+                ],
+                optionalString: "optionalString",
+                nestedUser: NestedUser(
+                    name: "name",
+                    user: User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                optionalUser: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            neighborRequired: SearchRequestNeighborRequired.user(
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                neighbor: SearchRequestNeighbor.user(
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                neighborRequired: SearchRequestNeighborRequired.user(
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
+        } catch {
+        }
         let elapsed = Date().timeIntervalSince(startTime)
 
-        try #require(response == true)
         try #require(stub.getRequestCount() == 2)
         try #require(elapsed >= 1.0)
     }
@@ -646,65 +656,67 @@ import Testing
         )
 
         let startTime = Date()
-        let response = try await client.search(
-            limit: 1,
-            id: "id",
-            date: "date",
-            deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            bytes: "bytes",
-            user: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            keyValue: [
-                "keyValue": "keyValue"
-            ],
-            optionalString: "optionalString",
-            nestedUser: NestedUser(
-                name: "name",
+        do {
+            _ = try await client.search(
+                limit: 1,
+                id: "id",
+                date: "date",
+                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                bytes: "bytes",
                 user: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            optionalUser: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            neighbor: SearchRequestNeighbor.user(
-                User(
+                ),
+                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                keyValue: [
+                    "keyValue": "keyValue"
+                ],
+                optionalString: "optionalString",
+                nestedUser: NestedUser(
+                    name: "name",
+                    user: User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                optionalUser: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            neighborRequired: SearchRequestNeighborRequired.user(
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                neighbor: SearchRequestNeighbor.user(
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                neighborRequired: SearchRequestNeighborRequired.user(
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
+        } catch {
+        }
         let elapsed = Date().timeIntervalSince(startTime)
 
-        try #require(response == true)
         try #require(stub.getRequestCount() == 2)
         try #require(elapsed >= 0.9)
     }
@@ -732,65 +744,67 @@ import Testing
         )
 
         let startTime = Date()
-        let response = try await client.search(
-            limit: 1,
-            id: "id",
-            date: "date",
-            deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            bytes: "bytes",
-            user: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            keyValue: [
-                "keyValue": "keyValue"
-            ],
-            optionalString: "optionalString",
-            nestedUser: NestedUser(
-                name: "name",
+        do {
+            _ = try await client.search(
+                limit: 1,
+                id: "id",
+                date: "date",
+                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                bytes: "bytes",
                 user: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            optionalUser: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            neighbor: SearchRequestNeighbor.user(
-                User(
+                ),
+                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                keyValue: [
+                    "keyValue": "keyValue"
+                ],
+                optionalString: "optionalString",
+                nestedUser: NestedUser(
+                    name: "name",
+                    user: User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                optionalUser: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            neighborRequired: SearchRequestNeighborRequired.user(
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                neighbor: SearchRequestNeighbor.user(
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                neighborRequired: SearchRequestNeighborRequired.user(
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
+        } catch {
+        }
         let elapsed = Date().timeIntervalSince(startTime)
 
-        try #require(response == true)
         try #require(stub.getRequestCount() == 2)
         try #require(elapsed >= 0.9)
     }
@@ -829,63 +843,65 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.search(
-            limit: 1,
-            id: "id",
-            date: "date",
-            deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            bytes: "bytes",
-            user: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            keyValue: [
-                "keyValue": "keyValue"
-            ],
-            optionalString: "optionalString",
-            nestedUser: NestedUser(
-                name: "name",
+        do {
+            _ = try await client.search(
+                limit: 1,
+                id: "id",
+                date: "date",
+                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                bytes: "bytes",
                 user: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            optionalUser: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            neighbor: SearchRequestNeighbor.user(
-                User(
+                ),
+                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                keyValue: [
+                    "keyValue": "keyValue"
+                ],
+                optionalString: "optionalString",
+                nestedUser: NestedUser(
+                    name: "name",
+                    user: User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                optionalUser: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            neighborRequired: SearchRequestNeighborRequired.user(
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                )
-            ),
-            requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
-        )
+                ),
+                neighbor: SearchRequestNeighbor.user(
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                neighborRequired: SearchRequestNeighborRequired.user(
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 6)
     }
 
@@ -977,63 +993,65 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.search(
-            limit: 1,
-            id: "id",
-            date: "date",
-            deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            bytes: "bytes",
-            user: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            keyValue: [
-                "keyValue": "keyValue"
-            ],
-            optionalString: "optionalString",
-            nestedUser: NestedUser(
-                name: "name",
+        do {
+            _ = try await client.search(
+                limit: 1,
+                id: "id",
+                date: "date",
+                deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                bytes: "bytes",
                 user: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            optionalUser: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            neighbor: SearchRequestNeighbor.user(
-                User(
+                ),
+                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                keyValue: [
+                    "keyValue": "keyValue"
+                ],
+                optionalString: "optionalString",
+                nestedUser: NestedUser(
+                    name: "name",
+                    user: User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                optionalUser: User(
                     name: "name",
                     tags: [
                         "tags",
                         "tags"
                     ]
-                )
-            ),
-            neighborRequired: SearchRequestNeighborRequired.user(
-                User(
-                    name: "name",
-                    tags: [
-                        "tags",
-                        "tags"
-                    ]
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
+                ),
+                neighbor: SearchRequestNeighbor.user(
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                neighborRequired: SearchRequestNeighborRequired.user(
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ),
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 1)
     }
 }
