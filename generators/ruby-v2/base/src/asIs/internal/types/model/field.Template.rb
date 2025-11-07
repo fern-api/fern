@@ -12,7 +12,7 @@ module <%= gem_namespace %>
             @type = type
             @optional = optional
             @nullable = nullable
-            @api_name = (api_name || name).to_sym
+            @api_name = api_name || name.to_s
             @value = value
             @default = default
           end
@@ -24,4 +24,4 @@ module <%= gem_namespace %>
       end
     end
   end
-end 
+end  

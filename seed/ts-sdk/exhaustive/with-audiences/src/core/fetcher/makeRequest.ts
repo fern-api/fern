@@ -13,7 +13,6 @@ export const makeRequest = async (
 ): Promise<Response> => {
     const signals: AbortSignal[] = [];
 
-    // Add timeout signal
     let timeoutAbortId: NodeJS.Timeout | undefined;
     if (timeoutMs != null) {
         const { signal, abortId } = getTimeoutSignal(timeoutMs);
@@ -21,7 +20,6 @@ export const makeRequest = async (
         signals.push(signal);
     }
 
-    // Add arbitrary signal
     if (abortSignal != null) {
         signals.push(abortSignal);
     }

@@ -1,9 +1,8 @@
 import fs from "fs";
-import stream from "stream";
 import { join } from "path";
-
-import { type Fetcher, fetcherImpl } from "../../../src/core/fetcher/Fetcher";
+import stream from "stream";
 import type { BinaryResponse } from "../../../src/core";
+import { type Fetcher, fetcherImpl } from "../../../src/core/fetcher/Fetcher";
 
 describe("Test fetcherImpl", () => {
     it("should handle successful request", async () => {
@@ -14,6 +13,7 @@ describe("Test fetcherImpl", () => {
             body: { data: "test" },
             contentType: "application/json",
             requestType: "json",
+            maxRetries: 0,
             responseType: "json",
         };
 
@@ -48,6 +48,7 @@ describe("Test fetcherImpl", () => {
             headers: { "X-Test": "x-test-header" },
             contentType: "application/octet-stream",
             requestType: "bytes",
+            maxRetries: 0,
             responseType: "json",
             body: fs.createReadStream(join(__dirname, "test-file.txt")),
         };
@@ -81,6 +82,7 @@ describe("Test fetcherImpl", () => {
             url,
             method: "GET",
             headers: { "X-Test": "x-test-header" },
+            maxRetries: 0,
             responseType: "binary-response",
         };
 
@@ -126,6 +128,7 @@ describe("Test fetcherImpl", () => {
             url,
             method: "GET",
             headers: { "X-Test": "x-test-header" },
+            maxRetries: 0,
             responseType: "binary-response",
         };
 
@@ -171,6 +174,7 @@ describe("Test fetcherImpl", () => {
             url,
             method: "GET",
             headers: { "X-Test": "x-test-header" },
+            maxRetries: 0,
             responseType: "binary-response",
         };
 
@@ -214,6 +218,7 @@ describe("Test fetcherImpl", () => {
             url,
             method: "GET",
             headers: { "X-Test": "x-test-header" },
+            maxRetries: 0,
             responseType: "binary-response",
         };
 

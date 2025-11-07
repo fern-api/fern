@@ -1,58 +1,92 @@
 import { BasicAuth } from "../../../../../src/test-packagePath/core/auth/BasicAuth";
 
 describe("BasicAuth", () => {
+    interface ToHeaderTestCase {
+        description: string;
+        input: { username: string; password: string };
+        expected: string;
+    }
+
+    interface FromHeaderTestCase {
+        description: string;
+        input: string;
+        expected: { username: string; password: string };
+    }
+
+    interface ErrorTestCase {
+        description: string;
+        input: string;
+        expectedError: string;
+    }
+
     describe("toAuthorizationHeader", () => {
-        it("correctly converts to header", () => {
-            expect(
-                BasicAuth.toAuthorizationHeader({
-                    username: "username",
-                    password: "password",
-                }),
-            ).toBe("Basic dXNlcm5hbWU6cGFzc3dvcmQ=");
+        const toHeaderTests: ToHeaderTestCase[] = [
+            {
+                description: "correctly converts to header",
+                input: { username: "username", password: "password" },
+                expected: "Basic dXNlcm5hbWU6cGFzc3dvcmQ=",
+            },
+        ];
+
+        toHeaderTests.forEach(({ description, input, expected }) => {
+            it(description, () => {
+                expect(BasicAuth.toAuthorizationHeader(input)).toBe(expected);
+            });
         });
     });
+
     describe("fromAuthorizationHeader", () => {
-        it("correctly parses header", () => {
-            expect(BasicAuth.fromAuthorizationHeader("Basic dXNlcm5hbWU6cGFzc3dvcmQ=")).toEqual({
-                username: "username",
-                password: "password",
+        const fromHeaderTests: FromHeaderTestCase[] = [
+            {
+                description: "correctly parses header",
+                input: "Basic dXNlcm5hbWU6cGFzc3dvcmQ=",
+                expected: { username: "username", password: "password" },
+            },
+            {
+                description: "handles password with colons",
+                input: "Basic dXNlcjpwYXNzOndvcmQ=",
+                expected: { username: "user", password: "pass:word" },
+            },
+            {
+                description: "handles empty username and password (just colon)",
+                input: "Basic Og==",
+                expected: { username: "", password: "" },
+            },
+            {
+                description: "handles empty username",
+                input: "Basic OnBhc3N3b3Jk",
+                expected: { username: "", password: "password" },
+            },
+            {
+                description: "handles empty password",
+                input: "Basic dXNlcm5hbWU6",
+                expected: { username: "username", password: "" },
+            },
+        ];
+
+        fromHeaderTests.forEach(({ description, input, expected }) => {
+            it(description, () => {
+                expect(BasicAuth.fromAuthorizationHeader(input)).toEqual(expected);
             });
         });
 
-        it("handles password with colons", () => {
-            expect(BasicAuth.fromAuthorizationHeader("Basic dXNlcjpwYXNzOndvcmQ=")).toEqual({
-                username: "user",
-                password: "pass:word",
+        const errorTests: ErrorTestCase[] = [
+            {
+                description: "throws error for completely empty credentials",
+                input: "Basic ",
+                expectedError: "Invalid basic auth",
+            },
+            {
+                description: "throws error for credentials without colon",
+                input: "Basic dXNlcm5hbWU=",
+                expectedError: "Invalid basic auth",
+            },
+        ];
+
+        errorTests.forEach(({ description, input, expectedError }) => {
+            it(description, () => {
+                expect(() => BasicAuth.fromAuthorizationHeader(input)).toThrow(expectedError);
             });
-        });
-
-        it("handles empty username and password (just colon)", () => {
-            expect(BasicAuth.fromAuthorizationHeader("Basic Og==")).toEqual({
-                username: "",
-                password: "",
-            });
-        });
-
-        it("handles empty username", () => {
-            expect(BasicAuth.fromAuthorizationHeader("Basic OnBhc3N3b3Jk")).toEqual({
-                username: "",
-                password: "password",
-            });
-        });
-
-        it("handles empty password", () => {
-            expect(BasicAuth.fromAuthorizationHeader("Basic dXNlcm5hbWU6")).toEqual({
-                username: "username",
-                password: "",
-            });
-        });
-
-        it("throws error for completely empty credentials", () => {
-            expect(() => BasicAuth.fromAuthorizationHeader("Basic ")).toThrow("Invalid basic auth");
-        });
-
-        it("throws error for credentials without colon", () => {
-            expect(() => BasicAuth.fromAuthorizationHeader("Basic dXNlcm5hbWU=")).toThrow("Invalid basic auth");
         });
     });
 });

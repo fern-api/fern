@@ -10,14 +10,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { anySignal, getTimeoutSignal } from "./signals.mjs";
 export const makeRequest = (fetchFn, url, method, headers, requestBody, timeoutMs, abortSignal, withCredentials, duplex) => __awaiter(void 0, void 0, void 0, function* () {
     const signals = [];
-    // Add timeout signal
     let timeoutAbortId;
     if (timeoutMs != null) {
         const { signal, abortId } = getTimeoutSignal(timeoutMs);
         timeoutAbortId = abortId;
         signals.push(signal);
     }
-    // Add arbitrary signal
     if (abortSignal != null) {
         signals.push(abortSignal);
     }

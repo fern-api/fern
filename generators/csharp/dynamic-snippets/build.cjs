@@ -1,5 +1,3 @@
-const { NodeModulesPolyfillPlugin } = require('@esbuild-plugins/node-modules-polyfill');
-const { NodeGlobalsPolyfillPlugin } = require('@esbuild-plugins/node-globals-polyfill');
 const packageJson = require("./package.json");
 const tsup = require('tsup');
 const { writeFile, mkdir } = require("fs/promises");
@@ -11,17 +9,10 @@ async function main() {
     const config = {
         entry: ['src/**/*.ts', '!src/__test__'],
         target: "es2017",
+        platform: "node",
         minify: true,
         dts: true,
         sourcemap: true,
-        esbuildPlugins: [
-            NodeModulesPolyfillPlugin(),
-            NodeGlobalsPolyfillPlugin({
-                process: true,
-                buffer: true,
-                util: true
-            })
-        ],
         tsconfig: "./build.tsconfig.json"
     };
 
