@@ -120,6 +120,7 @@ import Testing
 
 
         do {
+            _ = try await client.basicAuth.getWithBasicAuth()
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -145,6 +146,7 @@ import Testing
 
 
         do {
+            _ = try await client.basicAuth.getWithBasicAuth()
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -170,6 +172,7 @@ import Testing
 
 
         do {
+        _ = try await client.basicAuth.getWithBasicAuth()
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -318,6 +321,7 @@ import Testing
             urlSession: stub.urlSession
         )
 
+        let response = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(maxRetries: 5))
 
 
         try #require(response == true)
@@ -339,6 +343,7 @@ import Testing
 
 
         do {
+            _ = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(maxRetries: 0))
 
             Issue.record("Expected error to be thrown")
         } catch {

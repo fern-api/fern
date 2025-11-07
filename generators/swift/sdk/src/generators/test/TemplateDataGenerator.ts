@@ -53,18 +53,35 @@ export class TemplateDataGenerator {
             return null;
         }
         const clientDeclaration = this.generateClientDeclaration(dynamicEndpoint, dynamicEndpointExample);
-        const endpointCall = this.generateEndpointMethodCallStatement(dynamicEndpoint, dynamicEndpointExample);
+        const endpointCallExpression = this.generateEndpointMethodCallExpression(
+            dynamicEndpoint,
+            dynamicEndpointExample
+        );
 
         return {
             moduleName: moduleSymbol.name,
             clientDeclaration: clientDeclaration.toStringWithIndentation(3),
-            endpointCall: endpointCall.toStringWithIndentation(3),
-            // TODO(kafkas): Implement
-            endpointCall400BadRequest: "",
-            endpointCall404NotFound: "",
-            endpointCallMaxRetriesExhausted: "",
-            endpointCallMaxRetries5: "",
-            endpointCallMaxRetriesZero: ""
+            endpointCall: swift.Statement.constantDeclaration({
+                unsafeName: "response",
+                value: endpointCallExpression
+            }).toStringWithIndentation(3),
+            endpointCall400BadRequest:
+                swift.Statement.discardAssignment(endpointCallExpression).toStringWithIndentation(4),
+            endpointCall404NotFound:
+                swift.Statement.discardAssignment(endpointCallExpression).toStringWithIndentation(4),
+            endpointCallMaxRetriesExhausted:
+                swift.Statement.discardAssignment(endpointCallExpression).toStringWithIndentation(3),
+            endpointCallMaxRetries5: swift.Statement.constantDeclaration({
+                unsafeName: "response",
+                value: this.generateEndpointMethodCallExpressionWithMaxRetries(
+                    dynamicEndpoint,
+                    dynamicEndpointExample,
+                    5
+                )
+            }).toStringWithIndentation(3),
+            endpointCallMaxRetriesZero: swift.Statement.discardAssignment(
+                this.generateEndpointMethodCallExpressionWithMaxRetries(dynamicEndpoint, dynamicEndpointExample, 0)
+            ).toStringWithIndentation(4)
         };
     }
 
@@ -108,14 +125,47 @@ export class TemplateDataGenerator {
     private generateEndpointMethodCallStatement(
         dynamicEndpoint: dynamic.Endpoint,
         dynamicEndpointExample: dynamic.EndpointExample
-    ): swift.Statement {
-        const endpointSnippetRequest = convertDynamicEndpointSnippetRequest(dynamicEndpointExample);
+    ) {
         return swift.Statement.constantDeclaration({
             unsafeName: "response",
-            value: this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
-                endpoint: dynamicEndpoint,
-                snippet: endpointSnippetRequest
-            })
+            value: this.generateEndpointMethodCallExpression(dynamicEndpoint, dynamicEndpointExample)
+        });
+    }
+
+    private generateEndpointMethodCallExpression(
+        dynamicEndpoint: dynamic.Endpoint,
+        dynamicEndpointExample: dynamic.EndpointExample
+    ): swift.Expression {
+        const endpointSnippetRequest = convertDynamicEndpointSnippetRequest(dynamicEndpointExample);
+        return this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
+            endpoint: dynamicEndpoint,
+            snippet: endpointSnippetRequest
+        });
+    }
+
+    private generateEndpointMethodCallExpressionWithMaxRetries(
+        dynamicEndpoint: dynamic.Endpoint,
+        dynamicEndpointExample: dynamic.EndpointExample,
+        maxRetries: number
+    ): swift.Expression {
+        const endpointSnippetRequest = convertDynamicEndpointSnippetRequest(dynamicEndpointExample);
+        return this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
+            endpoint: dynamicEndpoint,
+            snippet: endpointSnippetRequest,
+            additionalArguments: [
+                swift.functionArgument({
+                    label: "requestOptions",
+                    value: swift.Expression.structInitialization({
+                        unsafeName: "RequestOptions",
+                        arguments_: [
+                            swift.functionArgument({
+                                label: "maxRetries",
+                                value: swift.Expression.numberLiteral(maxRetries)
+                            })
+                        ]
+                    })
+                })
+            ]
         });
     }
 }

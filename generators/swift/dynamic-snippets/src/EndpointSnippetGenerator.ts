@@ -255,21 +255,24 @@ export class EndpointSnippetGenerator {
 
     public generateEndpointMethodCallExpression({
         endpoint,
-        snippet
+        snippet,
+        additionalArguments = []
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
+        additionalArguments?: swift.FunctionArgument[];
     }) {
         const nonNopArguments = this.getEndpointMethodArguments({ endpoint, snippet }).filter(
             (arg) => !arg.value.isNop()
         );
+        const arguments_ = [...nonNopArguments, ...additionalArguments];
         return swift.Expression.try(
             swift.Expression.await(
                 swift.Expression.methodCall({
                     target: swift.Expression.rawValue(CLIENT_CONST_NAME),
                     methodName: this.getEndpointMethodName({ endpoint }),
-                    arguments_: nonNopArguments,
-                    multiline: nonNopArguments.length > 1 ? true : undefined
+                    arguments_: arguments_,
+                    multiline: arguments_.length > 1 ? true : undefined
                 })
             )
         );
