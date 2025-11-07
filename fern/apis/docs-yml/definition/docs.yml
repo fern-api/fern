@@ -502,10 +502,14 @@ types:
     properties:
       dark:
         type: optional<string>
-        docs: Path to your dark mode logo file, relative to the docs root. SVG format is recommended for optimal quality. Example: `assets/images/logo-dark.svg`
+        docs: |
+          Path to your dark mode logo file, relative to the docs root. SVG format is recommended for optimal quality.
+          Example: `assets/images/logo-dark.svg`
       light:
         type: optional<string>
-        docs: Path to your light mode logo file, relative to the docs root. SVG format is recommended for optimal quality. Example: `assets/images/logo-light.svg`
+        docs: |
+          Path to your light mode logo file, relative to the docs root. SVG format is recommended for optimal quality.
+          Example: `assets/images/logo-light.svg`
       height: optional<double> # todo: this should be a string like `32px` or `2rem`
       href:
         type: optional<string>
@@ -841,7 +845,9 @@ types:
           The name of the font. Defaults to a generated name that will be used to reference your custom font in the eventually injected CSS.
       path:
         type: optional<string>
-        docs: The path to your font file, relative to your docs folder. Use this when you have a single font file. For multiple font files (like separate files for bold, italic etc), use `paths` instead.
+        docs: |
+          The path to your font file, relative to your docs folder. Use this when you have a single font file.
+          For multiple font files (like separate files for bold, italic etc), use `paths` instead.
       weight:
         type: optional<FontWeight>
         docs: |
@@ -1231,7 +1237,9 @@ types:
     properties:
       href:
         type: optional<string>
-        docs: The URL once you click on the button. Example: https://buildwithfern.com/contact
+        docs: |
+          The URL once you click on the button.
+          Example: https://buildwithfern.com/contact
       url:
         type: optional<string>
         availability: deprecated
@@ -1480,7 +1488,9 @@ types:
         docs: The path you want to redirect from.
       destination:
         type: string
-        docs: The path you want to route to. Can be an internal path (`/new-path`) or an external URL (`https://example.com`). External URLs must include the full address, including `https`.
+        docs: |
+          The path you want to route to. Can be an internal path (`/new-path`) or an external URL (`https://example.com`).
+          External URLs must include the full address, including `https`.
       permanent:
         type: optional<boolean>
         docs: |
