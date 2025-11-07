@@ -1,9 +1,8 @@
 import fs from "fs";
-import stream from "stream";
 import { join } from "path";
-
-import { Fetcher, fetcherImpl } from "../../../src/core/fetcher/Fetcher";
+import stream from "stream";
 import type { BinaryResponse } from "../../../src/core";
+import { type Fetcher, fetcherImpl } from "../../../src/core/fetcher/Fetcher";
 
 describe("Test fetcherImpl", () => {
     it("should handle successful request", async () => {
@@ -14,6 +13,7 @@ describe("Test fetcherImpl", () => {
             body: { data: "test" },
             contentType: "application/json",
             requestType: "json",
+            maxRetries: 0,
             responseType: "json",
         };
 
@@ -48,6 +48,7 @@ describe("Test fetcherImpl", () => {
             headers: { "X-Test": "x-test-header" },
             contentType: "application/octet-stream",
             requestType: "bytes",
+            maxRetries: 0,
             responseType: "json",
             body: fs.createReadStream(join(__dirname, "test-file.txt")),
         };
@@ -83,6 +84,7 @@ describe("Test fetcherImpl", () => {
             url,
             method: "GET",
             headers: { "X-Test": "x-test-header" },
+            maxRetries: 0,
             responseType: "binary-response",
         };
 
@@ -110,7 +112,7 @@ describe("Test fetcherImpl", () => {
             const body = result.body as BinaryResponse;
             expect(body).toBeDefined();
             expect(body.bodyUsed).toBe(false);
-            expect(typeof body.stream).toBe('function');
+            expect(typeof body.stream).toBe("function");
             const stream = body.stream();
             expect(stream).toBeInstanceOf(ReadableStream);
             const reader = stream.getReader();
@@ -128,6 +130,7 @@ describe("Test fetcherImpl", () => {
             url,
             method: "GET",
             headers: { "X-Test": "x-test-header" },
+            maxRetries: 0,
             responseType: "binary-response",
         };
 
@@ -155,7 +158,7 @@ describe("Test fetcherImpl", () => {
             const body = result.body as BinaryResponse;
             expect(body).toBeDefined();
             expect(body.bodyUsed).toBe(false);
-            expect(typeof body.blob).toBe('function');
+            expect(typeof body.blob).toBe("function");
             const blob = await body.blob();
             expect(blob).toBeInstanceOf(Blob);
             const reader = blob.stream().getReader();
@@ -173,6 +176,7 @@ describe("Test fetcherImpl", () => {
             url,
             method: "GET",
             headers: { "X-Test": "x-test-header" },
+            maxRetries: 0,
             responseType: "binary-response",
         };
 
@@ -200,7 +204,7 @@ describe("Test fetcherImpl", () => {
             const body = result.body as BinaryResponse;
             expect(body).toBeDefined();
             expect(body.bodyUsed).toBe(false);
-            expect(typeof body.arrayBuffer).toBe('function');
+            expect(typeof body.arrayBuffer).toBe("function");
             const arrayBuffer = await body.arrayBuffer();
             expect(arrayBuffer).toBeInstanceOf(ArrayBuffer);
             const decoder = new TextDecoder();
@@ -209,13 +213,14 @@ describe("Test fetcherImpl", () => {
             expect(body.bodyUsed).toBe(true);
         }
     });
-    
+
     it("should receive file as bytes", async () => {
         const url = "https://httpbin.org/post/file";
         const mockArgs: Fetcher.Args = {
             url,
             method: "GET",
             headers: { "X-Test": "x-test-header" },
+            maxRetries: 0,
             responseType: "binary-response",
         };
 
@@ -243,8 +248,8 @@ describe("Test fetcherImpl", () => {
             const body = result.body as BinaryResponse;
             expect(body).toBeDefined();
             expect(body.bodyUsed).toBe(false);
-            expect(typeof body.bytes).toBe("function");            
-            if(!body.bytes) {
+            expect(typeof body.bytes).toBe("function");
+            if (!body.bytes) {
                 return;
             }
             const bytes = await body.bytes();

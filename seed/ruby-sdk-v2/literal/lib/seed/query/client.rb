@@ -13,7 +13,16 @@ module Seed
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
         _query_param_names = %i[prompt optional_prompt alias_prompt alias_optional_prompt query stream optional_stream
                                 alias_stream alias_optional_stream]
-        _query = params.slice(*_query_param_names)
+        _query = {}
+        _query["prompt"] = params[:prompt] if params.key?(:prompt)
+        _query["optional_prompt"] = params[:optional_prompt] if params.key?(:optional_prompt)
+        _query["alias_prompt"] = params[:alias_prompt] if params.key?(:alias_prompt)
+        _query["alias_optional_prompt"] = params[:alias_optional_prompt] if params.key?(:alias_optional_prompt)
+        _query["query"] = params[:query] if params.key?(:query)
+        _query["stream"] = params[:stream] if params.key?(:stream)
+        _query["optional_stream"] = params[:optional_stream] if params.key?(:optional_stream)
+        _query["alias_stream"] = params[:alias_stream] if params.key?(:alias_stream)
+        _query["alias_optional_stream"] = params[:alias_optional_stream] if params.key?(:alias_optional_stream)
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(

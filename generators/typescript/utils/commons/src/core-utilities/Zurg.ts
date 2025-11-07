@@ -30,6 +30,7 @@ export interface Zurg {
     boolean: () => Zurg.Schema;
     any: () => Zurg.Schema;
     unknown: () => Zurg.Schema;
+    never: () => Zurg.Schema;
     lazy: (schema: Zurg.Schema) => Zurg.Schema;
     lazyObject: (schema: Zurg.Schema) => Zurg.ObjectSchema;
 
@@ -588,6 +589,19 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             isOptional: true,
             isNullable: false,
             toExpression: () => ts.factory.createCallExpression(unknown.getExpression(), undefined, undefined)
+        };
+
+        return {
+            ...baseSchema,
+            ...this.getSchemaUtils(baseSchema)
+        };
+    });
+
+    public never = this.withExportedName("never", (never: Reference) => () => {
+        const baseSchema: Zurg.BaseSchema = {
+            isOptional: false,
+            isNullable: false,
+            toExpression: () => ts.factory.createCallExpression(never.getExpression(), undefined, undefined)
         };
 
         return {

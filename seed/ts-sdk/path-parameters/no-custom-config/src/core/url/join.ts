@@ -12,7 +12,6 @@ export function join(base: string, ...segments: string[]): string {
         try {
             url = new URL(base);
         } catch {
-            // Fallback to path joining if URL is malformed
             return joinPath(base, ...segments);
         }
 

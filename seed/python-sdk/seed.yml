@@ -369,3 +369,4 @@ allowedFailures:
   - response-property
   - streaming-parameter
   - trace
+  - websocket

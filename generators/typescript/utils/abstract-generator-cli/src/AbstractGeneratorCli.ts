@@ -11,9 +11,15 @@ import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
-import { serialization } from "@fern-fern/ir-sdk";
+import { FernIr, serialization } from "@fern-fern/ir-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { constructNpmPackage, NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
+import {
+    constructNpmPackage,
+    constructNpmPackageArgs,
+    constructNpmPackageFromArgs,
+    NpmPackage,
+    PersistedTypescriptProject
+} from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
@@ -73,10 +79,19 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             });
             const customConfig = this.parseCustomConfig(config.customConfig, logger);
 
-            const npmPackage = constructNpmPackage({
-                generatorConfig: config,
-                isPackagePrivate: this.isPackagePrivate(customConfig)
+            const ir = await parseIR({
+                absolutePathToIR: AbsoluteFilePath.of(config.irFilepath),
+                parse: serialization.IntermediateRepresentation.parse
             });
+
+            const npmPackage = ir.selfHosted
+                ? constructNpmPackageFromArgs(
+                      npmPackageInfoFromPublishConfig(config, ir.publishConfig, this.isPackagePrivate(customConfig))
+                  )
+                : constructNpmPackage({
+                      generatorConfig: config,
+                      isPackagePrivate: this.isPackagePrivate(customConfig)
+                  });
 
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.initV2({
@@ -90,11 +105,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 github: (github) => github.version,
                 publish: (publish) => publish.version,
                 _other: () => undefined
-            });
-
-            const ir = await parseIR({
-                absolutePathToIR: AbsoluteFilePath.of(config.irFilepath),
-                parse: serialization.IntermediateRepresentation.parse
             });
 
             const generatorContext = new GeneratorContextImpl(logger, version);
@@ -297,6 +307,33 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             mode: ir.publishConfig?.type === "github" ? ir.publishConfig.mode : undefined
         };
     }
+}
+
+function npmPackageInfoFromPublishConfig(
+    config: FernGeneratorExec.GeneratorConfig,
+    publishConfig: FernIr.PublishingConfig | undefined,
+    isPackagePrivate: boolean
+): constructNpmPackageArgs {
+    let args = {};
+    if (publishConfig?.type === "github") {
+        if (publishConfig.target?.type === "npm") {
+            const repoUrl =
+                publishConfig.repo != null && publishConfig.owner != null
+                    ? `https://github.com/${publishConfig.owner}/${publishConfig.repo}`
+                    : publishConfig.uri;
+            args = {
+                packageName: publishConfig.target.packageName,
+                version: publishConfig.target.version,
+                repoUrl,
+                publishInfo: undefined,
+                licenseConfig: config.license
+            };
+        }
+    }
+    return {
+        ...args,
+        isPackagePrivate
+    };
 }
 
 class GeneratorContextImpl implements GeneratorContext {

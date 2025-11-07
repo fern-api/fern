@@ -12,11 +12,14 @@ module Seed
       #
       # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
       def post_with_object_bodyand_response(request_options: {}, **params)
+        _body_prop_names = %i[string integer nested_object]
+        _body_bag = params.slice(*_body_prop_names)
+
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/req-bodies/object",
-          body: params
+          body: Seed::InlinedRequests::Types::PostWithObjectBody.new(_body_bag).to_h
         )
         begin
           _response = @client.send(_request)

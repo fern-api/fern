@@ -31,7 +31,8 @@ module Seed
       def list(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
         _query_param_names = %i[limit]
-        _query = params.slice(*_query_param_names)
+        _query = {}
+        _query["limit"] = params[:limit] if params.key?(:limit)
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
