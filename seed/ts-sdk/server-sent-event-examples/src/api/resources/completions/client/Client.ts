@@ -40,6 +40,7 @@ export class Completions {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
+            accepts: "text/event-stream",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,

@@ -62,6 +62,7 @@ export class FileUploadExample {
             ),
             method: "POST",
             headers: _headers,
+            accepts: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,

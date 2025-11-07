@@ -4,18 +4,28 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 import { SeedSimpleApiClient } from "../../src/Client";
 
 describe("User", () => {
+    
     test("get", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedSimpleApiClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedSimpleApiClient({ "token" : "test" , "environment" : server.baseUrl });
+        
+        const rawResponseBody = { "id" : "id" , "name" : "name" , "email" : "email" };
+        server
+            .mockEndpoint()
+            .get("/users/id").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const rawResponseBody = { id: "id", name: "name", email: "email" };
-        server.mockEndpoint().get("/users/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const response = await client.user.get("id");
-        expect(response).toEqual({
-            id: "id",
-            name: "name",
-            email: "email",
-        });
+        
+                    
+                            const response = await client.user.get("id");
+                            expect(response).toEqual({
+    id: "id",
+    name: "name",
+    email: "email"
+});
+                          
+                
     });
+          
 });

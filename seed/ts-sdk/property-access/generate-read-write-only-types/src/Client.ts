@@ -68,6 +68,7 @@ export class SeedPropertyAccessClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
+            accepts: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,

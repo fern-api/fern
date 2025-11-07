@@ -19,6 +19,7 @@ export declare namespace Fetcher {
         url: string;
         method: string;
         contentType?: string;
+        accepts?: "json" | string;
         headers?: Record<string, string | EndpointSupplier<string | null | undefined> | null | undefined>;
         queryParameters?: Record<string, unknown>;
         body?: unknown;
@@ -209,6 +210,15 @@ function redactUrl(url: string): string {
 
 async function getHeaders(args: Fetcher.Args): Promise<Record<string, string>> {
     const newHeaders: Record<string, string> = {};
+
+    if (args.accepts === "json") {
+        newHeaders.Accept = "application/json";
+    } else if (args.accepts != null) {
+        newHeaders.Accept = args.accepts;
+    } else {
+        newHeaders.Accept = "*/*";
+    }
+
     if (args.body !== undefined && args.contentType != null) {
         newHeaders["Content-Type"] = args.contentType;
     }
