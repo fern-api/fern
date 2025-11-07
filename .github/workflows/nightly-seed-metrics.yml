@@ -16,6 +16,7 @@ jobs:
   trigger-seed-snapshot-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       # Note: this will trigger to the default branch of the repo, not the workflow_dispatch branch
       - name: Trigger Seed Tests with Metrics
@@ -23,7 +24,7 @@ jobs:
         with:
           token: ${{ secrets.ACTIONS_PAT }}
           event-type: seed-test-metrics
-          client-payload: '{"ref": "refs/heads/main"}'
+          client-payload: '{"ref": "${{ github.ref }}"}'
 
   log-dispatch-rejection:
     runs-on: ubuntu-latest
