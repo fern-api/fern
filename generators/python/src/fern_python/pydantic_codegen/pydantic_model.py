@@ -421,7 +421,7 @@ class PydanticModel:
                 import_=ghost_ref.import_,
                 is_forward_reference=ghost_ref.is_forward_reference,
                 must_import_after_current_declaration=False,  # Clear this flag
-                import_if_type_checking=ghost_ref.import_if_type_checking,
+                import_if_type_checking=False,  # Ensure runtime import
                 has_been_dynamically_imported=ghost_ref.has_been_dynamically_imported,
                 require_postponed_annotations=ghost_ref.require_postponed_annotations,
             )
@@ -431,7 +431,7 @@ class PydanticModel:
             AST.Expression(
                 AST.FunctionInvocation(
                     function_definition=self._update_forward_ref_function_reference,
-                    args=[AST.Expression(self._local_class_reference)],
+                    args=[AST.ReferenceNode(self._local_class_reference)],
                     kwargs=ghost_refs_kwargs if len(ghost_refs_kwargs) > 0 else None,
                 )
             )
@@ -443,7 +443,7 @@ class PydanticModel:
             import_=self._local_class_reference.import_,
             is_forward_reference=self._local_class_reference.is_forward_reference,
             must_import_after_current_declaration=False,
-            import_if_type_checking=self._local_class_reference.import_if_type_checking,
+            import_if_type_checking=False,  # Ensure runtime import
             has_been_dynamically_imported=self._local_class_reference.has_been_dynamically_imported,
             require_postponed_annotations=self._local_class_reference.require_postponed_annotations,
         )
@@ -460,7 +460,7 @@ class PydanticModel:
                 import_=ghost_ref.import_,
                 is_forward_reference=ghost_ref.is_forward_reference,
                 must_import_after_current_declaration=False,
-                import_if_type_checking=ghost_ref.import_if_type_checking,
+                import_if_type_checking=False,  # Ensure runtime import
                 has_been_dynamically_imported=ghost_ref.has_been_dynamically_imported,
                 require_postponed_annotations=ghost_ref.require_postponed_annotations,
             )
@@ -470,7 +470,7 @@ class PydanticModel:
             AST.Expression(
                 AST.FunctionInvocation(
                     function_definition=self._update_forward_ref_function_reference,
-                    args=[AST.Expression(given_model)],
+                    args=[AST.ReferenceNode(given_model)],
                     kwargs=ghost_refs_kwargs,
                 )
             )
