@@ -249,8 +249,6 @@ types:
 
   AIChatModel:
     enum:
-      - value: "claude-3.5"
-        name: claude_3_5
       - value: "claude-3.7"
         name: claude_3_7
       - value: "claude-4"
