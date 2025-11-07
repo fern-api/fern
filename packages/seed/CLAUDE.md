@@ -56,6 +56,26 @@ pnpm seed run --generator go-sdk --path /path/to/project --skip-scripts
 pnpm seed run --generator python-sdk --path ./custom-api --ir-version 58
 ```
 
+### Remote vs Local Comparison Command (`pnpm seed test-remote-vs-local`)
+```bash
+# Compare remote and local generation outputs
+pnpm seed test-remote-vs-local \
+  --workspace-path /path/to/fern/workspace \
+  --remote-group ts-sdk-remote \
+  --local-group ts-sdk-local \
+  --github-repo owner/repo
+
+# Save comparison report to file
+pnpm seed test-remote-vs-local \
+  --workspace-path /path/to/fern/workspace \
+  --remote-group ts-sdk-remote \
+  --local-group ts-sdk-local \
+  --github-repo owner/repo \
+  --output-report ./comparison-report.txt
+```
+
+This command validates that remote generation (server-side via Fiddle service) produces identical output to local generation (Docker-based local execution) for the same generator configuration and API specification.
+
 ### Development Workflow
 ```bash
 # Initial setup

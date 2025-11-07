@@ -19,6 +19,7 @@ import { DockerScriptRunner, LocalScriptRunner, ScriptRunner } from "./commands/
 import { TaskContextFactory } from "./commands/test/TaskContextFactory";
 import { DockerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/test-runner";
 import { FIXTURES, LANGUAGE_SPECIFIC_FIXTURE_PREFIXES, testGenerator } from "./commands/test/testWorkspaceFixtures";
+import { RemoteLocalComparisonTestRunner } from "./commands/test-remote-vs-local";
 import { validateCliRelease } from "./commands/validate/validateCliChangelog";
 import { validateGenerator } from "./commands/validate/validateGeneratorChangelog";
 import { validateVersionsYml } from "./commands/validate/validateVersionsYml";
@@ -42,6 +43,7 @@ export async function tryRunCli(): Promise<void> {
     addTestCommand(cli);
     addRunCommand(cli);
     addGetAvailableFixturesCommand(cli);
+    addTestRemoteVsLocalCommand(cli);
     addRegisterCommands(cli);
     addPublishCommands(cli);
     addValidateCommands(cli);
@@ -382,6 +384,82 @@ async function getAvailableFixtures(generator: GeneratorWorkspace, withOutputFol
 
     // Don't include subfolders, return the original fixtures
     return availableFixtures;
+}
+
+function addTestRemoteVsLocalCommand(cli: Argv) {
+    cli.command(
+        "test-remote-vs-local",
+        "Compare remote vs local generation outputs",
+        (yargs) =>
+            yargs
+                .option("workspace-path", {
+                    type: "string",
+                    demandOption: true,
+                    description: "Path to the Fern workspace containing generators.yml"
+                })
+                .option("remote-group", {
+                    type: "string",
+                    demandOption: true,
+                    description: "Generator group name for remote generation"
+                })
+                .option("local-group", {
+                    type: "string",
+                    demandOption: true,
+                    description: "Generator group name for local generation"
+                })
+                .option("github-repo", {
+                    type: "string",
+                    demandOption: true,
+                    description: "GitHub repository in owner/repo format"
+                })
+                .option("log-level", {
+                    default: LogLevel.Info,
+                    choices: LOG_LEVELS
+                })
+                .option("output-report", {
+                    type: "string",
+                    demandOption: false,
+                    description: "Path to save the comparison report"
+                }),
+        async (argv) => {
+            const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+            const taskContext = taskContextFactory.create("test-remote-vs-local");
+
+            try {
+                const runner = new RemoteLocalComparisonTestRunner(
+                    {
+                        workspacePath: AbsoluteFilePath.of(argv["workspace-path"]),
+                        remoteGroup: argv["remote-group"],
+                        localGroup: argv["local-group"],
+                        githubRepo: argv["github-repo"]
+                    },
+                    taskContext
+                );
+
+                const result = await runner.run();
+
+                if (result.report) {
+                    console.log(result.report);
+                }
+
+                if (argv["output-report"]) {
+                    await writeFile(argv["output-report"], result.report ?? "");
+                    taskContext.logger.info(`Report saved to ${argv["output-report"]}`);
+                }
+
+                if (!result.passed) {
+                    taskContext.failAndThrow(
+                        "Comparison failed: differences found between remote and local generation"
+                    );
+                }
+
+                taskContext.logger.info("Comparison passed: remote and local generation produced identical output");
+            } catch (error) {
+                taskContext.logger.error(`Test failed: ${(error as Error)?.message ?? "Unknown error"}`);
+                throw error;
+            }
+        }
+    );
 }
 
 function addPublishCommands(cli: Argv) {
