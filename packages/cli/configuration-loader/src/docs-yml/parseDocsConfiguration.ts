@@ -367,17 +367,12 @@ function convertThemeConfig(
         return undefined;
     }
 
-    const result: docsYml.ParsedDocsConfiguration["theme"] = {
+    return {
         sidebar: theme.sidebar ?? "default",
         tabs: theme.tabs ?? "default",
-        body: theme.body ?? "default"
+        body: theme.body ?? "default",
+        pageActions: theme.pageActions
     };
-
-    if (theme.pageActions != null) {
-        result.pageActions = theme.pageActions;
-    }
-
-    return result;
 }
 
 function convertSettingsConfig(
