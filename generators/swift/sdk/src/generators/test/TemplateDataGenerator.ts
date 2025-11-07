@@ -38,6 +38,9 @@ export class TemplateDataGenerator {
         if (templateFileName === "ClientRetryTests.Template") {
             return this.generateTemplateDataForClientRetryTests();
         }
+        if (templateFileName === "HTTPStub.Template") {
+            return this.generateTemplateDataForHTTPStub();
+        }
         throw new Error(`Unknown template file "${templateFileName}"`);
     }
 
@@ -154,6 +157,13 @@ export class TemplateDataGenerator {
                     ]
                 })
             ).toStringWithIndentation(4)
+        };
+    }
+
+    private generateTemplateDataForHTTPStub() {
+        const moduleSymbol = this.context.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        return {
+            moduleName: moduleSymbol.name
         };
     }
 
