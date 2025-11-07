@@ -415,12 +415,9 @@ class PydanticModel:
     def update_forward_refs(self) -> None:
         ghost_refs_kwargs = []
         for ghost_ref in self._class_declaration.get_ghost_references():
-            try:
-                named_import = get_named_import_or_throw(ghost_ref)
-                ghost_refs_kwargs.append((named_import, AST.Expression(ghost_ref)))
-            except RuntimeError:
-                pass
-        
+            named_import = get_named_import_or_throw(ghost_ref)
+            ghost_refs_kwargs.append((named_import, AST.ReferenceNode(ghost_ref)))
+
         self._source_file.add_footer_expression(
             AST.Expression(
                 AST.FunctionInvocation(
@@ -432,17 +429,22 @@ class PydanticModel:
         )
 
     def update_forward_refs_for_given_model(self, given_model: AST.ClassReference) -> None:
+        ghost_refs_kwargs = [
+            (
+                get_named_import_or_throw(self._local_class_reference),
+                AST.ReferenceNode(self._local_class_reference),
+            )
+        ]
+        for ghost_ref in self._class_declaration.get_ghost_references():
+            named_import = get_named_import_or_throw(ghost_ref)
+            ghost_refs_kwargs.append((named_import, AST.ReferenceNode(ghost_ref)))
+
         self._source_file.add_footer_expression(
             AST.Expression(
                 AST.FunctionInvocation(
                     function_definition=self._update_forward_ref_function_reference,
                     args=[AST.Expression(given_model)],
-                    kwargs=[
-                        (
-                            get_named_import_or_throw(self._local_class_reference),
-                            AST.Expression(self._local_class_reference),
-                        )
-                    ],
+                    kwargs=ghost_refs_kwargs,
                 )
             )
         )
