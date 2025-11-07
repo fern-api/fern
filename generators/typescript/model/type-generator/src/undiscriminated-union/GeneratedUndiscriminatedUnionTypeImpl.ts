@@ -12,7 +12,6 @@ import {
 } from "@fern-typescript/commons";
 import { BaseContext, GeneratedUndiscriminatedUnionType } from "@fern-typescript/contexts";
 import {
-    InterfaceDeclarationStructure,
     ModuleDeclarationKind,
     ModuleDeclarationStructure,
     StatementStructures,
