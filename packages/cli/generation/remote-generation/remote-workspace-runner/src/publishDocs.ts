@@ -159,7 +159,7 @@ export async function publishDocs({
                         const uploadCount = Object.keys(urlsToUpload).length;
 
                         if (uploadCount > 0) {
-                            // context.logger.info(`↑ Uploading ${uploadCount} files`); // uncomment when FDR is updated to persist hashes over multiple previews
+                            // context.logger.info(`↑ Uploading ${uploadCount} files...`); // uncomment when FDR is updated to persist hashes over multiple previews
                             await uploadFiles(
                                 urlsToUpload,
                                 docsWorkspace.absoluteFilePath,
@@ -210,7 +210,7 @@ export async function publishDocs({
                         const uploadCount = Object.keys(urlsToUpload).length;
 
                         if (uploadCount > 0) {
-                            context.logger.info(`↑ Uploading ${uploadCount} files'}...`);
+                            context.logger.info(`↑ Uploading ${uploadCount} files...`);
                             await uploadFiles(
                                 urlsToUpload,
                                 docsWorkspace.absoluteFilePath,
