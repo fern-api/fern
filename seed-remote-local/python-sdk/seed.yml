@@ -1,0 +1,26 @@
+displayName: Python SDK (Remote vs Local)
+irVersion: v61
+image: fernapi/fern-python-sdk
+changelogLocation: ../../generators/python/sdk/versions.yml
+
+test:
+  local:
+    workingDirectory: generators/python
+    buildCommand:
+      - chmod +x setup-python.sh && ./setup-python.sh
+      - poetry config virtualenvs.in-project true
+      - poetry install
+    runCommand: poetry run python -m src.fern_python.generators.sdk.cli {CONFIG_PATH}
+    env:
+      PYTEST_CURRENT_TEST: "some value"
+
+language: python
+generatorType: SDK
+
+# Two output modes for the SAME fixture
+fixtures:
+  imdb:
+    - outputFolder: remote
+      customConfig: null
+    - outputFolder: local
+      customConfig: null

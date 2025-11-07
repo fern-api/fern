@@ -1,0 +1,26 @@
+displayName: Java SDK (Remote vs Local)
+irVersion: v61
+image: fernapi/fern-java-sdk
+changelogLocation: ../../generators/java/sdk/versions.yml
+
+test:
+  local:
+    workingDirectory: generators/java
+    buildCommand:
+      - ./gradlew :sdk:distTar
+      - chmod +x install-gradle.sh && ./install-gradle.sh
+      - cd sdk
+      - tar -xvf build/distributions/sdk.tar -C .
+    runCommand: cd sdk/sdk && java -cp sdk.jar:lib/* com.fern.java.client.Cli {CONFIG_PATH}
+    env: {}
+
+language: java
+generatorType: SDK
+
+# Two output modes for the SAME fixture
+fixtures:
+  imdb:
+    - outputFolder: remote
+      customConfig: null
+    - outputFolder: local
+      customConfig: null

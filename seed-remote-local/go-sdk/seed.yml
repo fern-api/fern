@@ -1,0 +1,23 @@
+displayName: Go SDK (Remote vs Local)
+irVersion: v61
+image: fernapi/fern-go-sdk
+changelogLocation: ../../generators/go/sdk/versions.yml
+
+test:
+  local:
+    workingDirectory: generators/go
+    buildCommand:
+      - go build ./...
+    runCommand: go run ./sdk/cli {CONFIG_PATH}
+    env: {}
+
+language: go
+generatorType: SDK
+
+# Two output modes for the SAME fixture
+fixtures:
+  imdb:
+    - outputFolder: remote
+      customConfig: null
+    - outputFolder: local
+      customConfig: null

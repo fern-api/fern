@@ -1,0 +1,81 @@
+# Generator versions used for snapshots (created 2025-11-07)
+# Using published Docker image versions for initial snapshot generation
+# - fernapi/fern-typescript-sdk: 0.9.0
+# - fernapi/fern-java-sdk: 0.8.0
+# - fernapi/fern-python-sdk: 0.9.0
+# - fernapi/fern-go-sdk: 0.9.0
+
+default-group: ts-sdk-local
+
+groups:
+  # TypeScript - Remote (uses Fiddle service)
+  ts-sdk-remote:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: 0.9.0
+        output:
+          location: local-file-system
+          path: ../../seed-remote-local/ts-sdk/remote/imdb
+
+  # TypeScript - Local (uses Docker)
+  ts-sdk-local:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: 0.9.0
+        output:
+          location: local-file-system
+          path: ../../seed-remote-local/ts-sdk/local/imdb
+
+  # Java - Remote
+  java-sdk-remote:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: 0.8.0
+        output:
+          location: local-file-system
+          path: ../../seed-remote-local/java-sdk/remote/imdb
+
+  # Java - Local  
+  java-sdk-local:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: 0.8.0
+        output:
+          location: local-file-system
+          path: ../../seed-remote-local/java-sdk/local/imdb
+
+  # Python - Remote
+  python-sdk-remote:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 0.9.0
+        output:
+          location: local-file-system
+          path: ../../seed-remote-local/python-sdk/remote/imdb
+
+  # Python - Local
+  python-sdk-local:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 0.9.0
+        output:
+          location: local-file-system
+          path: ../../seed-remote-local/python-sdk/local/imdb
+
+  # Go - Remote
+  go-sdk-remote:
+    generators:
+      - name: fernapi/fern-go-sdk
+        version: 0.9.0
+        output:
+          location: local-file-system
+          path: ../../seed-remote-local/go-sdk/remote/imdb
+
+  # Go - Local
+  go-sdk-local:
+    generators:
+      - name: fernapi/fern-go-sdk
+        version: 0.9.0
+        output:
+          location: local-file-system
+          path: ../../seed-remote-local/go-sdk/local/imdb

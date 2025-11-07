@@ -1,0 +1,24 @@
+displayName: TypeScript SDK (Remote vs Local)
+irVersion: v61
+image: fernapi/fern-typescript-sdk
+changelogLocation: ../../generators/typescript/sdk/versions.yml
+
+test:
+  local:
+    workingDirectory: generators/typescript
+    buildCommand:
+      - pnpm --filter @fern-typescript/sdk-generator-cli dist:cli
+    runCommand: node --enable-source-maps sdk/cli/dist/cli.cjs {CONFIG_PATH}
+    env:
+      NODE_ENV: test
+
+language: typescript
+generatorType: SDK
+
+# Two output modes for the SAME fixture
+fixtures:
+  imdb:
+    - outputFolder: remote
+      customConfig: null
+    - outputFolder: local
+      customConfig: null
