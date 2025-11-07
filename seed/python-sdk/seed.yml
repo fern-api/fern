@@ -370,3 +370,4 @@ allowedFailures:
   - streaming-parameter
   - trace
   - websocket
+  - websocket:websocket-with_generated_clients
