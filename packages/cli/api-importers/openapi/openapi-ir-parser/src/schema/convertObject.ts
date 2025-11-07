@@ -140,8 +140,7 @@ export function convertObject({
                     allOfElement,
                     [schemaId],
                     source,
-                    context.options.preserveSchemaIds,
-                    context
+                    context.options.preserveSchemaIds
                 ),
                 properties: getAllProperties({ schema: allOfElement, context, breadcrumbs, source, namespace })
             });

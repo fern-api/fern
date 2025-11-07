@@ -186,11 +186,9 @@ export function convertReferenceObject(
     source: Source,
     namespace: string | undefined
 ): SchemaWithExample {
-    const referencedSchema = context.resolveSchemaReference(schema);
-
     let result: SchemaWithExample = schema.$ref.includes("properties")
         ? convertSchemaObject(
-              referencedSchema,
+              context.resolveSchemaReference(schema),
               wrapAsOptional,
               wrapAsNullable,
               context,
@@ -201,12 +199,13 @@ export function convertReferenceObject(
               new Set()
           )
         : SchemaWithExample.reference(
-              convertToReferencedSchema(schema, breadcrumbs, source, context.options.preserveSchemaIds, context)
+              convertToReferencedSchema(schema, breadcrumbs, source, context.options.preserveSchemaIds)
           );
 
     // if referenced schema would be found nullable in convertSchemaObject(),
     // wrap it as nullable here
     if (wrapAsNullable === false) {
+        const referencedSchema = context.resolveSchemaReference(schema);
         if (
             referencedSchema.nullable === true ||
             (Array.isArray(referencedSchema.type) &&
@@ -1267,20 +1266,12 @@ export function convertToReferencedSchema(
     schema: OpenAPIV3.ReferenceObject,
     breadcrumbs: string[],
     source: Source,
-    preserveSchemaIds: boolean,
-    context?: SchemaParserContext
+    preserveSchemaIds: boolean
 ): ReferencedSchema {
     const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
     const generatedName = getGeneratedTypeName(breadcrumbs, preserveSchemaIds);
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    let description = (schema as any).description;
-
-    // If the reference object doesn't have a description, fall back to the resolved schema's description
-    if (description == null && context != null) {
-        const resolvedSchema = context.resolveSchemaReference(schema);
-        description = resolvedSchema.description;
-    }
-
+    const description = (schema as any).description;
     const availability = convertAvailability(schema);
 
     const schemaId = getSchemaIdFromReference(schema);

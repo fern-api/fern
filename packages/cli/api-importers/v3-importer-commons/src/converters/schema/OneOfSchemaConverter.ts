@@ -251,18 +251,9 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 }
 
                 if (maybeTypeReference.ok) {
-                    // biome-ignore lint/suspicious/noExplicitAny: ReferenceObject doesn't have description in types but may have it at runtime
-                    let variantDocs = (subSchema as any).description;
-                    if (variantDocs == null) {
-                        const resolved = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
-                            reference: subSchema,
-                            breadcrumbs: this.breadcrumbs
-                        });
-                        variantDocs = resolved.resolved ? resolved.value.description : undefined;
-                    }
                     unionTypes.push({
                         type: maybeTypeReference.reference,
-                        docs: variantDocs
+                        docs: subSchema.description
                     });
                 }
                 const typeId = this.context.getTypeIdFromSchemaReference(subSchema);
