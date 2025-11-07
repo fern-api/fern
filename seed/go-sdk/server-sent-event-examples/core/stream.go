@@ -327,16 +327,14 @@ func (s *SseStreamReader) parseSseLine(_bytes []byte, event *SseEvent) {
 	}
 }
 
-// tryParseField attempts to parse an SSE field with both standard (with space) and lenient (without space) formats.
+// tryParseField attempts to parse an SSE field by trying multiple prefix patterns in order.
 // This handles APIs that don't strictly follow the SSE specification by omitting the space after the colon.
-func (s *SseStreamReader) tryParseField(line []byte, prefixWithSpace []byte, prefixNoSpace []byte) ([]byte, bool) {
-	// Try standard format first (e.g., "data: {...}")
-	if bytes.HasPrefix(line, prefixWithSpace) {
-		return line[len(prefixWithSpace):], true
-	}
-	// Fall back to lenient format (e.g., "data:{...}")
-	if bytes.HasPrefix(line, prefixNoSpace) {
-		return line[len(prefixNoSpace):], true
+// It tries each prefix in the order provided and returns the value after the first matching prefix.
+func (s *SseStreamReader) tryParseField(line []byte, prefixes ...[]byte) ([]byte, bool) {
+	for _, prefix := range prefixes {
+		if bytes.HasPrefix(line, prefix) {
+			return line[len(prefix):], true
+		}
 	}
 	return nil, false
 }
