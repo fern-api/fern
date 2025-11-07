@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - version: 1.0.0-rc33
+  createdAt: "2025-11-07"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Bump IR version which we are dependent on.
+  irVersion: 61
+
+- version: 1.0.0-rc33
   createdAt: "2025-11-06"
   changelogEntry:
     - type: fix
