@@ -126,11 +126,26 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     public buildReadmeAddendumsByFeatureId(): Record<FernGeneratorCli.FeatureId, string> {
         const addendumsByFeatureId: Record<FernGeneratorCli.FeatureId, string> = {};
 
+        const addendums: string[] = [];
+
         // Check if collapse-optional-nullable flag is enabled
         const customConfig = this.context.customConfig;
         if (customConfig != null && customConfig["collapse-optional-nullable"] === true) {
             // Add OptionalNullable documentation to Usage section
-            addendumsByFeatureId[FernGeneratorCli.StructuredFeatureId.Usage] = this.getOptionalNullableDocumentation();
+            addendums.push(this.getOptionalNullableDocumentation());
+        }
+
+        // Check if bearer auth is configured
+        if (this.context.ir.auth.schemes.length > 0) {
+            const authScheme = this.context.ir.auth.schemes[0];
+            if (authScheme?.type === "bearer") {
+                // Add per-request token documentation to Usage section
+                addendums.push(this.getPerRequestTokenDocumentation());
+            }
+        }
+
+        if (addendums.length > 0) {
+            addendumsByFeatureId[FernGeneratorCli.StructuredFeatureId.Usage] = addendums.join("\n\n");
         }
 
         return addendumsByFeatureId;
@@ -159,6 +174,48 @@ UpdateRequest request = UpdateRequest.builder()
 
 - **Required fields**: For required fields, you cannot use \`absent()\`. Required fields must always be present with either a non-null value or explicitly set to null using \`ofNull()\`.
 - **Type safety**: \`OptionalNullable<T>\` is not fully type-safe since all three states use the same type, but it provides a cleaner API than nested \`Optional<Optional<T>>\` for handling three-state nullable semantics.`;
+    }
+
+    private getPerRequestTokenDocumentation(): string {
+        return `## Authentication and Per-Request Token Override
+
+The SDK requires a global token to be set when building the client. This token is used as the default Authorization header for all API requests.
+
+### Per-Request Token Override
+
+In some scenarios, you may need to use a different token for specific API calls. The \`RequestOptions.token()\` method allows you to override the global token on a per-request basis.
+
+\`\`\`java
+import com.example.api.core.RequestOptions;
+
+client.endpoint().method(
+    ...,
+    RequestOptions
+        .builder()
+        .token("DIFFERENT_TOKEN")  // Overrides the global token for this request only
+        .build()
+);
+\`\`\`
+
+### Common Use Cases for Per-Request Tokens
+
+Per-request token overrides are useful in several scenarios:
+
+- **Multi-tenant applications**: Different tenants may require different access tokens with tenant-specific permissions
+- **Narrower scopes**: A specific operation may need a token with more limited permissions than the global token
+- **On-behalf-of/impersonation**: Making API calls with a user's token instead of the service's global token
+- **Token rotation**: Using a freshly minted token for specific calls while the global token is being refreshed
+
+### Token Precedence
+
+When both a global token and a per-request token are provided, the per-request token takes precedence. The precedence order for all headers (including Authorization) is:
+
+1. Per-request header suppliers (highest priority)
+2. Per-request headers (including per-request token)
+3. Global header suppliers
+4. Global headers (including global token) (lowest priority)
+
+This means that if you provide a token via \`RequestOptions.builder().token()\`, it will override the global token set during client construction for that specific request only.`;
     }
 
     private getPrerenderedSnippetsForFeature(
