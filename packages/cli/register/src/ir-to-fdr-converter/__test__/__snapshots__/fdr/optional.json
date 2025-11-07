@@ -1,5 +1,24 @@
 {
-  "types": {},
+  "types": {
+    "type_optional:SendOptionalBodyRequest": {
+      "name": "SendOptionalBodyRequest",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "message",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
   "subpackages": {
     "subpackage_optional": {
       "subpackageId": "subpackage_optional",
@@ -83,11 +102,84 @@
               "codeSamples": []
             }
           ]
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "sendOptionalTypedBody",
+          "originalEndpointId": "endpoint_optional.sendOptionalTypedBody",
+          "name": "Send Optional Typed Body",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/send-optional-typed-body"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "id",
+                    "value": "type_optional:SendOptionalBodyRequest"
+                  }
+                }
+              }
+            }
+          },
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Id of the created resource"
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/send-optional-typed-body",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "json"
+              },
+              "responseStatusCode": 200,
+              "responseBody": "string",
+              "responseBodyV3": {
+                "type": "json",
+                "value": "string"
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],
       "websockets": [],
-      "types": [],
+      "types": [
+        "type_optional:SendOptionalBodyRequest"
+      ],
       "subpackages": []
     }
   },

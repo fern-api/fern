@@ -14,7 +14,7 @@ service:
       response:
         type: string
         docs: Id of the created resource
-    
+
     sendOptionalTypedBody:
       method: POST
       path: /send-optional-typed-body
