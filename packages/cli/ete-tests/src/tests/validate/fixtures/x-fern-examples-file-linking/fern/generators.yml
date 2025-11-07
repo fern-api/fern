@@ -1,0 +1,4 @@
+api:
+  specs:
+    - openapi: openapi/openapi.yml
+groups: {}
