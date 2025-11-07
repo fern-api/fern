@@ -283,7 +283,7 @@ export function convertTypeReferenceExample({
     recursionContext?: RecursionContext;
 }): ExampleTypeReference {
     const ctx = recursionContext ?? { depth: 0, seenTypeIds: new Set() };
-    
+
     const { resolvedExample, file: fileContainingResolvedExample } = exampleResolver.resolveExampleOrThrow({
         example,
         file: fileContainingExample
@@ -459,16 +459,16 @@ export function convertTypeReferenceExample({
                     name: parsedReferenceToNamedType.name,
                     displayName: parsedReferenceToNamedType.displayName
                 };
-                
+
                 if (ctx.depth > MAX_EXAMPLE_RECURSION_DEPTH || ctx.seenTypeIds.has(parsedReferenceToNamedType.typeId)) {
                     return ExampleTypeReferenceShape.unknown(jsonExample);
                 }
-                
+
                 const nextContext: RecursionContext = {
                     depth: ctx.depth + 1,
                     seenTypeIds: new Set(ctx.seenTypeIds).add(parsedReferenceToNamedType.typeId)
                 };
-                
+
                 return ExampleTypeReferenceShape.named({
                     typeName,
                     shape: convertTypeExample({
