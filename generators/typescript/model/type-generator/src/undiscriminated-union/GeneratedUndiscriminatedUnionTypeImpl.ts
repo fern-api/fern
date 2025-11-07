@@ -1,5 +1,7 @@
 import {
+    ContainerType,
     ExampleTypeShape,
+    TypeReference,
     UndiscriminatedUnionMember,
     UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
@@ -11,6 +13,7 @@ import {
 } from "@fern-typescript/commons";
 import { BaseContext, GeneratedUndiscriminatedUnionType } from "@fern-typescript/contexts";
 import {
+    InterfaceDeclarationStructure,
     ModuleDeclarationKind,
     ModuleDeclarationStructure,
     StatementStructures,
@@ -31,7 +34,13 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
     public generateStatements(
         context: Context
     ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
-        const statements: StatementStructures[] = [this.generateTypeAlias(context)];
+        const statements: StatementStructures[] = [];
+        
+        const helperInterfaces = this.generateHelperInterfaces(context);
+        statements.push(...helperInterfaces);
+        
+        statements.push(this.generateTypeAlias(context));
+        
         const iModule = this.generateModule(context);
         if (iModule) {
             statements.push(iModule);
@@ -151,7 +160,7 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
                 this.shape.members.map((value) => {
                     return {
                         docs: value.docs,
-                        node: this.getTypeNode(context, value)
+                        node: this.getTypeNodeForMember(context, value)
                     };
                 })
             )
@@ -174,5 +183,103 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
         }
 
         return context.type.getGeneratedExample(example.singleUnionType).build(context, opts);
+    }
+
+    private generateHelperInterfaces(context: Context): InterfaceDeclarationStructure[] {
+        const interfaces: InterfaceDeclarationStructure[] = [];
+        const seenHelpers = new Set<string>();
+        
+        for (const member of this.shape.members) {
+            const helperInterface = this.generateHelperInterfaceForMember(context, member, seenHelpers);
+            if (helperInterface != null) {
+                interfaces.push(helperInterface);
+            }
+        }
+        
+        return interfaces;
+    }
+
+    private generateHelperInterfaceForMember(
+        context: Context,
+        member: UndiscriminatedUnionMember,
+        seenHelpers: Set<string>
+    ): InterfaceDeclarationStructure | undefined {
+        if (member.type.type !== "container") {
+            return undefined;
+        }
+
+        const container = member.type.container;
+
+        if (container.type === "list") {
+            const helperName = `${this.typeName}Array`;
+            if (seenHelpers.has(helperName)) {
+                return undefined;
+            }
+            seenHelpers.add(helperName);
+            
+            return {
+                kind: StructureKind.Interface,
+                name: helperName,
+                isExported: true,
+                extends: [
+                    (writer) => {
+                        writer.write("Array<");
+                        writer.write(this.getTypeNodeStringForContainer(context, container.list));
+                        writer.write(">");
+                    }
+                ]
+            };
+        } else if (container.type === "map") {
+            const helperName = `${this.typeName}Object`;
+            if (seenHelpers.has(helperName)) {
+                return undefined;
+            }
+            seenHelpers.add(helperName);
+            
+            return {
+                kind: StructureKind.Interface,
+                name: helperName,
+                isExported: true,
+                extends: [
+                    (writer) => {
+                        writer.write("Record<string, ");
+                        writer.write(this.getTypeNodeStringForContainer(context, container.valueType));
+                        writer.write(">");
+                    }
+                ]
+            };
+        }
+
+        return undefined;
+    }
+
+    private getTypeNodeStringForContainer(context: Context, typeRef: TypeReference): string {
+        if (typeRef.type === "named") {
+            const namedTypeDeclaration = context.type.getTypeDeclaration(typeRef);
+            if (namedTypeDeclaration.name.name.pascalCase.unsafeName === this.typeName) {
+                return this.typeName;
+            }
+        }
+        
+        const typeNode = context.type.getReferenceToType(typeRef).typeNode;
+        const printer = ts.createPrinter();
+        const sourceFile = ts.createSourceFile("temp.ts", "", ts.ScriptTarget.Latest, false, ts.ScriptKind.TS);
+        return printer.printNode(ts.EmitHint.Unspecified, typeNode, sourceFile);
+    }
+
+    private getTypeNodeForMember(context: Context, member: UndiscriminatedUnionMember): ts.TypeNode {
+        if (member.type.type !== "container") {
+            return this.getTypeNode(context, member);
+        }
+
+        const container = member.type.container;
+
+        if (container.type === "list") {
+            return ts.factory.createTypeReferenceNode(`${this.typeName}Array`);
+        } else if (container.type === "map") {
+            return ts.factory.createTypeReferenceNode(`${this.typeName}Object`);
+        }
+
+        return this.getTypeNode(context, member);
     }
 }
