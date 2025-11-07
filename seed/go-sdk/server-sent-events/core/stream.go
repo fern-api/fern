@@ -306,7 +306,8 @@ func (s *SseStreamReader) nextEvent() (*SseEvent, error) {
 }
 
 func (s *SseStreamReader) parseSseLine(_bytes []byte, event *SseEvent) {
-	if bytes.HasPrefix(_bytes, sseDataPrefix) {
+	// Try to parse with space first (standard format), then without space (lenient format)
+	if value, ok := s.tryParseField(_bytes, sseDataPrefix, sseDataPrefixNoSpace); ok {
 		if len(event.data) > 0 {
 			// Join multiple data: lines using the configured delimiter
 			// This allows customization of how multi-line data is concatenated:
@@ -316,14 +317,28 @@ func (s *SseStreamReader) parseSseLine(_bytes []byte, event *SseEvent) {
 			lineDelimiter := s.options.getLineDelimiter()
 			event.data = append(event.data, lineDelimiter...)
 		}
-		event.data = append(event.data, _bytes[len(sseDataPrefix):]...)
-	} else if bytes.HasPrefix(_bytes, sseIdPrefix) {
-		event.id = append(event.id, _bytes[len(sseIdPrefix):]...)
-	} else if bytes.HasPrefix(_bytes, sseEventPrefix) {
-		event.event = append(event.event, _bytes[len(sseEventPrefix):]...)
-	} else if bytes.HasPrefix(_bytes, sseRetryPrefix) {
-		event.retry = append(event.retry, _bytes[len(sseRetryPrefix):]...)
+		event.data = append(event.data, value...)
+	} else if value, ok := s.tryParseField(_bytes, sseIdPrefix, sseIdPrefixNoSpace); ok {
+		event.id = append(event.id, value...)
+	} else if value, ok := s.tryParseField(_bytes, sseEventPrefix, sseEventPrefixNoSpace); ok {
+		event.event = append(event.event, value...)
+	} else if value, ok := s.tryParseField(_bytes, sseRetryPrefix, sseRetryPrefixNoSpace); ok {
+		event.retry = append(event.retry, value...)
 	}
+}
+
+// tryParseField attempts to parse an SSE field with both standard (with space) and lenient (without space) formats.
+// This handles APIs that don't strictly follow the SSE specification by omitting the space after the colon.
+func (s *SseStreamReader) tryParseField(line []byte, prefixWithSpace []byte, prefixNoSpace []byte) ([]byte, bool) {
+	// Try standard format first (e.g., "data: {...}")
+	if bytes.HasPrefix(line, prefixWithSpace) {
+		return line[len(prefixWithSpace):], true
+	}
+	// Fall back to lenient format (e.g., "data:{...}")
+	if bytes.HasPrefix(line, prefixNoSpace) {
+		return line[len(prefixNoSpace):], true
+	}
+	return nil, false
 }
 
 func (event *SseEvent) size() int {
@@ -346,4 +361,10 @@ var (
 	sseDataPrefix  = []byte("data: ")
 	sseEventPrefix = []byte("event: ")
 	sseRetryPrefix = []byte("retry: ")
+
+	// Lenient prefixes without space for APIs that don't strictly follow SSE specification
+	sseIdPrefixNoSpace    = []byte("id:")
+	sseDataPrefixNoSpace  = []byte("data:")
+	sseEventPrefixNoSpace = []byte("event:")
+	sseRetryPrefixNoSpace = []byte("retry:")
 )
