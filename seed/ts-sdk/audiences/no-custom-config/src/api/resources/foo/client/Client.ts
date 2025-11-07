@@ -55,6 +55,7 @@ export class Foo {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
+            accept: "json",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             requestType: "json",
             body: _body,

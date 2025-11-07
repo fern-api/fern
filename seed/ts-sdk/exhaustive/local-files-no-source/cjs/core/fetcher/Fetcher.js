@@ -155,6 +155,15 @@ function getHeaders(args) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
         const newHeaders = {};
+        if (args.accept === "json") {
+            newHeaders.Accept = "application/json";
+        }
+        else if (args.accept != null) {
+            newHeaders.Accept = args.accept;
+        }
+        else {
+            newHeaders.Accept = "*/*";
+        }
         if (args.body !== undefined && args.contentType != null) {
             newHeaders["Content-Type"] = args.contentType;
         }

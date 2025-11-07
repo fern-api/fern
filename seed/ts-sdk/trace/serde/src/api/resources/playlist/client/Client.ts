@@ -76,6 +76,7 @@ export class Playlist {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
+            accept: "json",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             requestType: "json",
             body: serializers.PlaylistCreateRequest.jsonOrThrow(_body, {
@@ -196,6 +197,7 @@ export class Playlist {
             ),
             method: "GET",
             headers: _headers,
+            accept: "json",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -286,6 +288,7 @@ export class Playlist {
             ),
             method: "GET",
             headers: _headers,
+            accept: "json",
             queryParameters: requestOptions?.queryParams,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -400,6 +403,7 @@ export class Playlist {
             method: "PUT",
             headers: _headers,
             contentType: "application/json",
+            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body:

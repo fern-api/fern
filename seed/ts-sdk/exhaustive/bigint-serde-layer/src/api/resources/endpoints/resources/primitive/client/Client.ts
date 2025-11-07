@@ -51,6 +51,7 @@ export class Primitive {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
+            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnString.Request.jsonOrThrow(request, {
@@ -133,6 +134,7 @@ export class Primitive {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
+            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnInt.Request.jsonOrThrow(request, {
@@ -215,6 +217,7 @@ export class Primitive {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
+            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnLong.Request.jsonOrThrow(request, {
@@ -297,6 +300,7 @@ export class Primitive {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
+            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnDouble.Request.jsonOrThrow(request, {
@@ -379,6 +383,7 @@ export class Primitive {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
+            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnBool.Request.jsonOrThrow(request, {
@@ -461,6 +466,7 @@ export class Primitive {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
+            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnDatetime.Request.jsonOrThrow(request, {
@@ -543,6 +549,7 @@ export class Primitive {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
+            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnDate.Request.jsonOrThrow(request, {
@@ -625,6 +632,7 @@ export class Primitive {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
+            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnUuid.Request.jsonOrThrow(request, {
@@ -707,6 +715,7 @@ export class Primitive {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
+            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnBase64.Request.jsonOrThrow(request, {

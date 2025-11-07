@@ -60,6 +60,7 @@ export class Union {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
+            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,

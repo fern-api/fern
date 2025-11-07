@@ -1,7 +1,7 @@
 import { type DefaultBodyType, type HttpHandler, HttpResponse, type HttpResponseResolver, http } from "msw";
 
-import { url } from "../../core";
-import { toJson } from "../../core/json";
+import { url } from "../../typescript/src/test-packagePath/core";
+import { toJson } from "../../typescript/src/test-packagePath/core/json";
 import { withFormUrlEncoded } from "./withFormUrlEncoded";
 import { withHeaders } from "./withHeaders";
 import { withJson } from "./withJson";

@@ -1,6 +1,6 @@
 import { type HttpResponseResolver, passthrough } from "msw";
 
-import { fromJson, toJson } from "../../core/json";
+import { fromJson, toJson } from "../../typescript/src/test-packagePath/core/json";
 
 /**
  * Creates a request matcher that validates if the request JSON body exactly matches the expected object

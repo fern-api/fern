@@ -48,6 +48,7 @@ export class HttpMethods {
             ),
             method: "GET",
             headers: _headers,
+            accept: "json",
             queryParameters: requestOptions?.queryParams,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -127,6 +128,7 @@ export class HttpMethods {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
+            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
@@ -214,6 +216,7 @@ export class HttpMethods {
             method: "PUT",
             headers: _headers,
             contentType: "application/json",
+            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
@@ -315,6 +318,7 @@ export class HttpMethods {
             method: "PATCH",
             headers: _headers,
             contentType: "application/json",
+            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
@@ -393,6 +397,7 @@ export class HttpMethods {
             ),
             method: "DELETE",
             headers: _headers,
+            accept: "json",
             queryParameters: requestOptions?.queryParams,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,

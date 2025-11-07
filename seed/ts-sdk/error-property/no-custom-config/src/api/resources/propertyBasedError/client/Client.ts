@@ -45,7 +45,7 @@ export class PropertyBasedError {
             ),
             method: "GET",
             headers: _headers,
-            accepts: "json",
+            accept: "json",
             queryParameters: requestOptions?.queryParams,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,

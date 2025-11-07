@@ -40,7 +40,7 @@ export class Dummy {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            accepts: "text/event-stream",
+            accept: "text/event-stream",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,

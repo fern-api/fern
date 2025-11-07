@@ -1,6 +1,6 @@
 import { setupServer } from "msw/node";
 
-import { fromJson, toJson } from "../../core/json";
+import { fromJson, toJson } from "../../typescript/src/test-packagePath/core/json";
 import { MockServer } from "./MockServer";
 import { randomBaseUrl } from "./randomBaseUrl";
 

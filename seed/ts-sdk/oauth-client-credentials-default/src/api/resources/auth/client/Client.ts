@@ -56,6 +56,7 @@ export class Auth {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
+            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: { ...request, grant_type: "client_credentials" },
