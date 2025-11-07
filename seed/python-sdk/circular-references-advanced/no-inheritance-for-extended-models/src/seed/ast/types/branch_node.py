@@ -23,4 +23,4 @@ class BranchNode(UniversalBaseModel):
 
 from .node import Node  # noqa: E402, I001
 
-update_forward_refs(BranchNode, BranchNode="BranchNode")
+update_forward_refs(BranchNode, BranchNode=BranchNode)
