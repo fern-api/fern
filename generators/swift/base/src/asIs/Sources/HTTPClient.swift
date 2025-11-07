@@ -4,10 +4,10 @@ final class HTTPClient: Sendable {
     private let clientConfig: ClientConfig
     private let jsonEncoder = Serde.jsonEncoder
     private let jsonDecoder = Serde.jsonDecoder
-    
+
     private static let initialRetryDelay: TimeInterval = 1.0  // 1 second
-    private static let maxRetryDelay: TimeInterval = 60.0     // 60 seconds
-    private static let jitterFactor: Double = 0.2             // 20% jitter
+    private static let maxRetryDelay: TimeInterval = 60.0  // 60 seconds
+    private static let jitterFactor: Double = 0.2  // 20% jitter
 
     init(config: ClientConfig) {
         self.clientConfig = config
@@ -68,7 +68,10 @@ final class HTTPClient: Sendable {
             requestOptions: requestOptions
         )
 
-        let (data, _) = try await executeRequestWithURLSession(request, requestOptions: requestOptions)
+        let (data, _) = try await executeRequestWithURLSession(
+            request,
+            requestOptions: requestOptions
+        )
 
         if responseType == Data.self {
             if let data = data as? T {
@@ -198,6 +201,13 @@ final class HTTPClient: Sendable {
         for (key, value) in requestOptions?.additionalHeaders ?? [:] {
             headers[key] = value
         }
+        // Ensure Stub-ID header is explicitly set on the request for Linux where
+        // URLProtocol may not see httpAdditionalHeaders at interception time.
+        if let additional = clientConfig.urlSession.configuration.httpAdditionalHeaders,
+            let stubHeader = additional["Stub-ID"] as? String
+        {
+            headers["Stub-ID"] = stubHeader
+        }
         return headers
     }
 
@@ -254,7 +264,7 @@ final class HTTPClient: Sendable {
     ) async throws -> (Data, String?) {
         let maxRetries = requestOptions?.maxRetries ?? clientConfig.maxRetries
         var lastResponse: (Data, HTTPURLResponse)?
-        
+
         for attempt in 0...maxRetries {
             do {
                 let (data, response) = try await clientConfig.urlSession.data(for: request)
@@ -310,17 +320,17 @@ final class HTTPClient: Sendable {
         }
         throw ClientError.invalidResponse
     }
-    
+
     private func shouldRetry(statusCode: Int) -> Bool {
         return statusCode == 408 || statusCode == 429 || statusCode >= 500
     }
-    
+
     private func getRetryDelay(response: HTTPURLResponse, retryAttempt: Int) -> TimeInterval {
         if let retryAfter = response.value(forHTTPHeaderField: "Retry-After") {
             if let seconds = Double(retryAfter), seconds > 0 {
                 return min(seconds, Self.maxRetryDelay)
             }
-            
+
             if let date = parseHTTPDate(retryAfter) {
                 let delay = date.timeIntervalSinceNow
                 if delay > 0 {
@@ -328,7 +338,7 @@ final class HTTPClient: Sendable {
                 }
             }
         }
-        
+
         if let rateLimitReset = response.value(forHTTPHeaderField: "X-RateLimit-Reset") {
             if let resetTimeSeconds = Double(rateLimitReset) {
                 let resetDate = Date(timeIntervalSince1970: resetTimeSeconds)
@@ -339,12 +349,12 @@ final class HTTPClient: Sendable {
                 }
             }
         }
-        
+
         let baseDelay = Self.initialRetryDelay * pow(2.0, Double(retryAttempt))
         let cappedDelay = min(baseDelay, Self.maxRetryDelay)
         return addSymmetricJitter(to: cappedDelay)
     }
-    
+
     private func parseHTTPDate(_ dateString: String) -> Date? {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -352,14 +362,15 @@ final class HTTPClient: Sendable {
         formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
         return formatter.date(from: dateString)
     }
-    
+
     private func addPositiveJitter(to delay: TimeInterval) -> TimeInterval {
         let jitterMultiplier = 1.0 + Double.random(in: 0...Self.jitterFactor)
         return delay * jitterMultiplier
     }
-    
+
     private func addSymmetricJitter(to delay: TimeInterval) -> TimeInterval {
-        let jitterMultiplier = 1.0 + Double.random(in: -Self.jitterFactor/2...Self.jitterFactor/2)
+        let jitterMultiplier =
+            1.0 + Double.random(in: -Self.jitterFactor / 2...Self.jitterFactor / 2)
         return delay * jitterMultiplier
     }
 
