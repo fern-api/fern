@@ -281,16 +281,10 @@ final class HTTPClient: Sendable {
                     continue
                 }
 
-                // Handle error responses (no more retries)
-                try handleErrorResponse(
+                throw makeErrorFromResponse(
                     statusCode: httpResponse.statusCode,
                     data: data
                 )
-
-                // This should never be reached, but satisfy the compiler
-                let contentType = httpResponse.value(forHTTPHeaderField: "Content-Type")
-                return (data, contentType)
-
             } catch {
                 if attempt >= maxRetries || error is ClientError {
                     if error is ClientError {
@@ -306,11 +300,8 @@ final class HTTPClient: Sendable {
             }
         }
 
-        // This should never be reached, but satisfy the compiler
         if let (data, httpResponse) = lastResponse {
-            try handleErrorResponse(statusCode: httpResponse.statusCode, data: data)
-            let contentType = httpResponse.value(forHTTPHeaderField: "Content-Type")
-            return (data, contentType)
+            throw makeErrorFromResponse(statusCode: httpResponse.statusCode, data: data)
         }
         throw ClientError.invalidResponse
     }
@@ -368,24 +359,23 @@ final class HTTPClient: Sendable {
         return delay * jitterMultiplier
     }
 
-    private func handleErrorResponse(statusCode: Int, data: Data) throws {
+    private func makeErrorFromResponse(statusCode: Int, data: Data) -> ClientError {
         let errorResponse = parseErrorResponse(statusCode: statusCode, from: data)
-
         switch statusCode {
         case 400:
-            throw ClientError.badRequest(errorResponse)
+            return ClientError.badRequest(errorResponse)
         case 401:
-            throw ClientError.unauthorized(errorResponse)
+            return ClientError.unauthorized(errorResponse)
         case 403:
-            throw ClientError.forbidden(errorResponse)
+            return ClientError.forbidden(errorResponse)
         case 404:
-            throw ClientError.notFound(errorResponse)
+            return ClientError.notFound(errorResponse)
         case 422:
-            throw ClientError.validationError(errorResponse)
+            return ClientError.validationError(errorResponse)
         case 500...599:
-            throw ClientError.serverError(errorResponse)
+            return ClientError.serverError(errorResponse)
         default:
-            throw ClientError.httpError(statusCode: statusCode, response: errorResponse)
+            return ClientError.httpError(statusCode: statusCode, response: errorResponse)
         }
     }
 
