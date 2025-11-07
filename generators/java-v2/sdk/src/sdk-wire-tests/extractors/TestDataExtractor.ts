@@ -3,7 +3,8 @@ import {
     ExampleRequestBody,
     ExampleResponse,
     ExampleTypeReference,
-    HttpEndpoint
+    HttpEndpoint,
+    TypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
@@ -42,11 +43,13 @@ export class WireTestDataExtractor {
     }
 
     private extractTestExample(example: ExampleEndpointCall, endpoint: HttpEndpoint): WireTestExample | undefined {
+        const requestBody = this.extractRequestBody(example.request, endpoint);
+
         return {
             id: example.id || `${endpoint.id}-example`,
             name: example.name?.originalName,
             request: {
-                body: this.extractRequestBody(example.request),
+                body: requestBody,
                 headers: this.extractHeaders(example),
                 queryParams: this.extractQueryParams(example),
                 pathParams: this.extractPathParams(example)
@@ -58,31 +61,114 @@ export class WireTestDataExtractor {
         };
     }
 
-    private extractRequestBody(request: ExampleRequestBody | undefined): unknown | undefined {
+    private extractRequestBody(request: ExampleRequestBody | undefined, endpoint: HttpEndpoint): unknown | undefined {
         if (!request) {
             return undefined;
         }
 
+        let rawBody: unknown | undefined;
+
         if ("jsonExample" in request && request.jsonExample !== undefined) {
-            return request.jsonExample;
+            rawBody = request.jsonExample;
+        } else {
+            // Fallback for inlined request bodies that may not have a direct jsonExample
+            rawBody = request._visit({
+                inlinedRequestBody: (value) => {
+                    const result: Record<string, unknown> = {};
+                    value.properties.forEach((p) => {
+                        result[p.name.wireValue] = this.createRawJsonExample(p.value);
+                    });
+                    return result;
+                },
+                reference: (value) => {
+                    return this.createRawJsonExample(value);
+                },
+                _other: () => {
+                    return undefined;
+                }
+            });
         }
 
-        // Fallback for inlined request bodies that may not have a direct jsonExample
-        return request._visit({
-            inlinedRequestBody: (value) => {
-                const result: Record<string, unknown> = {};
-                value.properties.forEach((p) => {
-                    result[p.name.wireValue] = this.createRawJsonExample(p.value);
-                });
-                return result;
-            },
-            reference: (value) => {
-                return this.createRawJsonExample(value);
-            },
-            _other: () => {
-                return undefined;
+        return this.pruneUnionBaseProperties(rawBody, endpoint);
+    }
+
+    /**
+     * Prunes base properties from union types in the request body.
+     * The Java generator does not support base properties on unions, so we need to
+     * remove them from expected JSON to match the actual SDK output.
+     */
+    private pruneUnionBaseProperties(body: unknown, endpoint: HttpEndpoint): unknown {
+        if (!body || typeof body !== "object") {
+            return body;
+        }
+
+        const requestBody = endpoint.requestBody;
+        if (!requestBody) {
+            return body;
+        }
+
+        if (requestBody.type === "reference") {
+            const typeReference = requestBody.requestBodyType;
+
+            if (typeReference.type === "named") {
+                const typeId = typeReference.typeId;
+                const typeDecl = this.context.ir.types[typeId];
+
+                if (typeDecl && typeDecl.shape.type === "union") {
+                    return this.pruneBasePropertiesFromUnion(body, typeDecl);
+                }
+            } else if (typeReference.type === "container" && typeReference.container.type === "list") {
+                const listItemType = typeReference.container.list;
+
+                if (listItemType.type === "named") {
+                    const typeId = listItemType.typeId;
+                    const typeDecl = this.context.ir.types[typeId];
+
+                    if (typeDecl && typeDecl.shape.type === "union") {
+                        return this.pruneBasePropertiesFromUnion(body, typeDecl);
+                    }
+                }
             }
+        }
+
+        return body;
+    }
+
+    /**
+     * Removes base properties from a union type's JSON representation.
+     * Also handles arrays of unions (e.g., list<BigUnion>).
+     */
+    private pruneBasePropertiesFromUnion(body: unknown, typeDecl: TypeDeclaration): unknown {
+        if (!body) {
+            return body;
+        }
+
+        if (Array.isArray(body)) {
+            return body.map((item) => this.pruneBasePropertiesFromUnion(item, typeDecl));
+        }
+
+        if (typeof body !== "object" || body === null) {
+            return body;
+        }
+
+        const unionShape = typeDecl.shape;
+        if (unionShape.type !== "union") {
+            return body;
+        }
+
+        const basePropertyWireNames = new Set<string>();
+        unionShape.baseProperties.forEach((prop) => {
+            basePropertyWireNames.add(prop.name.wireValue);
         });
+
+        const prunedBody: Record<string, unknown> = {};
+        for (const [key, value] of Object.entries(body as Record<string, unknown>)) {
+            if (!basePropertyWireNames.has(key)) {
+                prunedBody[key] = value;
+            }
+        }
+
+        return prunedBody;
     }
 
     private extractResponseBody(response: ExampleResponse | undefined): unknown | undefined {
