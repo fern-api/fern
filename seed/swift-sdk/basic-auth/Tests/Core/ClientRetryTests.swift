@@ -23,7 +23,6 @@ import Testing
 
         let response = try await client.basicAuth.getWithBasicAuth()
 
-
         try #require(response == true)
         try #require(stub.getRequestCount() == 3)
     }
@@ -47,7 +46,6 @@ import Testing
         )
 
         let response = try await client.basicAuth.getWithBasicAuth()
-
 
         try #require(response == true)
         try #require(stub.getRequestCount() == 3)
@@ -73,7 +71,6 @@ import Testing
 
         let response = try await client.basicAuth.getWithBasicAuth()
 
-
         try #require(response == true)
         try #require(stub.getRequestCount() == 3)
     }
@@ -97,7 +94,6 @@ import Testing
 
         let response = try await client.basicAuth.getWithBasicAuth()
 
-
         try #require(response == true)
         try #require(stub.getRequestCount() == 2)
     }
@@ -117,7 +113,6 @@ import Testing
             password: "<password>",
             urlSession: stub.urlSession
         )
-
 
         do {
             _ = try await client.basicAuth.getWithBasicAuth()
@@ -144,7 +139,6 @@ import Testing
             urlSession: stub.urlSession
         )
 
-
         do {
             _ = try await client.basicAuth.getWithBasicAuth()
 
@@ -169,7 +163,6 @@ import Testing
             password: "<password>",
             urlSession: stub.urlSession
         )
-
 
         do {
         _ = try await client.basicAuth.getWithBasicAuth()
@@ -199,7 +192,6 @@ import Testing
             password: "<password>",
             urlSession: stub.urlSession
         )
-
 
         let startTime = Date()
         let response = try await client.basicAuth.getWithBasicAuth()
@@ -239,7 +231,6 @@ import Testing
             urlSession: stub.urlSession
         )
 
-
         let startTime = Date()
         let response = try await client.basicAuth.getWithBasicAuth()
 
@@ -273,7 +264,6 @@ import Testing
             password: "<password>",
             urlSession: stub.urlSession
         )
-
 
         let startTime = Date()
         let response = try await client.basicAuth.getWithBasicAuth()
@@ -323,7 +313,6 @@ import Testing
 
         let response = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(maxRetries: 5))
 
-
         try #require(response == true)
         try #require(stub.getRequestCount() == 6)
     }
@@ -340,7 +329,6 @@ import Testing
             password: "<password>",
             urlSession: stub.urlSession
         )
-
 
         do {
             _ = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(maxRetries: 0))
@@ -368,7 +356,6 @@ import Testing
         )
 
         let response = try await client.basicAuth.getWithBasicAuth()
-
 
         try #require(response == true)
         try #require(stub.getRequestCount() == 1)

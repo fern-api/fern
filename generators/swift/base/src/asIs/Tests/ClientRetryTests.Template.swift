@@ -16,7 +16,6 @@ import Testing
 
 <%= clientDeclaration %>
 <%= endpointCall %>
-
         try #require(response == true)
         try #require(stub.getRequestCount() == 3)
     }
@@ -34,7 +33,6 @@ import Testing
 
 <%= clientDeclaration %>
 <%= endpointCall %>
-
         try #require(response == true)
         try #require(stub.getRequestCount() == 3)
     }
@@ -52,7 +50,6 @@ import Testing
 
 <%= clientDeclaration %>
 <%= endpointCall %>
-
         try #require(response == true)
         try #require(stub.getRequestCount() == 3)
     }
@@ -69,7 +66,6 @@ import Testing
 
 <%= clientDeclaration %>
 <%= endpointCall %>
-
         try #require(response == true)
         try #require(stub.getRequestCount() == 2)
     }
@@ -84,7 +80,6 @@ import Testing
         ])
 
 <%= clientDeclaration %>
-
         do {
 <%= endpointCall400BadRequest %>
             Issue.record("Expected error to be thrown")
@@ -103,7 +98,6 @@ import Testing
         ])
 
 <%= clientDeclaration %>
-
         do {
 <%= endpointCall404NotFound %>
             Issue.record("Expected error to be thrown")
@@ -122,7 +116,6 @@ import Testing
         ])
 
 <%= clientDeclaration %>
-
         do {
 <%= endpointCallMaxRetriesExhausted %>
             Issue.record("Expected error to be thrown")
@@ -145,7 +138,6 @@ import Testing
         ])
 
 <%= clientDeclaration %>
-
         let startTime = Date()
 <%= endpointCall %>
         let elapsed = Date().timeIntervalSince(startTime)
@@ -177,7 +169,6 @@ import Testing
         ])
 
 <%= clientDeclaration %>
-
         let startTime = Date()
 <%= endpointCall %>
         let elapsed = Date().timeIntervalSince(startTime)
@@ -205,7 +196,6 @@ import Testing
         ])
 
 <%= clientDeclaration %>
-
         let startTime = Date()
 <%= endpointCall %>
         let elapsed = Date().timeIntervalSince(startTime)
@@ -246,7 +236,6 @@ import Testing
 
 <%= clientDeclaration %>
 <%= endpointCallMaxRetries5 %>
-
         try #require(response == true)
         try #require(stub.getRequestCount() == 6)
     }
@@ -258,7 +247,6 @@ import Testing
         ])
 
 <%= clientDeclaration %>
-
         do {
 <%= endpointCallMaxRetriesZero %>
             Issue.record("Expected error to be thrown")
@@ -278,7 +266,6 @@ import Testing
 
 <%= clientDeclaration %>
 <%= endpointCall %>
-
         try #require(response == true)
         try #require(stub.getRequestCount() == 1)
     }

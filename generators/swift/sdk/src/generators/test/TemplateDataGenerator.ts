@@ -122,16 +122,6 @@ export class TemplateDataGenerator {
         });
     }
 
-    private generateEndpointMethodCallStatement(
-        dynamicEndpoint: dynamic.Endpoint,
-        dynamicEndpointExample: dynamic.EndpointExample
-    ) {
-        return swift.Statement.constantDeclaration({
-            unsafeName: "response",
-            value: this.generateEndpointMethodCallExpression(dynamicEndpoint, dynamicEndpointExample)
-        });
-    }
-
     private generateEndpointMethodCallExpression(
         dynamicEndpoint: dynamic.Endpoint,
         dynamicEndpointExample: dynamic.EndpointExample
