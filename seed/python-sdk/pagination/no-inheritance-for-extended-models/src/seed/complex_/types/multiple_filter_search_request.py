@@ -7,6 +7,8 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .multiple_filter_search_request_operator import MultipleFilterSearchRequestOperator
+from .single_filter_search_request import SingleFilterSearchRequest
+from .single_filter_search_request_operator import SingleFilterSearchRequestOperator
 
 
 class MultipleFilterSearchRequest(UniversalBaseModel):
@@ -25,4 +27,11 @@ class MultipleFilterSearchRequest(UniversalBaseModel):
 
 from .multiple_filter_search_request_value import MultipleFilterSearchRequestValue  # noqa: E402, I001
 
-update_forward_refs(MultipleFilterSearchRequest)
+update_forward_refs(
+    MultipleFilterSearchRequest,
+    SingleFilterSearchRequestOperator=SingleFilterSearchRequestOperator,
+    MultipleFilterSearchRequest=MultipleFilterSearchRequest,
+    MultipleFilterSearchRequestValue=MultipleFilterSearchRequestValue,
+    SingleFilterSearchRequest=SingleFilterSearchRequest,
+    MultipleFilterSearchRequestOperator=MultipleFilterSearchRequestOperator,
+)

@@ -51,6 +51,7 @@ class BigEntity(UniversalBaseModel):
 
 
 from .node import Node  # noqa: E402, I001
+from .tree import Tree  # noqa: E402, I001
 from .directory import Directory  # noqa: E402, I001
 
-update_forward_refs(BigEntity)
+update_forward_refs(BigEntity, Node=Node, Tree=Tree, Directory=Directory)
