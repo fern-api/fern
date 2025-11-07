@@ -266,7 +266,6 @@ scripts:
     commands:
       - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava spotlessCheck
 allowedFailures:
-  - api-wide-base-path
   - alias-extends
   - bytes-download
   - bytes-upload
@@ -309,9 +308,7 @@ allowedFailures:
   - oauth-client-credentials-default
   - oauth-client-credentials-environment-variables
   - oauth-client-credentials-nested-root
-  - package-yml
   - pagination-custom
-  - path-parameters
   - query-parameters
   - streaming
 
