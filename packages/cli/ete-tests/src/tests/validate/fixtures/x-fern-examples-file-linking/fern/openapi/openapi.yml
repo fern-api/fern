@@ -1,0 +1,48 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Test API for x-fern-examples file-linking
+servers:
+  - url: https://api.example.com
+paths:
+  /pets:
+    get:
+      operationId: listPets
+      summary: List all pets
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: A paged array of pets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+      x-fern-examples:
+        - name: List pets example
+          request:
+            limit: 10
+          response:
+            body:
+              - id: 1
+                name: Fluffy
+              - id: 2
+                name: Spot
+          code-samples:
+            - language: php
+              name: List pets with PHP
+              code:
+                $ref: ../../code_samples/example.php
