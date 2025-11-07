@@ -18,7 +18,7 @@ paths:
             type: integer
             format: int32
       responses:
-        '200':
+        "200":
           description: A paged array of pets
           content:
             application/json:
