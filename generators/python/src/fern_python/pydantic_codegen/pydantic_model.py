@@ -413,7 +413,7 @@ class PydanticModel:
             self._class_declaration.add_expression(AST.Expression(AST.CodeWriter(write_extras)))
 
     def update_forward_refs(self) -> None:
-        ghost_refs_kwargs = []
+        ghost_refs_kwargs: list[tuple[str, AST.Expression]] = []
         for ghost_ref in self._class_declaration.get_ghost_references():
             named_import = get_named_import_or_throw(ghost_ref)
             clean_ref = AST.Reference(
@@ -425,14 +425,14 @@ class PydanticModel:
                 has_been_dynamically_imported=ghost_ref.has_been_dynamically_imported,
                 require_postponed_annotations=ghost_ref.require_postponed_annotations,
             )
-            ghost_refs_kwargs.append((named_import, AST.ReferenceNode(clean_ref)))
+            ghost_refs_kwargs.append((named_import, AST.Expression(AST.ReferenceNode(clean_ref))))
 
         self._source_file.add_footer_expression(
             AST.Expression(
                 AST.FunctionInvocation(
                     function_definition=self._update_forward_ref_function_reference,
-                    args=[AST.ReferenceNode(self._local_class_reference)],
-                    kwargs=ghost_refs_kwargs if len(ghost_refs_kwargs) > 0 else None,
+                    args=[AST.Expression(AST.ReferenceNode(self._local_class_reference))],
+                    kwargs=ghost_refs_kwargs,
                 )
             )
         )
@@ -447,10 +447,10 @@ class PydanticModel:
             has_been_dynamically_imported=self._local_class_reference.has_been_dynamically_imported,
             require_postponed_annotations=self._local_class_reference.require_postponed_annotations,
         )
-        ghost_refs_kwargs = [
+        ghost_refs_kwargs: list[tuple[str, AST.Expression]] = [
             (
                 get_named_import_or_throw(self._local_class_reference),
-                AST.ReferenceNode(clean_local_ref),
+                AST.Expression(AST.ReferenceNode(clean_local_ref)),
             )
         ]
         for ghost_ref in self._class_declaration.get_ghost_references():
@@ -464,13 +464,13 @@ class PydanticModel:
                 has_been_dynamically_imported=ghost_ref.has_been_dynamically_imported,
                 require_postponed_annotations=ghost_ref.require_postponed_annotations,
             )
-            ghost_refs_kwargs.append((named_import, AST.ReferenceNode(clean_ref)))
+            ghost_refs_kwargs.append((named_import, AST.Expression(AST.ReferenceNode(clean_ref))))
 
         self._source_file.add_footer_expression(
             AST.Expression(
                 AST.FunctionInvocation(
                     function_definition=self._update_forward_ref_function_reference,
-                    args=[AST.ReferenceNode(given_model)],
+                    args=[AST.Expression(AST.ReferenceNode(given_model))],
                     kwargs=ghost_refs_kwargs,
                 )
             )
