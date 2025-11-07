@@ -413,11 +413,20 @@ class PydanticModel:
             self._class_declaration.add_expression(AST.Expression(AST.CodeWriter(write_extras)))
 
     def update_forward_refs(self) -> None:
+        ghost_refs_kwargs = []
+        for ghost_ref in self._class_declaration.get_ghost_references():
+            try:
+                named_import = get_named_import_or_throw(ghost_ref)
+                ghost_refs_kwargs.append((named_import, AST.Expression(ghost_ref)))
+            except RuntimeError:
+                pass
+        
         self._source_file.add_footer_expression(
             AST.Expression(
                 AST.FunctionInvocation(
                     function_definition=self._update_forward_ref_function_reference,
                     args=[AST.Expression(self._local_class_reference)],
+                    kwargs=ghost_refs_kwargs if len(ghost_refs_kwargs) > 0 else None,
                 )
             )
         )

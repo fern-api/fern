@@ -128,6 +128,9 @@ class ClassDeclaration(AstNode):
     def add_ghost_reference(self, reference: Reference) -> None:
         self.ghost_references.add(reference)
 
+    def get_ghost_references(self) -> OrderedSet[Reference]:
+        return self.ghost_references
+
     def get_metadata(self) -> AstNodeMetadata:
         metadata = AstNodeMetadata()
         metadata.declarations.add(self.name)
