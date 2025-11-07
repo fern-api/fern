@@ -67,6 +67,13 @@ export declare namespace GeneratedRequestWrapperImpl {
 
 const EXAMPLE_PREFIX = "    ";
 
+interface PropertyNameMapping {
+    propertyName: string;
+    safeName: string;
+    wireKey: string;
+    location: "path" | "query" | "header" | "body" | "file";
+}
+
 export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private service: HttpService;
     private endpoint: HttpEndpoint;
@@ -79,6 +86,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private _shouldInlinePathParameters: boolean;
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly flattenRequestParameters: boolean;
+    private propertyNameMappings: Map<string, PropertyNameMapping> | undefined;
 
     constructor({
         service,
@@ -108,6 +116,170 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     public shouldInlinePathParameters(): boolean {
         return this._shouldInlinePathParameters;
+    }
+
+    private getPropertyNameMappings(): Map<string, PropertyNameMapping> {
+        if (this.propertyNameMappings != null) {
+            return this.propertyNameMappings;
+        }
+
+        interface PropertyCandidate {
+            basePropertyName: string;
+            safeName: string;
+            wireKey: string;
+            location: "path" | "query" | "header" | "body" | "file";
+            originalParameter: PathParameter | QueryParameter | HttpHeader | InlinedRequestBodyProperty | FileProperty;
+        }
+
+        const candidates: PropertyCandidate[] = [];
+
+        for (const pathParameter of this.getPathParamsForRequestWrapper()) {
+            const baseNames = this.getBasePropertyNameOfPathParameterFromName(pathParameter.name);
+            candidates.push({
+                basePropertyName: baseNames.propertyName,
+                safeName: baseNames.safeName,
+                wireKey: pathParameter.name.originalName,
+                location: "path",
+                originalParameter: pathParameter
+            });
+        }
+
+        for (const queryParameter of this.getAllQueryParameters()) {
+            const baseNames = this.getBasePropertyNameOfQueryParameterFromName(queryParameter.name);
+            candidates.push({
+                basePropertyName: baseNames.propertyName,
+                safeName: baseNames.safeName,
+                wireKey: queryParameter.name.wireValue,
+                location: "query",
+                originalParameter: queryParameter
+            });
+        }
+
+        for (const header of [...this.service.headers, ...this.endpoint.headers]) {
+            const baseNames = this.getBasePropertyNameOfNonLiteralHeaderFromName(header.name);
+            candidates.push({
+                basePropertyName: baseNames.propertyName,
+                safeName: baseNames.safeName,
+                wireKey: header.name.wireValue,
+                location: "header",
+                originalParameter: header
+            });
+        }
+
+        if (this.inlineFileProperties) {
+            for (const fileProperty of this.getAllFileUploadProperties()) {
+                const baseNames = this.getBasePropertyNameOfFileParameterFromName(fileProperty.key);
+                candidates.push({
+                    basePropertyName: baseNames.propertyName,
+                    safeName: baseNames.safeName,
+                    wireKey: fileProperty.key.wireValue,
+                    location: "file",
+                    originalParameter: fileProperty
+                });
+            }
+        }
+
+        const requestBody = this.endpoint.requestBody;
+        if (requestBody != null) {
+            HttpRequestBody._visit(requestBody, {
+                inlinedRequestBody: (inlinedRequestBody) => {
+                    for (const property of inlinedRequestBody.properties) {
+                        const baseNames = this.getBaseInlinedRequestBodyPropertyKeyFromName(property.name);
+                        candidates.push({
+                            basePropertyName: baseNames.propertyName,
+                            safeName: baseNames.safeName,
+                            wireKey: property.name.wireValue,
+                            location: "body",
+                            originalParameter: property
+                        });
+                    }
+                },
+                fileUpload: (fileUploadRequest) => {
+                    for (const property of fileUploadRequest.properties) {
+                        FileUploadRequestProperty._visit(property, {
+                            bodyProperty: (inlinedProperty) => {
+                                const baseNames = this.getBaseInlinedRequestBodyPropertyKeyFromName(
+                                    inlinedProperty.name
+                                );
+                                candidates.push({
+                                    basePropertyName: baseNames.propertyName,
+                                    safeName: baseNames.safeName,
+                                    wireKey: inlinedProperty.name.wireValue,
+                                    location: "body",
+                                    originalParameter: inlinedProperty
+                                });
+                            },
+                            file: noop,
+                            _other: noop
+                        });
+                    }
+                },
+                reference: noop,
+                bytes: noop,
+                _other: noop
+            });
+        }
+
+        candidates.sort((a, b) => {
+            if (a.basePropertyName !== b.basePropertyName) {
+                return a.basePropertyName.localeCompare(b.basePropertyName);
+            }
+            const locationPrecedence = { path: 0, header: 1, query: 2, body: 3, file: 4 };
+            if (locationPrecedence[a.location] !== locationPrecedence[b.location]) {
+                return locationPrecedence[a.location] - locationPrecedence[b.location];
+            }
+            return a.wireKey.localeCompare(b.wireKey);
+        });
+
+        // Resolve collisions by renaming lower-precedence properties
+        const mappings = new Map<string, PropertyNameMapping>();
+        const usedPropertyNames = new Set<string>();
+
+        for (const candidate of candidates) {
+            let resolvedPropertyName = candidate.basePropertyName;
+            let resolvedSafeName = candidate.safeName;
+
+            if (usedPropertyNames.has(resolvedPropertyName)) {
+                const locationSuffix = this.getLocationSuffix(candidate.location);
+                resolvedPropertyName = `${candidate.basePropertyName}${locationSuffix}`;
+                resolvedSafeName = `${candidate.safeName}${locationSuffix}`;
+
+                let counter = 2;
+                while (usedPropertyNames.has(resolvedPropertyName)) {
+                    resolvedPropertyName = `${candidate.basePropertyName}${locationSuffix}${counter}`;
+                    resolvedSafeName = `${candidate.safeName}${locationSuffix}${counter}`;
+                    counter++;
+                }
+            }
+
+            usedPropertyNames.add(resolvedPropertyName);
+
+            const mappingKey = `${candidate.location}:${candidate.wireKey}`;
+            mappings.set(mappingKey, {
+                propertyName: resolvedPropertyName,
+                safeName: resolvedSafeName,
+                wireKey: candidate.wireKey,
+                location: candidate.location
+            });
+        }
+
+        this.propertyNameMappings = mappings;
+        return mappings;
+    }
+
+    private getLocationSuffix(location: "path" | "query" | "header" | "body" | "file"): string {
+        switch (location) {
+            case "path":
+                return "Path";
+            case "query":
+                return "Query";
+            case "header":
+                return "Header";
+            case "body":
+                return "Body";
+            case "file":
+                return "Form";
+        }
     }
 
     private getPathParamsForRequestWrapper(): PathParameter[] {
@@ -587,6 +759,21 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public getInlinedRequestBodyPropertyKeyFromName(name: NameAndWireValue): RequestWrapperBodyProperty {
+        const mappings = this.getPropertyNameMappings();
+        const mappingKey = `body:${name.wireValue}`;
+        const mapping = mappings.get(mappingKey);
+
+        if (mapping != null) {
+            return {
+                safeName: mapping.safeName,
+                propertyName: mapping.propertyName
+            };
+        }
+
+        return this.getBaseInlinedRequestBodyPropertyKeyFromName(name);
+    }
+
+    private getBaseInlinedRequestBodyPropertyKeyFromName(name: NameAndWireValue): RequestWrapperBodyProperty {
         return {
             propertyName:
                 this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue,
@@ -686,6 +873,21 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public getPropertyNameOfFileParameterFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
+        const mappings = this.getPropertyNameMappings();
+        const mappingKey = `file:${name.wireValue}`;
+        const mapping = mappings.get(mappingKey);
+
+        if (mapping != null) {
+            return {
+                safeName: mapping.safeName,
+                propertyName: mapping.propertyName
+            };
+        }
+
+        return this.getBasePropertyNameOfFileParameterFromName(name);
+    }
+
+    private getBasePropertyNameOfFileParameterFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
         return {
             safeName: name.name.camelCase.safeName,
             propertyName:
@@ -698,6 +900,21 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public getPropertyNameOfQueryParameterFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
+        const mappings = this.getPropertyNameMappings();
+        const mappingKey = `query:${name.wireValue}`;
+        const mapping = mappings.get(mappingKey);
+
+        if (mapping != null) {
+            return {
+                safeName: mapping.safeName,
+                propertyName: mapping.propertyName
+            };
+        }
+
+        return this.getBasePropertyNameOfQueryParameterFromName(name);
+    }
+
+    private getBasePropertyNameOfQueryParameterFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
         return {
             safeName: name.name.camelCase.safeName,
             propertyName:
@@ -710,6 +927,21 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public getPropertyNameOfPathParameterFromName(name: Name): RequestWrapperNonBodyProperty {
+        const mappings = this.getPropertyNameMappings();
+        const mappingKey = `path:${name.originalName}`;
+        const mapping = mappings.get(mappingKey);
+
+        if (mapping != null) {
+            return {
+                safeName: mapping.safeName,
+                propertyName: mapping.propertyName
+            };
+        }
+
+        return this.getBasePropertyNameOfPathParameterFromName(name);
+    }
+
+    private getBasePropertyNameOfPathParameterFromName(name: Name): RequestWrapperNonBodyProperty {
         return {
             safeName: name.camelCase.safeName,
             propertyName: getParameterNameForPropertyPathParameterName({
@@ -725,6 +957,21 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public getPropertyNameOfNonLiteralHeaderFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
+        const mappings = this.getPropertyNameMappings();
+        const mappingKey = `header:${name.wireValue}`;
+        const mapping = mappings.get(mappingKey);
+
+        if (mapping != null) {
+            return {
+                safeName: mapping.safeName,
+                propertyName: mapping.propertyName
+            };
+        }
+
+        return this.getBasePropertyNameOfNonLiteralHeaderFromName(name);
+    }
+
+    private getBasePropertyNameOfNonLiteralHeaderFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
         return {
             safeName: name.name.camelCase.safeName,
             propertyName:

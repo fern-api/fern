@@ -49,6 +49,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
 
     private importsManager: ImportsManager;
     private ir: IntermediateRepresentation;
+    private packageId: PackageId;
     private requestParameter: FileUploadRequestParameter | undefined;
     private queryParams: GeneratedQueryParams | undefined;
     private service: HttpService;
@@ -78,6 +79,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         formDataSupport
     }: GeneratedFileUploadEndpointRequest.Init) {
         this.ir = ir;
+        this.packageId = packageId;
         this.service = service;
         this.endpoint = endpoint;
         this.requestBody = requestBody;
@@ -304,6 +306,15 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             )
         );
         for (const property of this.requestBody.properties) {
+            let resolvedPropertyName: string | undefined;
+            if (property.type === "file" && this.inlineFileProperties && this.requestParameter != null) {
+                const requestWrapper = context.requestWrapper.getGeneratedRequestWrapper(
+                    this.packageId,
+                    this.endpoint.name
+                );
+                resolvedPropertyName = requestWrapper.getPropertyNameOfFileParameter(property.value).propertyName;
+            }
+
             statements.push(
                 appendPropertyToFormData({
                     property,
@@ -315,7 +326,8 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                     requestParameter: this.requestParameter,
                     includeSerdeLayer: this.includeSerdeLayer,
                     allowExtraFields: this.allowExtraFields,
-                    omitUndefined: this.omitUndefined
+                    omitUndefined: this.omitUndefined,
+                    resolvedPropertyName
                 })
             );
         }

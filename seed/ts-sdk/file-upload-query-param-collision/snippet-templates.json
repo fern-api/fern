@@ -1,0 +1,141 @@
+[
+    {
+        "sdk": {
+            "package": "@fern/file-upload-query-param-collision",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/upload",
+            "method": "POST",
+            "identifierOverride": "endpoint_service.uploadWithCollision"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedFileUploadQueryParamCollisionClient } from \"@fern/file-upload-query-param-collision\";"
+                ],
+                "templateString": "const client = new SeedFileUploadQueryParamCollisionClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await client.service.uploadWithCollision(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "name: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "name",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "description: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "description",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "name: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [
+                                                        "import fs from \"fs\";"
+                                                    ],
+                                                    "templateString": "fs.createReadStream(\"/path/to/your/file\")",
+                                                    "isOptional": false,
+                                                    "templateInputs": [],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "metadata: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "metadata",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

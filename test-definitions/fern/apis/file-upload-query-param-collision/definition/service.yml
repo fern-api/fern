@@ -1,0 +1,17 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    uploadWithCollision:
+      path: /upload
+      method: POST
+      request:
+        name: UploadRequest
+        query-parameters:
+          name: string
+          description: optional<string>
+        body:
+          properties:
+            name: file
+            metadata: optional<string>
+      response: string
