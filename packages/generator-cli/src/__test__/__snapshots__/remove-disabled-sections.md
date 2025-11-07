@@ -5,6 +5,10 @@
 
 The Basic TypeScript library provides convenient access to the Basic APIs from TypeScript.
 
+## Table of Contents
+
+- [Installation](#installation)
+
 ## Installation
 
 ```sh

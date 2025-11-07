@@ -5,6 +5,12 @@
 
 The IMDB Inc Python library provides convenient access to the IMDB Inc APIs from Python.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Preexisting Custom Section](#preexisting-custom-section)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
