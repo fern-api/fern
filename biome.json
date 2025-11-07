@@ -163,6 +163,7 @@
       "!packages/ir-sdk/**",
       "!packages/seed/**",
       "!seed/**",
+      "!seed-remote-local/**",
       "!**/*.yml",
       "!**/*.yaml"
     ]
@@ -379,6 +380,7 @@
         "**/__snapshots__",
         "**/fixtures/**/*.json",
         "seed/**/*",
+        "seed-remote-local/**/*",
         "docker/seed/**",
         "**/*.yaml",
         "**/*.yml",
