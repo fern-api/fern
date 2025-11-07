@@ -1,3 +1,41 @@
+- version: 3.14.1
+  changelogEntry:
+    - summary: |
+        Fix wire test failures by pruning union base properties from expected JSON. The Java generator does not generate base properties for union types, so wire test expectations now exclude these fields to match actual SDK serialization behavior.
+      type: fix
+  createdAt: "2025-11-07"
+  irVersion: 61
+
+- version: 3.14.0
+  changelogEntry:
+    - summary: |
+        Add support for WebSocket channels with bidirectional communication. Generated WebSocket clients
+        provide automatic reconnection with exponential backoff, strongly-typed message handlers, and message
+        queuing during disconnections. Clients are accessible via factory methods in subpackage clients.
+
+        ```java
+        // Create WebSocket client with path and query parameters
+        RealtimeWebSocketClient ws = client.realtime().realtimeWebSocket(
+            "session-123",
+            Optional.of("gpt-4"),
+            Optional.of(0)
+        );
+
+        // Register handlers and connect
+        ws.onReceive(message -> System.out.println("Received: " + message.getAlpha()));
+        ws.onConnected(() -> System.out.println("Connected!"));
+        ws.connect().get();
+
+        // Send typed messages
+        ws.sendSend(SendEvent.builder()
+            .sendText("Hello WebSocket!")
+            .sendParam(42)
+            .build());
+        ```
+      type: feat
+  createdAt: "2025-11-07"
+  irVersion: 61
+
 - version: 3.13.0
   changelogEntry:
     - summary: |

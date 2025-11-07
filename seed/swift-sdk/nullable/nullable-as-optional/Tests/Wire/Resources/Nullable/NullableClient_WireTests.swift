@@ -4,7 +4,7 @@ import Nullable
 
 @Suite("NullableClient_ Wire Tests") struct NullableClient_WireTests {
     @Test func getUsers1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -149,13 +149,14 @@ import Nullable
         ]
         let response = try await client.nullable.getUsers(
             avatar: "avatar",
-            extra: .value(true)
+            extra: .value(true),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func createUser1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -230,33 +231,36 @@ import Nullable
                 )
             ]))
         )
-        let response = try await client.nullable.createUser(request: .init(
-            username: "username",
-            tags: [
-                "tags",
-                "tags"
-            ],
-            metadata: Metadata(
-                createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                avatar: .value("avatar"),
-                activated: .value(true),
-                status: Status.active(
-                    .init(
+        let response = try await client.nullable.createUser(
+            request: .init(
+                username: "username",
+                tags: [
+                    "tags",
+                    "tags"
+                ],
+                metadata: Metadata(
+                    createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                    updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                    avatar: .value("avatar"),
+                    activated: .value(true),
+                    status: Status.active(
+                        .init(
 
-                    )
+                        )
+                    ),
+                    values: [
+                        "values": .value("values")
+                    ]
                 ),
-                values: [
-                    "values": .value("values")
-                ]
+                avatar: .value("avatar")
             ),
-            avatar: .value("avatar")
-        ))
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func deleteUser1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -269,7 +273,10 @@ import Nullable
             urlSession: stub.urlSession
         )
         let expectedResponse = true
-        let response = try await client.nullable.deleteUser(request: .init(username: .value("xy")))
+        let response = try await client.nullable.deleteUser(
+            request: .init(username: .value("xy")),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

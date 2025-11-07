@@ -28,10 +28,10 @@ impl FileUploadExampleClient {
         options: Option<RequestOptions>,
     ) -> Result<FileId, ApiError> {
         self.http_client
-            .execute_request(
+            .execute_multipart_request(
                 Method::POST,
                 "upload-file",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                request.clone().to_multipart(),
                 None,
                 options,
             )

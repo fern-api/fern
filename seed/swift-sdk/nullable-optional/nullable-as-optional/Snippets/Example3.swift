@@ -8,7 +8,7 @@ private func main() async throws {
         limit: 1,
         offset: 1,
         includeDeleted: true,
-        sortBy: .value("sortBy")
+        sortBy: "sortBy"
     )
 }
 

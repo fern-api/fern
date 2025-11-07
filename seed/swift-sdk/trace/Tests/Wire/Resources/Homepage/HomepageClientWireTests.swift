@@ -4,7 +4,7 @@ import Trace
 
 @Suite("HomepageClient Wire Tests") struct HomepageClientWireTests {
     @Test func getHomepageProblems1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -24,7 +24,7 @@ import Trace
             "string",
             "string"
         ]
-        let response = try await client.homepage.getHomepageProblems()
+        let response = try await client.homepage.getHomepageProblems(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

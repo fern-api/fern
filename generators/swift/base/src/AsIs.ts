@@ -92,11 +92,17 @@ function createSourceAsIsFiles(): SourceAsIsFileDefinitionsById {
 }
 
 const TestAsIsFileSpecs = {
-    // Wire/Utilities
-    WireStub: {
-        relativePathToDir: "Wire/Utilities",
-        filenameWithoutExtension: "WireStub",
-        symbols: [{ name: "WireStub", shape: { type: "class" } }]
+    // Core
+    ClientRetryTests: {
+        relativePathToDir: "Core",
+        filenameWithoutExtension: "ClientRetryTests.Template",
+        symbols: [{ name: "ClientRetryTests", shape: { type: "class" } }]
+    },
+    // Utilities
+    HTTPStub: {
+        relativePathToDir: "Utilities",
+        filenameWithoutExtension: "HTTPStub",
+        symbols: [{ name: "HTTPStub", shape: { type: "class" } }]
     }
 } satisfies Record<string, swift.AsIsFileSpec<string>>;
 

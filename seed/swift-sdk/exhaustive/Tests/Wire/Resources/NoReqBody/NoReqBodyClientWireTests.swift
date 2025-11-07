@@ -4,7 +4,7 @@ import Exhaustive
 
 @Suite("NoReqBodyClient Wire Tests") struct NoReqBodyClientWireTests {
     @Test func getWithNoRequestBody1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -58,12 +58,12 @@ import Exhaustive
             ]),
             bigint: Optional("1000000")
         )
-        let response = try await client.noReqBody.getWithNoRequestBody()
+        let response = try await client.noReqBody.getWithNoRequestBody(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
     @Test func postWithNoRequestBody1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -77,7 +77,7 @@ import Exhaustive
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.noReqBody.postWithNoRequestBody()
+        let response = try await client.noReqBody.postWithNoRequestBody(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

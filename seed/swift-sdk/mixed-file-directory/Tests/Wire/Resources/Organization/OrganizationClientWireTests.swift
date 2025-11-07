@@ -4,7 +4,7 @@ import MixedFileDirectory
 
 @Suite("OrganizationClient Wire Tests") struct OrganizationClientWireTests {
     @Test func create1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -47,9 +47,12 @@ import MixedFileDirectory
                 )
             ]
         )
-        let response = try await client.organization.create(request: CreateOrganizationRequest(
-            name: "name"
-        ))
+        let response = try await client.organization.create(
+            request: CreateOrganizationRequest(
+                name: "name"
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

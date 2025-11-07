@@ -4,7 +4,7 @@ import NullableOptional
 
 @Suite("NullableOptionalClient_ Wire Tests") struct NullableOptionalClient_WireTests {
     @Test func getUser1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -49,12 +49,15 @@ import NullableOptional
                 tenantId: Optional("tenantId")
             ))
         )
-        let response = try await client.nullableOptional.getUser(userId: "userId")
+        let response = try await client.nullableOptional.getUser(
+            userId: "userId",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func createUser1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -99,25 +102,28 @@ import NullableOptional
                 tenantId: Optional("tenantId")
             ))
         )
-        let response = try await client.nullableOptional.createUser(request: CreateUserRequest(
-            username: "username",
-            email: .value("email"),
-            phone: "phone",
-            address: .value(Address(
-                street: "street",
-                city: .value("city"),
-                state: "state",
-                zipCode: "zipCode",
-                country: .value("country"),
-                buildingId: .value("buildingId"),
-                tenantId: "tenantId"
-            ))
-        ))
+        let response = try await client.nullableOptional.createUser(
+            request: CreateUserRequest(
+                username: "username",
+                email: .value("email"),
+                phone: "phone",
+                address: .value(Address(
+                    street: "street",
+                    city: .value("city"),
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: .value("country"),
+                    buildingId: .value("buildingId"),
+                    tenantId: "tenantId"
+                ))
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func updateUser1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -177,13 +183,14 @@ import NullableOptional
                     buildingId: .value("buildingId"),
                     tenantId: "tenantId"
                 ))
-            )
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func listUsers1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -270,13 +277,14 @@ import NullableOptional
             limit: 1,
             offset: 1,
             includeDeleted: true,
-            sortBy: .value("sortBy")
+            sortBy: .value("sortBy"),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func searchUsers1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -363,13 +371,14 @@ import NullableOptional
             query: "query",
             department: .value("department"),
             role: "role",
-            isActive: .value(true)
+            isActive: .value(true),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func createComplexProfile1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -601,125 +610,128 @@ import NullableOptional
                 "optionalMapOfEnums": .admin
             ])
         )
-        let response = try await client.nullableOptional.createComplexProfile(request: ComplexProfile(
-            id: "id",
-            nullableRole: .value(.admin),
-            optionalRole: .admin,
-            optionalNullableRole: .value(.admin),
-            nullableStatus: .value(.active),
-            optionalStatus: .active,
-            optionalNullableStatus: .value(.active),
-            nullableNotification: .value(NotificationMethod.email(
-                .init(
-                    emailAddress: "emailAddress",
-                    subject: "subject",
-                    htmlContent: "htmlContent"
-                )
-            )),
-            optionalNotification: NotificationMethod.email(
-                .init(
-                    emailAddress: "emailAddress",
-                    subject: "subject",
-                    htmlContent: "htmlContent"
-                )
-            ),
-            optionalNullableNotification: .value(NotificationMethod.email(
-                .init(
-                    emailAddress: "emailAddress",
-                    subject: "subject",
-                    htmlContent: "htmlContent"
-                )
-            )),
-            nullableSearchResult: .value(SearchResult.user(
-                .init(
-                    id: "id",
-                    username: "username",
-                    email: .value("email"),
-                    phone: "phone",
-                    createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    updatedAt: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                    address: Address(
-                        street: "street",
-                        city: .value("city"),
-                        state: "state",
-                        zipCode: "zipCode",
-                        country: .value("country"),
-                        buildingId: .value("buildingId"),
-                        tenantId: "tenantId"
+        let response = try await client.nullableOptional.createComplexProfile(
+            request: ComplexProfile(
+                id: "id",
+                nullableRole: .value(.admin),
+                optionalRole: .admin,
+                optionalNullableRole: .value(.admin),
+                nullableStatus: .value(.active),
+                optionalStatus: .active,
+                optionalNullableStatus: .value(.active),
+                nullableNotification: .value(NotificationMethod.email(
+                    .init(
+                        emailAddress: "emailAddress",
+                        subject: "subject",
+                        htmlContent: "htmlContent"
                     )
-                )
-            )),
-            optionalSearchResult: SearchResult.user(
-                .init(
-                    id: "id",
-                    username: "username",
-                    email: .value("email"),
-                    phone: "phone",
-                    createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    updatedAt: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                    address: Address(
-                        street: "street",
-                        city: .value("city"),
-                        state: "state",
-                        zipCode: "zipCode",
-                        country: .value("country"),
-                        buildingId: .value("buildingId"),
-                        tenantId: "tenantId"
-                    )
-                )
-            ),
-            nullableArray: .value([
-                "nullableArray",
-                "nullableArray"
-            ]),
-            optionalArray: [
-                "optionalArray",
-                "optionalArray"
-            ],
-            optionalNullableArray: .value([
-                "optionalNullableArray",
-                "optionalNullableArray"
-            ]),
-            nullableListOfNullables: .value([
-                .value("nullableListOfNullables"),
-                .value("nullableListOfNullables")
-            ]),
-            nullableMapOfNullables: .value([
-                "nullableMapOfNullables": .value(Address(
-                    street: "street",
-                    city: .value("city"),
-                    state: "state",
-                    zipCode: "zipCode",
-                    country: .value("country"),
-                    buildingId: .value("buildingId"),
-                    tenantId: "tenantId"
-                ))
-            ]),
-            nullableListOfUnions: .value([
-                NotificationMethod.email(
+                )),
+                optionalNotification: NotificationMethod.email(
                     .init(
                         emailAddress: "emailAddress",
                         subject: "subject",
                         htmlContent: "htmlContent"
                     )
                 ),
-                NotificationMethod.email(
+                optionalNullableNotification: .value(NotificationMethod.email(
                     .init(
                         emailAddress: "emailAddress",
                         subject: "subject",
                         htmlContent: "htmlContent"
                     )
-                )
-            ]),
-            optionalMapOfEnums: [
-                "optionalMapOfEnums": .admin
-            ]
-        ))
+                )),
+                nullableSearchResult: .value(SearchResult.user(
+                    .init(
+                        id: "id",
+                        username: "username",
+                        email: .value("email"),
+                        phone: "phone",
+                        createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                        updatedAt: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                        address: Address(
+                            street: "street",
+                            city: .value("city"),
+                            state: "state",
+                            zipCode: "zipCode",
+                            country: .value("country"),
+                            buildingId: .value("buildingId"),
+                            tenantId: "tenantId"
+                        )
+                    )
+                )),
+                optionalSearchResult: SearchResult.user(
+                    .init(
+                        id: "id",
+                        username: "username",
+                        email: .value("email"),
+                        phone: "phone",
+                        createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                        updatedAt: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                        address: Address(
+                            street: "street",
+                            city: .value("city"),
+                            state: "state",
+                            zipCode: "zipCode",
+                            country: .value("country"),
+                            buildingId: .value("buildingId"),
+                            tenantId: "tenantId"
+                        )
+                    )
+                ),
+                nullableArray: .value([
+                    "nullableArray",
+                    "nullableArray"
+                ]),
+                optionalArray: [
+                    "optionalArray",
+                    "optionalArray"
+                ],
+                optionalNullableArray: .value([
+                    "optionalNullableArray",
+                    "optionalNullableArray"
+                ]),
+                nullableListOfNullables: .value([
+                    .value("nullableListOfNullables"),
+                    .value("nullableListOfNullables")
+                ]),
+                nullableMapOfNullables: .value([
+                    "nullableMapOfNullables": .value(Address(
+                        street: "street",
+                        city: .value("city"),
+                        state: "state",
+                        zipCode: "zipCode",
+                        country: .value("country"),
+                        buildingId: .value("buildingId"),
+                        tenantId: "tenantId"
+                    ))
+                ]),
+                nullableListOfUnions: .value([
+                    NotificationMethod.email(
+                        .init(
+                            emailAddress: "emailAddress",
+                            subject: "subject",
+                            htmlContent: "htmlContent"
+                        )
+                    ),
+                    NotificationMethod.email(
+                        .init(
+                            emailAddress: "emailAddress",
+                            subject: "subject",
+                            htmlContent: "htmlContent"
+                        )
+                    )
+                ]),
+                optionalMapOfEnums: [
+                    "optionalMapOfEnums": .admin
+                ]
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getComplexProfile1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -951,12 +963,15 @@ import NullableOptional
                 "optionalMapOfEnums": .admin
             ])
         )
-        let response = try await client.nullableOptional.getComplexProfile(profileId: "profileId")
+        let response = try await client.nullableOptional.getComplexProfile(
+            profileId: "profileId",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func updateComplexProfile1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -1223,13 +1238,14 @@ import NullableOptional
                     "nullableArray",
                     "nullableArray"
                 ])
-            )
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func testDeserialization1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -1360,67 +1376,70 @@ import NullableOptional
             nullCount: 1,
             presentFieldsCount: 1
         )
-        let response = try await client.nullableOptional.testDeserialization(request: DeserializationTestRequest(
-            requiredString: "requiredString",
-            nullableString: .value("nullableString"),
-            optionalString: "optionalString",
-            optionalNullableString: .value("optionalNullableString"),
-            nullableEnum: .value(.admin),
-            optionalEnum: .active,
-            nullableUnion: .value(NotificationMethod.email(
-                .init(
-                    emailAddress: "emailAddress",
-                    subject: "subject",
-                    htmlContent: "htmlContent"
-                )
-            )),
-            optionalUnion: SearchResult.user(
-                .init(
-                    id: "id",
-                    username: "username",
-                    email: .value("email"),
-                    phone: "phone",
-                    createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    updatedAt: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                    address: Address(
-                        street: "street",
-                        city: .value("city"),
-                        state: "state",
-                        zipCode: "zipCode",
-                        country: .value("country"),
-                        buildingId: .value("buildingId"),
-                        tenantId: "tenantId"
+        let response = try await client.nullableOptional.testDeserialization(
+            request: DeserializationTestRequest(
+                requiredString: "requiredString",
+                nullableString: .value("nullableString"),
+                optionalString: "optionalString",
+                optionalNullableString: .value("optionalNullableString"),
+                nullableEnum: .value(.admin),
+                optionalEnum: .active,
+                nullableUnion: .value(NotificationMethod.email(
+                    .init(
+                        emailAddress: "emailAddress",
+                        subject: "subject",
+                        htmlContent: "htmlContent"
                     )
+                )),
+                optionalUnion: SearchResult.user(
+                    .init(
+                        id: "id",
+                        username: "username",
+                        email: .value("email"),
+                        phone: "phone",
+                        createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                        updatedAt: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                        address: Address(
+                            street: "street",
+                            city: .value("city"),
+                            state: "state",
+                            zipCode: "zipCode",
+                            country: .value("country"),
+                            buildingId: .value("buildingId"),
+                            tenantId: "tenantId"
+                        )
+                    )
+                ),
+                nullableList: .value([
+                    "nullableList",
+                    "nullableList"
+                ]),
+                nullableMap: .value([
+                    "nullableMap": 1
+                ]),
+                nullableObject: .value(Address(
+                    street: "street",
+                    city: .value("city"),
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: .value("country"),
+                    buildingId: .value("buildingId"),
+                    tenantId: "tenantId"
+                )),
+                optionalObject: Organization(
+                    id: "id",
+                    name: "name",
+                    domain: .value("domain"),
+                    employeeCount: 1
                 )
             ),
-            nullableList: .value([
-                "nullableList",
-                "nullableList"
-            ]),
-            nullableMap: .value([
-                "nullableMap": 1
-            ]),
-            nullableObject: .value(Address(
-                street: "street",
-                city: .value("city"),
-                state: "state",
-                zipCode: "zipCode",
-                country: .value("country"),
-                buildingId: .value("buildingId"),
-                tenantId: "tenantId"
-            )),
-            optionalObject: Organization(
-                id: "id",
-                name: "name",
-                domain: .value("domain"),
-                employeeCount: 1
-            )
-        ))
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func filterByRole1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -1506,13 +1525,14 @@ import NullableOptional
         let response = try await client.nullableOptional.filterByRole(
             role: .value(.admin),
             status: .active,
-            secondaryRole: .value(.admin)
+            secondaryRole: .value(.admin),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func getNotificationSettings1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -1536,12 +1556,15 @@ import NullableOptional
                 htmlContent: Optional("htmlContent")
             )
         ))
-        let response = try await client.nullableOptional.getNotificationSettings(userId: "userId")
+        let response = try await client.nullableOptional.getNotificationSettings(
+            userId: "userId",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func updateTags1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -1575,13 +1598,14 @@ import NullableOptional
                     "labels",
                     "labels"
                 ])
-            )
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func getSearchResults1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -1670,16 +1694,19 @@ import NullableOptional
                 )
             )
         ])
-        let response = try await client.nullableOptional.getSearchResults(request: .init(
-            query: "query",
-            filters: [
-                "filters": .value("filters")
-            ],
-            includeTypes: .value([
-                "includeTypes",
-                "includeTypes"
-            ])
-        ))
+        let response = try await client.nullableOptional.getSearchResults(
+            request: .init(
+                query: "query",
+                filters: [
+                    "filters": .value("filters")
+                ],
+                includeTypes: .value([
+                    "includeTypes",
+                    "includeTypes"
+                ])
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

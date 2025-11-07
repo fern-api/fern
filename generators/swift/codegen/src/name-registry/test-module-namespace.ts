@@ -11,6 +11,10 @@ export class TestModuleNamespace {
         return `AsIs:${symbolName}`;
     }
 
+    private get retryTestSuiteNameId() {
+        return "RetryTestSuite";
+    }
+
     private wireTestSuiteNameId(typeId: string): string {
         return `WireTestSuite:${typeId}`;
     }
@@ -20,6 +24,17 @@ export class TestModuleNamespace {
     public addAsIsSymbol(symbolName: string) {
         const nameId = this.asIsNameId(symbolName);
         this.namespace.registerSymbol(nameId, [symbolName]);
+    }
+
+    public registerRetryTestSuiteSymbol(rootClientName: string): string {
+        return this.namespace.registerSymbol(this.retryTestSuiteNameId, [
+            `${rootClientName}RetryTests`,
+            `${rootClientName}RetryTestSuite`
+        ]);
+    }
+
+    public getRetryTestSuiteNameOrThrow(): string {
+        return this.namespace.getSymbolNameByIdOrThrow(this.retryTestSuiteNameId);
     }
 
     public registerWireTestSuiteSymbol(subclientName: string): string {
