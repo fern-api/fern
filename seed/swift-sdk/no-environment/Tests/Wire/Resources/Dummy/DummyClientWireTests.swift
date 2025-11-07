@@ -4,7 +4,7 @@ import NoEnvironment
 
 @Suite("DummyClient Wire Tests") struct DummyClientWireTests {
     @Test func getDummy1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -18,7 +18,7 @@ import NoEnvironment
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.dummy.getDummy()
+        let response = try await client.dummy.getDummy(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

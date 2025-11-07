@@ -11,7 +11,7 @@ export declare namespace Realtime {
     }
 
     export interface ConnectArgs {
-        id: string;
+        session_id: string;
         model?: string | undefined;
         temperature?: number | undefined;
         /** Arbitrary headers to send with the websocket connect request. */
@@ -33,7 +33,7 @@ export class Realtime {
     }
 
     public async connect(args: Realtime.ConnectArgs): Promise<RealtimeSocket> {
-        const { id, model, temperature, headers, debug, reconnectAttempts } = args;
+        const { session_id: sessionId, model, temperature, headers, debug, reconnectAttempts } = args;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (model != null) {
             _queryParams.model = model;
@@ -49,7 +49,7 @@ export class Realtime {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/realtime/${core.url.encodePathParam(id)}`,
+                `/realtime/${core.url.encodePathParam(sessionId)}`,
             ),
             protocols: [],
             queryParameters: _queryParams,

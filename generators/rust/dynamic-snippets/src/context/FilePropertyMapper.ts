@@ -64,7 +64,8 @@ export class FilePropertyMapper {
     }): rust.Expression {
         const fileValue = this.context.getSingleFileValue({ property, record });
         if (fileValue == null) {
-            return rust.Expression.raw('todo!("Missing file value")');
+            // Provide a helpful placeholder showing how to read a file
+            return rust.Expression.raw('std::fs::read("path/to/file").expect("Failed to read file")');
         }
         return this.createFileExpression(fileValue);
     }
@@ -78,7 +79,11 @@ export class FilePropertyMapper {
     }): rust.Expression {
         const fileValues = this.context.getFileArrayValues({ property, record });
         if (fileValues == null) {
-            return rust.Expression.vec([]);
+            // Provide a helpful placeholder showing how to read multiple files
+            return rust.Expression.vec([
+                rust.Expression.raw('std::fs::read("path/to/file1").expect("Failed to read file")'),
+                rust.Expression.raw('std::fs::read("path/to/file2").expect("Failed to read file")')
+            ]);
         }
         return rust.Expression.vec(fileValues.map((value) => this.createFileExpression(value)));
     }
@@ -92,7 +97,13 @@ export class FilePropertyMapper {
     }): rust.Expression {
         const bodyPropertyValue = record[property.name.wireValue];
         if (bodyPropertyValue == null) {
-            return rust.Expression.raw('todo!("Missing body property value")');
+            // Check if it's an optional type
+            if (property.typeReference.type === "optional" || property.typeReference.type === "nullable") {
+                return rust.Expression.raw("None");
+            }
+            // For required fields, provide a descriptive placeholder
+            const fieldName = property.name.wireValue;
+            return rust.Expression.raw(`todo!("Set ${fieldName} value")`);
         }
         return this.context.dynamicTypeLiteralMapper.convert({
             typeReference: property.typeReference,
@@ -101,20 +112,16 @@ export class FilePropertyMapper {
     }
 
     private createFileExpression(fileContent: string): rust.Expression {
-        // For Rust, create a multipart part expression
-        return rust.Expression.methodChain(rust.Expression.reference("multipart::Part"), [
-            {
-                method: "text",
-                args: [rust.Expression.stringLiteral(fileContent)]
-            },
-            {
-                method: "file_name",
-                args: [rust.Expression.stringLiteral("file.txt")]
-            },
-            {
-                method: "mime_str",
-                args: [rust.Expression.stringLiteral("text/plain")]
-            }
-        ]);
+        // For Rust, files are represented as Vec<u8> (byte arrays)
+        // Convert the file content string to a byte vector
+        return rust.Expression.methodCall({
+            target: rust.Expression.methodCall({
+                target: rust.Expression.stringLiteral(fileContent),
+                method: "as_bytes",
+                args: []
+            }),
+            method: "to_vec",
+            args: []
+        });
     }
 }

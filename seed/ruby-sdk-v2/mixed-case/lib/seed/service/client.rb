@@ -32,8 +32,10 @@ module Seed
       # @return [Array[Seed::Service::Types::Resource]]
       def list_resources(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
-        _query_param_names = %i[page_limit beforeDate]
-        _query = params.slice(*_query_param_names)
+        _query_param_names = %i[page_limit before_date]
+        _query = {}
+        _query["page_limit"] = params[:page_limit] if params.key?(:page_limit)
+        _query["beforeDate"] = params[:before_date] if params.key?(:before_date)
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(

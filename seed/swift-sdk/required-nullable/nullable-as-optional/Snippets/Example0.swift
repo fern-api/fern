@@ -6,7 +6,7 @@ private func main() async throws {
 
     _ = try await client.getFoo(
         requiredBaz: "required_baz",
-        requiredNullableBaz: .value("required_nullable_baz")
+        requiredNullableBaz: "required_nullable_baz"
     )
 }
 

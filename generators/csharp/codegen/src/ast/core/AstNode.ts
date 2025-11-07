@@ -1,4 +1,11 @@
-import { AbstractAstNode, AbstractFormatter } from "@fern-api/browser-compatible-base-generator";
+import {
+    AbstractAstNode,
+    AbstractFormatter,
+    addGlobalFunctionFilter,
+    at,
+    enableStackTracking,
+    getFramesForTaggedObject
+} from "@fern-api/browser-compatible-base-generator";
 import { Generation } from "../../context/generation-info";
 import { type Origin } from "../../context/model-navigator";
 import { type Class } from "../types/Class";
@@ -12,6 +19,9 @@ export interface FormattedAstNodeSnippet {
     imports: string | undefined;
     body: string;
 }
+
+// don't track stack frames for the internals of AstNode.
+addGlobalFunctionFilter("AstNode");
 
 export abstract class AstNode extends AbstractAstNode {
     constructor(public readonly generation: Generation) {
@@ -163,6 +173,16 @@ export abstract class AstNode extends AbstractAstNode {
             imports: writer.importsToString(),
             body: await formatter.format(writer.buffer)
         };
+    }
+
+    public get debugInfo(): string {
+        return enableStackTracking
+            ? `Debug Info:\n    at:\n    ${at({ multiline: true }).replaceAll("\n", "\n    ")}\n    creation stack:\n${getFramesForTaggedObject(
+                  this
+              )
+                  .map((each) => `    ${each.fn} - ${each.path}:${each.position}`)
+                  .join("\n")}`
+            : "";
     }
 }
 

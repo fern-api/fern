@@ -10,11 +10,14 @@ module Seed
 
       # @return [Seed::Types::SendResponse]
       def send_(request_options: {}, **params)
+        _body_prop_names = %i[query]
+        _body_bag = params.slice(*_body_prop_names)
+
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "headers",
-          body: params
+          body: Seed::Headers::Types::SendLiteralsInHeadersRequest.new(_body_bag).to_h
         )
         begin
           _response = @client.send(_request)

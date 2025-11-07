@@ -388,7 +388,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     ),
                     summary: `Discriminated union type for ${type.discriminantValue.name.originalName}`,
                     access: ast.Access.Public,
-                    type: memberType.isReferenceType() ? ast.Class.ClassType.Record : ast.Class.ClassType.Struct,
+                    type: memberType.isReferenceType ? ast.Class.ClassType.Record : ast.Class.ClassType.Struct,
                     annotations: [this.extern.System.Serializable]
                 });
                 if (isNoProperties) {
@@ -429,7 +429,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     parameters: [],
                     bodyType: ast.Method.BodyType.Expression,
                     body: this.csharp.codeblock(
-                        memberType.isOptional()
+                        memberType.isOptional
                             ? 'Value?.ToString() ?? "null"'
                             : is.Type.string(memberType)
                               ? "Value"
@@ -587,7 +587,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                             default:
                                 assertNever(type.shape);
                         }
-                        if (csharpType.isReferenceType() === false) {
+                        if (csharpType.isReferenceType === false) {
                             // non-reference types can be always be deserialized directly as is
                             writer.write(".Deserialize<", csharpType, ">(options)");
                         } else {
@@ -596,7 +596,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                             // (this ensures that the code is valid regardless if it is a record struct or class types)
                             writer.write(".Deserialize<", csharpType.toOptionalIfNotAlready(), ">(options)");
 
-                            if (!csharpType.isOptional()) {
+                            if (!csharpType.isOptional) {
                                 writer.write(' ?? throw new JsonException("Failed to deserialize ', csharpType, '")');
                             }
                         }

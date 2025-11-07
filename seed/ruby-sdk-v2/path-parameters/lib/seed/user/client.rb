@@ -53,13 +53,14 @@ module Seed
 
       # @return [Seed::User::Types::User]
       def update_user(request_options: {}, **params)
-        _path_param_names = %w[tenant_id user_id]
+        _path_param_names = %i[tenant_id user_id]
+        _body = params.except(*_path_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "/#{params[:tenant_id]}/user/#{params[:user_id]}",
-          body: params.except(*_path_param_names)
+          body: Seed::User::Types::User.new(_body).to_h
         )
         begin
           _response = @client.send(_request)
@@ -79,7 +80,8 @@ module Seed
       def search_users(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
         _query_param_names = %i[limit]
-        _query = params.slice(*_query_param_names)
+        _query = {}
+        _query["limit"] = params[:limit] if params.key?(:limit)
         params = params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(

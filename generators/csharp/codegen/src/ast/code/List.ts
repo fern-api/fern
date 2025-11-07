@@ -22,9 +22,7 @@ export class List extends AstNode {
 
     public write(writer: Writer): void {
         if (this.itemType != null) {
-            writer.write("new List<");
-            this.itemType.write(writer);
-            writer.write(">()");
+            writer.write("new ", this.System.Collections.Generic.List(this.itemType), "()");
             writer.pushScope();
         } else {
             writer.write("[");

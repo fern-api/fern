@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc34
+  createdAt: "2025-11-07"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Bump IR version which we are dependent on.
+  irVersion: 61
+
+- version: 1.0.0-rc33
+  createdAt: "2025-11-06"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix the to_h method to correctly serialize nested objects while respecting the api_name parameter.
+  irVersion: 59
 
 - version: 1.0.0-rc32
   createdAt: "2025-11-04"

@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.7.2
+  changelogEntry:
+    - type: fix
+      summary: |
+        Synthesize simple values for dynamic snippets when the example is missing data.
+  createdAt: "2025-11-05"
+  irVersion: 61
+
+- version: 2.7.1
+  changelogEntry:
+    - type: fix
+      summary: |
+        Improved generation of snippets and example code for file-upload scenarios.
+  createdAt: "2025-11-05"
+  irVersion: 61
 
 - version: 2.7.0
   changelogEntry:

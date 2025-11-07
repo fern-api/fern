@@ -4,7 +4,7 @@ import Api
 
 @Suite("ImdbClient Wire Tests") struct ImdbClientWireTests {
     @Test func createMovie1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -18,15 +18,18 @@ import Api
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.imdb.createMovie(request: CreateMovieRequest(
-            title: "title",
-            rating: 1.1
-        ))
+        let response = try await client.imdb.createMovie(
+            request: CreateMovieRequest(
+                title: "title",
+                rating: 1.1
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getMovie1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -48,7 +51,10 @@ import Api
             title: "title",
             rating: 1.1
         )
-        let response = try await client.imdb.getMovie(movieId: "movieId")
+        let response = try await client.imdb.getMovie(
+            movieId: "movieId",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

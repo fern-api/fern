@@ -38,11 +38,22 @@ defaultCustomConfig: {}
 scripts:
   - docker: fernapi/csharp-seed
     commands:
-      - dotnet restore src
-      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true --no-restore
-      - dotnet build src/*.DynamicSnippets
-      - dotnet test src --filter "FullyQualifiedName~SeedApi.Test.Core" --no-restore
-      # - dotnet test src
+      # add the dynamic snippets project to the solution
+      - dotnet sln src/*.sln add src/*DynamicSnippets/*.csproj 
+      
+      # build it all
+      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true
+      
+      # something changed in seed so that fixtures are getting created with the correct namespace (not just 'SeedApi')
+      # but that actually disabled the tests from running (because the pattern matching didn't find any)
+      # and it turns out that `dotnet test` doesn't return an error if the filter fails to match anything
+      # so this line ensures that if it doesn't find any tests, it will signal an error.
+      - dotnet test src  --filter "(FullyQualifiedName~Test.Core | FullyQualifiedName~Test_.Core)" --no-restore | tee /tmp/out && ! grep -q "No test matches the given testcase filter" /tmp/out
+      
+      # Than being the case however, the filter actually makes it so that all the generated tests don't get run 
+      # so that should be fixed so that `dotnet test src` can be run instead of the filtered version of it.
+      # - dotnet test src 
+      
 
 fixtures:
   pagination:
@@ -199,6 +210,4 @@ fixtures:
       outputFolder: with-websockets
 allowedFailures:
   - oauth-client-credentials-custom
-  - file-upload
-  - auth-environment-variables # TODO: Add global headers to ExampleEndpointCall.
  

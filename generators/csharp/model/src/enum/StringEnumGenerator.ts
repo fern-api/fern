@@ -8,7 +8,6 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext";
 export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly classReference: ast.ClassReference;
     private readonly customMethodName: string;
-    // private valuePropertyName: string = "Value";
     constructor(
         context: ModelGeneratorContext,
         private readonly typeDeclaration: TypeDeclaration,

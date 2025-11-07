@@ -4,7 +4,7 @@ import Exhaustive
 
 @Suite("HttpMethodsClient Wire Tests") struct HttpMethodsClientWireTests {
     @Test func testGet1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -18,12 +18,15 @@ import Exhaustive
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.endpoints.httpMethods.testGet(id: "id")
+        let response = try await client.endpoints.httpMethods.testGet(
+            id: "id",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func testPost1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -77,14 +80,17 @@ import Exhaustive
             ]),
             bigint: Optional("1000000")
         )
-        let response = try await client.endpoints.httpMethods.testPost(request: ObjectWithRequiredField(
-            string: "string"
-        ))
+        let response = try await client.endpoints.httpMethods.testPost(
+            request: ObjectWithRequiredField(
+                string: "string"
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func testPut1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -142,13 +148,14 @@ import Exhaustive
             id: "id",
             request: ObjectWithRequiredField(
                 string: "string"
-            )
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func testPatch1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -221,13 +228,14 @@ import Exhaustive
                 map: [
                     1: "map"
                 ]
-            )
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func testDelete1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -241,7 +249,10 @@ import Exhaustive
             urlSession: stub.urlSession
         )
         let expectedResponse = true
-        let response = try await client.endpoints.httpMethods.testDelete(id: "id")
+        let response = try await client.endpoints.httpMethods.testDelete(
+            id: "id",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

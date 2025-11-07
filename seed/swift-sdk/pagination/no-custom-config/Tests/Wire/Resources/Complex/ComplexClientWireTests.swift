@@ -4,7 +4,7 @@ import Pagination
 
 @Suite("ComplexClient Wire Tests") struct ComplexClientWireTests {
     @Test func search1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -74,7 +74,8 @@ import Pagination
                         value: "value"
                     )
                 )
-            )
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

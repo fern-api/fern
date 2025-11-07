@@ -144,9 +144,9 @@ impl PrimitiveClient {
 
     pub async fn get_and_return_base_64(
         &self,
-        request: &String,
+        request: &Vec<u8>,
         options: Option<RequestOptions>,
-    ) -> Result<String, ApiError> {
+    ) -> Result<Vec<u8>, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

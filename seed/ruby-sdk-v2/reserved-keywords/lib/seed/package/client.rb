@@ -11,8 +11,9 @@ module Seed
       # @return [untyped]
       def test(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
-        _query_param_names = %i[for]
-        _query = params.slice(*_query_param_names)
+        _query_param_names = %i[for_]
+        _query = {}
+        _query["for"] = params[:for_] if params.key?(:for_)
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
