@@ -261,6 +261,12 @@ fixtures:
     - customConfig:
         collapse-optional-nullable: true
       outputFolder: collapse-optional-nullable
+  cohere-example:
+    - outputFolder: default
+      customConfig:
+        client-class-name: Cohere
+        enable-wire-tests: true
+
 scripts:
   - docker: fernapi/java-seed
     commands:
