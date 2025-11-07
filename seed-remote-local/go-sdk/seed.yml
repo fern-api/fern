@@ -13,11 +13,23 @@ test:
 
 language: go
 generatorType: SDK
+defaultOutputMode: github
 
-# Two output modes for the SAME fixture
+# Remote vs Local testing with GitHub PR output
+# Uses ephemeral GitHub repos injected by test runner
 fixtures:
   imdb:
+    # Remote generation (uses Fiddle cloud service)
     - outputFolder: remote
       customConfig: null
+      github:
+        repository: ${GITHUB_TEST_REPO}
+        mode: pull-request
+
+    # Local generation (uses Docker)
     - outputFolder: local
       customConfig: null
+      github:
+        uri: ${GITHUB_TEST_REPO}
+        token: ${GITHUB_TOKEN}
+        mode: pull-request
