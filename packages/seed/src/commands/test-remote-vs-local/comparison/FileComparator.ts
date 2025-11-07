@@ -1,8 +1,7 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import * as diff from "diff";
+import { createPatch } from "diff";
+import fg from "fast-glob";
 import { readFile } from "fs/promises";
-import { glob } from "glob";
-import * as minimatch from "minimatch";
 import * as path from "path";
 import { Normalizer } from "./Normalizer";
 import { ComparisonRules, Difference } from "./types";
@@ -68,9 +67,9 @@ export class FileComparator {
     }
 
     private async listFiles(dir: AbsoluteFilePath): Promise<string[]> {
-        const files = await glob("**/*", {
+        const files = await fg("**/*", {
             cwd: dir,
-            nodir: true,
+            onlyFiles: true,
             dot: true,
             ignore: [
                 ".git/**",
@@ -88,16 +87,14 @@ export class FileComparator {
     }
 
     private shouldIgnore(file: string): boolean {
-        for (const pattern of this.ignorePatterns) {
-            if (minimatch(file, pattern)) {
-                return true;
-            }
+        if (this.ignorePatterns.length === 0) {
+            return false;
         }
-        return false;
+        return fg.isDynamicPattern(file) ? false : !fg.sync(file, { ignore: this.ignorePatterns }).includes(file);
     }
 
     private generateDiff(remote: string, local: string, filename: string): string {
-        const patches = diff.createPatch(filename, remote, local, "remote", "local");
+        const patches = createPatch(filename, remote, local, "remote", "local");
         return patches;
     }
 }

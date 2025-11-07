@@ -7948,6 +7948,13 @@ importers:
         version: 17.7.2
 
   packages/seed:
+    dependencies:
+      diff:
+        specifier: ^5.2.0
+        version: 5.2.0
+      fast-glob:
+        specifier: ^3.3.3
+        version: 3.3.3
     devDependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
@@ -7988,6 +7995,9 @@ importers:
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
         version: 0.114.0-5745f9e74
+      '@types/diff':
+        specifier: ^5.2.1
+        version: 5.2.3
       '@types/find-up':
         specifier: ^4.0.0
         version: 4.0.2

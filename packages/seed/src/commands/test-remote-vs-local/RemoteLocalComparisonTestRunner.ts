@@ -54,7 +54,7 @@ export class RemoteLocalComparisonTestRunner {
         });
 
         const branchMatch = stdout.match(/branch[:\s]+([^\s\n]+)/i);
-        if (!branchMatch) {
+        if (!branchMatch || !branchMatch[1]) {
             throw new Error("Failed to extract branch name from remote generation output");
         }
 
@@ -77,7 +77,7 @@ export class RemoteLocalComparisonTestRunner {
         );
 
         const branchMatch = stdout.match(/branch[:\s]+([^\s\n]+)/i);
-        if (!branchMatch) {
+        if (!branchMatch || !branchMatch[1]) {
             throw new Error("Failed to extract branch name from local generation output");
         }
 

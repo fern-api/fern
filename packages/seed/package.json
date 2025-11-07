@@ -48,6 +48,7 @@
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-sdk": "0.0.656",
     "@fern-fern/generators-sdk": "0.114.0-5745f9e74",
+    "@types/diff": "^5.2.1",
     "@types/find-up": "^4.0.0",
     "@types/js-yaml": "^4.0.8",
     "@types/lodash-es": "^4.17.12",
@@ -71,5 +72,9 @@
     "typescript": "5.9.3",
     "vitest": "^2.1.9",
     "yargs": "^17.4.1"
+  },
+  "dependencies": {
+    "diff": "^5.2.0",
+    "fast-glob": "^3.3.3"
   }
 }
