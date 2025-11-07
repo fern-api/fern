@@ -1,3 +1,8 @@
+types:
+  SendOptionalBodyRequest:
+    properties:
+      message: string
+
 service:
   auth: false
   base-path: ""
@@ -6,6 +11,14 @@ service:
       method: POST
       path: /send-optional-body
       request: optional<map<string, unknown>>
+      response:
+        type: string
+        docs: Id of the created resource
+    
+    sendOptionalTypedBody:
+      method: POST
+      path: /send-optional-typed-body
+      request: optional<SendOptionalBodyRequest>
       response:
         type: string
         docs: Id of the created resource
