@@ -374,7 +374,8 @@ export class SdkGenerator {
             allowCustomFetcher: config.allowCustomFetcher,
             generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
             requireDefaultEnvironment: config.requireDefaultEnvironment,
-            retainOriginalCasing: config.retainOriginalCasing
+            retainOriginalCasing: config.retainOriginalCasing,
+            baseClientTypeDeclarationReferencer: this.baseClientTypeDeclarationReferencer
         });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
             containingDirectory: [],
@@ -472,7 +473,9 @@ export class SdkGenerator {
             generateEndpointMetadata: config.generateEndpointMetadata
         });
         this.baseClientTypeGenerator = new BaseClientTypeGenerator({
-            generateIdempotentRequestOptions: this.hasIdempotentEndpoints()
+            generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
+            errorResolver: this.errorResolver,
+            intermediateRepresentation
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation,

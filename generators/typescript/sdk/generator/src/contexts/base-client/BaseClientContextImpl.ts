@@ -1,10 +1,25 @@
 import { SetRequired } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { getParameterNameForRootPathParameter, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
+import {
+    ExportsManager,
+    getParameterNameForRootPathParameter,
+    getPropertyKey,
+    getTextOfTsNode,
+    ImportsManager,
+    Reference
+} from "@fern-typescript/commons";
 import { BaseClientContext, SdkContext } from "@fern-typescript/contexts";
 import { endpointUtils } from "@fern-typescript/sdk-client-class-generator";
-import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, StructureKind, ts } from "ts-morph";
+import {
+    InterfaceDeclarationStructure,
+    OptionalKind,
+    PropertySignatureStructure,
+    SourceFile,
+    StructureKind,
+    ts
+} from "ts-morph";
+import { BaseClientTypeDeclarationReferencer } from "../../declaration-referencers/BaseClientTypeDeclarationReferencer";
 
 export declare namespace BaseClientContextImpl {
     export interface Init {
@@ -13,6 +28,7 @@ export declare namespace BaseClientContextImpl {
         requireDefaultEnvironment: boolean;
         retainOriginalCasing: boolean;
         generateIdempotentRequestOptions: boolean;
+        baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
     }
 }
 const OPTIONS_INTERFACE_NAME = "BaseClientOptions";
@@ -31,6 +47,7 @@ export class BaseClientContextImpl implements BaseClientContext {
     private readonly requireDefaultEnvironment: boolean;
     private readonly retainOriginalCasing: boolean;
     private readonly generateIdempotentRequestOptions: boolean;
+    private readonly baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
 
     public static readonly OPTIONS_INTERFACE_NAME = OPTIONS_INTERFACE_NAME;
 
@@ -52,13 +69,15 @@ export class BaseClientContextImpl implements BaseClientContext {
         allowCustomFetcher,
         requireDefaultEnvironment,
         retainOriginalCasing,
-        generateIdempotentRequestOptions
+        generateIdempotentRequestOptions,
+        baseClientTypeDeclarationReferencer
     }: BaseClientContextImpl.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.allowCustomFetcher = allowCustomFetcher;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
         this.retainOriginalCasing = retainOriginalCasing;
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
+        this.baseClientTypeDeclarationReferencer = baseClientTypeDeclarationReferencer;
 
         this.authHeaders = [];
         for (const authScheme of intermediateRepresentation.auth.schemes) {
@@ -441,6 +460,22 @@ export class BaseClientContextImpl implements BaseClientContext {
     }
     private getOptionNameForVariable(variable: FernIr.VariableDeclaration): string {
         return variable.name.camelCase.unsafeName;
+    }
+
+    public getReferenceToHandleGlobalStatusCodeError(args: {
+        importsManager: ImportsManager;
+        exportsManager: ExportsManager;
+        sourceFile: SourceFile;
+    }): Reference {
+        return this.baseClientTypeDeclarationReferencer.getReferenceToHandleGlobalStatusCodeError(args);
+    }
+
+    public getReferenceToHandleNonStatusCodeError(args: {
+        importsManager: ImportsManager;
+        exportsManager: ExportsManager;
+        sourceFile: SourceFile;
+    }): Reference {
+        return this.baseClientTypeDeclarationReferencer.getReferenceToHandleNonStatusCodeError(args);
     }
 }
 

@@ -26,7 +26,6 @@ import { ts } from "ts-morph";
 import { GeneratedSdkClientClassImpl } from "../../../GeneratedSdkClientClassImpl";
 import { GeneratedStreamingEndpointImplementation } from "../../GeneratedStreamingEndpointImplementation";
 import { getAbortSignalExpression } from "../../utils/requestOptionsParameter";
-import { generateGlobalStatusCodeErrorThrow, generateNonStatusCodeErrorHandling } from "./errorHandlingUtils";
 import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse";
 import {
     CONTENT_LENGTH_RESPONSE_KEY,
@@ -755,11 +754,18 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         const referenceToErrorBody = this.getReferenceToErrorBody(context);
         const referenceToRawResponse = this.getReferenceToRawResponse(context);
 
-        const globalStatusCodeErrorThrow = generateGlobalStatusCodeErrorThrow({
-            context,
-            referenceToError,
-            referenceToRawResponse
+        const handleGlobalStatusCodeErrorReference = context.baseClient.getReferenceToHandleGlobalStatusCodeError({
+            importsManager: context.importsManager,
+            exportsManager: context.exportsManager,
+            sourceFile: context.sourceFile
         });
+
+        const globalStatusCodeErrorThrow = ts.factory.createReturnStatement(
+            ts.factory.createCallExpression(handleGlobalStatusCodeErrorReference.getExpression(), undefined, [
+                referenceToError,
+                referenceToRawResponse
+            ])
+        );
 
         return [
             ts.factory.createIfStatement(
@@ -913,13 +919,21 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     private getThrowsForNonStatusCodeErrors(context: SdkContext): ts.Statement {
         const referenceToError = this.getReferenceToError(context);
         const referenceToRawResponse = this.getReferenceToRawResponse(context);
-        return generateNonStatusCodeErrorHandling({
-            context,
-            referenceToError,
-            referenceToRawResponse,
-            endpointMethod: this.endpoint.method,
-            endpointPath: getFullPathForEndpoint(this.endpoint)
+
+        const handleNonStatusCodeErrorReference = context.baseClient.getReferenceToHandleNonStatusCodeError({
+            importsManager: context.importsManager,
+            exportsManager: context.exportsManager,
+            sourceFile: context.sourceFile
         });
+
+        return ts.factory.createReturnStatement(
+            ts.factory.createCallExpression(handleNonStatusCodeErrorReference.getExpression(), undefined, [
+                referenceToError,
+                referenceToRawResponse,
+                ts.factory.createStringLiteral(this.endpoint.method),
+                ts.factory.createStringLiteral(getFullPathForEndpoint(this.endpoint))
+            ])
+        );
     }
 
     private getGeneratedEndpointTypeSchemas(context: SdkContext): GeneratedSdkEndpointTypeSchemas {
