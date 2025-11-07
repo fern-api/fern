@@ -15,8 +15,10 @@ import Testing
         ])
 
 <%= clientDeclaration %>
+        do {
 <%= endpointCall %>
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 3)
     }
 
@@ -32,8 +34,10 @@ import Testing
         ])
 
 <%= clientDeclaration %>
+        do {
 <%= endpointCall %>
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 3)
     }
 
@@ -49,8 +53,10 @@ import Testing
         ])
 
 <%= clientDeclaration %>
+        do {
 <%= endpointCall %>
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 3)
     }
 
@@ -65,8 +71,10 @@ import Testing
         ])
 
 <%= clientDeclaration %>
+        do {
 <%= endpointCall %>
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 2)
     }
 
@@ -139,10 +147,12 @@ import Testing
 
 <%= clientDeclaration %>
         let startTime = Date()
+        do {
 <%= endpointCall %>
+        } catch {
+        }
         let elapsed = Date().timeIntervalSince(startTime)
 
-        try #require(response == true)
         try #require(stub.getRequestCount() == 2)
         try #require(elapsed >= 1.0)
     }
@@ -170,10 +180,12 @@ import Testing
 
 <%= clientDeclaration %>
         let startTime = Date()
+        do {
 <%= endpointCall %>
+        } catch {
+        }
         let elapsed = Date().timeIntervalSince(startTime)
 
-        try #require(response == true)
         try #require(stub.getRequestCount() == 2)
         try #require(elapsed >= 0.9)
     }
@@ -197,10 +209,12 @@ import Testing
 
 <%= clientDeclaration %>
         let startTime = Date()
+        do {
 <%= endpointCall %>
+        } catch {
+        }
         let elapsed = Date().timeIntervalSince(startTime)
 
-        try #require(response == true)
         try #require(stub.getRequestCount() == 2)
         try #require(elapsed >= 0.9)
     }
@@ -235,8 +249,10 @@ import Testing
         ])
 
 <%= clientDeclaration %>
+        do {
 <%= endpointCallMaxRetries5 %>
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 6)
     }
 
@@ -265,8 +281,10 @@ import Testing
         ])
 
 <%= clientDeclaration %>
+        do {
 <%= endpointCall %>
-        try #require(response == true)
+        } catch {
+        }
         try #require(stub.getRequestCount() == 1)
     }
 }

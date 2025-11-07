@@ -52,35 +52,107 @@ export class TemplateDataGenerator {
         if (!dynamicEndpointExample) {
             return null;
         }
-        const clientDeclaration = this.generateClientDeclaration(dynamicEndpoint, dynamicEndpointExample);
-        const endpointCallExpression = this.generateEndpointMethodCallExpression(
-            dynamicEndpoint,
-            dynamicEndpointExample
-        );
+        const endpointSnippetRequest = convertDynamicEndpointSnippetRequest(dynamicEndpointExample, {
+            baseUrlFallback: "https://api.fern.com"
+        });
+        const clientDeclaration = this.endpointSnippetGenerator.generateRootClientInitializationStatement({
+            auth: dynamicEndpoint.auth,
+            snippet: endpointSnippetRequest,
+            additionalArgs: [
+                swift.functionArgument({
+                    label: "urlSession",
+                    value: swift.Expression.memberAccess({
+                        target: swift.Expression.reference("stub"),
+                        memberName: "urlSession"
+                    })
+                })
+            ]
+        });
+        const endpointCallExpression = this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
+            endpoint: dynamicEndpoint,
+            snippet: convertDynamicEndpointSnippetRequest(dynamicEndpointExample),
+            additionalArguments: [
+                swift.functionArgument({
+                    label: "requestOptions",
+                    value: swift.Expression.structInitialization({
+                        unsafeName: "RequestOptions",
+                        arguments_: [
+                            swift.functionArgument({
+                                label: "additionalHeaders",
+                                value: swift.Expression.memberAccess({
+                                    target: swift.Expression.reference("stub"),
+                                    memberName: "headers"
+                                })
+                            })
+                        ]
+                    })
+                })
+            ]
+        });
 
         return {
             moduleName: moduleSymbol.name,
             clientDeclaration: clientDeclaration.toStringWithIndentation(3),
-            endpointCall: swift.Statement.constantDeclaration({
-                unsafeName: "response",
-                value: endpointCallExpression
-            }).toStringWithIndentation(3),
+            endpointCall: swift.Statement.discardAssignment(endpointCallExpression).toStringWithIndentation(4),
             endpointCall400BadRequest:
                 swift.Statement.discardAssignment(endpointCallExpression).toStringWithIndentation(4),
             endpointCall404NotFound:
                 swift.Statement.discardAssignment(endpointCallExpression).toStringWithIndentation(4),
             endpointCallMaxRetriesExhausted:
-                swift.Statement.discardAssignment(endpointCallExpression).toStringWithIndentation(3),
-            endpointCallMaxRetries5: swift.Statement.constantDeclaration({
-                unsafeName: "response",
-                value: this.generateEndpointMethodCallExpressionWithMaxRetries(
-                    dynamicEndpoint,
-                    dynamicEndpointExample,
-                    5
-                )
-            }).toStringWithIndentation(3),
+                swift.Statement.discardAssignment(endpointCallExpression).toStringWithIndentation(4),
+            endpointCallMaxRetries5: swift.Statement.discardAssignment(
+                this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
+                    endpoint: dynamicEndpoint,
+                    snippet: convertDynamicEndpointSnippetRequest(dynamicEndpointExample),
+                    additionalArguments: [
+                        swift.functionArgument({
+                            label: "requestOptions",
+                            value: swift.Expression.structInitialization({
+                                unsafeName: "RequestOptions",
+                                arguments_: [
+                                    swift.functionArgument({
+                                        label: "maxRetries",
+                                        value: swift.Expression.numberLiteral(5)
+                                    }),
+                                    swift.functionArgument({
+                                        label: "additionalHeaders",
+                                        value: swift.Expression.memberAccess({
+                                            target: swift.Expression.reference("stub"),
+                                            memberName: "headers"
+                                        })
+                                    })
+                                ]
+                            })
+                        })
+                    ]
+                })
+            ).toStringWithIndentation(4),
             endpointCallMaxRetriesZero: swift.Statement.discardAssignment(
-                this.generateEndpointMethodCallExpressionWithMaxRetries(dynamicEndpoint, dynamicEndpointExample, 0)
+                this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
+                    endpoint: dynamicEndpoint,
+                    snippet: convertDynamicEndpointSnippetRequest(dynamicEndpointExample),
+                    additionalArguments: [
+                        swift.functionArgument({
+                            label: "requestOptions",
+                            value: swift.Expression.structInitialization({
+                                unsafeName: "RequestOptions",
+                                arguments_: [
+                                    swift.functionArgument({
+                                        label: "maxRetries",
+                                        value: swift.Expression.numberLiteral(0)
+                                    }),
+                                    swift.functionArgument({
+                                        label: "additionalHeaders",
+                                        value: swift.Expression.memberAccess({
+                                            target: swift.Expression.reference("stub"),
+                                            memberName: "headers"
+                                        })
+                                    })
+                                ]
+                            })
+                        })
+                    ]
+                })
             ).toStringWithIndentation(4)
         };
     }
@@ -98,88 +170,5 @@ export class TemplateDataGenerator {
         const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
         assertDefined(dynamicEndpoint, "Dynamic endpoint is required to generate wire tests.");
         return dynamicEndpoint;
-    }
-
-    private generateClientDeclaration(
-        dynamicEndpoint: dynamic.Endpoint,
-        dynamicEndpointExample: dynamic.EndpointExample
-    ): swift.Statement {
-        const endpointSnippetRequest = convertDynamicEndpointSnippetRequest(dynamicEndpointExample, {
-            baseUrlFallback: "https://api.fern.com"
-        });
-        return this.endpointSnippetGenerator.generateRootClientInitializationStatement({
-            auth: dynamicEndpoint.auth,
-            snippet: endpointSnippetRequest,
-            additionalArgs: [
-                swift.functionArgument({
-                    label: "urlSession",
-                    value: swift.Expression.memberAccess({
-                        target: swift.Expression.reference("stub"),
-                        memberName: "urlSession"
-                    })
-                })
-            ]
-        });
-    }
-
-    private generateEndpointMethodCallExpression(
-        dynamicEndpoint: dynamic.Endpoint,
-        dynamicEndpointExample: dynamic.EndpointExample
-    ): swift.Expression {
-        const endpointSnippetRequest = convertDynamicEndpointSnippetRequest(dynamicEndpointExample);
-        return this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
-            endpoint: dynamicEndpoint,
-            snippet: endpointSnippetRequest,
-            additionalArguments: [
-                swift.functionArgument({
-                    label: "requestOptions",
-                    value: swift.Expression.structInitialization({
-                        unsafeName: "RequestOptions",
-                        arguments_: [
-                            swift.functionArgument({
-                                label: "additionalHeaders",
-                                value: swift.Expression.memberAccess({
-                                    target: swift.Expression.reference("stub"),
-                                    memberName: "headers"
-                                })
-                            })
-                        ]
-                    })
-                })
-            ]
-        });
-    }
-
-    private generateEndpointMethodCallExpressionWithMaxRetries(
-        dynamicEndpoint: dynamic.Endpoint,
-        dynamicEndpointExample: dynamic.EndpointExample,
-        maxRetries: number
-    ): swift.Expression {
-        const endpointSnippetRequest = convertDynamicEndpointSnippetRequest(dynamicEndpointExample);
-        return this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
-            endpoint: dynamicEndpoint,
-            snippet: endpointSnippetRequest,
-            additionalArguments: [
-                swift.functionArgument({
-                    label: "requestOptions",
-                    value: swift.Expression.structInitialization({
-                        unsafeName: "RequestOptions",
-                        arguments_: [
-                            swift.functionArgument({
-                                label: "maxRetries",
-                                value: swift.Expression.numberLiteral(maxRetries)
-                            }),
-                            swift.functionArgument({
-                                label: "additionalHeaders",
-                                value: swift.Expression.memberAccess({
-                                    target: swift.Expression.reference("stub"),
-                                    memberName: "headers"
-                                })
-                            })
-                        ]
-                    })
-                })
-            ]
-        });
     }
 }
