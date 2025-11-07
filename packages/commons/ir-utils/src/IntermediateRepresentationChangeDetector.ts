@@ -1035,8 +1035,8 @@ export class IntermediateRepresentationChangeDetector {
             case "list":
                 if (to.type === "list") {
                     return this.areTypeReferencesCompatible({
-                        from: from.list,
-                        to: to.list
+                        from: from.itemType,
+                        to: to.itemType
                     });
                 }
                 break;

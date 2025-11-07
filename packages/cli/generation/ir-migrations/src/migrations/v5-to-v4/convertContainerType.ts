@@ -5,7 +5,7 @@ export function convertContainerType(
     containerType: IrVersions.V5.types.ContainerType
 ): IrVersions.V4.types.ContainerType {
     return IrVersions.V5.types.ContainerType._visit<IrVersions.V4.types.ContainerType>(containerType, {
-        list: (itemType) => IrVersions.V4.types.ContainerType.list(convertTypeReference(itemType)),
+        list: (listType) => IrVersions.V4.types.ContainerType.list(convertTypeReference(listType.itemType)),
         set: (itemType) => IrVersions.V4.types.ContainerType.set(convertTypeReference(itemType)),
         map: ({ keyType, valueType }) =>
             IrVersions.V4.types.ContainerType.map({

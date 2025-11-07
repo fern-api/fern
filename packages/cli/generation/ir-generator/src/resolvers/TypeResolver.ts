@@ -164,7 +164,10 @@ export class TypeResolverImpl implements TypeResolver {
                                   itemType
                               },
                               originalTypeReference: TypeReference.container(
-                                  ContainerType.list(itemType.originalTypeReference)
+                                  ContainerType.list({
+                                      itemType: itemType.originalTypeReference,
+                                      validation: undefined
+                                  })
                               )
                           }
                         : undefined,

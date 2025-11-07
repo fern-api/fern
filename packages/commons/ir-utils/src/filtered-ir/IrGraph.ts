@@ -720,7 +720,7 @@ function populateReferencesFromContainer(
 ) {
     ContainerType._visit(containerType, {
         list: (listType) => {
-            populateReferencesFromTypeReference(listType, referencedTypes, referencedSubpackages);
+            populateReferencesFromTypeReference(listType.itemType, referencedTypes, referencedSubpackages);
         },
         map: (mapType) => {
             populateReferencesFromTypeReference(mapType.keyType, referencedTypes, referencedSubpackages);

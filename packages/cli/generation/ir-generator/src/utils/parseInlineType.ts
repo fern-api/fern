@@ -22,7 +22,13 @@ export function parseInlineType({ type, file, _default, validation }: parseInlin
             primitive: TypeReference.primitive,
             unknown: TypeReference.unknown,
             map: ({ keyType, valueType }) => TypeReference.container(ContainerType.map({ keyType, valueType })),
-            list: (valueType) => TypeReference.container(ContainerType.list(valueType)),
+            list: (valueType) =>
+                TypeReference.container(
+                    ContainerType.list({
+                        itemType: valueType,
+                        validation: undefined
+                    })
+                ),
             set: (valueType) => TypeReference.container(ContainerType.set(valueType)),
             optional: (valueType) => TypeReference.container(ContainerType.optional(valueType)),
             nullable: (valueType) => TypeReference.container(ContainerType.nullable(valueType)),

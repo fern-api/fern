@@ -25,6 +25,8 @@ export * from "./NamedType";
 export * from "./NamedTypeDefault";
 export * from "./EnumTypeReference";
 export * from "./ContainerType";
+export * from "./ListType";
+export * from "./ListValidationRules";
 export * from "./MapType";
 export * from "./PrimitiveType";
 export * from "./PrimitiveTypeV1";

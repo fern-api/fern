@@ -411,7 +411,7 @@ export class DynamicSnippetsConverter {
     private convertContainerType(container: ContainerType): DynamicSnippets.TypeReference {
         switch (container.type) {
             case "list":
-                return DynamicSnippets.TypeReference.list(this.convertTypeReference(container.list));
+                return DynamicSnippets.TypeReference.list(this.convertTypeReference(container.itemType));
             case "map":
                 return DynamicSnippets.TypeReference.map({
                     key: this.convertTypeReference(container.keyType),

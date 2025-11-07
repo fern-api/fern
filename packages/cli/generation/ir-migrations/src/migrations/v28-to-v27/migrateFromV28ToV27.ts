@@ -565,7 +565,7 @@ function maybeConvertBooleanLiteralForTypeReference(val: IrVersions.V28.TypeRefe
 function maybeConvertBooleanLiteralForContainer(container: IrVersions.V28.ContainerType): IrVersions.V27.ContainerType {
     switch (container.type) {
         case "list":
-            return IrVersions.V27.ContainerType.list(maybeConvertBooleanLiteralForTypeReference(container.list));
+            return IrVersions.V27.ContainerType.list(maybeConvertBooleanLiteralForTypeReference(container.itemType));
         case "map":
             return IrVersions.V27.ContainerType.map({
                 keyType: maybeConvertBooleanLiteralForTypeReference(container.keyType),
