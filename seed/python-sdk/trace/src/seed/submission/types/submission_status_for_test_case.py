@@ -56,8 +56,11 @@ class SubmissionStatusForTestCase_Traced(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from ...commons.types.key_value_pair import KeyValuePair  # noqa: E402, I001
+from ...commons.types.map_value import MapValue  # noqa: E402, I001
+
 SubmissionStatusForTestCase = typing.Union[
     SubmissionStatusForTestCase_Graded, SubmissionStatusForTestCase_GradedV2, SubmissionStatusForTestCase_Traced
 ]
-update_forward_refs(SubmissionStatusForTestCase_Graded)
-update_forward_refs(SubmissionStatusForTestCase_Traced)
+update_forward_refs(SubmissionStatusForTestCase_Graded, KeyValuePair=KeyValuePair, MapValue=MapValue)
+update_forward_refs(SubmissionStatusForTestCase_Traced, KeyValuePair=KeyValuePair, MapValue=MapValue)

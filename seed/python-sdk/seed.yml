@@ -368,5 +368,4 @@ allowedFailures:
   - pagination-custom
   - response-property
   - streaming-parameter
-  - trace
   - websocket

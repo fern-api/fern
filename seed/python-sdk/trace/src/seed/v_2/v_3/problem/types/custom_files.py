@@ -33,6 +33,10 @@ class CustomFiles_Basic(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .....commons.types.list_type import ListType  # noqa: E402, I001
+from .....commons.types.map_type import MapType  # noqa: E402, I001
+
+
 class CustomFiles_Custom(UniversalBaseModel):
     value: typing.Dict[Language, Files]
     type: typing.Literal["custom"] = "custom"
@@ -47,4 +51,4 @@ class CustomFiles_Custom(UniversalBaseModel):
 
 
 CustomFiles = typing.Union[CustomFiles_Basic, CustomFiles_Custom]
-update_forward_refs(CustomFiles_Basic)
+update_forward_refs(CustomFiles_Basic, ListType=ListType, MapType=MapType)

@@ -46,5 +46,8 @@ class AssertCorrectnessCheck_Custom(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from ....commons.types.list_type import ListType  # noqa: E402, I001
+from ....commons.types.map_type import MapType  # noqa: E402, I001
+
 AssertCorrectnessCheck = typing.Union[AssertCorrectnessCheck_DeepEquality, AssertCorrectnessCheck_Custom]
-update_forward_refs(AssertCorrectnessCheck_Custom)
+update_forward_refs(AssertCorrectnessCheck_Custom, ListType=ListType, MapType=MapType)

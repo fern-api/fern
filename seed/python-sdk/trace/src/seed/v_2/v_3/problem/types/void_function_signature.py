@@ -22,4 +22,7 @@ class VoidFunctionSignature(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-update_forward_refs(VoidFunctionSignature)
+from .....commons.types.list_type import ListType  # noqa: E402, I001
+from .....commons.types.map_type import MapType  # noqa: E402, I001
+
+update_forward_refs(VoidFunctionSignature, ListType=ListType, MapType=MapType)

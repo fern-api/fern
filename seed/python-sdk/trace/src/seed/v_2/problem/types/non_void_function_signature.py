@@ -25,6 +25,8 @@ class NonVoidFunctionSignature(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from ....commons.types.list_type import ListType  # noqa: E402, I001
+from ....commons.types.map_type import MapType  # noqa: E402, I001
 from ....commons.types.variable_type import VariableType  # noqa: E402, I001
 
-update_forward_refs(NonVoidFunctionSignature)
+update_forward_refs(NonVoidFunctionSignature, ListType=ListType, MapType=MapType)

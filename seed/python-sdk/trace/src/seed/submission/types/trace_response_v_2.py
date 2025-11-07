@@ -37,6 +37,8 @@ class TraceResponseV2(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from ...commons.types.debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402, I001
+from ...commons.types.debug_map_value import DebugMapValue  # noqa: E402, I001
 from ...commons.types.debug_variable_value import DebugVariableValue  # noqa: E402, I001
 
-update_forward_refs(TraceResponseV2)
+update_forward_refs(TraceResponseV2, DebugKeyValuePairs=DebugKeyValuePairs, DebugMapValue=DebugMapValue)

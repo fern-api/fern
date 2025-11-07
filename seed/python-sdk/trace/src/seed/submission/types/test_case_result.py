@@ -26,6 +26,8 @@ class TestCaseResult(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from ...commons.types.key_value_pair import KeyValuePair  # noqa: E402, I001
+from ...commons.types.map_value import MapValue  # noqa: E402, I001
 from ...commons.types.variable_value import VariableValue  # noqa: E402, I001
 
-update_forward_refs(TestCaseResult)
+update_forward_refs(TestCaseResult, KeyValuePair=KeyValuePair, MapValue=MapValue)

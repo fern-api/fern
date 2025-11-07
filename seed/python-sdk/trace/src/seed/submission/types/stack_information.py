@@ -27,4 +27,7 @@ class StackInformation(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-update_forward_refs(StackInformation)
+from ...commons.types.debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402, I001
+from ...commons.types.debug_map_value import DebugMapValue  # noqa: E402, I001
+
+update_forward_refs(StackInformation, DebugKeyValuePairs=DebugKeyValuePairs, DebugMapValue=DebugMapValue)
