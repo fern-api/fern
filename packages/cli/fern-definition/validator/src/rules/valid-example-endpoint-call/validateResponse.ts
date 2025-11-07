@@ -85,7 +85,7 @@ function validateBodyResponse({
                     depth: 0
                 }).map((val): RuleViolation => {
                     return {
-                        severity: "fatal",
+                        severity: val.severity ?? "fatal",
                         message: val.message
                     };
                 })
@@ -131,10 +131,10 @@ function validateBodyResponse({
                         breadcrumbs: ["response", "body"],
                         depth: 0
                     }).map((val): RuleViolation => {
-                        return { severity: "fatal", message: val.message };
+                        return { severity: val.severity ?? "fatal", message: val.message };
                     })
                 );
-            } else if (example.body != null) {
+            }else if (example.body != null) {
                 violations.push({
                     severity: "fatal",
                     message: `Unexpected response in example. ${chalk.bold(example.error)} does not have a body.`
@@ -187,7 +187,7 @@ function validateStreamResponse({
                     breadcrumbs: ["response", "body"],
                     depth: 0
                 }).map((val): RuleViolation => {
-                    return { severity: "fatal", message: val.message };
+                    return { severity: val.severity ?? "fatal", message: val.message };
                 })
             );
         }
@@ -239,7 +239,7 @@ function validateSseResponse({
                     breadcrumbs: ["response", "body"],
                     depth: 0
                 }).map((val): RuleViolation => {
-                    return { severity: "fatal", message: val.message };
+                    return { severity: val.severity ?? "fatal", message: val.message };
                 })
             );
         }
