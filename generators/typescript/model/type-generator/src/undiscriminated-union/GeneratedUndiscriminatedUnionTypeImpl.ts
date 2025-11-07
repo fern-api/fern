@@ -29,11 +29,14 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
     implements GeneratedUndiscriminatedUnionType<Context>
 {
     public readonly type = "undiscriminatedUnion";
+    private shouldUseHelperInterfaces = false;
 
     public generateStatements(
         context: Context
     ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
         const statements: StatementStructures[] = [];
+
+        this.shouldUseHelperInterfaces = true;
 
         const helperInterfaces = this.generateHelperInterfaces(context);
         statements.push(...helperInterfaces);
@@ -210,6 +213,10 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
         const container = member.type.container;
 
         if (container.type === "list") {
+            if (!this.isSelfRecursive(context, container.list)) {
+                return undefined;
+            }
+
             const helperName = `${this.typeName}Array`;
             if (seenHelpers.has(helperName)) {
                 return undefined;
@@ -222,13 +229,15 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
                 isExported: true,
                 extends: [
                     (writer) => {
-                        writer.write("Array<");
-                        writer.write(this.getTypeNodeStringForContainer(context, container.list));
-                        writer.write(">");
+                        writer.write(`Array<${this.typeName}>`);
                     }
                 ]
             };
         } else if (container.type === "map") {
+            if (!this.isSelfRecursive(context, container.valueType)) {
+                return undefined;
+            }
+
             const helperName = `${this.typeName}Object`;
             if (seenHelpers.has(helperName)) {
                 return undefined;
@@ -241,15 +250,22 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
                 isExported: true,
                 extends: [
                     (writer) => {
-                        writer.write("Record<string, ");
-                        writer.write(this.getTypeNodeStringForContainer(context, container.valueType));
-                        writer.write(">");
+                        writer.write(`Record<string, ${this.typeName}>`);
                     }
                 ]
             };
         }
 
         return undefined;
+    }
+
+    private isSelfRecursive(context: Context, typeRef: TypeReference): boolean {
+        if (typeRef.type !== "named") {
+            return false;
+        }
+
+        const namedTypeDeclaration = context.type.getTypeDeclaration(typeRef);
+        return namedTypeDeclaration.name.name.pascalCase.unsafeName === this.typeName;
     }
 
     private getTypeNodeStringForContainer(context: Context, typeRef: TypeReference): string {
@@ -273,10 +289,12 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
 
         const container = member.type.container;
 
-        if (container.type === "list") {
-            return ts.factory.createTypeReferenceNode(`${this.typeName}Array`);
-        } else if (container.type === "map") {
-            return ts.factory.createTypeReferenceNode(`${this.typeName}Object`);
+        if (this.shouldUseHelperInterfaces) {
+            if (container.type === "list" && this.isSelfRecursive(context, container.list)) {
+                return ts.factory.createTypeReferenceNode(`${this.typeName}Array`);
+            } else if (container.type === "map" && this.isSelfRecursive(context, container.valueType)) {
+                return ts.factory.createTypeReferenceNode(`${this.typeName}Object`);
+            }
         }
 
         return this.getTypeNode(context, member);

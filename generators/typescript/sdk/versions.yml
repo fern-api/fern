@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.28.6
+  changelogEntry:
+    - summary: |
+        Fix circular type alias errors (TS2456) in undiscriminated unions by generating helper interfaces for self-recursive container members.
+        When an undiscriminated union contains `Array<ThisUnion>` or `Record<string, ThisUnion>`, the generator now emits helper interfaces like `interface ThisUnionArray extends Array<ThisUnion> {}` to avoid TypeScript's circular type alias restriction.
+        Non-self-recursive containers remain as inline types, preserving correct behavior for both standalone and inline unions.
+      type: fix
+  createdAt: "2025-11-07"
+  irVersion: 61
+
 - version: 3.28.5
   changelogEntry:
     - summary: Fix issue where logs were logged even when the respective log level was disabled.
