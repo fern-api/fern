@@ -42,14 +42,14 @@ import java.util.concurrent.TimeUnit;
 import javax.lang.model.element.Modifier;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.WebSocket;
-import okhttp3.WebSocketListener;
 
 public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
 
     // Field for connection latch
     private final FieldSpec connectionLatchField;
+
+    // Field for reconnecting listener
+    private final FieldSpec reconnectingListenerField;
 
     public SyncWebSocketChannelWriter(
             WebSocketChannel websocketChannel,
@@ -70,12 +70,24 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
 
         this.connectionLatchField = FieldSpec.builder(CountDownLatch.class, "connectionLatch", Modifier.PRIVATE)
                 .build();
+
+        this.reconnectingListenerField = FieldSpec.builder(
+                        ClassName.get(
+                                clientGeneratorContext
+                                        .getPoetClassNameFactory()
+                                        .getCoreClassName("ReconnectingWebSocketListener")
+                                        .packageName(),
+                                "ReconnectingWebSocketListener"),
+                        "reconnectingListener",
+                        Modifier.PRIVATE)
+                .build();
     }
 
     @Override
     protected void addFields(TypeSpec.Builder classBuilder) {
         super.addFields(classBuilder);
         classBuilder.addField(connectionLatchField);
+        classBuilder.addField(reconnectingListenerField);
     }
 
     @Override
@@ -144,7 +156,7 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
     protected MethodSpec generateConnectMethod() {
         MethodSpec.Builder builder = MethodSpec.methodBuilder("connect")
                 .addModifiers(Modifier.PUBLIC)
-                .addJavadoc("Establishes the WebSocket connection.\n")
+                .addJavadoc("Establishes the WebSocket connection with automatic reconnection.\n")
                 .addJavadoc("@throws RuntimeException if connection fails\n");
 
         // Build WebSocket URL
@@ -221,51 +233,106 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
             }
         }
 
-        builder.addStatement("$T request = requestBuilder.build()", Request.class);
+        builder.addStatement("final $T request = requestBuilder.build()", Request.class);
 
         // Set state to CONNECTING
         ClassName readyStateClassName =
                 ClassName.get(className.packageName(), className.simpleName(), "WebSocketReadyState");
         builder.addStatement("this.$N = $T.CONNECTING", readyStateField, readyStateClassName);
 
-        // Create WebSocket connection
-        builder.addStatement(
-                "this.$N = $N.newWebSocket(request, $L)",
-                webSocketField,
-                okHttpClientField,
-                generateWebSocketListener());
+        // Create ReconnectingWebSocketListener with connection supplier
+        ClassName reconnectingListenerClass = ClassName.get(
+                clientGeneratorContext
+                        .getPoetClassNameFactory()
+                        .getCoreClassName("ReconnectingWebSocketListener")
+                        .packageName(),
+                "ReconnectingWebSocketListener");
+        ClassName reconnectOptionsClass = ClassName.get(
+                clientGeneratorContext
+                        .getPoetClassNameFactory()
+                        .getCoreClassName("ReconnectingWebSocketListener")
+                        .packageName(),
+                "ReconnectingWebSocketListener",
+                "ReconnectOptions");
 
-        // Setup timeout executor
+        // Create reconnection options with defaults
         builder.addStatement(
-                "this.$N = $T.newSingleThreadScheduledExecutor()",
-                timeoutExecutorField,
-                ClassName.get("java.util.concurrent", "Executors"));
+                "$T reconnectOptions = $T.builder().build()", reconnectOptionsClass, reconnectOptionsClass);
+
+        // Create the connection supplier lambda
+        builder.addCode(
+                "this.$N = new $T(reconnectOptions, () -> {\n", reconnectingListenerField, reconnectingListenerClass);
+        builder.beginControlFlow("    if ($N.webSocketFactory().isPresent())", clientOptionsField);
+        builder.addStatement(
+                "return $N.webSocketFactory().get().create(request, this.$N)",
+                clientOptionsField,
+                reconnectingListenerField);
+        builder.endControlFlow();
+        builder.beginControlFlow("    else");
+        builder.addStatement("return $N.newWebSocket(request, this.$N)", okHttpClientField, reconnectingListenerField);
+        builder.endControlFlow();
+        builder.addCode("}) {\n");
+
+        // Override abstract methods to handle lifecycle events
+        builder.addCode("    @Override\n");
+        builder.addCode(
+                "    protected void onWebSocketOpen($T webSocket, $T response) {\n",
+                ClassName.get("okhttp3", "WebSocket"),
+                ClassName.get("okhttp3", "Response"));
+        // webSocket is set internally in ReconnectingWebSocketListener.onOpen()
+        builder.addStatement("        $N = $T.OPEN", readyStateField, readyStateClassName);
+        builder.beginControlFlow("        if ($N != null)", onConnectedHandlerField);
+        builder.addStatement("            $N.run()", onConnectedHandlerField);
+        builder.endControlFlow();
+        builder.addStatement("        $N.countDown()", connectionLatchField);
+        builder.addCode("    }\n\n");
+
+        builder.addCode("    @Override\n");
+        builder.addCode(
+                "    protected void onWebSocketMessage($T webSocket, String text) {\n",
+                ClassName.get("okhttp3", "WebSocket"));
+        builder.addStatement("        handleIncomingMessage(text)");
+        builder.addCode("    }\n\n");
+
+        builder.addCode("    @Override\n");
+        builder.addCode(
+                "    protected void onWebSocketFailure($T webSocket, Throwable t, $T response) {\n",
+                ClassName.get("okhttp3", "WebSocket"),
+                ClassName.get("okhttp3", "Response"));
+        builder.addStatement("        $N = $T.CLOSED", readyStateField, readyStateClassName);
+        builder.beginControlFlow("        if ($N != null)", onErrorHandlerField);
+        builder.addStatement("            $N.accept(new $T(t))", onErrorHandlerField, RuntimeException.class);
+        builder.endControlFlow();
+        builder.addCode("    }\n\n");
+
+        builder.addCode("    @Override\n");
+        builder.addCode(
+                "    protected void onWebSocketClosed($T webSocket, int code, String reason) {\n",
+                ClassName.get("okhttp3", "WebSocket"));
+        builder.addStatement("        $N = $T.CLOSED", readyStateField, readyStateClassName);
+        builder.beginControlFlow("        if ($N != null)", onDisconnectedHandlerField);
+        builder.addStatement(
+                "    $N.accept(new $T(code, reason))",
+                onDisconnectedHandlerField,
+                ClassName.get(className.packageName(), className.simpleName(), "DisconnectReason"));
+        builder.endControlFlow();
+        builder.addCode("    }\n");
+        builder.addStatement("}");
+
+        // Trigger connection
+        builder.addStatement("$N.connect()", reconnectingListenerField);
 
         // Wait for connection with timeout
         builder.beginControlFlow("try");
         builder.beginControlFlow("if (!$N.await(10, $T.SECONDS))", connectionLatchField, TimeUnit.class);
-        builder.beginControlFlow("if ($N != null)", webSocketField);
-        builder.addStatement("$N.close(1000, $S)", webSocketField, "Connection timeout");
-        builder.addStatement("$N = null", webSocketField);
-        builder.endControlFlow();
+        builder.addStatement("$N.disconnect()", reconnectingListenerField);
         builder.addStatement("this.$N = $T.CLOSED", readyStateField, readyStateClassName);
-        builder.beginControlFlow("if ($N != null)", timeoutExecutorField);
-        builder.addStatement("$N.shutdownNow()", timeoutExecutorField);
-        builder.addStatement("$N = null", timeoutExecutorField);
-        builder.endControlFlow();
         builder.addStatement("throw new $T($S)", RuntimeException.class, "WebSocket connection timeout");
         builder.endControlFlow();
         builder.endControlFlow();
         builder.beginControlFlow("catch ($T e)", InterruptedException.class);
-        builder.beginControlFlow("if ($N != null)", webSocketField);
-        builder.addStatement("$N.close(1000, $S)", webSocketField, "Connection interrupted");
-        builder.addStatement("$N = null", webSocketField);
-        builder.endControlFlow();
+        builder.addStatement("$N.disconnect()", reconnectingListenerField);
         builder.addStatement("this.$N = $T.CLOSED", readyStateField, readyStateClassName);
-        builder.beginControlFlow("if ($N != null)", timeoutExecutorField);
-        builder.addStatement("$N.shutdownNow()", timeoutExecutorField);
-        builder.addStatement("$N = null", timeoutExecutorField);
-        builder.endControlFlow();
         builder.addStatement("throw new $T($S, e)", RuntimeException.class, "WebSocket connection interrupted");
         builder.endControlFlow();
 
@@ -302,12 +369,10 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
                 .addStatement("envelope.put($S, type)", "type")
                 .addStatement("envelope.put($S, body)", "body")
                 .addStatement("String json = $N.writeValueAsString(envelope)", objectMapperField)
-                .addStatement("boolean queued = $N.send(json)", webSocketField)
-                .beginControlFlow("if (!queued)")
-                .addStatement(
-                        "throw new $T($S)",
-                        RuntimeException.class,
-                        "Failed to queue message - WebSocket may be closing or closed")
+                .addComment("Use reconnecting listener's send method which handles queuing")
+                .addStatement("boolean sent = $N.send(json)", reconnectingListenerField)
+                .beginControlFlow("if (!sent)")
+                .addComment("Message was queued for later delivery when reconnected")
                 .endControlFlow()
                 .endControlFlow()
                 .beginControlFlow("catch ($T e)", IllegalStateException.class)
@@ -319,63 +384,41 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
                 .build();
     }
 
-    private TypeSpec generateWebSocketListener() {
+    @Override
+    protected MethodSpec generateAssertSocketIsOpen() {
         ClassName readyStateClassName =
                 ClassName.get(className.packageName(), className.simpleName(), "WebSocketReadyState");
-        return TypeSpec.anonymousClassBuilder("")
-                .superclass(WebSocketListener.class)
-                .addMethod(MethodSpec.methodBuilder("onOpen")
-                        .addAnnotation(Override.class)
-                        .addModifiers(Modifier.PUBLIC)
-                        .addParameter(WebSocket.class, "webSocket")
-                        .addParameter(Response.class, "response")
-                        .addStatement("$N = $T.OPEN", readyStateField, readyStateClassName)
-                        .beginControlFlow("if ($N != null)", onConnectedHandlerField)
-                        .addStatement("$N.run()", onConnectedHandlerField)
-                        .endControlFlow()
-                        .addStatement("$N.countDown()", connectionLatchField)
-                        .build())
-                .addMethod(MethodSpec.methodBuilder("onMessage")
-                        .addAnnotation(Override.class)
-                        .addModifiers(Modifier.PUBLIC)
-                        .addParameter(WebSocket.class, "webSocket")
-                        .addParameter(String.class, "text")
-                        .addStatement("handleIncomingMessage(text)")
-                        .build())
-                .addMethod(MethodSpec.methodBuilder("onFailure")
-                        .addAnnotation(Override.class)
-                        .addModifiers(Modifier.PUBLIC)
-                        .addParameter(WebSocket.class, "webSocket")
-                        .addParameter(Throwable.class, "t")
-                        .addParameter(Response.class, "response")
-                        .addStatement("$N = $T.CLOSED", readyStateField, readyStateClassName)
-                        .beginControlFlow("if ($N != null)", onErrorHandlerField)
-                        .addStatement("$N.accept(new $T(t))", onErrorHandlerField, RuntimeException.class)
-                        .endControlFlow()
-                        .addStatement("$N.countDown()", connectionLatchField)
-                        .build())
-                .addMethod(MethodSpec.methodBuilder("onClosing")
-                        .addAnnotation(Override.class)
-                        .addModifiers(Modifier.PUBLIC)
-                        .addParameter(WebSocket.class, "webSocket")
-                        .addParameter(int.class, "code")
-                        .addParameter(String.class, "reason")
-                        .addStatement("$N = $T.CLOSING", readyStateField, readyStateClassName)
-                        .build())
-                .addMethod(MethodSpec.methodBuilder("onClosed")
-                        .addAnnotation(Override.class)
-                        .addModifiers(Modifier.PUBLIC)
-                        .addParameter(WebSocket.class, "webSocket")
-                        .addParameter(int.class, "code")
-                        .addParameter(String.class, "reason")
-                        .addStatement("$N = $T.CLOSED", readyStateField, readyStateClassName)
-                        .beginControlFlow("if ($N != null)", onDisconnectedHandlerField)
-                        .addStatement(
-                                "$N.accept(new $T(code, reason))",
-                                onDisconnectedHandlerField,
-                                ClassName.get(className.packageName(), className.simpleName(), "DisconnectReason"))
-                        .endControlFlow()
-                        .build())
+
+        return MethodSpec.methodBuilder("assertSocketIsOpen")
+                .addModifiers(Modifier.PRIVATE)
+                .addJavadoc("Ensures the WebSocket is connected and ready to send messages.\n")
+                .addJavadoc("@throws IllegalStateException if the socket is not connected or not open\n")
+                .beginControlFlow("if ($N.getWebSocket() == null)", reconnectingListenerField)
+                .addStatement(
+                        "throw new $T($S)",
+                        IllegalStateException.class,
+                        "WebSocket is not connected. Call connect() first.")
+                .endControlFlow()
+                .beginControlFlow("if ($N != $T.OPEN)", readyStateField, readyStateClassName)
+                .addStatement(
+                        "throw new $T($S + $N)",
+                        IllegalStateException.class,
+                        "WebSocket is not open. Current state: ",
+                        readyStateField)
+                .endControlFlow()
+                .build();
+    }
+
+    @Override
+    protected MethodSpec generateDisconnectMethod() {
+        return MethodSpec.methodBuilder("disconnect")
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc("Disconnects the WebSocket connection and releases resources.\n")
+                .addStatement("$N.disconnect()", reconnectingListenerField)
+                .beginControlFlow("if ($N != null)", timeoutExecutorField)
+                .addStatement("$N.shutdownNow()", timeoutExecutorField)
+                .addStatement("$N = null", timeoutExecutorField)
+                .endControlFlow()
                 .build();
     }
 }
