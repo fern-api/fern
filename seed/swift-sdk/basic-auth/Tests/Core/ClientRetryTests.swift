@@ -21,7 +21,7 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.basicAuth.getWithBasicAuth()
+        let response = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         try #require(response == true)
         try #require(stub.getRequestCount() == 3)
@@ -45,7 +45,7 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.basicAuth.getWithBasicAuth()
+        let response = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         try #require(response == true)
         try #require(stub.getRequestCount() == 3)
@@ -69,7 +69,7 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.basicAuth.getWithBasicAuth()
+        let response = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         try #require(response == true)
         try #require(stub.getRequestCount() == 3)
@@ -92,7 +92,7 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.basicAuth.getWithBasicAuth()
+        let response = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         try #require(response == true)
         try #require(stub.getRequestCount() == 2)
@@ -115,7 +115,7 @@ import Testing
         )
 
         do {
-            _ = try await client.basicAuth.getWithBasicAuth()
+            _ = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -140,7 +140,7 @@ import Testing
         )
 
         do {
-            _ = try await client.basicAuth.getWithBasicAuth()
+            _ = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -165,7 +165,7 @@ import Testing
         )
 
         do {
-        _ = try await client.basicAuth.getWithBasicAuth()
+        _ = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -194,7 +194,7 @@ import Testing
         )
 
         let startTime = Date()
-        let response = try await client.basicAuth.getWithBasicAuth()
+        let response = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         let elapsed = Date().timeIntervalSince(startTime)
 
@@ -232,7 +232,7 @@ import Testing
         )
 
         let startTime = Date()
-        let response = try await client.basicAuth.getWithBasicAuth()
+        let response = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         let elapsed = Date().timeIntervalSince(startTime)
 
@@ -266,7 +266,7 @@ import Testing
         )
 
         let startTime = Date()
-        let response = try await client.basicAuth.getWithBasicAuth()
+        let response = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         let elapsed = Date().timeIntervalSince(startTime)
 
@@ -311,7 +311,7 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(maxRetries: 5))
+        let response = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers))
 
         try #require(response == true)
         try #require(stub.getRequestCount() == 6)
@@ -331,7 +331,7 @@ import Testing
         )
 
         do {
-            _ = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(maxRetries: 0))
+            _ = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -355,7 +355,7 @@ import Testing
             urlSession: stub.urlSession
         )
 
-        let response = try await client.basicAuth.getWithBasicAuth()
+        let response = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         try #require(response == true)
         try #require(stub.getRequestCount() == 1)

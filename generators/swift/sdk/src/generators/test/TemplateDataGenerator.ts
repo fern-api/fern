@@ -129,7 +129,24 @@ export class TemplateDataGenerator {
         const endpointSnippetRequest = convertDynamicEndpointSnippetRequest(dynamicEndpointExample);
         return this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
             endpoint: dynamicEndpoint,
-            snippet: endpointSnippetRequest
+            snippet: endpointSnippetRequest,
+            additionalArguments: [
+                swift.functionArgument({
+                    label: "requestOptions",
+                    value: swift.Expression.structInitialization({
+                        unsafeName: "RequestOptions",
+                        arguments_: [
+                            swift.functionArgument({
+                                label: "additionalHeaders",
+                                value: swift.Expression.memberAccess({
+                                    target: swift.Expression.reference("stub"),
+                                    memberName: "headers"
+                                })
+                            })
+                        ]
+                    })
+                })
+            ]
         });
     }
 
@@ -151,6 +168,13 @@ export class TemplateDataGenerator {
                             swift.functionArgument({
                                 label: "maxRetries",
                                 value: swift.Expression.numberLiteral(maxRetries)
+                            }),
+                            swift.functionArgument({
+                                label: "additionalHeaders",
+                                value: swift.Expression.memberAccess({
+                                    target: swift.Expression.reference("stub"),
+                                    memberName: "headers"
+                                })
                             })
                         ]
                     })

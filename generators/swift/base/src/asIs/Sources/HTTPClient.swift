@@ -201,13 +201,7 @@ final class HTTPClient: Sendable {
         for (key, value) in requestOptions?.additionalHeaders ?? [:] {
             headers[key] = value
         }
-        // Ensure Stub-ID header is explicitly set on the request for Linux where
-        // URLProtocol may not see httpAdditionalHeaders at interception time.
-        if let additional = clientConfig.urlSession.configuration.httpAdditionalHeaders,
-            let stubHeader = additional["Stub-ID"] as? String
-        {
-            headers["Stub-ID"] = stubHeader
-        }
+
         return headers
     }
 

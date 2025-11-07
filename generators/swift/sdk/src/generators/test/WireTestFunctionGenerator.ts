@@ -167,7 +167,24 @@ export class WireTestFunctionGenerator {
             unsafeName: "response",
             value: this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
                 endpoint: this.dynamicEndpoint,
-                snippet: endpointSnippetRequest
+                snippet: endpointSnippetRequest,
+                additionalArguments: [
+                    swift.functionArgument({
+                        label: "requestOptions",
+                        value: swift.Expression.structInitialization({
+                            unsafeName: "RequestOptions",
+                            arguments_: [
+                                swift.functionArgument({
+                                    label: "additionalHeaders",
+                                    value: swift.Expression.memberAccess({
+                                        target: swift.Expression.reference("stub"),
+                                        memberName: "headers"
+                                    })
+                                })
+                            ]
+                        })
+                    })
+                ]
             })
         });
     }

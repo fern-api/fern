@@ -19,7 +19,7 @@ import BasicAuth
             urlSession: stub.urlSession
         )
         let expectedResponse = true
-        let response = try await client.basicAuth.getWithBasicAuth()
+        let response = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
@@ -39,7 +39,7 @@ import BasicAuth
             urlSession: stub.urlSession
         )
         let expectedResponse = true
-        let response = try await client.basicAuth.getWithBasicAuth()
+        let response = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
@@ -59,9 +59,12 @@ import BasicAuth
             urlSession: stub.urlSession
         )
         let expectedResponse = true
-        let response = try await client.basicAuth.postWithBasicAuth(request: .object([
-            "key": .string("value")
-        ]))
+        let response = try await client.basicAuth.postWithBasicAuth(
+            request: .object([
+                "key": .string("value")
+            ]),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
@@ -81,9 +84,12 @@ import BasicAuth
             urlSession: stub.urlSession
         )
         let expectedResponse = true
-        let response = try await client.basicAuth.postWithBasicAuth(request: .object([
-            "key": .string("value")
-        ]))
+        let response = try await client.basicAuth.postWithBasicAuth(
+            request: .object([
+                "key": .string("value")
+            ]),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

@@ -47,6 +47,10 @@ final class HTTPStub {
         session
     }
 
+    var headers: [String: String] {
+        ["Stub-ID": identifier.uuidString]
+    }
+
     func setResponse(
         statusCode: Int = 200,
         headers: [String: String] = ["Content-Type": "application/json"],
