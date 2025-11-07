@@ -416,7 +416,16 @@ class PydanticModel:
         ghost_refs_kwargs = []
         for ghost_ref in self._class_declaration.get_ghost_references():
             named_import = get_named_import_or_throw(ghost_ref)
-            ghost_refs_kwargs.append((named_import, AST.ReferenceNode(ghost_ref)))
+            clean_ref = AST.Reference(
+                qualified_name_excluding_import=ghost_ref.qualified_name_excluding_import,
+                import_=ghost_ref.import_,
+                is_forward_reference=ghost_ref.is_forward_reference,
+                must_import_after_current_declaration=False,  # Clear this flag
+                import_if_type_checking=ghost_ref.import_if_type_checking,
+                has_been_dynamically_imported=ghost_ref.has_been_dynamically_imported,
+                require_postponed_annotations=ghost_ref.require_postponed_annotations,
+            )
+            ghost_refs_kwargs.append((named_import, AST.ReferenceNode(clean_ref)))
 
         self._source_file.add_footer_expression(
             AST.Expression(
@@ -429,15 +438,33 @@ class PydanticModel:
         )
 
     def update_forward_refs_for_given_model(self, given_model: AST.ClassReference) -> None:
+        clean_local_ref = AST.Reference(
+            qualified_name_excluding_import=self._local_class_reference.qualified_name_excluding_import,
+            import_=self._local_class_reference.import_,
+            is_forward_reference=self._local_class_reference.is_forward_reference,
+            must_import_after_current_declaration=False,
+            import_if_type_checking=self._local_class_reference.import_if_type_checking,
+            has_been_dynamically_imported=self._local_class_reference.has_been_dynamically_imported,
+            require_postponed_annotations=self._local_class_reference.require_postponed_annotations,
+        )
         ghost_refs_kwargs = [
             (
                 get_named_import_or_throw(self._local_class_reference),
-                AST.ReferenceNode(self._local_class_reference),
+                AST.ReferenceNode(clean_local_ref),
             )
         ]
         for ghost_ref in self._class_declaration.get_ghost_references():
             named_import = get_named_import_or_throw(ghost_ref)
-            ghost_refs_kwargs.append((named_import, AST.ReferenceNode(ghost_ref)))
+            clean_ref = AST.Reference(
+                qualified_name_excluding_import=ghost_ref.qualified_name_excluding_import,
+                import_=ghost_ref.import_,
+                is_forward_reference=ghost_ref.is_forward_reference,
+                must_import_after_current_declaration=False,
+                import_if_type_checking=ghost_ref.import_if_type_checking,
+                has_been_dynamically_imported=ghost_ref.has_been_dynamically_imported,
+                require_postponed_annotations=ghost_ref.require_postponed_annotations,
+            )
+            ghost_refs_kwargs.append((named_import, AST.ReferenceNode(clean_ref)))
 
         self._source_file.add_footer_expression(
             AST.Expression(
