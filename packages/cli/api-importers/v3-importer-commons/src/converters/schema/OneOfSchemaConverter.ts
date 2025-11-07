@@ -116,8 +116,14 @@ export class OneOfSchemaConverter extends AbstractConverter<
                     wireValue: discriminant
                 });
 
+                const resolved = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
+                    reference: { $ref: reference },
+                    breadcrumbs: [...this.breadcrumbs, "discriminator", "mapping", discriminant]
+                });
+                const variantDocs = resolved.resolved ? resolved.value.description : undefined;
+
                 unionTypes.push({
-                    docs: undefined,
+                    docs: variantDocs,
                     discriminantValue: nameAndWireValue,
                     availability: convertedSchema.availability,
                     displayName: discriminant,
