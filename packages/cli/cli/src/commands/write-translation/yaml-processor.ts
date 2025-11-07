@@ -7,6 +7,7 @@ export async function translateYamlObject(
     obj: unknown,
     language: string,
     sourceLanguage: string,
+    filePath: string,
     cliContext: CliContext
 ): Promise<unknown> {
     if (obj === null || obj === undefined) {
@@ -18,17 +19,21 @@ export async function translateYamlObject(
     }
 
     if (Array.isArray(obj)) {
-        return await Promise.all(obj.map((item) => translateYamlObject(item, language, sourceLanguage, cliContext)));
+        return await Promise.all(
+            obj.map((item) => translateYamlObject(item, language, sourceLanguage, filePath, cliContext))
+        );
     }
 
     if (typeof obj === "object") {
         const result: Record<string, unknown> = {};
 
+        const fileType = filePath.endsWith(".yml") || filePath.endsWith(".yaml") ? "yaml" : "unknown";
+
         for (const [key, value] of Object.entries(obj)) {
             if (shouldTranslateValue(key, value)) {
-                result[key] = await translateText(value as string, language, sourceLanguage);
+                result[key] = await translateText(value as string, language, sourceLanguage, fileType);
             } else {
-                result[key] = await translateYamlObject(value, language, sourceLanguage, cliContext);
+                result[key] = await translateYamlObject(value, language, sourceLanguage, filePath, cliContext);
             }
         }
 
@@ -57,7 +62,7 @@ export async function translateYamlContent(
             return yamlContent;
         }
 
-        const translatedYaml = await translateYamlObject(parsedYaml, language, sourceLanguage, cliContext);
+        const translatedYaml = await translateYamlObject(parsedYaml, language, sourceLanguage, filePath, cliContext);
 
         const translatedYamlContent = yaml.dump(translatedYaml, {
             indent: 2,
