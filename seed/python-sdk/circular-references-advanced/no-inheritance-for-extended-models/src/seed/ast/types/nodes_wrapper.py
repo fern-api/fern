@@ -23,4 +23,4 @@ class NodesWrapper(UniversalBaseModel):
 
 from .node import Node  # noqa: E402, I001
 
-update_forward_refs(NodesWrapper)
+update_forward_refs(NodesWrapper, BranchNode="BranchNode")

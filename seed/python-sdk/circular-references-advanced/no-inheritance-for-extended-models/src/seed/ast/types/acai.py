@@ -23,4 +23,4 @@ class Acai(UniversalBaseModel):
 
 from .animal import Animal  # noqa: E402, I001
 
-update_forward_refs(Acai)
+update_forward_refs(Acai, Berry="Berry", Cat="Cat", Dog="Dog", Fig="Fig")
