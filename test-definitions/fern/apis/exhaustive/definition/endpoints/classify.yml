@@ -1,0 +1,41 @@
+imports:
+  classify: ../types/classify.yml
+
+service:
+  auth: true
+  base-path: /classify
+  endpoints:
+    classify:
+      docs: Classifies text inputs based on provided examples
+      path: ""
+      method: POST
+      request: classify.ClassifyRequest
+      response: classify.ClassifyResponse
+      examples:
+        - name: SpamClassification
+          request:
+            model: "spam-classifier-v1"
+            examples:
+              - text: "Dermatologists don't like her!"
+                label: "Spam"
+              - text: "Hello, open to this?"
+                label: "Spam"
+              - text: "I need help please wire me $1000 right now"
+                label: "Spam"
+              - text: "Your parcel will be delivered today"
+                label: "Not spam"
+              - text: "Review changes to our Terms and Conditions"
+                label: "Not spam"
+            inputs:
+              - "Confirm your email address"
+              - "hey i need u to send some $"
+          response:
+            body:
+              id: "classify-123"
+              classifications:
+                - input: "Confirm your email address"
+                  prediction: "Not spam"
+                  confidence: 0.85
+                - input: "hey i need u to send some $"
+                  prediction: "Spam"
+                  confidence: 0.92

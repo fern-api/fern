@@ -1,0 +1,46 @@
+types:
+  ClassifyExample:
+    docs: Represents a single training example for classification
+    properties:
+      text:
+        type: string
+        docs: The text content of the example
+      label:
+        type: string
+        docs: The label/class for this example
+
+  ClassifyRequest:
+    docs: Request for classifying text inputs
+    properties:
+      model:
+        type: optional<string>
+        docs: The model ID to use for classification
+      examples:
+        type: list<ClassifyExample>
+        docs: Training examples for the classifier
+      inputs:
+        type: list<string>
+        docs: The texts to classify
+
+  ClassifyClassification:
+    docs: A single classification result
+    properties:
+      input:
+        type: string
+        docs: The input text that was classified
+      prediction:
+        type: string
+        docs: The predicted label
+      confidence:
+        type: double
+        docs: Confidence score for the prediction
+
+  ClassifyResponse:
+    docs: Response containing classification results
+    properties:
+      id:
+        type: string
+        docs: Unique identifier for this classification request
+      classifications:
+        type: list<ClassifyClassification>
+        docs: The classification results for each input
