@@ -45,10 +45,7 @@ function maybeResolveCodeReference(code: unknown, baseDir: string | undefined): 
     return undefined;
 }
 
-function resolveCodeSamples(
-    codeSamples: unknown,
-    baseDir: string | undefined
-): RawSchemas.ExampleCodeSampleSchema[] {
+function resolveCodeSamples(codeSamples: unknown, baseDir: string | undefined): RawSchemas.ExampleCodeSampleSchema[] {
     if (!Array.isArray(codeSamples)) {
         return [];
     }
