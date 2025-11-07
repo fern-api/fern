@@ -29,17 +29,11 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
     implements GeneratedUndiscriminatedUnionType<Context>
 {
     public readonly type = "undiscriminatedUnion";
-    private shouldUseHelperInterfaces = false;
 
     public generateStatements(
         context: Context
     ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
         const statements: StatementStructures[] = [];
-
-        this.shouldUseHelperInterfaces = true;
-
-        const helperInterfaces = this.generateHelperInterfaces(context);
-        statements.push(...helperInterfaces);
 
         statements.push(this.generateTypeAlias(context));
 
@@ -187,78 +181,6 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
         return context.type.getGeneratedExample(example.singleUnionType).build(context, opts);
     }
 
-    private generateHelperInterfaces(context: Context): InterfaceDeclarationStructure[] {
-        const interfaces: InterfaceDeclarationStructure[] = [];
-        const seenHelpers = new Set<string>();
-
-        for (const member of this.shape.members) {
-            const helperInterface = this.generateHelperInterfaceForMember(context, member, seenHelpers);
-            if (helperInterface != null) {
-                interfaces.push(helperInterface);
-            }
-        }
-
-        return interfaces;
-    }
-
-    private generateHelperInterfaceForMember(
-        context: Context,
-        member: UndiscriminatedUnionMember,
-        seenHelpers: Set<string>
-    ): InterfaceDeclarationStructure | undefined {
-        if (member.type.type !== "container") {
-            return undefined;
-        }
-
-        const container = member.type.container;
-
-        if (container.type === "list") {
-            if (!this.isSelfRecursive(context, container.list)) {
-                return undefined;
-            }
-
-            const helperName = `${this.typeName}Array`;
-            if (seenHelpers.has(helperName)) {
-                return undefined;
-            }
-            seenHelpers.add(helperName);
-
-            return {
-                kind: StructureKind.Interface,
-                name: helperName,
-                isExported: true,
-                extends: [
-                    (writer) => {
-                        writer.write(`Array<${this.typeName}>`);
-                    }
-                ]
-            };
-        } else if (container.type === "map") {
-            if (!this.isSelfRecursive(context, container.valueType)) {
-                return undefined;
-            }
-
-            const helperName = `${this.typeName}Object`;
-            if (seenHelpers.has(helperName)) {
-                return undefined;
-            }
-            seenHelpers.add(helperName);
-
-            return {
-                kind: StructureKind.Interface,
-                name: helperName,
-                isExported: true,
-                extends: [
-                    (writer) => {
-                        writer.write(`Record<string, ${this.typeName}>`);
-                    }
-                ]
-            };
-        }
-
-        return undefined;
-    }
-
     private isSelfRecursive(context: Context, typeRef: TypeReference): boolean {
         if (typeRef.type !== "named") {
             return false;
@@ -268,20 +190,6 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
         return namedTypeDeclaration.name.name.pascalCase.unsafeName === this.typeName;
     }
 
-    private getTypeNodeStringForContainer(context: Context, typeRef: TypeReference): string {
-        if (typeRef.type === "named") {
-            const namedTypeDeclaration = context.type.getTypeDeclaration(typeRef);
-            if (namedTypeDeclaration.name.name.pascalCase.unsafeName === this.typeName) {
-                return this.typeName;
-            }
-        }
-
-        const typeNode = context.type.getReferenceToType(typeRef).typeNode;
-        const printer = ts.createPrinter();
-        const sourceFile = ts.createSourceFile("temp.ts", "", ts.ScriptTarget.Latest, false, ts.ScriptKind.TS);
-        return printer.printNode(ts.EmitHint.Unspecified, typeNode, sourceFile);
-    }
-
     private getTypeNodeForMember(context: Context, member: UndiscriminatedUnionMember): ts.TypeNode {
         if (member.type.type !== "container") {
             return this.getTypeNode(context, member);
@@ -289,12 +197,25 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
 
         const container = member.type.container;
 
-        if (this.shouldUseHelperInterfaces) {
-            if (container.type === "list" && this.isSelfRecursive(context, container.list)) {
-                return ts.factory.createTypeReferenceNode(`${this.typeName}Array`);
-            } else if (container.type === "map" && this.isSelfRecursive(context, container.valueType)) {
-                return ts.factory.createTypeReferenceNode(`${this.typeName}Object`);
-            }
+        if (container.type === "map" && this.isSelfRecursive(context, container.valueType)) {
+            return ts.factory.createTypeLiteralNode([
+                ts.factory.createIndexSignature(
+                    undefined,
+                    undefined,
+                    [
+                        ts.factory.createParameterDeclaration(
+                            undefined,
+                            undefined,
+                            undefined,
+                            "key",
+                            undefined,
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                            undefined
+                        )
+                    ],
+                    ts.factory.createTypeReferenceNode(this.typeName)
+                )
+            ]);
         }
 
         return this.getTypeNode(context, member);

@@ -2,9 +2,10 @@
 - version: 3.28.6
   changelogEntry:
     - summary: |
-        Fix circular type alias errors (TS2456) in undiscriminated unions by generating helper interfaces for self-recursive container members.
-        When an undiscriminated union contains `Array<ThisUnion>` or `Record<string, ThisUnion>`, the generator now emits helper interfaces like `interface ThisUnionArray extends Array<ThisUnion> {}` to avoid TypeScript's circular type alias restriction.
-        Non-self-recursive containers remain as inline types, preserving correct behavior for both standalone and inline unions.
+        Fix circular type alias errors (TS2456) in undiscriminated unions containing self-recursive Record types.
+        TypeScript prohibits circular type aliases like `type T = Record<string, T> | ...`, but allows `type T = T[] | ...` and `type T = { [key: string]: T } | ...`.
+        The generator now uses index signature syntax `{ [key: string]: ThisUnion }` instead of `Record<string, ThisUnion>` for self-recursive map types, avoiding the circular type alias restriction.
+        Arrays remain as `ThisUnion[]` (no changes needed). This fix works for both standalone and inline undiscriminated unions.
       type: fix
   createdAt: "2025-11-07"
   irVersion: 61
