@@ -3,7 +3,7 @@
   "groups": [
     {
       "fixtures": [
-        "optional",
+        "optional:wire-tests",
         "oauth-client-credentials-environment-variables",
         "folders",
         "file-upload:no-custom-config",
