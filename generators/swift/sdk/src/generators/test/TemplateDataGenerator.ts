@@ -53,12 +53,13 @@ export class TemplateDataGenerator {
             return null;
         }
         const clientDeclaration = this.generateClientDeclaration(dynamicEndpoint, dynamicEndpointExample);
+        const endpointCall = this.generateEndpointMethodCallStatement(dynamicEndpoint, dynamicEndpointExample);
 
         return {
             moduleName: moduleSymbol.name,
             clientDeclaration: clientDeclaration.toStringWithIndentation(3),
+            endpointCall: endpointCall.toStringWithIndentation(3),
             // TODO(kafkas): Implement
-            endpointCall: "",
             endpointCall400BadRequest: "",
             endpointCall404NotFound: "",
             endpointCallMaxRetriesExhausted: "",
@@ -101,6 +102,20 @@ export class TemplateDataGenerator {
                     })
                 })
             ]
+        });
+    }
+
+    private generateEndpointMethodCallStatement(
+        dynamicEndpoint: dynamic.Endpoint,
+        dynamicEndpointExample: dynamic.EndpointExample
+    ): swift.Statement {
+        const endpointSnippetRequest = convertDynamicEndpointSnippetRequest(dynamicEndpointExample);
+        return swift.Statement.constantDeclaration({
+            unsafeName: "response",
+            value: this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
+                endpoint: dynamicEndpoint,
+                snippet: endpointSnippetRequest
+            })
         });
     }
 }
