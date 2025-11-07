@@ -22,7 +22,7 @@ jobs:
       - name: Trigger Seed Tests with Metrics
         uses: peter-evans/repository-dispatch@v2
         with:
-          token: ${{ secrets.ACTIONS_PAT }}
+          token: ${{ secrets.FERN_GITHUB_PAT }}
           event-type: seed-test-metrics
           client-payload: '{"ref": "${{ github.ref }}"}'
 
