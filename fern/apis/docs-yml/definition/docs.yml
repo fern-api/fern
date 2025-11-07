@@ -233,43 +233,43 @@ types:
         type: optional<boolean>
         docs: |
           When enabled, displays a button that allows users to copy the entire page content to their clipboard for easy sharing or reference.
-          
+
           @default: true
       view-as-markdown:
         type: optional<boolean>
         docs: |
           When enabled, displays a button that allows users to view the raw Markdown source of the current page.
-          
+
           @default: true
       ask-ai:
         type: optional<boolean>
         docs: |
           When enabled, displays an "Ask AI" button that allows users to ask questions about the page content using AI-powered assistance.
-          
+
           @default: true
       chatgpt:
         type: optional<boolean>
         docs: |
           When enabled, displays an "Open in ChatGPT" button that allows users to send the page content to ChatGPT for further exploration and Q&A.
-          
+
           @default: false
       claude:
         type: optional<boolean>
         docs: |
           When enabled, displays an "Open in Claude" button that allows users to send the page content to Claude for further exploration and Q&A.
-          
+
           @default: false
       cursor:
         type: optional<boolean>
         docs: |
           When enabled, displays an "Open in Cursor" button that allows users to open the page content in Cursor IDE with AI-powered code assistance.
-          
+
           @default: false
       vscode:
         type: optional<boolean>
         docs: |
           When enabled, displays an "Open in VS Code" button that allows users to open the page content in Visual Studio Code for editing and development.
-          
+
           @default: false
 
   AIChatConfig:
@@ -287,7 +287,7 @@ types:
           - `docs` enables Ask Fern on your documentation site
           - `slack` enables Ask Fern in Slack
           - `discord` enables Ask Fern in Discord
-          
+
           Most users should enable Ask Fern for both `docs` and either `slack` or `discord`.
       datasources:
         type: optional<list<AIChatDatasource>>
@@ -660,26 +660,26 @@ types:
         type: optional<string>
         docs: |
           The text to display in the searchbar.
-          
+
           @default: Search
       disable-search:
         type: optional<boolean>
         docs: |
           If set to true, the searchbar will be disabled. Use this if you want to use a custom search solution.
-          
+
           @default: false
       dark-mode-code:
         type: optional<boolean>
         docs: |
           If set to true, the code blocks will be displayed in dark mode, regardless of the selected theme.
-          
+
           @default: false
       default-search-filters:
         type: optional<boolean>
         docs: |
           By default (`false`), search will display results for pages across all products and versions.
           If set to true, search will display results for pages within the current product and version.
-          
+
           @default: false
       http-snippets:
         type: optional<HttpSnippetsConfig>
@@ -687,28 +687,28 @@ types:
           Controls the display of HTTP snippets in the API Reference. HTTP snippets are enabled by default for all languages.
           - Set to `false` to disable HTTP snippets completely
           - Provide a list of languages to enable snippets for specific languages only
-          
+
           @default: true
       hide-404-page:
         type: optional<boolean>
         docs: |
           If set to true, when a user navigates to a page that does not exist, they will be redirected to the home page.
           By default, a 404 page will be displayed.
-          
+
           @default: false
       use-javascript-as-typescript:
         type: optional<boolean>
         docs: |
           If set to true, the TypeScript snippets will be displayed as JavaScript snippets in the API Reference.
-          
+
           @default: false
       disable-explorer-proxy:
         type: optional<boolean>
         docs: |
           If set to true, the API Explorer will bypass the proxy when sending requests directly to your API.
-          
+
           When this feature is enabled, your API must have Cross-Origin Resource Sharing (CORS) enabled to allow requests from the documentation domain.
-          
+
           @default: false
       disable-analytics: optional<boolean>
       language: optional<Language>
@@ -853,14 +853,14 @@ types:
         docs: |
           The weight of the font. Can be a number (400, 700) or a range for variable fonts (400 700).
           Common values: 400 (normal), 700 (bold).
-          
+
           @default: `100 900`.
         availability: in-development
       style:
         type: optional<FontStyle>
         docs: |
           The font style, either "normal" or "italic". Defaults to "normal" if not specified.
-          
+
           @default: `normal`.
         availability: in-development
       paths:
@@ -1263,7 +1263,7 @@ types:
           - **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.
           - **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.
           - **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `"<svg>...</svg>"`).
-          
+
           By default, the `rightIcon` for a `filled` button is set to `arrow-right`.
       rounded:
         type: optional<boolean>
@@ -1495,7 +1495,7 @@ types:
         type: optional<boolean>
         docs: |
           By default, uses the 308 status code to instructs clients and search engines to cache the redirect forever. Set to `false` only if you need a temporary redirect using the 307 status code, which won't be cached.
-          
+
           @default: true
 
   IntegrationsConfig:
@@ -1530,7 +1530,7 @@ types:
         availability: pre-release
         docs: |
           By default, SDK snippets are static code examples that are displayed in your API Reference. Alternatively, you can use dynamic SDK snippets that allow users to modify parameters and see code examples update in real time.
-          
+
           Enable dynamic snippets in `docs.yml`, then configure them by following the SDK snippets setup instructions.
 
   PlaygroundSettings:
