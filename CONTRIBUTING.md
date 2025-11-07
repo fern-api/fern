@@ -81,28 +81,7 @@ Below we talk through the large components of this monorepo and how to contribut
 
 Fern's documentation is hosted live at the URL https://buildwithfern.com/learn. We appreciate any help we can get that makes our documentation more digestible.
 
-If you find gaps within our documentation, please open an [issue](https://github.com/fern-api/fern/issues/new?assignees=&labels=documentation&projects=&template=documentation-suggestion.md&title=%5BFern%27s+Documentation%5D+)
-
-### Editing Documentation
-
-Our documentation is powered by Fern's Docs product. All of the configuration for the docs lives in [docs.yml](./fern/docs.yml).
-
-To edit the docs, you can modify `docs.yml` or any of the markdown that it references.
-
-To validate that the docs, run:
-
-```sh
-fern check
-```
-
-To preview the documentation, run:
-
-```sh
-fern docs dev
-```
-
-Finally, when you make a PR to update the docs, a PR preview link will be generated which will allow you
-to test if your changes came out as intended. [Here](https://github.com/fern-api/fern/pull/4330) is a sample PR with a preview link.
+If you find gaps within our documentation, please open an [issue](https://github.com/fern-api/docs/issues/new/choose) or learn how to contribute [here](https://github.com/fern-api/docs)
 
 <br>
 
