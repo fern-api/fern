@@ -87,6 +87,7 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
 
         const typeNodeReferences = this.shape.members.map((member) => ({
             docs: member.docs,
+            member: member,
             typeReference: this.getTypeReferenceNode(context, member)
         }));
         const anyRequestVariantsNeeded = typeNodeReferences.some((ref) => ref.typeReference.requestTypeNode != null);
@@ -99,9 +100,10 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
                 isExported: true,
                 type: getWriterForMultiLineUnionType(
                     typeNodeReferences.map((value) => {
+                        const requestNode = value.typeReference.requestTypeNode ?? value.typeReference.typeNode;
                         return {
                             docs: value.docs,
-                            node: value.typeReference.requestTypeNode ?? value.typeReference.typeNode
+                            node: this.applyIndexSignatureSubstitution(context, value.member, requestNode)
                         };
                     })
                 )
@@ -124,9 +126,10 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
                 isExported: true,
                 type: getWriterForMultiLineUnionType(
                     typeNodeReferences.map((value) => {
+                        const responseNode = value.typeReference.responseTypeNode ?? value.typeReference.typeNode;
                         return {
                             docs: value.docs,
-                            node: value.typeReference.responseTypeNode ?? value.typeReference.typeNode
+                            node: this.applyIndexSignatureSubstitution(context, value.member, responseNode)
                         };
                     })
                 )
@@ -187,6 +190,41 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
 
         const namedTypeDeclaration = context.type.getTypeDeclaration(typeRef);
         return namedTypeDeclaration.name.name.pascalCase.unsafeName === this.typeName;
+    }
+
+    private applyIndexSignatureSubstitution(
+        context: Context,
+        member: UndiscriminatedUnionMember,
+        typeNode: ts.TypeNode
+    ): ts.TypeNode {
+        if (member.type.type !== "container") {
+            return typeNode;
+        }
+
+        const container = member.type.container;
+
+        if (container.type === "map" && this.isSelfRecursive(context, container.valueType)) {
+            return ts.factory.createTypeLiteralNode([
+                ts.factory.createIndexSignature(
+                    undefined,
+                    undefined,
+                    [
+                        ts.factory.createParameterDeclaration(
+                            undefined,
+                            undefined,
+                            undefined,
+                            "key",
+                            undefined,
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                            undefined
+                        )
+                    ],
+                    ts.factory.createTypeReferenceNode(this.typeName)
+                )
+            ]);
+        }
+
+        return typeNode;
     }
 
     private getTypeNodeForMember(context: Context, member: UndiscriminatedUnionMember): ts.TypeNode {
