@@ -7,12 +7,12 @@ private func main() async throws {
     _ = try await client.nullableOptional.getSearchResults(request: .init(
         query: "query",
         filters: [
-            "filters": .value("filters")
+            "filters": "filters"
         ],
-        includeTypes: .value([
+        includeTypes: [
             "includeTypes",
             "includeTypes"
-        ])
+        ]
     ))
 }
 

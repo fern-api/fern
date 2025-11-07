@@ -4,7 +4,7 @@ import Unions
 
 @Suite("BigunionClient Wire Tests") struct BigunionClientWireTests {
     @Test func get1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -27,12 +27,15 @@ import Unions
                 value: "value"
             )
         )
-        let response = try await client.bigunion.get(id: "id")
+        let response = try await client.bigunion.get(
+            id: "id",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func update1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -45,19 +48,22 @@ import Unions
             urlSession: stub.urlSession
         )
         let expectedResponse = true
-        let response = try await client.bigunion.update(request: BigUnion.normalSweet(
-            .init(
-                id: "id",
-                createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                archivedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                value: "value"
-            )
-        ))
+        let response = try await client.bigunion.update(
+            request: BigUnion.normalSweet(
+                .init(
+                    id: "id",
+                    createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                    archivedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                    value: "value"
+                )
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func updateMany1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -74,24 +80,27 @@ import Unions
         let expectedResponse = [
             "string": true
         ]
-        let response = try await client.bigunion.updateMany(request: [
-            BigUnion.normalSweet(
-                .init(
-                    id: "id",
-                    createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    archivedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    value: "value"
+        let response = try await client.bigunion.updateMany(
+            request: [
+                BigUnion.normalSweet(
+                    .init(
+                        id: "id",
+                        createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                        archivedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                        value: "value"
+                    )
+                ),
+                BigUnion.normalSweet(
+                    .init(
+                        id: "id",
+                        createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                        archivedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                        value: "value"
+                    )
                 )
-            ),
-            BigUnion.normalSweet(
-                .init(
-                    id: "id",
-                    createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    archivedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    value: "value"
-                )
-            )
-        ])
+            ],
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

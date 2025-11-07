@@ -4,7 +4,7 @@ import MyCustomModule
 
 @Suite("ServiceClient Wire Tests") struct ServiceClientWireTests {
     @Test func listResources1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -79,13 +79,14 @@ import MyCustomModule
             order: "desc",
             includeTotals: true,
             fields: "fields",
-            search: "search"
+            search: "search",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func getResource1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -126,13 +127,14 @@ import MyCustomModule
         let response = try await client.service.getResource(
             resourceId: "resourceId",
             includeMetadata: true,
-            format: "json"
+            format: "json",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func searchResources1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -218,13 +220,14 @@ import MyCustomModule
                         "key": .string("value")
                     ])
                 ]
-            )
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func listUsers1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -472,13 +475,14 @@ import MyCustomModule
             connection: "connection",
             q: "q",
             searchEngine: "search_engine",
-            fields: "fields"
+            fields: "fields",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func getUserById1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -599,13 +603,14 @@ import MyCustomModule
         let response = try await client.service.getUserById(
             userId: "userId",
             fields: "fields",
-            includeFields: true
+            includeFields: true,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func createUser1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -723,30 +728,33 @@ import MyCustomModule
             givenName: Optional("given_name"),
             familyName: Optional("family_name")
         )
-        let response = try await client.service.createUser(request: CreateUserRequest(
-            email: "email",
-            emailVerified: true,
-            username: "username",
-            password: "password",
-            phoneNumber: "phone_number",
-            phoneVerified: true,
-            userMetadata: [
-                "user_metadata": .object([
-                    "key": .string("value")
-                ])
-            ],
-            appMetadata: [
-                "app_metadata": .object([
-                    "key": .string("value")
-                ])
-            ],
-            connection: "connection"
-        ))
+        let response = try await client.service.createUser(
+            request: CreateUserRequest(
+                email: "email",
+                emailVerified: true,
+                username: "username",
+                password: "password",
+                phoneNumber: "phone_number",
+                phoneVerified: true,
+                userMetadata: [
+                    "user_metadata": .object([
+                        "key": .string("value")
+                    ])
+                ],
+                appMetadata: [
+                    "app_metadata": .object([
+                        "key": .string("value")
+                    ])
+                ],
+                connection: "connection"
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func updateUser1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -884,13 +892,14 @@ import MyCustomModule
                 ],
                 password: "password",
                 blocked: true
-            )
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func listConnections1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -1017,13 +1026,14 @@ import MyCustomModule
         let response = try await client.service.listConnections(
             strategy: "strategy",
             name: "name",
-            fields: "fields"
+            fields: "fields",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func getConnection1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -1091,13 +1101,14 @@ import MyCustomModule
         )
         let response = try await client.service.getConnection(
             connectionId: "connectionId",
-            fields: "fields"
+            fields: "fields",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func listClients1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -1464,13 +1475,14 @@ import MyCustomModule
             appType: [
                 "app_type",
                 "app_type"
-            ]
+            ],
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func getClient1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -1649,7 +1661,8 @@ import MyCustomModule
         let response = try await client.service.getClient(
             clientId: "clientId",
             fields: "fields",
-            includeFields: true
+            includeFields: true,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

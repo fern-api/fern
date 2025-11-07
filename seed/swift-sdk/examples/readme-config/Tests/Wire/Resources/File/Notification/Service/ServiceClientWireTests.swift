@@ -4,7 +4,7 @@ import Examples
 
 @Suite("ServiceClient Wire Tests") struct ServiceClientWireTests {
     @Test func getException1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -29,12 +29,15 @@ import Examples
                 exceptionStacktrace: "<logs>"
             )
         )
-        let response = try await client.file.notification.service.getException(notificationId: "notification-hsy129x")
+        let response = try await client.file.notification.service.getException(
+            notificationId: "notification-hsy129x",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getException2() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -59,7 +62,10 @@ import Examples
                 exceptionStacktrace: "exceptionStacktrace"
             )
         )
-        let response = try await client.file.notification.service.getException(notificationId: "notificationId")
+        let response = try await client.file.notification.service.getException(
+            notificationId: "notificationId",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

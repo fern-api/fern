@@ -4,7 +4,7 @@ import Exhaustive
 
 @Suite("PutClient Wire Tests") struct PutClientWireTests {
     @Test func add1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -48,7 +48,10 @@ import Exhaustive
                 )
             ])
         )
-        let response = try await client.endpoints.put.add(id: "id")
+        let response = try await client.endpoints.put.add(
+            id: "id",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

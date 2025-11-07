@@ -4,7 +4,7 @@ import OauthClientCredentials
 
 @Suite("AuthClient Wire Tests") struct AuthClientWireTests {
     @Test func getTokenWithClientCredentials1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -25,18 +25,21 @@ import OauthClientCredentials
             expiresIn: 1,
             refreshToken: Optional("refresh_token")
         )
-        let response = try await client.auth.getTokenWithClientCredentials(request: .init(
-            clientId: "my_oauth_app_123",
-            clientSecret: "sk_live_abcdef123456789",
-            audience: .httpsApiExampleCom,
-            grantType: .clientCredentials,
-            scope: "read:users"
-        ))
+        let response = try await client.auth.getTokenWithClientCredentials(
+            request: .init(
+                clientId: "my_oauth_app_123",
+                clientSecret: "sk_live_abcdef123456789",
+                audience: .httpsApiExampleCom,
+                grantType: .clientCredentials,
+                scope: "read:users"
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getTokenWithClientCredentials2() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -57,18 +60,21 @@ import OauthClientCredentials
             expiresIn: 1,
             refreshToken: Optional("refresh_token")
         )
-        let response = try await client.auth.getTokenWithClientCredentials(request: .init(
-            clientId: "client_id",
-            clientSecret: "client_secret",
-            audience: .httpsApiExampleCom,
-            grantType: .clientCredentials,
-            scope: "scope"
-        ))
+        let response = try await client.auth.getTokenWithClientCredentials(
+            request: .init(
+                clientId: "client_id",
+                clientSecret: "client_secret",
+                audience: .httpsApiExampleCom,
+                grantType: .clientCredentials,
+                scope: "scope"
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func refreshToken1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -89,19 +95,22 @@ import OauthClientCredentials
             expiresIn: 1,
             refreshToken: Optional("refresh_token")
         )
-        let response = try await client.auth.refreshToken(request: .init(
-            clientId: "my_oauth_app_123",
-            clientSecret: "sk_live_abcdef123456789",
-            refreshToken: "refresh_token",
-            audience: .httpsApiExampleCom,
-            grantType: .refreshToken,
-            scope: "read:users"
-        ))
+        let response = try await client.auth.refreshToken(
+            request: .init(
+                clientId: "my_oauth_app_123",
+                clientSecret: "sk_live_abcdef123456789",
+                refreshToken: "refresh_token",
+                audience: .httpsApiExampleCom,
+                grantType: .refreshToken,
+                scope: "read:users"
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func refreshToken2() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -122,14 +131,17 @@ import OauthClientCredentials
             expiresIn: 1,
             refreshToken: Optional("refresh_token")
         )
-        let response = try await client.auth.refreshToken(request: .init(
-            clientId: "client_id",
-            clientSecret: "client_secret",
-            refreshToken: "refresh_token",
-            audience: .httpsApiExampleCom,
-            grantType: .refreshToken,
-            scope: "scope"
-        ))
+        let response = try await client.auth.refreshToken(
+            request: .init(
+                clientId: "client_id",
+                clientSecret: "client_secret",
+                refreshToken: "refresh_token",
+                audience: .httpsApiExampleCom,
+                grantType: .refreshToken,
+                scope: "scope"
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }
