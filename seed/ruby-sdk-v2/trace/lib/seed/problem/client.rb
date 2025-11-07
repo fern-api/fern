@@ -81,11 +81,14 @@ module Seed
       #
       # @return [Seed::Problem::Types::GetDefaultStarterFilesResponse]
       def get_default_starter_files(request_options: {}, **params)
+        _body_prop_names = %i[input_params output_type method_name]
+        _body_bag = params.slice(*_body_prop_names)
+
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/problem-crud/default-starter-files",
-          body: params
+          body: Seed::Problem::Types::GetDefaultStarterFilesRequest.new(_body_bag).to_h
         )
         begin
           _response = @client.send(_request)

@@ -57,7 +57,9 @@ module Seed
         def get_with_query(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.symbolize_keys(params)
           _query_param_names = %i[query number]
-          _query = params.slice(*_query_param_names)
+          _query = {}
+          _query["query"] = params[:query] if params.key?(:query)
+          _query["number"] = params[:number] if params.key?(:number)
           params.except(*_query_param_names)
 
           _request = Seed::Internal::JSON::Request.new(
@@ -84,7 +86,9 @@ module Seed
         def get_with_allow_multiple_query(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.symbolize_keys(params)
           _query_param_names = %i[query number]
-          _query = params.slice(*_query_param_names)
+          _query = {}
+          _query["query"] = params[:query] if params.key?(:query)
+          _query["number"] = params[:number] if params.key?(:number)
           params.except(*_query_param_names)
 
           _request = Seed::Internal::JSON::Request.new(
@@ -111,7 +115,8 @@ module Seed
         def get_with_path_and_query(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.symbolize_keys(params)
           _query_param_names = %i[query]
-          _query = params.slice(*_query_param_names)
+          _query = {}
+          _query["query"] = params[:query] if params.key?(:query)
           params = params.except(*_query_param_names)
 
           _request = Seed::Internal::JSON::Request.new(
@@ -138,7 +143,8 @@ module Seed
         def get_with_inline_path_and_query(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.symbolize_keys(params)
           _query_param_names = %i[query]
-          _query = params.slice(*_query_param_names)
+          _query = {}
+          _query["query"] = params[:query] if params.key?(:query)
           params = params.except(*_query_param_names)
 
           _request = Seed::Internal::JSON::Request.new(
@@ -185,13 +191,11 @@ module Seed
         #
         # @return [String]
         def modify_with_inline_path(request_options: {}, **params)
-          _path_param_names = ["param"]
-
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "PUT",
             path: "/params/path/#{params[:param]}",
-            body: params.except(*_path_param_names)
+            body: _body
           )
           begin
             _response = @client.send(_request)
