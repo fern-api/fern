@@ -477,7 +477,8 @@ export class OperationConverter extends AbstractOperationConverter {
         const fernExamplesExtension = new FernExamplesExtension({
             context: this.context,
             breadcrumbs: this.breadcrumbs,
-            operation: this.operation as object
+            operation: this.operation as object,
+            baseDir: this.context.documentBaseDir
         });
         const fernExamples = fernExamplesExtension.convert();
         if (fernExamples == null) {
