@@ -4,7 +4,7 @@ import OauthClientCredentials
 
 @Suite("AuthClient Wire Tests") struct AuthClientWireTests {
     @Test func getToken1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -25,13 +25,16 @@ import OauthClientCredentials
             expiresIn: 1,
             refreshToken: Optional("refresh_token")
         )
-        let response = try await client.auth.getToken(request: .init(
-            clientId: "client_id",
-            clientSecret: "client_secret",
-            audience: .httpsApiExampleCom,
-            grantType: .clientCredentials,
-            scope: "scope"
-        ))
+        let response = try await client.auth.getToken(
+            request: .init(
+                clientId: "client_id",
+                clientSecret: "client_secret",
+                audience: .httpsApiExampleCom,
+                grantType: .clientCredentials,
+                scope: "scope"
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

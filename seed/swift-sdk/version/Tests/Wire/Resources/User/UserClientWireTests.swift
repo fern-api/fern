@@ -4,7 +4,7 @@ import Version
 
 @Suite("UserClient Wire Tests") struct UserClientWireTests {
     @Test func getUser1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -23,7 +23,10 @@ import Version
             id: "id",
             name: "name"
         )
-        let response = try await client.user.getUser(userId: "userId")
+        let response = try await client.user.getUser(
+            userId: "userId",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }
