@@ -7,8 +7,8 @@ private func main() async throws {
     _ = try await client.updateFoo(
         id: "id",
         request: .init(
-            nullableText: "nullable_text",
-            nullableNumber: 1.1,
+            nullableText: .value("nullable_text"),
+            nullableNumber: .value(1.1),
             nonNullableText: "non_nullable_text"
         )
     )

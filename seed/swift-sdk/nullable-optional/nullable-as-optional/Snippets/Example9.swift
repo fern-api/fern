@@ -5,9 +5,9 @@ private func main() async throws {
     let client = NullableOptionalClient(baseURL: "https://api.fern.com")
 
     _ = try await client.nullableOptional.filterByRole(
-        role: .admin,
+        role: .value(.admin),
         status: .active,
-        secondaryRole: .admin
+        secondaryRole: .value(.admin)
     )
 }
 

@@ -169,7 +169,7 @@ import PathParameters
     }
 
     @Test func getUserMetadata1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -196,7 +196,8 @@ import PathParameters
         )
         let response = try await client.user.getUserMetadata(
             userId: "user_id",
-            version: 1
+            version: 1,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
