@@ -425,7 +425,6 @@ scripts:
           if grep -q '"test":' package.json; then corepack yarn test; fi
         fi
 allowedFailures:
-  - circular-references
   - enum:no-custom-config
   - enum:forward-compatible-enums
   - enum:serde
