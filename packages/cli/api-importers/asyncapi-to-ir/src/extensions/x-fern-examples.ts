@@ -21,6 +21,7 @@ export interface WebsocketSessionExtensionExample {
 export declare namespace FernExamplesExtension {
     export interface Args extends AbstractConverter.AbstractArgs {
         channel: object;
+        baseDir?: string;
     }
 
     export type Output = WebsocketSessionExtensionExample[];
@@ -28,11 +29,13 @@ export declare namespace FernExamplesExtension {
 
 export class FernExamplesExtension extends AbstractExtension<FernExamplesExtension.Output> {
     private readonly channel: object;
+    private readonly baseDir: string | undefined;
     public readonly key = "x-fern-examples";
 
-    constructor({ breadcrumbs, channel, context }: FernExamplesExtension.Args) {
+    constructor({ breadcrumbs, channel, context, baseDir }: FernExamplesExtension.Args) {
         super({ breadcrumbs: breadcrumbs ?? [], context });
         this.channel = channel;
+        this.baseDir = baseDir;
     }
 
     public convert(): FernExamplesExtension.Output | undefined {
