@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-- version: 3.13.1
+- version: 3.14.1
   changelogEntry:
     - summary: |
         Fix wire test failures by pruning union base properties from expected JSON. The Java generator does not generate base properties for union types, so wire test expectations now exclude these fields to match actual SDK serialization behavior.
@@ -7,8 +6,6 @@
   createdAt: "2025-11-07"
   irVersion: 61
 
-||||||| b66e49fb70
-=======
 - version: 3.14.0
   changelogEntry:
     - summary: |
@@ -39,7 +36,6 @@
   createdAt: "2025-11-07"
   irVersion: 61
 
->>>>>>> origin/main
 - version: 3.13.0
   changelogEntry:
     - summary: |
