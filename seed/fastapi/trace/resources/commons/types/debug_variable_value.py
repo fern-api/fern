@@ -269,6 +269,7 @@ class DebugVariableValue(UniversalRootModel):
 
 
 from .debug_map_value import DebugMapValue  # noqa: E402, I001
+from .debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402, I001
 
 
 class _DebugVariableValue:
@@ -320,4 +321,4 @@ class _DebugVariableValue:
 
 update_forward_refs(_DebugVariableValue.MapValue)
 update_forward_refs(_DebugVariableValue.ListValue)
-update_forward_refs(DebugVariableValue)
+update_forward_refs(DebugVariableValue, DebugKeyValuePairs=DebugKeyValuePairs, DebugMapValue=DebugMapValue)

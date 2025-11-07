@@ -19,6 +19,10 @@ class Berry(UniversalBaseModel):
             extra = pydantic.Extra.forbid
 
 
+from .acai import Acai  # noqa: E402, I001
+from .cat import Cat  # noqa: E402, I001
+from .dog import Dog  # noqa: E402, I001
+from .fig import Fig  # noqa: E402, I001
 from .animal import Animal  # noqa: E402, I001
 
-update_forward_refs(Berry)
+update_forward_refs(Berry, Acai=Acai, Cat=Cat, Dog=Dog, Fig=Fig)

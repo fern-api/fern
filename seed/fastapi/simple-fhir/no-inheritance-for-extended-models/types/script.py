@@ -23,7 +23,13 @@ class Script(UniversalBaseModel):
             extra = pydantic.Extra.forbid
 
 
-from .resource_list import ResourceList  # noqa: E402, I001
+from .account import Account  # noqa: E402, I001
+from .base_resource import BaseResource  # noqa: E402, I001
 from .memo import Memo  # noqa: E402, I001
+from .patient import Patient  # noqa: E402, I001
+from .practitioner import Practitioner  # noqa: E402, I001
+from .resource_list import ResourceList  # noqa: E402, I001
 
-update_forward_refs(Script)
+update_forward_refs(
+    Script, Account=Account, BaseResource=BaseResource, Memo=Memo, Patient=Patient, Practitioner=Practitioner
+)

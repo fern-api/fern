@@ -211,5 +211,5 @@ DebugVariableValue = typing.Union[
 ]
 from .debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402, I001
 
-update_forward_refs(DebugVariableValue_MapValue)
+update_forward_refs(DebugVariableValue_MapValue, DebugKeyValuePairs=DebugKeyValuePairs)
 update_forward_refs(DebugVariableValue_ListValue)

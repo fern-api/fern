@@ -21,5 +21,11 @@ class Memo(UniversalBaseModel):
 
 
 from .account import Account  # noqa: E402, I001
+from .base_resource import BaseResource  # noqa: E402, I001
+from .patient import Patient  # noqa: E402, I001
+from .practitioner import Practitioner  # noqa: E402, I001
+from .script import Script  # noqa: E402, I001
 
-update_forward_refs(Memo)
+update_forward_refs(
+    Memo, Account=Account, BaseResource=BaseResource, Patient=Patient, Practitioner=Practitioner, Script=Script
+)

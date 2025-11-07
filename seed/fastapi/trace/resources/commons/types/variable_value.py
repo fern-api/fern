@@ -246,6 +246,7 @@ class VariableValue(UniversalRootModel):
 
 
 from .map_value import MapValue as resources_commons_types_map_value_MapValue  # noqa: E402, I001
+from .key_value_pair import KeyValuePair  # noqa: E402, I001
 
 
 class _VariableValue:
@@ -291,4 +292,4 @@ class _VariableValue:
 
 update_forward_refs(_VariableValue.MapValue)
 update_forward_refs(_VariableValue.ListValue)
-update_forward_refs(VariableValue)
+update_forward_refs(VariableValue, KeyValuePair=KeyValuePair, MapValue=resources_commons_types_map_value_MapValue)

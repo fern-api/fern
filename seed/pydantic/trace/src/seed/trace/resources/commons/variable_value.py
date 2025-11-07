@@ -119,5 +119,5 @@ VariableValue = typing.Union[
 ]
 from .key_value_pair import KeyValuePair  # noqa: E402, I001
 
-update_forward_refs(VariableValue_MapValue)
+update_forward_refs(VariableValue_MapValue, KeyValuePair=KeyValuePair)
 update_forward_refs(VariableValue_ListValue)
