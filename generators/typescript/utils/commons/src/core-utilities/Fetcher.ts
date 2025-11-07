@@ -15,6 +15,7 @@ export interface Fetcher {
                 method: "method";
                 headers: "headers";
                 contentType: "contentType";
+                accepts: "accepts";
                 queryParameters: "queryParameters";
                 body: "body";
                 abortSignal: "abortSignal";
@@ -145,6 +146,7 @@ export declare namespace Fetcher {
         method: ts.Expression;
         headers: ts.Expression;
         contentType?: string | ts.Expression;
+        accepts?: ts.Expression;
         queryParameters: ts.Expression | undefined;
         body: ts.Expression | undefined;
         abortSignal: ts.Expression | undefined;
@@ -217,6 +219,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 method: "method",
                 headers: "headers",
                 contentType: "contentType",
+                accepts: "accepts",
                 queryParameters: "queryParameters",
                 maxRetries: "maxRetries",
                 body: "body",
@@ -278,6 +281,14 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                         typeof args.contentType === "string"
                             ? ts.factory.createStringLiteral(args.contentType)
                             : args.contentType
+                    )
+                );
+            }
+            if (args.accepts != null) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(
+                        this.Fetcher.Args.properties.accepts,
+                        args.accepts
                     )
                 );
             }
