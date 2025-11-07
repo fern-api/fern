@@ -19,7 +19,7 @@ RUN pip install ruff
 RUN ruff --version
 
 # Set Python environment
-ENV PYTHONPATH=${PYTHONPATH}:${PWD}
+ENV PYTHONPATH=/src
 ENV _TYPER_STANDARD_TRACEBACK=1
 ENV HTTPX_LOG_LEVEL=trace
 
