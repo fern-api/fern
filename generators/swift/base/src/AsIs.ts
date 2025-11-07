@@ -92,6 +92,12 @@ function createSourceAsIsFiles(): SourceAsIsFileDefinitionsById {
 }
 
 const TestAsIsFileSpecs = {
+    // Core
+    ClientRetryTests: {
+        relativePathToDir: "Core",
+        filenameWithoutExtension: "ClientRetryTests.Template",
+        symbols: [{ name: "ClientRetryTests", shape: { type: "class" } }]
+    },
     // Utilities
     HTTPStub: {
         relativePathToDir: "Utilities",
