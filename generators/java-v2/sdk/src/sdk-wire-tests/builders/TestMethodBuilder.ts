@@ -34,7 +34,7 @@ export class TestMethodBuilder {
     ): (writer: Writer) => void {
         return (writer) => {
             const testMethodName = `test${this.toJavaMethodName(endpoint.name.pascalCase.safeName)}`;
-            const methodCall = this.snippetExtractor.extractMethodCall(snippet);
+            const methodCall = this.snippetExtractor.extractMethodCall(snippet, endpoint);
 
             writer.writeLine("@Test");
             writer.writeLine(`public void ${testMethodName}() throws Exception {`);

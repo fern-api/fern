@@ -1,3 +1,4 @@
+import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
 /**
@@ -10,25 +11,48 @@ export class SnippetExtractor {
      * Extracts just the client method call from a full Java snippet.
      * Removes client instantiation and imports, returning only the actual method invocation.
      */
-    public extractMethodCall(fullSnippet: string): string {
+    public extractMethodCall(fullSnippet: string, endpoint?: HttpEndpoint): string {
         const lines = fullSnippet.split("\n");
-
-        let clientInstantiationIndex = -1;
         let clientCallStartIndex = -1;
 
-        for (let i = 0; i < lines.length; i++) {
-            const line = lines[i];
-            if (!line) {
-                continue;
-            }
+        if (endpoint) {
+            const methodName = endpoint.name.camelCase.safeName;
+            const methodRegex = new RegExp(`\\.${methodName}\\s*\\(`);
 
-            if (line.includes("client =") || line.includes("Client client =")) {
-                clientInstantiationIndex = i;
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
+                if (line && methodRegex.test(line)) {
+                    clientCallStartIndex = i;
+                    break;
+                }
             }
+        }
 
-            if (clientInstantiationIndex !== -1 && i > clientInstantiationIndex && line.includes("client.")) {
-                clientCallStartIndex = i;
-                break;
+        if (clientCallStartIndex === -1) {
+            let clientInstantiationIndex = -1;
+            const clientVarRegex = /\b([A-Za-z_]\w*)\s+(\w+)\s*=/;
+            let clientVarName = "client";
+
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
+                if (!line) {
+                    continue;
+                }
+
+                const match = line.match(clientVarRegex);
+                if (match && match[2]) {
+                    clientVarName = match[2];
+                    clientInstantiationIndex = i;
+                }
+
+                if (
+                    clientInstantiationIndex !== -1 &&
+                    i > clientInstantiationIndex &&
+                    line.includes(`${clientVarName}.`)
+                ) {
+                    clientCallStartIndex = i;
+                    break;
+                }
             }
         }
 
@@ -51,19 +75,44 @@ export class SnippetExtractor {
             if (line !== undefined) {
                 methodCallLines.push(line);
 
-                for (const char of line) {
-                    if (char === "{") {
-                        braceDepth++;
-                    } else if (char === "}") {
-                        braceDepth--;
-                    } else if (char === "(") {
-                        parenDepth++;
-                    } else if (char === ")") {
-                        parenDepth--;
+                let inString = false;
+                let escapeNext = false;
+                let hasSemicolon = false;
+
+                for (let j = 0; j < line.length; j++) {
+                    const char = line[j];
+
+                    if (escapeNext) {
+                        escapeNext = false;
+                        continue;
+                    }
+
+                    if (char === "\\" && inString) {
+                        escapeNext = true;
+                        continue;
+                    }
+
+                    if (char === '"') {
+                        inString = !inString;
+                        continue;
+                    }
+
+                    if (!inString) {
+                        if (char === "{") {
+                            braceDepth++;
+                        } else if (char === "}") {
+                            braceDepth--;
+                        } else if (char === "(") {
+                            parenDepth++;
+                        } else if (char === ")") {
+                            parenDepth--;
+                        } else if (char === ";") {
+                            hasSemicolon = true;
+                        }
                     }
                 }
 
-                if (line.includes(";") && braceDepth === 0 && parenDepth === 0) {
+                if (hasSemicolon && braceDepth === 0 && parenDepth === 0) {
                     foundSemicolon = true;
                     break;
                 }
