@@ -30,7 +30,7 @@ export const V61_TO_V60_MIGRATION: IrMigration<
         [GeneratorName.GO_MODEL]: "0.23.9",
         [GeneratorName.GO_SDK]: "1.14.0",
         [GeneratorName.RUBY_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.RUBY_SDK]: "1.0.0-rc34",
         [GeneratorName.CSHARP_MODEL]: "0.0.4",
         [GeneratorName.CSHARP_SDK]: "2.4.0",
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
