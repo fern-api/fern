@@ -153,15 +153,25 @@ final class HTTPClient: Sendable {
             )
         }
         if !requestQueryParams.isEmpty {
-            components.queryItems = requestQueryParams.map { key, value in
-                URLQueryItem(name: key, value: value?.toString())
+            let baseItems: [URLQueryItem] = requestQueryParams.compactMap { key, value in
+                guard let unwrapped = value else { return nil }
+                let stringValue = unwrapped.toString()
+                guard !stringValue.isEmpty else { return nil }
+                return URLQueryItem(name: key, value: stringValue)
+            }
+            if !baseItems.isEmpty {
+                components.queryItems = baseItems
             }
         }
         if let additionalQueryParams = requestOptions?.additionalQueryParameters {
-            components.queryItems?.append(
-                contentsOf: additionalQueryParams.map { key, value in
-                    URLQueryItem(name: key, value: value)
-                })
+            let extraItems = additionalQueryParams.compactMap { key, value in
+                value.isEmpty ? nil : URLQueryItem(name: key, value: value)
+            }
+            if components.queryItems == nil {
+                components.queryItems = extraItems
+            } else {
+                components.queryItems?.append(contentsOf: extraItems)
+            }
         }
         guard let url = components.url else {
             preconditionFailure(

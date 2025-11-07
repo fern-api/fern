@@ -7,18 +7,18 @@ private func main() async throws {
     _ = try await client.nullableOptional.updateTags(
         userId: "userId",
         request: .init(
-            tags: [
+            tags: .value([
                 "tags",
                 "tags"
-            ],
+            ]),
             categories: [
                 "categories",
                 "categories"
             ],
-            labels: [
+            labels: .value([
                 "labels",
                 "labels"
-            ]
+            ])
         )
     )
 }

@@ -2,6 +2,7 @@ import Foundation
 
 /// Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 public final class WebsocketClient: Sendable {
+    public let empty: EmptyClient
     public let realtime: RealtimeClient
     private let httpClient: HTTPClient
 
@@ -51,6 +52,7 @@ public final class WebsocketClient: Sendable {
             maxRetries: maxRetries,
             urlSession: urlSession
         )
+        self.empty = EmptyClient(config: config)
         self.realtime = RealtimeClient(config: config)
         self.httpClient = HTTPClient(config: config)
     }

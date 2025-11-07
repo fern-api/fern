@@ -6,57 +6,57 @@ private func main() async throws {
 
     _ = try await client.nullableOptional.testDeserialization(request: DeserializationTestRequest(
         requiredString: "requiredString",
-        nullableString: "nullableString",
+        nullableString: .value("nullableString"),
         optionalString: "optionalString",
-        optionalNullableString: "optionalNullableString",
-        nullableEnum: .admin,
+        optionalNullableString: .value("optionalNullableString"),
+        nullableEnum: .value(.admin),
         optionalEnum: .active,
-        nullableUnion: NotificationMethod.email(
+        nullableUnion: .value(NotificationMethod.email(
             .init(
                 emailAddress: "emailAddress",
                 subject: "subject",
                 htmlContent: "htmlContent"
             )
-        ),
+        )),
         optionalUnion: SearchResult.user(
             .init(
                 id: "id",
                 username: "username",
-                email: "email",
+                email: .value("email"),
                 phone: "phone",
                 createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                updatedAt: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
                 address: Address(
                     street: "street",
-                    city: "city",
+                    city: .value("city"),
                     state: "state",
                     zipCode: "zipCode",
-                    country: "country",
-                    buildingId: "buildingId",
+                    country: .value("country"),
+                    buildingId: .value("buildingId"),
                     tenantId: "tenantId"
                 )
             )
         ),
-        nullableList: [
+        nullableList: .value([
             "nullableList",
             "nullableList"
-        ],
-        nullableMap: [
+        ]),
+        nullableMap: .value([
             "nullableMap": 1
-        ],
-        nullableObject: Address(
+        ]),
+        nullableObject: .value(Address(
             street: "street",
-            city: "city",
+            city: .value("city"),
             state: "state",
             zipCode: "zipCode",
-            country: "country",
-            buildingId: "buildingId",
+            country: .value("country"),
+            buildingId: .value("buildingId"),
             tenantId: "tenantId"
-        ),
+        )),
         optionalObject: Organization(
             id: "id",
             name: "name",
-            domain: "domain",
+            domain: .value("domain"),
             employeeCount: 1
         )
     ))
