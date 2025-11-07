@@ -46,7 +46,7 @@
     "@fern-api/go-ast": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.1167",
-    "@fern-fern/ir-sdk": "^60.3.1",
+    "@fern-fern/ir-sdk": "^61.7.0",
     "@types/node": "18.15.3",
     "dedent": "^1.5.1",
     "depcheck": "^1.4.7",

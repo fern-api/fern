@@ -20,6 +20,7 @@ export declare const SchemaType: {
     readonly NUMBER: "number";
     readonly STRING: "string";
     readonly UNKNOWN: "unknown";
+    readonly NEVER: "never";
     readonly RECORD: "record";
     readonly SET: "set";
     readonly UNION: "union";

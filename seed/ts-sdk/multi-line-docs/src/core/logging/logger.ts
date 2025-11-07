@@ -102,7 +102,7 @@ export class Logger {
      * @returns True if the level should be logged
      */
     public shouldLog(level: LogLevel): boolean {
-        return !this.silent && this.level >= logLevelMap[level];
+        return !this.silent && this.level <= logLevelMap[level];
     }
 
     /**

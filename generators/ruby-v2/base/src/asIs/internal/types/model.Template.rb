@@ -141,7 +141,7 @@ module <%= gem_namespace %>
           values = Utils.symbolize_keys(values.dup)
 
           self.class.fields.each do |field_name, field|
-            value = values.delete(field.api_name)
+            value = values.delete(field.api_name.to_sym) || values.delete(field.api_name) || values.delete(field_name)
 
             field_value = value || (if field.literal?
                                       field.value
@@ -195,4 +195,4 @@ module <%= gem_namespace %>
       end
     end
   end
-end 
+end  

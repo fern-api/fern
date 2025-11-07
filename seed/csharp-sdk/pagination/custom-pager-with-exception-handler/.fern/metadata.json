@@ -1,0 +1,9 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-csharp-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "custom-pager-name": "MyPager",
+    "include-exception-handler": true
+  }
+}

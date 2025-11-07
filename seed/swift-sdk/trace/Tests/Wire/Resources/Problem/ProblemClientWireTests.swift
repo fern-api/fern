@@ -4,7 +4,7 @@ import Trace
 
 @Suite("ProblemClient Wire Tests") struct ProblemClientWireTests {
     @Test func createProblem1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -21,116 +21,119 @@ import Trace
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.problem.createProblem(request: CreateProblemRequest(
-            problemName: "problemName",
-            problemDescription: ProblemDescription(
-                boards: [
-                    ProblemDescriptionBoard.html(
-                        .init(
-                            html: 
+        let response = try await client.problem.createProblem(
+            request: CreateProblemRequest(
+                problemName: "problemName",
+                problemDescription: ProblemDescription(
+                    boards: [
+                        ProblemDescriptionBoard.html(
+                            .init(
+                                html: 
+                            )
+                        ),
+                        ProblemDescriptionBoard.html(
+                            .init(
+                                html: 
+                            )
                         )
-                    ),
-                    ProblemDescriptionBoard.html(
-                        .init(
-                            html: 
-                        )
-                    )
-                ]
-            ),
-            files: [
-                .java: ProblemFiles(
-                    solutionFile: FileInfo(
-                        filename: "filename",
-                        contents: "contents"
-                    ),
-                    readOnlyFiles: [
-                        FileInfo(
+                    ]
+                ),
+                files: [
+                    .java: ProblemFiles(
+                        solutionFile: FileInfo(
                             filename: "filename",
                             contents: "contents"
                         ),
-                        FileInfo(
-                            filename: "filename",
-                            contents: "contents"
-                        )
-                    ]
-                )
-            ],
-            inputParams: [
-                VariableTypeAndName(
-                    variableType: VariableType.integerType(
-                        .init(
+                        readOnlyFiles: [
+                            FileInfo(
+                                filename: "filename",
+                                contents: "contents"
+                            ),
+                            FileInfo(
+                                filename: "filename",
+                                contents: "contents"
+                            )
+                        ]
+                    )
+                ],
+                inputParams: [
+                    VariableTypeAndName(
+                        variableType: VariableType.integerType(
+                            .init(
 
-                        )
+                            )
+                        ),
+                        name: "name"
                     ),
-                    name: "name"
+                    VariableTypeAndName(
+                        variableType: VariableType.integerType(
+                            .init(
+
+                            )
+                        ),
+                        name: "name"
+                    )
+                ],
+                outputType: VariableType.integerType(
+                    .init(
+
+                    )
                 ),
-                VariableTypeAndName(
-                    variableType: VariableType.integerType(
-                        .init(
-
+                testcases: [
+                    TestCaseWithExpectedResult(
+                        testCase: TestCase(
+                            id: "id",
+                            params: [
+                                VariableValue.integerValue(
+                                    .init(
+                                        integerValue: 
+                                    )
+                                ),
+                                VariableValue.integerValue(
+                                    .init(
+                                        integerValue: 
+                                    )
+                                )
+                            ]
+                        ),
+                        expectedResult: VariableValue.integerValue(
+                            .init(
+                                integerValue: 
+                            )
                         )
                     ),
-                    name: "name"
-                )
-            ],
-            outputType: VariableType.integerType(
-                .init(
-
-                )
+                    TestCaseWithExpectedResult(
+                        testCase: TestCase(
+                            id: "id",
+                            params: [
+                                VariableValue.integerValue(
+                                    .init(
+                                        integerValue: 
+                                    )
+                                ),
+                                VariableValue.integerValue(
+                                    .init(
+                                        integerValue: 
+                                    )
+                                )
+                            ]
+                        ),
+                        expectedResult: VariableValue.integerValue(
+                            .init(
+                                integerValue: 
+                            )
+                        )
+                    )
+                ],
+                methodName: "methodName"
             ),
-            testcases: [
-                TestCaseWithExpectedResult(
-                    testCase: TestCase(
-                        id: "id",
-                        params: [
-                            VariableValue.integerValue(
-                                .init(
-                                    integerValue: 
-                                )
-                            ),
-                            VariableValue.integerValue(
-                                .init(
-                                    integerValue: 
-                                )
-                            )
-                        ]
-                    ),
-                    expectedResult: VariableValue.integerValue(
-                        .init(
-                            integerValue: 
-                        )
-                    )
-                ),
-                TestCaseWithExpectedResult(
-                    testCase: TestCase(
-                        id: "id",
-                        params: [
-                            VariableValue.integerValue(
-                                .init(
-                                    integerValue: 
-                                )
-                            ),
-                            VariableValue.integerValue(
-                                .init(
-                                    integerValue: 
-                                )
-                            )
-                        ]
-                    ),
-                    expectedResult: VariableValue.integerValue(
-                        .init(
-                            integerValue: 
-                        )
-                    )
-                )
-            ],
-            methodName: "methodName"
-        ))
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func updateProblem1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -254,13 +257,14 @@ import Trace
                     )
                 ],
                 methodName: "methodName"
-            )
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func getDefaultStarterFiles1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -312,32 +316,35 @@ import Trace
                 )
             ]
         )
-        let response = try await client.problem.getDefaultStarterFiles(request: .init(
-            inputParams: [
-                VariableTypeAndName(
-                    variableType: VariableType.integerType(
-                        .init(
+        let response = try await client.problem.getDefaultStarterFiles(
+            request: .init(
+                inputParams: [
+                    VariableTypeAndName(
+                        variableType: VariableType.integerType(
+                            .init(
 
-                        )
+                            )
+                        ),
+                        name: "name"
                     ),
-                    name: "name"
+                    VariableTypeAndName(
+                        variableType: VariableType.integerType(
+                            .init(
+
+                            )
+                        ),
+                        name: "name"
+                    )
+                ],
+                outputType: VariableType.integerType(
+                    .init(
+
+                    )
                 ),
-                VariableTypeAndName(
-                    variableType: VariableType.integerType(
-                        .init(
-
-                        )
-                    ),
-                    name: "name"
-                )
-            ],
-            outputType: VariableType.integerType(
-                .init(
-
-                )
+                methodName: "methodName"
             ),
-            methodName: "methodName"
-        ))
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

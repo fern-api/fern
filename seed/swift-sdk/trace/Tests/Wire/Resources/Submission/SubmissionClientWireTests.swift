@@ -4,7 +4,7 @@ import Trace
 
 @Suite("SubmissionClient Wire Tests") struct SubmissionClientWireTests {
     @Test func createExecutionSession1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -28,12 +28,15 @@ import Trace
             language: .java,
             status: .creatingContainer
         )
-        let response = try await client.submission.createExecutionSession(language: .java)
+        let response = try await client.submission.createExecutionSession(
+            language: .java,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getExecutionSession1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -57,12 +60,15 @@ import Trace
             language: .java,
             status: .creatingContainer
         ))
-        let response = try await client.submission.getExecutionSession(sessionId: "sessionId")
+        let response = try await client.submission.getExecutionSession(
+            sessionId: "sessionId",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getExecutionSessionsState1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -108,7 +114,7 @@ import Trace
                 "warmingSessionIds"
             ]
         )
-        let response = try await client.submission.getExecutionSessionsState()
+        let response = try await client.submission.getExecutionSessionsState(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "octokit": "^4.1.4",
+    "simple-git": "^3.24.0",
     "tmp-promise": "^3.0.3"
   },
   "devDependencies": {

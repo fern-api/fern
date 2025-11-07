@@ -1,10 +1,10 @@
 # yaml-language-server: $schema=./../../../../../fern.schema.json
 
 channel:
-  path: /realtime/{id}
+  path: /realtime/{session_id}
   auth: true
   path-parameters:
-    id: string
+    session_id: string
   query-parameters:
     model: optional<string>
     temperature: optional<integer>
@@ -40,7 +40,7 @@ channel:
   examples:
     - name: Default example
       path-parameters:
-        id: doc_123
+        session_id: doc_123
       messages:
         - type: send
           body:

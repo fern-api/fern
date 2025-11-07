@@ -1,4 +1,4 @@
-import { AbstractGeneratorCli } from "@fern-api/base-generator";
+import { AbstractGeneratorCli, File } from "@fern-api/base-generator";
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
@@ -44,5 +44,12 @@ export abstract class AbstractRustGeneratorCli<
         }
 
         return parsedIR.value;
+    }
+
+    protected async generateMetadata(context: RustGeneratorContext): Promise<void> {
+        const content = JSON.stringify(context.ir.generationMetadata, null, 2);
+        context.project.addRawFiles(
+            new File(this.GENERATION_METADATA_FILENAME, this.GENERATION_METADATA_FILEPATH, content)
+        );
     }
 }

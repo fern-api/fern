@@ -4,7 +4,7 @@ import RequestParameters
 
 @Suite("UserClient Wire Tests") struct UserClientWireTests {
     @Test func getUsername1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -80,7 +80,8 @@ import RequestParameters
                     "tags"
                 ]
             ),
-            longParam: 1000000
+            longParam: 1000000,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

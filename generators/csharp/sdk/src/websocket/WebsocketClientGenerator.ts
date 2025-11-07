@@ -362,7 +362,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 summary: queryParameter.docs ?? "",
                 get: true,
                 set: true,
-                useRequired: !type.isOptional()
+                useRequired: !type.isOptional
             });
         }
 
@@ -375,7 +375,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 summary: pathParameter.docs ?? "",
                 get: true,
                 set: true,
-                useRequired: !type.isOptional()
+                useRequired: !type.isOptional
             });
         }
 
@@ -392,10 +392,10 @@ export class WebSocketClientGenerator extends WithGeneration {
     private static hasRequiredOptions(websocketChannel: WebSocketChannel, context: SdkGeneratorContext) {
         return (
             websocketChannel.pathParameters.some(
-                (p) => !context.csharpTypeMapper.convert({ reference: p.valueType }).isOptional()
+                (p) => !context.csharpTypeMapper.convert({ reference: p.valueType }).isOptional
             ) ||
             websocketChannel.queryParameters.some(
-                (p) => !context.csharpTypeMapper.convert({ reference: p.valueType }).isOptional()
+                (p) => !context.csharpTypeMapper.convert({ reference: p.valueType }).isOptional
             )
         );
     }
@@ -531,7 +531,7 @@ export class WebSocketClientGenerator extends WithGeneration {
 
                 writer.write("var uri = ");
                 writer.writeNode(
-                    this.extern.System.UriBuilder.instantiate({
+                    this.extern.System.UriBuilder.new({
                         arguments_: [this.csharp.codeblock((writer) => writer.write("BaseUrl"))]
                     })
                 );

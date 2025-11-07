@@ -1,0 +1,17 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-php-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "customReadmeSections": [
+      {
+        "title": "Override Section",
+        "content": "Override Content"
+      },
+      {
+        "title": "Generator Invocation Custom Section",
+        "content": "Generator Invocation Custom Content for {{ packageName }}"
+      }
+    ]
+  }
+}

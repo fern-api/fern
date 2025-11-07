@@ -4,7 +4,7 @@ import PathParameters
 
 @Suite("UserClient Wire Tests") struct UserClientWireTests {
     @Test func getUser1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -29,12 +29,15 @@ import PathParameters
                 "tags"
             ]
         )
-        let response = try await client.user.getUser(userId: "user_id")
+        let response = try await client.user.getUser(
+            userId: "user_id",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func createUser1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -67,13 +70,14 @@ import PathParameters
                     "tags",
                     "tags"
                 ]
-            )
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func updateUser1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -106,13 +110,14 @@ import PathParameters
                     "tags",
                     "tags"
                 ]
-            ))
+            )),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func searchUsers1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -157,7 +162,41 @@ import PathParameters
         ]
         let response = try await client.user.searchUsers(
             userId: "user_id",
-            limit: 1
+            limit: 1,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getUserMetadata1() async throws -> Void {
+        let stub = WireStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "name": "name",
+                  "tags": [
+                    "tags",
+                    "tags"
+                  ]
+                }
+                """.utf8
+            )
+        )
+        let client = PathParametersClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = User(
+            name: "name",
+            tags: [
+                "tags",
+                "tags"
+            ]
+        )
+        let response = try await client.user.getUserMetadata(
+            userId: "user_id",
+            version: 1
         )
         try #require(response == expectedResponse)
     }

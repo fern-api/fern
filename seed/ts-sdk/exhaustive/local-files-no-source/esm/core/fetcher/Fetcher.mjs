@@ -20,14 +20,21 @@ import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawRespon
 import { requestWithRetries } from "./requestWithRetries.mjs";
 const SENSITIVE_HEADERS = new Set([
     "authorization",
+    "www-authenticate",
     "x-api-key",
     "api-key",
+    "apikey",
+    "x-api-token",
     "x-auth-token",
+    "auth-token",
     "cookie",
     "set-cookie",
     "proxy-authorization",
+    "proxy-authenticate",
     "x-csrf-token",
     "x-xsrf-token",
+    "x-session-token",
+    "x-access-token",
 ]);
 function redactHeaders(headers) {
     const filtered = {};
@@ -81,20 +88,26 @@ function redactUrl(url) {
     if (protocolIndex === -1)
         return url;
     const afterProtocol = protocolIndex + 3;
-    const atIndex = url.indexOf("@", afterProtocol);
-    if (atIndex !== -1) {
-        const pathStart = url.indexOf("/", afterProtocol);
-        const queryStart = url.indexOf("?", afterProtocol);
-        const fragmentStart = url.indexOf("#", afterProtocol);
-        const firstDelimiter = Math.min(pathStart === -1 ? url.length : pathStart, queryStart === -1 ? url.length : queryStart, fragmentStart === -1 ? url.length : fragmentStart);
-        if (atIndex < firstDelimiter) {
-            url = `${url.slice(0, afterProtocol)}[REDACTED]@${url.slice(atIndex + 1)}`;
+    // Find the first delimiter that marks the end of the authority section
+    const pathStart = url.indexOf("/", afterProtocol);
+    let queryStart = url.indexOf("?", afterProtocol);
+    let fragmentStart = url.indexOf("#", afterProtocol);
+    const firstDelimiter = Math.min(pathStart === -1 ? url.length : pathStart, queryStart === -1 ? url.length : queryStart, fragmentStart === -1 ? url.length : fragmentStart);
+    // Find the LAST @ before the delimiter (handles multiple @ in credentials)
+    let atIndex = -1;
+    for (let i = afterProtocol; i < firstDelimiter; i++) {
+        if (url[i] === "@") {
+            atIndex = i;
         }
     }
-    const queryStart = url.indexOf("?");
+    if (atIndex !== -1) {
+        url = `${url.slice(0, afterProtocol)}[REDACTED]@${url.slice(atIndex + 1)}`;
+    }
+    // Recalculate queryStart since url might have changed
+    queryStart = url.indexOf("?");
     if (queryStart === -1)
         return url;
-    const fragmentStart = url.indexOf("#", queryStart);
+    fragmentStart = url.indexOf("#", queryStart);
     const queryEnd = fragmentStart !== -1 ? fragmentStart : url.length;
     const queryString = url.slice(queryStart + 1, queryEnd);
     if (queryString.length === 0)
@@ -102,15 +115,15 @@ function redactUrl(url) {
     // FAST PATH: Quick check if any sensitive keywords present
     // Using indexOf is faster than regex for simple substring matching
     const lower = queryString.toLowerCase();
-    const hasSensitive = lower.includes("token") || // catches token, access_token, auth_token, etc.
-        lower.includes("key") || // catches key, api_key, apikey, api-key, etc.
-        lower.includes("password") || // catches password
-        lower.includes("passwd") || // catches passwd
-        lower.includes("secret") || // catches secret, api_secret, etc.
-        lower.includes("session") || // catches session, session_id, session-id
-        lower.includes("auth"); // catches auth_token, auth-token, etc.
+    const hasSensitive = lower.includes("token") ||
+        lower.includes("key") ||
+        lower.includes("password") ||
+        lower.includes("passwd") ||
+        lower.includes("secret") ||
+        lower.includes("session") ||
+        lower.includes("auth");
     if (!hasSensitive) {
-        return url; // Early exit - no sensitive params
+        return url;
     }
     // SLOW PATH: Parse and redact
     const redactedParams = [];
@@ -189,6 +202,7 @@ export function fetcherImpl(args) {
                         method: args.method,
                         url: redactUrl(url),
                         statusCode: response.status,
+                        responseHeaders: redactHeaders(Object.fromEntries(response.headers.entries())),
                     };
                     logger.debug("HTTP request succeeded", metadata);
                 }
@@ -205,6 +219,7 @@ export function fetcherImpl(args) {
                         method: args.method,
                         url: redactUrl(url),
                         statusCode: response.status,
+                        responseHeaders: redactHeaders(Object.fromEntries(response.headers.entries())),
                     };
                     logger.error("HTTP request failed with error status", metadata);
                 }

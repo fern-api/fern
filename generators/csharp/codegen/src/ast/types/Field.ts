@@ -1,6 +1,7 @@
 import { fail } from "assert";
 import { type Generation } from "../../context/generation-info";
 import { type Origin } from "../../context/model-navigator";
+import { type ClassInstantiation } from "../code/ClassInstantiation";
 import { MemberNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
 import { Access } from "../language/Access";
@@ -54,7 +55,7 @@ export declare namespace Field {
         /* Field annotations */
         annotations?: (Annotation | ClassReference)[];
         /* The initializer for the field */
-        initializer?: CodeBlock;
+        initializer?: CodeBlock | ClassInstantiation;
         /* The summary tag (used for describing the field) */
         summary?: string;
         /* The doc block (used for describing the field) */
@@ -97,7 +98,7 @@ export class Field extends MemberNode {
     private readonly set: Access | boolean;
     private readonly new_: boolean;
     private readonly annotations: Annotation[];
-    private readonly initializer?: CodeBlock;
+    private readonly initializer?: CodeBlock | ClassInstantiation;
     private readonly doc: XmlDocBlock;
     private readonly jsonPropertyName?: string;
     private readonly readonly?: boolean;
@@ -184,7 +185,7 @@ export class Field extends MemberNode {
     }
 
     public get needsIntialization(): boolean {
-        return !this.type.isOptional() && this.initializer == null;
+        return !this.type.isOptional && this.initializer == null;
     }
 
     public get isConst(): boolean {
@@ -214,7 +215,7 @@ export class Field extends MemberNode {
     }
 
     public get isOptional(): boolean {
-        return this.type.isOptional();
+        return this.type.isOptional;
     }
 
     public write(writer: Writer): void {
@@ -240,7 +241,7 @@ export class Field extends MemberNode {
         }
         const underlyingTypeIfOptional = this.type.underlyingTypeIfOptional();
         const isOptional = underlyingTypeIfOptional != null;
-        const isCollection = (underlyingTypeIfOptional ?? this.type).isCollection();
+        const isCollection = (underlyingTypeIfOptional ?? this.type).isCollection;
         if (this.useRequired && !isOptional && !isCollection && this.initializer == null) {
             writer.write("required ");
         }

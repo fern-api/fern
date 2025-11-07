@@ -1,0 +1,17 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-csharp-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "custom-readme-sections": [
+      {
+        "title": "Override Section",
+        "content": "Override Content"
+      },
+      {
+        "title": "Generator Invocation Custom Section",
+        "content": "Generator Invocation Custom Content for {{ packageName }}"
+      }
+    ]
+  }
+}

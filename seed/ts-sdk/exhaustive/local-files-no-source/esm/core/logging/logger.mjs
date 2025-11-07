@@ -46,7 +46,7 @@ export class Logger {
      * @returns True if the level should be logged
      */
     shouldLog(level) {
-        return !this.silent && this.level >= logLevelMap[level];
+        return !this.silent && this.level <= logLevelMap[level];
     }
     /**
      * Checks if debug logging is enabled.

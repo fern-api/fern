@@ -45,6 +45,7 @@
     "cors": "^2.8.5",
     "decompress": "^4.2.1",
     "express": "^4.21.2",
+    "gray-matter": "^4.0.3",
     "tmp-promise": "^3.0.3",
     "uuid": "^9.0.1",
     "watcher": "^2.3.1",

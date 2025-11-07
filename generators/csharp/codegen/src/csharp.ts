@@ -967,7 +967,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the class initialization
          */
         class_: ({ reference, fields }: { reference: ClassReference; fields: ConstructorField[] }) => {
-            return new TypeLiteral({ type: "class", reference, fields }, this.generation);
+            return new TypeLiteral.Class_(reference, fields, this.generation);
         },
 
         /**
@@ -987,7 +987,7 @@ export class CSharp {
             valueType: Type;
             entries: DictionaryEntry[];
         }) => {
-            return new TypeLiteral({ type: "dictionary", keyType, valueType, entries }, this.generation);
+            return new TypeLiteral.Dictionary(keyType, valueType, entries, this.generation);
         },
 
         /**
@@ -998,7 +998,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the list initialization
          */
         list: ({ valueType, values }: { valueType: Type; values: TypeLiteral[] }) => {
-            return new TypeLiteral({ type: "list", valueType, values }, this.generation);
+            return new TypeLiteral.List(valueType, values, this.generation);
         },
 
         /**
@@ -1009,7 +1009,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the set initialization
          */
         set: ({ valueType, values }: { valueType: Type; values: TypeLiteral[] }) => {
-            return new TypeLiteral({ type: "set", valueType, values }, this.generation);
+            return new TypeLiteral.Set(valueType, values, this.generation);
         },
 
         /**
@@ -1019,7 +1019,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the boolean literal
          */
         boolean: (value: boolean) => {
-            return new TypeLiteral({ type: "boolean", value }, this.generation);
+            return new TypeLiteral.Boolean(value, this.generation);
         },
 
         /**
@@ -1029,7 +1029,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the float literal
          */
         float: (value: number) => {
-            return new TypeLiteral({ type: "float", value }, this.generation);
+            return new TypeLiteral.Float(value, this.generation);
         },
 
         /**
@@ -1039,7 +1039,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the date literal
          */
         date: (value: string) => {
-            return new TypeLiteral({ type: "date", value }, this.generation);
+            return new TypeLiteral.Date(value, this.generation);
         },
 
         /**
@@ -1049,7 +1049,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the DateTime literal
          */
         datetime: (value: string) => {
-            return new TypeLiteral({ type: "datetime", value }, this.generation);
+            return new TypeLiteral.DateTime(value, this.generation);
         },
 
         /**
@@ -1059,7 +1059,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the decimal literal
          */
         decimal: (value: number) => {
-            return new TypeLiteral({ type: "decimal", value }, this.generation);
+            return new TypeLiteral.Decimal(value, this.generation);
         },
 
         /**
@@ -1069,7 +1069,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the double literal
          */
         double: (value: number) => {
-            return new TypeLiteral({ type: "double", value }, this.generation);
+            return new TypeLiteral.Double(value, this.generation);
         },
 
         /**
@@ -1079,7 +1079,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the integer literal
          */
         integer: (value: number) => {
-            return new TypeLiteral({ type: "integer", value }, this.generation);
+            return new TypeLiteral.Integer(value, this.generation);
         },
 
         /**
@@ -1089,7 +1089,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the long literal
          */
         long: (value: number) => {
-            return new TypeLiteral({ type: "long", value }, this.generation);
+            return new TypeLiteral.Long(value, this.generation);
         },
 
         /**
@@ -1099,7 +1099,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the uint literal
          */
         uint: (value: number) => {
-            return new TypeLiteral({ type: "uint", value }, this.generation);
+            return new TypeLiteral.Uint(value, this.generation);
         },
 
         /**
@@ -1109,7 +1109,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the ulong literal
          */
         ulong: (value: number) => {
-            return new TypeLiteral({ type: "ulong", value }, this.generation);
+            return new TypeLiteral.Ulong(value, this.generation);
         },
 
         /**
@@ -1119,13 +1119,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the reference literal
          */
         reference: (value: AstNode) => {
-            return new TypeLiteral(
-                {
-                    type: "reference",
-                    value
-                },
-                this.generation
-            );
+            return new TypeLiteral.Reference(value, this.generation);
         },
 
         /**
@@ -1135,13 +1129,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the string literal
          */
         string: (value: string) => {
-            return new TypeLiteral(
-                {
-                    type: "string",
-                    value
-                },
-                this.generation
-            );
+            return new TypeLiteral.String(value, this.generation);
         },
 
         /**
@@ -1150,7 +1138,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the null literal
          */
         null: () => {
-            return new TypeLiteral({ type: "null" }, this.generation);
+            return new TypeLiteral.Null(this.generation);
         },
 
         /**
@@ -1159,7 +1147,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing a no-operation literal
          */
         nop: () => {
-            return new TypeLiteral({ type: "nop" }, this.generation);
+            return new TypeLiteral.Nop(this.generation);
         },
 
         /**
@@ -1169,17 +1157,7 @@ export class CSharp {
          * @returns A TypeLiteral object representing the unknown literal
          */
         unknown: (value: unknown) => {
-            return new TypeLiteral({ type: "unknown", value }, this.generation);
-        },
-
-        /**
-         * Checks if a TypeLiteral is a no-operation literal.
-         *
-         * @param typeLiteral - The TypeLiteral to check
-         * @returns True if the TypeLiteral is a no-operation literal
-         */
-        isNop: (typeLiteral: TypeLiteral) => {
-            return typeLiteral.internalType.type === "nop";
+            return new TypeLiteral.Unknown(value, this.generation);
         }
     };
 

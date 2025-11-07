@@ -3,9 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { camelCase, upperFirst } from "lodash-es";
-
 import { Config } from "./Config";
-
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 import { FilePropertyInfo } from "./context/FilePropertyMapper";
 
@@ -220,7 +218,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
         environment: FernIr.dynamic.EnvironmentValues | undefined;
     }): NamedArgument[] {
         const baseUrlArg = this.getBaseUrlArg({ baseUrl, environment });
-        if (this.csharp.TypeLiteral.isNop(baseUrlArg)) {
+        if (is.TypeLiteral.nop(baseUrlArg)) {
             return [];
         }
         return [
@@ -375,7 +373,8 @@ export class EndpointSnippetGenerator extends WithGeneration {
                 name: this.context.getParameterName(auth.header.name.name),
                 assignment: this.context.dynamicTypeLiteralMapper.convert({
                     typeReference: auth.header.typeReference,
-                    value: values.value
+                    value: values.value,
+                    fallbackToDefault: auth.header.name.wireValue
                 })
             }
         ];
@@ -429,9 +428,10 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }): ast.TypeLiteral | undefined {
         const typeLiteral = this.context.dynamicTypeLiteralMapper.convert({
             typeReference: header.typeReference,
-            value
+            value,
+            fallbackToDefault: header.name.wireValue
         });
-        if (this.csharp.TypeLiteral.isNop(typeLiteral)) {
+        if (is.TypeLiteral.nop(typeLiteral)) {
             // Literal header values (e.g. "X-API-Version") should not be included in the
             // client constructor.
             return undefined;
@@ -551,7 +551,10 @@ export class EndpointSnippetGenerator extends WithGeneration {
         });
         const headerFields = headers.map((header) => ({
             name: this.context.getPropertyName(header.name.name),
-            value: this.context.dynamicTypeLiteralMapper.convert(header)
+            value: this.context.dynamicTypeLiteralMapper.convert({
+                ...header,
+                fallbackToDefault: header.name.wireValue
+            })
         }));
         this.context.errors.unscope();
 
@@ -612,7 +615,10 @@ export class EndpointSnippetGenerator extends WithGeneration {
         for (const parameter of bodyProperties) {
             fields.push({
                 name: this.context.getPropertyName(parameter.name.name),
-                value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+                value: this.context.dynamicTypeLiteralMapper.convert({
+                    ...parameter,
+                    fallbackToDefault: parameter.name.wireValue
+                })
             });
         }
 
@@ -651,7 +657,11 @@ export class EndpointSnippetGenerator extends WithGeneration {
             case "bytes":
                 return this.getBytesBodyRequestArg({ value });
             case "typeReference":
-                return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
+                return this.context.dynamicTypeLiteralMapper.convert({
+                    typeReference: body.value,
+                    value,
+                    fallbackToDefault: JSON.stringify(body.value)
+                });
             default:
                 assertNever(body);
         }
@@ -700,7 +710,11 @@ export class EndpointSnippetGenerator extends WithGeneration {
                 if (body.value.type === "optional" && value == undefined) {
                     return this.csharp.TypeLiteral.null();
                 }
-                return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
+                return this.context.dynamicTypeLiteralMapper.convert({
+                    typeReference: body.value,
+                    value,
+                    fallbackToDefault: JSON.stringify(body.value)
+                });
             default:
                 assertNever(body);
         }
@@ -744,7 +758,10 @@ export class EndpointSnippetGenerator extends WithGeneration {
         for (const parameter of pathParameters) {
             args.push({
                 name: this.context.getPropertyName(parameter.name.name),
-                value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+                value: this.context.dynamicTypeLiteralMapper.convert({
+                    ...parameter,
+                    fallbackToDefault: parameter.name.wireValue
+                })
             });
         }
         return args;

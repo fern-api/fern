@@ -13,7 +13,9 @@ module Seed
         def get_direct_thread(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.symbolize_keys(params)
           _query_param_names = %i[ids tags]
-          _query = params.slice(*_query_param_names)
+          _query = {}
+          _query["ids"] = params[:ids] if params.key?(:ids)
+          _query["tags"] = params[:tags] if params.key?(:tags)
           params.except(*_query_param_names)
 
           _request = Seed::Internal::JSON::Request.new(
