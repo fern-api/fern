@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add support for file hashing when running `fern generate --docs`. This allows for more efficient file uploads to the docs site by only uploading files that have changed since the last generation.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-07"
+  version: 0.110.0
+
+- changelogEntry:
+    - summary: |
         Fix TypeScript SDK generator's local GitHub generation to match remote generation.
       type: fix
   irVersion: 61

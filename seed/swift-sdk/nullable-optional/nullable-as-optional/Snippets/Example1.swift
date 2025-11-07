@@ -6,17 +6,17 @@ private func main() async throws {
 
     _ = try await client.nullableOptional.createUser(request: CreateUserRequest(
         username: "username",
-        email: .value("email"),
+        email: "email",
         phone: "phone",
-        address: .value(Address(
+        address: Address(
             street: "street",
-            city: .value("city"),
+            city: "city",
             state: "state",
             zipCode: "zipCode",
-            country: .value("country"),
-            buildingId: .value("buildingId"),
+            country: "country",
+            buildingId: "buildingId",
             tenantId: "tenantId"
-        ))
+        )
     ))
 }
 

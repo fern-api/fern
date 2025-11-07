@@ -4,7 +4,7 @@ import Audiences
 
 @Suite("ServiceClient Wire Tests") struct ServiceClientWireTests {
     @Test func getDirectThread1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -29,7 +29,7 @@ import Audiences
                 ))
             ))
         )
-        let response = try await client.folderA.service.getDirectThread()
+        let response = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

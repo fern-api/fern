@@ -4,7 +4,7 @@ import Examples
 
 @Suite("FileServiceClient Wire Tests") struct FileServiceClientWireTests {
     @Test func getFile2() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -24,7 +24,10 @@ import Examples
             name: "name",
             contents: "contents"
         )
-        let response = try await client.file.service.getFile(filename: "filename")
+        let response = try await client.file.service.getFile(
+            filename: "filename",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

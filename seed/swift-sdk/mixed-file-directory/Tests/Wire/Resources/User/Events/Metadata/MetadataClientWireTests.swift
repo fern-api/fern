@@ -4,7 +4,7 @@ import MixedFileDirectory
 
 @Suite("MetadataClient Wire Tests") struct MetadataClientWireTests {
     @Test func getMetadata1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -29,7 +29,10 @@ import MixedFileDirectory
                 ]
             )
         )
-        let response = try await client.user.events.metadata.getMetadata(id: "id")
+        let response = try await client.user.events.metadata.getMetadata(
+            id: "id",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

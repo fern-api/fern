@@ -4,7 +4,7 @@ import ResponseProperty
 
 @Suite("ServiceClient Wire Tests") struct ServiceClientWireTests {
     @Test func getMovie1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -35,12 +35,15 @@ import ResponseProperty
             ],
             docs: "docs"
         )
-        let response = try await client.service.getMovie(request: "string")
+        let response = try await client.service.getMovie(
+            request: "string",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getMovieDocs1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -71,12 +74,15 @@ import ResponseProperty
             ],
             docs: "docs"
         )
-        let response = try await client.service.getMovieDocs(request: "string")
+        let response = try await client.service.getMovieDocs(
+            request: "string",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getMovieName1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -93,12 +99,15 @@ import ResponseProperty
         let expectedResponse = StringResponse(
             data: "data"
         )
-        let response = try await client.service.getMovieName(request: "string")
+        let response = try await client.service.getMovieName(
+            request: "string",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getMovieMetadata1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -129,12 +138,15 @@ import ResponseProperty
             ],
             docs: "docs"
         )
-        let response = try await client.service.getMovieMetadata(request: "string")
+        let response = try await client.service.getMovieMetadata(
+            request: "string",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getOptionalMovie1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -165,12 +177,15 @@ import ResponseProperty
             ],
             docs: "docs"
         ))
-        let response = try await client.service.getOptionalMovie(request: "string")
+        let response = try await client.service.getOptionalMovie(
+            request: "string",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getOptionalMovieDocs1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -187,12 +202,15 @@ import ResponseProperty
         let expectedResponse = Optional(WithDocs(
             docs: "docs"
         ))
-        let response = try await client.service.getOptionalMovieDocs(request: "string")
+        let response = try await client.service.getOptionalMovieDocs(
+            request: "string",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getOptionalMovieName1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -209,7 +227,10 @@ import ResponseProperty
         let expectedResponse = Optional(StringResponse(
             data: "data"
         ))
-        let response = try await client.service.getOptionalMovieName(request: "string")
+        let response = try await client.service.getOptionalMovieName(
+            request: "string",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

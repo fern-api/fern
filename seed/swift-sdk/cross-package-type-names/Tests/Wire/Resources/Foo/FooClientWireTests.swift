@@ -4,7 +4,7 @@ import CrossPackageTypeNames
 
 @Suite("FooClient Wire Tests") struct FooClientWireTests {
     @Test func find1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -26,7 +26,8 @@ import CrossPackageTypeNames
             request: .init(
                 publicProperty: "publicProperty",
                 privateProperty: 1
-            )
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

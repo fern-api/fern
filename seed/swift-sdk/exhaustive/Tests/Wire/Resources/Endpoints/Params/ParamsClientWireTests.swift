@@ -4,7 +4,7 @@ import Exhaustive
 
 @Suite("ParamsClient Wire Tests") struct ParamsClientWireTests {
     @Test func getWithPath1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -18,12 +18,15 @@ import Exhaustive
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.endpoints.params.getWithPath(param: "param")
+        let response = try await client.endpoints.params.getWithPath(
+            param: "param",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getWithInlinePath1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -37,12 +40,15 @@ import Exhaustive
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.endpoints.params.getWithInlinePath(param: "param")
+        let response = try await client.endpoints.params.getWithInlinePath(
+            param: "param",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func modifyWithPath1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -58,13 +64,14 @@ import Exhaustive
         let expectedResponse = "string"
         let response = try await client.endpoints.params.modifyWithPath(
             param: "param",
-            request: "string"
+            request: "string",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func modifyWithInlinePath1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -80,7 +87,8 @@ import Exhaustive
         let expectedResponse = "string"
         let response = try await client.endpoints.params.modifyWithInlinePath(
             param: "param",
-            request: .init(body: "string")
+            request: .init(body: "string"),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

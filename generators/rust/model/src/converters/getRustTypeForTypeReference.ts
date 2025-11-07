@@ -112,8 +112,14 @@ export function generateRustTypeForTypeReference(
                     );
                 },
                 base64: () => {
-                    // Base64 is typically represented as Vec<u8> or String
-                    return rust.Type.primitive(rust.PrimitiveType.String);
+                    // Base64 represents binary data as Vec<u8>
+                    return rust.Type.reference(
+                        rust.reference({
+                            name: "Vec",
+                            module: undefined,
+                            genericArgs: [rust.Type.primitive(rust.PrimitiveType.U8)]
+                        })
+                    );
                 },
                 uuid: () => {
                     // Use uuid::Uuid

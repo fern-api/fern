@@ -4,7 +4,7 @@ import ObjectsWithImports
 
 @Suite("OptionalClient Wire Tests") struct OptionalClientWireTests {
     @Test func sendOptionalBody1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -17,11 +17,14 @@ import ObjectsWithImports
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.optional.sendOptionalBody(request: [
-            "string": .object([
-                "key": .string("value")
-            ])
-        ])
+        let response = try await client.optional.sendOptionalBody(
+            request: [
+                "string": .object([
+                    "key": .string("value")
+                ])
+            ],
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

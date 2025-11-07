@@ -41,7 +41,7 @@ async fn main() {
         .file_upload_example
         .upload_file(
             &UploadFileRequest {
-                file: todo!("Missing file value"),
+                file: std::fs::read("path/to/file").expect("Failed to read file"),
                 name: "name".to_string(),
             },
             None,
