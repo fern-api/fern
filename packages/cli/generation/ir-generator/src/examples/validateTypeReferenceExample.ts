@@ -53,7 +53,8 @@ export function validateTypeReferenceExample({
         // This comment never reaches the user and serves as a termination condition for the recursion.
         return [
             {
-                message: "Example is too deeply nested. This may indicate a circular reference."
+                message: "Example is too deeply nested. This may indicate a circular reference. Example generation was truncated.",
+                severity: "warning"
             }
         ];
     }
