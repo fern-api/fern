@@ -11,8 +11,8 @@ async fn main() {
         .service
         .optional_args(
             &OptionalArgsRequest {
-                image_file: todo!("Missing file value"),
-                request: todo!("Missing body property value"),
+                image_file: std::fs::read("path/to/file").expect("Failed to read file"),
+                request: None,
             },
             None,
         )

@@ -5,5 +5,5 @@ pub use crate::prelude::*;
 pub enum Data {
     String { value: String },
 
-    Base64 { value: String },
+    Base64 { value: Vec<u8> },
 }
