@@ -293,7 +293,55 @@ class FernAwarePydanticModel:
                 self._pydantic_model.add_partial_class()
             self._get_validators_generator().add_validators()
         if self._model_contains_forward_refs or self._force_update_forward_refs:
-            self._pydantic_model.update_forward_refs()
+            # Check for mutually recursive object types (object types that reference each other)
+            type_id_to_reference = self._type_id_for_forward_ref()
+            mutually_recursive_object_types: List[ir_types.TypeId] = []
+
+            if type_id_to_reference is not None:
+                # Get all types that this type references
+                referenced_types = self._context.get_referenced_types(type_id_to_reference)
+
+                # Check which of those types also reference this type back (mutual recursion)
+                for referenced_type_id in referenced_types:
+                    # Skip self-references
+                    if referenced_type_id == type_id_to_reference:
+                        continue
+
+                    # Only include object types (not unions or aliases)
+                    referenced_declaration = self._context.get_declaration_for_type_id(referenced_type_id)
+                    if referenced_declaration.shape.get_as_union().type != "object":
+                        continue
+
+                    if self._context.do_types_reference_each_other(type_id_to_reference, referenced_type_id):
+                        mutually_recursive_object_types.append(referenced_type_id)
+
+                # Sort by class name to ensure deterministic output
+                mutually_recursive_object_types.sort(
+                    key=lambda type_id: self._context.get_class_name_for_type_id(type_id, as_request=False)
+                )
+
+            # If there are mutually recursive object types, import them and call update_forward_refs with kwargs
+            if len(mutually_recursive_object_types) > 0:
+                # Add all mutually recursive types as ghost references (imports at bottom of file)
+                # and create class references that can be used at runtime (not as forward ref strings)
+                mutually_recursive_class_refs: List[AST.ClassReference] = []
+                for mutually_recursive_type_id in mutually_recursive_object_types:
+                    self.add_ghost_reference(mutually_recursive_type_id)
+
+                    # Get the class reference and mark it as dynamically imported
+                    # so it can be used as an actual reference (not a string) in the kwargs
+                    class_ref = self._context.get_class_reference_for_type_id(
+                        type_id=mutually_recursive_type_id,
+                        must_import_after_current_declaration=lambda _: False,  # Force actual import, not forward ref
+                        as_request=False,
+                    )
+                    mutually_recursive_class_refs.append(class_ref)
+
+                # Call update_forward_refs with all mutually recursive types as kwargs
+                self._pydantic_model.update_forward_refs_with_locals(mutually_recursive_class_refs)
+            else:
+                # No mutual recursion, just call regular update_forward_refs
+                self._pydantic_model.update_forward_refs()
 
         # Acknowledge forward refs for extended models as well
         for extended_type in self._extends:

@@ -423,16 +423,45 @@ class PydanticModel:
         )
 
     def update_forward_refs_for_given_model(self, given_model: AST.ClassReference) -> None:
+        """
+        Updates forward refs for this model, passing given_model as a kwarg.
+        Generates: update_forward_refs(ThisModel, GivenModelName=GivenModel)
+
+        This is used for mutually recursive types where two models reference each other.
+        """
         self._source_file.add_footer_expression(
             AST.Expression(
                 AST.FunctionInvocation(
                     function_definition=self._update_forward_ref_function_reference,
-                    args=[AST.Expression(given_model)],
+                    args=[AST.Expression(self._local_class_reference)],
                     kwargs=[
                         (
-                            get_named_import_or_throw(self._local_class_reference),
-                            AST.Expression(self._local_class_reference),
+                            get_named_import_or_throw(given_model),
+                            AST.Expression(given_model),
                         )
+                    ],
+                )
+            )
+        )
+
+    def update_forward_refs_with_locals(self, mutually_recursive_types: List[AST.ClassReference]) -> None:
+        """
+        Updates forward refs for this model, passing multiple models as kwargs.
+        Generates: update_forward_refs(ThisModel, Model1=Model1, Model2=Model2, ...)
+
+        This is used for mutually recursive types where multiple models reference each other.
+        """
+        self._source_file.add_footer_expression(
+            AST.Expression(
+                AST.FunctionInvocation(
+                    function_definition=self._update_forward_ref_function_reference,
+                    args=[AST.Expression(self._local_class_reference)],
+                    kwargs=[
+                        (
+                            get_named_import_or_throw(class_ref),
+                            AST.Expression(class_ref),
+                        )
+                        for class_ref in mutually_recursive_types
                     ],
                 )
             )
