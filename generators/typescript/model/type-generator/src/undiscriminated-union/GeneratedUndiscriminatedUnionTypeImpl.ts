@@ -1,5 +1,4 @@
 import {
-    ContainerType,
     ExampleTypeShape,
     TypeReference,
     UndiscriminatedUnionMember,
@@ -35,12 +34,12 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
         context: Context
     ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
         const statements: StatementStructures[] = [];
-        
+
         const helperInterfaces = this.generateHelperInterfaces(context);
         statements.push(...helperInterfaces);
-        
+
         statements.push(this.generateTypeAlias(context));
-        
+
         const iModule = this.generateModule(context);
         if (iModule) {
             statements.push(iModule);
@@ -188,14 +187,14 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
     private generateHelperInterfaces(context: Context): InterfaceDeclarationStructure[] {
         const interfaces: InterfaceDeclarationStructure[] = [];
         const seenHelpers = new Set<string>();
-        
+
         for (const member of this.shape.members) {
             const helperInterface = this.generateHelperInterfaceForMember(context, member, seenHelpers);
             if (helperInterface != null) {
                 interfaces.push(helperInterface);
             }
         }
-        
+
         return interfaces;
     }
 
@@ -216,7 +215,7 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
                 return undefined;
             }
             seenHelpers.add(helperName);
-            
+
             return {
                 kind: StructureKind.Interface,
                 name: helperName,
@@ -235,7 +234,7 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
                 return undefined;
             }
             seenHelpers.add(helperName);
-            
+
             return {
                 kind: StructureKind.Interface,
                 name: helperName,
@@ -260,7 +259,7 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
                 return this.typeName;
             }
         }
-        
+
         const typeNode = context.type.getReferenceToType(typeRef).typeNode;
         const printer = ts.createPrinter();
         const sourceFile = ts.createSourceFile("temp.ts", "", ts.ScriptTarget.Latest, false, ts.ScriptKind.TS);
