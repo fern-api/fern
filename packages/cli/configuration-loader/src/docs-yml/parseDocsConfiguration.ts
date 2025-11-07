@@ -371,7 +371,7 @@ function convertThemeConfig(
         sidebar: theme.sidebar ?? "default",
         tabs: theme.tabs ?? "default",
         body: theme.body ?? "default",
-        pageActions: theme.pageActions
+        pageActions: theme.pageActions ?? "default"
     };
 }
 
