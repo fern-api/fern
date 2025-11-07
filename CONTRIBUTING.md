@@ -81,7 +81,7 @@ Below we talk through the large components of this monorepo and how to contribut
 
 Fern's documentation is hosted live at the URL https://buildwithfern.com/learn. We appreciate any help we can get that makes our documentation more digestible.
 
-If you find gaps within our documentation, please open an [issue](https://github.com/fern-api/docs/issues/new/choose) or learn how to contribute [here](https://github.com/fern-api/docs).
+If you find gaps within our documentation, open an [issue](https://github.com/fern-api/docs/issues/new/choose) or learn how to contribute [here](https://github.com/fern-api/docs).
 
 <br>
 
