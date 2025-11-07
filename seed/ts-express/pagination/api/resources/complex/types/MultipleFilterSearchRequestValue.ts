@@ -2,8 +2,6 @@
 
 import type * as SeedPagination from "../../../index";
 
-export interface MultipleFilterSearchRequestValueArray extends Array<SeedPagination.MultipleFilterSearchRequest> {}
-
 export type MultipleFilterSearchRequestValue =
-    | MultipleFilterSearchRequestValueArray
-    | MultipleFilterSearchRequestValueArray;
+    | SeedPagination.MultipleFilterSearchRequest[]
+    | SeedPagination.SingleFilterSearchRequest[];

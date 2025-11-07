@@ -2,10 +2,6 @@
 
 import type * as SeedObject from "../index";
 
-export interface UndiscriminatedUnion1Array extends Array<SeedObject.UndiscriminatedUnion1InlineListItem1> {}
-
-export interface UndiscriminatedUnion1Object extends Record<string, SeedObject.UndiscriminatedUnion1InlineMapItem1> {}
-
 /**
  * lorem ipsum
  */
@@ -27,13 +23,13 @@ export type UndiscriminatedUnion1 =
     | SeedObject.UserId
     /**
      * lorem ipsum */
-    | UndiscriminatedUnion1Array
+    | SeedObject.UndiscriminatedUnion1InlineListItem1[]
     /**
      * lorem ipsum */
     | SeedObject.UndiscriminatedUnion1InlineSetItem1[]
     /**
      * lorem ipsum */
-    | UndiscriminatedUnion1Object
+    | Record<string, SeedObject.UndiscriminatedUnion1InlineMapItem1>
     /**
      * lorem ipsum */
     | SeedObject.ReferenceType;

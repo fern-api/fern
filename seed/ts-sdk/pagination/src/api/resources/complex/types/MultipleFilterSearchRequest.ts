@@ -13,8 +13,5 @@ export namespace MultipleFilterSearchRequest {
         Or: "OR",
     } as const;
     export type Operator = (typeof Operator)[keyof typeof Operator];
-
-    export interface ValueArray extends Array<SeedPagination.MultipleFilterSearchRequest> {}
-
-    export type Value = ValueArray | ValueArray;
+    export type Value = SeedPagination.MultipleFilterSearchRequest[] | SeedPagination.SingleFilterSearchRequest[];
 }

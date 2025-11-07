@@ -2,9 +2,7 @@
 
 import type * as SeedUndiscriminatedUnions from "../../../index";
 
-export interface NestedUnionRootArray extends Array<string> {}
-
 /**
  * Nested union root.
  */
-export type NestedUnionRoot = string | NestedUnionRootArray | SeedUndiscriminatedUnions.NestedUnionL1;
+export type NestedUnionRoot = string | string[] | SeedUndiscriminatedUnions.NestedUnionL1;

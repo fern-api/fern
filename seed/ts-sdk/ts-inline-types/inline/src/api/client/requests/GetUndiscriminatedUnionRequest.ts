@@ -26,10 +26,6 @@ export interface GetUndiscriminatedUnionRequest {
 }
 
 export namespace GetUndiscriminatedUnionRequest {
-    export interface BarArray extends Array<SeedObject.UndiscriminatedUnion1InlineListItem1> {}
-
-    export interface BarObject extends Record<string, SeedObject.UndiscriminatedUnion1InlineMapItem1> {}
-
     /**
      * lorem ipsum
      */
@@ -75,7 +71,10 @@ export namespace GetUndiscriminatedUnionRequest {
         | SeedObject.UserId
         /**
          * lorem ipsum */
-        | BarArray
+        | {
+              foo: string;
+              ref: SeedObject.ReferenceType;
+          }[]
         /**
          * lorem ipsum */
         | {
@@ -84,7 +83,13 @@ export namespace GetUndiscriminatedUnionRequest {
           }[]
         /**
          * lorem ipsum */
-        | BarObject
+        | Record<
+              string,
+              {
+                  foo: string;
+                  ref: SeedObject.ReferenceType;
+              }
+          >
         /**
          * lorem ipsum */
         | SeedObject.ReferenceType;
