@@ -26,6 +26,7 @@ import { ts } from "ts-morph";
 import { GeneratedSdkClientClassImpl } from "../../../GeneratedSdkClientClassImpl";
 import { GeneratedStreamingEndpointImplementation } from "../../GeneratedStreamingEndpointImplementation";
 import { getAbortSignalExpression } from "../../utils/requestOptionsParameter";
+import { generateGlobalStatusCodeErrorThrow, generateNonStatusCodeErrorHandling } from "./errorHandlingUtils";
 import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse";
 import {
     CONTENT_LENGTH_RESPONSE_KEY,
@@ -746,7 +747,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     }
 
     private getReturnFailedResponse(context: SdkContext): ts.Statement[] {
-        return [...this.getThrowsForStatusCodeErrors(context), ...this.getThrowsForNonStatusCodeErrors(context)];
+        return [...this.getThrowsForStatusCodeErrors(context), this.getThrowsForNonStatusCodeErrors(context)];
     }
 
     private getThrowsForStatusCodeErrors(context: SdkContext): ts.Statement[] {
@@ -754,20 +755,11 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         const referenceToErrorBody = this.getReferenceToErrorBody(context);
         const referenceToRawResponse = this.getReferenceToRawResponse(context);
 
-        const defaultThrow = ts.factory.createThrowStatement(
-            context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
-                message: undefined,
-                statusCode: ts.factory.createPropertyAccessExpression(
-                    referenceToError,
-                    context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.statusCode
-                ),
-                responseBody: ts.factory.createPropertyAccessExpression(
-                    referenceToError,
-                    context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.body
-                ),
-                rawResponse: referenceToRawResponse
-            })
-        );
+        const globalStatusCodeErrorThrow = generateGlobalStatusCodeErrorThrow({
+            context,
+            referenceToError,
+            referenceToRawResponse
+        });
 
         return [
             ts.factory.createIfStatement(
@@ -808,9 +800,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                           )
                                       ];
                                   },
-                                  defaultBody: [defaultThrow]
+                                  defaultBody: [globalStatusCodeErrorThrow]
                               })
-                            : defaultThrow
+                            : globalStatusCodeErrorThrow
                     ],
                     true
                 )
@@ -890,13 +882,23 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         generateCaseBody: (responseError: ResponseError) => ts.Statement[];
         defaultBody: ts.Statement[];
     }) {
+        const seenStatusCodes = new Set<number>();
+        const uniqueErrors = this.endpoint.errors.filter((error) => {
+            const errorDeclaration = this.errorResolver.getErrorDeclarationFromName(error.error);
+            if (seenStatusCodes.has(errorDeclaration.statusCode)) {
+                return false;
+            }
+            seenStatusCodes.add(errorDeclaration.statusCode);
+            return true;
+        });
+
         return ts.factory.createSwitchStatement(
             ts.factory.createPropertyAccessExpression(
                 this.getReferenceToError(context),
                 context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.statusCode
             ),
             ts.factory.createCaseBlock([
-                ...this.endpoint.errors.map((error) => {
+                ...uniqueErrors.map((error) => {
                     const errorDeclaration = this.errorResolver.getErrorDeclarationFromName(error.error);
                     return ts.factory.createCaseClause(
                         ts.factory.createNumericLiteral(errorDeclaration.statusCode),
@@ -908,75 +910,16 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         );
     }
 
-    private getThrowsForNonStatusCodeErrors(context: SdkContext): ts.Statement[] {
+    private getThrowsForNonStatusCodeErrors(context: SdkContext): ts.Statement {
         const referenceToError = this.getReferenceToError(context);
         const referenceToRawResponse = this.getReferenceToRawResponse(context);
-        return [
-            ts.factory.createSwitchStatement(
-                ts.factory.createPropertyAccessExpression(
-                    referenceToError,
-                    context.coreUtilities.fetcher.Fetcher.Error.reason
-                ),
-                ts.factory.createCaseBlock([
-                    ts.factory.createCaseClause(
-                        ts.factory.createStringLiteral(
-                            context.coreUtilities.fetcher.Fetcher.NonJsonError._reasonLiteralValue
-                        ),
-                        [
-                            ts.factory.createThrowStatement(
-                                context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
-                                    message: undefined,
-                                    statusCode: ts.factory.createPropertyAccessExpression(
-                                        referenceToError,
-                                        context.coreUtilities.fetcher.Fetcher.NonJsonError.statusCode
-                                    ),
-                                    responseBody: ts.factory.createPropertyAccessExpression(
-                                        referenceToError,
-                                        context.coreUtilities.fetcher.Fetcher.NonJsonError.rawBody
-                                    ),
-                                    rawResponse: referenceToRawResponse
-                                })
-                            )
-                        ]
-                    ),
-                    ts.factory.createCaseClause(
-                        ts.factory.createStringLiteral(
-                            context.coreUtilities.fetcher.Fetcher.TimeoutSdkError._reasonLiteralValue
-                        ),
-                        [
-                            ts.factory.createThrowStatement(
-                                context.timeoutSdkError
-                                    .getGeneratedTimeoutSdkError()
-                                    .build(
-                                        context,
-                                        `Timeout exceeded when calling ${this.endpoint.method} ${getFullPathForEndpoint(
-                                            this.endpoint
-                                        )}.`
-                                    )
-                            )
-                        ]
-                    ),
-                    ts.factory.createCaseClause(
-                        ts.factory.createStringLiteral(
-                            context.coreUtilities.fetcher.Fetcher.UnknownError._reasonLiteralValue
-                        ),
-                        [
-                            ts.factory.createThrowStatement(
-                                context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
-                                    message: ts.factory.createPropertyAccessExpression(
-                                        referenceToError,
-                                        context.coreUtilities.fetcher.Fetcher.UnknownError.message
-                                    ),
-                                    statusCode: undefined,
-                                    responseBody: undefined,
-                                    rawResponse: referenceToRawResponse
-                                })
-                            )
-                        ]
-                    )
-                ])
-            )
-        ];
+        return generateNonStatusCodeErrorHandling({
+            context,
+            referenceToError,
+            referenceToRawResponse,
+            endpointMethod: this.endpoint.method,
+            endpointPath: getFullPathForEndpoint(this.endpoint)
+        });
     }
 
     private getGeneratedEndpointTypeSchemas(context: SdkContext): GeneratedSdkEndpointTypeSchemas {
