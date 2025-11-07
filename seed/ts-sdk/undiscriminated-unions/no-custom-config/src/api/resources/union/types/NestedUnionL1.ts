@@ -2,7 +2,9 @@
 
 import type * as SeedUndiscriminatedUnions from "../../../index.js";
 
+export interface NestedUnionL1Array extends Array<string> {}
+
 /**
  * Nested layer 1.
  */
-export type NestedUnionL1 = number | string[] | string[] | SeedUndiscriminatedUnions.NestedUnionL2;
+export type NestedUnionL1 = number | string[] | NestedUnionL1Array | SeedUndiscriminatedUnions.NestedUnionL2;
