@@ -2,13 +2,16 @@ import { CliContext } from "../../cli-context/CliContext";
 import { ContentTransformation } from "./types";
 import { translateYamlContent } from "./yaml-processor";
 
-export function transformContentForLanguage(transformation: ContentTransformation, cliContext: CliContext): string {
+export async function transformContentForLanguage(
+    transformation: ContentTransformation,
+    cliContext: CliContext
+): Promise<string> {
     const { filePath, language, sourceLanguage, originalContent } = transformation;
 
     cliContext.logger.debug(`[PROCESSING] ${filePath} for language: ${language} (source: ${sourceLanguage})`);
 
     if (filePath.endsWith(".yml") || filePath.endsWith(".yaml")) {
-        return translateYamlContent(originalContent, language, sourceLanguage, filePath, cliContext);
+        return await translateYamlContent(originalContent, language, sourceLanguage, filePath, cliContext);
     }
 
     if (filePath.endsWith(".md") || filePath.endsWith(".mdx")) {

@@ -3,12 +3,12 @@ import { CliContext } from "../../cli-context/CliContext";
 import { shouldTranslateValue } from "./translatable-keys";
 import { translateText } from "./translation-service";
 
-export function translateYamlObject(
+export async function translateYamlObject(
     obj: unknown,
     language: string,
     sourceLanguage: string,
     cliContext: CliContext
-): unknown {
+): Promise<unknown> {
     if (obj === null || obj === undefined) {
         return obj;
     }
@@ -18,7 +18,7 @@ export function translateYamlObject(
     }
 
     if (Array.isArray(obj)) {
-        return obj.map((item) => translateYamlObject(item, language, sourceLanguage, cliContext));
+        return await Promise.all(obj.map((item) => translateYamlObject(item, language, sourceLanguage, cliContext)));
     }
 
     if (typeof obj === "object") {
@@ -26,9 +26,9 @@ export function translateYamlObject(
 
         for (const [key, value] of Object.entries(obj)) {
             if (shouldTranslateValue(key, value)) {
-                result[key] = translateText(value as string, language, sourceLanguage);
+                result[key] = await translateText(value as string, language, sourceLanguage);
             } else {
-                result[key] = translateYamlObject(value, language, sourceLanguage, cliContext);
+                result[key] = await translateYamlObject(value, language, sourceLanguage, cliContext);
             }
         }
 
@@ -38,13 +38,13 @@ export function translateYamlObject(
     return obj;
 }
 
-export function translateYamlContent(
+export async function translateYamlContent(
     yamlContent: string,
     language: string,
     sourceLanguage: string,
     filePath: string,
     cliContext: CliContext
-): string {
+): Promise<string> {
     // preserve the source material
     if (language === sourceLanguage) {
         return yamlContent;
@@ -57,7 +57,7 @@ export function translateYamlContent(
             return yamlContent;
         }
 
-        const translatedYaml = translateYamlObject(parsedYaml, language, sourceLanguage, cliContext);
+        const translatedYaml = await translateYamlObject(parsedYaml, language, sourceLanguage, cliContext);
 
         const translatedYamlContent = yaml.dump(translatedYaml, {
             indent: 2,

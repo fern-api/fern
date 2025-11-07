@@ -322,7 +322,7 @@ export async function writeTranslationForProject({
                         originalContent
                     };
 
-                    const transformedContent = transformContentForLanguage(transformation, cliContext);
+                    const transformedContent = await transformContentForLanguage(transformation, cliContext);
                     await writeFile(destPath, transformedContent, "utf-8");
 
                     const languageStatsForLang = languageStats[language];
