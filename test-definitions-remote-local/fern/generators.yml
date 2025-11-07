@@ -35,7 +35,7 @@ groups:
           location: local-file-system
           path: ../../seed-remote-local/java-sdk/remote/imdb
 
-  # Java - Local  
+  # Java - Local
   java-sdk-local:
     generators:
       - name: fernapi/fern-java-sdk
