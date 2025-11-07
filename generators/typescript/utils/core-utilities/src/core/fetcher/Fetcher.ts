@@ -215,6 +215,8 @@ async function getHeaders(args: Fetcher.Args): Promise<Record<string, string>> {
         newHeaders["Accept"] = "application/json";
     } else if (args.accepts != null) {
         newHeaders["Accept"] = args.accepts;
+    } else {
+        newHeaders["Accept"] = "*/*";
     }
 
     if (args.body !== undefined && args.contentType != null) {
