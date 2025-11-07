@@ -45,4 +45,4 @@ paths:
             - language: php
               name: List pets with PHP
               code:
-                $ref: code_samples/example.php
+                $ref: ../../code_samples/example.php

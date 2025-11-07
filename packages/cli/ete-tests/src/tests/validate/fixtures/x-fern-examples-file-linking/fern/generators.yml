@@ -1,4 +1,12 @@
 api:
   specs:
     - openapi: openapi/openapi.yml
-groups: {}
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        output:
+          location: local-file-system
+          path: ../sdks/typescript
+        version: 3.28.4
