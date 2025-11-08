@@ -6,8 +6,20 @@ import * as FernDocsConfig from "../../../index";
 
 export interface AiChatConfig {
     model?: FernDocsConfig.AiChatModel;
-    /** This is a system prompt that acts as context given to the LLM for AI chat. */
+    /**
+     * By default, Ask Fern uses system prompts to finetune AI search results. Add a custom prompt here to override it.
+     * See Anthropic's prompting guide for ideas and examples.
+     */
     systemPrompt?: string;
+    /**
+     * Specifies where Ask Fern will be available. Options:
+     * - `docs` enables Ask Fern on your documentation site
+     * - `slack` enables Ask Fern in Slack
+     * - `discord` enables Ask Fern in Discord
+     *
+     * Most users should enable Ask Fern for both `docs` and either `slack` or `discord`.
+     */
     location?: FernDocsConfig.AiChatLocation[];
+    /** Additional content sources that Ask Fern should index and search. */
     datasources?: FernDocsConfig.AiChatDatasource[];
 }

@@ -3,11 +3,46 @@
  */
 
 export interface PageActionOptions {
+    /**
+     * When enabled, displays a button that allows users to copy the entire page content to their clipboard for easy sharing or reference.
+     *
+     * @default: true
+     */
     copyPage?: boolean;
+    /**
+     * When enabled, displays a button that allows users to view the raw Markdown source of the current page.
+     *
+     * @default: true
+     */
     viewAsMarkdown?: boolean;
+    /**
+     * When enabled, displays an "Ask AI" button that allows users to ask questions about the page content using AI-powered assistance.
+     *
+     * @default: true
+     */
     askAi?: boolean;
+    /**
+     * When enabled, displays an "Open in ChatGPT" button that allows users to send the page content to ChatGPT for further exploration and Q&A.
+     *
+     * @default: false
+     */
     chatgpt?: boolean;
+    /**
+     * When enabled, displays an "Open in Claude" button that allows users to send the page content to Claude for further exploration and Q&A.
+     *
+     * @default: false
+     */
     claude?: boolean;
+    /**
+     * When enabled, displays an "Open in Cursor" button that allows users to open the page content in Cursor IDE with AI-powered code assistance.
+     *
+     * @default: false
+     */
     cursor?: boolean;
+    /**
+     * When enabled, displays an "Open in VS Code" button that allows users to open the page content in Visual Studio Code for editing and development.
+     *
+     * @default: false
+     */
     vscode?: boolean;
 }

@@ -5,13 +5,59 @@
 import * as FernDocsConfig from "../../../index";
 
 export interface DocsSettingsConfig {
+    /**
+     * The text to display in the searchbar.
+     *
+     * @default: Search
+     */
     searchText?: string;
+    /**
+     * If set to true, the searchbar will be disabled. Use this if you want to use a custom search solution.
+     *
+     * @default: false
+     */
     disableSearch?: boolean;
+    /**
+     * If set to true, the code blocks will be displayed in dark mode, regardless of the selected theme.
+     *
+     * @default: false
+     */
     darkModeCode?: boolean;
+    /**
+     * By default (`false`), search will display results for pages across all products and versions.
+     * If set to true, search will display results for pages within the current product and version.
+     *
+     * @default: false
+     */
     defaultSearchFilters?: boolean;
+    /**
+     * Controls the display of HTTP snippets in the API Reference. HTTP snippets are enabled by default for all languages.
+     * - Set to `false` to disable HTTP snippets completely
+     * - Provide a list of languages to enable snippets for specific languages only
+     *
+     * @default: true
+     */
     httpSnippets?: FernDocsConfig.HttpSnippetsConfig;
+    /**
+     * If set to true, when a user navigates to a page that does not exist, they will be redirected to the home page.
+     * By default, a 404 page will be displayed.
+     *
+     * @default: false
+     */
     hide404Page?: boolean;
+    /**
+     * If set to true, the TypeScript snippets will be displayed as JavaScript snippets in the API Reference.
+     *
+     * @default: false
+     */
     useJavascriptAsTypescript?: boolean;
+    /**
+     * If set to true, the API Explorer will bypass the proxy when sending requests directly to your API.
+     *
+     * When this feature is enabled, your API must have Cross-Origin Resource Sharing (CORS) enabled to allow requests from the documentation domain.
+     *
+     * @default: false
+     */
     disableExplorerProxy?: boolean;
     disableAnalytics?: boolean;
     language?: FernDocsConfig.Language;

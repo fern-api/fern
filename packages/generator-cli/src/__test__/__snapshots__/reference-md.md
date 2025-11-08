@@ -4,6 +4,11 @@
 
 The Imdb TypeScript library provides convenient access to the Imdb APIs from TypeScript.
 
+## Table of Contents
+
+- [Reference](#reference)
+- [Contributing](#contributing)
+
 ## Reference
 
 A full reference for this library is available [here](./reference.md).

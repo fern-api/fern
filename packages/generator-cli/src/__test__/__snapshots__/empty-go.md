@@ -4,6 +4,10 @@
 
 The Empty Go library provides convenient access to the Empty APIs from Go.
 
+## Table of Contents
+
+- [Contributing](#contributing)
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.
