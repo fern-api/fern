@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.23.2
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixes a bug where query parameters with string enum types were incorrectly omitted from the request URL.
+  createdAt: "2025-11-07"
+  irVersion: 61
+
 - version: 0.23.1
   changelogEntry:
     - type: fix
