@@ -6,7 +6,8 @@ import * as FernDocsConfig from "../../../index";
 
 export interface ColorsConfiguration {
     /**
-     * The primary accent color is used for buttons, links, and other interactive elements.
+     * The primary brand color used for interactive elements like links, buttons, and highlighted text.
+     * Configure separate colors for light and dark modes to ensure proper contrast and visibility.
      *
      * @default: #818CF8
      */
@@ -14,7 +15,8 @@ export interface ColorsConfiguration {
     /** Use `accent-primary` instead. */
     accentPrimaryDeprecated?: FernDocsConfig.ColorConfig;
     /**
-     * The background color is used for the main background of the docs site.
+     * The main background color for all documentation pages. Choose colors that provide good contrast with text
+     * and complement your brand colors. Dark mode colors should reduce eye strain.
      *
      * @default:
      *   dark: #111111
@@ -24,7 +26,8 @@ export interface ColorsConfiguration {
      */
     background?: FernDocsConfig.ColorConfig;
     /**
-     * The border color is used for the borders of cards and other elements.
+     * Used for dividing lines, borders around elements, and visual separators. Choose subtle colors that create
+     * clear boundaries without being too prominent.
      *
      * @default:
      *   dark: black/12%
@@ -32,17 +35,18 @@ export interface ColorsConfiguration {
      */
     border?: FernDocsConfig.ColorConfig;
     /**
-     * If `sidebarBackground` is not set, the sidebar will render with a transparent background without a border.
-     * If `sidebarBackground` is set, the sidebar will also render a 1px border on the right side.
+     * Background color for the navigation sidebar. When specified, includes a 1px border on the right side.
+     * If omitted, the sidebar uses a transparent background without a border.
      */
     sidebarBackground?: FernDocsConfig.ColorConfig;
     /**
-     * If `headerBackground` is not set, the header will render with a transparent background, with a 1px faded border on the bottom.
-     * If `headerBackground` is set, the header will render with a solid background, with a 1px solid border on the bottom.
+     * Background color for the top navigation header. When specified, includes a 1px solid border on the bottom.
+     * If omitted, the header uses a transparent background with a subtle gradient border.
      */
     headerBackground?: FernDocsConfig.ColorConfig;
     /**
-     * This is the background color of cards and code blocks.
+     * Background color for cards, code blocks, and other contained elements. Should be slightly different from the
+     * main background to create visual hierarchy while maintaining readability.
      *
      * @default:
      *   dark: white/3.5%

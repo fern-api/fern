@@ -6,7 +6,7 @@ import * as FernDocsConfig from "../../../index";
 
 export interface DocsConfiguration {
     instances: FernDocsConfig.DocsInstance[];
-    /** used as tab bar title, and in the navbar if no logo is defined */
+    /** A string that is used as the tab bar title. */
     title?: string;
     /**
      * The `analytics` object allows you to configure analytics for your docs site.
@@ -19,6 +19,7 @@ export interface DocsConfiguration {
     tabs?: Record<FernDocsConfig.TabId, FernDocsConfig.TabConfig>;
     versions?: FernDocsConfig.VersionConfig[];
     products?: FernDocsConfig.ProductConfig[];
+    /** Creates a landing page for your documentation website. */
     landingPage?: FernDocsConfig.PageConfiguration;
     /** The navigation config is skipped when multiple versions are present. */
     navigation?: FernDocsConfig.NavigationConfig;
@@ -26,6 +27,10 @@ export interface DocsConfiguration {
     footerLinks?: FernDocsConfig.FooterLinksConfig;
     pageActions?: FernDocsConfig.PageActionsConfig;
     experimental?: FernDocsConfig.ExperimentalConfig;
+    /**
+     * Sets the default language displayed by code snippets in the API Reference.
+     * Options include: typescript, python, java, go, ruby, csharp, php, swift, curl
+     */
     defaultLanguage?: FernDocsConfig.ProgrammingLanguage;
     languages?: FernDocsConfig.Language[];
     aiChat?: FernDocsConfig.AiChatConfig;
@@ -33,6 +38,7 @@ export interface DocsConfiguration {
     metadata?: FernDocsConfig.MetadataConfig;
     redirects?: FernDocsConfig.RedirectConfig[];
     logo?: FernDocsConfig.LogoConfiguration;
+    /** Relative filepath to the favicon. */
     favicon?: string;
     backgroundImage?: FernDocsConfig.BackgroundImageConfiguration;
     colors?: FernDocsConfig.ColorsConfiguration;

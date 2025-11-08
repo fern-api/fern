@@ -3,8 +3,17 @@
  */
 
 export interface LogoConfiguration {
+    /**
+     * Path to your dark mode logo file, relative to the docs root. SVG format is recommended for optimal quality.
+     * Example: `assets/images/logo-dark.svg`
+     */
     dark?: string;
+    /**
+     * Path to your light mode logo file, relative to the docs root. SVG format is recommended for optimal quality.
+     * Example: `assets/images/logo-light.svg`
+     */
     light?: string;
     height?: number;
+    /** The URL that users will be directed to when clicking the logo. Typically your company's homepage or app. */
     href?: string;
 }

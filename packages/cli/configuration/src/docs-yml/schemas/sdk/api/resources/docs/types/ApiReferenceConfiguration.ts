@@ -14,7 +14,7 @@ export interface ApiReferenceConfiguration extends FernDocsConfig.WithPermission
     /** Defaults to false */
     displayErrors?: boolean;
     snippets?: FernDocsConfig.SnippetsConfiguration;
-    /** URL to a Postman collection */
+    /** URL to a Postman collection for this API reference */
     postman?: string;
     /** Relative path to the markdown file */
     summary?: string;

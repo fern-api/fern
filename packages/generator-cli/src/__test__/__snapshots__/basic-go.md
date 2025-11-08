@@ -5,6 +5,11 @@
 
 The Basic Go library provides convenient access to the Basic APIs from Go.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
