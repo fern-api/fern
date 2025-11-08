@@ -123,12 +123,19 @@ class SnippetTemplateFactory:
         else:
             client = self._generated_root_client.sync_client
 
+        is_multi_environment = (
+            self._ir.environments is not None
+            and self._ir.environments.environments.get_as_union().type == "multipleBaseUrls"
+        )
+
         # Because we don't allow for templating ALL inputs to the client, we need to separate out the template inputs
         # from the non-template inputs, and keep the non-template inputs within the snippet.
         # We could alternatively just nix the non-template inputs and only use the template inputs.
         client_template_inputs = []
         client_non_template_inputs = []
         for param in client.parameters:
+            if is_multi_environment and param.constructor_parameter_name == "base_url":
+                continue
             if param.template is not None:
                 client_template_inputs.append(TemplateInput.factory.template(param.template))
             elif param.initializer is not None:
