@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        OpenAPI importer now converts request bodies to referenced requests when body parameter names overlap with query parameter names. This ensures proper type generation and avoids naming conflicts in generated SDKs.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-08"
+  version: 0.111.0
+
+- changelogEntry:
+    - summary: |
         CLI will send the correct IR version to latest Ruby generator.
       type: chore
   irVersion: 61
