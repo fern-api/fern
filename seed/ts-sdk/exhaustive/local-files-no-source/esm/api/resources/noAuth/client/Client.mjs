@@ -41,7 +41,6 @@ export class NoAuth {
                 method: "POST",
                 headers: _headers,
                 contentType: "application/json",
-                accept: "json",
                 queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
                 requestType: "json",
                 body: request,

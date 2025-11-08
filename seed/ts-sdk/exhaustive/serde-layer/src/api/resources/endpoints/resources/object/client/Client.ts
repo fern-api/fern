@@ -68,7 +68,6 @@ export class Object_ {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
@@ -155,7 +154,6 @@ export class Object_ {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
@@ -246,7 +244,6 @@ export class Object_ {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.types.ObjectWithMapOfMap.jsonOrThrow(request, {
@@ -352,7 +349,6 @@ export class Object_ {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.types.NestedObjectWithOptionalField.jsonOrThrow(request, {
@@ -461,7 +457,6 @@ export class Object_ {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.types.NestedObjectWithRequiredField.jsonOrThrow(request, {
@@ -586,7 +581,6 @@ export class Object_ {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.jsonOrThrow(request, {

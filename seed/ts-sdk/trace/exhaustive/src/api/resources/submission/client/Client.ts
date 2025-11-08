@@ -65,7 +65,6 @@ export class Submission {
             ),
             method: "POST",
             headers: _headers,
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
@@ -147,7 +146,6 @@ export class Submission {
             ),
             method: "GET",
             headers: _headers,
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
@@ -299,7 +297,6 @@ export class Submission {
             ),
             method: "GET",
             headers: _headers,
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null

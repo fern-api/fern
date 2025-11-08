@@ -50,7 +50,6 @@ export class Params {
             ),
             method: "GET",
             headers: _headers,
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -132,7 +131,6 @@ export class Params {
             ),
             method: "GET",
             headers: _headers,
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -533,7 +531,6 @@ export class Params {
             method: "PUT",
             headers: _headers,
             contentType: "application/json",
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.endpoints.params.modifyWithPath.Request.jsonOrThrow(request, {
@@ -622,7 +619,6 @@ export class Params {
             method: "PUT",
             headers: _headers,
             contentType: "application/json",
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.endpoints.params.modifyWithInlinePath.Request.jsonOrThrow(_body, {

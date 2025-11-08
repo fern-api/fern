@@ -38,7 +38,6 @@ export class Service {
             ),
             method: "POST",
             headers: _headers,
-            accept: "text/plain",
             queryParameters: requestOptions?.queryParams,
             responseType: "text",
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

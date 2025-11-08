@@ -135,7 +135,6 @@ export class Sysprop {
             ),
             method: "GET",
             headers: _headers,
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null

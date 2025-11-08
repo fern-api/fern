@@ -64,7 +64,6 @@ export class SeedApiClient {
             method: "POST",
             headers: _headers,
             contentType: "application/x-www-form-urlencoded",
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "form",
             body: request,

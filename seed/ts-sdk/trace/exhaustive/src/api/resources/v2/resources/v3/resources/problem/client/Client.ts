@@ -65,7 +65,6 @@ export class Problem {
             ),
             method: "GET",
             headers: _headers,
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
@@ -141,7 +140,6 @@ export class Problem {
             ),
             method: "GET",
             headers: _headers,
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
@@ -220,7 +218,6 @@ export class Problem {
             ),
             method: "GET",
             headers: _headers,
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
@@ -304,7 +301,6 @@ export class Problem {
             ),
             method: "GET",
             headers: _headers,
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null

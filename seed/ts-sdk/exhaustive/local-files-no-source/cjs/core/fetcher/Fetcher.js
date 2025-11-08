@@ -19,6 +19,7 @@ const getErrorResponseBody_js_1 = require("./getErrorResponseBody.js");
 const getFetchFn_js_1 = require("./getFetchFn.js");
 const getRequestBody_js_1 = require("./getRequestBody.js");
 const getResponseBody_js_1 = require("./getResponseBody.js");
+const Headers_js_1 = require("./Headers.js");
 const makeRequest_js_1 = require("./makeRequest.js");
 const RawResponse_js_1 = require("./RawResponse.js");
 const requestWithRetries_js_1 = require("./requestWithRetries.js");
@@ -42,7 +43,7 @@ const SENSITIVE_HEADERS = new Set([
 ]);
 function redactHeaders(headers) {
     const filtered = {};
-    for (const [key, value] of Object.entries(headers)) {
+    for (const [key, value] of headers instanceof Headers_js_1.Headers ? headers.entries() : Object.entries(headers)) {
         if (SENSITIVE_HEADERS.has(key.toLowerCase())) {
             filtered[key] = "[REDACTED]";
         }
@@ -154,18 +155,10 @@ function redactUrl(url) {
 function getHeaders(args) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
-        const newHeaders = {};
-        if (args.accept === "json") {
-            newHeaders.Accept = "application/json";
-        }
-        else if (args.accept != null) {
-            newHeaders.Accept = args.accept;
-        }
-        else {
-            newHeaders.Accept = "*/*";
-        }
+        const newHeaders = new Headers_js_1.Headers();
+        newHeaders.set("Accept", args.responseType === "json" ? "application/json" : args.responseType === "text" ? "text/plain" : "*/*");
         if (args.body !== undefined && args.contentType != null) {
-            newHeaders["Content-Type"] = args.contentType;
+            newHeaders.set("Content-Type", args.contentType);
         }
         if (args.headers == null) {
             return newHeaders;
@@ -173,13 +166,13 @@ function getHeaders(args) {
         for (const [key, value] of Object.entries(args.headers)) {
             const result = yield EndpointSupplier_js_1.EndpointSupplier.get(value, { endpointMetadata: (_a = args.endpointMetadata) !== null && _a !== void 0 ? _a : {} });
             if (typeof result === "string") {
-                newHeaders[key] = result;
+                newHeaders.set(key, result);
                 continue;
             }
             if (result == null) {
                 continue;
             }
-            newHeaders[key] = `${result}`;
+            newHeaders.set(key, `${result}`);
         }
         return newHeaders;
     });
@@ -215,7 +208,7 @@ function fetcherImpl(args) {
                         method: args.method,
                         url: redactUrl(url),
                         statusCode: response.status,
-                        responseHeaders: redactHeaders(Object.fromEntries(response.headers.entries())),
+                        responseHeaders: redactHeaders(response.headers),
                     };
                     logger.debug("HTTP request succeeded", metadata);
                 }

@@ -5,7 +5,7 @@ function createMockLogger() {
         debug: vi.fn(),
         info: vi.fn(),
         warn: vi.fn(),
-        error: vi.fn()
+        error: vi.fn(),
     };
 }
 
@@ -13,8 +13,8 @@ function mockSuccessResponse(data: unknown = { data: "test" }, status = 200, sta
     global.fetch = vi.fn().mockResolvedValue(
         new Response(JSON.stringify(data), {
             status,
-            statusText
-        })
+            statusText,
+        }),
     );
 }
 
@@ -22,8 +22,8 @@ function mockErrorResponse(data: unknown = { error: "Error" }, status = 404, sta
     global.fetch = vi.fn().mockResolvedValue(
         new Response(JSON.stringify(data), {
             status,
-            statusText
-        })
+            statusText,
+        }),
     );
 }
 
@@ -45,8 +45,8 @@ describe("Fetcher Logging Integration", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
@@ -54,11 +54,11 @@ describe("Fetcher Logging Integration", () => {
                 expect.objectContaining({
                     method: "POST",
                     url: "https://example.com/api",
-                    headers: expect.objectContaining({
-                        "Content-Type": "application/json"
+                    headers: expect.toContainHeaders({
+                        "Content-Type": "application/json",
                     }),
-                    hasBody: true
-                })
+                    hasBody: true,
+                }),
             );
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
@@ -66,8 +66,8 @@ describe("Fetcher Logging Integration", () => {
                 expect.objectContaining({
                     method: "POST",
                     url: "https://example.com/api",
-                    statusCode: 200
-                })
+                    statusCode: 200,
+                }),
             );
         });
 
@@ -83,8 +83,8 @@ describe("Fetcher Logging Integration", () => {
                 logging: {
                     level: "info",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).not.toHaveBeenCalled();
@@ -106,15 +106,15 @@ describe("Fetcher Logging Integration", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    hasBody: true
-                })
+                    hasBody: true,
+                }),
             );
         });
 
@@ -130,15 +130,15 @@ describe("Fetcher Logging Integration", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    hasBody: false
-                })
+                    hasBody: false,
+                }),
             );
         });
 
@@ -154,8 +154,8 @@ describe("Fetcher Logging Integration", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: true
-                }
+                    silent: true,
+                },
             });
 
             expect(mockLogger.debug).not.toHaveBeenCalled();
@@ -172,7 +172,7 @@ describe("Fetcher Logging Integration", () => {
                 url: "https://example.com/api",
                 method: "GET",
                 responseType: "json",
-                maxRetries: 0
+                maxRetries: 0,
             });
 
             expect(mockLogger.debug).not.toHaveBeenCalled();
@@ -192,8 +192,8 @@ describe("Fetcher Logging Integration", () => {
                 logging: {
                     level: "error",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(result.ok).toBe(false);
@@ -202,8 +202,8 @@ describe("Fetcher Logging Integration", () => {
                 expect.objectContaining({
                     method: "GET",
                     url: "https://example.com/api",
-                    statusCode: 404
-                })
+                    statusCode: 404,
+                }),
             );
         });
 
@@ -219,8 +219,8 @@ describe("Fetcher Logging Integration", () => {
                 logging: {
                     level: "error",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(result.ok).toBe(false);
@@ -229,8 +229,8 @@ describe("Fetcher Logging Integration", () => {
                 expect.objectContaining({
                     method: "GET",
                     url: "https://example.com/api",
-                    statusCode: 500
-                })
+                    statusCode: 500,
+                }),
             );
         });
 
@@ -251,8 +251,8 @@ describe("Fetcher Logging Integration", () => {
                 logging: {
                     level: "error",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(result.ok).toBe(false);
@@ -260,8 +260,8 @@ describe("Fetcher Logging Integration", () => {
                 "HTTP request was aborted",
                 expect.objectContaining({
                     method: "GET",
-                    url: "https://example.com/api"
-                })
+                    url: "https://example.com/api",
+                }),
             );
         });
 
@@ -281,8 +281,8 @@ describe("Fetcher Logging Integration", () => {
                 logging: {
                     level: "error",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(result.ok).toBe(false);
@@ -291,8 +291,8 @@ describe("Fetcher Logging Integration", () => {
                 expect.objectContaining({
                     method: "GET",
                     url: "https://example.com/api",
-                    timeoutMs: undefined
-                })
+                    timeoutMs: undefined,
+                }),
             );
         });
 
@@ -311,8 +311,8 @@ describe("Fetcher Logging Integration", () => {
                 logging: {
                     level: "error",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(result.ok).toBe(false);
@@ -321,8 +321,8 @@ describe("Fetcher Logging Integration", () => {
                 expect.objectContaining({
                     method: "GET",
                     url: "https://example.com/api",
-                    errorMessage: "Unknown error"
-                })
+                    errorMessage: "Unknown error",
+                }),
             );
         });
     });
@@ -340,15 +340,15 @@ describe("Fetcher Logging Integration", () => {
                 logging: {
                     level: "error",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.error).toHaveBeenCalledWith(
                 "HTTP request failed with error status",
                 expect.objectContaining({
-                    url: "https://example.com/api?api_key=[REDACTED]"
-                })
+                    url: "https://example.com/api?api_key=[REDACTED]",
+                }),
             );
         });
     });
@@ -366,15 +366,15 @@ describe("Fetcher Logging Integration", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    method: "GET"
-                })
+                    method: "GET",
+                }),
             );
         });
 
@@ -393,15 +393,15 @@ describe("Fetcher Logging Integration", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    method: "POST"
-                })
+                    method: "POST",
+                }),
             );
         });
 
@@ -420,15 +420,15 @@ describe("Fetcher Logging Integration", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    method: "PUT"
-                })
+                    method: "PUT",
+                }),
             );
         });
 
@@ -437,8 +437,8 @@ describe("Fetcher Logging Integration", () => {
             global.fetch = vi.fn().mockResolvedValue(
                 new Response(null, {
                     status: 200,
-                    statusText: "OK"
-                })
+                    statusText: "OK",
+                }),
             );
 
             await fetcherImpl({
@@ -449,15 +449,15 @@ describe("Fetcher Logging Integration", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    method: "DELETE"
-                })
+                    method: "DELETE",
+                }),
             );
         });
     });
@@ -478,15 +478,15 @@ describe("Fetcher Logging Integration", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "HTTP request succeeded",
                 expect.objectContaining({
-                    statusCode: 201
-                })
+                    statusCode: 201,
+                }),
             );
         });
 
@@ -502,15 +502,15 @@ describe("Fetcher Logging Integration", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "HTTP request succeeded",
                 expect.objectContaining({
-                    statusCode: 301
-                })
+                    statusCode: 301,
+                }),
             );
         });
     });

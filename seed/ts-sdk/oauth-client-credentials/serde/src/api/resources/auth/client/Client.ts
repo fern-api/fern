@@ -58,7 +58,6 @@ export class Auth {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: {
@@ -150,7 +149,6 @@ export class Auth {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: {

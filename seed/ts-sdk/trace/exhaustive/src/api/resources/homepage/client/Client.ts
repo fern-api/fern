@@ -53,7 +53,6 @@ export class Homepage {
             ),
             method: "GET",
             headers: _headers,
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null

@@ -8,6 +8,7 @@ import { getErrorResponseBody } from "./getErrorResponseBody";
 import { getFetchFn } from "./getFetchFn";
 import { getRequestBody } from "./getRequestBody";
 import { getResponseBody } from "./getResponseBody";
+import { Headers } from "./Headers";
 import { makeRequest } from "./makeRequest";
 import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse";
 import { requestWithRetries } from "./requestWithRetries";
@@ -19,7 +20,6 @@ export declare namespace Fetcher {
         url: string;
         method: string;
         contentType?: string;
-        accept?: "json" | string;
         headers?: Record<string, string | EndpointSupplier<string | null | undefined> | null | undefined>;
         queryParameters?: Record<string, unknown>;
         body?: unknown;
@@ -78,9 +78,9 @@ const SENSITIVE_HEADERS = new Set([
     "x-access-token",
 ]);
 
-function redactHeaders(headers: Record<string, string>): Record<string, string> {
+function redactHeaders(headers: Headers | Record<string, string>): Record<string, string> {
     const filtered: Record<string, string> = {};
-    for (const [key, value] of Object.entries(headers)) {
+    for (const [key, value] of headers instanceof Headers ? headers.entries() : Object.entries(headers)) {
         if (SENSITIVE_HEADERS.has(key.toLowerCase())) {
             filtered[key] = "[REDACTED]";
         } else {
@@ -208,19 +208,15 @@ function redactUrl(url: string): string {
     return url.slice(0, queryStart + 1) + redactedParams.join("&") + url.slice(queryEnd);
 }
 
-async function getHeaders(args: Fetcher.Args): Promise<Record<string, string>> {
-    const newHeaders: Record<string, string> = {};
+async function getHeaders(args: Fetcher.Args): Promise<Headers> {
+    const newHeaders: Headers = new Headers();
 
-    if (args.accept === "json") {
-        newHeaders.Accept = "application/json";
-    } else if (args.accept != null) {
-        newHeaders.Accept = args.accept;
-    } else {
-        newHeaders.Accept = "*/*";
-    }
-
+    newHeaders.set(
+        "Accept",
+        args.responseType === "json" ? "application/json" : args.responseType === "text" ? "text/plain" : "*/*",
+    );
     if (args.body !== undefined && args.contentType != null) {
-        newHeaders["Content-Type"] = args.contentType;
+        newHeaders.set("Content-Type", args.contentType);
     }
 
     if (args.headers == null) {
@@ -230,13 +226,13 @@ async function getHeaders(args: Fetcher.Args): Promise<Record<string, string>> {
     for (const [key, value] of Object.entries(args.headers)) {
         const result = await EndpointSupplier.get(value, { endpointMetadata: args.endpointMetadata ?? {} });
         if (typeof result === "string") {
-            newHeaders[key] = result;
+            newHeaders.set(key, result);
             continue;
         }
         if (result == null) {
             continue;
         }
-        newHeaders[key] = `${result}`;
+        newHeaders.set(key, `${result}`);
     }
     return newHeaders;
 }
@@ -285,7 +281,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     method: args.method,
                     url: redactUrl(url),
                     statusCode: response.status,
-                    responseHeaders: redactHeaders(Object.fromEntries(response.headers.entries())),
+                    responseHeaders: redactHeaders(response.headers),
                 };
                 logger.debug("HTTP request succeeded", metadata);
             }

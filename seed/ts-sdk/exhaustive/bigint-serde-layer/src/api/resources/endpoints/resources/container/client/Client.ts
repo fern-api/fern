@@ -52,7 +52,6 @@ export class Container {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.endpoints.container.getAndReturnListOfPrimitives.Request.jsonOrThrow(request, {
@@ -144,7 +143,6 @@ export class Container {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.endpoints.container.getAndReturnListOfObjects.Request.jsonOrThrow(request, {
@@ -229,7 +227,6 @@ export class Container {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.endpoints.container.getAndReturnSetOfPrimitives.Request.jsonOrThrow(request, {
@@ -319,7 +316,6 @@ export class Container {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.endpoints.container.getAndReturnSetOfObjects.Request.jsonOrThrow(request, {
@@ -406,7 +402,6 @@ export class Container {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.endpoints.container.getAndReturnMapPrimToPrim.Request.jsonOrThrow(request, {
@@ -495,7 +490,6 @@ export class Container {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.endpoints.container.getAndReturnMapOfPrimToObject.Request.jsonOrThrow(request, {
@@ -585,7 +579,6 @@ export class Container {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body:

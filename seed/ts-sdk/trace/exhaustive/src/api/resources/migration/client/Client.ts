@@ -62,7 +62,6 @@ export class Migration {
             ),
             method: "GET",
             headers: _headers,
-            accept: "json",
             queryParameters: requestOptions?.queryParams,
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
