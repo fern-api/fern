@@ -285,7 +285,9 @@ describe("replaceReferencedMarkdown", () => {
         });
 
         expect(warnSpy).toHaveBeenCalledWith(
-            expect.stringMatching(/\[\/path\/to\/fern\/pages\/test\.mdx:\d+\] Markdown snippet missing property: `tier`/)
+            expect.stringMatching(
+                /\[\/path\/to\/fern\/pages\/test\.mdx:\d+\] Markdown snippet missing property: `tier`/
+            )
         );
         expect(warnSpy).toHaveBeenCalledTimes(1);
         expect(result.trim()).toBe("Plan: pro, Tier: {tier}");
@@ -312,10 +314,14 @@ describe("replaceReferencedMarkdown", () => {
         });
 
         expect(warnSpy).toHaveBeenCalledWith(
-            expect.stringMatching(/\[\/path\/to\/fern\/pages\/test\.mdx:\d+\] Markdown snippet missing property: `plan`/)
+            expect.stringMatching(
+                /\[\/path\/to\/fern\/pages\/test\.mdx:\d+\] Markdown snippet missing property: `plan`/
+            )
         );
         expect(warnSpy).toHaveBeenCalledWith(
-            expect.stringMatching(/\[\/path\/to\/fern\/pages\/test\.mdx:\d+\] Markdown snippet missing property: `tier`/)
+            expect.stringMatching(
+                /\[\/path\/to\/fern\/pages\/test\.mdx:\d+\] Markdown snippet missing property: `tier`/
+            )
         );
         expect(warnSpy).toHaveBeenCalledTimes(2);
         expect(result.trim()).toBe("API - Plan: {plan}, Tier: {tier}");
