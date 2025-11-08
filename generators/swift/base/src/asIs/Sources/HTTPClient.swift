@@ -104,12 +104,12 @@ final class HTTPClient: Swift.Sendable {
         requestQueryParams: [Swift.String: QueryParameter?],
         requestBody: HTTP.RequestBody? = nil,
         requestOptions: RequestOptions? = nil
-    ) async throws -> Foundation.URLRequest {
+    ) async throws -> Networking.URLRequest {
         // Init with URL
         let url = buildRequestURL(
             path: path, requestQueryParams: requestQueryParams, requestOptions: requestOptions
         )
-        var request = Foundation.URLRequest(url: url)
+        var request = Networking.URLRequest(url: url)
 
         // Set timeout
         if let timeout = requestOptions?.timeout {
@@ -264,17 +264,17 @@ final class HTTPClient: Swift.Sendable {
     }
 
     private func executeRequestWithURLSession(
-        _ request: Foundation.URLRequest,
+        _ request: Networking.URLRequest,
         requestOptions: RequestOptions? = nil
     ) async throws -> (Foundation.Data, Swift.String?) {
         let maxRetries = requestOptions?.maxRetries ?? clientConfig.maxRetries
-        var lastResponse: (Foundation.Data, Foundation.HTTPURLResponse)?
+        var lastResponse: (Foundation.Data, Networking.HTTPURLResponse)?
 
         for attempt in 0...maxRetries {
             do {
                 let (data, response) = try await clientConfig.urlSession.data(for: request)
 
-                guard let httpResponse = response as? Foundation.HTTPURLResponse else {
+                guard let httpResponse = response as? Networking.HTTPURLResponse else {
                     throw ClientError.invalidResponse
                 }
 
@@ -323,7 +323,7 @@ final class HTTPClient: Swift.Sendable {
         return statusCode == 408 || statusCode == 429 || statusCode >= 500
     }
 
-    private func getRetryDelay(response: Foundation.HTTPURLResponse, retryAttempt: Swift.Int)
+    private func getRetryDelay(response: Networking.HTTPURLResponse, retryAttempt: Swift.Int)
         -> Foundation.TimeInterval
     {
         if let retryAfter = response.value(forHTTPHeaderField: "Retry-After") {
