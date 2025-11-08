@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add a docs check to ensure that there are no external references in custom components.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-07"
+  version: 0.110.2
+
+- changelogEntry:
+    - summary: |
         CLI will send the correct IR version to latest Ruby generator.
       type: chore
   irVersion: 61
