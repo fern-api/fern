@@ -7,6 +7,7 @@ from ..discriminated_union.simple_discriminated_union_generator import (
     AbstractSimpleDiscriminatedUnionGenerator,
 )
 from fern_python.codegen import AST, LocalClassReference, SourceFile
+from fern_python.external_dependencies import Pydantic
 from fern_python.generators.pydantic_model.fern_aware_pydantic_model import (
     FernAwarePydanticModel,
 )
@@ -62,6 +63,9 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
                     base_union_pydantic_model.add_field(**vars(field))
 
     def _maybe_wrap_type_hint(self, type_hint: AST.TypeHint) -> AST.TypeHint:
+        if len(self._union.types) <= 1:
+            return type_hint
+            
         if self._custom_config.skip_validation:
             return AST.TypeHint.annotated(
                 type=type_hint,
@@ -77,7 +81,21 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
                     )
                 ),
             )
-        return type_hint
+        
+        field_invocation = AST.FunctionInvocation(
+            function_definition=Pydantic(self._custom_config.version).Field(),
+            kwargs=[
+                (
+                    "discriminator",
+                    AST.Expression(f'"{self._union.discriminant.wire_value}"'),
+                )
+            ],
+        )
+        
+        return AST.TypeHint.annotated(
+            type=type_hint,
+            annotation=AST.Expression(field_invocation),
+        )
 
     def _generate_member_name(self, single_union_type: ir_types.SingleUnionType) -> str:
         return get_single_union_type_class_name(
