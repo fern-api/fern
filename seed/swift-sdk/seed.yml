@@ -29,9 +29,6 @@ defaultCustomConfig: {}
 scripts:
   - docker: swift:6.1.2
     commands:
-      # On Linux, URLSession/URLRequest require explicit FoundationNetworking import
-      # The Swift generator only outputs "import Foundation" but Linux needs both imports
-      - find . -name "*.swift" -exec sed -i '1s/^import Foundation$/import Foundation\nimport FoundationNetworking/' {} \;
       - swift build -c release --build-tests
       - swift test
 

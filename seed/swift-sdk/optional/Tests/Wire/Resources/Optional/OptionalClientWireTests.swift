@@ -27,4 +27,27 @@ import ObjectsWithImports
         )
         try #require(response == expectedResponse)
     }
+
+    @Test func sendOptionalTypedBody1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                string
+                """.utf8
+            )
+        )
+        let client = ObjectsWithImportsClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = "string"
+        let response = try await client.optional.sendOptionalTypedBody(
+            request: SendOptionalBodyRequest(
+                message: "message"
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
 }

@@ -15,7 +15,7 @@ export type SwiftTypeSymbolName =
     // TODO(kafkas): Any doesn't seem to be under the Swift scope i.e. Swift.Any is not valid so we probably wanna move this.
     | "Any";
 
-export type FoundationTypeSymbolName = "Data" | "Date" | "URLSession" | "UUID";
+export type FoundationTypeSymbolName = "Data" | "Date" | "UUID";
 
 export class Symbol {
     public static readonly SWIFT_SYMBOL_NAME = "Swift";
@@ -43,7 +43,6 @@ export class Symbol {
     private static foundationTypeSymbolsByName: Record<FoundationTypeSymbolName, Symbol> = {
         Data: Symbol.foundationType("Data"),
         Date: Symbol.foundationType("Date"),
-        URLSession: Symbol.foundationType("URLSession"),
         UUID: Symbol.foundationType("UUID")
     };
     public static foundationTypeSymbols = Object.values(Symbol.foundationTypeSymbolsByName);
