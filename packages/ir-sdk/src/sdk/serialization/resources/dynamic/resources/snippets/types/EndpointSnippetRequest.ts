@@ -22,6 +22,7 @@ export const EndpointSnippetRequest: core.serialization.ObjectSchema<
     queryParameters: Values.optional(),
     headers: Values.optional(),
     requestBody: core.serialization.unknown().optional(),
+    postmanCollectionLink: core.serialization.string().optional(),
 });
 
 export declare namespace EndpointSnippetRequest {
@@ -34,5 +35,6 @@ export declare namespace EndpointSnippetRequest {
         queryParameters?: Values.Raw | null;
         headers?: Values.Raw | null;
         requestBody?: unknown | null;
+        postmanCollectionLink?: string | null;
     }
 }

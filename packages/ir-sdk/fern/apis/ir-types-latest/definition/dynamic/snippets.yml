@@ -42,6 +42,7 @@ types:
       queryParameters: optional<Values>
       headers: optional<Values>
       requestBody: optional<unknown>
+      postmanCollectionLink: optional<string>
 
   EndpointSnippetResponse:
     audiences:
