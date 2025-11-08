@@ -822,7 +822,8 @@ export class DynamicSnippetsConverter {
                         return [parameter.name.wireValue, parameter.value.jsonExample];
                     })
                 ),
-                requestBody: example.example?.request?.jsonExample
+                requestBody: example.example?.request?.jsonExample,
+                postmanCollectionLink: undefined
             });
         }
         return requests;
