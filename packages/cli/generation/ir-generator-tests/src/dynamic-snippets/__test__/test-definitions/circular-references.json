@@ -1120,6 +1120,135 @@
                     "value": "BOOLEAN"
                 }
             ]
+        },
+        "type_ast:JsonLikeWithNullAndUndefined": {
+            "type": "undiscriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "JsonLikeWithNullAndUndefined",
+                    "camelCase": {
+                        "unsafeName": "jsonLikeWithNullAndUndefined",
+                        "safeName": "jsonLikeWithNullAndUndefined"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "json_like_with_null_and_undefined",
+                        "safeName": "json_like_with_null_and_undefined"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "JSON_LIKE_WITH_NULL_AND_UNDEFINED",
+                        "safeName": "JSON_LIKE_WITH_NULL_AND_UNDEFINED"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "JSONLikeWithNullAndUndefined",
+                        "safeName": "JSONLikeWithNullAndUndefined"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "ast",
+                            "camelCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AST",
+                                "safeName": "AST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ast",
+                                "safeName": "Ast"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "ast",
+                        "camelCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AST",
+                            "safeName": "AST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ast",
+                            "safeName": "Ast"
+                        }
+                    }
+                }
+            },
+            "types": [
+                {
+                    "type": "list",
+                    "value": {
+                        "type": "optional",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "named",
+                                "value": "type_ast:JsonLikeWithNullAndUndefined"
+                            }
+                        }
+                    }
+                },
+                {
+                    "type": "map",
+                    "key": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "value": {
+                        "type": "optional",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "named",
+                                "value": "type_ast:JsonLikeWithNullAndUndefined"
+                            }
+                        }
+                    }
+                },
+                {
+                    "type": "optional",
+                    "value": {
+                        "type": "nullable",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    }
+                },
+                {
+                    "type": "optional",
+                    "value": {
+                        "type": "nullable",
+                        "value": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        }
+                    }
+                },
+                {
+                    "type": "optional",
+                    "value": {
+                        "type": "nullable",
+                        "value": {
+                            "type": "primitive",
+                            "value": "BOOLEAN"
+                        }
+                    }
+                }
+            ]
         }
     },
     "headers": [],

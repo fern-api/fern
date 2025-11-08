@@ -1,6 +1,7 @@
 export * from "./ContainerValue.js";
 export * from "./FieldValue.js";
 export * from "./JsonLike.js";
+export * from "./JsonLikeWithNullAndUndefined.js";
 export * from "./ObjectValue.js";
 export * from "./PrimitiveValue.js";
 export * from "./T.js";

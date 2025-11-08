@@ -3,10 +3,20 @@
 import express from "express";
 import * as errors from "../../../../errors/index";
 import * as serializers from "../../../../serialization/index";
+import type * as SeedObjectsWithImports from "../../../index";
 
 export interface OptionalServiceMethods {
     sendOptionalBody(
         req: express.Request<never, string, Record<string, unknown> | undefined, never>,
+        res: {
+            send: (responseBody: string) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    sendOptionalTypedBody(
+        req: express.Request<never, string, SeedObjectsWithImports.SendOptionalBodyRequest | undefined, never>,
         res: {
             send: (responseBody: string) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
@@ -64,6 +74,49 @@ export class OptionalService {
                     if (error instanceof errors.SeedObjectsWithImportsError) {
                         console.warn(
                             `Endpoint 'sendOptionalBody' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => `${["request", ...error.path].join(" -> ")}: ${error.message}`,
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.post("/send-optional-typed-body", async (req, res, next) => {
+            const request = serializers.optional.sendOptionalTypedBody.Request.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.sendOptionalTypedBody(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.optional.sendOptionalTypedBody.Response.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    }),
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next,
+                    );
+                    if (!res.writableEnded) {
+                        next();
+                    }
+                } catch (error) {
+                    if (error instanceof errors.SeedObjectsWithImportsError) {
+                        console.warn(
+                            `Endpoint 'sendOptionalTypedBody' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
                         );
                         await error.send(res);
                     } else {
