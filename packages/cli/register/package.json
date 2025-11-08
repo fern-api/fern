@@ -38,6 +38,7 @@
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
+    "@fern-api/fdr-sdk": "0.139.44-44071b8e4",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
@@ -45,7 +46,6 @@
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-api/fdr-sdk": "0.139.43-309880147",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
