@@ -1,4 +1,5 @@
 const TRANSLATION_SERVICE_URL = "https://r88yjrnw5k.execute-api.us-east-1.amazonaws.com/dev2/translate";
+
 import { getToken } from "@fern-api/auth";
 import { CliContext } from "../../cli-context/CliContext";
 

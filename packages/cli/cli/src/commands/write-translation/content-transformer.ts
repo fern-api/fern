@@ -1,7 +1,7 @@
 import { CliContext } from "../../cli-context/CliContext";
+import { translateText } from "./translation-service";
 import { ContentTransformation } from "./types";
 import { translateYamlContent } from "./yaml-processor";
-import { translateText } from "./translation-service";
 
 export async function transformContentForLanguage(
     transformation: ContentTransformation,
