@@ -3,6 +3,8 @@
  */
 
 export interface AiChatWebsiteDatasource {
+    /** The URL of the website to index. Ask Fern will crawl and index the content from this URL. */
     url: string;
+    /** An optional display name for this datasource. This helps users understand where the information is coming from when Ask Fern cites content from this source. */
     title?: string;
 }

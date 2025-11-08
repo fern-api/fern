@@ -988,6 +988,7 @@ async function convertNavigationItem({
                 rawConfig.snippets != null
                     ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets })
                     : undefined,
+            postman: rawConfig.postman,
             navigation:
                 rawConfig.layout?.flatMap((item) => parseApiReferenceLayoutItem(item, absolutePathToConfig)) ?? [],
             overviewAbsolutePath: resolveFilepath(rawConfig.summary, absolutePathToConfig),

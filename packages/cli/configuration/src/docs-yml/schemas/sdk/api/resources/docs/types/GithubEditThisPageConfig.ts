@@ -5,8 +5,10 @@
 export interface GithubEditThisPageConfig {
     /** @default: `github.com` */
     host?: string;
+    /** The GitHub organization that owns the documentation repository. */
     owner: string;
+    /** The name of the GitHub repository containing your fern folder. */
     repo: string;
-    /** @default: `main` */
+    /** The branch of the repository you would like the GitHub editor to open a PR to. Default is `main`. */
     branch?: string;
 }

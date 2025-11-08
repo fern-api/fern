@@ -129,6 +129,7 @@ export class ApiReferenceNodeConverter {
             pointsTo,
             noindex: undefined,
             playground: this.#convertPlaygroundSettings(this.apiSection.playground),
+            // postmanCollectionUrl: this.apiSection.postman,
             authed: undefined,
             viewers: this.apiSection.viewers,
             orphaned: this.apiSection.orphaned,

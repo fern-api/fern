@@ -5,7 +5,19 @@
 import * as FernDocsConfig from "../../../index";
 
 export interface DocsTypographyConfig {
+    /**
+     * The font used for headings, titles, and other prominent text elements. Can be the same as your body font
+     * if you prefer a unified look. Supports multiple weights for different heading levels.
+     */
     headingsFont?: FernDocsConfig.FontConfig;
+    /**
+     * The font used for all body text including paragraphs, lists, and general content.
+     * For optimal performance, use WOFF2 format.
+     */
     bodyFont?: FernDocsConfig.FontConfig;
+    /**
+     * The font used for code blocks and inline code. Monospace fonts are recommended for better code readability.
+     * Popular choices include JetBrains Mono, Fira Code, and Source Code Pro.
+     */
     codeFont?: FernDocsConfig.FontConfig;
 }
