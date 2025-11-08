@@ -117,7 +117,7 @@ export async function replaceReferencedMarkdown({
                     String(absolutePathToMarkdownFile).split("/").pop() ?? String(absolutePathToMarkdownFile);
 
                 for (const variable of missingVariables) {
-                    context.logger.warn(`${pageName}:${line} Markdown snippet missing property: \`${variable}\``);
+                    context.logger.warn(`[${absolutePathToMarkdownFile}:${line}] Markdown snippet missing property: \`${variable}\``);
                 }
             }
 
