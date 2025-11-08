@@ -2060,6 +2060,16 @@
             }
           ]
         },
+        "postman": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "summary": {
           "oneOf": [
             {
