@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Add optional postmanCollectionLink field to EndpointSnippetRequest in IR and postman field to ApiReferenceConfiguration in docs.yml to support linking to Postman collections from API documentation.
-      type: feat
+        Add optional postmanCollectionLink field to EndpointSnippetRequest in IR to support linking to Postman collections.
+      type: chore
   irVersion: 62
   createdAt: "2025-11-08"
   version: 0.110.2
