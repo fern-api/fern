@@ -255,7 +255,8 @@ function convertService(
                     return { type: "grpc", methodName: irEndpoint.id, methodType: protoSource.methodType };
                 },
                 _other: () => undefined
-            })
+            }),
+            includeInApiExplorer: undefined
         };
         endpoints.push(endpoint);
     }
