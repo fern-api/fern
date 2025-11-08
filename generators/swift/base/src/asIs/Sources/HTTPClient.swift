@@ -104,12 +104,12 @@ final class HTTPClient: Swift.Sendable {
         requestQueryParams: [Swift.String: QueryParameter?],
         requestBody: HTTP.RequestBody? = nil,
         requestOptions: RequestOptions? = nil
-    ) async throws -> Networking.URLRequest {
+    ) async throws -> Foundation.URLRequest {
         // Init with URL
         let url = buildRequestURL(
             path: path, requestQueryParams: requestQueryParams, requestOptions: requestOptions
         )
-        var request = Networking.URLRequest(url: url)
+        var request = Foundation.URLRequest(url: url)
 
         // Set timeout
         if let timeout = requestOptions?.timeout {
@@ -142,22 +142,22 @@ final class HTTPClient: Swift.Sendable {
     }
 
     private func buildRequestURL(
-        path: String,
-        requestQueryParams: [String: QueryParameter?],
+        path: Swift.String,
+        requestQueryParams: [Swift.String: QueryParameter?],
         requestOptions: RequestOptions? = nil
     ) -> URL {
-        let endpointURL: String = "\(clientConfig.baseURL)\(path)"
-        guard var components: URLComponents = URLComponents(string: endpointURL) else {
+        let endpointURL = "\(clientConfig.baseURL)\(path)"
+        guard var components = Foundation.URLComponents(string: endpointURL) else {
             preconditionFailure(
                 "Invalid URL '\(endpointURL)' - this indicates an unexpected error in the SDK."
             )
         }
         if !requestQueryParams.isEmpty {
-            let baseItems: [URLQueryItem] = requestQueryParams.compactMap { key, value in
+            let baseItems: [Foundation.URLQueryItem] = requestQueryParams.compactMap { key, value in
                 guard let unwrapped = value else { return nil }
                 let stringValue = unwrapped.toString()
                 guard !stringValue.isEmpty else { return nil }
-                return URLQueryItem(name: key, value: stringValue)
+                return Foundation.URLQueryItem(name: key, value: stringValue)
             }
             if !baseItems.isEmpty {
                 components.queryItems = baseItems
@@ -165,7 +165,7 @@ final class HTTPClient: Swift.Sendable {
         }
         if let additionalQueryParams = requestOptions?.additionalQueryParameters {
             let extraItems = additionalQueryParams.compactMap { key, value in
-                value.isEmpty ? nil : URLQueryItem(name: key, value: value)
+                value.isEmpty ? nil : Foundation.URLQueryItem(name: key, value: value)
             }
             if components.queryItems == nil {
                 components.queryItems = extraItems
@@ -264,17 +264,17 @@ final class HTTPClient: Swift.Sendable {
     }
 
     private func executeRequestWithURLSession(
-        _ request: Networking.URLRequest,
+        _ request: Foundation.URLRequest,
         requestOptions: RequestOptions? = nil
     ) async throws -> (Foundation.Data, Swift.String?) {
         let maxRetries = requestOptions?.maxRetries ?? clientConfig.maxRetries
-        var lastResponse: (Foundation.Data, Networking.HTTPURLResponse)?
+        var lastResponse: (Foundation.Data, Foundation.HTTPURLResponse)?
 
         for attempt in 0...maxRetries {
             do {
                 let (data, response) = try await clientConfig.urlSession.data(for: request)
 
-                guard let httpResponse = response as? Networking.HTTPURLResponse else {
+                guard let httpResponse = response as? Foundation.HTTPURLResponse else {
                     throw ClientError.invalidResponse
                 }
 
@@ -323,7 +323,7 @@ final class HTTPClient: Swift.Sendable {
         return statusCode == 408 || statusCode == 429 || statusCode >= 500
     }
 
-    private func getRetryDelay(response: Networking.HTTPURLResponse, retryAttempt: Swift.Int)
+    private func getRetryDelay(response: Foundation.HTTPURLResponse, retryAttempt: Swift.Int)
         -> Foundation.TimeInterval
     {
         if let retryAfter = response.value(forHTTPHeaderField: "Retry-After") {
