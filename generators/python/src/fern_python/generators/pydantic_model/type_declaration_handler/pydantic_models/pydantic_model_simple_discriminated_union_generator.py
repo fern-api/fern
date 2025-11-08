@@ -65,7 +65,7 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
     def _maybe_wrap_type_hint(self, type_hint: AST.TypeHint) -> AST.TypeHint:
         if len(self._union.types) <= 1:
             return type_hint
-            
+
         if self._custom_config.skip_validation:
             return AST.TypeHint.annotated(
                 type=type_hint,
@@ -81,7 +81,7 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
                     )
                 ),
             )
-        
+
         field_invocation = AST.FunctionInvocation(
             function_definition=Pydantic(self._custom_config.version).Field(),
             kwargs=[
@@ -91,7 +91,7 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
                 )
             ],
         )
-        
+
         return AST.TypeHint.annotated(
             type=type_hint,
             annotation=AST.Expression(field_invocation),
