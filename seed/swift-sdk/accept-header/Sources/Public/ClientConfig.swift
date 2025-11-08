@@ -52,7 +52,7 @@ public final class ClientConfig: Swift.Sendable {
     let headers: [Swift.String: Swift.String]?
     let timeout: Swift.Int
     let maxRetries: Swift.Int
-    let urlSession: Foundation.URLSession
+    let urlSession: Networking.URLSession
 
     init(
         baseURL: Swift.String,
@@ -62,7 +62,7 @@ public final class ClientConfig: Swift.Sendable {
         headers: [Swift.String: Swift.String]? = nil,
         timeout: Swift.Int? = nil,
         maxRetries: Swift.Int? = nil,
-        urlSession: Foundation.URLSession? = nil
+        urlSession: Networking.URLSession? = nil
     ) {
         self.baseURL = baseURL
         self.headerAuth = headerAuth
@@ -75,8 +75,8 @@ public final class ClientConfig: Swift.Sendable {
     }
 }
 
-private func buildURLSession(timeoutSeconds: Swift.Int) -> Foundation.URLSession {
-    let configuration = Foundation.URLSessionConfiguration.default
+private func buildURLSession(timeoutSeconds: Swift.Int) -> Networking.URLSession {
+    let configuration = Networking.URLSessionConfiguration.default
     configuration.timeoutIntervalForRequest = .init(timeoutSeconds)
     return .init(configuration: configuration)
 }

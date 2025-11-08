@@ -3,11 +3,11 @@ import Foundation
 /// Represents a file with its data and optional metadata for multipart uploads
 public struct FormFile {
     /// The file data
-    public let data: Data
+    public let data: Foundation.Data
     /// Optional filename
-    public let filename: String?
+    public let filename: Swift.String?
 
-    public init(data: Data, filename: String? = nil) {
+    public init(data: Foundation.Data, filename: Swift.String? = nil) {
         self.data = data
         self.filename = filename
     }
@@ -18,7 +18,7 @@ public struct FormFile {
 extension FormFile {
     /// Create a FormFile from raw Data with no metadata
     /// - Parameter data: The file data
-    public static func data(_ data: Data) -> FormFile {
+    public static func data(_ data: Foundation.Data) -> FormFile {
         return FormFile(data: data)
     }
 
@@ -26,7 +26,7 @@ extension FormFile {
     /// - Parameters:
     ///   - data: The file data
     ///   - filename: The filename
-    public static func named(_ data: Data, filename: String) -> FormFile {
+    public static func named(_ data: Foundation.Data, filename: Swift.String) -> FormFile {
         return FormFile(data: data, filename: filename)
     }
 }

@@ -1,11 +1,11 @@
 import Foundation
 
-extension String {
-    func urlPathEncoded() -> String {
+extension Swift.String {
+    func urlPathEncoded() -> Swift.String {
         return self.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? self
     }
 
-    func urlQueryEncoded() -> String {
+    func urlQueryEncoded() -> Swift.String {
         return self.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? self
     }
 }
