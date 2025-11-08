@@ -14,6 +14,8 @@ export * from "./errors/types";
 export * as examples from "./examples";
 export * from "./examples/types";
 export * as generatorExec from "./generatorExec";
+export * as graphql from "./graphql";
+export * from "./graphql/types";
 export * as http from "./http";
 export * from "./http/types";
 export * as ir from "./ir";

@@ -1,0 +1,29 @@
+{
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../../../commons/casings-generator"
+    },
+    {
+      "path": "../../../commons/core-utils"
+    },
+    {
+      "path": "../../fern-definition/schema"
+    },
+    {
+      "path": "../../../ir-sdk"
+    },
+    {
+      "path": "../../../commons/ir-utils"
+    },
+    {
+      "path": "../../task-context"
+    }
+  ]
+}

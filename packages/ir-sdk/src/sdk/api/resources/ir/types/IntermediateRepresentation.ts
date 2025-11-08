@@ -28,6 +28,8 @@ export interface IntermediateRepresentation {
     webhookGroups: Record<FernIr.WebhookGroupId, FernIr.WebhookGroup>;
     /** The websocket channels served by this API */
     websocketChannels: Record<FernIr.WebSocketChannelId, FernIr.WebSocketChannel> | undefined;
+    /** The GraphQL APIs exposed by this API */
+    graphqlApis: Record<FernIr.GraphQlApiId, FernIr.GraphQlApi> | undefined;
     errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration>;
     subpackages: Record<FernIr.SubpackageId, FernIr.Subpackage>;
     rootPackage: FernIr.Package;

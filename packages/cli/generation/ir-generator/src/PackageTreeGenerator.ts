@@ -34,6 +34,7 @@ export class PackageTreeGenerator {
         errors: [],
         subpackages: [],
         webhooks: undefined,
+        graphql: undefined,
         navigationConfig: undefined
     };
 
@@ -227,7 +228,8 @@ export class PackageTreeGenerator {
                 subpackages: [],
                 navigationConfig: undefined,
                 webhooks: undefined,
-                websocket: undefined
+                websocket: undefined,
+                graphql: undefined
             };
             this.subpackages[newParentId] = newParent;
             parent.subpackages.push(newParentId);

@@ -16,6 +16,7 @@ export * from "./ErrorId";
 export * from "./WebhookGroupId";
 export * from "./WebhookId";
 export * from "./WebSocketChannelId";
+export * from "./GraphQlApiId";
 export * from "./FeatureId";
 export * from "./Declaration";
 export * from "./Availability";

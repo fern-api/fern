@@ -1,0 +1,150 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  examples: examples.yml
+  types: types.yml
+  http: http.yml
+  environment: environment.yml
+
+types:
+  GraphQLOperationId: string
+  GraphQLTypeId: string
+
+  GraphQLApi:
+    extends: commons.Declaration
+    properties:
+      name: GraphQLApiName
+      displayName: optional<string>
+      endpoint: string
+      baseUrl: optional<environment.EnvironmentBaseUrlId>
+      auth: boolean
+      headers: list<http.HttpHeader>
+      queries:
+        docs: "GraphQL query operations"
+        type: list<GraphQLOperation>
+      mutations:
+        docs: "GraphQL mutation operations"
+        type: list<GraphQLOperation>
+      subscriptions:
+        docs: "GraphQL subscription operations"
+        type: list<GraphQLSubscription>
+      types:
+        docs: "Custom GraphQL types (objects, interfaces, unions, enums, input objects)"
+        type: map<GraphQLTypeId, GraphQLTypeDeclaration>
+      examples: list<ExampleGraphQLSession>
+
+  GraphQLApiName: commons.Name
+
+  GraphQLOperation:
+    extends: commons.Declaration
+    properties:
+      id: GraphQLOperationId
+      name: commons.Name
+      displayName: optional<string>
+      operationType: GraphQLOperationType
+      arguments: list<GraphQLArgument>
+      returnType: types.TypeReference
+      deprecationReason: optional<string>
+
+  GraphQLOperationType:
+    enum:
+      - QUERY
+      - MUTATION
+      - SUBSCRIPTION
+
+  GraphQLSubscription:
+    extends: GraphQLOperation
+    properties:
+      subscriptionProtocol: optional<GraphQLSubscriptionProtocol>
+
+  GraphQLSubscriptionProtocol:
+    enum:
+      - WEBSOCKET
+      - SSE
+      - GRAPHQL_WS
+      - GRAPHQL_TRANSPORT_WS
+
+  GraphQLArgument:
+    extends: commons.WithDocs
+    properties:
+      name: commons.NameAndWireValue
+      valueType: types.TypeReference
+      defaultValue: optional<unknown>
+      isRequired: boolean
+
+  GraphQLTypeDeclaration:
+    union:
+      object: GraphQLObjectType
+      interface: GraphQLInterfaceType
+      union: GraphQLUnionType
+      enum: GraphQLEnumType
+      inputObject: GraphQLInputObjectType
+
+  GraphQLObjectType:
+    extends: commons.Declaration
+    properties:
+      name: types.DeclaredTypeName
+      fields: list<GraphQLField>
+      interfaces: list<GraphQLTypeId>
+
+  GraphQLInterfaceType:
+    extends: commons.Declaration
+    properties:
+      name: types.DeclaredTypeName
+      fields: list<GraphQLField>
+      implementedBy: list<GraphQLTypeId>
+
+  GraphQLUnionType:
+    extends: commons.Declaration
+    properties:
+      name: types.DeclaredTypeName
+      members: list<GraphQLTypeId>
+
+  GraphQLEnumType:
+    extends: commons.Declaration
+    properties:
+      name: types.DeclaredTypeName
+      values: list<GraphQLEnumValue>
+
+  GraphQLInputObjectType:
+    extends: commons.Declaration
+    properties:
+      name: types.DeclaredTypeName
+      fields: list<GraphQLInputField>
+
+  GraphQLField:
+    extends: commons.WithDocs
+    properties:
+      name: commons.NameAndWireValue
+      valueType: types.TypeReference
+      arguments: list<GraphQLArgument>
+      deprecationReason: optional<string>
+
+  GraphQLInputField:
+    extends: commons.WithDocs
+    properties:
+      name: commons.NameAndWireValue
+      valueType: types.TypeReference
+      defaultValue: optional<unknown>
+
+  GraphQLEnumValue:
+    extends: commons.WithDocs
+    properties:
+      name: commons.NameAndWireValue
+      deprecationReason: optional<string>
+
+  ExampleGraphQLSession:
+    extends: commons.WithDocs
+    properties:
+      name: optional<commons.Name>
+      endpoint: string
+      headers: list<http.ExampleHeader>
+      operations: list<ExampleGraphQLOperation>
+
+  ExampleGraphQLOperation:
+    properties:
+      operationId: GraphQLOperationId
+      query: string
+      variables: optional<map<string, unknown>>
+      response: unknown

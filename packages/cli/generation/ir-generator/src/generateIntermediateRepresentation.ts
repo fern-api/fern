@@ -1,8 +1,10 @@
+import { readFileSync } from "node:fs";
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/api-workspace-commons";
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { Audiences, FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
 import { noop, visitObject } from "@fern-api/core-utils";
 import { isGeneric } from "@fern-api/fern-definition-schema";
+import { convertGraphQLSchemaToIR, parseGraphQLSchema } from "@fern-api/graphql-to-ir";
 import {
     dynamic,
     FernIr,
@@ -90,6 +92,7 @@ export function generateIntermediateRepresentation({
     readme,
     packageName,
     version,
+    context,
     fdrApiDefinitionId,
     sourceResolver,
     disableDynamicExamples,
@@ -157,6 +160,7 @@ export function generateIntermediateRepresentation({
         types: {},
         errors: {},
         services: {},
+        graphqlApis: undefined,
         constants: generateFernConstants(casingsGenerator),
         environments,
         errorDiscriminationStrategy: convertErrorDiscriminationStrategy(
@@ -386,6 +390,42 @@ export function generateIntermediateRepresentation({
                     intermediateRepresentation.websocketChannels[websocketChannelId] = websocketChannel;
                     packageTreeGenerator.addWebSocketChannel(websocketChannelId, file.fernFilepath);
                 }
+            },
+            graphql: (graphqlSchemaPath) => {
+                if (graphqlSchemaPath == null) {
+                    return;
+                }
+
+                const defDir = dirname(join(workspace.absoluteFilePath, file.relativeFilepath));
+                const absoluteGraphqlPath = join(defDir, RelativeFilePath.of(graphqlSchemaPath));
+
+                const schemaContent = readFileSync(absoluteGraphqlPath, "utf-8");
+                const graphqlSchema = parseGraphQLSchema(schemaContent, context);
+                const parsedGraphQL = convertGraphQLSchemaToIR(graphqlSchema, casingsGenerator);
+
+                const graphqlApiId = IdGenerator.generateSubpackageId(file.fernFilepath);
+
+                if (intermediateRepresentation.graphqlApis == null) {
+                    intermediateRepresentation.graphqlApis = {};
+                }
+
+                intermediateRepresentation.graphqlApis[graphqlApiId] = {
+                    name: casingsGenerator.generateName("GraphQL API"),
+                    displayName: undefined,
+                    endpoint: "/graphql",
+                    baseUrl: undefined,
+                    auth: false,
+                    headers: [],
+                    docs: undefined,
+                    availability: undefined,
+                    queries: parsedGraphQL.queries,
+                    mutations: parsedGraphQL.mutations,
+                    subscriptions: parsedGraphQL.subscriptions,
+                    types: parsedGraphQL.types,
+                    examples: []
+                };
+
+                packageTreeGenerator.addSubpackage(file.fernFilepath);
             }
         });
     };

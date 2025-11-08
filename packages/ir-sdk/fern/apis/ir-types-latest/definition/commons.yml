@@ -66,6 +66,7 @@ types:
   WebhookGroupId: string
   WebhookId: string
   WebSocketChannelId: string
+  GraphQLApiId: string
   FeatureId: string
 
   # declarations

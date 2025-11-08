@@ -54,6 +54,7 @@ export abstract class AbstractSpecConverter<
             errors: {},
             webhookGroups: {},
             websocketChannels: undefined,
+            graphqlApis: undefined,
             headers: [],
             idempotencyHeaders: [],
             apiVersion: undefined,
@@ -522,6 +523,7 @@ export abstract class AbstractSpecConverter<
             docs: undefined,
             webhooks: undefined,
             websocket: undefined,
+            graphql: undefined,
             hasEndpointsInTree: false,
             navigationConfig: undefined
         };
