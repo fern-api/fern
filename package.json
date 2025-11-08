@@ -136,5 +136,8 @@
     "qs": "^6.13.0",
     "ts-essentials": "^10.1.1",
     "url-join": "^4.0.1"
+  },
+  "dependencies": {
+    "@fern-api/fdr-sdk": "0.139.44-44071b8e4"
   }
 }
