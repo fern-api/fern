@@ -8,6 +8,22 @@ const absolutePathToFernFolder = AbsoluteFilePath.of("/path/to/fern");
 const absolutePathToMarkdownFile = AbsoluteFilePath.of("/path/to/fern/pages/test.mdx");
 const context = createMockTaskContext();
 
+function makeContextWithWarnSpy() {
+    const warnSpy = vi.fn();
+    const logger = {
+        debug: vi.fn(),
+        info: vi.fn(),
+        warn: warnSpy,
+        error: vi.fn(),
+        trace: vi.fn(),
+        log: vi.fn(),
+        enable: vi.fn(),
+        disable: vi.fn()
+    };
+    const testContext = createMockTaskContext({ logger });
+    return { context: testContext, warnSpy };
+}
+
 describe("replaceReferencedMarkdown", () => {
     it("should replace the referenced markdown with the content of the markdown file", async () => {
         const markdown = `
@@ -249,15 +265,7 @@ describe("replaceReferencedMarkdown", () => {
     });
 
     it("should warn when snippet references a missing variable", async () => {
-        const warnSpy = vi.fn();
-        const testContext = createMockTaskContext({
-            logger: {
-                debug: vi.fn(),
-                info: vi.fn(),
-                warn: warnSpy,
-                error: vi.fn()
-            }
-        });
+        const { context: testContext, warnSpy } = makeContextWithWarnSpy();
 
         const markdown = `
             <Markdown src="plan-tier.mdx" plan="pro" />
@@ -284,15 +292,7 @@ describe("replaceReferencedMarkdown", () => {
     });
 
     it("should warn for multiple missing variables", async () => {
-        const warnSpy = vi.fn();
-        const testContext = createMockTaskContext({
-            logger: {
-                debug: vi.fn(),
-                info: vi.fn(),
-                warn: warnSpy,
-                error: vi.fn()
-            }
-        });
+        const { context: testContext, warnSpy } = makeContextWithWarnSpy();
 
         const markdown = `
             <Markdown src="details.md" name="API" />
@@ -322,15 +322,7 @@ describe("replaceReferencedMarkdown", () => {
     });
 
     it("should not warn when all variables are provided", async () => {
-        const warnSpy = vi.fn();
-        const testContext = createMockTaskContext({
-            logger: {
-                debug: vi.fn(),
-                info: vi.fn(),
-                warn: warnSpy,
-                error: vi.fn()
-            }
-        });
+        const { context: testContext, warnSpy } = makeContextWithWarnSpy();
 
         const markdown = `
             <Markdown src="plan-tier.mdx" plan="pro" tier="enterprise" />
@@ -354,15 +346,7 @@ describe("replaceReferencedMarkdown", () => {
     });
 
     it("should not warn when snippet has no variables", async () => {
-        const warnSpy = vi.fn();
-        const testContext = createMockTaskContext({
-            logger: {
-                debug: vi.fn(),
-                info: vi.fn(),
-                warn: warnSpy,
-                error: vi.fn()
-            }
-        });
+        const { context: testContext, warnSpy } = makeContextWithWarnSpy();
 
         const markdown = `
             <Markdown src="static.md" plan="pro" />
