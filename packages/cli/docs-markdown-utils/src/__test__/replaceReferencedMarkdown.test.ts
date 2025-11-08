@@ -121,9 +121,7 @@ describe("replaceReferencedMarkdown", () => {
             }
         });
 
-        expect(result).toBe(`
-            The enterprise tier costs $999 per month.
-        `);
+        expect(result.trim()).toMatchInlineSnapshot(`"The enterprise tier costs $999 per month."`);
     });
 
     it("should substitute the same variable multiple times", async () => {
@@ -241,8 +239,12 @@ describe("replaceReferencedMarkdown", () => {
             }
         });
 
-        expect(result).toContain("# API Keys");
-        expect(result).toContain("This feature is available on the enterprise plan.");
-        expect(result).toContain("Learn more about API Keys below.");
+        expect(result.trim()).toMatchInlineSnapshot(`
+          "# API Keys
+                      
+                      This feature is available on the enterprise plan.
+                      
+                      Learn more about API Keys below."
+        `);
     });
 });
