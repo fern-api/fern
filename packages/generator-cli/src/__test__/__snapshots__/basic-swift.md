@@ -5,6 +5,11 @@
 
 The Basic Swift library provides convenient access to the Basic APIs from Swift.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Contributing](#contributing)
+
 ## Installation
 
 With Swift Package Manager (SPM), add the following to the top-level `dependencies` array within your `Package.swift` file:
