@@ -3,7 +3,7 @@
  */
 
 /**
- * The `redirects` object allows you to redirect traffic from one path to another, i.e.
+ * The `redirects` object allows you to redirect traffic from one path to another. You can redirect exact paths or use dynamic patterns with regex parameters like `:slug` to handle bulk redirects. You can redirect to internal paths within your site or external URLs.
  *
  * ```yaml
  * redirects:
@@ -14,9 +14,17 @@
  * Both source and destination paths support regex. See https://github.com/pillarjs/path-to-regexp
  */
 export interface RedirectConfig {
-    /** The path that you want to redirect from, i.e. `/old-path` */
+    /** The path you want to redirect from. */
     source: string;
-    /** The path that you want to redirect to, i.e. `/new-path` */
+    /**
+     * The path you want to route to. Can be an internal path (`/new-path`) or an external URL (`https://example.com`).
+     * External URLs must include the full address, including `https`.
+     */
     destination: string;
+    /**
+     * By default, uses the 308 status code to instructs clients and search engines to cache the redirect forever. Set to `false` only if you need a temporary redirect using the 307 status code, which won't be cached.
+     *
+     * @default: true
+     */
     permanent?: boolean;
 }

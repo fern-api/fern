@@ -990,6 +990,9 @@ types:
         type: optional<boolean>
         docs: Defaults to false
       snippets: optional<SnippetsConfiguration>
+      postman:
+        type: optional<string>
+        docs: URL to a Postman collection for this API reference
       summary:
         type: optional<string>
         docs: Relative path to the markdown file
