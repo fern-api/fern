@@ -6,17 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import optional
-    from .client import AsyncSeedObjectsWithImports, SeedObjectsWithImports
-    from .optional import SendOptionalBodyRequest
-    from .version import __version__
-_dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedObjectsWithImports": ".client",
-    "SeedObjectsWithImports": ".client",
-    "SendOptionalBodyRequest": ".optional",
-    "__version__": ".version",
-    "optional": ".optional",
-}
+    from .send_optional_body_request import SendOptionalBodyRequest
+_dynamic_imports: typing.Dict[str, str] = {"SendOptionalBodyRequest": ".send_optional_body_request"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -40,10 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "AsyncSeedObjectsWithImports",
-    "SeedObjectsWithImports",
-    "SendOptionalBodyRequest",
-    "__version__",
-    "optional",
-]
+__all__ = ["SendOptionalBodyRequest"]
