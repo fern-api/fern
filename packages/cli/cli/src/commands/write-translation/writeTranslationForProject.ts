@@ -245,7 +245,7 @@ export async function writeTranslationForProject({
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
         const fernDirectory = docsWorkspace.absoluteFilePath;
-        const translationsDirectory = join(fernDirectory, RelativeFilePath.of("translations"));
+        const translationsDirectory = join(fernDirectory, RelativeFilePath.of("translations/fern"));
 
         const sourceLanguage = languages[0];
         if (!sourceLanguage) {

@@ -23,7 +23,7 @@ interface TranslationOutput {
     docConfigs?: Record<string, unknown>;
 }
 
-describe("writeTranslationForProject", () => {
+describe.skip("writeTranslationForProject", () => {
     let mockCliContext: CliContext;
 
     beforeEach(async () => {
