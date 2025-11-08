@@ -92,7 +92,8 @@ export class OperationConverter extends AbstractOperationConverter {
             breadcrumbs: [...this.breadcrumbs, "requestBody"],
             group,
             method,
-            streamingExtension: this.streamingExtension
+            streamingExtension: this.streamingExtension,
+            queryParameters
         });
         const requestBody = convertedRequestBodies != null ? convertedRequestBodies[0]?.requestBody : undefined;
         const streamRequestBody =

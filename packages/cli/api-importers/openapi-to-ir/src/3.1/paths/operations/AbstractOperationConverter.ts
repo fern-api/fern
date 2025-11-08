@@ -189,12 +189,14 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         breadcrumbs,
         group,
         method,
-        streamingExtension
+        streamingExtension,
+        queryParameters
     }: {
         breadcrumbs: string[];
         group: string[] | undefined;
         method: string;
         streamingExtension: FernStreamingExtension.Output | undefined;
+        queryParameters?: QueryParameter[];
     }): ConvertedRequestBody[] | undefined | null {
         if (this.operation.requestBody == null) {
             return undefined;
@@ -221,7 +223,8 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 required: resolvedRequestBody.required,
                 group: group ?? [],
                 method,
-                streamingExtension
+                streamingExtension,
+                queryParameters
             });
             const convertedRequestBody = requestBodyConverter.convert();
             if (convertedRequestBody != null) {
