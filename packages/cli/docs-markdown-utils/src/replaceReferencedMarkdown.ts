@@ -26,6 +26,24 @@ function extractAttributes(markdownTag: string): Record<string, string> {
     return attributes;
 }
 
+function extractVariablesFromContent(content: string): Set<string> {
+    const vars = new Set<string>();
+    const VAR_REGEX = /{([A-Za-z_][A-Za-z0-9_]*)}/g;
+
+    let match: RegExpExecArray | null;
+    while ((match = VAR_REGEX.exec(content)) != null) {
+        if (match[1] != null) {
+            vars.add(match[1]);
+        }
+    }
+
+    return vars;
+}
+
+function getLineNumber(source: string, index: number): number {
+    return source.slice(0, index).split("\n").length;
+}
+
 function substituteVariables(content: string, variables: Record<string, string>): string {
     let result = content;
 
@@ -87,6 +105,21 @@ export async function replaceReferencedMarkdown({
             let replaceString = await markdownLoader(filepath);
 
             const { src: _, ...variables } = attributes;
+
+            const usedVariables = extractVariablesFromContent(replaceString);
+            const providedVariables = new Set(Object.keys(variables));
+            const missingVariables = [...usedVariables].filter((v) => !providedVariables.has(v));
+
+            if (missingVariables.length > 0) {
+                const idx = match.index ?? markdown.indexOf(matchString);
+                const line = getLineNumber(markdown, idx);
+                const pageName =
+                    String(absolutePathToMarkdownFile).split("/").pop() ?? String(absolutePathToMarkdownFile);
+
+                for (const variable of missingVariables) {
+                    context.logger.warn(`${pageName}:${line} Markdown snippet missing property: \`${variable}\``);
+                }
+            }
 
             replaceString = substituteVariables(replaceString, variables);
 
