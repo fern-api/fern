@@ -260,7 +260,6 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             fetchFn: this.generatedSdkClientClass.getReferenceToFetch(),
             logging: this.generatedSdkClientClass.getReferenceToLogger(context),
             responseType: "sse",
-            accept: ts.factory.createStringLiteral("text/event-stream"),
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             endpointMetadata: this.generateEndpointMetadata
                 ? this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()

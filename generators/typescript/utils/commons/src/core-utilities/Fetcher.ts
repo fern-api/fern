@@ -15,7 +15,6 @@ export interface Fetcher {
                 method: "method";
                 headers: "headers";
                 contentType: "contentType";
-                accept: "accept";
                 queryParameters: "queryParameters";
                 body: "body";
                 abortSignal: "abortSignal";
@@ -146,7 +145,6 @@ export declare namespace Fetcher {
         method: ts.Expression;
         headers: ts.Expression;
         contentType?: string | ts.Expression;
-        accept?: ts.Expression;
         queryParameters: ts.Expression | undefined;
         body: ts.Expression | undefined;
         abortSignal: ts.Expression | undefined;
@@ -204,7 +202,7 @@ export const MANIFEST: CoreUtility.Manifest = {
             ignore.push("tests/unit/fetcher/getFetchFn.test.ts");
         }
         return {
-            patterns: ["src/core/fetcher/**", "tests/unit/fetcher/**"],
+            patterns: ["src/core/fetcher/**", "tests/unit/fetcher/**", "tests/setup.template.ts"],
             ignore
         };
     }
@@ -219,7 +217,6 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 method: "method",
                 headers: "headers",
                 contentType: "contentType",
-                accept: "accept",
                 queryParameters: "queryParameters",
                 maxRetries: "maxRetries",
                 body: "body",
@@ -283,9 +280,6 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                             : args.contentType
                     )
                 );
-            }
-            if (args.accept != null) {
-                properties.push(ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.accept, args.accept));
             }
             if (args.queryParameters != null) {
                 properties.push(

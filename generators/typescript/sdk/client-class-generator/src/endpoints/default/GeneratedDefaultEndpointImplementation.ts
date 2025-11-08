@@ -515,12 +515,6 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             fetcherArgs.responseType = "text";
         }
 
-        if (this.endpoint.response?.body?.type === "json") {
-            fetcherArgs.accept = ts.factory.createStringLiteral("json");
-        } else if (this.endpoint.response?.body?.type === "text") {
-            fetcherArgs.accept = ts.factory.createStringLiteral("text/plain");
-        }
-
         return [
             ts.factory.createVariableStatement(
                 undefined,
