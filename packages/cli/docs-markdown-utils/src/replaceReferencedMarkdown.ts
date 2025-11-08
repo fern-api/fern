@@ -9,6 +9,34 @@ async function defaultMarkdownLoader(filepath: AbsoluteFilePath) {
     return content;
 }
 
+function extractAttributes(markdownTag: string): Record<string, string> {
+    const attributes: Record<string, string> = {};
+
+    const attrRegex = /(\w+)=(?:{?['"]([^'"]+)['"]?}?|{([^}]+)})/g;
+
+    let attrMatch: RegExpExecArray | null;
+    while ((attrMatch = attrRegex.exec(markdownTag)) != null) {
+        const attrName = attrMatch[1];
+        const attrValue = attrMatch[2] ?? attrMatch[3];
+        if (attrName != null && attrValue != null) {
+            attributes[attrName] = attrValue;
+        }
+    }
+
+    return attributes;
+}
+
+function substituteVariables(content: string, variables: Record<string, string>): string {
+    let result = content;
+
+    for (const [key, value] of Object.entries(variables)) {
+        const variablePattern = new RegExp(`\\{${key}\\}`, "g");
+        result = result.replace(variablePattern, value);
+    }
+
+    return result;
+}
+
 // TODO: recursively replace referenced markdown files
 export async function replaceReferencedMarkdown({
     markdown,
@@ -28,7 +56,7 @@ export async function replaceReferencedMarkdown({
         return markdown;
     }
 
-    const regex = /([ \t]*)<Markdown\s+src={?['"]([^'"]+.mdx?)['"](?! \+)}?\s*\/>/g;
+    const regex = /([ \t]*)<Markdown\s+([^>]+)\/>/g;
 
     let newMarkdown = markdown;
 
@@ -37,10 +65,17 @@ export async function replaceReferencedMarkdown({
     while ((match = regex.exec(markdown)) != null) {
         const matchString = match[0];
         const indent = match[1];
-        const src = match[2];
+        const attributesString = match[2];
 
-        if (matchString == null || src == null) {
+        if (matchString == null || attributesString == null) {
             throw new Error(`Failed to parse regex "${match}" in ${absolutePathToMarkdownFile}`);
+        }
+
+        const attributes = extractAttributes(attributesString);
+        const src = attributes.src;
+
+        if (src == null || !src.match(/\.mdx?$/)) {
+            continue;
         }
 
         const filepath = resolve(
@@ -50,6 +85,11 @@ export async function replaceReferencedMarkdown({
 
         try {
             let replaceString = await markdownLoader(filepath);
+
+            const { src: _, ...variables } = attributes;
+
+            replaceString = substituteVariables(replaceString, variables);
+
             replaceString = replaceString
                 .split("\n")
                 .map((line) => indent + line)
