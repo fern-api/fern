@@ -77,7 +77,7 @@ async function validateComponentFile(absoluteFilePath: string, relativeFilePath:
 
         for (const importInfo of externalImports) {
             violations.push({
-                severity: "fatal",
+                severity: "error",
                 name: "External npm dependency in custom component",
                 message: `Custom component "${relativeFilePath}" imports external npm package "${importInfo.packageName}" on line ${importInfo.line}. Custom components must not include external npm dependencies.`,
                 relativeFilepath: relativeFilePath as RelativeFilePath
