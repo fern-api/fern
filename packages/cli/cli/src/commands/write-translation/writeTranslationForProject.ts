@@ -2,6 +2,7 @@ import { docsYml } from "@fern-api/configuration";
 
 type DocsConfiguration = docsYml.RawSchemas.DocsConfiguration;
 type DocsInstance = docsYml.RawSchemas.DocsInstance;
+type Language = docsYml.RawSchemas.Language;
 
 import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -33,7 +34,7 @@ import { ContentTransformation, ProcessingStats } from "./types";
  * - "https://docs.custom.com" -> "https://de.docs.custom.com"
  * - "https://docs.custom.com/path" -> "https://de.docs.custom.com/path"
  */
-export function addLanguageSuffixToUrl(url: string, language: string): string {
+export function addLanguageSuffixToUrl(url: string, language: Language): string {
     try {
         const urlObj = new URL(url);
         const hostname = urlObj.hostname;
@@ -123,13 +124,31 @@ export function addLanguageSuffixToUrl(url: string, language: string): string {
     }
 }
 
+function modifyConfig(docsConfig: DocsConfiguration, language: Language): DocsConfiguration {
+    const configWithLanguage = modifySettingsConfigForLanguage(docsConfig, language);
+    return modifyInstanceUrlsForLanguage(configWithLanguage, language);
+}
+
+function modifySettingsConfigForLanguage(docsConfig: DocsConfiguration, language: Language): DocsConfiguration {
+    const modifiedConfig = structuredClone(docsConfig);
+
+    if (modifiedConfig.settings) {
+        modifiedConfig.settings.language = language;
+    } else {
+        modifiedConfig.settings = {
+            language
+        };
+    }
+    return modifiedConfig;
+}
+
 /**
  * Modifies instance URLs in docs configuration to add language suffixes.
  * @param docsConfig - The original docs configuration
  * @param language - The target language
  * @returns Modified docs configuration with language-suffixed URLs
  */
-function modifyInstanceUrlsForLanguage(docsConfig: DocsConfiguration, language: string): DocsConfiguration {
+function modifyInstanceUrlsForLanguage(docsConfig: DocsConfiguration, language: Language): DocsConfiguration {
     const modifiedConfig = structuredClone(docsConfig);
 
     if (modifiedConfig.instances && Array.isArray(modifiedConfig.instances)) {
@@ -163,19 +182,31 @@ function modifyInstanceUrlsForLanguage(docsConfig: DocsConfiguration, language: 
  * @param originalDocsConfigPath - Path to the original docs.yml
  * @param targetDirectory - Directory where the modified config should be written
  * @param language - The target language
+ * @param sourceLanguage - The source language
  * @param context - CLI context for logging
  */
 async function createLanguageSpecificDocsConfig(
     originalDocsConfigPath: AbsoluteFilePath,
     targetDirectory: AbsoluteFilePath,
-    language: string,
+    language: Language,
+    sourceLanguage: Language,
     context: CliContext
 ): Promise<void> {
     try {
         const originalConfigContent = await readFile(originalDocsConfigPath, "utf-8");
-        const originalConfig = yaml.load(originalConfigContent) as DocsConfiguration;
 
-        const modifiedConfig = modifyInstanceUrlsForLanguage(originalConfig, language);
+        // First, translate the content
+        const transformation: ContentTransformation = {
+            filePath: DOCS_CONFIGURATION_FILENAME,
+            language,
+            sourceLanguage,
+            originalContent: originalConfigContent
+        };
+        const translatedContent = await transformContentForLanguage(transformation, context);
+
+        // Then parse the translated content and modify URLs
+        const translatedConfig = yaml.load(translatedContent) as DocsConfiguration;
+        const modifiedConfig = modifyConfig(translatedConfig, language);
 
         const modifiedConfigPath = join(targetDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME));
         const modifiedConfigContent = yaml.dump(modifiedConfig, { sortKeys: false });
@@ -183,6 +214,10 @@ async function createLanguageSpecificDocsConfig(
 
         context.logger.debug(`Created language-specific docs config: ${modifiedConfigPath}`);
     } catch (error) {
+        if (error instanceof Error && error.message.includes("403")) {
+            throw error;
+        }
+
         context.logger.warn(`Failed to create language-specific docs config for ${language}: ${error}`);
     }
 }
@@ -222,7 +257,7 @@ export async function writeTranslationForProject({
             await mkdir(translationsDirectory, { recursive: true });
         }
 
-        const languageStats: { [language: string]: ProcessingStats } = {};
+        const languageStats: Partial<Record<Language, ProcessingStats>> = {};
         const targetLanguages = languages.filter((lang) => lang !== sourceLanguage);
 
         const originalDocsConfigPath = join(fernDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME));
@@ -236,7 +271,13 @@ export async function writeTranslationForProject({
             }
 
             if (hasDocsConfig) {
-                await createLanguageSpecificDocsConfig(originalDocsConfigPath, languageDirectory, language, cliContext);
+                await createLanguageSpecificDocsConfig(
+                    originalDocsConfigPath,
+                    languageDirectory,
+                    language,
+                    sourceLanguage,
+                    cliContext
+                );
             }
 
             languageStats[language] = {
@@ -365,6 +406,9 @@ export async function writeTranslationForProject({
                 }
             }
         } catch (error) {
+            if (error instanceof Error && error.message.includes("403")) {
+                throw error;
+            }
             context.logger.error(`Failed to create translations: ${error}`);
             throw error;
         }

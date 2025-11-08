@@ -27,11 +27,9 @@ export async function translateYamlObject(
     if (typeof obj === "object") {
         const result: Record<string, unknown> = {};
 
-        const fileType = filePath.endsWith(".yml") || filePath.endsWith(".yaml") ? "yaml" : "unknown";
-
         for (const [key, value] of Object.entries(obj)) {
             if (shouldTranslateValue(key, value)) {
-                result[key] = await translateText(value as string, language, sourceLanguage, fileType);
+                result[key] = await translateText({ text: value as string, language, sourceLanguage, cliContext });
             } else {
                 result[key] = await translateYamlObject(value, language, sourceLanguage, filePath, cliContext);
             }
@@ -73,6 +71,10 @@ export async function translateYamlContent(
 
         return translatedYamlContent;
     } catch (error) {
+        if (error instanceof Error && error.message.includes("403")) {
+            throw error;
+        }
+
         cliContext.logger.error(`    [ERROR] Failed to process YAML file ${filePath}: ${error}`);
         return yamlContent;
     }
