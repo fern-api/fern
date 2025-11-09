@@ -140,12 +140,6 @@ pnpm test:update src/__test__/openapi-from-flag.test.ts
 - **Auth Schemes** - Bearer token authentication
 - **Error Handling** - Invalid workspace loading
 
-## Performance
-
-- **6x faster than CLI-based tests** (15s vs 90s)
-- **No compilation required**
-- **Direct function testing**
-
 ## Files
 
 - **Test**: `src/__test__/openapi-from-flag.test.ts`
