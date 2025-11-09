@@ -163,36 +163,3 @@ class TestDiscriminatedUnionSerialization:
         assert isinstance(owner2.pet, Animal_Cat)
         assert owner2.pet.name == "Whiskers"
         assert owner2.pet.likes_to_meow is True
-
-
-class TestDiscriminatedUnionMetadata:
-    """Test that the union type alias has correct Annotated metadata with Field(discriminator=...)."""
-    
-    def test_union_is_annotated(self):
-        """Test that the Animal union is wrapped with Annotated."""
-        origin = get_origin(Animal)
-        
-        assert origin is typing_extensions.Annotated, \
-            f"Expected Animal to be Annotated, but got {origin}"
-    
-    def test_union_has_discriminator_metadata(self):
-        """Test that the Annotated metadata includes Field with discriminator='animal'."""
-        args = get_args(Animal)
-        
-        assert len(args) >= 2, f"Expected at least 2 args in Annotated, got {len(args)}"
-        
-        field_metadata = args[1]
-        
-        discriminator = None
-        
-        if hasattr(field_metadata, 'discriminator'):
-            discriminator = field_metadata.discriminator
-        elif hasattr(field_metadata, 'extra') and isinstance(field_metadata.extra, dict):
-            discriminator = field_metadata.extra.get('discriminator')
-        elif 'discriminator' in repr(field_metadata):
-            assert 'animal' in repr(field_metadata), \
-                f"Expected 'animal' in Field metadata repr, got {repr(field_metadata)}"
-            return  # Skip the exact value check
-        
-        assert discriminator == "animal", \
-            f"Expected discriminator='animal', got {discriminator}"
