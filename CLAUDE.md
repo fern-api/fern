@@ -2,6 +2,16 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## PR & Branch Conventions
+
+**Branch Naming**: `devin/{timestamp}-{descriptive-slug}` (generate timestamp with `date +%s`)
+
+**PR Title Format**: Must follow semantic commit format (enforced by `.github/workflows/lint-pr-title.yml`)
+- Examples: `feat(python): add discriminated union support`, `fix(seed): handle aliasing in tests`, `docs(claude): improve root guide`
+- Valid types: `feat`, `fix`, `docs`, `chore`, `test`, `refactor`, `perf`, `ci`, `build`, `revert`
+
+**CI Workflow**: Always wait for all CI checks to complete before reporting completion. Use `git_check_pr` tool to monitor status.
+
 ## Development Commands
 
 **Package Manager**: This project uses `pnpm` (version 9.4.0+) exclusively. Node.js 18+ required.
@@ -40,6 +50,40 @@ pnpm seed:build                 # Build seed CLI for generator testing
 **Running Individual Tests**: Use Turbo filters, e.g., `pnpm test --filter @fern-api/cli`
 
 **Dependency Management**: Run `pnpm depcheck` to check for unused dependencies
+
+## Python Generator Quickstart (End-to-End)
+
+This is a fast-path recipe for making changes to the Python generator. For deeper context, see `generators/python/CLAUDE.md` and `packages/seed/CLAUDE.md`.
+
+**Initial Setup**:
+```bash
+pnpm install && pnpm compile && pnpm seed:build
+```
+
+**Fast Validation Loop** (for a single fixture):
+```bash
+# Make your changes in generators/python/
+pnpm seed:local test --generator python-sdk --fixture exhaustive:no-custom-config --skip-scripts
+
+# Review output changes
+git diff seed/python-sdk/exhaustive/no-custom-config/
+```
+
+**Expand Testing** (when ready to validate across Pydantic versions):
+```bash
+pnpm seed:local test --generator python-sdk --fixture exhaustive:pydantic-v1-wrapped --skip-scripts
+pnpm seed:local test --generator python-sdk --fixture exhaustive:pydantic-v2-wrapped --skip-scripts
+```
+
+**Full Validation** (only after generator changes are stable):
+```bash
+pnpm test:ete  # Runs all end-to-end tests (slow, ~10+ minutes)
+```
+
+**Key Points**:
+- Use `--skip-scripts` during development to skip pytest/mypy runs and iterate faster
+- Only run full `pnpm test:ete` when you're confident in your changes
+- Use `git diff seed/python-sdk/<fixture>/` to review generated code changes before committing
 
 ## Architecture Overview
 
@@ -180,6 +224,116 @@ Multi-stage process: API Schema → IR Updates → Generator Updates → Release
 **New fixtures**: Create `/seed/<generator>/<fixture>/` directory → Add `seed.yml` config → Run `pnpm seed:build` → Run `pnpm test:update` and `pnpm test:ete:update` → Validate → Commit
 
 **Update fixtures**: `pnpm seed:build --filter <fixture-name>` or `pnpm test:update` for snapshots
+
+### Adding Custom Tests to Seed Fixtures
+
+Custom tests allow you to validate generator behavior beyond basic compilation. Here's how to add pytest tests to Python SDK fixtures that persist across regeneration:
+
+**Location**: `seed/python-sdk/<fixture>/tests/custom/`
+
+**Persistence**: Add test paths to `.fernignore` in the fixture root to prevent regeneration from overwriting them:
+```
+# seed/python-sdk/<fixture>/.fernignore
+tests/custom/
+```
+
+**Version-Agnostic Test Template** (works with both Pydantic v1 and v2):
+```python
+import sys
+import pytest
+
+# Detect Pydantic version
+if sys.version_info >= (3, 8):
+    from importlib.metadata import version as get_version
+else:
+    from importlib_metadata import version as get_version
+
+PYDANTIC_VERSION = int(get_version("pydantic").split(".")[0])
+
+# Example: Test discriminated union parsing
+def test_parse_variant():
+    """Test that the correct variant is selected based on discriminator."""
+    from seed.types import MyUnion_VariantA
+    
+    data = {"type": "variant_a", "field": "value"}
+    
+    if PYDANTIC_VERSION >= 2:
+        obj = MyUnion_VariantA.model_validate(data)
+    else:
+        obj = MyUnion_VariantA.parse_obj(data)
+    
+    assert isinstance(obj, MyUnion_VariantA)
+    assert obj.field == "value"
+
+# Example: Test serialization with aliasing tolerance
+def test_serialize_with_aliasing():
+    """Test serialization handles both snake_case and camelCase."""
+    from seed.types import MyModel
+    
+    obj = MyModel(my_field="value")
+    
+    if PYDANTIC_VERSION >= 2:
+        data = obj.model_dump()
+    else:
+        data = obj.dict()
+    
+    # Tolerant assertion for aliasing (Pydantic v1 may use camelCase)
+    field_value = data.get("my_field", data.get("myField"))
+    assert field_value == "value"
+```
+
+**Best Practices for Custom Tests**:
+- **Do**: Write behavioral tests (parsing succeeds, errors surface correctly)
+- **Do**: Use version gates for Pydantic v1 vs v2 API differences
+- **Do**: Use tolerant assertions for field aliasing (`.get()` with fallback)
+- **Don't**: Assert on exact error message formatting (use stable substrings)
+- **Don't**: Use typing introspection (`get_origin`, `get_args`) - brittle across Python versions
+- **Don't**: Re-parse alias-form JSON unless `populate_by_name` is enabled
+- **Don't**: Rely on `by_alias=True` for FieldMetadata aliases (Fern's custom metadata, not Pydantic's Field)
+
+## CI Triage Playbook
+
+When seed tests fail in CI, use this playbook to debug quickly:
+
+### Identifying Failures
+
+**Where to Look**: CI failures appear in seed test matrices (e.g., `python-sdk (exhaustive:no-custom-config, ...)`)
+
+**Quick Grep Patterns** (search bottom-up in logs):
+```bash
+# Find failing fixtures
+grep "unexpected failures, including:" output.log
+
+# Jump to test failures
+grep -B 20 "FAILURES" output.log
+
+# Find specific assertion errors
+grep -A 5 "AssertionError\|ValidationError" output.log
+```
+
+### Known Pitfalls
+
+**Python 3.8 Typing Introspection**:
+- `get_origin(Annotated[...])` may return `Union` instead of `Annotated` in Python 3.8 CI environments
+- **Solution**: Avoid typing introspection tests; write behavioral tests instead
+
+**Pydantic v1 vs v2 Aliasing**:
+- Pydantic v1 with `UniversalBaseModel` may serialize with camelCase (via `FieldMetadata`)
+- Pydantic v2 typically uses snake_case by default
+- Re-parsing alias-form JSON fails unless `populate_by_name` is enabled
+- **Solution**: Write tolerant assertions using `.get()` with fallback, or avoid roundtrip re-parsing
+
+**Resource Issues**:
+- Docker or disk-space errors during seed tests
+- **Solution**: `docker system prune -af` and rerun just the affected fixture
+
+### Debugging Workflow
+
+1. **Identify failing fixture** from CI summary table
+2. **View detailed logs** using `git_ci_job_logs` command with job_id from `git_check_pr`
+3. **Reproduce locally**: `pnpm seed:local test --generator python-sdk --fixture <fixture-name>`
+4. **Fix and verify**: Make changes, test locally with pytest before pushing
+5. **Push and wait**: Always wait for all CI checks to complete before reporting completion
 
 ## Troubleshooting
 
