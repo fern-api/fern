@@ -6847,9 +6847,6 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../configs
-      '@fern-api/project-loader':
-        specifier: workspace:*
-        version: link:../project-loader
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
