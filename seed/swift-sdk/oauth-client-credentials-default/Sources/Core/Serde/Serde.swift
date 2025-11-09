@@ -1,20 +1,20 @@
 import Foundation
 
 final class Serde {
-    static var jsonEncoder: JSONEncoder {
-        let encoder = JSONEncoder()
+    static var jsonEncoder: Foundation.JSONEncoder {
+        let encoder = Foundation.JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         return encoder
     }
 
-    static var jsonDecoder: JSONDecoder {
-        let decoder = JSONDecoder()
+    static var jsonDecoder: Foundation.JSONDecoder {
+        let decoder = Foundation.JSONDecoder()
         // Use custom strategy for robust ISO 8601 date parsing with fractional seconds
         decoder.dateDecodingStrategy = .custom { decoder in
             let container = try decoder.singleValueContainer()
             let dateString = try container.decode(String.self)
 
-            let formatter = ISO8601DateFormatter()
+            let formatter = Foundation.ISO8601DateFormatter()
             formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
 
             if let date = formatter.date(from: dateString) {
@@ -27,7 +27,7 @@ final class Serde {
                 return date
             }
 
-            throw DecodingError.dataCorruptedError(
+            throw Swift.DecodingError.dataCorruptedError(
                 in: container, debugDescription: "Invalid date format: \(dateString)")
         }
         return decoder

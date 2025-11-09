@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.28.7
+  changelogEntry:
+    - summary: |
+        Fix circular type alias errors (TS2456) in undiscriminated unions containing self-recursive Record types where the value is a union of itself with null and/or undefined.
+      type: fix
+  createdAt: "2025-11-08"
+  irVersion: 61
+
 - version: 3.28.6
   changelogEntry:
     - summary: |

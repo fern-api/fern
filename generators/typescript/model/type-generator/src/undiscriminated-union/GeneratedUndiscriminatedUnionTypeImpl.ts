@@ -1,3 +1,4 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExampleTypeShape,
     TypeReference,
@@ -20,7 +21,6 @@ import {
     ts,
     WriterFunction
 } from "ts-morph";
-
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
 export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
@@ -184,11 +184,12 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
     }
 
     private isSelfRecursive(context: Context, typeRef: TypeReference): boolean {
-        if (typeRef.type !== "named") {
+        const unwrappedRef = unwrapOptionalAndNullable(typeRef);
+        if (unwrappedRef.type !== "named") {
             return false;
         }
 
-        const namedTypeDeclaration = context.type.getTypeDeclaration(typeRef);
+        const namedTypeDeclaration = context.type.getTypeDeclaration(unwrappedRef);
         return namedTypeDeclaration.name.name.pascalCase.unsafeName === this.typeName;
     }
 
@@ -257,4 +258,17 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
 
         return this.getTypeNode(context, member);
     }
+}
+
+function unwrapOptionalAndNullable(typeReference: FernIr.TypeReference): FernIr.TypeReference {
+    if (typeReference.type === "container") {
+        if (typeReference.container.type === "optional") {
+            return unwrapOptionalAndNullable(typeReference.container.optional);
+        }
+        if (typeReference.container.type === "nullable") {
+            return unwrapOptionalAndNullable(typeReference.container.nullable);
+        }
+    }
+
+    return typeReference;
 }

@@ -19,7 +19,7 @@ public final class UnionsClient: Sendable {
         headers: [String: String]? = nil,
         timeout: Int? = nil,
         maxRetries: Int? = nil,
-        urlSession: URLSession? = nil
+        urlSession: Networking.URLSession? = nil
     ) {
         self.init(
             baseURL: baseURL,
@@ -41,7 +41,7 @@ public final class UnionsClient: Sendable {
         headers: [String: String]? = nil,
         timeout: Int? = nil,
         maxRetries: Int? = nil,
-        urlSession: URLSession? = nil
+        urlSession: Networking.URLSession? = nil
     ) {
         let config = ClientConfig(
             baseURL: baseURL,
