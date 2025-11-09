@@ -47,7 +47,6 @@
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@fern-api/register": "workspace:*",
     "@types/js-yaml": "^4.0.8",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",

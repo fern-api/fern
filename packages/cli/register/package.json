@@ -45,6 +45,7 @@
     "@fern-api/ir-utils": "workspace:*",
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/task-context": "workspace:*",
+    "@fern-api/workspace-loader": "workspace:*",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {

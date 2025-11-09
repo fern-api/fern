@@ -6840,6 +6840,9 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../workspace/loader
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -7207,9 +7210,6 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../configs
-      '@fern-api/register':
-        specifier: workspace:*
-        version: link:../../register
       '@types/js-yaml':
         specifier: ^4.0.8
         version: 4.0.9
