@@ -8,7 +8,6 @@
 
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { convertIrToFdrApi } from "@fern-api/register";
 import { createMockTaskContext } from "@fern-api/task-context";
 import assert from "assert";
 
@@ -66,6 +65,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
 
         // Step 4: Convert IR to FDR API Definition (COMPLETE --from-openapi pipeline)
         // This is what gets uploaded to S3 and what the CLI command `fern fdr {file} --from-openapi` produces
+        const { convertIrToFdrApi } = await import("@fern-api/register");
         const fdrApiDefinition = await convertIrToFdrApi({
             ir: intermediateRepresentation,
             snippetsConfig: {
@@ -147,6 +147,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         });
 
         // Convert to FDR format (complete pipeline)
+        const { convertIrToFdrApi } = await import("@fern-api/register");
         const fdrApiDefinition = await convertIrToFdrApi({
             ir: intermediateRepresentation,
             snippetsConfig: {
@@ -231,6 +232,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         });
 
         // Convert to FDR format (complete pipeline)
+        const { convertIrToFdrApi } = await import("@fern-api/register");
         const fdrApiDefinition = await convertIrToFdrApi({
             ir: intermediateRepresentation,
             snippetsConfig: {
