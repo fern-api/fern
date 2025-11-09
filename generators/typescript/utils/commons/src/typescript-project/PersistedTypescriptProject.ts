@@ -159,7 +159,37 @@ export class PersistedTypescriptProject {
             cwd: this.directory,
             logger
         });
-        await pm(this.buildCommand);
+        try {
+            await pm(this.buildCommand);
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            const isTypeScriptError = errorMessage.includes("TS") || 
+                                     errorMessage.includes("error TS") ||
+                                     errorMessage.includes("tsc") ||
+                                     this.buildCommand.some(cmd => cmd.includes("tsc"));
+            
+            if (isTypeScriptError) {
+                const enhancedMessage = [
+                    "TypeScript compilation failed.",
+                    "",
+                    "If you have a custom tsconfig.json in your project, the generated SDK may not be compatible with stricter compiler settings.",
+                    "",
+                    "To resolve this issue:",
+                    "1. Check your tsconfig.json for strict settings (e.g., strictNullChecks, noImplicitAny, strict: true)",
+                    "2. Consider using a separate tsconfig.json for the generated SDK",
+                    "3. Or adjust your tsconfig.json to be less strict for the SDK directory",
+                    "",
+                    "Original error:",
+                    errorMessage
+                ].join("\n");
+                
+                const enhancedError = new Error(enhancedMessage);
+                enhancedError.stack = error instanceof Error ? error.stack : undefined;
+                throw enhancedError;
+            }
+            
+            throw error;
+        }
     }
 
     public async copyProjectTo({
