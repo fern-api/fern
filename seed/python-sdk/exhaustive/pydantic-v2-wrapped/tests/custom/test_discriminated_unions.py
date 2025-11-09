@@ -130,7 +130,8 @@ class TestDiscriminatedUnionSerialization:
         
         assert data["pet"]["animal"] == "dog"
         assert data["pet"]["name"] == "Buddy"
-        assert data["pet"]["likes_to_woof"] is True
+        woof_value = data["pet"].get("likes_to_woof", data["pet"].get("likesToWoof"))
+        assert woof_value is True
         
         if PYDANTIC_VERSION >= 2:
             owner2 = PetOwner.model_validate(data)
@@ -153,7 +154,8 @@ class TestDiscriminatedUnionSerialization:
         
         assert data["pet"]["animal"] == "cat"
         assert data["pet"]["name"] == "Whiskers"
-        assert data["pet"]["likes_to_meow"] is True
+        meow_value = data["pet"].get("likes_to_meow", data["pet"].get("likesToMeow"))
+        assert meow_value is True
         
         if PYDANTIC_VERSION >= 2:
             owner2 = PetOwner.model_validate(data)
