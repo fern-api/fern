@@ -201,6 +201,81 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         }
     });
 
+    it("should handle OpenAPI with oneOf discriminator mapping using references", async () => {
+        // Test OpenAPI spec with oneOf discriminator that uses property mapping and references with descriptions
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/oneOf-references-mapping")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "oneOf-references-mapping"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate oneOf/discriminator processing
+        expect(intermediateRepresentation.types).toBeDefined();
+        expect(Object.keys(intermediateRepresentation.types)).toContain("EventRequest");
+
+        // Check that union type with discriminator was processed (may be discriminated or undiscriminated)
+        const eventRequestType = Object.values(intermediateRepresentation.types).find(
+            (type) => type.name.name.originalName === "EventRequest"
+        );
+        expect(eventRequestType).toBeDefined();
+        // Note: v3 parser may produce "union" or "undiscriminatedUnion" depending on discriminator processing
+        expect(["union", "undiscriminatedUnion"]).toContain(eventRequestType?.shape.type);
+
+        // Validate FDR structure for union types
+        expect(fdrApiDefinition.types).toBeDefined();
+        const fdrEventRequestType = Object.values(fdrApiDefinition.types).find(
+            (type: any) => type.name === "EventRequest"
+        );
+        expect(fdrEventRequestType).toBeDefined();
+        // FDR structure should also have union-like shape
+        expect(["union", "undiscriminatedUnion"]).toContain((fdrEventRequestType as any)?.shape?.type);
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/oneOf-references-mapping-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/oneOf-references-mapping-ir.snap");
+    });
+
     it("should validate OpenAPI fixture structure", async () => {
         // Basic validation that our test fixture is properly structured
         const context = createMockTaskContext();
