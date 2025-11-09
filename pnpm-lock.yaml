@@ -7207,9 +7207,6 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../configs
-      '@fern-api/ir-sdk':
-        specifier: workspace:*
-        version: link:../../../ir-sdk
       '@fern-api/register':
         specifier: workspace:*
         version: link:../../register
