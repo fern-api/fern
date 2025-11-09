@@ -5,8 +5,8 @@
         - Gracefully circuit-break from recursive examples
       type: fix
   irVersion: 61
-  createdAt: "2025-11-07"
-  version: 0.110.1
+  createdAt: "2025-11-09"
+  version: 0.112.1
 
 - changelogEntry:
     - summary: |
