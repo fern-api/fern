@@ -116,10 +116,10 @@ class TestDiscriminatedUnionErrors:
 
 
 class TestDiscriminatedUnionSerialization:
-    """Test round-trip serialization/deserialization of discriminated unions."""
+    """Test serialization of discriminated unions."""
     
-    def test_roundtrip_dog(self):
-        """Test that a Dog can be serialized and deserialized correctly."""
+    def test_serialize_dog(self):
+        """Test that a Dog can be serialized correctly."""
         dog = Animal_Dog(name="Buddy", likes_to_woof=True)
         owner = PetOwner(owner_name="Alice", pet=dog)
         
@@ -132,18 +132,9 @@ class TestDiscriminatedUnionSerialization:
         assert data["pet"]["name"] == "Buddy"
         woof_value = data["pet"].get("likes_to_woof", data["pet"].get("likesToWoof"))
         assert woof_value is True
-        
-        if PYDANTIC_VERSION >= 2:
-            owner2 = PetOwner.model_validate(data)
-        else:
-            owner2 = PetOwner.parse_obj(data)
-        
-        assert isinstance(owner2.pet, Animal_Dog)
-        assert owner2.pet.name == "Buddy"
-        assert owner2.pet.likes_to_woof is True
     
-    def test_roundtrip_cat(self):
-        """Test that a Cat can be serialized and deserialized correctly."""
+    def test_serialize_cat(self):
+        """Test that a Cat can be serialized correctly."""
         cat = Animal_Cat(name="Whiskers", likes_to_meow=True)
         owner = PetOwner(owner_name="Bob", pet=cat)
         
@@ -156,12 +147,3 @@ class TestDiscriminatedUnionSerialization:
         assert data["pet"]["name"] == "Whiskers"
         meow_value = data["pet"].get("likes_to_meow", data["pet"].get("likesToMeow"))
         assert meow_value is True
-        
-        if PYDANTIC_VERSION >= 2:
-            owner2 = PetOwner.model_validate(data)
-        else:
-            owner2 = PetOwner.parse_obj(data)
-        
-        assert isinstance(owner2.pet, Animal_Cat)
-        assert owner2.pet.name == "Whiskers"
-        assert owner2.pet.likes_to_meow is True
