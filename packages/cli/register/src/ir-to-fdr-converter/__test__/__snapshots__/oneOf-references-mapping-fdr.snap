@@ -1,0 +1,708 @@
+{
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": "https://api.example.com/v1",
+        "description": "Creates an event that can be of different types",
+        "environments": [
+          {
+            "baseUrl": "https://api.example.com/v1",
+            "id": "https://api.example.com/v1",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [
+          {
+            "availability": undefined,
+            "description": "Bad request",
+            "examples": [],
+            "name": "BadRequestError",
+            "statusCode": 400,
+            "type": {
+              "type": "alias",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "Error",
+              },
+            },
+          },
+        ],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/events",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": {
+              "action": "login",
+              "type": "user",
+              "userId": "user_123",
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "action": "login",
+                "type": "user",
+                "userId": "user_123",
+              },
+            },
+            "responseBody": {
+              "event": {
+                "action": "login",
+                "timestamp": "2023-12-01T12:00:00Z",
+                "type": "user",
+                "userId": "user_123",
+              },
+              "id": "event_456",
+              "status": "created",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "event": {
+                  "action": "login",
+                  "timestamp": "2023-12-01T12:00:00Z",
+                  "type": "user",
+                  "userId": "user_123",
+                },
+                "id": "event_456",
+                "status": "created",
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "createEvent",
+        "includeInApiExplorer": undefined,
+        "method": "POST",
+        "name": "Create an event",
+        "originalEndpointId": "endpoint_.createEvent",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/events",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": {
+          "description": undefined,
+          "type": {
+            "contentType": "application/json",
+            "description": undefined,
+            "shape": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "EventRequest",
+              },
+            },
+            "type": "json",
+          },
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "description": undefined,
+              "type": {
+                "contentType": "application/json",
+                "description": undefined,
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "EventRequest",
+                  },
+                },
+                "type": "json",
+              },
+            },
+          ],
+        },
+        "response": {
+          "description": "Event created successfully",
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "EventResponse",
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Event created successfully",
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "EventResponse",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+    ],
+    "pointsTo": undefined,
+    "subpackages": [],
+    "types": [
+      "EventRequest",
+      "UserEvent",
+      "SystemEvent",
+      "ErrorEvent",
+      "EventResponse",
+      "Error",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {},
+  "types": {
+    "Error": {
+      "availability": undefined,
+      "description": "Error response schema",
+      "displayName": undefined,
+      "name": "Error",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "code",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "message",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "ErrorEvent": {
+      "availability": undefined,
+      "description": "Event representing an error condition",
+      "displayName": undefined,
+      "name": "ErrorEvent",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "type",
+            "propertyAccess": undefined,
+            "valueType": {
+              "default": undefined,
+              "type": "id",
+              "value": "ErrorEventType",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Unique code identifying the error type",
+            "key": "errorCode",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Human-readable error message",
+            "key": "message",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Severity level of the error",
+            "key": "severity",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "ErrorEventSeverity",
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "ErrorEventSeverity": {
+      "availability": undefined,
+      "description": "Severity level of the error",
+      "displayName": undefined,
+      "name": "ErrorEventSeverity",
+      "shape": {
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "low",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "medium",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "high",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "critical",
+          },
+        ],
+      },
+    },
+    "ErrorEventType": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "ErrorEventType",
+      "shape": {
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "error",
+          },
+        ],
+      },
+    },
+    "EventRequest": {
+      "availability": undefined,
+      "description": "Request payload for creating events",
+      "displayName": undefined,
+      "name": "EventRequest",
+      "shape": {
+        "discriminant": undefined,
+        "type": "discriminatedUnion",
+        "variants": [
+          {
+            "additionalProperties": {
+              "extends": [
+                "UserEvent",
+              ],
+              "extraProperties": undefined,
+              "properties": [],
+            },
+            "availability": undefined,
+            "description": undefined,
+            "discriminantValue": "user",
+            "displayName": "user",
+          },
+          {
+            "additionalProperties": {
+              "extends": [
+                "SystemEvent",
+              ],
+              "extraProperties": undefined,
+              "properties": [],
+            },
+            "availability": undefined,
+            "description": undefined,
+            "discriminantValue": "system",
+            "displayName": "system",
+          },
+          {
+            "additionalProperties": {
+              "extends": [
+                "ErrorEvent",
+              ],
+              "extraProperties": undefined,
+              "properties": [],
+            },
+            "availability": undefined,
+            "description": undefined,
+            "discriminantValue": "error",
+            "displayName": "error",
+          },
+        ],
+      },
+    },
+    "EventResponse": {
+      "availability": undefined,
+      "description": "Response after creating an event",
+      "displayName": undefined,
+      "name": "EventResponse",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Unique identifier for the created event",
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Status of the event processing",
+            "key": "status",
+            "propertyAccess": undefined,
+            "valueType": {
+              "default": undefined,
+              "type": "id",
+              "value": "EventResponseStatus",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "event",
+            "propertyAccess": undefined,
+            "valueType": {
+              "default": undefined,
+              "type": "id",
+              "value": "EventRequest",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "EventResponseStatus": {
+      "availability": undefined,
+      "description": "Status of the event processing",
+      "displayName": undefined,
+      "name": "EventResponseStatus",
+      "shape": {
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "created",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "processed",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "failed",
+          },
+        ],
+      },
+    },
+    "SystemEvent": {
+      "availability": undefined,
+      "description": "Event generated by system processes",
+      "displayName": undefined,
+      "name": "SystemEvent",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "type",
+            "propertyAccess": undefined,
+            "valueType": {
+              "default": undefined,
+              "type": "id",
+              "value": "SystemEventType",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Name of the service that generated the event",
+            "key": "service",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "The system operation performed",
+            "key": "operation",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Additional system metadata",
+            "key": "metadata",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "regex": undefined,
+                    "type": "string",
+                  },
+                },
+                "type": "map",
+                "valueType": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "regex": undefined,
+                    "type": "string",
+                  },
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "SystemEventType": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "SystemEventType",
+      "shape": {
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "system",
+          },
+        ],
+      },
+    },
+    "UserEvent": {
+      "availability": undefined,
+      "description": "Event triggered by user actions",
+      "displayName": undefined,
+      "name": "UserEvent",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "type",
+            "propertyAccess": undefined,
+            "valueType": {
+              "default": undefined,
+              "type": "id",
+              "value": "UserEventType",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "ID of the user who triggered the event",
+            "key": "userId",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "The action performed by the user",
+            "key": "action",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "When the event occurred",
+            "key": "timestamp",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": "date-time",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "UserEventType": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "UserEventType",
+      "shape": {
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "user",
+          },
+        ],
+      },
+    },
+  },
+}
