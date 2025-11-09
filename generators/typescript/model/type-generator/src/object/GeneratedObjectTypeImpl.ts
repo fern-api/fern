@@ -72,8 +72,11 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                     let propertyValue: ts.TypeNode = type;
                     if (irProperty) {
                         const inlineUnionRef = context.type.getReferenceToTypeForInlineUnion(irProperty.valueType);
+                        const shouldIncludeUndefined = hasQuestionToken && !this.includeSerdeLayer;
                         propertyValue = hasQuestionToken
-                            ? inlineUnionRef.typeNode
+                            ? shouldIncludeUndefined
+                                ? inlineUnionRef.typeNode
+                                : inlineUnionRef.typeNodeWithoutUndefined
                             : inlineUnionRef.typeNodeWithoutUndefined;
                     }
                     return ts.factory.createPropertySignature(
@@ -94,8 +97,12 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                                   const inlineUnionRef = context.type.getReferenceToTypeForInlineUnion(
                                       irProperty.valueType
                                   );
+                                  const shouldIncludeUndefined = hasQuestionToken && !this.includeSerdeLayer;
                                   propertyValue = hasQuestionToken
-                                      ? (inlineUnionRef.requestTypeNode ?? inlineUnionRef.typeNode)
+                                      ? shouldIncludeUndefined
+                                          ? (inlineUnionRef.requestTypeNode ?? inlineUnionRef.typeNode)
+                                          : (inlineUnionRef.requestTypeNodeWithoutUndefined ??
+                                            inlineUnionRef.typeNodeWithoutUndefined)
                                       : (inlineUnionRef.requestTypeNodeWithoutUndefined ??
                                         inlineUnionRef.typeNodeWithoutUndefined);
                               }
@@ -118,8 +125,12 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                                   const inlineUnionRef = context.type.getReferenceToTypeForInlineUnion(
                                       irProperty.valueType
                                   );
+                                  const shouldIncludeUndefined = hasQuestionToken && !this.includeSerdeLayer;
                                   propertyValue = hasQuestionToken
-                                      ? (inlineUnionRef.responseTypeNode ?? inlineUnionRef.typeNode)
+                                      ? shouldIncludeUndefined
+                                          ? (inlineUnionRef.responseTypeNode ?? inlineUnionRef.typeNode)
+                                          : (inlineUnionRef.responseTypeNodeWithoutUndefined ??
+                                            inlineUnionRef.typeNodeWithoutUndefined)
                                       : (inlineUnionRef.responseTypeNodeWithoutUndefined ??
                                         inlineUnionRef.typeNodeWithoutUndefined);
                               }
@@ -175,24 +186,37 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     private generatePropertiesInternal(context: Context): Property[] {
         const props = this.shape.properties.map((property) => {
             const value = this.getTypeForObjectProperty(context, property);
+
+            // When noSerdeLayer is true (i.e., !includeSerdeLayer), use typeNode which includes | undefined
+            const shouldIncludeUndefined = value.isOptional && !this.includeSerdeLayer;
+            const typeNodeToUse = this.noOptionalProperties
+                ? value.typeNode
+                : shouldIncludeUndefined
+                  ? value.typeNode
+                  : value.typeNodeWithoutUndefined;
+
+            const requestTypeNodeToUse = this.noOptionalProperties
+                ? value.requestTypeNode
+                : shouldIncludeUndefined
+                  ? value.requestTypeNode
+                  : value.requestTypeNodeWithoutUndefined;
+
+            const responseTypeNodeToUse = this.noOptionalProperties
+                ? value.responseTypeNode
+                : shouldIncludeUndefined
+                  ? value.responseTypeNode
+                  : value.responseTypeNodeWithoutUndefined;
+
             const propertyNode: Property = {
                 name: getPropertyKey(this.getPropertyKeyFromProperty(property)),
-                type: this.noOptionalProperties ? value.typeNode : value.typeNodeWithoutUndefined,
+                type: typeNodeToUse,
                 hasQuestionToken: !this.noOptionalProperties && value.isOptional,
                 docs: property.docs,
                 irProperty: property,
                 isReadonly: this.generateReadWriteOnlyTypes ? property.propertyAccess === "READ_ONLY" : false,
                 isWriteonly: this.generateReadWriteOnlyTypes ? property.propertyAccess === "WRITE_ONLY" : false,
-                requestType: this.generateReadWriteOnlyTypes
-                    ? this.noOptionalProperties
-                        ? value.requestTypeNode
-                        : value.requestTypeNodeWithoutUndefined
-                    : undefined,
-                responseType: this.generateReadWriteOnlyTypes
-                    ? this.noOptionalProperties
-                        ? value.responseTypeNode
-                        : value.responseTypeNodeWithoutUndefined
-                    : undefined
+                requestType: this.generateReadWriteOnlyTypes ? requestTypeNodeToUse : undefined,
+                responseType: this.generateReadWriteOnlyTypes ? responseTypeNodeToUse : undefined
             };
             return propertyNode;
         });
