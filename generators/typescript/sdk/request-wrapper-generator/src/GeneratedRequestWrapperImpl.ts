@@ -104,7 +104,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         formDataSupport,
         flattenRequestParameters,
         useDefaultRequestParameterValues,
-        useBigInt,
+        useBigInt
     }: GeneratedRequestWrapperImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
@@ -1005,8 +1005,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                     for (const property of fileUploadRequest.properties) {
                         const hasDefault = FileUploadRequestProperty._visit(property, {
                             file: () => false,
-                            bodyProperty: (inlinedProperty) =>
-                                context.type.hasDefaultValue(inlinedProperty.valueType),
+                            bodyProperty: (inlinedProperty) => context.type.hasDefaultValue(inlinedProperty.valueType),
                             _other: () => false
                         });
                         if (hasDefault) {

@@ -4,7 +4,6 @@ import {
     HttpEndpoint,
     HttpRequestBody,
     HttpService,
-    InlinedRequestBody,
     IntermediateRepresentation,
     SdkRequest,
     SdkRequestShape
@@ -14,7 +13,6 @@ import {
     Fetcher,
     GetReferenceOpts,
     getParameterNameForPositionalPathParameter,
-    getPropertyKey,
     getTextOfTsNode,
     PackageId
 } from "@fern-typescript/commons";
