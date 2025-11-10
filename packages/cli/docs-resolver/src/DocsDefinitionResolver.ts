@@ -637,13 +637,14 @@ export class DocsDefinitionResolver {
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
             pageActions: this.parsedDocsConfig.pageActions,
-            theme:
-                this.parsedDocsConfig.theme != null
-                    ? {
-                          ...this.parsedDocsConfig.theme,
-                          "page-actions": undefined
-                      }
-                    : undefined,
+            theme: this.parsedDocsConfig.theme != null
+                ? {
+                      sidebar: this.parsedDocsConfig.theme.sidebar,
+                      body: this.parsedDocsConfig.theme.body,
+                      tabs: this.parsedDocsConfig.theme.tabs,
+                      "page-actions": this.parsedDocsConfig.theme.pageActions
+                  }
+                : undefined,
             // deprecated
             logo: undefined,
             logoV2: undefined,
