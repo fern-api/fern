@@ -213,6 +213,7 @@
             {
               "availability": undefined,
               "description": "The unique identifier of the user",
+              "explode": false,
               "key": "userId",
               "type": {
                 "type": "primitive",
@@ -235,6 +236,7 @@
           {
             "availability": undefined,
             "description": "Whether to include user metadata",
+            "explode": false,
             "key": "includeMetadata",
             "type": {
               "defaultValue": undefined,

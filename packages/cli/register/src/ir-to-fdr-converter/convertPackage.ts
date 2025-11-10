@@ -189,12 +189,14 @@ function convertService(
                 irEndpoint.basePath != null
                     ? {
                           pathParameters: irEndpoint.pathParameters.map(
-                              (pathParameter): FdrCjsSdk.api.v1.register.PathParameter => ({
-                                  description: pathParameter.docs ?? undefined,
-                                  key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
-                                  type: convertTypeReference(pathParameter.valueType),
-                                  availability: undefined
-                              })
+                              (pathParameter): FdrCjsSdk.api.v1.register.PathParameter =>
+                                  ({
+                                      description: pathParameter.docs ?? undefined,
+                                      key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
+                                      type: convertTypeReference(pathParameter.valueType),
+                                      availability: undefined,
+                                      explode: pathParameter.explode ?? false
+                                  }) as any
                           ),
                           parts: [...convertHttpPath(irEndpoint.basePath), ...convertHttpPath(irEndpoint.path)]
                       }
@@ -204,12 +206,14 @@ function convertService(
                               ...irService.pathParameters,
                               ...irEndpoint.pathParameters
                           ].map(
-                              (pathParameter): FdrCjsSdk.api.v1.register.PathParameter => ({
-                                  description: pathParameter.docs ?? undefined,
-                                  key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
-                                  type: convertTypeReference(pathParameter.valueType),
-                                  availability: undefined
-                              })
+                              (pathParameter): FdrCjsSdk.api.v1.register.PathParameter =>
+                                  ({
+                                      description: pathParameter.docs ?? undefined,
+                                      key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
+                                      type: convertTypeReference(pathParameter.valueType),
+                                      availability: undefined,
+                                      explode: pathParameter.explode ?? false
+                                  }) as any
                           ),
                           parts: [
                               ...(ir.basePath != null ? convertHttpPath(ir.basePath) : []),
@@ -218,12 +222,14 @@ function convertService(
                           ]
                       },
             queryParameters: irEndpoint.queryParameters.map(
-                (queryParameter): FdrCjsSdk.api.v1.register.QueryParameter => ({
-                    description: queryParameter.docs ?? undefined,
-                    key: queryParameter.name.wireValue,
-                    type: convertTypeReference(queryParameter.valueType),
-                    availability: convertIrAvailability(queryParameter.availability)
-                })
+                (queryParameter): FdrCjsSdk.api.v1.register.QueryParameter =>
+                    ({
+                        description: queryParameter.docs ?? undefined,
+                        key: queryParameter.name.wireValue,
+                        type: convertTypeReference(queryParameter.valueType),
+                        availability: convertIrAvailability(queryParameter.availability),
+                        explode: queryParameter.explode ?? false
+                    }) as any
             ),
             headers: [...irService.headers, ...irEndpoint.headers].map(
                 (header): FdrCjsSdk.api.v1.register.Header => ({
@@ -342,12 +348,14 @@ function convertWebSocketChannel(
         name: channel.displayName ?? startCase(channel.name.originalName),
         path: {
             pathParameters: channel.pathParameters.map(
-                (pathParameter): FdrCjsSdk.api.v1.register.PathParameter => ({
-                    description: pathParameter.docs ?? undefined,
-                    key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
-                    type: convertTypeReference(pathParameter.valueType),
-                    availability: undefined
-                })
+                (pathParameter): FdrCjsSdk.api.v1.register.PathParameter =>
+                    ({
+                        description: pathParameter.docs ?? undefined,
+                        key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
+                        type: convertTypeReference(pathParameter.valueType),
+                        availability: undefined,
+                        explode: pathParameter.explode ?? false
+                    }) as any
             ),
             parts: convertHttpPath(channel.path)
         },
@@ -360,12 +368,14 @@ function convertWebSocketChannel(
             })
         ),
         queryParameters: channel.queryParameters.map(
-            (queryParameter): FdrCjsSdk.api.v1.register.QueryParameter => ({
-                description: queryParameter.docs ?? undefined,
-                key: queryParameter.name.wireValue,
-                type: convertTypeReference(queryParameter.valueType),
-                availability: convertIrAvailability(queryParameter.availability)
-            })
+            (queryParameter): FdrCjsSdk.api.v1.register.QueryParameter =>
+                ({
+                    description: queryParameter.docs ?? undefined,
+                    key: queryParameter.name.wireValue,
+                    type: convertTypeReference(queryParameter.valueType),
+                    availability: convertIrAvailability(queryParameter.availability),
+                    explode: queryParameter.explode ?? false
+                }) as any
         ),
         messages: channel.messages.map(
             (message): FdrCjsSdk.api.v1.register.WebSocketMessage => ({

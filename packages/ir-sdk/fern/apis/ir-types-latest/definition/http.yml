@@ -138,6 +138,10 @@ types:
       location: PathParameterLocation
       variable: optional<variables.VariableId>
       v2Examples: optional<examples.V2SchemaExamples>
+      explode:
+        type: optional<boolean>
+        docs: |
+          Populated from the OpenAPI `explode` parameter. Defaults to false if not specified.
 
   PathParameterLocation:
     enum:
@@ -152,6 +156,10 @@ types:
       valueType: types.TypeReference
       allowMultiple: boolean
       v2Examples: optional<examples.V2SchemaExamples>
+      explode:
+        type: optional<boolean>
+        docs: |
+          Populated from the OpenAPI `explode` parameter. Defaults to false if not specified.
 
   HttpRequestBody:
     union:

@@ -664,6 +664,7 @@
           "allPathParameters": [
             {
               "docs": "The unique identifier of the user",
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -796,6 +797,7 @@
           "pathParameters": [
             {
               "docs": "The unique identifier of the user",
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -848,6 +850,7 @@
               "allowMultiple": false,
               "availability": undefined,
               "docs": "Whether to include user metadata",
+              "explode": undefined,
               "name": {
                 "name": {
                   "camelCase": {

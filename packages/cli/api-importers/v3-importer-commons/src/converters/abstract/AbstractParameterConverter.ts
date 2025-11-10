@@ -83,7 +83,8 @@ export abstract class AbstractParameterConverter<
                         v2Examples: this.convertParameterExamples({
                             schema: parameterSchemaWithExampleOverride ?? schema
                         }),
-                        availability
+                        availability,
+                        explode: this.parameter.explode
                     },
                     inlinedTypes
                 };
@@ -116,7 +117,8 @@ export abstract class AbstractParameterConverter<
                         variable: undefined,
                         v2Examples: this.convertParameterExamples({
                             schema: parameterSchemaWithExampleOverride ?? schema
-                        })
+                        }),
+                        explode: this.parameter.explode
                     },
                     inlinedTypes
                 };
