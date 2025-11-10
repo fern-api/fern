@@ -8,4 +8,5 @@ export interface ThemeConfig {
     sidebar: FernDocsConfig.SidebarThemeConfig;
     body: FernDocsConfig.BodyThemeConfig;
     tabs: FernDocsConfig.TabsThemeConfig;
+    pageActions: FernDocsConfig.PageActionsThemeConfig;
 }
