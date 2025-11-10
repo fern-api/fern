@@ -74,7 +74,15 @@ class FileUploadRequestBodyParameter(EndpointParameter):
         )
 
     def get_default(self) -> AST.Expression:
-        return FastAPI.Body(variable_name=self._parameter_name(), wire_value=self._request_property.name.wire_value)
+        type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+            self._request_property.value_type, in_endpoint=True
+        )
+        is_optional = type_hint.is_optional
+        return FastAPI.Form(
+            variable_name=self._parameter_name(),
+            wire_value=self._request_property.name.wire_value,
+            is_optional=is_optional,
+        )
 
 
 class FileUploadRequestEndpointParameters:
