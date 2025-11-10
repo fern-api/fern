@@ -161,9 +161,33 @@ export function validateUnionExample({
             })
         );
 
-        const variantHasDiscriminant = resolvedType.declaration.properties?.[discriminant] != null;
+        // Check if discriminant exists in variant's properties or extended schemas
+        const variantHasDiscriminant =
+            resolvedType.declaration.properties?.[discriminant] != null ||
+            (() => {
+                const variantExtends =
+                    typeof resolvedType.declaration.extends === "undefined"
+                        ? []
+                        : typeof resolvedType.declaration.extends === "string"
+                          ? [resolvedType.declaration.extends]
+                          : resolvedType.declaration.extends;
+
+                return variantExtends.some((extendedType) => {
+                    const resolvedExtendedType = typeResolver.resolveNamedType({
+                        referenceToNamedType: extendedType,
+                        file: resolvedType.file
+                    });
+                    if (
+                        resolvedExtendedType?._type === "named" &&
+                        isRawObjectDefinition(resolvedExtendedType.declaration)
+                    ) {
+                        return resolvedExtendedType.declaration.properties?.[discriminant] != null;
+                    }
+                    return false;
+                });
+            })();
         const exampleToValidate = variantHasDiscriminant
-            ? { ...unionMemberExample, [discriminant]: discriminantValue }
+            ? { [discriminant]: discriminantValue, ...unionMemberExample }
             : unionMemberExample;
 
         return validateObjectExample({
