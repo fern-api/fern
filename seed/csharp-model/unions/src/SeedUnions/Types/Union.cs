@@ -192,7 +192,7 @@ public record Union
             JsonSerializerOptions options
         )
         {
-            JsonNode json =
+            JsonObject json =
                 value.Type switch
                 {
                     "foo" => new JsonObject
@@ -203,7 +203,7 @@ public record Union
                     {
                         ["bar"] = JsonSerializer.SerializeToNode(value.Value, options),
                     },
-                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                    _ => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);

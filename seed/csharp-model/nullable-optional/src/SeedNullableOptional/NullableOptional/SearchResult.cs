@@ -249,13 +249,15 @@ public record SearchResult
             JsonSerializerOptions options
         )
         {
-            JsonNode json =
+            JsonObject json =
                 value.Type switch
                 {
-                    "user" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "organization" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "document" => JsonSerializer.SerializeToNode(value.Value, options),
-                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                    "user" => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
+                    "organization" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "document" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    _ => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);

@@ -189,12 +189,12 @@ public record UnionWithNoProperties
             JsonSerializerOptions options
         )
         {
-            JsonNode json =
+            JsonObject json =
                 value.Type switch
                 {
-                    "foo" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "empty" => null,
-                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                    "foo" => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
+                    "empty" => new JsonObject(),
+                    _ => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);

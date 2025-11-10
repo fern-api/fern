@@ -264,16 +264,16 @@ public record UserOrAdminDiscriminated
             JsonSerializerOptions options
         )
         {
-            JsonNode json =
+            JsonObject json =
                 value.Type switch
                 {
-                    "user" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "user" => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
                     "admin" => new JsonObject
                     {
                         ["admin"] = JsonSerializer.SerializeToNode(value.Value, options),
                     },
-                    "empty" => null,
-                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                    "empty" => new JsonObject(),
+                    _ => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
                 } ?? new JsonObject();
             json["type"] = value.Type;
             var basePropertiesJson =

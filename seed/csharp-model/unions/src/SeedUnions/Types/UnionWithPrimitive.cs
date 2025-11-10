@@ -194,7 +194,7 @@ public record UnionWithPrimitive
             JsonSerializerOptions options
         )
         {
-            JsonNode json =
+            JsonObject json =
                 value.Type switch
                 {
                     "integer" => new JsonObject
@@ -205,7 +205,7 @@ public record UnionWithPrimitive
                     {
                         ["value"] = JsonSerializer.SerializeToNode(value.Value, options),
                     },
-                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                    _ => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);

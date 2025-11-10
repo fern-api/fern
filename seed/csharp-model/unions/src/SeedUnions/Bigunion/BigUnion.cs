@@ -1441,39 +1441,68 @@ public record BigUnion
             JsonSerializerOptions options
         )
         {
-            JsonNode json =
+            JsonObject json =
                 value.Type switch
                 {
-                    "normalSweet" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "thankfulFactor" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "jumboEnd" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "hastyPain" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "mistySnow" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "distinctFailure" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "practicalPrinciple" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "limpingStep" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "vibrantExcitement" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "activeDiamond" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "popularLimit" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "falseMirror" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "primaryBlock" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "rotatingRatio" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "colorfulCover" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "disloyalValue" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "gruesomeCoach" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "totalWork" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "harmoniousPlay" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "uniqueStress" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "unwillingSmoke" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "frozenSleep" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "diligentDeal" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "attractiveScript" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "hoarseMouse" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "circularCard" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "potableBad" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "triangularRepair" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "gaseousRoad" => JsonSerializer.SerializeToNode(value.Value, options),
-                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                    "normalSweet" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "thankfulFactor" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "jumboEnd" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "hastyPain" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "mistySnow" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "distinctFailure" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "practicalPrinciple" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "limpingStep" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "vibrantExcitement" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "activeDiamond" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "popularLimit" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "falseMirror" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "primaryBlock" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "rotatingRatio" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "colorfulCover" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "disloyalValue" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "gruesomeCoach" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "totalWork" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "harmoniousPlay" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "uniqueStress" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "unwillingSmoke" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "frozenSleep" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "diligentDeal" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "attractiveScript" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "hoarseMouse" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "circularCard" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "potableBad" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "triangularRepair" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    "gaseousRoad" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    _ => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
                 } ?? new JsonObject();
             json["type"] = value.Type;
             var basePropertiesJson =

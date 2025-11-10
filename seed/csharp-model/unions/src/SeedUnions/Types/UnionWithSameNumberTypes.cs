@@ -243,7 +243,7 @@ public record UnionWithSameNumberTypes
             JsonSerializerOptions options
         )
         {
-            JsonNode json =
+            JsonObject json =
                 value.Type switch
                 {
                     "positiveInt" => new JsonObject
@@ -258,7 +258,7 @@ public record UnionWithSameNumberTypes
                     {
                         ["value"] = JsonSerializer.SerializeToNode(value.Value, options),
                     },
-                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                    _ => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);

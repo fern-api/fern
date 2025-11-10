@@ -242,19 +242,20 @@ public record FieldValue
             JsonSerializerOptions options
         )
         {
-            JsonNode json =
+            JsonObject json =
                 value.Type switch
                 {
                     "primitive_value" => new JsonObject
                     {
                         ["value"] = JsonSerializer.SerializeToNode(value.Value, options),
                     },
-                    "object_value" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "object_value" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
                     "container_value" => new JsonObject
                     {
                         ["value"] = JsonSerializer.SerializeToNode(value.Value, options),
                     },
-                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                    _ => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);

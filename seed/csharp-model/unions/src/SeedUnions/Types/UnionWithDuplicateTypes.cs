@@ -195,12 +195,12 @@ public record UnionWithDuplicateTypes
             JsonSerializerOptions options
         )
         {
-            JsonNode json =
+            JsonObject json =
                 value.Type switch
                 {
-                    "foo1" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "foo2" => JsonSerializer.SerializeToNode(value.Value, options),
-                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                    "foo1" => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
+                    "foo2" => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
+                    _ => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);

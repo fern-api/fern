@@ -293,7 +293,7 @@ public record UnionWithDuplicatePrimitive
             JsonSerializerOptions options
         )
         {
-            JsonNode json =
+            JsonObject json =
                 value.Type switch
                 {
                     "integer1" => new JsonObject
@@ -312,7 +312,7 @@ public record UnionWithDuplicatePrimitive
                     {
                         ["value"] = JsonSerializer.SerializeToNode(value.Value, options),
                     },
-                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                    _ => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
