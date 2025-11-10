@@ -161,7 +161,7 @@ export class ExampleGenerator extends WithGeneration {
                 const entries = p.list.map((exampleTypeReference) =>
                     this.getSnippetForTypeReference({ exampleTypeReference, parseDatetimes })
                 );
-                if (this.context.isReadOnlyMemoryType(p.itemType)) {
+                if (this.context.common.isReadOnlyMemoryType(p.itemType)) {
                     return this.csharp.readOnlyMemory({
                         itemType: this.context.csharpTypeMapper.convert({
                             reference: p.itemType,

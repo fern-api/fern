@@ -15,7 +15,7 @@ export class ErrorGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSch
         readonly errorDeclaration: ErrorDeclaration
     ) {
         super(context);
-        this.classReference = this.context.getExceptionClassReference(this.errorDeclaration.name);
+        this.classReference = this.context.common.getExceptionClassReference(this.errorDeclaration.name);
     }
 
     public doGenerate(): CSharpFile {

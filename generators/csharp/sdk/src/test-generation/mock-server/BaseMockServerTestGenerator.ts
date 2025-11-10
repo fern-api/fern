@@ -56,12 +56,12 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
             set: true
         });
 
-        if (this.context.hasIdempotencyHeaders()) {
+        if (this.context.common.hasIdempotencyHeaders()) {
             // create an initializer for the fields
             const initializer = this.csharp.codeblock((writer) => {
                 writer.writeLine("new()");
                 writer.pushScope();
-                this.context.getIdempotencyInitializers(writer);
+                this.context.common.getIdempotencyInitializers(writer);
                 writer.popScope();
             });
 
@@ -179,7 +179,9 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                 }
                 // token endpoint
                 const tokenEndpointReference = scheme.configuration.tokenEndpoint.endpointReference;
-                const tokenEndpointHttpService = this.context.getHttpServiceOrThrow(tokenEndpointReference.serviceId);
+                const tokenEndpointHttpService = this.context.common.getHttpServiceOrThrow(
+                    tokenEndpointReference.serviceId
+                );
                 const tokenHttpEndpoint = this.context.resolveEndpointOrThrow(
                     tokenEndpointHttpService,
                     tokenEndpointReference.endpointId
@@ -228,7 +230,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                 }
                 if (scheme.configuration.refreshEndpoint) {
                     const refreshEndpointReference = scheme.configuration.refreshEndpoint.endpointReference;
-                    const refreshEndpointHttpService = this.context.getHttpServiceOrThrow(
+                    const refreshEndpointHttpService = this.context.common.getHttpServiceOrThrow(
                         refreshEndpointReference.serviceId
                     );
                     const refreshHttpEndpoint = this.context.resolveEndpointOrThrow(
