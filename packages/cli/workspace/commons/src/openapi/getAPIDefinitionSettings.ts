@@ -1,6 +1,6 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { DEFAULT_PARSE_OPENAPI_SETTINGS, ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
-import { ConvertOpenAPIOptions, DEFAULT_CONVERT_OPENAPI_OPTIONS } from "@fern-api/openapi-ir-to-fern";
+import { getParseOptions, type ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
+import { type ConvertOpenAPIOptions, getConvertOptions } from "@fern-api/openapi-ir-to-fern";
 
 /**
  * Combined settings for OpenAPI/AsyncAPI parsing and conversion.
@@ -11,11 +11,14 @@ export interface APIDefinitionSettings extends ParseOpenAPIOptions, ConvertOpenA
 /**
  * Get the default settings for API definition processing.
  * This is the single source of truth for all default values.
+ * Uses the authoritative defaults from the importer packages.
  */
 export function getAPIDefinitionSettingsDefaults(): APIDefinitionSettings {
+    const parseDefaults = getParseOptions({});
+    const convertDefaults = getConvertOptions({});
     return {
-        ...DEFAULT_PARSE_OPENAPI_SETTINGS,
-        ...DEFAULT_CONVERT_OPENAPI_OPTIONS
+        ...parseDefaults,
+        ...convertDefaults
     };
 }
 
@@ -27,47 +30,52 @@ export function getAPIDefinitionSettingsDefaults(): APIDefinitionSettings {
  * @returns Complete APIDefinitionSettings with all defaults applied
  */
 export function getAPIDefinitionSettings(settings?: generatorsYml.APIDefinitionSettings): APIDefinitionSettings {
-    const defaults = getAPIDefinitionSettingsDefaults();
+    const parseOptions: Partial<ParseOpenAPIOptions> = {
+        useTitlesAsName: settings?.shouldUseTitleAsName,
+        shouldUseUndiscriminatedUnionsWithLiterals: settings?.shouldUseUndiscriminatedUnionsWithLiterals,
+        shouldUseIdiomaticRequestNames: settings?.shouldUseIdiomaticRequestNames,
+        optionalAdditionalProperties: settings?.shouldUseOptionalAdditionalProperties,
+        coerceEnumsToLiterals: settings?.coerceEnumsToLiterals,
+        objectQueryParameters: settings?.objectQueryParameters,
+        respectReadonlySchemas: settings?.respectReadonlySchemas,
+        respectNullableSchemas: settings?.respectNullableSchemas,
+        onlyIncludeReferencedSchemas: settings?.onlyIncludeReferencedSchemas,
+        inlinePathParameters: settings?.inlinePathParameters,
+        asyncApiNaming: settings?.asyncApiMessageNaming,
+        filter: settings?.filter,
+        exampleGeneration: settings?.exampleGeneration,
+        defaultFormParameterEncoding: settings?.defaultFormParameterEncoding,
+        useBytesForBinaryResponse: settings?.useBytesForBinaryResponse,
+        respectForwardCompatibleEnums: settings?.respectForwardCompatibleEnums,
+        additionalPropertiesDefaultsTo: settings?.additionalPropertiesDefaultsTo,
+        typeDatesAsStrings: settings?.typeDatesAsStrings,
+        preserveSingleSchemaOneOf: settings?.preserveSingleSchemaOneOf,
+        inlineAllOfSchemas: settings?.inlineAllOfSchemas,
+        resolveAliases: settings?.resolveAliases,
+        groupMultiApiEnvironments: settings?.groupMultiApiEnvironments,
+        wrapReferencesToNullableInOptional: settings?.wrapReferencesToNullableInOptional,
+        coerceOptionalSchemasToNullable: settings?.coerceOptionalSchemasToNullable,
+        groupEnvironmentsByHost: settings?.groupEnvironmentsByHost
+    };
+
+    const convertOptions: Partial<ConvertOpenAPIOptions> = {
+        objectQueryParameters: settings?.objectQueryParameters,
+        respectReadonlySchemas: settings?.respectReadonlySchemas,
+        respectNullableSchemas: settings?.respectNullableSchemas,
+        onlyIncludeReferencedSchemas: settings?.onlyIncludeReferencedSchemas,
+        inlinePathParameters: settings?.inlinePathParameters,
+        useBytesForBinaryResponse: settings?.useBytesForBinaryResponse,
+        respectForwardCompatibleEnums: settings?.respectForwardCompatibleEnums,
+        wrapReferencesToNullableInOptional: settings?.wrapReferencesToNullableInOptional,
+        coerceOptionalSchemasToNullable: settings?.coerceOptionalSchemasToNullable,
+        groupEnvironmentsByHost: settings?.groupEnvironmentsByHost
+    };
+
+    const parseResult = getParseOptions({ options: parseOptions });
+    const convertResult = getConvertOptions({ options: convertOptions });
 
     return {
-        disableExamples: defaults.disableExamples,
-        discriminatedUnionV2: settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? defaults.discriminatedUnionV2,
-        useTitlesAsName: settings?.shouldUseTitleAsName ?? defaults.useTitlesAsName,
-        audiences: defaults.audiences,
-        optionalAdditionalProperties:
-            settings?.shouldUseOptionalAdditionalProperties ?? defaults.optionalAdditionalProperties,
-        coerceEnumsToLiterals: settings?.coerceEnumsToLiterals ?? defaults.coerceEnumsToLiterals,
-        respectReadonlySchemas: settings?.respectReadonlySchemas ?? defaults.respectReadonlySchemas,
-        respectNullableSchemas: settings?.respectNullableSchemas ?? defaults.respectNullableSchemas,
-        onlyIncludeReferencedSchemas: settings?.onlyIncludeReferencedSchemas ?? defaults.onlyIncludeReferencedSchemas,
-        inlinePathParameters: settings?.inlinePathParameters ?? defaults.inlinePathParameters,
-        preserveSchemaIds: defaults.preserveSchemaIds,
-        objectQueryParameters: settings?.objectQueryParameters ?? defaults.objectQueryParameters,
-        shouldUseUndiscriminatedUnionsWithLiterals:
-            settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? defaults.shouldUseUndiscriminatedUnionsWithLiterals,
-        shouldUseIdiomaticRequestNames:
-            settings?.shouldUseIdiomaticRequestNames ?? defaults.shouldUseIdiomaticRequestNames,
-        defaultFormParameterEncoding: settings?.defaultFormParameterEncoding ?? defaults.defaultFormParameterEncoding,
-        useBytesForBinaryResponse: settings?.useBytesForBinaryResponse ?? defaults.useBytesForBinaryResponse,
-        respectForwardCompatibleEnums:
-            settings?.respectForwardCompatibleEnums ?? defaults.respectForwardCompatibleEnums,
-        inlineAllOfSchemas: settings?.inlineAllOfSchemas ?? defaults.inlineAllOfSchemas,
-        resolveAliases: settings?.resolveAliases ?? defaults.resolveAliases,
-        filter: settings?.filter ?? defaults.filter,
-        asyncApiNaming: settings?.asyncApiMessageNaming ?? defaults.asyncApiNaming,
-        exampleGeneration: settings?.exampleGeneration ?? defaults.exampleGeneration,
-        additionalPropertiesDefaultsTo:
-            settings?.additionalPropertiesDefaultsTo ?? defaults.additionalPropertiesDefaultsTo,
-        typeDatesAsStrings: settings?.typeDatesAsStrings ?? defaults.typeDatesAsStrings,
-        preserveSingleSchemaOneOf: settings?.preserveSingleSchemaOneOf ?? defaults.preserveSingleSchemaOneOf,
-        groupMultiApiEnvironments: settings?.groupMultiApiEnvironments ?? defaults.groupMultiApiEnvironments,
-        groupEnvironmentsByHost: settings?.groupEnvironmentsByHost ?? defaults.groupEnvironmentsByHost,
-        wrapReferencesToNullableInOptional:
-            settings?.wrapReferencesToNullableInOptional ?? defaults.wrapReferencesToNullableInOptional,
-        coerceOptionalSchemasToNullable:
-            settings?.coerceOptionalSchemasToNullable ?? defaults.coerceOptionalSchemasToNullable,
-
-        enableUniqueErrorsPerEndpoint: defaults.enableUniqueErrorsPerEndpoint,
-        detectGlobalHeaders: defaults.detectGlobalHeaders
+        ...parseResult,
+        ...convertResult
     };
 }
