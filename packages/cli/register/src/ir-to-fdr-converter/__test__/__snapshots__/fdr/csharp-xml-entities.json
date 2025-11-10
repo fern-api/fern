@@ -1,0 +1,131 @@
+{
+  "types": {
+    "type_:TimeZoneModel": {
+      "description": "Model demonstrating HTML entity bug in C# XML documentation.\nThis description contains HTML entities that are not valid in XML.",
+      "name": "TimeZoneModel",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Format is UTC &plus; offset notation (e.g., &plus;05:30)",
+            "key": "timeZoneOffset",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "Expression: A &plus; B &minus; C &times; D &divide; E",
+            "key": "mathExpression",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "This uses valid XML entity: A &lt; B &amp; C &gt; D",
+            "key": "validEntity",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "Special characters: &nbsp; &hellip; &middot; &copy;",
+            "key": "specialChars",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {},
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "description": "Get timezone information with &plus; offset",
+        "method": "GET",
+        "id": "getTimeZone",
+        "originalEndpointId": "endpoint_.getTimeZone",
+        "name": "Get Time Zone",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": "/"
+            },
+            {
+              "type": "literal",
+              "value": "/timezone"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "requestsV2": {},
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "type_:TimeZoneModel"
+            }
+          }
+        },
+        "responsesV2": {},
+        "errorsV2": [],
+        "examples": [
+          {
+            "path": "/timezone",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": {
+              "timeZoneOffset": "timeZoneOffset",
+              "mathExpression": "mathExpression",
+              "validEntity": "validEntity",
+              "specialChars": "specialChars"
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "timeZoneOffset": "timeZoneOffset",
+                "mathExpression": "mathExpression",
+                "validEntity": "validEntity",
+                "specialChars": "specialChars"
+              }
+            },
+            "codeSamples": []
+          }
+        ]
+      }
+    ],
+    "webhooks": [],
+    "websockets": [],
+    "types": [
+      "type_:TimeZoneModel"
+    ],
+    "subpackages": []
+  },
+  "authSchemes": {},
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

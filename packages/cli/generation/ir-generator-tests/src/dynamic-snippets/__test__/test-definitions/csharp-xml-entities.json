@@ -1,0 +1,209 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:TimeZoneModel": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "TimeZoneModel",
+                    "camelCase": {
+                        "unsafeName": "timeZoneModel",
+                        "safeName": "timeZoneModel"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "time_zone_model",
+                        "safeName": "time_zone_model"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TIME_ZONE_MODEL",
+                        "safeName": "TIME_ZONE_MODEL"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TimeZoneModel",
+                        "safeName": "TimeZoneModel"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "timeZoneOffset",
+                            "camelCase": {
+                                "unsafeName": "timeZoneOffset",
+                                "safeName": "timeZoneOffset"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "time_zone_offset",
+                                "safeName": "time_zone_offset"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TIME_ZONE_OFFSET",
+                                "safeName": "TIME_ZONE_OFFSET"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "TimeZoneOffset",
+                                "safeName": "TimeZoneOffset"
+                            }
+                        },
+                        "wireValue": "timeZoneOffset"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "mathExpression",
+                            "camelCase": {
+                                "unsafeName": "mathExpression",
+                                "safeName": "mathExpression"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "math_expression",
+                                "safeName": "math_expression"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MATH_EXPRESSION",
+                                "safeName": "MATH_EXPRESSION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "MathExpression",
+                                "safeName": "MathExpression"
+                            }
+                        },
+                        "wireValue": "mathExpression"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "validEntity",
+                            "camelCase": {
+                                "unsafeName": "validEntity",
+                                "safeName": "validEntity"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "valid_entity",
+                                "safeName": "valid_entity"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "VALID_ENTITY",
+                                "safeName": "VALID_ENTITY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ValidEntity",
+                                "safeName": "ValidEntity"
+                            }
+                        },
+                        "wireValue": "validEntity"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "specialChars",
+                            "camelCase": {
+                                "unsafeName": "specialChars",
+                                "safeName": "specialChars"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "special_chars",
+                                "safeName": "special_chars"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SPECIAL_CHARS",
+                                "safeName": "SPECIAL_CHARS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "SpecialChars",
+                                "safeName": "SpecialChars"
+                            }
+                        },
+                        "wireValue": "specialChars"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_.getTimeZone": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getTimeZone",
+                    "camelCase": {
+                        "unsafeName": "getTimeZone",
+                        "safeName": "getTimeZone"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_time_zone",
+                        "safeName": "get_time_zone"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_TIME_ZONE",
+                        "safeName": "GET_TIME_ZONE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetTimeZone",
+                        "safeName": "GetTimeZone"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/timezone"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}
