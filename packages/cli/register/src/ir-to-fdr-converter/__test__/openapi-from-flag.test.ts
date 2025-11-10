@@ -356,10 +356,12 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         expect(service).toBeDefined();
 
         if (service && typeof service === "object" && "endpoints" in service) {
-            const serviceWithEndpoints = service as { endpoints?: Array<{
-                pathParameters?: Array<{ explode?: boolean }>;
-                queryParameters?: Array<{ explode?: boolean }>;
-            }> };
+            const serviceWithEndpoints = service as {
+                endpoints?: Array<{
+                    pathParameters?: Array<{ explode?: boolean }>;
+                    queryParameters?: Array<{ explode?: boolean }>;
+                }>;
+            };
             expect(serviceWithEndpoints.endpoints).toBeDefined();
             expect(serviceWithEndpoints.endpoints?.length).toBe(1);
 
