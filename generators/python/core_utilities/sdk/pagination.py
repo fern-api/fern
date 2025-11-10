@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import AsyncIterator, Awaitable, Callable, Generic, Iterator, List, Optional, TypeVar
 
+from .http_response import BaseHttpResponse  # noqa: F401
+
 # Generic to represent the underlying type of the results within a page
 T = TypeVar("T")
 # Generic to represent the type of the API response
