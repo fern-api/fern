@@ -2,6 +2,7 @@ import { Rule } from "./Rule";
 import { AccentColorContrastRule } from "./rules/accent-color-contrast";
 import { AllRolesMustBeDeclaredRule } from "./rules/all-roles-must-be-declared";
 import { FilepathsExistRule } from "./rules/filepaths-exist";
+import { NoAuthConflictsRule } from "./rules/no-auth-conflicts";
 import { NoNonComponentRefsRule } from "./rules/no-non-component-refs";
 import { NoOpenApiV2InDocsRule } from "./rules/no-openapi-v2-in-docs";
 import { OnlyVersionedNavigation } from "./rules/only-versioned-navigation";
@@ -18,6 +19,7 @@ const allRules = [
     NoOpenApiV2InDocsRule, // Check OpenAPI v2 first (more fundamental issue)
     NoNonComponentRefsRule, // Check non-component references (will skip v2 files)
     ValidLocalReferencesRule, // Validate that local references actually exist
+    NoAuthConflictsRule, // Check for auth conflicts between generators.yml and OpenAPI specs
     OnlyVersionedNavigation,
     ValidateVersionFileRule,
     ValidateProductFileRule,
