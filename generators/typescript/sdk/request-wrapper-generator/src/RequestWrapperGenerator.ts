@@ -19,6 +19,7 @@ export declare namespace RequestWrapperGenerator {
             formDataSupport: "Node16" | "Node18";
             flattenRequestParameters: boolean;
             useDefaultRequestParameterValues: boolean;
+            useBigInt: boolean;
         }
     }
 }
@@ -36,7 +37,8 @@ export class RequestWrapperGenerator {
         shouldInlinePathParameters,
         formDataSupport,
         flattenRequestParameters,
-        useDefaultRequestParameterValues
+        useDefaultRequestParameterValues,
+        useBigInt
     }: RequestWrapperGenerator.generateRequestWrapper.Args): GeneratedRequestWrapper {
         return new GeneratedRequestWrapperImpl({
             packageId,
@@ -50,7 +52,8 @@ export class RequestWrapperGenerator {
             shouldInlinePathParameters,
             formDataSupport,
             flattenRequestParameters,
-            useDefaultRequestParameterValues
+            useDefaultRequestParameterValues,
+            useBigInt
         });
     }
 }

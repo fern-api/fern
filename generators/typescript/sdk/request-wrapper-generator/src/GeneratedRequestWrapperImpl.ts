@@ -56,10 +56,6 @@ import {
 } from "ts-morph";
 import { RequestWrapperExampleGenerator } from "./RequestWrapperExampleGenerator";
 
-interface SdkCustomConfig {
-    useBigInt?: boolean;
-}
-
 export declare namespace GeneratedRequestWrapperImpl {
     export interface Init {
         service: HttpService;
@@ -74,6 +70,7 @@ export declare namespace GeneratedRequestWrapperImpl {
         formDataSupport: "Node16" | "Node18";
         flattenRequestParameters: boolean;
         useDefaultRequestParameterValues: boolean;
+        useBigInt: boolean;
     }
 }
 
@@ -92,6 +89,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly flattenRequestParameters: boolean;
     private readonly useDefaultRequestParameterValues: boolean;
+    private readonly useBigInt: boolean;
 
     constructor({
         service,
@@ -105,7 +103,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         shouldInlinePathParameters,
         formDataSupport,
         flattenRequestParameters,
-        useDefaultRequestParameterValues
+        useDefaultRequestParameterValues,
+        useBigInt,
     }: GeneratedRequestWrapperImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
@@ -119,6 +118,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         this.formDataSupport = formDataSupport;
         this.flattenRequestParameters = flattenRequestParameters;
         this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
+        this.useBigInt = useBigInt;
     }
 
     public shouldInlinePathParameters(): boolean {
@@ -860,10 +860,6 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return property.type === "fileArray" ? ts.factory.createArrayTypeNode(value) : value;
     }
 
-    private getCustomConfig(context: SdkContext): SdkCustomConfig | undefined {
-        return context.config.customConfig as SdkCustomConfig | undefined;
-    }
-
     private hasDefaultValue(typeReference: TypeReference, context: SdkContext): boolean {
         const hasDefaultValue = context.type.hasDefaultValue(typeReference);
         const useDefaultValues = this.useDefaultRequestParameterValues;
@@ -883,7 +879,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             }
         }
 
-        const useBigInt = this.getCustomConfig(context)?.useBigInt ?? false;
+        const useBigInt = this.useBigInt;
 
         if (resolvedType.type === "primitive" && resolvedType.primitive.v2 != null) {
             return resolvedType.primitive.v2._visit<ts.Expression | undefined>({

@@ -273,7 +273,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             }
         }
 
-        const useBigInt = (context.config.customConfig as { useBigInt?: boolean })?.useBigInt;
+        const useBigInt = context.useBigInt;
 
         if (resolvedType.type === "primitive" && resolvedType.primitive.v2 != null) {
             return resolvedType.primitive.v2._visit<ts.Expression | undefined>({

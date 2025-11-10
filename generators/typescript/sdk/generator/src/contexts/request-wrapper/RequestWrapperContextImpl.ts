@@ -24,6 +24,7 @@ export declare namespace RequestWrapperContextImpl {
         formDataSupport: "Node16" | "Node18";
         flattenRequestParameters: boolean;
         useDefaultRequestParameterValues: boolean;
+        useBigInt: boolean;
     }
 }
 
@@ -42,6 +43,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly flattenRequestParameters: boolean;
     private readonly useDefaultRequestParameterValues: boolean;
+    private readonly useBigInt: boolean;
 
     constructor({
         requestWrapperGenerator,
@@ -57,7 +59,8 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         enableInlineTypes,
         formDataSupport,
         flattenRequestParameters,
-        useDefaultRequestParameterValues
+        useDefaultRequestParameterValues,
+        useBigInt
     }: RequestWrapperContextImpl.Init) {
         this.requestWrapperGenerator = requestWrapperGenerator;
         this.requestWrapperDeclarationReferencer = requestWrapperDeclarationReferencer;
@@ -73,6 +76,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         this.formDataSupport = formDataSupport;
         this.flattenRequestParameters = flattenRequestParameters;
         this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
+        this.useBigInt = useBigInt;
     }
 
     public shouldInlinePathParameters(sdkRequest: SdkRequest | undefined | null): boolean {
@@ -122,7 +126,8 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
             shouldInlinePathParameters: this.shouldInlinePathParameters(endpoint.sdkRequest),
             formDataSupport: this.formDataSupport,
             flattenRequestParameters: this.flattenRequestParameters,
-            useDefaultRequestParameterValues: this.useDefaultRequestParameterValues
+            useDefaultRequestParameterValues: this.useDefaultRequestParameterValues,
+            useBigInt: this.useBigInt
         });
     }
 
