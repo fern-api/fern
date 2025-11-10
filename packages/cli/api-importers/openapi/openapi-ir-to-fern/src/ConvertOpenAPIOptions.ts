@@ -94,7 +94,7 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     groupEnvironmentsByHost: false
 };
 
-function mergeOptions<T extends Record<string, unknown>>(params: {
+function mergeOptions<T extends object>(params: {
     defaults: T;
     options?: Partial<T>;
     overrides?: Partial<T>;

@@ -117,7 +117,7 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     coerceOptionalSchemasToNullable: true
 };
 
-function mergeOptions<T extends Record<string, unknown>>(params: {
+function mergeOptions<T extends object>(params: {
     defaults: T;
     options?: Partial<T>;
     overrides?: Partial<T>;
