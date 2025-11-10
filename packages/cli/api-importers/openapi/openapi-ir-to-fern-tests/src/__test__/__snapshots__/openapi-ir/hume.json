@@ -487,8 +487,7 @@
           "source": {
             "file": "../openapi.yaml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "queryParameters": [],
@@ -668,8 +667,7 @@
           "source": {
             "file": "../openapi.yaml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "queryParameters": [],
@@ -723,8 +721,7 @@
           "source": {
             "file": "../openapi.yaml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "queryParameters": [],

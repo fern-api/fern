@@ -195,7 +195,7 @@ function convertService(
                                       key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
                                       type: convertTypeReference(pathParameter.valueType),
                                       availability: undefined,
-                                      explode: pathParameter.explode ?? false
+                                      ...(pathParameter.explode !== undefined ? { explode: pathParameter.explode } : {})
                                       // biome-ignore lint/suspicious/noExplicitAny: FDR SDK types don't include explode field yet
                                   }) as any
                           ),
@@ -213,7 +213,7 @@ function convertService(
                                       key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
                                       type: convertTypeReference(pathParameter.valueType),
                                       availability: undefined,
-                                      explode: pathParameter.explode ?? false
+                                      ...(pathParameter.explode !== undefined ? { explode: pathParameter.explode } : {})
                                       // biome-ignore lint/suspicious/noExplicitAny: FDR SDK types don't include explode field yet
                                   }) as any
                           ),
@@ -230,7 +230,7 @@ function convertService(
                         key: queryParameter.name.wireValue,
                         type: convertTypeReference(queryParameter.valueType),
                         availability: convertIrAvailability(queryParameter.availability),
-                        explode: queryParameter.explode ?? false
+                        ...(queryParameter.explode !== undefined ? { explode: queryParameter.explode } : {})
                         // biome-ignore lint/suspicious/noExplicitAny: FDR SDK types don't include explode field yet
                     }) as any
             ),
@@ -357,7 +357,7 @@ function convertWebSocketChannel(
                         key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
                         type: convertTypeReference(pathParameter.valueType),
                         availability: undefined,
-                        explode: pathParameter.explode ?? false
+                        ...(pathParameter.explode !== undefined ? { explode: pathParameter.explode } : {})
                         // biome-ignore lint/suspicious/noExplicitAny: FDR SDK types don't include explode field yet
                     }) as any
             ),
@@ -378,7 +378,7 @@ function convertWebSocketChannel(
                     key: queryParameter.name.wireValue,
                     type: convertTypeReference(queryParameter.valueType),
                     availability: convertIrAvailability(queryParameter.availability),
-                    explode: queryParameter.explode ?? false
+                    ...(queryParameter.explode !== undefined ? { explode: queryParameter.explode } : {})
                     // biome-ignore lint/suspicious/noExplicitAny: FDR SDK types don't include explode field yet
                 }) as any
         ),

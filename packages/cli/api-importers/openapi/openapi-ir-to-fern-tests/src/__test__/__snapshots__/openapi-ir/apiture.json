@@ -94,7 +94,8 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          }
+          },
+          "explode": false
         },
         {
           "description": "Filter accounts to just a subset of `internal` or `external` accounts (per the `location` property on the [`accountItem`](#schema-accountItem) schema).",
@@ -11717,7 +11718,8 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          }
+          },
+          "explode": false
         },
         {
           "description": "Filter transactions to only those whose `type` is in this pipe-separated list.",
@@ -11744,7 +11746,8 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          }
+          },
+          "explode": false
         },
         {
           "description": "Filter transactions to only those whose `subtype` is in this pipe-separated list.",
@@ -11771,7 +11774,8 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          }
+          },
+          "explode": false
         },
         {
           "description": "Return only transactions whose `amount` is in this numeric range. This compares only the absolute value of the transaction. That is, the value `[1000.00,1100.00)` matches either a debit of `-1070.25` or a credit of `1021.90`.<br> Some examples of specifying an amount range: <ul> <li>`1200.50` match the dollar amount 1,200.50 exactly</li> <li>`[1000.00,1200.00)` matches items where `1000.00 <= amount < 1200.00`</li> <li>`[1000.00,1199.99]` matches items where `1000.00 <= amount <= 1199.99`</li> <li>`(999.99,1200.00]` matches items where `999.99 < amount <= 1200.00`</li> <li>`[1200.50,]` matches items where `amount >= 1200.50`</li> <li>`(1200.50,)` matches items where `amount > 1200.50`</li> <li>`[,1200.50]` matches items where `amount <= 1200.50`</li> <li>`(,1200.50)` matches items where `amount < 1200.50`</li> </ul>",
