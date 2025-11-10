@@ -14,7 +14,7 @@ try:
 except ImportError:
     from websockets import WebSocketClientProtocol  # type: ignore
 
-EmptyRealtimeSocketClientResponse = typing.Union
+EmptyRealtimeSocketClientResponse = typing.Any
 
 
 class AsyncEmptyRealtimeSocketClient(EventEmitterMixin):
