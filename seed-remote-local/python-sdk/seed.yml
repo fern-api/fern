@@ -1,5 +1,4 @@
 displayName: Python SDK (Remote vs Local)
-irVersion: v61
 image: fernapi/fern-python-sdk
 changelogLocation: ../../generators/python/sdk/versions.yml
 
@@ -12,25 +11,7 @@ generatorType: SDK
 defaultOutputMode: github
 
 # Opt-in fixtures for remote vs local testing
-# Only these fixtures will be tested (not all fixtures like regular seed tests)
-fixtures:
-  imdb:
-    - outputFolder: remote
-      customConfig: null
-      publishConfig:
-        type: pypi
-        packageName: "fern-test-imdb-sdk"
-        token: ""
-      github:
-        repository: ${GITHUB_TEST_REPO}
-        mode: pull-request
-
-    - outputFolder: local
-      customConfig: null
-      publishConfig:
-        type: pypi
-        packageName: "fern-test-imdb-sdk"
-        token: ""
-      github:
-        uri: ${GITHUB_TEST_REPO}
-        mode: pull-request
+# The test runner will generate both remote (via Fiddle) and local (via Docker)
+# and compare outputs to committed snapshots
+remoteVsLocalFixtures:
+  - imdb
