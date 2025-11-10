@@ -430,15 +430,17 @@ function convertVariable(variable: IrVersions.V23.VariableDeclaration): IrVersio
 }
 
 function convertPathParameter(pathParameter: IrVersions.V23.PathParameter): IrVersions.V22.http.PathParameter {
+    const { explode, ...rest } = pathParameter as IrVersions.V23.PathParameter & { explode?: boolean };
     return {
-        ...pathParameter,
+        ...rest,
         valueType: convertTypeReference(pathParameter.valueType)
     };
 }
 
 function convertQueryParameter(queryParameter: IrVersions.V23.QueryParameter): IrVersions.V22.http.QueryParameter {
+    const { explode, ...rest } = queryParameter as IrVersions.V23.QueryParameter & { explode?: boolean };
     return {
-        ...queryParameter,
+        ...rest,
         valueType: convertTypeReference(queryParameter.valueType)
     };
 }
