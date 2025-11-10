@@ -61,9 +61,8 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
         const hasDiscriminator = this.schema.discriminator != null;
         const hasMapping = hasDiscriminator && Object.keys(this.schema.discriminator.mapping ?? {}).length > 0;
-        const hasPropertyName = hasDiscriminator && this.schema.discriminator.propertyName != null;
 
-        if (hasMapping || hasPropertyName) {
+        if (hasMapping) {
             return this.convertAsDiscriminatedUnion();
         }
 
@@ -187,6 +186,10 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
         const discriminantProperty = this.inferDiscriminantProperty();
         if (discriminantProperty == null) {
+            return this.convertAsUndiscriminatedUnion();
+        }
+
+        if (unionTypes.length === 0) {
             return this.convertAsUndiscriminatedUnion();
         }
 
@@ -519,13 +522,29 @@ export class OneOfSchemaConverter extends AbstractConverter<
                     break;
                 }
 
+                let propToCheck = prop;
                 if (this.context.isReferenceObject(prop)) {
-                    isCommonDiscriminant = false;
-                    break;
+                    const resolvedProp = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
+                        reference: prop,
+                        breadcrumbs: [
+                            ...this.breadcrumbs,
+                            "discriminator",
+                            "mapping",
+                            discriminantValue,
+                            "properties",
+                            propName
+                        ]
+                    });
+                    if (!resolvedProp.resolved) {
+                        isCommonDiscriminant = false;
+                        break;
+                    }
+                    propToCheck = resolvedProp.value;
                 }
 
                 const hasConstOrEnum =
-                    "const" in prop || ("enum" in prop && Array.isArray(prop.enum) && prop.enum.length > 0);
+                    "const" in propToCheck ||
+                    ("enum" in propToCheck && Array.isArray(propToCheck.enum) && propToCheck.enum.length > 0);
 
                 if (!hasConstOrEnum) {
                     isCommonDiscriminant = false;
