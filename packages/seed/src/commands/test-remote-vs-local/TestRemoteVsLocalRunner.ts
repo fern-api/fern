@@ -1,8 +1,10 @@
+import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { Octokit } from "@octokit/rest";
 import { exec } from "child_process";
-import { copyFile, cp, mkdir, mkdtemp, readdir, readFile, rm, stat, writeFile } from "fs/promises";
+import { cp, mkdir, mkdtemp, readFile, rm, stat, writeFile } from "fs/promises";
+import yaml from "js-yaml";
 import os from "os";
 import path from "path";
 import { promisify } from "util";
@@ -105,7 +107,7 @@ export class TestRemoteVsLocalRunner {
         options: TestRemoteVsLocalOptions
     ): Promise<TestResult> {
         let repo: EphemeralRepo | null = null;
-        let tempDir: string | null = null;
+        let tempDirs: string[] = [];
 
         try {
             // 1. Create ephemeral GitHub repo
@@ -113,18 +115,19 @@ export class TestRemoteVsLocalRunner {
             repo = await this.createEphemeralRepo(workspace.workspaceName, fixture);
             options.context.logger.info(`  ✅ Created: ${repo.fullName}`);
 
-            // 2. Setup temp project with API definition + generators.yml
+            // 2. Setup temp project with proper Fern structure
             options.context.logger.info(`  📁 Setting up temp project...`);
-            tempDir = await this.setupTempProject(workspace, fixture, repo);
+            const projectDir = await this.setupTempProject(workspace, fixture, repo, options.context);
+            tempDirs.push(projectDir);
 
             // 3. Generate remote (via Fiddle)
             options.context.logger.info(`  🔄 Generating remote (via Fiddle)...`);
-            const remoteBranch = await this.generateRemote(tempDir, options.context);
+            const remoteBranch = await this.generateRemote(projectDir, options.context);
             options.context.logger.info(`  ✅ Remote complete: branch ${remoteBranch}`);
 
             // 4. Generate local (via Docker)
             options.context.logger.info(`  🔄 Generating local (via Docker)...`);
-            const localBranch = await this.generateLocal(tempDir, options.context);
+            const localBranch = await this.generateLocal(projectDir, options.context);
             options.context.logger.info(`  ✅ Local complete: branch ${localBranch}`);
 
             // 5. Download outputs from GitHub
@@ -133,6 +136,7 @@ export class TestRemoteVsLocalRunner {
                 this.downloadBranch(repo, remoteBranch, options.context),
                 this.downloadBranch(repo, localBranch, options.context)
             ]);
+            tempDirs.push(remoteOutput, localOutput);
 
             // 6. Compare to snapshots or update them
             if (options.updateSnapshots) {
@@ -164,11 +168,15 @@ export class TestRemoteVsLocalRunner {
                 try {
                     options.context.logger.info(`  🗑️  Cleaning up ephemeral repo...`);
                     await this.deleteEphemeralRepo(repo);
-                } catch (error) {
-                    options.context.logger.warn(`  ⚠️  Failed to cleanup repo: ${error}`);
+                } catch (error: any) {
+                    // Silently ignore 403 errors - user token may not have delete permissions
+                    // GitHub will auto-delete test repos after 24 hours anyway
+                    if (!error.message?.includes("403") && !error.message?.includes("admin rights")) {
+                        options.context.logger.warn(`  ⚠️  Failed to cleanup repo: ${error.message}`);
+                    }
                 }
             }
-            if (tempDir) {
+            for (const tempDir of tempDirs) {
                 try {
                     await rm(tempDir, { recursive: true, force: true });
                 } catch (error) {
@@ -176,6 +184,155 @@ export class TestRemoteVsLocalRunner {
                 }
             }
         }
+    }
+
+    private async setupTempProject(
+        workspace: RemoteVsLocalWorkspace,
+        fixture: string,
+        repo: EphemeralRepo,
+        context: TaskContext
+    ): Promise<string> {
+        const tmpDir = await mkdtemp(path.join(os.tmpdir(), "fern-rvl-"));
+
+        try {
+            // Initialize Fern project
+            context.logger.info(`    Running fern init...`);
+            await execAsync("fern init --organization test", {
+                cwd: tmpDir,
+                env: { ...process.env }
+            });
+
+            // Copy API definition from test-definitions
+            const repoRoot = await this.findRepoRoot();
+            const sourceApiPath = path.join(repoRoot, "test-definitions", FERN_DIRECTORY, APIS_DIRECTORY, fixture);
+            const targetApiPath = path.join(tmpDir, FERN_DIRECTORY, "api");
+
+            context.logger.info(`    Copying API definition...`);
+            await cp(sourceApiPath, targetApiPath, { recursive: true });
+
+            // Create generators.yml with remote and local configurations
+            context.logger.info(`    Creating generators.yml...`);
+            const remoteImageParts = workspace.workspaceConfig.image.split(":");
+            const remoteVersion = remoteImageParts.length > 1 ? (remoteImageParts[1] ?? "latest") : "latest";
+
+            const localImageParts = workspace.workspaceConfig.test.docker.image.split(":");
+            const localVersion = localImageParts.length > 1 ? (localImageParts[1] ?? "latest") : "latest";
+
+            const generatorsConfig = {
+                "default-group": "remote",
+                groups: {
+                    remote: {
+                        generators: [
+                            {
+                                name: workspace.workspaceConfig.generatorType,
+                                version: remoteVersion,
+                                output: {
+                                    location: "github",
+                                    mode: "pull-request",
+                                    "repo-url": repo.fullName
+                                }
+                            }
+                        ]
+                    },
+                    local: {
+                        generators: [
+                            {
+                                name: workspace.workspaceConfig.generatorType,
+                                version: localVersion,
+                                output: {
+                                    location: "github",
+                                    mode: "pull-request",
+                                    "repo-url": repo.fullName
+                                }
+                            }
+                        ]
+                    }
+                }
+            };
+
+            const generatorsYmlPath = path.join(tmpDir, FERN_DIRECTORY, "generators.yml");
+            await writeFile(generatorsYmlPath, yaml.dump(generatorsConfig));
+
+            // Run fern upgrade
+            context.logger.info(`    Running fern upgrade...`);
+            try {
+                await execAsync("fern upgrade", {
+                    cwd: tmpDir,
+                    env: { ...process.env }
+                });
+            } catch (error) {
+                // fern upgrade might not be necessary for all projects
+                context.logger.warn(`    fern upgrade failed (may not be needed): ${error}`);
+            }
+
+            // Run fern generator upgrade
+            context.logger.info(`    Running fern generator upgrade...`);
+            try {
+                await execAsync("fern generator upgrade", {
+                    cwd: tmpDir,
+                    env: { ...process.env }
+                });
+            } catch (error) {
+                context.logger.warn(`    fern generator upgrade failed (may not be needed): ${error}`);
+            }
+
+            return tmpDir;
+        } catch (error) {
+            // Cleanup on failure
+            await rm(tmpDir, { recursive: true, force: true });
+            throw error;
+        }
+    }
+
+    private async generateRemote(projectDir: string, context: TaskContext): Promise<string> {
+        const { stdout, stderr } = await execAsync("fern generate --group remote", {
+            cwd: projectDir,
+            env: {
+                ...process.env,
+                FERN_TOKEN: process.env.FERN_TOKEN,
+                GITHUB_TOKEN: process.env.GITHUB_TOKEN
+            }
+        }).catch((error) => {
+            context.logger.error(`Remote generation failed:`);
+            if (error.stdout) context.logger.error(`stdout: ${error.stdout}`);
+            if (error.stderr) context.logger.error(`stderr: ${error.stderr}`);
+            throw error;
+        });
+
+        // Parse branch name from output
+        // Expected format: "Created pull request: https://github.com/owner/repo/pull/1"
+        // or similar - need to extract branch from GitHub API
+        const branchMatch = stdout.match(/branch[:\s]+([^\s]+)/i);
+        if (branchMatch && branchMatch[1]) {
+            return branchMatch[1];
+        }
+
+        // If we can't extract branch from output, we'll need to query GitHub for latest PR
+        throw new Error("Could not extract branch name from generation output");
+    }
+
+    private async generateLocal(projectDir: string, context: TaskContext): Promise<string> {
+        const { stdout, stderr } = await execAsync("fern generate --group local --local", {
+            cwd: projectDir,
+            env: {
+                ...process.env,
+                GITHUB_TOKEN: process.env.GITHUB_TOKEN
+            }
+        }).catch((error) => {
+            context.logger.error(`Local generation failed:`);
+            if (error.stdout) context.logger.error(`stdout: ${error.stdout}`);
+            if (error.stderr) context.logger.error(`stderr: ${error.stderr}`);
+            throw error;
+        });
+
+        // Parse branch name from output
+        const branchMatch = stdout.match(/branch[:\s]+([^\s]+)/i);
+        if (branchMatch && branchMatch[1]) {
+            return branchMatch[1];
+        }
+
+        // If we can't extract branch from output, we'll need to query GitHub for latest PR
+        throw new Error("Could not extract branch name from generation output");
     }
 
     private async createEphemeralRepo(workspace: string, fixture: string): Promise<EphemeralRepo> {
@@ -200,96 +357,6 @@ export class TestRemoteVsLocalRunner {
             owner: repo.owner,
             repo: repo.name
         });
-    }
-
-    private async setupTempProject(
-        workspace: RemoteVsLocalWorkspace,
-        fixture: string,
-        repo: EphemeralRepo
-    ): Promise<string> {
-        const tmpDir = await mkdtemp(path.join(os.tmpdir(), "fern-rvl-"));
-
-        // Find the repo root (where test-definitions is located)
-        const repoRoot = await this.findRepoRoot();
-        const apiDefPath = path.join(repoRoot, "test-definitions/fern/apis", fixture);
-
-        // Create fern directory
-        const fernDir = path.join(tmpDir, "fern");
-        await mkdir(fernDir, { recursive: true });
-
-        // Copy API definition
-        await cp(apiDefPath, fernDir, { recursive: true });
-
-        // Build and write generators.yml
-        const generatorsYml = this.buildGeneratorsYml(workspace, repo);
-        await writeFile(path.join(fernDir, "generators.yml"), generatorsYml);
-
-        return tmpDir;
-    }
-
-    private buildGeneratorsYml(workspace: RemoteVsLocalWorkspace, repo: EphemeralRepo): string {
-        return `default-group: remote
-
-groups:
-  remote:
-    generators:
-      - name: ${workspace.workspaceConfig.image}
-        # Version resolved from :latest Docker Hub tag
-        github:
-          repository: ${repo.fullName}
-          mode: pull-request
-
-  local:
-    generators:
-      - name: ${workspace.workspaceConfig.image}
-        # Same :latest version as remote
-        github:
-          uri: ${repo.fullName}
-          mode: pull-request
-`;
-    }
-
-    private async generateRemote(projectDir: string, context: TaskContext): Promise<string> {
-        try {
-            const { stdout } = await execAsync("fern generate --group remote", {
-                cwd: projectDir,
-                env: {
-                    ...process.env,
-                    FERN_TOKEN: process.env.FERN_TOKEN,
-                    GITHUB_TOKEN: process.env.GITHUB_TOKEN
-                }
-            });
-            return this.extractBranchName(stdout);
-        } catch (error) {
-            context.logger.error(`Remote generation failed: ${error}`);
-            throw error;
-        }
-    }
-
-    private async generateLocal(projectDir: string, context: TaskContext): Promise<string> {
-        try {
-            const { stdout } = await execAsync("fern generate --group local --local", {
-                cwd: projectDir,
-                env: {
-                    ...process.env,
-                    FERN_TOKEN: process.env.FERN_TOKEN,
-                    GITHUB_TOKEN: process.env.GITHUB_TOKEN
-                }
-            });
-            return this.extractBranchName(stdout);
-        } catch (error) {
-            context.logger.error(`Local generation failed: ${error}`);
-            throw error;
-        }
-    }
-
-    private extractBranchName(output: string): string {
-        // Look for patterns like "fern-bot/2025-11-10-..." in the output
-        const match = output.match(/fern-bot\/[^\s]+/);
-        if (!match) {
-            throw new Error("Could not extract branch name from generation output");
-        }
-        return match[0];
     }
 
     private async downloadBranch(repo: EphemeralRepo, branch: string, context: TaskContext): Promise<string> {
