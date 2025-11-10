@@ -30,7 +30,7 @@ export async function convertJestImportsToVitest(
         // 1. Replace jest.Mock with Mock
         sourceFile.forEachDescendant((node) => {
             if (node.getKind() === SyntaxKind.TypeReference && node.getText().startsWith("jest.Mock")) {
-                node.replaceWithText('Mock');
+                node.replaceWithText("Mock");
                 needsMock = true;
             }
         });
@@ -38,7 +38,7 @@ export async function convertJestImportsToVitest(
         // 2. Replace jest.SpyInstance with MockInstance
         sourceFile.forEachDescendant((node) => {
             if (node.getKind() === SyntaxKind.TypeReference && node.getText().startsWith("jest.SpyInstance")) {
-                node.replaceWithText('MockInstance');
+                node.replaceWithText("MockInstance");
                 needsMockInstance = true;
             }
         });
@@ -49,7 +49,7 @@ export async function convertJestImportsToVitest(
             const importsToAdd = [];
             if (vitestImport) {
                 const namedImports = vitestImport.getNamedImports();
-                const existingNames = namedImports.map(ni => ni.getName());
+                const existingNames = namedImports.map((ni) => ni.getName());
 
                 if (needsMock && !existingNames.includes("Mock")) {
                     importsToAdd.push("Mock");
