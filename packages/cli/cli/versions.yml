@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Update to use discriminated unions when propertyName is provided in oneOf.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-09"
+  version: 0.112.1
+
+- changelogEntry:
+    - summary: |
         Markdown snippets now support passing parameters to the markdown file.
       type: feat
   irVersion: 61
