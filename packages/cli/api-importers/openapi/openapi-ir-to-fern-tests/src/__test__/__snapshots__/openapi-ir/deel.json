@@ -51318,6 +51318,7 @@
               "value": {
                 "generatedName": "EorEntitlementListItemRolloverType",
                 "schema": "EorHolidaysRolloverType",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -51572,15 +51573,19 @@
               "description": "Date the contract is marked for completion",
               "value": {
                 "generatedName": "ContractTerminationResultCompletionDate",
+                "description": "Date the contract is marked for completion",
                 "value": {
+                  "description": "Date the contract is marked for completion",
                   "generatedName": "ContractTerminationResultCompletionDate",
                   "schema": "DateString",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -55300,6 +55305,7 @@
               "value": {
                 "generatedName": "EorTimeoffsItemCreatedAt",
                 "schema": "DateTimeString",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -55322,12 +55328,14 @@
                 "value": {
                   "generatedName": "EorTimeoffsItemUpdatedAt",
                   "schema": "DateTimeString",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -55344,6 +55352,7 @@
               "value": {
                 "generatedName": "EorTimeoffsItemStartDate",
                 "schema": "DateTimeString",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -55366,12 +55375,14 @@
                 "value": {
                   "generatedName": "EorTimeoffsItemEndDate",
                   "schema": "DateTimeString",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -55442,15 +55453,19 @@
               "description": "Only valid if the requester asks to change existing time off and it has been reviewed.",
               "value": {
                 "generatedName": "EorTimeoffsItemChangeRequest",
+                "description": "Only valid if the requester asks to change existing time off and it has been reviewed.",
                 "value": {
+                  "description": "Only valid if the requester asks to change existing time off and it has been reviewed.",
                   "generatedName": "EorTimeoffsItemChangeRequest",
                   "schema": "EorTimeoffsBaseItem",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -55552,8 +55567,10 @@
               "generatedName": "EorTimeoffsBaseItemRequestedAt",
               "description": "Timestamp when time off was requested.",
               "value": {
+                "description": "Timestamp when time off was requested.",
                 "generatedName": "EorTimeoffsBaseItemRequestedAt",
                 "schema": "DateTimeString",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -55574,15 +55591,19 @@
               "description": "Timestamp when time off was reviewed.",
               "value": {
                 "generatedName": "EorTimeoffsBaseItemReviewedAt",
+                "description": "Timestamp when time off was reviewed.",
                 "value": {
+                  "description": "Timestamp when time off was reviewed.",
                   "generatedName": "EorTimeoffsBaseItemReviewedAt",
                   "schema": "DateTimeString",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -55699,15 +55720,19 @@
               "description": "Employee who requested the time off.",
               "value": {
                 "generatedName": "EorTimeoffsBaseItemRequester",
+                "description": "Employee who requested the time off.",
                 "value": {
+                  "description": "Employee who requested the time off.",
                   "generatedName": "EorTimeoffsBaseItemRequester",
                   "schema": "TimeoffsProfile",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -55724,15 +55749,19 @@
               "description": "User who reviewed the time off.",
               "value": {
                 "generatedName": "EorTimeoffsBaseItemReviewer",
+                "description": "User who reviewed the time off.",
                 "value": {
+                  "description": "User who reviewed the time off.",
                   "generatedName": "EorTimeoffsBaseItemReviewer",
                   "schema": "TimeoffsProfile",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -55859,12 +55888,14 @@
                 "value": {
                   "generatedName": "EorTimeoffsBaseItemSingleDate",
                   "schema": "DateTimeString",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -55910,12 +55941,14 @@
                 "value": {
                   "generatedName": "EorTimeoffsBaseItemAttachments",
                   "schema": "TimeoffsAttachments",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -56261,15 +56294,19 @@
               "description": "Avatar or selfie.",
               "value": {
                 "generatedName": "TimeoffsProfilePicUrl",
+                "description": "Avatar or selfie.",
                 "value": {
+                  "description": "Avatar or selfie.",
                   "generatedName": "TimeoffsProfilePicUrl",
                   "schema": "UrlType",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -58261,8 +58298,10 @@
               "generatedName": "PaymentPaidAt",
               "description": "Timestamp when payment was paid.",
               "value": {
+                "description": "Timestamp when payment was paid.",
                 "generatedName": "PaymentPaidAt",
                 "schema": "DateTimeString",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -58282,8 +58321,10 @@
               "generatedName": "PaymentCreatedAt",
               "description": "Timestamp when the record was created.",
               "value": {
+                "description": "Timestamp when the record was created.",
                 "generatedName": "PaymentCreatedAt",
                 "schema": "DateTimeString",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -62221,6 +62262,7 @@
               "value": {
                 "generatedName": "PeopleMeProfileType",
                 "schema": "ProfileTypeEnum",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"

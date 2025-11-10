@@ -19277,8 +19277,10 @@
             "generatedName": "ListConditionSetsRequestType",
             "description": "if provided, will return only the condition sets of the specified type. e.g: only user sets.",
             "value": {
+              "description": "if provided, will return only the condition sets of the specified type. e.g: only user sets.",
               "generatedName": "ListConditionSetsRequestType",
               "schema": "ConditionSetType",
+              "groupName": [],
               "source": {
                 "file": "../openapi.json",
                 "type": "openapi"
@@ -33808,8 +33810,10 @@
               "generatedName": "ConditionSetCreateType",
               "description": "the type of the set: UserSet or ResourceSet",
               "value": {
+                "description": "the type of the set: UserSet or ResourceSet",
                 "generatedName": "ConditionSetCreateType",
                 "schema": "ConditionSetType",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -34008,8 +34012,10 @@
               "generatedName": "ConditionSetReadType",
               "description": "the type of the set: UserSet or ResourceSet",
               "value": {
+                "description": "the type of the set: UserSet or ResourceSet",
                 "generatedName": "ConditionSetReadType",
                 "schema": "ConditionSetType",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -34926,8 +34932,10 @@
               "generatedName": "EnvironmentCopyScope",
               "description": "Filters to include and exclude copied objects",
               "value": {
+                "description": "Filters to include and exclude copied objects",
                 "generatedName": "EnvironmentCopyScope",
                 "schema": "EnvironmentCopyScope",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -34963,8 +34971,10 @@
               "generatedName": "EnvironmentCopyScopeResources",
               "description": "Resources to copy",
               "value": {
+                "description": "Resources to copy",
                 "generatedName": "EnvironmentCopyScopeResources",
                 "schema": "EnvironmentCopyScopeFilters",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -34984,8 +34994,10 @@
               "generatedName": "EnvironmentCopyScopeRoles",
               "description": "Roles to copy",
               "value": {
+                "description": "Roles to copy",
                 "generatedName": "EnvironmentCopyScopeRoles",
                 "schema": "EnvironmentCopyScopeFilters",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -35005,8 +35017,10 @@
               "generatedName": "EnvironmentCopyScopeUserSets",
               "description": "User sets to copy",
               "value": {
+                "description": "User sets to copy",
                 "generatedName": "EnvironmentCopyScopeUserSets",
                 "schema": "EnvironmentCopyScopeFilters",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -35026,8 +35040,10 @@
               "generatedName": "EnvironmentCopyScopeResourceSets",
               "description": "Resource sets to copy",
               "value": {
+                "description": "Resource sets to copy",
                 "generatedName": "EnvironmentCopyScopeResourceSets",
                 "schema": "EnvironmentCopyScopeFilters",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -35164,8 +35180,10 @@
               "generatedName": "EnvironmentCopyTargetNew",
               "description": "Description of the environment to create. This environment must not already exist.",
               "value": {
+                "description": "Description of the environment to create. This environment must not already exist.",
                 "generatedName": "EnvironmentCopyTargetNew",
                 "schema": "EnvironmentCreate",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -35284,8 +35302,10 @@
               "generatedName": "EnvironmentCreateJwks",
               "description": "jwks for element frontend only login",
               "value": {
+                "description": "jwks for element frontend only login",
                 "generatedName": "EnvironmentCreateJwks",
                 "schema": "JwksObj",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -35521,8 +35541,10 @@
               "generatedName": "EnvironmentReadJwks",
               "description": "jwks for element frontend only login",
               "value": {
+                "description": "jwks for element frontend only login",
                 "generatedName": "EnvironmentReadJwks",
                 "schema": "JwksObj",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -35758,8 +35780,10 @@
               "generatedName": "EnvironmentStatsJwks",
               "description": "jwks for element frontend only login",
               "value": {
+                "description": "jwks for element frontend only login",
                 "generatedName": "EnvironmentStatsJwks",
                 "schema": "JwksObj",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -35940,8 +35964,10 @@
               "generatedName": "EnvironmentUpdateJwks",
               "description": "jwks for element frontend only login",
               "value": {
+                "description": "jwks for element frontend only login",
                 "generatedName": "EnvironmentUpdateJwks",
                 "schema": "JwksObj",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -36223,8 +36249,10 @@
               "generatedName": "InviteReadRole",
               "description": "The role the member will be assigned with",
               "value": {
+                "description": "The role the member will be assigned with",
                 "generatedName": "InviteReadRole",
                 "schema": "MemberAccessLevel",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -40122,8 +40150,10 @@
               "generatedName": "ResourceAttributeUpdateType",
               "description": "The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.",
               "value": {
+                "description": "The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.",
                 "generatedName": "ResourceAttributeUpdateType",
                 "schema": "AttributeType",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"

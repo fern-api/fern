@@ -108,15 +108,22 @@
               "generatedName": "RequestId",
               "description": "An optional string value.\n",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "RequestId",
+                "description": "An optional string value.\n",
+                "value": {
+                  "description": "An optional string value.\n",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "RequestId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -143,15 +150,22 @@
               "generatedName": "ResponseValue",
               "description": "An optional numerical value.\n",
               "value": {
-                "schema": {
-                  "type": "double"
-                },
                 "generatedName": "ResponseValue",
+                "description": "An optional numerical value.\n",
+                "value": {
+                  "description": "An optional numerical value.\n",
+                  "schema": {
+                    "type": "double"
+                  },
+                  "generatedName": "ResponseValue",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
