@@ -72,4 +72,48 @@ describe("no-duplicate-overrides", () => {
 
         expect(violations).toMatchSnapshot();
     }, 10_000);
+
+    it("disjoint audiences - no conflict", async () => {
+        const violations = await getViolationsForRule({
+            rule: NoDuplicateOverridesRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("disjoint-audiences")
+            ),
+            cliVersion: "0.1.3-rc0"
+        });
+
+        expect(violations).toEqual([]);
+    }, 10_000);
+
+    it("overlapping audiences - conflict", async () => {
+        const violations = await getViolationsForRule({
+            rule: NoDuplicateOverridesRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("overlapping-audiences")
+            ),
+            cliVersion: "0.1.3-rc0"
+        });
+
+        expect(violations.length).toBeGreaterThan(0);
+        expect(violations[0]?.message).toContain("SDK method members.add already exists");
+    }, 10_000);
+
+    it("wildcard audiences - conflict", async () => {
+        const violations = await getViolationsForRule({
+            rule: NoDuplicateOverridesRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("wildcard-audiences")
+            ),
+            cliVersion: "0.1.3-rc0"
+        });
+
+        expect(violations.length).toBeGreaterThan(0);
+        expect(violations[0]?.message).toContain("SDK method members.add already exists");
+    }, 10_000);
 });

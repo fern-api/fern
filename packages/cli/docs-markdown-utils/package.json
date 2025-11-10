@@ -21,7 +21,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -32,7 +34,7 @@
     "test:update": "vitest --run -u"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "0.139.44-44071b8e4",
+    "@fern-api/fdr-sdk": "0.140.0-a411fe32c",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "estree-walker": "^3.0.3",
