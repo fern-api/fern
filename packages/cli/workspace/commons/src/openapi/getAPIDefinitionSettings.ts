@@ -33,6 +33,7 @@ export function getAPIDefinitionSettings(settings?: generatorsYml.APIDefinitionS
     const parseOptions: Partial<ParseOpenAPIOptions> = {
         useTitlesAsName: settings?.shouldUseTitleAsName,
         shouldUseUndiscriminatedUnionsWithLiterals: settings?.shouldUseUndiscriminatedUnionsWithLiterals,
+        discriminatedUnionV2: settings?.shouldUseUndiscriminatedUnionsWithLiterals,
         shouldUseIdiomaticRequestNames: settings?.shouldUseIdiomaticRequestNames,
         optionalAdditionalProperties: settings?.shouldUseOptionalAdditionalProperties,
         coerceEnumsToLiterals: settings?.coerceEnumsToLiterals,
