@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import path from "path";
 import { Project, SyntaxKind } from "ts-morph";
 
@@ -15,6 +15,10 @@ export async function convertJestImportsToVitest(
     project.addSourceFilesAtPaths(path.join(pathToProject, testsPath, "**/*.ts"));
     const testFiles = project.getSourceFiles();
     for (const sourceFile of testFiles) {
+        // Track if we need to add Mock/MockInstance imports
+        let needsMock = false;
+        let needsMockInstance = false;
+
         // 0. Replace import { ... } from "@jest/globals" with import { ... } from "vitest"
         sourceFile.getImportDeclarations().forEach((importDecl) => {
             const moduleSpecifier = importDecl.getModuleSpecifierValue();
@@ -23,28 +27,64 @@ export async function convertJestImportsToVitest(
             }
         });
 
-        // 1. Replace jest.Mock with import("vitest").Mock
+        // 1. Replace jest.Mock with Mock
         sourceFile.forEachDescendant((node) => {
             if (node.getKind() === SyntaxKind.TypeReference && node.getText().startsWith("jest.Mock")) {
-                node.replaceWithText('import("vitest").Mock');
+                node.replaceWithText('Mock');
+                needsMock = true;
             }
         });
 
-        // 2. Replace jest.SpyInstance with import("vitest").MockInstance
+        // 2. Replace jest.SpyInstance with MockInstance
         sourceFile.forEachDescendant((node) => {
             if (node.getKind() === SyntaxKind.TypeReference && node.getText().startsWith("jest.SpyInstance")) {
-                node.replaceWithText('import("vitest").MockInstance');
+                node.replaceWithText('MockInstance');
+                needsMockInstance = true;
             }
         });
 
-        // 3. Replace jest.useFakeTimers({ doNotFake: ["nextTick"] }) with vi.useFakeTimers({...})
+        // 3. Add Mock/MockInstance to vitest import if needed
+        if (needsMock || needsMockInstance) {
+            const vitestImport = sourceFile.getImportDeclaration("vitest");
+            const importsToAdd = [];
+            if (vitestImport) {
+                const namedImports = vitestImport.getNamedImports();
+                const existingNames = namedImports.map(ni => ni.getName());
+
+                if (needsMock && !existingNames.includes("Mock")) {
+                    importsToAdd.push("Mock");
+                }
+                if (needsMockInstance && !existingNames.includes("MockInstance")) {
+                    importsToAdd.push("MockInstance");
+                }
+
+                if (importsToAdd.length > 0) {
+                    vitestImport.addNamedImports(importsToAdd);
+                }
+            } else {
+                // No vitest import exists, create one
+                if (needsMock) {
+                    importsToAdd.push("Mock");
+                }
+                if (needsMockInstance) {
+                    importsToAdd.push("MockInstance");
+                }
+
+                sourceFile.addImportDeclaration({
+                    moduleSpecifier: "vitest",
+                    namedImports: importsToAdd
+                });
+            }
+        }
+
+        // 4. Replace jest.useFakeTimers({ doNotFake: ["nextTick"] }) with vi.useFakeTimers({...})
         sourceFile.forEachDescendant((node) => {
             if (
                 node.getKind() === SyntaxKind.CallExpression &&
                 node.getText().replace(/\s/g, "") === 'jest.useFakeTimers({doNotFake:["nextTick"]})'
             ) {
                 node.replaceWithText(
-                    `vi.useFakeTimers({ 
+                    `vi.useFakeTimers({
 	toFake: [
 		"setTimeout",
 		"clearTimeout",
@@ -64,7 +104,7 @@ export async function convertJestImportsToVitest(
             }
         });
 
-        // 4. Replace all remaining 'jest' with 'vi'
+        // 5. Replace all remaining 'jest' with 'vi'
         // (after special cases above)
         const fullText = sourceFile.getFullText();
         // Only replace if there are still 'jest' occurrences
