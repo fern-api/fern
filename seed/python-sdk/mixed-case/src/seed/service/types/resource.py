@@ -99,4 +99,6 @@ Resource_User(
     extra_properties={"foo": "bar", "baz": "qux"},
 )
 """
-Resource = typing.Union[Resource_User, Resource_Organization]
+Resource = typing_extensions.Annotated[
+    typing.Union[Resource_User, Resource_Organization], pydantic.Field(discriminator="resource_type")
+]
