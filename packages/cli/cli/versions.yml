@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- changelogEntry:
+    - summary: |
+        - Gracefully circuit-break from recursive examples
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-10"
+  version: 0.112.2
+
 - changelogEntry:
     - summary: |
         Update to use discriminated unions when propertyName is provided in oneOf.
