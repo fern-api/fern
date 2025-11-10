@@ -715,9 +715,10 @@ types:
 
   ThemeConfig:
     properties:
-      sidebar: SidebarThemeConfig
-      body: BodyThemeConfig
-      tabs: TabsThemeConfig
+      sidebar: optional<SidebarThemeConfig>
+      body: optional<BodyThemeConfig>
+      tabs: optional<TabsThemeConfig>
+      page-actions: optional<PageActionsThemeConfig>
 
   TabsThemeConfig:
     enum:
@@ -733,6 +734,11 @@ types:
     enum:
       - default
       - minimal
+
+  PageActionsThemeConfig:
+    enum:
+      - default
+      - toolbar
 
   HttpSnippetsConfig:
     discriminated: false

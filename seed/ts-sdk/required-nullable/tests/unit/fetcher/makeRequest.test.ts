@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import { makeRequest } from "../../../src/core/fetcher/makeRequest";
 
 describe("Test makeRequest", () => {
@@ -6,7 +7,7 @@ describe("Test makeRequest", () => {
     const mockHeaders = { "Content-Type": "application/json" };
     const mockBody = JSON.stringify({ key: "value" });
 
-    let mockFetch: import("vitest").Mock;
+    let mockFetch: Mock;
 
     beforeEach(() => {
         mockFetch = vi.fn();
