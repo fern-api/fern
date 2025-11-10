@@ -20062,15 +20062,20 @@
             "schema": {
               "generatedName": "ThingPublishedAt",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ThingPublishedAt",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ThingPublishedAt",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
