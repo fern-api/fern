@@ -57,8 +57,11 @@ class InvalidRequestCause_UnexpectedLanguage(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-InvalidRequestCause = typing.Union[
-    InvalidRequestCause_SubmissionIdNotFound,
-    InvalidRequestCause_CustomTestCasesUnsupported,
-    InvalidRequestCause_UnexpectedLanguage,
+InvalidRequestCause = typing_extensions.Annotated[
+    typing.Union[
+        InvalidRequestCause_SubmissionIdNotFound,
+        InvalidRequestCause_CustomTestCasesUnsupported,
+        InvalidRequestCause_UnexpectedLanguage,
+    ],
+    pydantic.Field(discriminator="type"),
 ]

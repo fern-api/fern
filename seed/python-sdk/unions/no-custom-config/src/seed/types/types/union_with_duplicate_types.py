@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
@@ -63,4 +64,6 @@ UnionWithDuplicateTypes_Foo1(
     name="example1",
 )
 """
-UnionWithDuplicateTypes = typing.Union[UnionWithDuplicateTypes_Foo1, UnionWithDuplicateTypes_Foo2]
+UnionWithDuplicateTypes = typing_extensions.Annotated[
+    typing.Union[UnionWithDuplicateTypes_Foo1, UnionWithDuplicateTypes_Foo2], pydantic.Field(discriminator="type")
+]

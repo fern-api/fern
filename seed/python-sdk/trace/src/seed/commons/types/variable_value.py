@@ -164,18 +164,21 @@ class VariableValue_NullValue(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-VariableValue = typing.Union[
-    VariableValue_IntegerValue,
-    VariableValue_BooleanValue,
-    VariableValue_DoubleValue,
-    VariableValue_StringValue,
-    VariableValue_CharValue,
-    VariableValue_MapValue,
-    VariableValue_ListValue,
-    VariableValue_BinaryTreeValue,
-    VariableValue_SinglyLinkedListValue,
-    VariableValue_DoublyLinkedListValue,
-    VariableValue_NullValue,
+VariableValue = typing_extensions.Annotated[
+    typing.Union[
+        VariableValue_IntegerValue,
+        VariableValue_BooleanValue,
+        VariableValue_DoubleValue,
+        VariableValue_StringValue,
+        VariableValue_CharValue,
+        VariableValue_MapValue,
+        VariableValue_ListValue,
+        VariableValue_BinaryTreeValue,
+        VariableValue_SinglyLinkedListValue,
+        VariableValue_DoublyLinkedListValue,
+        VariableValue_NullValue,
+    ],
+    pydantic.Field(discriminator="type"),
 ]
 from .key_value_pair import KeyValuePair  # noqa: E402, I001
 

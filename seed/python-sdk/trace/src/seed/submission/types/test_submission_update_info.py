@@ -96,12 +96,15 @@ class TestSubmissionUpdateInfo_Finished(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-TestSubmissionUpdateInfo = typing.Union[
-    TestSubmissionUpdateInfo_Running,
-    TestSubmissionUpdateInfo_Stopped,
-    TestSubmissionUpdateInfo_Errored,
-    TestSubmissionUpdateInfo_GradedTestCase,
-    TestSubmissionUpdateInfo_RecordedTestCase,
-    TestSubmissionUpdateInfo_Finished,
+TestSubmissionUpdateInfo = typing_extensions.Annotated[
+    typing.Union[
+        TestSubmissionUpdateInfo_Running,
+        TestSubmissionUpdateInfo_Stopped,
+        TestSubmissionUpdateInfo_Errored,
+        TestSubmissionUpdateInfo_GradedTestCase,
+        TestSubmissionUpdateInfo_RecordedTestCase,
+        TestSubmissionUpdateInfo_Finished,
+    ],
+    pydantic.Field(discriminator="type"),
 ]
 update_forward_refs(TestSubmissionUpdateInfo_GradedTestCase)

@@ -5,6 +5,7 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from .raw_client import AsyncRawOptionalClient, RawOptionalClient
+from .types.send_optional_body_request import SendOptionalBodyRequest
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -56,6 +57,42 @@ class OptionalClient:
         )
         """
         _response = self._raw_client.send_optional_body(request=request, request_options=request_options)
+        return _response.data
+
+    def send_optional_typed_body(
+        self,
+        *,
+        request: typing.Optional[SendOptionalBodyRequest] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> str:
+        """
+        Parameters
+        ----------
+        request : typing.Optional[SendOptionalBodyRequest]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+            Id of the created resource
+
+        Examples
+        --------
+        from seed import SeedObjectsWithImports
+        from seed.optional import SendOptionalBodyRequest
+
+        client = SeedObjectsWithImports(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.optional.send_optional_typed_body(
+            request=SendOptionalBodyRequest(
+                message="message",
+            ),
+        )
+        """
+        _response = self._raw_client.send_optional_typed_body(request=request, request_options=request_options)
         return _response.data
 
 
@@ -113,4 +150,48 @@ class AsyncOptionalClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.send_optional_body(request=request, request_options=request_options)
+        return _response.data
+
+    async def send_optional_typed_body(
+        self,
+        *,
+        request: typing.Optional[SendOptionalBodyRequest] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> str:
+        """
+        Parameters
+        ----------
+        request : typing.Optional[SendOptionalBodyRequest]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+            Id of the created resource
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedObjectsWithImports
+        from seed.optional import SendOptionalBodyRequest
+
+        client = AsyncSeedObjectsWithImports(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.optional.send_optional_typed_body(
+                request=SendOptionalBodyRequest(
+                    message="message",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.send_optional_typed_body(request=request, request_options=request_options)
         return _response.data

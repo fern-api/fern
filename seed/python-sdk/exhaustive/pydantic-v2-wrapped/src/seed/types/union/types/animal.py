@@ -26,4 +26,4 @@ class Animal_Cat(UniversalBaseModel):
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
-Animal = typing.Union[Animal_Dog, Animal_Cat]
+Animal = typing_extensions.Annotated[typing.Union[Animal_Dog, Animal_Cat], pydantic.Field(discriminator="animal")]
