@@ -1,5 +1,7 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExampleTypeShape,
+    TypeReference,
     UndiscriminatedUnionMember,
     UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
@@ -19,7 +21,6 @@ import {
     ts,
     WriterFunction
 } from "ts-morph";
-
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
 export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
@@ -31,7 +32,10 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
     public generateStatements(
         context: Context
     ): string | WriterFunction | (string | WriterFunction | StatementStructures)[] {
-        const statements: StatementStructures[] = [this.generateTypeAlias(context)];
+        const statements: StatementStructures[] = [];
+
+        statements.push(this.generateTypeAlias(context));
+
         const iModule = this.generateModule(context);
         if (iModule) {
             statements.push(iModule);
@@ -83,6 +87,7 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
 
         const typeNodeReferences = this.shape.members.map((member) => ({
             docs: member.docs,
+            member: member,
             typeReference: this.getTypeReferenceNode(context, member)
         }));
         const anyRequestVariantsNeeded = typeNodeReferences.some((ref) => ref.typeReference.requestTypeNode != null);
@@ -95,9 +100,10 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
                 isExported: true,
                 type: getWriterForMultiLineUnionType(
                     typeNodeReferences.map((value) => {
+                        const requestNode = value.typeReference.requestTypeNode ?? value.typeReference.typeNode;
                         return {
                             docs: value.docs,
-                            node: value.typeReference.requestTypeNode ?? value.typeReference.typeNode
+                            node: this.applyIndexSignatureSubstitution(context, value.member, requestNode)
                         };
                     })
                 )
@@ -120,9 +126,10 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
                 isExported: true,
                 type: getWriterForMultiLineUnionType(
                     typeNodeReferences.map((value) => {
+                        const responseNode = value.typeReference.responseTypeNode ?? value.typeReference.typeNode;
                         return {
                             docs: value.docs,
-                            node: value.typeReference.responseTypeNode ?? value.typeReference.typeNode
+                            node: this.applyIndexSignatureSubstitution(context, value.member, responseNode)
                         };
                     })
                 )
@@ -151,7 +158,7 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
                 this.shape.members.map((value) => {
                     return {
                         docs: value.docs,
-                        node: this.getTypeNode(context, value)
+                        node: this.getTypeNodeForMember(context, value)
                     };
                 })
             )
@@ -175,4 +182,93 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
 
         return context.type.getGeneratedExample(example.singleUnionType).build(context, opts);
     }
+
+    private isSelfRecursive(context: Context, typeRef: TypeReference): boolean {
+        const unwrappedRef = unwrapOptionalAndNullable(typeRef);
+        if (unwrappedRef.type !== "named") {
+            return false;
+        }
+
+        const namedTypeDeclaration = context.type.getTypeDeclaration(unwrappedRef);
+        return namedTypeDeclaration.name.name.pascalCase.unsafeName === this.typeName;
+    }
+
+    private applyIndexSignatureSubstitution(
+        context: Context,
+        member: UndiscriminatedUnionMember,
+        typeNode: ts.TypeNode
+    ): ts.TypeNode {
+        if (member.type.type !== "container") {
+            return typeNode;
+        }
+
+        const container = member.type.container;
+
+        if (container.type === "map" && this.isSelfRecursive(context, container.valueType)) {
+            return ts.factory.createTypeLiteralNode([
+                ts.factory.createIndexSignature(
+                    undefined,
+                    undefined,
+                    [
+                        ts.factory.createParameterDeclaration(
+                            undefined,
+                            undefined,
+                            undefined,
+                            "key",
+                            undefined,
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                            undefined
+                        )
+                    ],
+                    ts.factory.createTypeReferenceNode(this.typeName)
+                )
+            ]);
+        }
+
+        return typeNode;
+    }
+
+    private getTypeNodeForMember(context: Context, member: UndiscriminatedUnionMember): ts.TypeNode {
+        if (member.type.type !== "container") {
+            return this.getTypeNode(context, member);
+        }
+
+        const container = member.type.container;
+
+        if (container.type === "map" && this.isSelfRecursive(context, container.valueType)) {
+            return ts.factory.createTypeLiteralNode([
+                ts.factory.createIndexSignature(
+                    undefined,
+                    undefined,
+                    [
+                        ts.factory.createParameterDeclaration(
+                            undefined,
+                            undefined,
+                            undefined,
+                            "key",
+                            undefined,
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                            undefined
+                        )
+                    ],
+                    ts.factory.createTypeReferenceNode(this.typeName)
+                )
+            ]);
+        }
+
+        return this.getTypeNode(context, member);
+    }
+}
+
+function unwrapOptionalAndNullable(typeReference: FernIr.TypeReference): FernIr.TypeReference {
+    if (typeReference.type === "container") {
+        if (typeReference.container.type === "optional") {
+            return unwrapOptionalAndNullable(typeReference.container.optional);
+        }
+        if (typeReference.container.type === "nullable") {
+            return unwrapOptionalAndNullable(typeReference.container.nullable);
+        }
+    }
+
+    return typeReference;
 }

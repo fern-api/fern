@@ -6,19 +6,19 @@ private func main() async throws {
 
     _ = try await client.nullableOptional.createComplexProfile(request: ComplexProfile(
         id: "id",
-        nullableRole: .admin,
+        nullableRole: .value(.admin),
         optionalRole: .admin,
-        optionalNullableRole: .admin,
-        nullableStatus: .active,
+        optionalNullableRole: .value(.admin),
+        nullableStatus: .value(.active),
         optionalStatus: .active,
-        optionalNullableStatus: .active,
-        nullableNotification: NotificationMethod.email(
+        optionalNullableStatus: .value(.active),
+        nullableNotification: .value(NotificationMethod.email(
             .init(
                 emailAddress: "emailAddress",
                 subject: "subject",
                 htmlContent: "htmlContent"
             )
-        ),
+        )),
         optionalNotification: NotificationMethod.email(
             .init(
                 emailAddress: "emailAddress",
@@ -26,79 +26,79 @@ private func main() async throws {
                 htmlContent: "htmlContent"
             )
         ),
-        optionalNullableNotification: NotificationMethod.email(
+        optionalNullableNotification: .value(NotificationMethod.email(
             .init(
                 emailAddress: "emailAddress",
                 subject: "subject",
                 htmlContent: "htmlContent"
             )
-        ),
-        nullableSearchResult: SearchResult.user(
+        )),
+        nullableSearchResult: .value(SearchResult.user(
             .init(
                 id: "id",
                 username: "username",
-                email: "email",
+                email: .value("email"),
                 phone: "phone",
                 createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                updatedAt: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
                 address: Address(
                     street: "street",
-                    city: "city",
+                    city: .value("city"),
                     state: "state",
                     zipCode: "zipCode",
-                    country: "country",
-                    buildingId: "buildingId",
+                    country: .value("country"),
+                    buildingId: .value("buildingId"),
                     tenantId: "tenantId"
                 )
             )
-        ),
+        )),
         optionalSearchResult: SearchResult.user(
             .init(
                 id: "id",
                 username: "username",
-                email: "email",
+                email: .value("email"),
                 phone: "phone",
                 createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                updatedAt: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
                 address: Address(
                     street: "street",
-                    city: "city",
+                    city: .value("city"),
                     state: "state",
                     zipCode: "zipCode",
-                    country: "country",
-                    buildingId: "buildingId",
+                    country: .value("country"),
+                    buildingId: .value("buildingId"),
                     tenantId: "tenantId"
                 )
             )
         ),
-        nullableArray: [
+        nullableArray: .value([
             "nullableArray",
             "nullableArray"
-        ],
+        ]),
         optionalArray: [
             "optionalArray",
             "optionalArray"
         ],
-        optionalNullableArray: [
+        optionalNullableArray: .value([
             "optionalNullableArray",
             "optionalNullableArray"
-        ],
-        nullableListOfNullables: [
-            "nullableListOfNullables",
-            "nullableListOfNullables"
-        ],
-        nullableMapOfNullables: [
-            "nullableMapOfNullables": Address(
+        ]),
+        nullableListOfNullables: .value([
+            .value("nullableListOfNullables"),
+            .value("nullableListOfNullables")
+        ]),
+        nullableMapOfNullables: .value([
+            "nullableMapOfNullables": .value(Address(
                 street: "street",
-                city: "city",
+                city: .value("city"),
                 state: "state",
                 zipCode: "zipCode",
-                country: "country",
-                buildingId: "buildingId",
+                country: .value("country"),
+                buildingId: .value("buildingId"),
                 tenantId: "tenantId"
-            )
-        ],
-        nullableListOfUnions: [
+            ))
+        ]),
+        nullableListOfUnions: .value([
             NotificationMethod.email(
                 .init(
                     emailAddress: "emailAddress",
@@ -113,7 +113,7 @@ private func main() async throws {
                     htmlContent: "htmlContent"
                 )
             )
-        ],
+        ]),
         optionalMapOfEnums: [
             "optionalMapOfEnums": .admin
         ]

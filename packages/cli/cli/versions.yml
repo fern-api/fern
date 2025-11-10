@@ -1,6 +1,30 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Markdown snippets now support passing parameters to the markdown file.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-08"
+  version: 0.112.0
+
+- changelogEntry:
+    - summary: |
+        OpenAPI importer now converts request bodies to referenced requests when body parameter names overlap with query parameter names. This ensures proper type generation and avoids naming conflicts in generated SDKs.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-08"
+  version: 0.111.0
+
+- changelogEntry:
+    - summary: |
+        CLI will send the correct IR version to latest Ruby generator.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-07"
+  version: 0.110.1
+
+- changelogEntry:
+    - summary: |
         Add support for file hashing when running `fern generate --docs`. This allows for more efficient file uploads to the docs site by only uploading files that have changed since the last generation.
       type: chore
   irVersion: 61

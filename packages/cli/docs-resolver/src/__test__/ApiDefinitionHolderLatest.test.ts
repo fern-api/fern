@@ -89,7 +89,8 @@ it.skip("finds endpoint by id and by path/method", () => {
                 responses: [],
                 errors: [],
                 snippetTemplates: undefined,
-                protocol: undefined
+                protocol: undefined,
+                includeInApiExplorer: undefined
             }
         },
         websockets: {},

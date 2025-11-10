@@ -5,6 +5,12 @@
 
 The IMDB Inc PHP library provides convenient access to the IMDB Inc APIs from PHP.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Custom Section](#custom-section)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh

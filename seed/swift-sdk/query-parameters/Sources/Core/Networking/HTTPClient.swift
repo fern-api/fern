@@ -1,13 +1,13 @@
 import Foundation
 
-final class HTTPClient: Sendable {
+final class HTTPClient: Swift.Sendable {
     private let clientConfig: ClientConfig
     private let jsonEncoder = Serde.jsonEncoder
     private let jsonDecoder = Serde.jsonDecoder
 
-    private static let initialRetryDelay: TimeInterval = 1.0  // 1 second
-    private static let maxRetryDelay: TimeInterval = 60.0  // 60 seconds
-    private static let jitterFactor: Double = 0.2  // 20% jitter
+    private static let initialRetryDelay: Foundation.TimeInterval = 1.0  // 1 second
+    private static let maxRetryDelay: Foundation.TimeInterval = 60.0  // 60 seconds
+    private static let jitterFactor: Swift.Double = 0.2  // 20% jitter
 
     init(config: ClientConfig) {
         self.clientConfig = config
@@ -16,10 +16,10 @@ final class HTTPClient: Sendable {
     /// Performs a request with no response.
     func performRequest(
         method: HTTP.Method,
-        path: String,
+        path: Swift.String,
         contentType requestContentType: HTTP.ContentType = .applicationJson,
-        headers requestHeaders: [String: String?] = [:],
-        queryParams requestQueryParams: [String: QueryParameter?] = [:],
+        headers requestHeaders: [Swift.String: Swift.String?] = [:],
+        queryParams requestQueryParams: [Swift.String: QueryParameter?] = [:],
         body requestBody: Any? = nil,
         requestOptions: RequestOptions? = nil
     ) async throws {
@@ -31,17 +31,17 @@ final class HTTPClient: Sendable {
             queryParams: requestQueryParams,
             body: requestBody,
             requestOptions: requestOptions,
-            responseType: Data.self
+            responseType: Foundation.Data.self
         )
     }
 
     /// Performs a request with the specified response type.
-    func performRequest<T: Decodable>(
+    func performRequest<T: Swift.Decodable>(
         method: HTTP.Method,
-        path: String,
+        path: Swift.String,
         contentType requestContentType: HTTP.ContentType = .applicationJson,
-        headers requestHeaders: [String: String?] = [:],
-        queryParams requestQueryParams: [String: QueryParameter?] = [:],
+        headers requestHeaders: [Swift.String: Swift.String?] = [:],
+        queryParams requestQueryParams: [Swift.String: QueryParameter?] = [:],
         body requestBody: Any? = nil,
         requestOptions: RequestOptions? = nil,
         responseType: T.Type
@@ -49,9 +49,9 @@ final class HTTPClient: Sendable {
         let requestBody: HTTP.RequestBody? = requestBody.map { body in
             if let multipartData = body as? MultipartFormData {
                 return .multipartFormData(multipartData)
-            } else if let data = body as? Data {
+            } else if let data = body as? Foundation.Data {
                 return .data(data)
-            } else if let encodable = body as? any Encodable {
+            } else if let encodable = body as? any Swift.Encodable {
                 return .jsonEncodable(encodable)
             } else {
                 preconditionFailure("Unsupported body type: \(type(of: body))")
@@ -73,7 +73,7 @@ final class HTTPClient: Sendable {
             requestOptions: requestOptions
         )
 
-        if responseType == Data.self {
+        if responseType == Foundation.Data.self {
             if let data = data as? T {
                 return data
             } else {
@@ -81,8 +81,8 @@ final class HTTPClient: Sendable {
             }
         }
 
-        if responseType == String.self {
-            if let string = String(data: data, encoding: .utf8) as? T {
+        if responseType == Swift.String.self {
+            if let string = Swift.String(data: data, encoding: .utf8) as? T {
                 return string
             } else {
                 throw ClientError.invalidResponse
@@ -98,22 +98,22 @@ final class HTTPClient: Sendable {
 
     private func buildRequest(
         method: HTTP.Method,
-        path: String,
+        path: Swift.String,
         requestContentType: HTTP.ContentType,
-        requestHeaders: [String: String?],
-        requestQueryParams: [String: QueryParameter?],
+        requestHeaders: [Swift.String: Swift.String?],
+        requestQueryParams: [Swift.String: QueryParameter?],
         requestBody: HTTP.RequestBody? = nil,
         requestOptions: RequestOptions? = nil
-    ) async throws -> URLRequest {
+    ) async throws -> Networking.URLRequest {
         // Init with URL
         let url = buildRequestURL(
             path: path, requestQueryParams: requestQueryParams, requestOptions: requestOptions
         )
-        var request = URLRequest(url: url)
+        var request = Networking.URLRequest(url: url)
 
         // Set timeout
         if let timeout = requestOptions?.timeout {
-            request.timeoutInterval = TimeInterval(timeout)
+            request.timeoutInterval = Foundation.TimeInterval(timeout)
         }
 
         // Set method
@@ -142,26 +142,36 @@ final class HTTPClient: Sendable {
     }
 
     private func buildRequestURL(
-        path: String,
-        requestQueryParams: [String: QueryParameter?],
+        path: Swift.String,
+        requestQueryParams: [Swift.String: QueryParameter?],
         requestOptions: RequestOptions? = nil
     ) -> URL {
-        let endpointURL: String = "\(clientConfig.baseURL)\(path)"
-        guard var components: URLComponents = URLComponents(string: endpointURL) else {
+        let endpointURL = "\(clientConfig.baseURL)\(path)"
+        guard var components = Foundation.URLComponents(string: endpointURL) else {
             preconditionFailure(
                 "Invalid URL '\(endpointURL)' - this indicates an unexpected error in the SDK."
             )
         }
         if !requestQueryParams.isEmpty {
-            components.queryItems = requestQueryParams.map { key, value in
-                URLQueryItem(name: key, value: value?.toString())
+            let baseItems: [Foundation.URLQueryItem] = requestQueryParams.compactMap { key, value in
+                guard let unwrapped = value else { return nil }
+                let stringValue = unwrapped.toString()
+                guard !stringValue.isEmpty else { return nil }
+                return Foundation.URLQueryItem(name: key, value: stringValue)
+            }
+            if !baseItems.isEmpty {
+                components.queryItems = baseItems
             }
         }
         if let additionalQueryParams = requestOptions?.additionalQueryParameters {
-            components.queryItems?.append(
-                contentsOf: additionalQueryParams.map { key, value in
-                    URLQueryItem(name: key, value: value)
-                })
+            let extraItems = additionalQueryParams.compactMap { key, value in
+                value.isEmpty ? nil : Foundation.URLQueryItem(name: key, value: value)
+            }
+            if components.queryItems == nil {
+                components.queryItems = extraItems
+            } else {
+                components.queryItems?.append(contentsOf: extraItems)
+            }
         }
         guard let url = components.url else {
             preconditionFailure(
@@ -174,9 +184,9 @@ final class HTTPClient: Sendable {
     private func buildRequestHeaders(
         requestBody: HTTP.RequestBody?,
         requestContentType: HTTP.ContentType,
-        requestHeaders: [String: String?],
+        requestHeaders: [Swift.String: Swift.String?],
         requestOptions: RequestOptions? = nil
-    ) async throws -> [String: String] {
+    ) async throws -> [Swift.String: Swift.String] {
         var headers = clientConfig.headers ?? [:]
 
         headers["Content-Type"] = buildContentTypeHeader(
@@ -208,7 +218,7 @@ final class HTTPClient: Sendable {
     private func buildContentTypeHeader(
         requestBody: HTTP.RequestBody?,
         requestContentType: HTTP.ContentType,
-    ) -> String {
+    ) -> Swift.String {
         var contentType = requestContentType.rawValue
         if let requestBody, case .multipartFormData(let multipartData) = requestBody {
             if contentType != HTTP.ContentType.multipartFormData.rawValue {
@@ -222,7 +232,8 @@ final class HTTPClient: Sendable {
         return contentType
     }
 
-    private func getBearerAuthToken(_ requestOptions: RequestOptions?) async throws -> String? {
+    private func getBearerAuthToken(_ requestOptions: RequestOptions?) async throws -> Swift.String?
+    {
         if let tokenString = requestOptions?.token {
             return tokenString
         }
@@ -253,17 +264,17 @@ final class HTTPClient: Sendable {
     }
 
     private func executeRequestWithURLSession(
-        _ request: URLRequest,
+        _ request: Networking.URLRequest,
         requestOptions: RequestOptions? = nil
-    ) async throws -> (Data, String?) {
+    ) async throws -> (Foundation.Data, Swift.String?) {
         let maxRetries = requestOptions?.maxRetries ?? clientConfig.maxRetries
-        var lastResponse: (Data, HTTPURLResponse)?
+        var lastResponse: (Foundation.Data, Networking.HTTPURLResponse)?
 
         for attempt in 0...maxRetries {
             do {
                 let (data, response) = try await clientConfig.urlSession.data(for: request)
 
-                guard let httpResponse = response as? HTTPURLResponse else {
+                guard let httpResponse = response as? Networking.HTTPURLResponse else {
                     throw ClientError.invalidResponse
                 }
 
@@ -277,7 +288,8 @@ final class HTTPClient: Sendable {
 
                 if attempt < maxRetries && shouldRetry(statusCode: httpResponse.statusCode) {
                     let delay = getRetryDelay(response: httpResponse, retryAttempt: attempt)
-                    try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+                    try await _Concurrency.Task.sleep(
+                        nanoseconds: Swift.UInt64(delay * 1_000_000_000))
                     continue
                 }
 
@@ -293,10 +305,11 @@ final class HTTPClient: Sendable {
                         throw ClientError.networkError(error)
                     }
                 }
-                let delay = Self.initialRetryDelay * pow(2.0, Double(attempt))
+                let delay = Self.initialRetryDelay * pow(2.0, Swift.Double(attempt))
                 let cappedDelay = min(delay, Self.maxRetryDelay)
                 let jitteredDelay = addSymmetricJitter(to: cappedDelay)
-                try await Task.sleep(nanoseconds: UInt64(jitteredDelay * 1_000_000_000))
+                try await _Concurrency.Task.sleep(
+                    nanoseconds: Swift.UInt64(jitteredDelay * 1_000_000_000))
             }
         }
 
@@ -306,13 +319,15 @@ final class HTTPClient: Sendable {
         throw ClientError.invalidResponse
     }
 
-    private func shouldRetry(statusCode: Int) -> Bool {
+    private func shouldRetry(statusCode: Swift.Int) -> Swift.Bool {
         return statusCode == 408 || statusCode == 429 || statusCode >= 500
     }
 
-    private func getRetryDelay(response: HTTPURLResponse, retryAttempt: Int) -> TimeInterval {
+    private func getRetryDelay(response: Networking.HTTPURLResponse, retryAttempt: Swift.Int)
+        -> Foundation.TimeInterval
+    {
         if let retryAfter = response.value(forHTTPHeaderField: "Retry-After") {
-            if let seconds = Double(retryAfter), seconds > 0 {
+            if let seconds = Swift.Double(retryAfter), seconds > 0 {
                 return min(seconds, Self.maxRetryDelay)
             }
 
@@ -325,8 +340,8 @@ final class HTTPClient: Sendable {
         }
 
         if let rateLimitReset = response.value(forHTTPHeaderField: "X-RateLimit-Reset") {
-            if let resetTimeSeconds = Double(rateLimitReset) {
-                let resetDate = Date(timeIntervalSince1970: resetTimeSeconds)
+            if let resetTimeSeconds = Swift.Double(rateLimitReset) {
+                let resetDate = Foundation.Date(timeIntervalSince1970: resetTimeSeconds)
                 let delay = resetDate.timeIntervalSinceNow
                 if delay > 0 {
                     let cappedDelay = min(delay, Self.maxRetryDelay)
@@ -335,31 +350,32 @@ final class HTTPClient: Sendable {
             }
         }
 
-        let baseDelay = Self.initialRetryDelay * pow(2.0, Double(retryAttempt))
+        let baseDelay = Self.initialRetryDelay * pow(2.0, Swift.Double(retryAttempt))
         let cappedDelay = min(baseDelay, Self.maxRetryDelay)
         return addSymmetricJitter(to: cappedDelay)
     }
 
-    private func parseHTTPDate(_ dateString: String) -> Date? {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(abbreviation: "GMT")
+    private func parseHTTPDate(_ dateString: Swift.String) -> Foundation.Date? {
+        let formatter = Foundation.DateFormatter()
+        formatter.locale = Foundation.Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = Foundation.TimeZone(abbreviation: "GMT")
         formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
         return formatter.date(from: dateString)
     }
 
-    private func addPositiveJitter(to delay: TimeInterval) -> TimeInterval {
-        let jitterMultiplier = 1.0 + Double.random(in: 0...Self.jitterFactor)
+    private func addPositiveJitter(to delay: Foundation.TimeInterval) -> Foundation.TimeInterval {
+        let jitterMultiplier = 1.0 + Swift.Double.random(in: 0...Self.jitterFactor)
         return delay * jitterMultiplier
     }
 
-    private func addSymmetricJitter(to delay: TimeInterval) -> TimeInterval {
+    private func addSymmetricJitter(to delay: Foundation.TimeInterval) -> Foundation.TimeInterval {
         let jitterMultiplier =
-            1.0 + Double.random(in: -Self.jitterFactor / 2...Self.jitterFactor / 2)
+            1.0 + Swift.Double.random(in: -Self.jitterFactor / 2...Self.jitterFactor / 2)
         return delay * jitterMultiplier
     }
 
-    private func makeErrorFromResponse(statusCode: Int, data: Data) -> ClientError {
+    private func makeErrorFromResponse(statusCode: Swift.Int, data: Foundation.Data) -> ClientError
+    {
         let errorResponse = parseErrorResponse(statusCode: statusCode, from: data)
         switch statusCode {
         case 400:
@@ -379,21 +395,24 @@ final class HTTPClient: Sendable {
         }
     }
 
-    private func parseErrorResponse(statusCode: Int, from data: Data) -> APIErrorResponse? {
+    private func parseErrorResponse(statusCode: Swift.Int, from data: Foundation.Data)
+        -> APIErrorResponse?
+    {
         // Try to parse as JSON error response first
         if let errorResponse = try? jsonDecoder.decode(APIErrorResponse.self, from: data) {
             return errorResponse
         }
 
         // Try to parse as simple JSON with message field
-        if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-            let message = json["message"] as? String
+        if let json = try? Foundation.JSONSerialization.jsonObject(with: data)
+            as? [Swift.String: Any],
+            let message = json["message"] as? Swift.String
         {
             return APIErrorResponse(code: statusCode, message: message)
         }
 
         // Try to parse as plain text
-        if let errorMessage = String(data: data, encoding: .utf8), !errorMessage.isEmpty {
+        if let errorMessage = Swift.String(data: data, encoding: .utf8), !errorMessage.isEmpty {
             return APIErrorResponse(code: statusCode, message: errorMessage)
         }
 
