@@ -307,6 +307,30 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         GeneratedClientOptions generatedClientOptions = clientOptionsGenerator.generateFile();
         this.addGeneratedFile(generatedClientOptions);
 
+        // Generate WebSocket factory classes if WebSocket channels exist
+        if (ir.getWebsocketChannels().isPresent()
+                && !ir.getWebsocketChannels().get().isEmpty()) {
+            // Generate WebSocketFactory interface
+            String corePackageName = context.getPoetClassNameFactory()
+                    .getCoreClassName("WebSocketFactory")
+                    .packageName();
+            com.fern.java.client.generators.websocket.WebSocketFactoryGenerator webSocketFactoryGenerator =
+                    new com.fern.java.client.generators.websocket.WebSocketFactoryGenerator(corePackageName);
+            this.addGeneratedFile(webSocketFactoryGenerator.generateInterface());
+
+            // Generate OkHttpWebSocketFactory implementation
+            com.fern.java.client.generators.websocket.OkHttpWebSocketFactoryGenerator okHttpWebSocketFactoryGenerator =
+                    new com.fern.java.client.generators.websocket.OkHttpWebSocketFactoryGenerator(corePackageName);
+            this.addGeneratedFile(okHttpWebSocketFactoryGenerator.generateImplementation());
+
+            // Generate ReconnectingWebSocketListener
+            com.fern.java.client.generators.websocket.ReconnectingWebSocketListenerGenerator
+                    reconnectingListenerGenerator =
+                            new com.fern.java.client.generators.websocket.ReconnectingWebSocketListenerGenerator(
+                                    corePackageName);
+            this.addGeneratedFile(reconnectingListenerGenerator.generateListener());
+        }
+
         DateTimeDeserializerGenerator dateTimeDeserializerGenerator = new DateTimeDeserializerGenerator(context);
         this.addGeneratedFile(dateTimeDeserializerGenerator.generateFile());
 

@@ -17,7 +17,8 @@ export type AsIsSymbolName =
     | "ClientError"
     | "FormFile"
     | "Nullable"
-    | "RequestOptions";
+    | "RequestOptions"
+    | "Networking";
 
 /**
  * Configuration specification for a static Swift file that gets included as-is in the generated SDK.
@@ -153,6 +154,11 @@ export const SourceAsIsFileSpecs = {
         relativePathToDir: "Public",
         filenameWithoutExtension: "JSONValue",
         symbols: [{ name: "JSONValue", shape: { type: "enum-with-associated-values" } }]
+    },
+    Networking: {
+        relativePathToDir: "Public",
+        filenameWithoutExtension: "Networking",
+        symbols: [{ name: "Networking", shape: { type: "enum-container" } }]
     },
     Nullable: {
         relativePathToDir: "Public",

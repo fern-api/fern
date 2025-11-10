@@ -79,4 +79,7 @@ class SearchResult_Document(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-SearchResult = typing.Union[SearchResult_User, SearchResult_Organization, SearchResult_Document]
+SearchResult = typing_extensions.Annotated[
+    typing.Union[SearchResult_User, SearchResult_Organization, SearchResult_Document],
+    pydantic.Field(discriminator="type"),
+]

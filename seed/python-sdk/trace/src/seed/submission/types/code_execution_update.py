@@ -193,18 +193,21 @@ class CodeExecutionUpdate_Finished(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-CodeExecutionUpdate = typing.Union[
-    CodeExecutionUpdate_BuildingExecutor,
-    CodeExecutionUpdate_Running,
-    CodeExecutionUpdate_Errored,
-    CodeExecutionUpdate_Stopped,
-    CodeExecutionUpdate_Graded,
-    CodeExecutionUpdate_GradedV2,
-    CodeExecutionUpdate_WorkspaceRan,
-    CodeExecutionUpdate_Recording,
-    CodeExecutionUpdate_Recorded,
-    CodeExecutionUpdate_InvalidRequest,
-    CodeExecutionUpdate_Finished,
+CodeExecutionUpdate = typing_extensions.Annotated[
+    typing.Union[
+        CodeExecutionUpdate_BuildingExecutor,
+        CodeExecutionUpdate_Running,
+        CodeExecutionUpdate_Errored,
+        CodeExecutionUpdate_Stopped,
+        CodeExecutionUpdate_Graded,
+        CodeExecutionUpdate_GradedV2,
+        CodeExecutionUpdate_WorkspaceRan,
+        CodeExecutionUpdate_Recording,
+        CodeExecutionUpdate_Recorded,
+        CodeExecutionUpdate_InvalidRequest,
+        CodeExecutionUpdate_Finished,
+    ],
+    pydantic.Field(discriminator="type"),
 ]
 update_forward_refs(CodeExecutionUpdate_Graded)
 update_forward_refs(CodeExecutionUpdate_GradedV2)

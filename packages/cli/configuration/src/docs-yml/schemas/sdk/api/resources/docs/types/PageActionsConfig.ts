@@ -5,6 +5,7 @@
 import * as FernDocsConfig from "../../../index";
 
 export interface PageActionsConfig {
+    /** The default page action to display. Options: copy-page, view-as-markdown, ask-ai, chatgpt, claude, cursor, vscode. */
     default?: FernDocsConfig.PageActionOption;
     options?: FernDocsConfig.PageActionOptions;
 }

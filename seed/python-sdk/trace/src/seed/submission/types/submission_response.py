@@ -93,11 +93,14 @@ class SubmissionResponse_Terminated(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-SubmissionResponse = typing.Union[
-    SubmissionResponse_ServerInitialized,
-    SubmissionResponse_ProblemInitialized,
-    SubmissionResponse_WorkspaceInitialized,
-    SubmissionResponse_ServerErrored,
-    SubmissionResponse_CodeExecutionUpdate,
-    SubmissionResponse_Terminated,
+SubmissionResponse = typing_extensions.Annotated[
+    typing.Union[
+        SubmissionResponse_ServerInitialized,
+        SubmissionResponse_ProblemInitialized,
+        SubmissionResponse_WorkspaceInitialized,
+        SubmissionResponse_ServerErrored,
+        SubmissionResponse_CodeExecutionUpdate,
+        SubmissionResponse_Terminated,
+    ],
+    pydantic.Field(discriminator="type"),
 ]

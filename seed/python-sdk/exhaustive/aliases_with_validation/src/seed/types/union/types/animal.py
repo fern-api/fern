@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
@@ -38,4 +39,4 @@ class Animal_Cat(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-Animal = typing.Union[Animal_Dog, Animal_Cat]
+Animal = typing_extensions.Annotated[typing.Union[Animal_Dog, Animal_Cat], pydantic.Field(discriminator="animal")]

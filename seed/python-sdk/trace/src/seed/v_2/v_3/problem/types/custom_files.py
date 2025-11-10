@@ -46,5 +46,7 @@ class CustomFiles_Custom(UniversalBaseModel):
             smart_union = True
 
 
-CustomFiles = typing.Union[CustomFiles_Basic, CustomFiles_Custom]
+CustomFiles = typing_extensions.Annotated[
+    typing.Union[CustomFiles_Basic, CustomFiles_Custom], pydantic.Field(discriminator="type")
+]
 update_forward_refs(CustomFiles_Basic)

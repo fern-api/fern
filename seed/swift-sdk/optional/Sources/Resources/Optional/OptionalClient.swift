@@ -16,4 +16,14 @@ public final class OptionalClient: Sendable {
             responseType: String.self
         )
     }
+
+    public func sendOptionalTypedBody(request: SendOptionalBodyRequest?, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/send-optional-typed-body",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: String.self
+        )
+    }
 }

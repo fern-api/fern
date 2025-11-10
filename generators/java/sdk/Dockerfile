@@ -1,4 +1,5 @@
 # Stage 1: Java V2
+# Updated: WebSocket feature support added
 FROM node:23.10-bookworm AS node
 COPY generators/java-v2/sdk/dist/cli.cjs /dist/cli.cjs
 COPY generators/java-v2/sdk/features.yml /assets/features.yml

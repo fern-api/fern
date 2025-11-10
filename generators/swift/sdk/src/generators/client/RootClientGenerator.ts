@@ -91,7 +91,9 @@ export class RootClientGenerator {
         return swift.functionParameter({
             argumentLabel: "urlSession",
             unsafeName: "urlSession",
-            type: swift.TypeReference.optional(this.referencer.referenceFoundationType("URLSession")),
+            type: swift.TypeReference.optional(
+                swift.TypeReference.memberAccess(this.referencer.referenceAsIsType("Networking"), "URLSession")
+            ),
             defaultValue: swift.Expression.rawValue("nil"),
             docsContent:
                 "Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout."
@@ -401,7 +403,9 @@ export class RootClientGenerator {
             swift.functionParameter({
                 argumentLabel: "urlSession",
                 unsafeName: "urlSession",
-                type: swift.TypeReference.optional(this.referencer.referenceFoundationType("URLSession")),
+                type: swift.TypeReference.optional(
+                    swift.TypeReference.memberAccess(this.referencer.referenceAsIsType("Networking"), "URLSession")
+                ),
                 defaultValue: swift.Expression.nil()
             })
         ];

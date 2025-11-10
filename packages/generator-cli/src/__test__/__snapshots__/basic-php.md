@@ -5,6 +5,11 @@
 
 The Basic PHP library provides convenient access to the Basic APIs from PHP.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh

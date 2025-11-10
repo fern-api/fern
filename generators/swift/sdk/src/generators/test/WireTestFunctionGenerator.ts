@@ -80,7 +80,7 @@ export class WireTestFunctionGenerator {
                 const statements: swift.Statement[] = [
                     swift.Statement.constantDeclaration({
                         unsafeName: "stub",
-                        value: swift.Expression.structInitialization({ unsafeName: "WireStub" })
+                        value: swift.Expression.structInitialization({ unsafeName: "HTTPStub" })
                     }),
                     swift.Statement.expressionStatement(
                         swift.Expression.methodCall({
@@ -167,7 +167,24 @@ export class WireTestFunctionGenerator {
             unsafeName: "response",
             value: this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
                 endpoint: this.dynamicEndpoint,
-                snippet: endpointSnippetRequest
+                snippet: endpointSnippetRequest,
+                additionalArguments: [
+                    swift.functionArgument({
+                        label: "requestOptions",
+                        value: swift.Expression.structInitialization({
+                            unsafeName: "RequestOptions",
+                            arguments_: [
+                                swift.functionArgument({
+                                    label: "additionalHeaders",
+                                    value: swift.Expression.memberAccess({
+                                        target: swift.Expression.reference("stub"),
+                                        memberName: "headers"
+                                    })
+                                })
+                            ]
+                        })
+                    })
+                ]
             })
         });
     }

@@ -97584,8 +97584,10 @@
         "generatedName": "IndyPrimaryProofEqProof",
         "description": "Indy equality proof",
         "value": {
+          "description": "Indy equality proof",
           "generatedName": "IndyPrimaryProofEqProof",
           "schema": "IndyEQProof",
+          "groupName": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -97632,8 +97634,10 @@
         "generatedName": "IndyProofProofProofsProofNonRevocProof",
         "description": "Indy non-revocation proof",
         "value": {
+          "description": "Indy non-revocation proof",
           "generatedName": "IndyProofProofProofsProofNonRevocProof",
           "schema": "IndyNonRevocProof",
+          "groupName": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -97659,6 +97663,7 @@
         "value": {
           "generatedName": "IndyProofReqAttrSpecNonRevoked",
           "schema": "IndyProofReqAttrSpecNonRevoked",
+          "groupName": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -97673,6 +97678,7 @@
         "value": {
           "generatedName": "IndyProofReqPredSpecNonRevoked",
           "schema": "IndyProofReqPredSpecNonRevoked",
+          "groupName": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -97687,6 +97693,7 @@
         "value": {
           "generatedName": "IndyProofRequestNonRevoked",
           "schema": "IndyProofRequestNonRevoked",
+          "groupName": [],
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"

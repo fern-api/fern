@@ -4,6 +4,10 @@
 
 The Basic Java library provides convenient access to the Basic APIs from Java.
 
+## Table of Contents
+
+- [Contributing](#contributing)
+
 ## Contributing
 
 While we value open-source contributions to this SDK, this library is generated programmatically.

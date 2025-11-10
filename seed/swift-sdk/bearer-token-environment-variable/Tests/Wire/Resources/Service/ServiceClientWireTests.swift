@@ -4,7 +4,7 @@ import BearerTokenEnvironmentVariable
 
 @Suite("ServiceClient Wire Tests") struct ServiceClientWireTests {
     @Test func getWithBearerToken1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -18,7 +18,7 @@ import BearerTokenEnvironmentVariable
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.service.getWithBearerToken()
+        let response = try await client.service.getWithBearerToken(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

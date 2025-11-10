@@ -9,6 +9,17 @@ The Cohere Go SDK allows access to Cohere models across many different platforms
 AWS (Bedrock, Sagemaker), Azure, GCP and Oracle OCI. For a full list of support and snippets, please
 take a look at the [SDK support docs](https://docs.cohere.com/docs/cohere-works-everywhere) page.
 
+## Table of Contents
+
+- [Documentation](#documentation)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Errors](#errors)
+- [Advanced](#advanced)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+- [Contributing](#contributing)
+
 ## Documentation
 
 API reference documentation is available [here](https://docs.cohere.com).

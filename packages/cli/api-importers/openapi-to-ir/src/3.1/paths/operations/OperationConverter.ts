@@ -92,7 +92,8 @@ export class OperationConverter extends AbstractOperationConverter {
             breadcrumbs: [...this.breadcrumbs, "requestBody"],
             group,
             method,
-            streamingExtension: this.streamingExtension
+            streamingExtension: this.streamingExtension,
+            queryParameters
         });
         const requestBody = convertedRequestBodies != null ? convertedRequestBodies[0]?.requestBody : undefined;
         const streamRequestBody =
@@ -477,7 +478,8 @@ export class OperationConverter extends AbstractOperationConverter {
         const fernExamplesExtension = new FernExamplesExtension({
             context: this.context,
             breadcrumbs: this.breadcrumbs,
-            operation: this.operation as object
+            operation: this.operation as object,
+            baseDir: this.context.documentBaseDir
         });
         const fernExamples = fernExamplesExtension.convert();
         if (fernExamples == null) {

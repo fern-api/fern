@@ -98,6 +98,7 @@
             "value": {
               "generatedName": "ListJobsRequestWhen",
               "schema": "When",
+              "groupName": [],
               "source": {
                 "file": "../openapi.yaml",
                 "type": "openapi"
@@ -142,6 +143,7 @@
             "value": {
               "generatedName": "ListJobsRequestSortBy",
               "schema": "SortBy",
+              "groupName": [],
               "source": {
                 "file": "../openapi.yaml",
                 "type": "openapi"
@@ -164,6 +166,7 @@
             "value": {
               "generatedName": "ListJobsRequestDirection",
               "schema": "Direction",
+              "groupName": [],
               "source": {
                 "file": "../openapi.yaml",
                 "type": "openapi"
@@ -1339,6 +1342,7 @@
               "value": {
                 "generatedName": "BaseRequestModels",
                 "schema": "Models",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -1359,6 +1363,7 @@
               "value": {
                 "generatedName": "BaseRequestTranscription",
                 "schema": "Transcription",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -2001,15 +2006,22 @@
               "generatedName": "ErrorCustomSessionId",
               "value": {
                 "generatedName": "ErrorCustomSessionId",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "ErrorCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -2182,6 +2194,7 @@
               "value": {
                 "generatedName": "FaceFacs",
                 "schema": "Empty",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -2202,6 +2215,7 @@
               "value": {
                 "generatedName": "FaceDescriptions",
                 "schema": "Empty",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3120,6 +3134,7 @@
               "value": {
                 "generatedName": "LanguageGranularity",
                 "schema": "Granularity",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3164,6 +3179,7 @@
               "value": {
                 "generatedName": "LanguageSentiment",
                 "schema": "Empty",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3184,6 +3200,7 @@
               "value": {
                 "generatedName": "LanguageToxicity",
                 "schema": "Empty",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3415,6 +3432,7 @@
               "value": {
                 "generatedName": "ModelsFace",
                 "schema": "Face",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3435,6 +3453,7 @@
               "value": {
                 "generatedName": "ModelsBurst",
                 "schema": "Empty",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3455,6 +3474,7 @@
               "value": {
                 "generatedName": "ModelsProsody",
                 "schema": "Prosody",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3475,6 +3495,7 @@
               "value": {
                 "generatedName": "ModelsLanguage",
                 "schema": "Language",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3495,6 +3516,7 @@
               "value": {
                 "generatedName": "ModelsNer",
                 "schema": "Ner",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3515,6 +3537,7 @@
               "value": {
                 "generatedName": "ModelsFacemesh",
                 "schema": "Empty",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3549,6 +3572,7 @@
               "value": {
                 "generatedName": "ModelsPredictionsFace",
                 "schema": "Predictions_optional_Null_FacePrediction",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3569,6 +3593,7 @@
               "value": {
                 "generatedName": "ModelsPredictionsBurst",
                 "schema": "Predictions_optional_Null_BurstPrediction",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3589,6 +3614,7 @@
               "value": {
                 "generatedName": "ModelsPredictionsProsody",
                 "schema": "Predictions_optional_TranscriptionMetadata_ProsodyPrediction",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3609,6 +3635,7 @@
               "value": {
                 "generatedName": "ModelsPredictionsLanguage",
                 "schema": "Predictions_optional_TranscriptionMetadata_LanguagePrediction",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3629,6 +3656,7 @@
               "value": {
                 "generatedName": "ModelsPredictionsNer",
                 "schema": "Predictions_optional_TranscriptionMetadata_NerPrediction",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -3649,6 +3677,7 @@
               "value": {
                 "generatedName": "ModelsPredictionsFacemesh",
                 "schema": "Predictions_optional_Null_FacemeshPrediction",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -4359,6 +4388,7 @@
               "value": {
                 "generatedName": "ProsodyGranularity",
                 "schema": "Granularity",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -4403,6 +4433,7 @@
               "value": {
                 "generatedName": "ProsodyWindow",
                 "schema": "Window",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -4593,6 +4624,7 @@
               "value": {
                 "generatedName": "RequestModels",
                 "schema": "Models",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -4613,6 +4645,7 @@
               "value": {
                 "generatedName": "RequestTranscription",
                 "schema": "Transcription",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -5310,6 +5343,7 @@
               "value": {
                 "generatedName": "TranscriptionLanguage",
                 "schema": "Bcp47Tag",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -5359,6 +5393,7 @@
               "value": {
                 "generatedName": "TranscriptionMetadataDetectedLanguage",
                 "schema": "Bcp47Tag",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yaml",
                   "type": "openapi"
@@ -5490,14 +5525,19 @@
               "generatedName": "AssistantInputCustomSessionId",
               "value": {
                 "generatedName": "AssistantInputCustomSessionId",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "AssistantInputCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
                 },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -5630,15 +5670,22 @@
               "generatedName": "AudioInputCustomSessionId",
               "value": {
                 "generatedName": "AudioInputCustomSessionId",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "AudioInputCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -5725,15 +5772,22 @@
               "generatedName": "BuiltinToolConfigFallbackContent",
               "value": {
                 "generatedName": "BuiltinToolConfigFallbackContent",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "BuiltinToolConfigFallbackContent",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Optional text passed to the supplemental LLM if the tool call fails. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation.",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "Optional text passed to the supplemental LLM if the tool call fails. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation.",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "Optional text passed to the supplemental LLM if the tool call fails. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -5895,15 +5949,22 @@
               "generatedName": "PauseAssistantMessageCustomSessionId",
               "value": {
                 "generatedName": "PauseAssistantMessageCustomSessionId",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "PauseAssistantMessageCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -5959,15 +6020,22 @@
               "generatedName": "ResumeAssistantMessageCustomSessionId",
               "value": {
                 "generatedName": "ResumeAssistantMessageCustomSessionId",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "ResumeAssistantMessageCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6015,15 +6083,22 @@
               "generatedName": "SessionSettingsCustomSessionId",
               "value": {
                 "generatedName": "SessionSettingsCustomSessionId",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "SessionSettingsCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Unique identifier for the session. Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.\n\nIf included, the response sent from Hume to your backend will include this ID. This allows you to correlate frontend users with their incoming messages.\n\nIt is recommended to pass a `custom_session_id` if you are using a Custom Language Model. Please see our guide to [using a custom language model](/docs/empathic-voice-interface-evi/custom-language-model) with EVI to learn more.",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "Unique identifier for the session. Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.\n\nIf included, the response sent from Hume to your backend will include this ID. This allows you to correlate frontend users with their incoming messages.\n\nIt is recommended to pass a `custom_session_id` if you are using a Custom Language Model. Please see our guide to [using a custom language model](/docs/empathic-voice-interface-evi/custom-language-model) with EVI to learn more.",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "Unique identifier for the session. Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.\n\nIf included, the response sent from Hume to your backend will include this ID. This allows you to correlate frontend users with their incoming messages.\n\nIt is recommended to pass a `custom_session_id` if you are using a Custom Language Model. Please see our guide to [using a custom language model](/docs/empathic-voice-interface-evi/custom-language-model) with EVI to learn more.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6035,15 +6110,22 @@
               "generatedName": "SessionSettingsSystemPrompt",
               "value": {
                 "generatedName": "SessionSettingsSystemPrompt",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "SessionSettingsSystemPrompt",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Instructions used to shape EVI’s behavior, responses, and style for the session.\n\nWhen included in a Session Settings message, the provided Prompt overrides the existing one specified in the EVI configuration. If no Prompt was defined in the configuration, this Prompt will be the one used for the session.\n\nYou can use the Prompt to define a specific goal or role for EVI, specifying how it should act or what it should focus on during the conversation. For example, EVI can be instructed to act as a customer support representative, a fitness coach, or a travel advisor, each with its own set of behaviors and response styles.\n\nFor help writing a system prompt, see our [Prompting Guide](/docs/empathic-voice-interface-evi/prompting).",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "Instructions used to shape EVI’s behavior, responses, and style for the session.\n\nWhen included in a Session Settings message, the provided Prompt overrides the existing one specified in the EVI configuration. If no Prompt was defined in the configuration, this Prompt will be the one used for the session.\n\nYou can use the Prompt to define a specific goal or role for EVI, specifying how it should act or what it should focus on during the conversation. For example, EVI can be instructed to act as a customer support representative, a fitness coach, or a travel advisor, each with its own set of behaviors and response styles.\n\nFor help writing a system prompt, see our [Prompting Guide](/docs/empathic-voice-interface-evi/prompting).",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "Instructions used to shape EVI’s behavior, responses, and style for the session.\n\nWhen included in a Session Settings message, the provided Prompt overrides the existing one specified in the EVI configuration. If no Prompt was defined in the configuration, this Prompt will be the one used for the session.\n\nYou can use the Prompt to define a specific goal or role for EVI, specifying how it should act or what it should focus on during the conversation. For example, EVI can be instructed to act as a customer support representative, a fitness coach, or a travel advisor, each with its own set of behaviors and response styles.\n\nFor help writing a system prompt, see our [Prompting Guide](/docs/empathic-voice-interface-evi/prompting).",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6055,16 +6137,24 @@
               "generatedName": "SessionSettingsContext",
               "value": {
                 "generatedName": "SessionSettingsContext",
-                "schema": "Context",
-                "source": {
-                  "file": "../asyncapi.json",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "SessionSettingsContext",
+                  "schema": "Context",
+                  "description": "Allows developers to inject additional context into the conversation, which is appended to the end of user messages for the session.\n\nWhen included in a Session Settings message, the provided context can be used to remind the LLM of its role in every user message, prevent it from forgetting important details, or add new relevant information to the conversation.\n\nSet to `null` to disable context injection.",
+                  "groupName": [],
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "description": "Allows developers to inject additional context into the conversation, which is appended to the end of user messages for the session.\n\nWhen included in a Session Settings message, the provided context can be used to remind the LLM of its role in every user message, prevent it from forgetting important details, or add new relevant information to the conversation.\n\nSet to `null` to disable context injection.",
+                "groupName": [],
+                "type": "nullable"
               },
               "description": "Allows developers to inject additional context into the conversation, which is appended to the end of user messages for the session.\n\nWhen included in a Session Settings message, the provided context can be used to remind the LLM of its role in every user message, prevent it from forgetting important details, or add new relevant information to the conversation.\n\nSet to `null` to disable context injection.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6076,16 +6166,24 @@
               "generatedName": "SessionSettingsAudio",
               "value": {
                 "generatedName": "SessionSettingsAudio",
-                "schema": "AudioConfiguration",
-                "source": {
-                  "file": "../asyncapi.json",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "SessionSettingsAudio",
+                  "schema": "AudioConfiguration",
+                  "description": "Configuration details for the audio input used during the session. Ensures the audio is being correctly set up for processing.\n\nThis optional field is only required when the audio input is encoded in PCM Linear 16 (16-bit, little-endian, signed PCM WAV data). For detailed instructions on how to configure session settings for PCM Linear 16 audio, please refer to the [Session Settings section](/docs/empathic-voice-interface-evi/configuration#session-settings) on the EVI Configuration page.",
+                  "groupName": [],
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "description": "Configuration details for the audio input used during the session. Ensures the audio is being correctly set up for processing.\n\nThis optional field is only required when the audio input is encoded in PCM Linear 16 (16-bit, little-endian, signed PCM WAV data). For detailed instructions on how to configure session settings for PCM Linear 16 audio, please refer to the [Session Settings section](/docs/empathic-voice-interface-evi/configuration#session-settings) on the EVI Configuration page.",
+                "groupName": [],
+                "type": "nullable"
               },
               "description": "Configuration details for the audio input used during the session. Ensures the audio is being correctly set up for processing.\n\nThis optional field is only required when the audio input is encoded in PCM Linear 16 (16-bit, little-endian, signed PCM WAV data). For detailed instructions on how to configure session settings for PCM Linear 16 audio, please refer to the [Session Settings section](/docs/empathic-voice-interface-evi/configuration#session-settings) on the EVI Configuration page.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6097,15 +6195,22 @@
               "generatedName": "SessionSettingsLanguageModelApiKey",
               "value": {
                 "generatedName": "SessionSettingsLanguageModelApiKey",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "SessionSettingsLanguageModelApiKey",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Third party API key for the supplemental language model.\n\nWhen provided, EVI will use this key instead of Hume’s API key for the supplemental LLM. This allows you to bypass rate limits and utilize your own API key as needed.",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "Third party API key for the supplemental language model.\n\nWhen provided, EVI will use this key instead of Hume’s API key for the supplemental LLM. This allows you to bypass rate limits and utilize your own API key as needed.",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "Third party API key for the supplemental language model.\n\nWhen provided, EVI will use this key instead of Hume’s API key for the supplemental LLM. This allows you to bypass rate limits and utilize your own API key as needed.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6118,20 +6223,26 @@
               "value": {
                 "generatedName": "SessionSettingsTools",
                 "value": {
-                  "generatedName": "SessionSettingsToolsItem",
-                  "schema": "Tool",
-                  "source": {
-                    "file": "../asyncapi.json",
-                    "type": "openapi"
+                  "generatedName": "SessionSettingsTools",
+                  "value": {
+                    "generatedName": "SessionSettingsToolsItem",
+                    "schema": "Tool",
+                    "source": {
+                      "file": "../asyncapi.json",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "groupName": [],
+                  "type": "array"
                 },
+                "description": "List of user-defined tools to enable for the session.\n\nTools are resources used by EVI to perform various tasks, such as searching the web or calling external APIs. Built-in tools, like web search, are natively integrated, while user-defined tools are created and invoked by the user. To learn more, see our [Tool Use Guide](/docs/empathic-voice-interface-evi/tool-use).",
                 "groupName": [],
-                "type": "array"
+                "type": "nullable"
               },
               "description": "List of user-defined tools to enable for the session.\n\nTools are resources used by EVI to perform various tasks, such as searching the web or calling external APIs. Built-in tools, like web search, are natively integrated, while user-defined tools are created and invoked by the user. To learn more, see our [Tool Use Guide](/docs/empathic-voice-interface-evi/tool-use).",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6144,20 +6255,26 @@
               "value": {
                 "generatedName": "SessionSettingsBuiltinTools",
                 "value": {
-                  "generatedName": "SessionSettingsBuiltinToolsItem",
-                  "schema": "BuiltinToolConfig",
-                  "source": {
-                    "file": "../asyncapi.json",
-                    "type": "openapi"
+                  "generatedName": "SessionSettingsBuiltinTools",
+                  "value": {
+                    "generatedName": "SessionSettingsBuiltinToolsItem",
+                    "schema": "BuiltinToolConfig",
+                    "source": {
+                      "file": "../asyncapi.json",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "groupName": [],
+                  "type": "array"
                 },
+                "description": "List of built-in tools to enable for the session.\n\nTools are resources used by EVI to perform various tasks, such as searching the web or calling external APIs. Built-in tools, like web search, are natively integrated, while user-defined tools are created and invoked by the user. To learn more, see our [Tool Use Guide](/docs/empathic-voice-interface-evi/tool-use).\n\nCurrently, the only built-in tool Hume provides is **Web Search**. When enabled, Web Search equips EVI with the ability to search the web for up-to-date information.",
                 "groupName": [],
-                "type": "array"
+                "type": "nullable"
               },
               "description": "List of built-in tools to enable for the session.\n\nTools are resources used by EVI to perform various tasks, such as searching the web or calling external APIs. Built-in tools, like web search, are natively integrated, while user-defined tools are created and invoked by the user. To learn more, see our [Tool Use Guide](/docs/empathic-voice-interface-evi/tool-use).\n\nCurrently, the only built-in tool Hume provides is **Web Search**. When enabled, Web Search equips EVI with the ability to search the web for up-to-date information.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6169,23 +6286,28 @@
               "generatedName": "SessionSettingsMetadata",
               "value": {
                 "generatedName": "SessionSettingsMetadata",
-                "key": {
-                  "generatedName": "SessionSettingsMetadataKey",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "groupName": []
-                },
                 "value": {
-                  "generatedName": "SessionSettingsMetadataValue",
+                  "generatedName": "SessionSettingsMetadata",
+                  "key": {
+                    "generatedName": "SessionSettingsMetadataKey",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "groupName": []
+                  },
+                  "value": {
+                    "generatedName": "SessionSettingsMetadataValue",
+                    "groupName": [],
+                    "type": "unknown"
+                  },
                   "groupName": [],
-                  "type": "unknown"
+                  "type": "map"
                 },
                 "groupName": [],
-                "type": "map"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6197,32 +6319,38 @@
               "generatedName": "SessionSettingsVariables",
               "value": {
                 "generatedName": "SessionSettingsVariables",
-                "key": {
-                  "generatedName": "SessionSettingsVariablesKey",
-                  "schema": {
-                    "type": "string"
-                  }
-                },
                 "value": {
-                  "generatedName": "SessionSettingsVariablesValue",
-                  "value": {
-                    "generatedName": "SessionSettingsVariablesValue",
+                  "generatedName": "SessionSettingsVariables",
+                  "key": {
+                    "generatedName": "SessionSettingsVariablesKey",
                     "schema": {
                       "type": "string"
+                    }
+                  },
+                  "value": {
+                    "generatedName": "SessionSettingsVariablesValue",
+                    "value": {
+                      "generatedName": "SessionSettingsVariablesValue",
+                      "schema": {
+                        "type": "string"
+                      },
+                      "groupName": [],
+                      "type": "primitive"
                     },
                     "groupName": [],
-                    "type": "primitive"
+                    "inline": true,
+                    "type": "nullable"
                   },
                   "groupName": [],
-                  "inline": true,
-                  "type": "nullable"
+                  "type": "map"
                 },
+                "description": "Dynamic values that can be used to populate EVI prompts.",
                 "groupName": [],
-                "type": "map"
+                "type": "nullable"
               },
               "description": "Dynamic values that can be used to populate EVI prompts.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6303,15 +6431,22 @@
               "generatedName": "ToolDescription",
               "value": {
                 "generatedName": "ToolDescription",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "ToolDescription",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "An optional description of what the tool does, used by the supplemental LLM to choose when and how to call the function.",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "An optional description of what the tool does, used by the supplemental LLM to choose when and how to call the function.",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "An optional description of what the tool does, used by the supplemental LLM to choose when and how to call the function.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6323,15 +6458,22 @@
               "generatedName": "ToolFallbackContent",
               "value": {
                 "generatedName": "ToolFallbackContent",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "ToolFallbackContent",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Optional text passed to the supplemental LLM if the tool call fails. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation.",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "Optional text passed to the supplemental LLM if the tool call fails. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation.",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "Optional text passed to the supplemental LLM if the tool call fails. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6387,15 +6529,22 @@
               "generatedName": "ToolErrorMessageCustomSessionId",
               "value": {
                 "generatedName": "ToolErrorMessageCustomSessionId",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "ToolErrorMessageCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6407,16 +6556,24 @@
               "generatedName": "ToolErrorMessageToolType",
               "value": {
                 "generatedName": "ToolErrorMessageToolType",
-                "schema": "ToolType",
-                "source": {
-                  "file": "../asyncapi.json",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ToolErrorMessageToolType",
+                  "schema": "ToolType",
+                  "description": "Type of tool called. Either `builtin` for natively implemented tools, like web search, or `function` for user-defined tools.",
+                  "groupName": [],
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "description": "Type of tool called. Either `builtin` for natively implemented tools, like web search, or `function` for user-defined tools.",
+                "groupName": [],
+                "type": "nullable"
               },
               "description": "Type of tool called. Either `builtin` for natively implemented tools, like web search, or `function` for user-defined tools.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6444,15 +6601,22 @@
               "generatedName": "ToolErrorMessageContent",
               "value": {
                 "generatedName": "ToolErrorMessageContent",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "ToolErrorMessageContent",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Optional text passed to the supplemental LLM in place of the tool call result. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation if the tool errors.",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "Optional text passed to the supplemental LLM in place of the tool call result. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation if the tool errors.",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "Optional text passed to the supplemental LLM in place of the tool call result. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation if the tool errors.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6481,15 +6645,22 @@
               "generatedName": "ToolErrorMessageCode",
               "value": {
                 "generatedName": "ToolErrorMessageCode",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "ToolErrorMessageCode",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Error code. Identifies the type of error encountered.",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "Error code. Identifies the type of error encountered.",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "Error code. Identifies the type of error encountered.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6501,16 +6672,24 @@
               "generatedName": "ToolErrorMessageLevel",
               "value": {
                 "generatedName": "ToolErrorMessageLevel",
-                "schema": "ErrorLevel",
-                "source": {
-                  "file": "../asyncapi.json",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ToolErrorMessageLevel",
+                  "schema": "ErrorLevel",
+                  "description": "Indicates the severity of an error; for a Tool Error message, this must be `warn` to signal an unexpected event.",
+                  "groupName": [],
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "description": "Indicates the severity of an error; for a Tool Error message, this must be `warn` to signal an unexpected event.",
+                "groupName": [],
+                "type": "nullable"
               },
               "description": "Indicates the severity of an error; for a Tool Error message, this must be `warn` to signal an unexpected event.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6566,15 +6745,22 @@
               "generatedName": "ToolResponseMessageCustomSessionId",
               "value": {
                 "generatedName": "ToolResponseMessageCustomSessionId",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "ToolResponseMessageCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6619,14 +6805,19 @@
               "generatedName": "ToolResponseMessageToolName",
               "value": {
                 "generatedName": "ToolResponseMessageToolName",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "ToolResponseMessageToolName",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
                 },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6638,15 +6829,21 @@
               "generatedName": "ToolResponseMessageToolType",
               "value": {
                 "generatedName": "ToolResponseMessageToolType",
-                "schema": "ToolType",
-                "source": {
-                  "file": "../asyncapi.json",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ToolResponseMessageToolType",
+                  "schema": "ToolType",
+                  "groupName": [],
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6717,15 +6914,22 @@
               "generatedName": "UserInputCustomSessionId",
               "value": {
                 "generatedName": "UserInputCustomSessionId",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "UserInputCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6790,15 +6994,22 @@
               "generatedName": "AssistantEndCustomSessionId",
               "value": {
                 "generatedName": "AssistantEndCustomSessionId",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "AssistantEndCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6846,15 +7057,22 @@
               "generatedName": "AssistantMessageCustomSessionId",
               "value": {
                 "generatedName": "AssistantMessageCustomSessionId",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "AssistantMessageCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -6978,15 +7196,22 @@
               "generatedName": "AudioOutputCustomSessionId",
               "value": {
                 "generatedName": "AudioOutputCustomSessionId",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "AudioOutputCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -7101,15 +7326,22 @@
               "generatedName": "ChatMessageContent",
               "value": {
                 "generatedName": "ChatMessageContent",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "ChatMessageContent",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Transcript of the message.",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "Transcript of the message.",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "Transcript of the message.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -7121,16 +7353,24 @@
               "generatedName": "ChatMessageToolCall",
               "value": {
                 "generatedName": "ChatMessageToolCall",
-                "schema": "ToolCallMessage",
-                "source": {
-                  "file": "../asyncapi.json",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ChatMessageToolCall",
+                  "schema": "ToolCallMessage",
+                  "description": "Function call name and arguments.",
+                  "groupName": [],
+                  "source": {
+                    "file": "../asyncapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "description": "Function call name and arguments.",
+                "groupName": [],
+                "type": "nullable"
               },
               "description": "Function call name and arguments.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -7232,15 +7472,22 @@
               "generatedName": "ChatMetadataCustomSessionId",
               "value": {
                 "generatedName": "ChatMetadataCustomSessionId",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "ChatMetadataCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -7287,6 +7534,7 @@
                 "schema": {
                   "type": "string"
                 },
+                "description": "ID of the initiating request.",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -8103,6 +8351,8 @@
               "value": {
                 "generatedName": "InferenceProsody",
                 "schema": "ProsodyInference",
+                "description": "Prosody model inference results.\n\nEVI uses the prosody model to measure 48 emotions related to speech and vocal characteristics within a given expression.",
+                "groupName": [],
                 "source": {
                   "file": "../asyncapi.json",
                   "type": "openapi"
@@ -8341,15 +8591,22 @@
               "generatedName": "ToolCallMessageCustomSessionId",
               "value": {
                 "generatedName": "ToolCallMessageCustomSessionId",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "ToolCallMessageCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -8431,15 +8688,22 @@
               "generatedName": "UserInterruptionCustomSessionId",
               "value": {
                 "generatedName": "UserInterruptionCustomSessionId",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "UserInterruptionCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
@@ -8503,15 +8767,22 @@
               "generatedName": "UserMessageCustomSessionId",
               "value": {
                 "generatedName": "UserMessageCustomSessionId",
-                "schema": {
-                  "type": "string"
+                "value": {
+                  "generatedName": "UserMessageCustomSessionId",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
+                  "groupName": [],
+                  "type": "primitive"
                 },
+                "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "description": "Used to manage conversational state, correlate frontend and backend data, and persist conversations across EVI sessions.",
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "conflict": {},
