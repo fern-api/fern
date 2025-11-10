@@ -196,6 +196,7 @@ function convertService(
                                       type: convertTypeReference(pathParameter.valueType),
                                       availability: undefined,
                                       explode: pathParameter.explode ?? false
+                                      // biome-ignore lint/suspicious/noExplicitAny: FDR SDK types don't include explode field yet
                                   }) as any
                           ),
                           parts: [...convertHttpPath(irEndpoint.basePath), ...convertHttpPath(irEndpoint.path)]
@@ -213,6 +214,7 @@ function convertService(
                                       type: convertTypeReference(pathParameter.valueType),
                                       availability: undefined,
                                       explode: pathParameter.explode ?? false
+                                      // biome-ignore lint/suspicious/noExplicitAny: FDR SDK types don't include explode field yet
                                   }) as any
                           ),
                           parts: [
@@ -229,6 +231,7 @@ function convertService(
                         type: convertTypeReference(queryParameter.valueType),
                         availability: convertIrAvailability(queryParameter.availability),
                         explode: queryParameter.explode ?? false
+                        // biome-ignore lint/suspicious/noExplicitAny: FDR SDK types don't include explode field yet
                     }) as any
             ),
             headers: [...irService.headers, ...irEndpoint.headers].map(
@@ -355,6 +358,7 @@ function convertWebSocketChannel(
                         type: convertTypeReference(pathParameter.valueType),
                         availability: undefined,
                         explode: pathParameter.explode ?? false
+                        // biome-ignore lint/suspicious/noExplicitAny: FDR SDK types don't include explode field yet
                     }) as any
             ),
             parts: convertHttpPath(channel.path)
@@ -375,6 +379,7 @@ function convertWebSocketChannel(
                     type: convertTypeReference(queryParameter.valueType),
                     availability: convertIrAvailability(queryParameter.availability),
                     explode: queryParameter.explode ?? false
+                    // biome-ignore lint/suspicious/noExplicitAny: FDR SDK types don't include explode field yet
                 }) as any
         ),
         messages: channel.messages.map(
