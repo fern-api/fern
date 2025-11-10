@@ -86,8 +86,9 @@ navigation:
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.section).toBe("[TRANSLATED] API Guide");
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.slug).toBe("api-guide");
             expect(
-                ((parsed.navigation as Array<Record<string, unknown>>)[0]!.contents as Array<Record<string, unknown>>)[0]!
-                    .slug
+                (
+                    (parsed.navigation as Array<Record<string, unknown>>)[0]!.contents as Array<Record<string, unknown>>
+                )[0]!.slug
             ).toBe("overview");
         });
 
@@ -106,8 +107,9 @@ navigation:
 
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.slug).toBeUndefined();
             expect(
-                ((parsed.navigation as Array<Record<string, unknown>>)[0]!.contents as Array<Record<string, unknown>>)[0]!
-                    .slug
+                (
+                    (parsed.navigation as Array<Record<string, unknown>>)[0]!.contents as Array<Record<string, unknown>>
+                )[0]!.slug
             ).toBe("overview");
         });
 
@@ -293,8 +295,9 @@ navigation:
 
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.slug).toBe("level-1");
             expect(
-                ((parsed.navigation as Array<Record<string, unknown>>)[0]!.contents as Array<Record<string, unknown>>)[0]!
-                    .slug
+                (
+                    (parsed.navigation as Array<Record<string, unknown>>)[0]!.contents as Array<Record<string, unknown>>
+                )[0]!.slug
             ).toBe("level-2");
             expect(
                 (

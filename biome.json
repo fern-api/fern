@@ -253,6 +253,16 @@
       }
     },
     {
+      "includes": ["packages/cli/cli/src/commands/write-translation/__test__/yaml-processor.test.ts"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noNonNullAssertion": "off"
+          }
+        }
+      }
+    },
+    {
       "includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
       "linter": {
         "rules": {
