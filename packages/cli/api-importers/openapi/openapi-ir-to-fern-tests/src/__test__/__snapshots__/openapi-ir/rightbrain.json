@@ -1521,6 +1521,7 @@
             "value": {
               "generatedName": "OrgListOrgGetRequestMembership",
               "schema": "OrgMembership",
+              "groupName": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -2639,6 +2640,7 @@
             "value": {
               "generatedName": "OrgInvitesListOrgOrgIdInviteGetRequestShow",
               "schema": "OrgInviteShow",
+              "groupName": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -10602,6 +10604,7 @@
             "value": {
               "generatedName": "ListChatsOrgOrgIdProjectProjectIdCollectionCollectionIdChatGetRequestShow",
               "schema": "CollectionChatShow",
+              "groupName": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -47380,6 +47383,7 @@
             "generatedName": "GetAllTasksRequestName",
             "description": "Filter tasks by name. Supports partial matches.",
             "value": {
+              "description": "Filter tasks by name. Supports partial matches.",
               "schema": {
                 "type": "string"
               },
@@ -47402,6 +47406,7 @@
             "generatedName": "GetAllTasksRequestPageLimit",
             "description": "The maximum number of items to return per page. Defaults to `100` if not specified.",
             "value": {
+              "description": "The maximum number of items to return per page. Defaults to `100` if not specified.",
               "schema": {
                 "minimum": 1,
                 "maximum": 100,
@@ -47426,6 +47431,7 @@
             "generatedName": "GetAllTasksRequestCursor",
             "description": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
             "value": {
+              "description": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
               "schema": {
                 "format": "uuid",
                 "type": "string"
@@ -49474,6 +49480,7 @@
             "generatedName": "GetTaskRunsRequestPageLimit",
             "description": "The maximum number of items to return per page. Defaults to `100` if not specified.",
             "value": {
+              "description": "The maximum number of items to return per page. Defaults to `100` if not specified.",
               "schema": {
                 "minimum": 1,
                 "maximum": 100,
@@ -49498,6 +49505,7 @@
             "generatedName": "GetTaskRunsRequestCursor",
             "description": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
             "value": {
+              "description": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
               "schema": {
                 "format": "uuid",
                 "type": "string"
@@ -49521,6 +49529,7 @@
             "generatedName": "GetTaskRunsRequestTaskRevisionId",
             "description": "The specific Task Revision to reference.",
             "value": {
+              "description": "The specific Task Revision to reference.",
               "schema": {
                 "format": "uuid",
                 "type": "string"
@@ -51996,6 +52005,7 @@
             "generatedName": "GetAllTaskForwardersRequestPageLimit",
             "description": "The maximum number of items to return per page. Defaults to `100` if not specified.",
             "value": {
+              "description": "The maximum number of items to return per page. Defaults to `100` if not specified.",
               "schema": {
                 "minimum": 1,
                 "maximum": 100,
@@ -52020,6 +52030,7 @@
             "generatedName": "GetAllTaskForwardersRequestCursor",
             "description": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
             "value": {
+              "description": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
               "schema": {
                 "format": "uuid",
                 "type": "string"
@@ -55661,15 +55672,19 @@
               "description": "Conversational Guardrails can be defined to run against Chat `input` (i.e. the users query) or on Chat `output` (i.e. the LLM output)",
               "value": {
                 "generatedName": "ChatConfigInputChatGuardrails",
+                "description": "Conversational Guardrails can be defined to run against Chat `input` (i.e. the users query) or on Chat `output` (i.e. the LLM output)",
                 "value": {
+                  "description": "Conversational Guardrails can be defined to run against Chat `input` (i.e. the users query) or on Chat `output` (i.e. the LLM output)",
                   "generatedName": "ChatConfigInputChatGuardrails",
                   "schema": "ConversationalGuardrails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -55896,15 +55911,19 @@
               "description": "Conversational Guardrails can be defined to run against Chat `input` (i.e. the users query) or on Chat `output` (i.e. the LLM output)",
               "value": {
                 "generatedName": "ChatConfigOutputChatGuardrails",
+                "description": "Conversational Guardrails can be defined to run against Chat `input` (i.e. the users query) or on Chat `output` (i.e. the LLM output)",
                 "value": {
+                  "description": "Conversational Guardrails can be defined to run against Chat `input` (i.e. the users query) or on Chat `output` (i.e. the LLM output)",
                   "generatedName": "ChatConfigOutputChatGuardrails",
                   "schema": "ConversationalGuardrails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -56829,7 +56848,9 @@
               "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
               "value": {
                 "generatedName": "ChatIamMemberRoleUpdateRemoveAll",
+                "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
                 "value": {
+                  "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
                   "schema": {
                     "type": "boolean"
                   },
@@ -57545,7 +57566,9 @@
               "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
               "value": {
                 "generatedName": "CollectionIamMemberRoleUpdateRemoveAll",
+                "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
                 "value": {
+                  "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
                   "schema": {
                     "type": "boolean"
                   },
@@ -59230,12 +59253,14 @@
                 "value": {
                   "generatedName": "DatasourceSyncRunDatasourceConnection",
                   "schema": "DatasourceConnection",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -59477,7 +59502,9 @@
               "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
               "value": {
                 "generatedName": "DocumentIamMemberRoleUpdateRemoveAll",
+                "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
                 "value": {
+                  "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
                   "schema": {
                     "type": "boolean"
                   },
@@ -59929,7 +59956,9 @@
               "description": "The name of the member.",
               "value": {
                 "generatedName": "IamMemberName",
+                "description": "The name of the member.",
                 "value": {
+                  "description": "The name of the member.",
                   "schema": {
                     "type": "string"
                   },
@@ -59954,7 +59983,9 @@
               "description": "If avatar of the member, if it is supported by their subject type.",
               "value": {
                 "generatedName": "IamMemberAvatarUrl",
+                "description": "If avatar of the member, if it is supported by their subject type.",
                 "value": {
+                  "description": "If avatar of the member, if it is supported by their subject type.",
                   "schema": {
                     "type": "string"
                   },
@@ -60260,12 +60291,14 @@
                 "value": {
                   "generatedName": "InvalidMemberErrorDetailsResource",
                   "schema": "IAMObjectErrorDetails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -60284,12 +60317,14 @@
                 "value": {
                   "generatedName": "InvalidMemberErrorDetailsSubject",
                   "schema": "IAMObjectErrorDetails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -60374,12 +60409,14 @@
                 "value": {
                   "generatedName": "InvalidRoleErrorDetailsResource",
                   "schema": "IAMObjectErrorDetails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -60480,12 +60517,14 @@
                 "value": {
                   "generatedName": "InvalidSubjectTypeErrorDetailsSubject",
                   "schema": "IAMObjectErrorDetails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -60585,6 +60624,7 @@
               "value": {
                 "generatedName": "KratosIdentityTraits",
                 "schema": "KratosIdentityTraits",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -60900,12 +60940,14 @@
                 "value": {
                   "generatedName": "KratosWebhookIdentity",
                   "schema": "KratosIdentity",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -61409,12 +61451,14 @@
                 "value": {
                   "generatedName": "MultipleRolesNotAllowedErrorDetailsResource",
                   "schema": "IAMObjectErrorDetails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -61539,6 +61583,7 @@
               "value": {
                 "generatedName": "OAuthClientCreateProfile",
                 "schema": "OAuthClientProfile",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -61896,6 +61941,7 @@
               "value": {
                 "generatedName": "ObjectType",
                 "schema": "ObjectType",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -62529,7 +62575,9 @@
               "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
               "value": {
                 "generatedName": "OrganizationIamMemberRoleUpdateRemoveAll",
+                "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
                 "value": {
+                  "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
                   "schema": {
                     "type": "boolean"
                   },
@@ -62988,15 +63036,19 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetChatDocumentEmbeddingRecordPagination",
+                "description": "Contains pagination information for the result set.",
                 "value": {
+                  "description": "Contains pagination information for the result set.",
                   "generatedName": "PaginatedResultSetChatDocumentEmbeddingRecordPagination",
                   "schema": "PaginationDetails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -63051,15 +63103,19 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetChatDocumentPagination",
+                "description": "Contains pagination information for the result set.",
                 "value": {
+                  "description": "Contains pagination information for the result set.",
                   "generatedName": "PaginatedResultSetChatDocumentPagination",
                   "schema": "PaginationDetails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -63114,15 +63170,19 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetChatPagination",
+                "description": "Contains pagination information for the result set.",
                 "value": {
+                  "description": "Contains pagination information for the result set.",
                   "generatedName": "PaginatedResultSetChatPagination",
                   "schema": "PaginationDetails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -63177,15 +63237,19 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetCollectionPagination",
+                "description": "Contains pagination information for the result set.",
                 "value": {
+                  "description": "Contains pagination information for the result set.",
                   "generatedName": "PaginatedResultSetCollectionPagination",
                   "schema": "PaginationDetails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -63240,15 +63304,19 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetDatasourceSyncRunPagination",
+                "description": "Contains pagination information for the result set.",
                 "value": {
+                  "description": "Contains pagination information for the result set.",
                   "generatedName": "PaginatedResultSetDatasourceSyncRunPagination",
                   "schema": "PaginationDetails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -63303,15 +63371,19 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetIamMemberPagination",
+                "description": "Contains pagination information for the result set.",
                 "value": {
+                  "description": "Contains pagination information for the result set.",
                   "generatedName": "PaginatedResultSetIamMemberPagination",
                   "schema": "PaginationDetails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -63366,15 +63438,19 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetOrganizationDomainPagination",
+                "description": "Contains pagination information for the result set.",
                 "value": {
+                  "description": "Contains pagination information for the result set.",
                   "generatedName": "PaginatedResultSetOrganizationDomainPagination",
                   "schema": "PaginationDetails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -63429,15 +63505,19 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetOrganizationInvitePagination",
+                "description": "Contains pagination information for the result set.",
                 "value": {
+                  "description": "Contains pagination information for the result set.",
                   "generatedName": "PaginatedResultSetOrganizationInvitePagination",
                   "schema": "PaginationDetails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -63492,15 +63572,19 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetProjectPagination",
+                "description": "Contains pagination information for the result set.",
                 "value": {
+                  "description": "Contains pagination information for the result set.",
                   "generatedName": "PaginatedResultSetProjectPagination",
                   "schema": "PaginationDetails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -63555,15 +63639,19 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetTaskForwarderPagination",
+                "description": "Contains pagination information for the result set.",
                 "value": {
+                  "description": "Contains pagination information for the result set.",
                   "generatedName": "PaginatedResultSetTaskForwarderPagination",
                   "schema": "PaginationDetails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -63618,15 +63706,19 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetTaskRunPagination",
+                "description": "Contains pagination information for the result set.",
                 "value": {
+                  "description": "Contains pagination information for the result set.",
                   "generatedName": "PaginatedResultSetTaskRunPagination",
                   "schema": "PaginationDetails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -63681,15 +63773,19 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetTaskPagination",
+                "description": "Contains pagination information for the result set.",
                 "value": {
+                  "description": "Contains pagination information for the result set.",
                   "generatedName": "PaginatedResultSetTaskPagination",
                   "schema": "PaginationDetails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -63744,7 +63840,9 @@
               "description": "A token used to retrieve the next page of results. If `null`, there are no more results.",
               "value": {
                 "generatedName": "PaginationDetailsNextCursor",
+                "description": "A token used to retrieve the next page of results. If `null`, there are no more results.",
                 "value": {
+                  "description": "A token used to retrieve the next page of results. If `null`, there are no more results.",
                   "schema": {
                     "type": "string"
                   },
@@ -63769,7 +63867,9 @@
               "description": "Indicates whether there are more results available in the next page.",
               "value": {
                 "generatedName": "PaginationDetailsHasNext",
+                "description": "Indicates whether there are more results available in the next page.",
                 "value": {
+                  "description": "Indicates whether there are more results available in the next page.",
                   "schema": {
                     "type": "boolean"
                   },
@@ -63794,7 +63894,9 @@
               "description": "The maximum number of items returned per page.",
               "value": {
                 "generatedName": "PaginationDetailsPageLimit",
+                "description": "The maximum number of items returned per page.",
                 "value": {
+                  "description": "The maximum number of items returned per page.",
                   "schema": {
                     "type": "int"
                   },
@@ -63837,12 +63939,14 @@
                 "value": {
                   "generatedName": "PermissionCheckFailedErrorDetailsSubject",
                   "schema": "IAMObjectErrorDetails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -63861,12 +63965,14 @@
                 "value": {
                   "generatedName": "PermissionCheckFailedErrorDetailsResource",
                   "schema": "IAMObjectErrorDetails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -64251,12 +64357,14 @@
                 "value": {
                   "generatedName": "ProjectConfigInputChatGuardrails",
                   "schema": "ConversationalGuardrails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -64485,12 +64593,14 @@
                 "value": {
                   "generatedName": "ProjectConfigOutputChatGuardrails",
                   "schema": "ConversationalGuardrails",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -64725,7 +64835,9 @@
               "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
               "value": {
                 "generatedName": "ProjectIamMemberRoleUpdateRemoveAll",
+                "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
                 "value": {
+                  "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
                   "schema": {
                     "type": "boolean"
                   },
@@ -65317,7 +65429,9 @@
               "description": "A longer description of the Task for internal reference.",
               "value": {
                 "generatedName": "TaskDescription",
+                "description": "A longer description of the Task for internal reference.",
                 "value": {
+                  "description": "A longer description of the Task for internal reference.",
                   "schema": {
                     "type": "string"
                   },
@@ -65565,8 +65679,10 @@
               "generatedName": "TaskCreateLlmConfig",
               "description": "Specific configuration parameters for the LLM model.",
               "value": {
+                "description": "Specific configuration parameters for the LLM model.",
                 "generatedName": "TaskCreateLlmConfig",
                 "schema": "TaskLLMConfig",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -65655,7 +65771,9 @@
               "description": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
               "value": {
                 "generatedName": "TaskCreateTaskForwarderId",
+                "description": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
                 "value": {
+                  "description": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
                   "schema": {
                     "format": "uuid",
                     "type": "string"
@@ -65681,15 +65799,19 @@
               "description": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
               "value": {
                 "generatedName": "TaskCreateRag",
+                "description": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
                 "value": {
+                  "description": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
                   "generatedName": "TaskCreateRag",
                   "schema": "TaskRAG",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -65750,7 +65872,9 @@
               "description": "A longer description of the Task for internal reference.",
               "value": {
                 "generatedName": "TaskCreateDescription",
+                "description": "A longer description of the Task for internal reference.",
                 "value": {
+                  "description": "A longer description of the Task for internal reference.",
                   "schema": {
                     "type": "string"
                   },
@@ -65825,7 +65949,9 @@
               "description": "Additional details about the Task Forwarder's purpose or configuration.",
               "value": {
                 "generatedName": "TaskForwarderDescription",
+                "description": "Additional details about the Task Forwarder's purpose or configuration.",
                 "value": {
+                  "description": "Additional details about the Task Forwarder's purpose or configuration.",
                   "schema": {
                     "type": "string"
                   },
@@ -65850,15 +65976,19 @@
               "description": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
               "value": {
                 "generatedName": "TaskForwarderConfig",
+                "description": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
                 "value": {
+                  "description": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
                   "generatedName": "TaskForwarderConfig",
                   "schema": "TaskForwarderConfig",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -65875,15 +66005,19 @@
               "description": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
               "value": {
                 "generatedName": "TaskForwarderConfigSensitive",
+                "description": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
                 "value": {
+                  "description": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
                   "generatedName": "TaskForwarderConfigSensitive",
                   "schema": "TaskForwarderSensitiveConfig",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -66034,7 +66168,9 @@
               "description": "Additional details about the Task Forwarder's purpose or configuration.",
               "value": {
                 "generatedName": "TaskForwarderCreateDescription",
+                "description": "Additional details about the Task Forwarder's purpose or configuration.",
                 "value": {
+                  "description": "Additional details about the Task Forwarder's purpose or configuration.",
                   "schema": {
                     "type": "string"
                   },
@@ -66059,15 +66195,19 @@
               "description": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
               "value": {
                 "generatedName": "TaskForwarderCreateConfig",
+                "description": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
                 "value": {
+                  "description": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
                   "generatedName": "TaskForwarderCreateConfig",
                   "schema": "TaskForwarderConfig",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -66084,15 +66224,19 @@
               "description": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
               "value": {
                 "generatedName": "TaskForwarderCreateConfigSensitive",
+                "description": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
                 "value": {
+                  "description": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
                   "generatedName": "TaskForwarderCreateConfigSensitive",
                   "schema": "TaskForwarderSensitiveConfig",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -66157,7 +66301,9 @@
               "description": "A descriptive name for the Task Forwarder.",
               "value": {
                 "generatedName": "TaskForwarderUpdateName",
+                "description": "A descriptive name for the Task Forwarder.",
                 "value": {
+                  "description": "A descriptive name for the Task Forwarder.",
                   "schema": {
                     "type": "string"
                   },
@@ -66182,7 +66328,9 @@
               "description": "Additional details about the Task Forwarder's purpose or configuration.",
               "value": {
                 "generatedName": "TaskForwarderUpdateDescription",
+                "description": "Additional details about the Task Forwarder's purpose or configuration.",
                 "value": {
+                  "description": "Additional details about the Task Forwarder's purpose or configuration.",
                   "schema": {
                     "type": "string"
                   },
@@ -66207,15 +66355,19 @@
               "description": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
               "value": {
                 "generatedName": "TaskForwarderUpdateConfig",
+                "description": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
                 "value": {
+                  "description": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
                   "generatedName": "TaskForwarderUpdateConfig",
                   "schema": "TaskForwarderConfig",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -66232,15 +66384,19 @@
               "description": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
               "value": {
                 "generatedName": "TaskForwarderUpdateConfigSensitive",
+                "description": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
                 "value": {
+                  "description": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
                   "generatedName": "TaskForwarderUpdateConfigSensitive",
                   "schema": "TaskForwarderSensitiveConfig",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -66369,7 +66525,9 @@
               "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
               "value": {
                 "generatedName": "TaskIamMemberRoleUpdateRemoveAll",
+                "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
                 "value": {
+                  "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
                   "schema": {
                     "type": "boolean"
                   },
@@ -66715,8 +66873,10 @@
               "generatedName": "TaskRevisionLlmConfig",
               "description": "Specific configuration parameters for the LLM model.",
               "value": {
+                "description": "Specific configuration parameters for the LLM model.",
                 "generatedName": "TaskRevisionLlmConfig",
                 "schema": "TaskLLMConfig",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -66805,7 +66965,9 @@
               "description": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
               "value": {
                 "generatedName": "TaskRevisionTaskForwarderId",
+                "description": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
                 "value": {
+                  "description": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
                   "schema": {
                     "format": "uuid",
                     "type": "string"
@@ -66831,15 +66993,19 @@
               "description": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
               "value": {
                 "generatedName": "TaskRevisionRag",
+                "description": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
                 "value": {
+                  "description": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
                   "generatedName": "TaskRevisionRag",
                   "schema": "TaskRAG",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -67096,6 +67262,7 @@
               "description": "The system prompt that is used to set the LLM context.",
               "value": {
                 "generatedName": "TaskUpdateSystemPrompt",
+                "description": "The system prompt that is used to set the LLM context.",
                 "value": {
                   "generatedName": "TaskUpdateSystemPrompt",
                   "type": "unknown"
@@ -67117,6 +67284,7 @@
               "description": "The description of the Task. It is not required to mention the outputs in the prompt, but it can help the model to understand the context better. Any input strings should be referenced with the dynamic `{...}` syntax, this informs the model to look for those values in the input data.",
               "value": {
                 "generatedName": "TaskUpdateUserPrompt",
+                "description": "The description of the Task. It is not required to mention the outputs in the prompt, but it can help the model to understand the context better. Any input strings should be referenced with the dynamic `{...}` syntax, this informs the model to look for those values in the input data.",
                 "value": {
                   "generatedName": "TaskUpdateUserPrompt",
                   "type": "unknown"
@@ -67138,6 +67306,7 @@
               "description": "The LLM model to use for the Task.",
               "value": {
                 "generatedName": "TaskUpdateLlmModel",
+                "description": "The LLM model to use for the Task.",
                 "value": {
                   "generatedName": "TaskUpdateLlmModel",
                   "values": [
@@ -67226,15 +67395,19 @@
               "description": "Specific configuration parameters for the LLM model.",
               "value": {
                 "generatedName": "TaskUpdateLlmConfig",
+                "description": "Specific configuration parameters for the LLM model.",
                 "value": {
+                  "description": "Specific configuration parameters for the LLM model.",
                   "generatedName": "TaskUpdateLlmConfig",
                   "schema": "TaskLLMConfig",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -67251,6 +67424,7 @@
               "description": "This gives control over the structure of how the Task responds. Supports shorthand notation or an object with `type` can be specified for each attribute. In most instances, the LLM will be able to generate the desired output into the relevant property, but an optional `description` can be passed to provide it with additional context.",
               "value": {
                 "generatedName": "TaskUpdateOutputFormat",
+                "description": "This gives control over the structure of how the Task responds. Supports shorthand notation or an object with `type` can be specified for each attribute. In most instances, the LLM will be able to generate the desired output into the relevant property, but an optional `description` can be passed to provide it with additional context.",
                 "value": {
                   "key": {
                     "schema": {
@@ -67334,7 +67508,9 @@
               "description": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
               "value": {
                 "generatedName": "TaskUpdateTaskForwarderId",
+                "description": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
                 "value": {
+                  "description": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
                   "schema": {
                     "format": "uuid",
                     "type": "string"
@@ -67360,15 +67536,19 @@
               "description": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
               "value": {
                 "generatedName": "TaskUpdateRag",
+                "description": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
                 "value": {
+                  "description": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
                   "generatedName": "TaskUpdateRag",
                   "schema": "TaskRAG",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -67388,7 +67568,9 @@
               "description": "When `true` it requires an image to be sent in the Task Run request.",
               "value": {
                 "generatedName": "TaskUpdateImageRequired",
+                "description": "When `true` it requires an image to be sent in the Task Run request.",
                 "value": {
+                  "description": "When `true` it requires an image to be sent in the Task Run request.",
                   "schema": {
                     "type": "boolean"
                   },
@@ -67413,7 +67595,9 @@
               "description": "A name or reference for the Task.",
               "value": {
                 "generatedName": "TaskUpdateName",
+                "description": "A name or reference for the Task.",
                 "value": {
+                  "description": "A name or reference for the Task.",
                   "schema": {
                     "type": "string"
                   },
@@ -67438,7 +67622,9 @@
               "description": "A longer description of the Task for internal reference.",
               "value": {
                 "generatedName": "TaskUpdateDescription",
+                "description": "A longer description of the Task for internal reference.",
                 "value": {
+                  "description": "A longer description of the Task for internal reference.",
                   "schema": {
                     "type": "string"
                   },
@@ -67463,7 +67649,9 @@
               "description": "When `true` the Task is active and callable. `false` denotes the Task is not yet operational.",
               "value": {
                 "generatedName": "TaskUpdateEnabled",
+                "description": "When `true` the Task is active and callable. `false` denotes the Task is not yet operational.",
                 "value": {
+                  "description": "When `true` the Task is active and callable. `false` denotes the Task is not yet operational.",
                   "schema": {
                     "type": "boolean"
                   },

@@ -109,7 +109,9 @@
               "description": "An optional string value.\n",
               "value": {
                 "generatedName": "RequestId",
+                "description": "An optional string value.\n",
                 "value": {
+                  "description": "An optional string value.\n",
                   "schema": {
                     "type": "string"
                   },
@@ -149,7 +151,9 @@
               "description": "An optional numerical value.\n",
               "value": {
                 "generatedName": "ResponseValue",
+                "description": "An optional numerical value.\n",
                 "value": {
+                  "description": "An optional numerical value.\n",
                   "schema": {
                     "type": "double"
                   },

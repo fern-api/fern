@@ -20061,9 +20061,12 @@
             "key": "publishedAt",
             "schema": {
               "generatedName": "ThingPublishedAt",
+              "description": "PublishedAt is the time at which the Thing was published.\n",
               "value": {
                 "generatedName": "ThingPublishedAt",
+                "description": "PublishedAt is the time at which the Thing was published.\n",
                 "value": {
+                  "description": "PublishedAt is the time at which the Thing was published.\n",
                   "schema": {
                     "type": "string"
                   },
