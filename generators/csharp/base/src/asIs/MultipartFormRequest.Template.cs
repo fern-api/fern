@@ -52,6 +52,22 @@ internal record MultipartFormRequest : BaseRequest
         }
     }
 
+    internal void AddJsonParts<T>(string name, IEnumerable<T>? value) =>
+        AddJsonParts(name, value, null);
+
+    internal void AddJsonParts<T>(string name, IEnumerable<T>? value, string? contentType)
+    {
+        if (value is null)
+        {
+            return;
+        }
+
+        foreach (var item in value)
+        {
+            AddJsonPart(name, item, contentType);
+        }
+    }
+
     internal void AddStringPart(string name, object? value) => AddStringPart(name, value, null);
 
     internal void AddStringPart(string name, object? value, string? contentType)
@@ -220,6 +236,22 @@ internal record MultipartFormRequest : BaseRequest
         }
     }
 
+    internal void AddFormEncodedParts<T>(string name, IEnumerable<T>? value) =>
+        AddFormEncodedParts(name, value, null);
+
+    internal void AddFormEncodedParts<T>(string name, IEnumerable<T>? value, string? contentType)
+    {
+        if (value is null)
+        {
+            return;
+        }
+
+        foreach (var item in value)
+        {
+            AddFormEncodedPart(name, item, contentType);
+        }
+    }
+
     internal void AddExplodedFormEncodedPart(string name, object? value) =>
         AddExplodedFormEncodedPart(name, value, null);
 
@@ -248,6 +280,26 @@ internal record MultipartFormRequest : BaseRequest
     internal void AddExplodedFormEncodedParts(
         string name,
         IEnumerable<object?>? value,
+        string? contentType
+    )
+    {
+        if (value is null)
+        {
+            return;
+        }
+
+        foreach (var item in value)
+        {
+            AddExplodedFormEncodedPart(name, item, contentType);
+        }
+    }
+
+    internal void AddExplodedFormEncodedParts<T>(string name, IEnumerable<T>? value) =>
+        AddExplodedFormEncodedParts(name, value, null);
+
+    internal void AddExplodedFormEncodedParts<T>(
+        string name,
+        IEnumerable<T>? value,
         string? contentType
     )
     {
