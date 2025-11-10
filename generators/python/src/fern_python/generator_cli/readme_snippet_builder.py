@@ -266,7 +266,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
                         ),
                     )
                 )
-                writer.write_line("print(pager.response.headers)  # access the response headers for the first page")
+                writer.write_line("print(pager.response)  # access the typed response for the first page")
                 writer.write_node(
                     AST.ForStatement(
                         target="item",
@@ -281,7 +281,7 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
                         iterable="pager.iter_pages()",
                         body=[
                             AST.Expression(
-                                "print(page.response.headers)  # access the response headers for each page\n"
+                                "print(page.response)  # access the typed response for each page\n"
                             ),
                             AST.ForStatement(
                                 target="item",
@@ -383,7 +383,30 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
 
     def _build_pagination_snippets(self) -> List[str]:
         try:
-            return self._build_snippets_for_feature(ReadmeSnippetBuilder.PAGINATION_FEATURE_ID)
+            snippets = self._build_snippets_for_feature(ReadmeSnippetBuilder.PAGINATION_FEATURE_ID)
+            
+            if len(snippets) > 0:
+                pagination_endpoint_ids = self._filter_endpoint_ids_by_feature(ReadmeSnippetBuilder.PAGINATION_FEATURE_ID)
+                filtered_pagination_endpoint_ids = [e for e in pagination_endpoint_ids if e in self._endpoint_snippet_map]
+                
+                if len(filtered_pagination_endpoint_ids) > 0:
+                    endpoint_id = filtered_pagination_endpoint_ids[0]
+                    endpoint = self._endpoint_metadata.get_endpoint_metadata(endpoint_id)
+                    
+                    if endpoint is not None:
+                        has_parameters = self._endpoint_metadata.has_parameters(endpoint_id)
+                        
+                        additional_snippet = f"""# You can also iterate through pages and access the typed response per page
+pager = client.{endpoint.endpoint_package_path}{endpoint.method_name}({'...' if has_parameters else ''})
+for page in pager.iter_pages():
+    print(page.response)  # access the typed response for each page
+    for item in page:
+        print(item)
+"""
+                        
+                        snippets.append(additional_snippet)
+            
+            return snippets
         except Exception as e:
             print(f"Failed to generage pagination snippets with exception {e}")
             return []
