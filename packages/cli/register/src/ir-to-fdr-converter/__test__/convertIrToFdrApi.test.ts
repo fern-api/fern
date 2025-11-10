@@ -52,7 +52,8 @@ describe.skip("fdr", async () => {
         ).flat()
     ];
     */
-    const apiWorkspaces: never[] = []; // Temporary empty array to avoid compilation errors
+    // biome-ignore lint/suspicious/noExplicitAny: skipped test with empty array
+    const apiWorkspaces: any[] = [];
 
     await Promise.all(
         apiWorkspaces.map(async (workspace) => {

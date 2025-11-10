@@ -105,9 +105,9 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
 
         // Validate service endpoints (should have 3 endpoints from our OpenAPI spec)
         if (service && typeof service === "object" && "endpoints" in service) {
-            const serviceWithEndpoints = service as { endpoints?: Record<string, unknown> };
+            const serviceWithEndpoints = service as { endpoints?: unknown[] };
             expect(serviceWithEndpoints.endpoints).toBeDefined();
-            expect(Object.keys(serviceWithEndpoints.endpoints ?? {})).toHaveLength(3); // /health, /users/{userId}, /users POST
+            expect(serviceWithEndpoints.endpoints?.length).toBe(3); // /health, /users/{userId}, /users POST
         }
 
         // Step 6: Snapshot the FINAL FDR output (what gets uploaded to S3)
