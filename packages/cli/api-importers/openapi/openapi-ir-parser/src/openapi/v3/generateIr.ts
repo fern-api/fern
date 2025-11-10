@@ -427,6 +427,13 @@ function maybeRemoveDiscriminantsFromSchemas(
             continue;
         }
 
+        // Check if the schema is also referenced outside of discriminated unions.
+        const isReferencedElsewhere = context.getReferencedSchemas().has(schemaId);
+        if (isReferencedElsewhere) {
+            result[schemaId] = schema;
+            continue;
+        }
+
         const schemaWithoutDiscriminants: SchemaWithExample.Object_ = {
             ...schema,
             type: "object",
