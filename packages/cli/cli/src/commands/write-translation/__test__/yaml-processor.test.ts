@@ -30,11 +30,13 @@ navigation:
 `;
 
             const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
-            const parsed = yaml.load(result) as Record<string, unknown>;
+            type PageItem = { page: string; path: string; slug?: string };
+            type PageDoc = { navigation: PageItem[] };
+            const parsed = yaml.load(result) as PageDoc;
 
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].page).toBe("[TRANSLATED] Hello World");
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].path).toBe("./hello.mdx");
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].slug).toBe("hello-world");
+            expect(parsed.navigation[0]!.page).toBe("[TRANSLATED] Hello World");
+            expect(parsed.navigation[0]!.path).toBe("./hello.mdx");
+            expect(parsed.navigation[0]!.slug).toBe("hello-world");
         });
 
         it("should preserve existing slug from source", async () => {
@@ -48,7 +50,7 @@ navigation:
             const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
             const parsed = yaml.load(result) as Record<string, unknown>;
 
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].slug).toBe("custom-slug");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.slug).toBe("custom-slug");
         });
 
         it("should handle multiple pages", async () => {
@@ -63,8 +65,8 @@ navigation:
             const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
             const parsed = yaml.load(result) as Record<string, unknown>;
 
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].slug).toBe("getting-started");
-            expect((parsed.navigation as Array<Record<string, unknown>>)[1].slug).toBe("api-reference");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.slug).toBe("getting-started");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[1]!.slug).toBe("api-reference");
         });
     });
 
@@ -81,10 +83,10 @@ navigation:
             const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
             const parsed = yaml.load(result) as Record<string, unknown>;
 
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].section).toBe("[TRANSLATED] API Guide");
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].slug).toBe("api-guide");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.section).toBe("[TRANSLATED] API Guide");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.slug).toBe("api-guide");
             expect(
-                ((parsed.navigation as Array<Record<string, unknown>>)[0].contents as Array<Record<string, unknown>>)[0]
+                ((parsed.navigation as Array<Record<string, unknown>>)[0]!.contents as Array<Record<string, unknown>>)[0]!
                     .slug
             ).toBe("overview");
         });
@@ -102,9 +104,9 @@ navigation:
             const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
             const parsed = yaml.load(result) as Record<string, unknown>;
 
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].slug).toBeUndefined();
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.slug).toBeUndefined();
             expect(
-                ((parsed.navigation as Array<Record<string, unknown>>)[0].contents as Array<Record<string, unknown>>)[0]
+                ((parsed.navigation as Array<Record<string, unknown>>)[0]!.contents as Array<Record<string, unknown>>)[0]!
                     .slug
             ).toBe("overview");
         });
@@ -122,7 +124,7 @@ navigation:
             const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
             const parsed = yaml.load(result) as Record<string, unknown>;
 
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].slug).toBe("custom-section-slug");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.slug).toBe("custom-section-slug");
         });
     });
 
@@ -136,8 +138,8 @@ navigation:
             const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
             const parsed = yaml.load(result) as Record<string, unknown>;
 
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].api).toBe("[TRANSLATED] My API");
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].slug).toBe("my-api");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.api).toBe("[TRANSLATED] My API");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.slug).toBe("my-api");
         });
 
         it("should prefer api-name over api for slug generation", async () => {
@@ -150,7 +152,7 @@ navigation:
             const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
             const parsed = yaml.load(result) as Record<string, unknown>;
 
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].slug).toBe("custom-api-name");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.slug).toBe("custom-api-name");
         });
 
         it("should respect skip-slug for api reference", async () => {
@@ -163,7 +165,7 @@ navigation:
             const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
             const parsed = yaml.load(result) as Record<string, unknown>;
 
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].slug).toBeUndefined();
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.slug).toBeUndefined();
         });
 
         it("should preserve existing slug from source for api reference", async () => {
@@ -176,7 +178,7 @@ navigation:
             const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
             const parsed = yaml.load(result) as Record<string, unknown>;
 
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].slug).toBe("custom-api-slug");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.slug).toBe("custom-api-slug");
         });
     });
 
@@ -191,8 +193,8 @@ navigation:
             const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
             const parsed = yaml.load(result) as Record<string, unknown>;
 
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].title).toBe("[TRANSLATED] Release Notes");
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].slug).toBe("release-notes");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.title).toBe("[TRANSLATED] Release Notes");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.slug).toBe("release-notes");
         });
 
         it("should use changelog path basename when title is missing", async () => {
@@ -204,7 +206,7 @@ navigation:
             const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
             const parsed = yaml.load(result) as Record<string, unknown>;
 
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].slug).toBe("changelog");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.slug).toBe("changelog");
         });
 
         it("should preserve existing slug from source for changelog", async () => {
@@ -218,7 +220,7 @@ navigation:
             const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
             const parsed = yaml.load(result) as Record<string, unknown>;
 
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].slug).toBe("custom-changelog-slug");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.slug).toBe("custom-changelog-slug");
         });
     });
 
@@ -233,9 +235,9 @@ navigation:
             const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
             const parsed = yaml.load(result) as Record<string, unknown>;
 
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].link).toBe("[TRANSLATED] External Link");
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].href).toBe("https://example.com");
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].slug).toBeUndefined();
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.link).toBe("[TRANSLATED] External Link");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.href).toBe("https://example.com");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.slug).toBeUndefined();
         });
     });
 
@@ -257,21 +259,21 @@ navigation:
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             expect(
-                ((parsed.navigation as Array<Record<string, unknown>>)[0].layout as Array<Record<string, unknown>>)[0]
+                ((parsed.navigation as Array<Record<string, unknown>>)[0]!.layout as Array<Record<string, unknown>>)[0]!
                     .slug
             ).toBe("getting-started");
             expect(
-                ((parsed.navigation as Array<Record<string, unknown>>)[0].layout as Array<Record<string, unknown>>)[1]
+                ((parsed.navigation as Array<Record<string, unknown>>)[0]!.layout as Array<Record<string, unknown>>)[1]!
                     .slug
             ).toBe("api-guide");
             expect(
                 (
                     (
-                        (parsed.navigation as Array<Record<string, unknown>>)[0].layout as Array<
+                        (parsed.navigation as Array<Record<string, unknown>>)[0]!.layout as Array<
                             Record<string, unknown>
                         >
-                    )[1].contents as Array<Record<string, unknown>>
-                )[0].slug
+                    )[1]!.contents as Array<Record<string, unknown>>
+                )[0]!.slug
             ).toBe("overview");
         });
 
@@ -289,19 +291,19 @@ navigation:
             const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
             const parsed = yaml.load(result) as Record<string, unknown>;
 
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].slug).toBe("level-1");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.slug).toBe("level-1");
             expect(
-                ((parsed.navigation as Array<Record<string, unknown>>)[0].contents as Array<Record<string, unknown>>)[0]
+                ((parsed.navigation as Array<Record<string, unknown>>)[0]!.contents as Array<Record<string, unknown>>)[0]!
                     .slug
             ).toBe("level-2");
             expect(
                 (
                     (
-                        (parsed.navigation as Array<Record<string, unknown>>)[0].contents as Array<
+                        (parsed.navigation as Array<Record<string, unknown>>)[0]!.contents as Array<
                             Record<string, unknown>
                         >
-                    )[0].contents as Array<Record<string, unknown>>
-                )[0].slug
+                    )[0]!.contents as Array<Record<string, unknown>>
+                )[0]!.slug
             ).toBe("deep-page");
         });
     });
@@ -317,7 +319,7 @@ navigation:
             const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
             const parsed = yaml.load(result) as Record<string, unknown>;
 
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].slug).toBe("hello-world-2024");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.slug).toBe("hello-world-2024");
         });
 
         it("should handle multiple spaces and hyphens", async () => {
@@ -330,7 +332,7 @@ navigation:
             const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
             const parsed = yaml.load(result) as Record<string, unknown>;
 
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].slug).toBe("multiple-spaces-and-hyphens");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.slug).toBe("multiple-spaces-and-hyphens");
         });
 
         it("should handle leading and trailing spaces", async () => {
@@ -343,7 +345,7 @@ navigation:
             const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
             const parsed = yaml.load(result) as Record<string, unknown>;
 
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0].slug).toBe("trimmed-title");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]!.slug).toBe("trimmed-title");
         });
     });
 

@@ -51,12 +51,18 @@ function isChangelogConfiguration(obj: unknown): obj is Record<string, unknown> 
     return typeof record["changelog"] === "string";
 }
 
-function computeSlugForNavigationItem(sourceRecord: Record<string, unknown>): string | undefined {
-    if (typeof sourceRecord["slug"] === "string") {
-        return sourceRecord["slug"];
+function computeSlugForNavigationItem(sourceRecord: unknown): string | undefined {
+    if (typeof sourceRecord !== "object" || sourceRecord === null) {
+        return undefined;
     }
 
-    if (sourceRecord["skip-slug"] === true) {
+    const record = sourceRecord as Record<string, unknown>;
+
+    if (typeof record["slug"] === "string") {
+        return record["slug"];
+    }
+
+    if (record["skip-slug"] === true) {
         return undefined;
     }
 
