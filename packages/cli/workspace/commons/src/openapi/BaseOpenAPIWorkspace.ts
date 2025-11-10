@@ -2,7 +2,6 @@ import { generatorsYml } from "@fern-api/configuration";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 import { TaskContext } from "@fern-api/task-context";
-
 import { AbstractAPIWorkspace, AbstractAPIWorkspaceSync, FernDefinition, FernWorkspace } from "..";
 import { FernDefinitionConverter } from "./FernDefinitionConverter";
 import { OpenAPISettings } from "./OpenAPISettings";
@@ -22,26 +21,28 @@ export declare namespace BaseOpenAPIWorkspace {
         inlineAllOfSchemas: boolean | undefined;
         resolveAliases: generatorsYml.ResolveAliases | undefined;
         groupEnvironmentsByHost: boolean | undefined;
+        removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas | undefined;
     }
 
     export type Settings = Partial<OpenAPISettings>;
 }
 
 export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpenAPIWorkspace.Settings> {
-    public inlinePathParameters: boolean | undefined;
-    public objectQueryParameters: boolean | undefined;
-    public onlyIncludeReferencedSchemas: boolean | undefined;
-    public respectReadonlySchemas: boolean | undefined;
-    public respectNullableSchemas: boolean | undefined;
-    public wrapReferencesToNullableInOptional: boolean | undefined;
-    public coerceOptionalSchemasToNullable: boolean | undefined;
-    public exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
-    public useBytesForBinaryResponse: boolean | undefined;
-    public respectForwardCompatibleEnums: boolean | undefined;
-    public inlineAllOfSchemas: boolean | undefined;
-    public resolveAliases: generatorsYml.ResolveAliases | undefined;
-    public groupEnvironmentsByHost: boolean | undefined;
-    private converter: FernDefinitionConverter;
+    public readonly inlinePathParameters: boolean | undefined;
+    public readonly objectQueryParameters: boolean | undefined;
+    public readonly onlyIncludeReferencedSchemas: boolean | undefined;
+    public readonly respectReadonlySchemas: boolean | undefined;
+    public readonly respectNullableSchemas: boolean | undefined;
+    public readonly wrapReferencesToNullableInOptional: boolean | undefined;
+    public readonly coerceOptionalSchemasToNullable: boolean | undefined;
+    public readonly exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
+    public readonly useBytesForBinaryResponse: boolean | undefined;
+    public readonly respectForwardCompatibleEnums: boolean | undefined;
+    public readonly inlineAllOfSchemas: boolean | undefined;
+    public readonly resolveAliases: generatorsYml.ResolveAliases | undefined;
+    public readonly groupEnvironmentsByHost: boolean | undefined;
+    public readonly removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas | undefined;
+    private readonly converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
         super(args);
@@ -58,6 +59,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         this.inlineAllOfSchemas = args.inlineAllOfSchemas;
         this.resolveAliases = args.resolveAliases;
         this.groupEnvironmentsByHost = args.groupEnvironmentsByHost;
+        this.removeDiscriminantsFromSchemas = args.removeDiscriminantsFromSchemas;
         this.converter = new FernDefinitionConverter(args);
     }
 
