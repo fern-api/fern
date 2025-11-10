@@ -13,7 +13,7 @@ import {
 } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 
-import { ConvertOpenAPIOptions } from "./ConvertOpenAPIOptions";
+import { ConvertOpenAPIOptions, getConvertOptions } from "./ConvertOpenAPIOptions";
 import { State } from "./State";
 
 export interface OpenApiIrConverterContextOpts {
@@ -92,19 +92,21 @@ export class OpenApiIrConverterContext {
         this.environmentOverrides = environmentOverrides;
         this.authOverrides = authOverrides;
         this.globalHeaderOverrides = globalHeaderOverrides;
-        this.detectGlobalHeaders = options?.detectGlobalHeaders ?? true;
-        this.objectQueryParameters = options?.objectQueryParameters ?? false;
-        this.respectReadonlySchemas = options?.respectReadonlySchemas ?? false;
-        this.respectNullableSchemas = options?.respectNullableSchemas ?? false;
-        this.onlyIncludeReferencedSchemas = options?.onlyIncludeReferencedSchemas ?? false;
-        this.inlinePathParameters = options?.inlinePathParameters ?? false;
-        this.useBytesForBinaryResponse = options?.useBytesForBinaryResponse ?? false;
-        this.respectForwardCompatibleEnums = options?.respectForwardCompatibleEnums ?? false;
-        this.referencedSchemaIds = options?.onlyIncludeReferencedSchemas ? new Set() : undefined;
-        this.enableUniqueErrorsPerEndpoint = options?.enableUniqueErrorsPerEndpoint ?? false;
-        this.wrapReferencesToNullableInOptional = options?.wrapReferencesToNullableInOptional ?? true;
-        this.coerceOptionalSchemasToNullable = options?.coerceOptionalSchemasToNullable ?? true;
-        this.groupEnvironmentsByHost = options?.groupEnvironmentsByHost ?? false;
+
+        const resolvedOptions = getConvertOptions({ options });
+        this.detectGlobalHeaders = resolvedOptions.detectGlobalHeaders;
+        this.objectQueryParameters = resolvedOptions.objectQueryParameters;
+        this.respectReadonlySchemas = resolvedOptions.respectReadonlySchemas;
+        this.respectNullableSchemas = resolvedOptions.respectNullableSchemas;
+        this.onlyIncludeReferencedSchemas = resolvedOptions.onlyIncludeReferencedSchemas;
+        this.inlinePathParameters = resolvedOptions.inlinePathParameters;
+        this.useBytesForBinaryResponse = resolvedOptions.useBytesForBinaryResponse;
+        this.respectForwardCompatibleEnums = resolvedOptions.respectForwardCompatibleEnums;
+        this.referencedSchemaIds = resolvedOptions.onlyIncludeReferencedSchemas ? new Set() : undefined;
+        this.enableUniqueErrorsPerEndpoint = resolvedOptions.enableUniqueErrorsPerEndpoint;
+        this.wrapReferencesToNullableInOptional = resolvedOptions.wrapReferencesToNullableInOptional;
+        this.coerceOptionalSchemasToNullable = resolvedOptions.coerceOptionalSchemasToNullable;
+        this.groupEnvironmentsByHost = resolvedOptions.groupEnvironmentsByHost;
         this.builder = new FernDefinitionBuilderImpl(this.enableUniqueErrorsPerEndpoint);
         if (ir.title != null) {
             this.builder.setDisplayName({ displayName: ir.title });

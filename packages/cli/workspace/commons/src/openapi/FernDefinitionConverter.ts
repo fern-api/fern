@@ -23,28 +23,25 @@ export class FernDefinitionConverter {
         settings?: BaseOpenAPIWorkspace.Settings;
         absoluteFilePath?: AbsoluteFilePath;
     }): FernDefinition {
+        const baseOptions = {
+            respectReadonlySchemas: this.args.respectReadonlySchemas,
+            respectNullableSchemas: this.args.respectNullableSchemas,
+            wrapReferencesToNullableInOptional: this.args.wrapReferencesToNullableInOptional,
+            coerceOptionalSchemasToNullable: this.args.coerceOptionalSchemasToNullable,
+            onlyIncludeReferencedSchemas: this.args.onlyIncludeReferencedSchemas,
+            inlinePathParameters: this.args.inlinePathParameters,
+            objectQueryParameters: this.args.objectQueryParameters,
+            useBytesForBinaryResponse: this.args.useBytesForBinaryResponse,
+            respectForwardCompatibleEnums: this.args.respectForwardCompatibleEnums,
+            groupEnvironmentsByHost: this.args.groupEnvironmentsByHost
+        };
+
         const definition = convert({
             taskContext: context,
             ir,
             options: getConvertOptions({
-                overrides: {
-                    ...settings,
-                    respectReadonlySchemas: settings?.respectReadonlySchemas ?? this.args.respectReadonlySchemas,
-                    respectNullableSchemas: settings?.respectNullableSchemas ?? this.args.respectNullableSchemas,
-                    wrapReferencesToNullableInOptional:
-                        settings?.wrapReferencesToNullableInOptional ?? this.args.wrapReferencesToNullableInOptional,
-                    coerceOptionalSchemasToNullable:
-                        settings?.coerceOptionalSchemasToNullable ?? this.args.coerceOptionalSchemasToNullable,
-                    onlyIncludeReferencedSchemas:
-                        settings?.onlyIncludeReferencedSchemas ?? this.args.onlyIncludeReferencedSchemas,
-                    inlinePathParameters: settings?.inlinePathParameters ?? this.args.inlinePathParameters,
-                    objectQueryParameters: settings?.objectQueryParameters ?? this.args.objectQueryParameters,
-                    useBytesForBinaryResponse:
-                        settings?.useBytesForBinaryResponse ?? this.args.useBytesForBinaryResponse,
-                    respectForwardCompatibleEnums:
-                        settings?.respectForwardCompatibleEnums ?? this.args.respectForwardCompatibleEnums,
-                    groupEnvironmentsByHost: settings?.groupEnvironmentsByHost ?? this.args.groupEnvironmentsByHost
-                }
+                options: baseOptions,
+                overrides: settings
             }),
             authOverrides:
                 settings?.auth != null

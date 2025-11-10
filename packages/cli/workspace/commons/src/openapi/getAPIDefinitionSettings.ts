@@ -1,6 +1,8 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { getParseOptions, type ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
-import { type ConvertOpenAPIOptions, getConvertOptions } from "@fern-api/openapi-ir-to-fern";
+import { type ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
+import { type ConvertOpenAPIOptions } from "@fern-api/openapi-ir-to-fern";
+
+import { getOpenAPISettings, type OpenAPISettings } from "./OpenAPISettings";
 
 /**
  * Combined settings for OpenAPI/AsyncAPI parsing and conversion.
@@ -14,12 +16,7 @@ export interface APIDefinitionSettings extends ParseOpenAPIOptions, ConvertOpenA
  * Uses the authoritative defaults from the importer packages.
  */
 export function getAPIDefinitionSettingsDefaults(): APIDefinitionSettings {
-    const parseDefaults = getParseOptions({});
-    const convertDefaults = getConvertOptions({});
-    return {
-        ...parseDefaults,
-        ...convertDefaults
-    };
+    return getOpenAPISettings();
 }
 
 /**
@@ -30,7 +27,7 @@ export function getAPIDefinitionSettingsDefaults(): APIDefinitionSettings {
  * @returns Complete APIDefinitionSettings with all defaults applied
  */
 export function getAPIDefinitionSettings(settings?: generatorsYml.APIDefinitionSettings): APIDefinitionSettings {
-    const parseOptions: Partial<ParseOpenAPIOptions> = {
+    const mappedSettings: Partial<OpenAPISettings> = {
         useTitlesAsName: settings?.shouldUseTitleAsName,
         shouldUseUndiscriminatedUnionsWithLiterals: settings?.shouldUseUndiscriminatedUnionsWithLiterals,
         discriminatedUnionV2: settings?.shouldUseUndiscriminatedUnionsWithLiterals,
@@ -59,24 +56,5 @@ export function getAPIDefinitionSettings(settings?: generatorsYml.APIDefinitionS
         groupEnvironmentsByHost: settings?.groupEnvironmentsByHost
     };
 
-    const convertOptions: Partial<ConvertOpenAPIOptions> = {
-        objectQueryParameters: settings?.objectQueryParameters,
-        respectReadonlySchemas: settings?.respectReadonlySchemas,
-        respectNullableSchemas: settings?.respectNullableSchemas,
-        onlyIncludeReferencedSchemas: settings?.onlyIncludeReferencedSchemas,
-        inlinePathParameters: settings?.inlinePathParameters,
-        useBytesForBinaryResponse: settings?.useBytesForBinaryResponse,
-        respectForwardCompatibleEnums: settings?.respectForwardCompatibleEnums,
-        wrapReferencesToNullableInOptional: settings?.wrapReferencesToNullableInOptional,
-        coerceOptionalSchemasToNullable: settings?.coerceOptionalSchemasToNullable,
-        groupEnvironmentsByHost: settings?.groupEnvironmentsByHost
-    };
-
-    const parseResult = getParseOptions({ options: parseOptions });
-    const convertResult = getConvertOptions({ options: convertOptions });
-
-    return {
-        ...parseResult,
-        ...convertResult
-    };
+    return getOpenAPISettings({ options: mappedSettings });
 }
