@@ -140,8 +140,8 @@ function getGithubPublishConfig(
                   FernGeneratorExec.GithubPublishInfo.pypi({
                       registryUrl: value.registryUrl,
                       packageName: value.packageName,
-                      usernameEnvironmentVariable: EnvironmentVariable(value.credentials?.username ?? ""),
-                      passwordEnvironmentVariable: EnvironmentVariable(value.credentials?.password ?? "")
+                      usernameEnvironmentVariable: EnvironmentVariable("PYPI_USERNAME"),
+                      passwordEnvironmentVariable: EnvironmentVariable("PYPI_PASSWORD"),
                   }),
               rubygems: (value) =>
                   FernGeneratorExec.GithubPublishInfo.rubygems({

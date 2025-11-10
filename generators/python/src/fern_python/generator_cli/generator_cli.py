@@ -159,6 +159,7 @@ class GeneratorCli:
             github_repo_url=github_repo_url,
             github_installation_token=github_installation_token,
         )
+        print(f"readme_config: {json.dumps(readme_config.dict(), indent=2)}")
         file = tempfile.NamedTemporaryFile(delete=False, mode="w+")
         file.write(json.dumps(readme_config.dict()))
         file.flush()
@@ -213,6 +214,8 @@ class GeneratorCli:
         github_repo_url: Optional[str] = None,
         github_installation_token: Optional[str] = None,
     ) -> Optional[generatorcli.readme.Remote]:
+        print(f"github_repo_url: {github_repo_url}")
+        print(f"github_installation_token: {github_installation_token}")
         if github_repo_url is not None and github_installation_token is not None:
             return generatorcli.readme.Remote(
                 type="github",
