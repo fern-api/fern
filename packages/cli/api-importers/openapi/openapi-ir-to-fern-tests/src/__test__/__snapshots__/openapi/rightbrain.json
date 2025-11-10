@@ -15,7 +15,6 @@
                 "value": {
                   "message": "message",
                   "multipleRolesNotAllowedError": {
-                    "resource": null,
                     "roles": [
                       "roles",
                     ],
@@ -27,9 +26,7 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidSubjectTypeError": {
-                    "subject": null,
-                  },
+                  "invalidSubjectTypeError": {},
                   "message": "message",
                   "reason": "INVALID_SUBJECT_TYPE",
                 },
@@ -73,10 +70,7 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {
-                    "resource": null,
-                    "subject": null,
-                  },
+                  "invalidMemberError": {},
                   "message": "message",
                 },
               },
@@ -2609,14 +2603,12 @@ errors:
       - value:
           message: message
           multipleRolesNotAllowedError:
-            resource: null
             roles:
               - roles
           reason: MULTIPLE_ROLES_NOT_ALLOWED
       - value:
           message: message
-          invalidSubjectTypeError:
-            subject: null
+          invalidSubjectTypeError: {}
           reason: INVALID_SUBJECT_TYPE
       - value:
           message: message
@@ -2646,9 +2638,7 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError:
-            resource: null
-            subject: null
+          invalidMemberError: {}
 types:
   ForbiddenErrorBody:
     discriminant: reason
@@ -6375,7 +6365,6 @@ This may be combined with `remove_all` to replace the member's entire role list.
                           "embedding_instances": [
                             {
                               "chat_document_id": "chat_document_id",
-                              "config": null,
                               "id": "id",
                               "is_active": true,
                             },
@@ -6665,8 +6654,7 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   embedding_instances:
-                    - config: null
-                      id: id
+                    - id: id
                       chat_document_id: chat_document_id
                       is_active: true
     createCollection:
@@ -8379,11 +8367,7 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
-                            "created_by": null,
-                            "datasource_id": null,
                             "id": "id",
-                            "private": null,
-                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -8704,10 +8688,6 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
-                    private: null
-                    project_id: null
-                    datasource_id: null
-                    created_by: null
                     id: id
     checkStatus:
       path: /org/{org_id}/project/{project_id}/datasource/box/{connection_id}/run
@@ -9314,11 +9294,7 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
-                            "created_by": null,
-                            "datasource_id": null,
                             "id": "id",
-                            "private": null,
-                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -9641,10 +9617,6 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
-                    private: null
-                    project_id: null
-                    datasource_id: null
-                    created_by: null
                     id: id
     checkStatus:
       path: >-
@@ -10254,11 +10226,7 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
-                            "created_by": null,
-                            "datasource_id": null,
                             "id": "id",
-                            "private": null,
-                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -10581,10 +10549,6 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
-                    private: null
-                    project_id: null
-                    datasource_id: null
-                    created_by: null
                     id: id
     checkStatus:
       path: >-
@@ -11194,11 +11158,7 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
-                            "created_by": null,
-                            "datasource_id": null,
                             "id": "id",
-                            "private": null,
-                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -11521,10 +11481,6 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
-                    private: null
-                    project_id: null
-                    datasource_id: null
-                    created_by: null
                     id: id
     checkStatus:
       path: /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/run
@@ -12133,11 +12089,7 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
-                            "created_by": null,
-                            "datasource_id": null,
                             "id": "id",
-                            "private": null,
-                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -12460,10 +12412,6 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
-                    private: null
-                    project_id: null
-                    datasource_id: null
-                    created_by: null
                     id: id
     checkStatus:
       path: /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/run
@@ -13072,11 +13020,7 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
-                            "created_by": null,
-                            "datasource_id": null,
                             "id": "id",
-                            "private": null,
-                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -13399,10 +13343,6 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
-                    private: null
-                    project_id: null
-                    datasource_id: null
-                    created_by: null
                     id: id
     checkStatus:
       path: >-
@@ -14012,11 +13952,7 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
-                            "created_by": null,
-                            "datasource_id": null,
                             "id": "id",
-                            "private": null,
-                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -14339,10 +14275,6 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
-                    private: null
-                    project_id: null
-                    datasource_id: null
-                    created_by: null
                     id: id
     checkStatus:
       path: >-
@@ -14870,7 +14802,6 @@ service:
                           "embedding_instances": [
                             {
                               "chat_document_id": "chat_document_id",
-                              "config": null,
                               "id": "id",
                               "is_active": true,
                             },
@@ -15130,7 +15061,6 @@ service:
                         "embedding_instances": [
                           {
                             "chat_document_id": "chat_document_id",
-                            "config": null,
                             "id": "id",
                             "is_active": true,
                           },
@@ -15737,8 +15667,7 @@ service:
                   chunks: 1
                   original_mime: original_mime
                   embedding_instances:
-                    - config: null
-                      id: id
+                    - id: id
                       chat_document_id: chat_document_id
                       is_active: true
     documentCreate:
@@ -15834,8 +15763,7 @@ service:
                 chunks: 1
                 original_mime: original_mime
                 embedding_instances:
-                  - config: null
-                    id: id
+                  - id: id
                     chat_document_id: chat_document_id
                     is_active: true
     taskStatus:
@@ -16490,7 +16418,6 @@ service:
                           "instance_ptr": "instance_ptr",
                           "messages": [
                             {
-                              "context": null,
                               "id": 1,
                               "text": "text",
                               "type": "info",
@@ -16542,7 +16469,6 @@ service:
                           "instance_ptr": "instance_ptr",
                           "messages": [
                             {
-                              "context": null,
                               "id": 1,
                               "text": "text",
                               "type": "info",
@@ -16684,7 +16610,6 @@ service:
                     - id: 1
                       text: text
                       type: info
-                      context: null
               identity:
                 key: value
     webhookKratosSignupCommit:
@@ -16714,7 +16639,6 @@ service:
                     - id: 1
                       text: text
                       type: info
-                      context: null
               identity:
                 key: value
   source:
@@ -20520,11 +20444,7 @@ types:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
-                            "created_by": null,
-                            "datasource_id": null,
                             "id": "id",
-                            "private": null,
-                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -20740,10 +20660,6 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
-                    private: null
-                    project_id: null
-                    datasource_id: null
-                    created_by: null
                     id: id
   source:
     openapi: ../openapi.yml
@@ -21857,9 +21773,7 @@ service:
                                 "match": "str",
                                 "rationale": "str",
                               },
-                              "rag": null,
                               "system_prompt": "You are an expert software program specifically designed for the fintech industry that will be used for pre-triage tasks to ensure the best possible client UX and efficient 3rd party platform interoperability.",
-                              "task_forwarder_id": null,
                               "user_prompt": "Your task is to validate the uploaded image and determine whether it will be suitable for authentication and onboarding checks. If the image of the person is clear and typical of a passport style photo then set the compliance field to true. Provide rationale for your decision in the rationale field. If the compliance result is false, then provide a helpful hint for the customer who has submitted the photo informing them why it is unacceptable and some steps to remedy it, place this into the hint field. Determine whether the following description matches the provided image: {description}",
                             },
                           ],
@@ -22933,8 +22847,6 @@ service:
                         hint: str
                         match: str
                         rationale: str
-                      task_forwarder_id: null
-                      rag: null
                       image_required: true
                       id: 019011e6-e530-3aca-6cf7-2973387c255d
                       created: '2024-06-13T14:01:03Z'

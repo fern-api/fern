@@ -65822,8 +65822,10 @@
               "generatedName": "BookingAmendmentNewContainerCounts",
               "description": "The requested new container count values",
               "value": {
+                "description": "The requested new container count values",
                 "generatedName": "BookingAmendmentNewContainerCounts",
                 "schema": "ContainerCounts",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -65931,8 +65933,10 @@
               "generatedName": "BookingAmendmentNewOriginAddress",
               "description": "The requested new origin address",
               "value": {
+                "description": "The requested new origin address",
                 "generatedName": "BookingAmendmentNewOriginAddress",
                 "schema": "Address",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -65952,8 +65956,10 @@
               "generatedName": "BookingAmendmentNewPortOfLoading",
               "description": "The requested new origin port (port of loading)",
               "value": {
+                "description": "The requested new origin port (port of loading)",
                 "generatedName": "BookingAmendmentNewPortOfLoading",
                 "schema": "Address",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -65973,8 +65979,10 @@
               "generatedName": "BookingAmendmentNewPortOfUnloading",
               "description": "The requested new destination port (port of unloading)",
               "value": {
+                "description": "The requested new destination port (port of unloading)",
                 "generatedName": "BookingAmendmentNewPortOfUnloading",
                 "schema": "Address",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -66043,8 +66051,10 @@
               "generatedName": "BookingAmendmentNewCargo",
               "description": "The requested new cargo, possibly including package details",
               "value": {
+                "description": "The requested new cargo, possibly including package details",
                 "generatedName": "BookingAmendmentNewCargo",
                 "schema": "Cargo",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -66064,8 +66074,10 @@
               "generatedName": "BookingAmendmentNewMetadata",
               "description": "The requested new metadata",
               "value": {
+                "description": "The requested new metadata",
                 "generatedName": "BookingAmendmentNewMetadata",
                 "schema": "Metadata",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -71286,8 +71298,10 @@
               "generatedName": "CommercialInvoiceLineItemWeight",
               "description": "Weight including any associated packaging (padding, foam, etc).",
               "value": {
+                "description": "Weight including any associated packaging (padding, foam, etc).",
                 "generatedName": "CommercialInvoiceLineItemWeight",
                 "schema": "Weight",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -71328,8 +71342,10 @@
               "generatedName": "CommercialInvoiceLineItemNetWeight",
               "description": "Weight excluding packaging.",
               "value": {
+                "description": "Weight excluding packaging.",
                 "generatedName": "CommercialInvoiceLineItemNetWeight",
                 "schema": "Weight",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -71349,8 +71365,10 @@
               "generatedName": "CommercialInvoiceLineItemNetNetWeight",
               "description": "Weight excluding packaging, tags, labels, instruction manuals, etc.",
               "value": {
+                "description": "Weight excluding packaging, tags, labels, instruction manuals, etc.",
                 "generatedName": "CommercialInvoiceLineItemNetNetWeight",
                 "schema": "Weight",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -79104,8 +79122,10 @@
               "generatedName": "ShipmentEventDataLocation",
               "description": "Possibly null. Location associated with the event.",
               "value": {
+                "description": "Possibly null. Location associated with the event.",
                 "generatedName": "ShipmentEventDataLocation",
                 "schema": "ShipmentNode",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"

@@ -4339,6 +4339,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "properties": {
               "publishedAt": {
                 "access": "read-only",
+                "docs": "PublishedAt is the time at which the Thing was published.
+",
                 "type": "optional<string>",
               },
             },
@@ -7120,6 +7122,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     properties:
       publishedAt:
         type: optional<string>
+        docs: |
+          PublishedAt is the time at which the Thing was published.
         access: read-only
     source:
       openapi: ../openapi.yml
