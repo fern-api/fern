@@ -60,7 +60,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         }
 
         const hasDiscriminator = this.schema.discriminator != null;
-        const hasMapping = hasDiscriminator && Object.keys(this.schema.discriminator.mapping ?? {}).length > 0;
+        const hasMapping = hasDiscriminator && Object.keys(this.schema.discriminator?.mapping ?? {}).length > 0;
 
         if (hasMapping) {
             return this.convertAsDiscriminatedUnion();
