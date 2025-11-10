@@ -37,7 +37,7 @@ class RawUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -58,7 +58,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersPaginationResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -103,7 +103,7 @@ class RawUsersClient:
 
     def list_with_mixed_type_cursor_pagination(
         self, *, cursor: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersMixedTypePaginationResponse]:
         """
         Parameters
         ----------
@@ -114,7 +114,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersMixedTypePaginationResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -150,7 +150,7 @@ class RawUsersClient:
 
     def list_with_body_cursor_pagination(
         self, *, pagination: typing.Optional[WithCursor] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -163,7 +163,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersPaginationResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -211,7 +211,7 @@ class RawUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -232,7 +232,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersPaginationResponse]
         """
         page = page if page is not None else 0
 
@@ -281,7 +281,7 @@ class RawUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -302,7 +302,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersPaginationResponse]
         """
         page = page if page is not None else 1
 
@@ -345,7 +345,7 @@ class RawUsersClient:
 
     def list_with_body_offset_pagination(
         self, *, pagination: typing.Optional[WithPage] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -358,7 +358,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersPaginationResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -401,7 +401,7 @@ class RawUsersClient:
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -420,7 +420,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersPaginationResponse]
         """
         page = page if page is not None else 1
 
@@ -466,7 +466,7 @@ class RawUsersClient:
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -485,7 +485,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersPaginationResponse]
         """
         page = page if page is not None else 1
 
@@ -526,7 +526,7 @@ class RawUsersClient:
 
     def list_with_extended_results(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersExtendedResponse]:
         """
         Parameters
         ----------
@@ -537,7 +537,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersExtendedResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -574,7 +574,7 @@ class RawUsersClient:
 
     def list_with_extended_results_and_optional_data(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersExtendedOptionalListResponse]:
         """
         Parameters
         ----------
@@ -585,7 +585,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersExtendedOptionalListResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -622,7 +622,7 @@ class RawUsersClient:
 
     def list_usernames(
         self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[str]:
+    ) -> SyncPager[str, UsernameCursor]:
         """
         Parameters
         ----------
@@ -635,7 +635,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[str]
+        SyncPager[str, UsernameCursor]
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -675,7 +675,7 @@ class RawUsersClient:
 
     def list_with_global_config(
         self, *, offset: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[str]:
+    ) -> SyncPager[str, UsernameContainer]:
         """
         Parameters
         ----------
@@ -686,7 +686,7 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncPager[str]
+        SyncPager[str, UsernameContainer]
         """
         offset = offset if offset is not None else 1
 
@@ -734,7 +734,7 @@ class AsyncRawUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -755,7 +755,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersPaginationResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -803,7 +803,7 @@ class AsyncRawUsersClient:
 
     async def list_with_mixed_type_cursor_pagination(
         self, *, cursor: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersMixedTypePaginationResponse]:
         """
         Parameters
         ----------
@@ -814,7 +814,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersMixedTypePaginationResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -853,7 +853,7 @@ class AsyncRawUsersClient:
 
     async def list_with_body_cursor_pagination(
         self, *, pagination: typing.Optional[WithCursor] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -866,7 +866,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersPaginationResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -917,7 +917,7 @@ class AsyncRawUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -938,7 +938,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersPaginationResponse]
         """
         page = page if page is not None else 0
 
@@ -990,7 +990,7 @@ class AsyncRawUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -1011,7 +1011,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersPaginationResponse]
         """
         page = page if page is not None else 1
 
@@ -1057,7 +1057,7 @@ class AsyncRawUsersClient:
 
     async def list_with_body_offset_pagination(
         self, *, pagination: typing.Optional[WithPage] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -1070,7 +1070,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersPaginationResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -1116,7 +1116,7 @@ class AsyncRawUsersClient:
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -1135,7 +1135,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersPaginationResponse]
         """
         page = page if page is not None else 1
 
@@ -1184,7 +1184,7 @@ class AsyncRawUsersClient:
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -1203,7 +1203,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersPaginationResponse]
         """
         page = page if page is not None else 1
 
@@ -1247,7 +1247,7 @@ class AsyncRawUsersClient:
 
     async def list_with_extended_results(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersExtendedResponse]:
         """
         Parameters
         ----------
@@ -1258,7 +1258,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersExtendedResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -1298,7 +1298,7 @@ class AsyncRawUsersClient:
 
     async def list_with_extended_results_and_optional_data(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersExtendedOptionalListResponse]:
         """
         Parameters
         ----------
@@ -1309,7 +1309,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersExtendedOptionalListResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -1349,7 +1349,7 @@ class AsyncRawUsersClient:
 
     async def list_usernames(
         self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[str]:
+    ) -> AsyncPager[str, UsernameCursor]:
         """
         Parameters
         ----------
@@ -1362,7 +1362,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[str]
+        AsyncPager[str, UsernameCursor]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -1405,7 +1405,7 @@ class AsyncRawUsersClient:
 
     async def list_with_global_config(
         self, *, offset: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[str]:
+    ) -> AsyncPager[str, UsernameContainer]:
         """
         Parameters
         ----------
@@ -1416,7 +1416,7 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncPager[str]
+        AsyncPager[str, UsernameContainer]
         """
         offset = offset if offset is not None else 1
 

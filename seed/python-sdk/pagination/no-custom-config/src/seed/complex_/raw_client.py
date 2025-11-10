@@ -30,7 +30,7 @@ class RawComplexClient:
         query: SearchRequestQuery,
         pagination: typing.Optional[StartingAfterPaging] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Conversation]:
+    ) -> SyncPager[Conversation, PaginatedConversationResponse]:
         """
         Parameters
         ----------
@@ -45,7 +45,7 @@ class RawComplexClient:
 
         Returns
         -------
-        SyncPager[Conversation]
+        SyncPager[Conversation, PaginatedConversationResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
             f"{jsonable_encoder(index)}/conversations/search",
@@ -105,7 +105,7 @@ class AsyncRawComplexClient:
         query: SearchRequestQuery,
         pagination: typing.Optional[StartingAfterPaging] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Conversation]:
+    ) -> AsyncPager[Conversation, PaginatedConversationResponse]:
         """
         Parameters
         ----------
@@ -120,7 +120,7 @@ class AsyncRawComplexClient:
 
         Returns
         -------
-        AsyncPager[Conversation]
+        AsyncPager[Conversation, PaginatedConversationResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"{jsonable_encoder(index)}/conversations/search",
