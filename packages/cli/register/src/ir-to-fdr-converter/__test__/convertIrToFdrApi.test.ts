@@ -5,7 +5,6 @@
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 // import { loadApis } from "@fern-api/project-loader"; // Commented out to avoid cyclic dependency
 import { createMockTaskContext } from "@fern-api/task-context";
 import { readdir } from "fs/promises";
@@ -53,7 +52,7 @@ describe.skip("fdr", async () => {
         ).flat()
     ];
     */
-    const apiWorkspaces: any[] = []; // Temporary empty array to avoid compilation errors
+    const apiWorkspaces: never[] = []; // Temporary empty array to avoid compilation errors
 
     await Promise.all(
         apiWorkspaces.map(async (workspace) => {

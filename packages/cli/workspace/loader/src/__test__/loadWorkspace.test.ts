@@ -27,7 +27,7 @@ describe("loadWorkspace", () => {
 
     it("open api", async () => {
         const workspace = await loadAPIWorkspace({
-            absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/openapi-path")),
+            absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures")),
             context: createMockTaskContext(),
             cliVersion: "0.0.0",
             workspaceName: undefined

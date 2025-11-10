@@ -105,8 +105,9 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
 
         // Validate service endpoints (should have 3 endpoints from our OpenAPI spec)
         if (service && typeof service === "object" && "endpoints" in service) {
-            expect((service as any).endpoints).toBeDefined();
-            expect(Object.keys((service as any).endpoints ?? {})).toHaveLength(3); // /health, /users/{userId}, /users POST
+            const serviceWithEndpoints = service as { endpoints?: Record<string, unknown> };
+            expect(serviceWithEndpoints.endpoints).toBeDefined();
+            expect(Object.keys(serviceWithEndpoints.endpoints ?? {})).toHaveLength(3); // /health, /users/{userId}, /users POST
         }
 
         // Step 6: Snapshot the FINAL FDR output (what gets uploaded to S3)
@@ -264,8 +265,8 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
 
         // Validate FDR structure for union types
         expect(fdrApiDefinition.types).toBeDefined();
-        const fdrEventRequestType = Object.values(fdrApiDefinition.types).find(
-            (type: any) => type.name === "EventRequest"
+        const fdrEventRequestType = Object.values(fdrApiDefinition.types as Record<string, { name?: unknown }>).find(
+            (type): type is { name: string } => typeof type.name === "string" && type.name === "EventRequest"
         );
         expect(fdrEventRequestType).toBeDefined();
         // FDR structure should also have union-like shape
