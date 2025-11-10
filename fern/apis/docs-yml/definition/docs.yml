@@ -418,6 +418,10 @@ types:
         docs: |
           If `availability` is set to `deprecated`, Fern will display a warning banner on the docs site.
       audiences: optional<Audience>
+      hidden:
+        type: optional<boolean>
+        docs: |
+          If true, this version will be hidden from navigation, search, and indexing, but still accessible via direct URL.
 
   Availability:
     enum:
