@@ -1,10 +1,10 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`fern generator get > fern generator get --language 1`] = `"typescript"`;
+
 exports[`fern generator get > fern generator get --version 1`] = `"2.3.2"`;
 
-exports[`fern generator get > fern generator get to file 1`] = `"typescript"`;
-
-exports[`fern generator get > fern generator get to file 2`] = `
+exports[`fern generator get > fern generator get to file 1`] = `
 "{
   "version": "2.3.2",
   "language": "typescript"

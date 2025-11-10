@@ -1,112 +1,5 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`fern init > existing fern directory 1`] = `
-[
-  {
-    "contents": [
-      {
-        "contents": "name: api
-error-discrimination:
-  strategy: status-code
-",
-        "name": "api.yml",
-        "type": "file",
-      },
-      {
-        "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
-service:
-  auth: false
-  base-path: /movies
-  endpoints:
-    createMovie:
-      docs: Add a movie to the database
-      method: POST
-      path: /create-movie
-      request: CreateMovieRequest
-      response: MovieId
-
-    getMovie:
-      docs: Retrieve a movie from the database based on the ID
-      method: GET
-      path: /{id}
-      path-parameters:
-        id: MovieId
-      response: Movie
-      errors:
-        - MovieDoesNotExistError
-      examples:
-        # Success response
-        - path-parameters:
-            id: tt0111161
-          response:
-            body:
-              id: tt0111161
-              title: The Shawshank Redemption
-              rating: 9.3
-        # Error response
-        - path-parameters:
-            id: tt1234
-          response:
-            error: MovieDoesNotExistError
-            body: tt1234
-
-types:
-  MovieId:
-    type: string
-    docs: The unique identifier for a Movie in the database
-
-  Movie:
-    properties:
-      id: MovieId
-      title: string
-      rating:
-        type: double
-        docs: The rating scale out of ten stars
-
-  CreateMovieRequest:
-    properties:
-      title: string
-      rating: double
-
-errors:
-  MovieDoesNotExistError:
-    status-code: 404
-    type: MovieId
-",
-        "name": "imdb.yml",
-        "type": "file",
-      },
-    ],
-    "name": "definition",
-    "type": "directory",
-  },
-  {
-    "contents": "{
-    "organization": "fern",
-    "version": "0.0.0"
-}",
-    "name": "fern.config.json",
-    "type": "file",
-  },
-  {
-    "contents": "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
-default-group: local
-groups:
-  local:
-    generators:
-      - name: fernapi/fern-typescript-sdk
-        output:
-          location: local-file-system
-          path: ../sdks/typescript
-        version: 2.3.2
-",
-    "name": "generators.yml",
-    "type": "file",
-  },
-]
-`;
-
 exports[`fern init > init docs 1`] = `
 [
   {
@@ -439,6 +332,113 @@ components:
           type: string
 ",
     "name": "petstore-openapi.yml",
+    "type": "file",
+  },
+]
+`;
+
+exports[`fern init > no existing fern directory 1`] = `
+[
+  {
+    "contents": [
+      {
+        "contents": "name: api
+error-discrimination:
+  strategy: status-code
+",
+        "name": "api.yml",
+        "type": "file",
+      },
+      {
+        "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: false
+  base-path: /movies
+  endpoints:
+    createMovie:
+      docs: Add a movie to the database
+      method: POST
+      path: /create-movie
+      request: CreateMovieRequest
+      response: MovieId
+
+    getMovie:
+      docs: Retrieve a movie from the database based on the ID
+      method: GET
+      path: /{id}
+      path-parameters:
+        id: MovieId
+      response: Movie
+      errors:
+        - MovieDoesNotExistError
+      examples:
+        # Success response
+        - path-parameters:
+            id: tt0111161
+          response:
+            body:
+              id: tt0111161
+              title: The Shawshank Redemption
+              rating: 9.3
+        # Error response
+        - path-parameters:
+            id: tt1234
+          response:
+            error: MovieDoesNotExistError
+            body: tt1234
+
+types:
+  MovieId:
+    type: string
+    docs: The unique identifier for a Movie in the database
+
+  Movie:
+    properties:
+      id: MovieId
+      title: string
+      rating:
+        type: double
+        docs: The rating scale out of ten stars
+
+  CreateMovieRequest:
+    properties:
+      title: string
+      rating: double
+
+errors:
+  MovieDoesNotExistError:
+    status-code: 404
+    type: MovieId
+",
+        "name": "imdb.yml",
+        "type": "file",
+      },
+    ],
+    "name": "definition",
+    "type": "directory",
+  },
+  {
+    "contents": "{
+    "organization": "fern",
+    "version": "0.0.0"
+}",
+    "name": "fern.config.json",
+    "type": "file",
+  },
+  {
+    "contents": "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        output:
+          location: local-file-system
+          path: ../sdks/typescript
+        version: 2.3.2
+",
+    "name": "generators.yml",
     "type": "file",
   },
 ]
