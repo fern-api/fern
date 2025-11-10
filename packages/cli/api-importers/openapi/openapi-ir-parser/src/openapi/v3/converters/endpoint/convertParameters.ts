@@ -161,12 +161,15 @@ export function convertParameters({
             }
         }
 
-        const style = resolvedParameter.style ?? (resolvedParameter.in === "query" || resolvedParameter.in === "cookie" ? "form" : "simple");
+        const style =
+            resolvedParameter.style ??
+            (resolvedParameter.in === "query" || resolvedParameter.in === "cookie" ? "form" : "simple");
         const defaultExplode = style === "form";
-        
-        const explodeValue = resolvedParameter.explode !== undefined && resolvedParameter.explode !== defaultExplode
-            ? resolvedParameter.explode
-            : undefined;
+
+        const explodeValue =
+            resolvedParameter.explode !== undefined && resolvedParameter.explode !== defaultExplode
+                ? resolvedParameter.explode
+                : undefined;
 
         const convertedParameter = {
             name: resolvedParameter.name,
@@ -184,7 +187,7 @@ export function convertParameters({
                 ...convertedParameter,
                 variableReference: getVariableReference(resolvedParameter)
             });
-        }else if (resolvedParameter.in === "header") {
+        } else if (resolvedParameter.in === "header") {
             if (
                 !HEADERS_TO_SKIP.has(resolvedParameter.name.toLowerCase()) &&
                 !context.authHeaders.has(resolvedParameter.name)
