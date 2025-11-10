@@ -23,6 +23,7 @@ export declare namespace RequestWrapperContextImpl {
         enableInlineTypes: boolean;
         formDataSupport: "Node16" | "Node18";
         flattenRequestParameters: boolean;
+        useDefaultRequestParameterValues: boolean;
     }
 }
 
@@ -40,6 +41,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
     private enableInlineTypes: boolean;
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly flattenRequestParameters: boolean;
+    private readonly useDefaultRequestParameterValues: boolean;
 
     constructor({
         requestWrapperGenerator,
@@ -54,7 +56,8 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         inlinePathParameters,
         enableInlineTypes,
         formDataSupport,
-        flattenRequestParameters
+        flattenRequestParameters,
+        useDefaultRequestParameterValues
     }: RequestWrapperContextImpl.Init) {
         this.requestWrapperGenerator = requestWrapperGenerator;
         this.requestWrapperDeclarationReferencer = requestWrapperDeclarationReferencer;
@@ -69,6 +72,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         this.enableInlineTypes = enableInlineTypes;
         this.formDataSupport = formDataSupport;
         this.flattenRequestParameters = flattenRequestParameters;
+        this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
     }
 
     public shouldInlinePathParameters(sdkRequest: SdkRequest | undefined | null): boolean {
@@ -117,7 +121,8 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
             enableInlineTypes: this.enableInlineTypes,
             shouldInlinePathParameters: this.shouldInlinePathParameters(endpoint.sdkRequest),
             formDataSupport: this.formDataSupport,
-            flattenRequestParameters: this.flattenRequestParameters
+            flattenRequestParameters: this.flattenRequestParameters,
+            useDefaultRequestParameterValues: this.useDefaultRequestParameterValues
         });
     }
 
@@ -137,6 +142,23 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
                 type: "fromRoot",
                 namespaceImport: this.requestWrapperDeclarationReferencer.namespaceExport
             },
+            referencedIn: this.sourceFile
+        });
+    }
+
+    public getReferenceToRequestWrapperExpression(packageId: PackageId, endpointName: Name): ts.Expression {
+        const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
+        const endpoint = serviceDeclaration.endpoints.find(
+            (endpoint) => endpoint.name.originalName === endpointName.originalName
+        );
+        if (endpoint == null) {
+            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+        }
+        return this.requestWrapperDeclarationReferencer.getReferenceToRequestWrapperExpression({
+            name: { packageId, endpoint },
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
+            importStrategy: { type: "direct" },
             referencedIn: this.sourceFile
         });
     }

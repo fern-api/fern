@@ -33,6 +33,7 @@ export namespace GeneratedRequestWrapper {
 
 export interface GeneratedRequestWrapper extends GeneratedFile<SdkContext> {
     areAllPropertiesOptional: (context: SdkContext) => boolean;
+    hasDefaults: (context: SdkContext) => boolean;
     areBodyPropertiesInlined: () => boolean;
     getReferencedBodyPropertyName: () => string;
     getAllQueryParameters: () => QueryParameter[];

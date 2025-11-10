@@ -92,6 +92,12 @@ export class RequestWrapperDeclarationReferencer extends AbstractSdkClientClassD
         return this.getReferenceTo(this.getExportedName(args.name), args).getTypeNode();
     }
 
+    public getReferenceToRequestWrapperExpression(
+        args: DeclarationReferencer.getReferenceTo.Options<RequestWrapperDeclarationReferencer.Name>
+    ): ts.Expression {
+        return this.getReferenceTo(this.getExportedName(args.name), args).getExpression();
+    }
+
     protected getPackageIdFromName(name: RequestWrapperDeclarationReferencer.Name): PackageId {
         return name.packageId;
     }

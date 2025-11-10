@@ -55,6 +55,40 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             return [];
         }
 
+        const hasDefaults = generatedRequestWrapper.hasDefaults(context);
+
+        const statements: ts.Statement[] = [];
+
+        // If there are defaults, call withDefaults() first
+        const sourceVariableName = hasDefaults ? "_request" : this.getRequestParameterName();
+        if (hasDefaults) {
+            const requestWrapperExpression = context.requestWrapper.getReferenceToRequestWrapperExpression(
+                this.packageId,
+                this.endpoint.name
+            );
+
+            statements.push(
+                ts.factory.createVariableStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                "_request",
+                                undefined,
+                                undefined,
+                                ts.factory.createCallExpression(
+                                    ts.factory.createPropertyAccessExpression(requestWrapperExpression, "withDefaults"),
+                                    undefined,
+                                    [ts.factory.createIdentifier(this.getRequestParameterName())]
+                                )
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    )
+                )
+            );
+        }
+
         const usedNames = new Set(variablesInScope);
         const getNonConflictingName = (name: string) => {
             while (usedNames.has(name)) {
@@ -69,28 +103,13 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             const nonConflictingName = getNonConflictingName(defaultName);
             this.nonBodyKeyAliases[defaultName] = nonConflictingName;
 
-            const useDefaultValues = (context.config.customConfig as { useDefaultRequestParameterValues?: boolean })
-                ?.useDefaultRequestParameterValues;
-
-            let defaultValue: ts.Expression | undefined;
-            if (useDefaultValues) {
-                if (nonBodyKey.originalParameter != null) {
-                    if (nonBodyKey.originalParameter.type !== "file") {
-                        defaultValue = this.extractDefaultValue(
-                            nonBodyKey.originalParameter.parameter.valueType,
-                            context
-                        );
-                    }
-                }
-            }
-
             return ts.factory.createBindingElement(
                 undefined,
                 nonConflictingName !== nonBodyKey.propertyName
                     ? ts.factory.createStringLiteral(nonBodyKey.propertyName)
                     : undefined,
                 nonConflictingName,
-                defaultValue
+                undefined
             );
         });
 
@@ -114,7 +133,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             }
         }
 
-        return [
+        statements.push(
             ts.factory.createVariableStatement(
                 undefined,
                 ts.factory.createVariableDeclarationList(
@@ -123,13 +142,15 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                             ts.factory.createObjectBindingPattern(bindingElements),
                             undefined,
                             undefined,
-                            ts.factory.createIdentifier(this.getRequestParameterName())
+                            ts.factory.createIdentifier(sourceVariableName)
                         )
                     ],
                     ts.NodeFlags.Const
                 )
             )
-        ];
+        );
+
+        return statements;
     }
 
     public getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined {
