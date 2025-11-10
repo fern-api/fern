@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.14.2
+  changelogEntry:
+    - summary: |
+        - more flexible SSE parsing logic
+      type: fix
+  createdAt: "2025-11-07"
+  irVersion: 60
+
 - version: 1.14.1
   changelogEntry:
     - summary: |
