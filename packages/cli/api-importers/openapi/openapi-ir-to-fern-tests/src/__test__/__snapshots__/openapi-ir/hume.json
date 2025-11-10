@@ -61,8 +61,7 @@
           "source": {
             "file": "../openapi.yaml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Include only jobs with these statuses.",
@@ -89,8 +88,7 @@
           "source": {
             "file": "../openapi.yaml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Include only jobs that were created before or after `timestamp_ms`.",
@@ -113,8 +111,7 @@
           "source": {
             "file": "../openapi.yaml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Defaults to the current date and time. See `when`.",
@@ -136,8 +133,7 @@
           "source": {
             "file": "../openapi.yaml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "The job timestamp to sort by.",
@@ -160,8 +156,7 @@
           "source": {
             "file": "../openapi.yaml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "The sort direction.",
@@ -184,8 +179,7 @@
           "source": {
             "file": "../openapi.yaml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],

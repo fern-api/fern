@@ -161,6 +161,13 @@ export function convertParameters({
             }
         }
 
+        const style = resolvedParameter.style ?? (resolvedParameter.in === "query" || resolvedParameter.in === "cookie" ? "form" : "simple");
+        const defaultExplode = style === "form";
+        
+        const explodeValue = resolvedParameter.explode !== undefined && resolvedParameter.explode !== defaultExplode
+            ? resolvedParameter.explode
+            : undefined;
+
         const convertedParameter = {
             name: resolvedParameter.name,
             schema,
@@ -168,7 +175,7 @@ export function convertParameters({
             parameterNameOverride: getParameterName(resolvedParameter),
             availability,
             source,
-            explode: resolvedParameter.explode
+            explode: explodeValue
         };
         if (resolvedParameter.in === "query") {
             convertedParameters.queryParameters.push(convertedParameter);
@@ -177,7 +184,7 @@ export function convertParameters({
                 ...convertedParameter,
                 variableReference: getVariableReference(resolvedParameter)
             });
-        } else if (resolvedParameter.in === "header") {
+        }else if (resolvedParameter.in === "header") {
             if (
                 !HEADERS_TO_SKIP.has(resolvedParameter.name.toLowerCase()) &&
                 !context.authHeaders.has(resolvedParameter.name)

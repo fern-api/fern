@@ -166,8 +166,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Sets how the model will interpret strings submitted to the `custom_topic` param. When `strict`, the model will only return topics submitted using the `custom_topic` param. When `extended`, the model will return its own detected topics in addition to those submitted using the `custom_topic` param",
@@ -256,8 +255,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Sets how the model will interpret intents submitted to the `custom_intent` param. When `strict`, the model will only return intents submitted using the `custom_intent` param. When `extended`, the model will return its own detected intents in addition those submitted using the `custom_intents` param",
@@ -369,8 +367,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Version of the diarization feature to use. Only used when the diarization feature is enabled (`diarize=true` is passed to the API)",
@@ -550,8 +547,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Filler Words can help transcribe interruptions in your audio, like \"uh\" and \"um\"",
@@ -621,8 +617,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Keywords can boost or suppress specialized terminology and brands",
@@ -670,8 +665,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model you choose only certain languages are available",
@@ -1439,8 +1433,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Search for terms or phrases in submitted audio and replaces them",
@@ -1488,8 +1481,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Search for terms or phrases in submitted audio",
@@ -1537,8 +1529,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Recognizes the sentiment throughout a transcript or text",
@@ -1683,8 +1674,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Detect topics throughout a transcript or text",
@@ -2077,8 +2067,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Sets how the model will interpret strings submitted to the `custom_topic` param. When `strict`, the model will only return topics submitted using the `custom_topic` param. When `extended`, the model will return its own detected topics in addition to those submitted using the `custom_topic` param",

@@ -156,8 +156,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -259,8 +258,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -424,8 +422,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -576,8 +573,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -679,8 +675,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -841,8 +836,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Connection protocol used",
@@ -876,8 +870,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "invitation key",
@@ -899,8 +892,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Identifier of the associated Invitation Mesage",
@@ -922,8 +914,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "My DID",
@@ -945,8 +936,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Connection state",
@@ -1015,8 +1005,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Their DID",
@@ -1038,8 +1027,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Their Public DID",
@@ -1061,8 +1049,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Their role in the connection protocol",
@@ -1106,8 +1093,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -1534,8 +1520,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Auto-accept connection (defaults to configuration)",
@@ -1556,8 +1541,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Create invitation for multiple use (default false)",
@@ -1578,8 +1562,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Create invitation from public DID (default false)",
@@ -1600,8 +1583,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -2207,8 +2189,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Auto-accept connection (defaults to configuration)",
@@ -2229,8 +2210,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Identifier for active mediation record to be used",
@@ -2252,8 +2232,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -2580,8 +2559,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -2792,8 +2770,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -2895,8 +2872,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [
@@ -2920,8 +2896,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "My URL endpoint",
@@ -2943,8 +2918,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Label for connection",
@@ -2965,8 +2939,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -3207,8 +3180,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [
@@ -3232,8 +3204,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -3454,8 +3425,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -3555,8 +3525,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         },
         {
           "description": "Inbound connection identifier",
@@ -3572,8 +3541,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -3685,8 +3653,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [
@@ -3709,8 +3676,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -3805,8 +3771,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -3919,8 +3884,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -4053,8 +4017,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -4178,8 +4141,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [
@@ -4197,8 +4159,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Message",
@@ -4219,8 +4180,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -4348,8 +4308,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Create Transaction For Endorser's signature",
@@ -4370,8 +4329,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -4711,8 +4669,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Issuer DID",
@@ -4734,8 +4691,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Schema identifier",
@@ -4757,8 +4713,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Schema issuer DID",
@@ -4780,8 +4735,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Schema name",
@@ -4802,8 +4756,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Schema version",
@@ -4825,8 +4778,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -4981,8 +4933,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -5243,8 +5194,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -5504,8 +5454,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -5609,8 +5558,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [
@@ -5634,8 +5582,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Latest epoch of revocation status interval of interest",
@@ -5657,8 +5604,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -5771,8 +5717,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -5992,8 +5937,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -6095,8 +6039,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -6235,8 +6178,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -6345,8 +6287,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Start index",
@@ -6368,8 +6309,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "(JSON) WQL query",
@@ -6391,8 +6331,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -6625,8 +6564,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Start index",
@@ -6648,8 +6586,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "(JSON) WQL query",
@@ -6671,8 +6608,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -7220,8 +7156,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Alias for connection",
@@ -7242,8 +7177,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Identifier for active mediation record to be used",
@@ -7265,8 +7199,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "My URL endpoint",
@@ -7288,8 +7221,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Label for connection request",
@@ -7310,8 +7242,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Use public DID for this connection",
@@ -7332,8 +7263,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -7599,8 +7529,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Auto-accept connection (defaults to configuration)",
@@ -7621,8 +7550,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Identifier for active mediation record to be used",
@@ -7644,8 +7572,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "My URL endpoint",
@@ -7667,8 +7594,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -8059,8 +7985,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [
@@ -8084,8 +8009,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Label for connection request",
@@ -8106,8 +8030,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -8338,8 +8261,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [
@@ -8363,8 +8285,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "My URL endpoint",
@@ -8386,8 +8307,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -8624,8 +8544,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Goal-code feature-type query",
@@ -8646,8 +8565,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Protocol feature-type query",
@@ -8668,8 +8586,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -8919,8 +8836,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -9252,8 +9168,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Connection identifier, if none specified, then the query will provide features for this agent.",
@@ -9274,8 +9189,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Protocol feature query",
@@ -9296,8 +9210,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -9526,8 +9439,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -12123,8 +12035,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Role assigned in credential exchange",
@@ -12158,8 +12069,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Credential exchange state",
@@ -12238,8 +12148,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Thread identifier",
@@ -12261,8 +12170,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -14465,8 +14373,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -15620,8 +15527,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -15724,8 +15630,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -16910,8 +16815,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -17045,8 +16949,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -18180,8 +18083,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -19253,8 +19155,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -26866,8 +26767,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Role assigned in credential exchange",
@@ -26901,8 +26801,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Credential exchange state",
@@ -26981,8 +26880,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Thread identifier",
@@ -27004,8 +26902,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -28464,8 +28361,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -29240,8 +29136,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -29344,8 +29239,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -30151,8 +30045,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -30286,8 +30179,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -31085,8 +30977,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -31861,8 +31752,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -35619,8 +35509,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Endpoint type of interest (default 'Endpoint')",
@@ -35659,8 +35548,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -35761,8 +35649,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -35856,8 +35743,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -36156,8 +36042,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Verification key",
@@ -36174,8 +36059,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Alias",
@@ -36196,8 +36080,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Connection identifier",
@@ -36218,8 +36101,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Create Transaction For Endorser's signature",
@@ -36240,8 +36122,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Role",
@@ -36290,8 +36171,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -37284,8 +37164,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Filer on role, 'client' for keys         mediated by other agents, 'server' for keys         mediated by this agent",
@@ -37324,8 +37203,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -37545,8 +37423,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [
@@ -37570,8 +37447,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "offset to use in pagination",
@@ -37593,8 +37469,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -37757,8 +37632,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -37956,8 +37830,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -38218,8 +38091,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "List of mediator rules for recipient",
@@ -38246,8 +38118,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "List of recipient rules for mediation",
@@ -38274,8 +38145,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Mediation state (optional)",
@@ -38314,8 +38184,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -38635,8 +38504,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -38829,8 +38697,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -39023,8 +38890,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -39225,8 +39091,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -39352,8 +39217,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -39522,8 +39386,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -39902,8 +39765,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -40021,8 +39883,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -40201,8 +40062,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -40334,8 +40194,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -40465,8 +40324,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -40636,8 +40494,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Create invitation for multiple use (default false)",
@@ -40658,8 +40515,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -41375,8 +41231,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Auto-accept connection (defaults to configuration)",
@@ -41397,8 +41252,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Identifier for active mediation record to be used",
@@ -41420,8 +41274,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Use an existing connection, if possible",
@@ -41442,8 +41295,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -43505,8 +43357,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Role assigned in presentation exchange",
@@ -43540,8 +43391,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Presentation exchange state",
@@ -43605,8 +43455,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Thread identifier",
@@ -43628,8 +43477,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -44874,8 +44722,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -45550,8 +45397,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -45654,8 +45500,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [
@@ -45679,8 +45524,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "(JSON) object mapping referents to extra WQL queries",
@@ -45702,8 +45546,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Proof request referents of interest, comma-separated",
@@ -45724,8 +45567,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Start index",
@@ -45747,8 +45589,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -45981,8 +45822,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -46116,8 +45956,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -46913,8 +46752,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -47627,8 +47465,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -51076,8 +50913,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Role assigned in presentation exchange",
@@ -51111,8 +50947,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Presentation exchange state",
@@ -51181,8 +51016,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Thread identifier",
@@ -51204,8 +51038,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -52522,8 +52355,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -53316,8 +53148,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -53420,8 +53251,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [
@@ -53445,8 +53275,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "(JSON) object mapping referents to extra WQL queries",
@@ -53468,8 +53297,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Proof request referents of interest, comma-separated",
@@ -53490,8 +53318,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Start index",
@@ -53513,8 +53340,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -53747,8 +53573,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -53882,8 +53707,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -54785,8 +54609,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -55617,8 +55440,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -58389,8 +58211,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -58485,8 +58306,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -59241,8 +59061,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Credential revocation identifier",
@@ -59264,8 +59083,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Revocation registry identifier",
@@ -59287,8 +59105,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -59789,8 +59606,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Revocation registry state",
@@ -59839,8 +59655,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -59958,8 +59773,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Revocation registry identifier",
@@ -59981,8 +59795,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -60085,8 +59898,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -60385,8 +60197,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -60716,8 +60527,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [
@@ -60740,8 +60550,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Create Transaction For Endorser's signature",
@@ -60762,8 +60571,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -61209,8 +61017,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [
@@ -61233,8 +61040,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Create Transaction For Endorser's signature",
@@ -61255,8 +61061,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -61575,8 +61380,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [
@@ -61594,8 +61398,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -61691,8 +61494,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -61786,8 +61588,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -62015,8 +61816,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -62102,8 +61902,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [
@@ -62149,8 +61948,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -62456,8 +62254,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -62507,8 +62304,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -62558,8 +62354,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -62825,8 +62620,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Create Transaction For Endorser's signature",
@@ -62847,8 +62641,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -63252,8 +63045,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Schema issuer DID",
@@ -63275,8 +63067,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Schema name",
@@ -63297,8 +63088,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Schema version",
@@ -63320,8 +63110,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -63456,8 +63245,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -63603,8 +63391,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -64156,8 +63943,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -64824,8 +64610,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Endorser will write the transaction after endorsing it",
@@ -64846,8 +64631,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -65142,8 +64926,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [
@@ -65161,8 +64944,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Endorser Name",
@@ -65183,8 +64965,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -65304,8 +65085,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [
@@ -65346,8 +65126,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -65448,8 +65227,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -65704,8 +65482,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -65960,8 +65737,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [
@@ -65984,8 +65760,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -66250,8 +66025,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -66506,8 +66280,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": false
+          }
         }
       ],
       "queryParameters": [],
@@ -66769,8 +66542,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Key type to query for.",
@@ -66804,8 +66576,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "DID method to query for. e.g. sov to only fetch indy/sov DIDs",
@@ -66839,8 +66610,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Whether DID is current public DID, posted to ledger but current public DID, or local to the wallet",
@@ -66879,8 +66649,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Verification key of interest",
@@ -66902,8 +66671,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -67224,8 +66992,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -67420,8 +67187,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Connection identifier",
@@ -67442,8 +67208,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Create Transaction For Endorser's signature",
@@ -67464,8 +67229,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Mediation identifier",
@@ -67486,8 +67250,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -67638,8 +67401,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],
@@ -67744,8 +67506,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         },
         {
           "description": "Create Transaction For Endorser's signature",
@@ -67766,8 +67527,7 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          },
-          "explode": true
+          }
         }
       ],
       "headers": [],

@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Track OpenAPI explode parameter in IR and FDR. The explode field is now included in PathParameter and QueryParameter types, allowing generators to correctly handle array/object parameter serialization. The field is omitted when it matches the OpenAPI default (true for query parameters with style=form, false for path parameters with style=simple) to minimize snapshot churn.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-10"
+  version: 0.113.2
+
+- changelogEntry:
+    - summary: |
         Make individual theme options optional in docs.yml.
       type: fix
   irVersion: 61
