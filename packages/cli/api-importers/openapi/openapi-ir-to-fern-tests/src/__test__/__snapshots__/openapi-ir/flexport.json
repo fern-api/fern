@@ -44970,7 +44970,8 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          }
+          },
+          "explode": true
         },
         {
           "description": "Filter the list based on whether a PO is on the shipment matching the provided ID",

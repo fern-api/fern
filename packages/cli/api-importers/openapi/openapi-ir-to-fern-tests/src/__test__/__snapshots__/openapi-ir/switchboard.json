@@ -145,7 +145,8 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          }
+          },
+          "explode": false
         }
       ],
       "headers": [],
@@ -610,7 +611,8 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          }
+          },
+          "explode": false
         }
       ],
       "headers": [],
@@ -963,7 +965,8 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          }
+          },
+          "explode": false
         },
         {
           "description": "a comma separated list of tags to filter by (joined by OR, e.g. tag is red OR blue)",
@@ -991,7 +994,8 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          }
+          },
+          "explode": false
         }
       ],
       "headers": [],
@@ -1480,7 +1484,8 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          }
+          },
+          "explode": false
         },
         {
           "description": "a comma separated list of tags to filter by (joined by OR, e.g. tag is red OR blue)",
@@ -1508,7 +1513,8 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          }
+          },
+          "explode": false
         }
       ],
       "headers": [],
@@ -1876,7 +1882,8 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          }
+          },
+          "explode": false
         },
         {
           "description": "status of the session to get",
@@ -1922,7 +1929,8 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          }
+          },
+          "explode": false
         },
         {
           "description": "offset for pagination",
@@ -1947,7 +1955,8 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          }
+          },
+          "explode": false
         },
         {
           "description": "limit for pagination",
@@ -1972,7 +1981,8 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          }
+          },
+          "explode": false
         }
       ],
       "headers": [],
@@ -3531,7 +3541,8 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          }
+          },
+          "explode": false
         },
         {
           "description": "By default browsers will adapt its resolution to the live view window size. This flag disables that behavior",
@@ -3554,7 +3565,8 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          }
+          },
+          "explode": false
         },
         {
           "description": "Ex: Screen resolution of the live view in format wxh, e.g. 1920x1080. When this value is provided the live view won't adapt it's resolution to the live view window size",
@@ -3578,7 +3590,8 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          }
+          },
+          "explode": false
         }
       ],
       "headers": [],
