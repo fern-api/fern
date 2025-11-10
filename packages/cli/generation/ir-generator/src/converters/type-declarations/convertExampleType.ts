@@ -23,6 +23,7 @@ import {
     PrimitiveTypeV1
 } from "@fern-api/ir-sdk";
 import { IdGenerator } from "@fern-api/ir-utils";
+import { ExampleViolation } from "../../examples/exampleViolation";
 import { validateTypeReferenceExample } from "../../examples/validateTypeReferenceExample";
 import { FernFileContext } from "../../FernFileContext";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
@@ -213,6 +214,12 @@ export function convertTypeExample({
             });
         },
         undiscriminatedUnion: (undiscriminatedUnion) => {
+            const isOnlyTooDeep = (violations: ExampleViolation[]): boolean => {
+                return violations.length > 0 && violations.every((v) => v.code === "EXAMPLE_TOO_DEEP");
+            };
+
+            let allVariantsAreTooDeep = true;
+
             for (const [index, variant] of undiscriminatedUnion.union.entries()) {
                 const violationsForMember = validateTypeReferenceExample({
                     rawTypeReference: typeof variant === "string" ? variant : variant.type,
@@ -224,6 +231,7 @@ export function convertTypeExample({
                     breadcrumbs: [],
                     depth: 0
                 });
+
                 if (violationsForMember.length === 0) {
                     return ExampleTypeShape.undiscriminatedUnion({
                         index,
@@ -238,7 +246,18 @@ export function convertTypeExample({
                         })
                     });
                 }
+
+                if (!isOnlyTooDeep(violationsForMember)) {
+                    allVariantsAreTooDeep = false;
+                }
             }
+
+            if (allVariantsAreTooDeep) {
+                throw new Error(
+                    `Example is too deeply nested for all union variants. This may indicate a circular reference.`
+                );
+            }
+
             const variantOptions = undiscriminatedUnion.union.map((variant) => {
                 return typeof variant === "string" ? variant : variant.type;
             });
