@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Add support for page actions theme in docs.yml.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-10"
+  version: 0.113.0
+
+- changelogEntry:
+    - summary: |
         - Gracefully circuit-break from recursive examples
       type: fix
   irVersion: 61
