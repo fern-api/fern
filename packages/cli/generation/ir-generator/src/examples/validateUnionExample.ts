@@ -161,12 +161,17 @@ export function validateUnionExample({
             })
         );
 
+        const variantHasDiscriminant = resolvedType.declaration.properties?.[discriminant] != null;
+        const exampleToValidate = variantHasDiscriminant
+            ? { ...unionMemberExample, [discriminant]: discriminantValue }
+            : unionMemberExample;
+
         return validateObjectExample({
             typeName,
             typeNameForBreadcrumb: typeName,
             rawObject: resolvedType.declaration,
             file: resolvedType.file,
-            example: unionMemberExample,
+            example: exampleToValidate,
             typeResolver,
             exampleResolver,
             workspace,

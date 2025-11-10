@@ -1,18 +1,14 @@
-import { getDefinitionFile } from "@fern-api/api-workspace-commons";
-import { isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
+import { visitRawTypeDeclaration } from "@fern-api/fern-definition-schema";
 import {
-    constructFernFileContext,
     convertObjectPropertyWithPathToString,
     getAllPropertiesForObject,
     getEnumName,
     getSingleUnionTypeName,
-    getUnionDiscriminantName,
     TypeResolverImpl
 } from "@fern-api/ir-generator";
 import { groupBy, noop } from "lodash-es";
 
 import { Rule, RuleViolation } from "../../Rule";
-import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import { getTypeDeclarationNameAsString } from "../../utils/getTypeDeclarationNameAsString";
 
 export const NoDuplicateFieldNamesRule: Rule = {
