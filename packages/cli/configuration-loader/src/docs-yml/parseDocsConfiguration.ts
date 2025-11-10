@@ -388,7 +388,7 @@ function convertSettingsConfig(
         disableSearch: settings.disableSearch ?? false,
         hide404Page: settings.hide404Page ?? false,
         httpSnippets: settings.httpSnippets ?? true,
-        searchText: settings.searchText ?? "Search",
+        searchText: settings.searchText ?? undefined,
         useJavascriptAsTypescript: settings.useJavascriptAsTypescript ?? false,
         disableExplorerProxy: settings.disableExplorerProxy ?? false,
         disableAnalytics: settings.disableAnalytics ?? false
