@@ -253,7 +253,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         }
     }
 
-    public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
+    public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts, recursionGuard?: RecursionGuard): ts.Expression {
         if (example.type !== "object") {
             throw new Error("Example is not for an object");
         }

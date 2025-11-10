@@ -1,5 +1,5 @@
 from abc import ABC
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 
 from ...context.pydantic_generator_context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig
@@ -11,6 +11,9 @@ from fern_python.generators.pydantic_model.type_declaration_handler.abc.abstract
 from fern_python.snippet import SnippetWriter
 
 import fern.ir.resources as ir_types
+
+if TYPE_CHECKING:
+    from fern_python.snippet.recursion_guard import RecursionGuard
 
 
 class AbstractAliasGenerator(AbstractTypeGenerator, ABC):
@@ -52,9 +55,10 @@ class AbstractAliasSnippetGenerator(AbstractTypeSnippetGenerator):
         self.as_request = as_request
         self.example = example
 
-    def generate_snippet(self) -> Optional[AST.Expression]:
+    def generate_snippet(self, recursion_guard: Optional["RecursionGuard"] = None) -> Optional[AST.Expression]:
         return self.snippet_writer.get_snippet_for_example_type_reference(
             example_type_reference=self.example.value,
             use_typeddict_request=self.use_typeddict_request,
             as_request=self.as_request,
+            recursion_guard=recursion_guard,
         )

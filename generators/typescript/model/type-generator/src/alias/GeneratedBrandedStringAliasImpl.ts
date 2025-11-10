@@ -54,7 +54,7 @@ export class GeneratedBrandedStringAliasImpl<Context extends BaseContext>
         return this.getReferenceToSelf(context).getExpression(opts);
     }
 
-    public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
+    public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts, recursionGuard?: RecursionGuard): ts.Expression {
         if (example.type !== "alias") {
             throw new Error("Example is not for an alias");
         }

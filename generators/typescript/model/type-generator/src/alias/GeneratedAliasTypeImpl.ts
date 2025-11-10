@@ -73,7 +73,7 @@ export class GeneratedAliasTypeImpl<Context extends BaseContext>
         });
     }
 
-    public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
+    public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts, recursionGuard?: RecursionGuard): ts.Expression {
         if (example.type !== "alias") {
             throw new Error("Example is not for an alias");
         }

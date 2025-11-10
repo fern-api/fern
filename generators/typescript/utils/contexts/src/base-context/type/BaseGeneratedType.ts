@@ -6,11 +6,12 @@ import { GeneratedFile } from "../../commons";
 import { GeneratedModule } from "../../commons/GeneratedModule";
 import { GeneratedStatements } from "../../commons/GeneratedStatements";
 import { GeneratedUnionInlineMemberNode } from "../../commons/GeneratedUnionInlineMemberNode";
+import { RecursionGuard } from "@fern-typescript/type-reference-example-generator";
 
 export interface BaseGeneratedType<Context>
     extends GeneratedFile<Context>,
         GeneratedStatements<Context>,
         GeneratedModule<Context>,
         GeneratedUnionInlineMemberNode<Context> {
-    buildExample: (example: ExampleTypeShape, context: Context, opts: GetReferenceOpts) => ts.Expression;
+    buildExample: (example: ExampleTypeShape, context: Context, opts: GetReferenceOpts, recursionGuard?: RecursionGuard) => ts.Expression;
 }

@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, TYPE_CHECKING
 
 from ....context.pydantic_generator_context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig
@@ -12,6 +12,9 @@ from fern_python.generators.pydantic_model.typeddict import FernTypedDict
 from fern_python.snippet import SnippetWriter
 
 import fern.ir.resources as ir_types
+
+if TYPE_CHECKING:
+    from fern_python.snippet.recursion_guard import RecursionGuard
 
 
 class TypeddictObjectGenerator(AbstractObjectGenerator):
@@ -72,5 +75,5 @@ class TypeddictObjectSnippetGenerator(AbstractObjectSnippetGenerator):
             example=example,
         )
 
-    def generate_snippet(self) -> AST.Expression:
-        return FernTypedDict.type_to_snippet(example=self.example, snippet_writer=self.snippet_writer)
+    def generate_snippet(self, recursion_guard: Optional["RecursionGuard"] = None) -> AST.Expression:
+        return FernTypedDict.type_to_snippet(example=self.example, snippet_writer=self.snippet_writer, recursion_guard=recursion_guard)

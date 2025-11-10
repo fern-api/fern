@@ -10,6 +10,7 @@ import {
 import { GetReferenceOpts, isExpressionUndefined } from "@fern-typescript/commons";
 import { BaseContext, GeneratedTypeReferenceExample } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+import { RecursionGuard, RecursionGuardImpl } from "./RecursionGuard";
 
 export declare namespace GeneratedTypeReferenceExampleImpl {
     export interface Init {
@@ -31,18 +32,21 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
     }
 
     public build(context: BaseContext, opts: GetReferenceOpts): ts.Expression {
-        return this.buildExample({ example: this.example, context, opts });
+        return this.buildExample({ example: this.example, context, opts, recursionGuard: new RecursionGuardImpl() });
     }
 
     private buildExample({
         example,
         context,
-        opts
+        opts,
+        recursionGuard
     }: {
         example: ExampleTypeReference;
         context: BaseContext;
         opts: GetReferenceOpts;
+        recursionGuard?: RecursionGuard;
     }): ts.Expression {
+        const guard = recursionGuard ?? new RecursionGuardImpl();
         return ExampleTypeReferenceShape._visit(example.shape, {
             primitive: (primitiveExample) =>
                 ExamplePrimitive._visit<ts.Expression>(primitiveExample, {
@@ -91,7 +95,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     list: (exampleItems) =>
                         ts.factory.createArrayLiteralExpression(
                             exampleItems.list
-                                .map((exampleItem) => this.buildExample({ example: exampleItem, context, opts }))
+                                .map((exampleItem) => this.buildExample({ example: exampleItem, context, opts, recursionGuard: guard.withDepthIncrement() }))
                                 .filter((expr) => !isExpressionUndefined(expr))
                         ),
                     set: (exampleItems) => {
@@ -100,7 +104,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                                 ts.factory.createArrayLiteralExpression(
                                     exampleItems.set
                                         .map((exampleItem) =>
-                                            this.buildExample({ example: exampleItem, context, opts })
+                                            this.buildExample({ example: exampleItem, context, opts, recursionGuard: guard.withDepthIncrement() })
                                         )
                                         .filter((expr) => !isExpressionUndefined(expr))
                                 )
@@ -108,7 +112,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                         } else {
                             return ts.factory.createArrayLiteralExpression(
                                 exampleItems.set
-                                    .map((exampleItem) => this.buildExample({ example: exampleItem, context, opts }))
+                                    .map((exampleItem) => this.buildExample({ example: exampleItem, context, opts, recursionGuard: guard.withDepthIncrement() }))
                                     .filter((expr) => !isExpressionUndefined(expr))
                             );
                         }
@@ -117,8 +121,8 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                         ts.factory.createObjectLiteralExpression(
                             examplePairs.map
                                 .map<[ts.PropertyName, ts.Expression]>((examplePair) => [
-                                    this.getExampleAsPropertyName({ example: examplePair.key, context, opts }),
-                                    this.buildExample({ example: examplePair.value, context, opts })
+                                    this.getExampleAsPropertyName({ example: examplePair.key, context, opts, recursionGuard: guard }),
+                                    this.buildExample({ example: examplePair.value, context, opts, recursionGuard: guard.withDepthIncrement() })
                                 ])
                                 .filter(([, value]) => !isExpressionUndefined(value))
                                 .map<ts.PropertyAssignment>(([key, value]) =>
@@ -128,11 +132,11 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                         ),
                     nullable: (exampleItem) =>
                         exampleItem.nullable != null
-                            ? this.buildExample({ example: exampleItem.nullable, context, opts })
+                            ? this.buildExample({ example: exampleItem.nullable, context, opts, recursionGuard: guard })
                             : ts.factory.createIdentifier("null"),
                     optional: (exampleItem) =>
                         exampleItem.optional != null
-                            ? this.buildExample({ example: exampleItem.optional, context, opts })
+                            ? this.buildExample({ example: exampleItem.optional, context, opts, recursionGuard: guard })
                             : ts.factory.createIdentifier("undefined"),
                     literal: (exampleItem) =>
                         exampleItem != null
@@ -142,7 +146,8 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                                       shape: ExampleTypeReferenceShape.primitive(exampleItem.literal)
                                   },
                                   context,
-                                  opts
+                                  opts,
+                                  recursionGuard: guard
                               })
                             : ts.factory.createIdentifier("undefined"),
                     _other: () => {
@@ -151,7 +156,10 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                 });
             },
             named: ({ typeName, shape: example }) => {
-                return context.type.getGeneratedType(typeName).buildExample(example, context, opts);
+                if (!guard.canRecurse(typeName.typeId)) {
+                    return ts.factory.createIdentifier("undefined");
+                }
+                return context.type.getGeneratedType(typeName).buildExample(example, context, opts, guard.enter(typeName.typeId));
             },
             unknown: (value) => {
                 const parsed = ts.parseJsonText(
@@ -208,12 +216,15 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
     private getExampleAsPropertyName({
         example,
         context,
-        opts
+        opts,
+        recursionGuard
     }: {
         example: ExampleTypeReference;
         context: BaseContext;
         opts: GetReferenceOpts;
+        recursionGuard?: RecursionGuard;
     }): ts.PropertyName {
+        const guard = recursionGuard ?? new RecursionGuardImpl();
         return ExampleTypeReferenceShape._visit<ts.PropertyName>(example.shape, {
             primitive: (primitiveExample) =>
                 ExamplePrimitive._visit<ts.PropertyName>(primitiveExample, {
@@ -246,7 +257,8 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                                 jsonExample: example.jsonExample
                             },
                             context,
-                            opts
+                            opts,
+                            recursionGuard: guard
                         });
                 }
                 throw new Error("Cannot convert container to property name");
@@ -267,12 +279,13 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                         );
                     }
                     case "alias":
-                        return this.getExampleAsPropertyName({ example: example.value, context, opts });
+                        return this.getExampleAsPropertyName({ example: example.value, context, opts, recursionGuard: guard });
                     case "undiscriminatedUnion":
                         return this.getExampleAsPropertyName({
                             example: example.singleUnionType,
                             context,
-                            opts
+                            opts,
+                            recursionGuard: guard
                         });
                     default:
                         assertNever(example);

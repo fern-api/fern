@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from types import TracebackType
-from typing import Dict, List, Optional, Sequence, Type
+from typing import Dict, List, Optional, Sequence, Type, TYPE_CHECKING
 
 from ..context.pydantic_generator_context import PydanticGeneratorContext
 from fern_python.codegen import AST, SourceFile
@@ -15,6 +15,9 @@ from fern_python.generators.pydantic_model.model_utilities import can_be_fern_mo
 from fern_python.snippet.snippet_writer import SnippetWriter
 
 import fern.ir.resources as ir_types
+
+if TYPE_CHECKING:
+    from fern_python.snippet.recursion_guard import RecursionGuard
 
 TYPING_EXTENSIONS_MODULE = AST.Module.external(
     module_path=("typing_extensions",),
@@ -203,7 +206,7 @@ class FernTypedDict:
 
     @classmethod
     def snippet_from_properties(
-        cls, example_properties: List[SimpleObjectProperty], snippet_writer: SnippetWriter
+        cls, example_properties: List[SimpleObjectProperty], snippet_writer: SnippetWriter, recursion_guard: Optional["RecursionGuard"] = None
     ) -> AST.Expression:
         example_dict_pairs: List[ir_types.ExampleKeyValuePair] = []
         for property in example_properties:
@@ -219,7 +222,7 @@ class FernTypedDict:
                 )
             )
         return snippet_writer._get_snippet_for_map(
-            example_dict_pairs, use_typeddict_request=True, as_request=True, in_typeddict=True
+            example_dict_pairs, use_typeddict_request=True, as_request=True, in_typeddict=True, recursion_guard=recursion_guard
         )
 
     @classmethod
@@ -228,6 +231,7 @@ class FernTypedDict:
         example: ir_types.ExampleObjectType,
         snippet_writer: SnippetWriter,
         additional_properties: List[SimpleObjectProperty] = [],
+        recursion_guard: Optional["RecursionGuard"] = None,
     ) -> AST.Expression:
         example_properties = [
             SimpleObjectProperty(
@@ -240,6 +244,7 @@ class FernTypedDict:
         return cls.snippet_from_properties(
             example_properties=example_properties,
             snippet_writer=snippet_writer,
+            recursion_guard=recursion_guard,
         )
 
     @classmethod

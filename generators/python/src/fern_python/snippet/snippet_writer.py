@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Optional
 
 from .type_declaration_snippet_generator import TypeDeclarationSnippetGenerator
+from .recursion_guard import RecursionGuard
 from fern_python.codegen import AST
 from fern_python.generators.context.pydantic_generator_context import PydanticGeneratorContext
 
@@ -22,13 +23,20 @@ class SnippetWriter:
         self,
         name: ir_types.DeclaredTypeName,
         example_type_shape: ir_types.ExampleTypeShape,
+        recursion_guard: Optional[RecursionGuard] = None,
     ) -> Optional[AST.Expression]:
         if self._type_declaration_snippet_generator is None:
+            return None
+
+        guard = recursion_guard or RecursionGuard()
+        
+        if not guard.can_recurse(name):
             return None
 
         return self._type_declaration_snippet_generator.generate_snippet(
             name=name,
             example=example_type_shape,
+            recursion_guard=guard.enter(name),
         )
 
     def get_class_reference_for_declared_type_name(
@@ -66,8 +74,10 @@ class SnippetWriter:
         as_request: bool,
         in_typeddict: bool = False,
         force_include_literals: bool = False,
+        recursion_guard: Optional[RecursionGuard] = None,
     ) -> Optional[AST.Expression]:
         unwrapped_reference = self._context.unwrap_example_type_reference(example_type_reference)
+        guard = recursion_guard or RecursionGuard()
 
         return unwrapped_reference.shape.visit(
             primitive=lambda primitive: self._get_snippet_for_primitive(
@@ -79,6 +89,7 @@ class SnippetWriter:
                 as_request=as_request,
                 in_typeddict=in_typeddict,
                 force_include_literals=force_include_literals,
+                recursion_guard=guard,
             ),
             unknown=lambda unknown: self._get_snippet_for_unknown(
                 unknown=unknown,
@@ -86,6 +97,7 @@ class SnippetWriter:
             named=lambda named: self.get_snippet_for_example_type_shape(
                 name=named.type_name,
                 example_type_shape=named.shape,
+                recursion_guard=guard,
             ),
         )
 
@@ -96,8 +108,10 @@ class SnippetWriter:
         in_typeddict: bool,
         use_typeddict_request: bool,
         as_request: bool,
+        recursion_guard: Optional[RecursionGuard] = None,
     ) -> List[AST.Expression]:
         args: List[AST.Expression] = []
+        guard = recursion_guard or RecursionGuard()
         for property in example.properties:
             value = property.value.shape.visit(
                 primitive=lambda primitive: self._get_snippet_for_primitive(
@@ -108,6 +122,7 @@ class SnippetWriter:
                     use_typeddict_request=use_typeddict_request,
                     as_request=as_request,
                     in_typeddict=in_typeddict,
+                    recursion_guard=guard,
                 ),
                 unknown=lambda unknown: self._get_snippet_for_unknown(
                     unknown=unknown,
@@ -115,6 +130,7 @@ class SnippetWriter:
                 named=lambda named: self.get_snippet_for_example_type_shape(
                     name=named.type_name,
                     example_type_shape=named.shape,
+                    recursion_guard=guard,
                 ),
             )
             if value is not None:
@@ -221,7 +237,9 @@ class SnippetWriter:
         use_typeddict_request: bool,
         as_request: bool,
         force_include_literals: bool = False,
+        recursion_guard: Optional[RecursionGuard] = None,
     ) -> Optional[AST.Expression]:
+        guard = recursion_guard or RecursionGuard()
         return container.visit(
             list_=lambda list: self._get_snippet_for_list_or_set(
                 example_type_references=list.list_,
@@ -229,6 +247,7 @@ class SnippetWriter:
                 in_typeddict=in_typeddict,
                 use_typeddict_request=use_typeddict_request,
                 as_request=as_request,
+                recursion_guard=guard,
             ),
             set_=lambda set: self._get_snippet_for_list_or_set(
                 example_type_references=set.set_,
@@ -236,12 +255,14 @@ class SnippetWriter:
                 in_typeddict=in_typeddict,
                 use_typeddict_request=use_typeddict_request,
                 as_request=as_request,
+                recursion_guard=guard,
             ),
             optional=lambda optional: self.get_snippet_for_example_type_reference(
                 example_type_reference=optional.optional,
                 use_typeddict_request=use_typeddict_request,
                 as_request=as_request,
                 in_typeddict=in_typeddict,
+                recursion_guard=guard,
             )
             if optional.optional is not None
             else None,
@@ -250,6 +271,7 @@ class SnippetWriter:
                 use_typeddict_request=use_typeddict_request,
                 as_request=as_request,
                 in_typeddict=in_typeddict,
+                recursion_guard=guard,
             )
             if nullable.nullable is not None
             else None,
@@ -258,6 +280,7 @@ class SnippetWriter:
                 use_typeddict_request=use_typeddict_request,
                 as_request=as_request,
                 in_typeddict=in_typeddict,
+                recursion_guard=guard,
             ),
             literal=lambda lit: self._get_snippet_for_primitive(lit.literal)
             if in_typeddict or force_include_literals
@@ -284,8 +307,10 @@ class SnippetWriter:
         in_typeddict: bool,
         use_typeddict_request: bool,
         as_request: bool,
+        recursion_guard: Optional[RecursionGuard] = None,
     ) -> Optional[AST.Expression]:
         values: List[AST.Expression] = []
+        guard = recursion_guard or RecursionGuard()
         # We use lists for sets if the inner type is non-primitive because Pydantic models aren't hashable
         contents_are_primitive = False
         for example_type_reference in example_type_references:
@@ -300,6 +325,7 @@ class SnippetWriter:
                 use_typeddict_request=use_typeddict_request,
                 as_request=as_request,
                 in_typeddict=in_typeddict,
+                recursion_guard=guard,
             )
             if expression is not None:
                 values.append(expression)
@@ -313,21 +339,25 @@ class SnippetWriter:
         in_typeddict: bool,
         use_typeddict_request: bool,
         as_request: bool,
+        recursion_guard: Optional[RecursionGuard] = None,
     ) -> AST.Expression:
         keys: List[AST.Expression] = []
         values: List[AST.Expression] = []
+        guard = recursion_guard or RecursionGuard()
         for pair in pairs:
             key = self.get_snippet_for_example_type_reference(
                 example_type_reference=pair.key,
                 use_typeddict_request=use_typeddict_request,
                 as_request=as_request,
                 in_typeddict=in_typeddict,
+                recursion_guard=guard,
             )
             value = self.get_snippet_for_example_type_reference(
                 example_type_reference=pair.value,
                 use_typeddict_request=use_typeddict_request,
                 as_request=as_request,
                 in_typeddict=in_typeddict,
+                recursion_guard=guard,
             )
             if key is not None and value is not None:
                 keys.append(key)

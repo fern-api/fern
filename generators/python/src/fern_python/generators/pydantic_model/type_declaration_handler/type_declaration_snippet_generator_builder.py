@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 
 from ...context.pydantic_generator_context import PydanticGeneratorContext
 from .enum_generator import EnumSnippetGenerator
@@ -27,6 +27,9 @@ from fern_python.snippet import SnippetWriter, TypeDeclarationSnippetGenerator
 
 import fern.ir.resources as ir_types
 
+if TYPE_CHECKING:
+    from fern_python.snippet.recursion_guard import RecursionGuard
+
 
 class TypeDeclarationSnippetGeneratorBuilder:
     def __init__(
@@ -41,50 +44,50 @@ class TypeDeclarationSnippetGeneratorBuilder:
         self,
     ) -> TypeDeclarationSnippetGenerator:
         return TypeDeclarationSnippetGenerator(
-            alias=lambda example: self._get_alias_snippet_generator(example),
-            enum=lambda name, example: EnumSnippetGenerator(
+            alias=lambda example, recursion_guard=None: self._get_alias_snippet_generator(example, recursion_guard),
+            enum=lambda name, example, recursion_guard=None: EnumSnippetGenerator(
                 snippet_writer=self._snippet_writer,
                 name=name,
                 example=example,
                 use_str_enums=self._context.use_str_enums,
-            ).generate_snippet(),
-            object=lambda name, example: self._get_object_snippet_generator(name, example),
-            discriminated_union=lambda name, example: self._get_discriminated_union_snippet_generator(name, example),
-            undiscriminated_union=lambda name, example: self._get_undiscriminated_union_snippet_generator(
-                name, example
+            ).generate_snippet(recursion_guard),
+            object=lambda name, example, recursion_guard=None: self._get_object_snippet_generator(name, example, recursion_guard),
+            discriminated_union=lambda name, example, recursion_guard=None: self._get_discriminated_union_snippet_generator(name, example, recursion_guard),
+            undiscriminated_union=lambda name, example, recursion_guard=None: self._get_undiscriminated_union_snippet_generator(
+                name, example, recursion_guard
             ),
         )
 
-    def _get_alias_snippet_generator(self, example: ir_types.ExampleAliasType) -> Optional[AST.Expression]:
+    def _get_alias_snippet_generator(self, example: ir_types.ExampleAliasType, recursion_guard: Optional["RecursionGuard"] = None) -> Optional[AST.Expression]:
         if self._context.use_typeddict_requests:
             return TypedDictAliasSnippetGenerator(
                 snippet_writer=self._snippet_writer,
                 example=example,
-            ).generate_snippet()
+            ).generate_snippet(recursion_guard)
 
         return PydanticModelAliasSnippetGenerator(
             snippet_writer=self._snippet_writer,
             example=example,
-        ).generate_snippet()
+        ).generate_snippet(recursion_guard)
 
     def _get_object_snippet_generator(
-        self, name: ir_types.DeclaredTypeName, example: ir_types.ExampleObjectType
+        self, name: ir_types.DeclaredTypeName, example: ir_types.ExampleObjectType, recursion_guard: Optional["RecursionGuard"] = None
     ) -> AST.Expression:
         if self._context.use_typeddict_requests:
             return TypeddictObjectSnippetGenerator(
                 name=name,
                 snippet_writer=self._snippet_writer,
                 example=example,
-            ).generate_snippet()
+            ).generate_snippet(recursion_guard)
 
         return PydanticModelObjectSnippetGenerator(
             name=name,
             snippet_writer=self._snippet_writer,
             example=example,
-        ).generate_snippet()
+        ).generate_snippet(recursion_guard)
 
     def _get_discriminated_union_snippet_generator(
-        self, name: ir_types.DeclaredTypeName, example: ir_types.ExampleUnionType
+        self, name: ir_types.DeclaredTypeName, example: ir_types.ExampleUnionType, recursion_guard: Optional["RecursionGuard"] = None
     ) -> AST.Expression:
         if self._context.use_typeddict_requests:
             return TypeddictDiscriminatedUnionSnippetGenerator(
@@ -92,27 +95,27 @@ class TypeDeclarationSnippetGeneratorBuilder:
                 snippet_writer=self._snippet_writer,
                 example=example,
                 union_naming_version=self._context.union_naming_version,
-            ).generate_snippet()
+            ).generate_snippet(recursion_guard)
 
         return PydanticModelDiscriminatedUnionSnippetGenerator(
             name=name,
             snippet_writer=self._snippet_writer,
             example=example,
             union_naming_version=self._context.union_naming_version,
-        ).generate_snippet()
+        ).generate_snippet(recursion_guard)
 
     def _get_undiscriminated_union_snippet_generator(
-        self, name: ir_types.DeclaredTypeName, example: ir_types.ExampleUndiscriminatedUnionType
+        self, name: ir_types.DeclaredTypeName, example: ir_types.ExampleUndiscriminatedUnionType, recursion_guard: Optional["RecursionGuard"] = None
     ) -> Optional[AST.Expression]:
         if self._context.use_typeddict_requests:
             return TypeddictUndiscriminatedUnionSnippetGenerator(
                 name=name,
                 snippet_writer=self._snippet_writer,
                 example=example,
-            ).generate_snippet()
+            ).generate_snippet(recursion_guard)
 
         return PydanticModelUndiscriminatedUnionSnippetGenerator(
             name=name,
             snippet_writer=self._snippet_writer,
             example=example,
-        ).generate_snippet()
+        ).generate_snippet(recursion_guard)

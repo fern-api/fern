@@ -4,12 +4,16 @@ from fern_python.codegen import AST
 
 import fern.ir.resources as ir_types
 
-AliasSnippetGenerator = Callable[[ir_types.ExampleAliasType], Optional[AST.Expression]]
-EnumSnippetGenerator = Callable[[ir_types.DeclaredTypeName, ir_types.ExampleEnumType], AST.Expression]
-ObjectSnippetGenerator = Callable[[ir_types.DeclaredTypeName, ir_types.ExampleObjectType], AST.Expression]
-DiscriminatedUnionGenerator = Callable[[ir_types.DeclaredTypeName, ir_types.ExampleUnionType], AST.Expression]
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from .recursion_guard import RecursionGuard
+
+AliasSnippetGenerator = Callable[[ir_types.ExampleAliasType, Optional["RecursionGuard"]], Optional[AST.Expression]]
+EnumSnippetGenerator = Callable[[ir_types.DeclaredTypeName, ir_types.ExampleEnumType, Optional["RecursionGuard"]], AST.Expression]
+ObjectSnippetGenerator = Callable[[ir_types.DeclaredTypeName, ir_types.ExampleObjectType, Optional["RecursionGuard"]], AST.Expression]
+DiscriminatedUnionGenerator = Callable[[ir_types.DeclaredTypeName, ir_types.ExampleUnionType, Optional["RecursionGuard"]], AST.Expression]
 UndiscriminatedUnionGenerator = Callable[
-    [ir_types.DeclaredTypeName, ir_types.ExampleUndiscriminatedUnionType], Optional[AST.Expression]
+    [ir_types.DeclaredTypeName, ir_types.ExampleUndiscriminatedUnionType, Optional["RecursionGuard"]], Optional[AST.Expression]
 ]
 
 
@@ -32,11 +36,12 @@ class TypeDeclarationSnippetGenerator:
         self,
         name: ir_types.DeclaredTypeName,
         example: ir_types.ExampleTypeShape,
+        recursion_guard: Optional["RecursionGuard"] = None,
     ) -> Optional[AST.Expression]:
         return example.visit(
-            alias=lambda alias: self._generate_alias(alias),
-            enum=lambda enum: self._generate_enum(name, enum),
-            object=lambda object_: self._generate_object(name, object_),
-            union=lambda union: self._generate_discriminated_union(name, union),
-            undiscriminated_union=lambda union: self._generate_undiscriminated_union(name, union),
+            alias=lambda alias: self._generate_alias(alias, recursion_guard),
+            enum=lambda enum: self._generate_enum(name, enum, recursion_guard),
+            object=lambda object_: self._generate_object(name, object_, recursion_guard),
+            union=lambda union: self._generate_discriminated_union(name, union, recursion_guard),
+            undiscriminated_union=lambda union: self._generate_undiscriminated_union(name, union, recursion_guard),
         )

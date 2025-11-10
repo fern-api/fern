@@ -1,6 +1,6 @@
 from abc import ABC
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List, Optional, TYPE_CHECKING
 
 from ...context.pydantic_generator_context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig
@@ -12,6 +12,9 @@ from fern_python.generators.pydantic_model.type_declaration_handler.abc.abstract
 from fern_python.snippet.snippet_writer import SnippetWriter
 
 import fern.ir.resources as ir_types
+
+if TYPE_CHECKING:
+    from fern_python.snippet.recursion_guard import RecursionGuard
 
 
 @dataclass(frozen=True)
@@ -71,9 +74,10 @@ class AbstractUndiscriminatedUnionSnippetGenerator(AbstractTypeSnippetGenerator)
         self.as_request = as_request
         self.use_typeddict_request = use_typeddict_request
 
-    def generate_snippet(self) -> Optional[AST.Expression]:
+    def generate_snippet(self, recursion_guard: Optional["RecursionGuard"] = None) -> Optional[AST.Expression]:
         return self.snippet_writer.get_snippet_for_example_type_reference(
             example_type_reference=self.example.single_union_type,
             use_typeddict_request=self.use_typeddict_request,
             as_request=self.as_request,
+            recursion_guard=recursion_guard,
         )

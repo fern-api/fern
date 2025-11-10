@@ -1,6 +1,7 @@
 import { ExampleType, ExampleTypeShape, FernFilepath } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts, getTextOfTsNode, Reference } from "@fern-typescript/commons";
 import { BaseContext, BaseGeneratedType } from "@fern-typescript/contexts";
+import { RecursionGuard } from "@fern-typescript/type-reference-example-generator";
 import { ModuleDeclarationStructure, StatementStructures, ts, WriterFunction } from "ts-morph";
 
 export declare namespace AbstractGeneratedType {
@@ -108,5 +109,5 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
         responseTypeNode: ts.TypeNode | undefined;
     };
     public abstract generateModule(context: Context): ModuleDeclarationStructure | undefined;
-    public abstract buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression;
+    public abstract buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts, recursionGuard?: RecursionGuard): ts.Expression;
 }

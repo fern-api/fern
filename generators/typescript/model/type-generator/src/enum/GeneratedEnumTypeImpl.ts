@@ -275,7 +275,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
         return enumModule;
     }
 
-    public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
+    public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts, recursionGuard?: RecursionGuard): ts.Expression {
         if (example.type !== "enum") {
             throw new Error("Example is not for an enum");
         }

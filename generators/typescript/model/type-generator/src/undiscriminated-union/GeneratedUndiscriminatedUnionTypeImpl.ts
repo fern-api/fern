@@ -175,7 +175,7 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends BaseContext>
         return this.getTypeReferenceNode(context, member).typeNode;
     }
 
-    public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
+    public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts, recursionGuard?: RecursionGuard): ts.Expression {
         if (example.type !== "undiscriminatedUnion") {
             throw new Error("Example is not for an undiscriminated union");
         }

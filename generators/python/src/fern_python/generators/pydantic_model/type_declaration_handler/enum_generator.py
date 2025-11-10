@@ -1,4 +1,4 @@
-from typing import Optional, Union
+from typing import Optional, Union, TYPE_CHECKING
 
 from ...context.pydantic_generator_context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig
@@ -11,6 +11,9 @@ from fern_python.generators.pydantic_model.type_declaration_handler.abc.abstract
 from fern_python.snippet import SnippetWriter
 
 import fern.ir.resources as ir_types
+
+if TYPE_CHECKING:
+    from fern_python.snippet.recursion_guard import RecursionGuard
 
 
 # Note enums are the same for both pydantic models and typeddicts os the generator is not multiplexed
@@ -166,7 +169,7 @@ class EnumSnippetGenerator(AbstractTypeSnippetGenerator):
         self.name = name
         self.example = example.value if isinstance(example, ir_types.ExampleEnumType) else example
 
-    def generate_snippet(self) -> AST.Expression:
+    def generate_snippet(self, recursion_guard: Optional["RecursionGuard"] = None) -> AST.Expression:
         class_reference = self.snippet_writer.get_class_reference_for_declared_type_name(
             name=self.name,
             as_request=False,
