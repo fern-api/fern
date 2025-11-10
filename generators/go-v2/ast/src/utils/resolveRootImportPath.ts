@@ -1,4 +1,5 @@
 import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import { generatorExec } from "@fern-api/ir-sdk";
 import { basename } from "@fern-api/path-utils";
 import path from "path";
 import { BaseGoCustomConfigSchema } from "../custom-config/BaseGoCustomConfigSchema";
@@ -13,8 +14,12 @@ export function resolveRootImportPath({
     customConfig: BaseGoCustomConfigSchema | undefined;
 }): string {
     const suffix = getMajorVersionSuffix({ config });
+    console.error("[DEBUG resolveRootImportPath] suffix:", suffix);
     const importPath = getImportPath({ config, customConfig });
-    return suffix != null ? maybeAppendMajorVersionSuffix({ importPath, majorVersion: suffix }) : importPath;
+    console.error("[DEBUG resolveRootImportPath] importPath:", importPath);
+    const result = suffix != null ? maybeAppendMajorVersionSuffix({ importPath, majorVersion: suffix }) : importPath;
+    console.error("[DEBUG resolveRootImportPath] final result:", result);
+    return result;
 }
 
 export function resolveRootModulePath({
@@ -94,9 +99,28 @@ function trimPrefix(str: string, prefix: string): string {
 }
 
 function getVersion(config: FernGeneratorExec.GeneratorConfig): string | undefined {
-    const mode = config?.output?.mode;
+    const mode = config?.output?.mode as generatorExec.OutputMode;
+    const fs = require("fs");
+    fs.appendFileSync("/tmp/fern-debug.log", `[DEBUG resolveRootImportPath] mode: ${JSON.stringify(mode, null, 2)}\n`);
     if (mode == null) {
+        fs.appendFileSync("/tmp/fern-debug.log", "[DEBUG resolveRootImportPath] mode is null, returning undefined\n");
         return undefined;
     }
-    return mode.type === "github" || mode.type === "publish" ? mode.version : undefined;
+    fs.appendFileSync("/tmp/fern-debug.log", `[DEBUG resolveRootImportPath] mode.type: ${mode.type}\n`);
+    if (mode.type === "github" || mode.type === "publish") {
+        fs.appendFileSync(
+            "/tmp/fern-debug.log",
+            `[DEBUG resolveRootImportPath] Found github/publish mode, version: ${mode.version}\n`
+        );
+        return mode.version;
+    }
+    if (mode.type === "downloadFiles" && mode.version != null) {
+        fs.appendFileSync(
+            "/tmp/fern-debug.log",
+            `[DEBUG resolveRootImportPath] Found downloadFiles mode with version: ${mode.version}\n`
+        );
+        return mode.version;
+    }
+    fs.appendFileSync("/tmp/fern-debug.log", "[DEBUG resolveRootImportPath] No version found, returning undefined\n");
+    return undefined;
 }
