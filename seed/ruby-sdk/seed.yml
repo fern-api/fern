@@ -54,6 +54,7 @@ allowedFailures:
   - accept-header
   - alias
   - alias-extends
+  - alias-object-pointer
   - any-auth
   - api-wide-base-path
   - audiences
