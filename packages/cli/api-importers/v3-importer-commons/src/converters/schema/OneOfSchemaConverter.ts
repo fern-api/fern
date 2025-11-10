@@ -187,11 +187,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
         const discriminantProperty = this.inferDiscriminantProperty();
         if (discriminantProperty == null) {
-            this.context.errorCollector.addError({
-                message: "Cannot determine discriminant property for discriminated union",
-                breadcrumbs: this.breadcrumbs
-            });
-            return undefined;
+            return this.convertAsUndiscriminatedUnion();
         }
 
         return {
@@ -483,7 +479,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
         const mapping = this.schema.discriminator?.mapping ?? {};
         const mappingEntries = Object.entries(mapping);
-        
+
         if (mappingEntries.length === 0) {
             return undefined;
         }
@@ -495,7 +491,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 reference: { $ref: reference },
                 breadcrumbs: [...this.breadcrumbs, "discriminator", "mapping", discriminantValue]
             });
-            
+
             if (resolved.resolved && resolved.value.properties) {
                 for (const propName of Object.keys(resolved.value.properties)) {
                     propertyNames.add(propName);
@@ -505,13 +501,13 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
         for (const propName of propertyNames) {
             let isCommonDiscriminant = true;
-            
+
             for (const [discriminantValue, reference] of mappingEntries) {
                 const resolved = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
                     reference: { $ref: reference },
                     breadcrumbs: [...this.breadcrumbs, "discriminator", "mapping", discriminantValue]
                 });
-                
+
                 if (!resolved.resolved) {
                     isCommonDiscriminant = false;
                     break;
@@ -523,10 +519,14 @@ export class OneOfSchemaConverter extends AbstractConverter<
                     break;
                 }
 
-                const hasConstOrEnum = 
-                    ('const' in prop) || 
-                    ('enum' in prop && Array.isArray(prop.enum) && prop.enum.length > 0);
-                
+                if (this.context.isReferenceObject(prop)) {
+                    isCommonDiscriminant = false;
+                    break;
+                }
+
+                const hasConstOrEnum =
+                    "const" in prop || ("enum" in prop && Array.isArray(prop.enum) && prop.enum.length > 0);
+
                 if (!hasConstOrEnum) {
                     isCommonDiscriminant = false;
                     break;

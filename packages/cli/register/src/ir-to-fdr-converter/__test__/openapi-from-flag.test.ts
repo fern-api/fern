@@ -335,7 +335,9 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         expect(fdrEventRequestType).toBeDefined();
 
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/oneOf-mapping-no-propertyName-fdr.snap");
-        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/oneOf-mapping-no-propertyName-ir.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot(
+            "__snapshots__/oneOf-mapping-no-propertyName-ir.snap"
+        );
     });
 
     it("should validate OpenAPI fixture structure", async () => {
