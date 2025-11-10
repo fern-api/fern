@@ -2,7 +2,6 @@ from abc import abstractmethod
 from typing import List, Optional
 
 from fern_python.codegen import AST
-from fern_python.generators.sdk.client_generator.constants import RESPONSE_VARIABLE
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 
 import fern.ir.resources as ir_types
