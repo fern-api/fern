@@ -2,7 +2,7 @@
 # For unreleased changes, use unreleased.yml
 - version: 4.35.1
   changelogEntry:
-    - summary: Centralize docstring escaping and ensure enum string literal values are escaped at all emission sites to prevent SyntaxWarning during bytecode compilation.
+    - summary: Generated Python SDKs no longer show SyntaxWarnings when API docs or enum values include backslashes.
       type: fix
   createdAt: "2025-11-10"
   irVersion: 61
