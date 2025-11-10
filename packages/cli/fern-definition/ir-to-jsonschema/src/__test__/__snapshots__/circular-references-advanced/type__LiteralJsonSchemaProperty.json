@@ -1,0 +1,36 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LiteralJsonSchemaPropertyType"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "description": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "LiteralJsonSchemaPropertyType": {
+      "type": "string",
+      "enum": [
+        "string",
+        "number",
+        "boolean"
+      ]
+    }
+  }
+}

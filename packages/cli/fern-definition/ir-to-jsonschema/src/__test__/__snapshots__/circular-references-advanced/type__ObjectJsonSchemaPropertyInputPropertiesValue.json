@@ -1,0 +1,159 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/LiteralJsonSchemaProperty"
+    },
+    {
+      "$ref": "#/definitions/ObjectJsonSchemaPropertyInput"
+    },
+    {
+      "$ref": "#/definitions/ArrayJsonSchemaPropertyInput"
+    }
+  ],
+  "definitions": {
+    "LiteralJsonSchemaPropertyType": {
+      "type": "string",
+      "enum": [
+        "string",
+        "number",
+        "boolean"
+      ]
+    },
+    "LiteralJsonSchemaProperty": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LiteralJsonSchemaPropertyType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "description": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ArrayJsonSchemaPropertyInputItems": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/LiteralJsonSchemaProperty"
+        },
+        {
+          "$ref": "#/definitions/ObjectJsonSchemaPropertyInput"
+        },
+        {
+          "$ref": "#/definitions/ArrayJsonSchemaPropertyInput"
+        }
+      ]
+    },
+    "ArrayJsonSchemaPropertyInput": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "oneOf": [
+            {
+              "const": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "description": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "items": {
+          "$ref": "#/definitions/ArrayJsonSchemaPropertyInputItems"
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "additionalProperties": true
+    },
+    "ObjectJsonSchemaPropertyInputPropertiesValue": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/LiteralJsonSchemaProperty"
+        },
+        {
+          "$ref": "#/definitions/ObjectJsonSchemaPropertyInput"
+        },
+        {
+          "$ref": "#/definitions/ArrayJsonSchemaPropertyInput"
+        }
+      ]
+    },
+    "ObjectJsonSchemaPropertyInput": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "oneOf": [
+            {
+              "const": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "required": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "description": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "properties": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/ObjectJsonSchemaPropertyInputPropertiesValue"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

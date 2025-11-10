@@ -2,8 +2,6 @@ import Foundation
 
 /// Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 public final class ApiClient: Sendable {
-    public let a: AClient
-    public let ast: AstClient
     private let httpClient: HTTPClient
 
     /// Initialize the client with the specified configuration.
@@ -52,8 +50,19 @@ public final class ApiClient: Sendable {
             maxRetries: maxRetries,
             urlSession: urlSession
         )
-        self.a = AClient(config: config)
-        self.ast = AstClient(config: config)
         self.httpClient = HTTPClient(config: config)
+    }
+
+    /// Test endpoint to ensure types are generated
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func testEndpoint(request: ObjectJsonSchemaPropertyInput, requestOptions: RequestOptions? = nil) async throws -> ObjectJsonSchemaPropertyInput {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/test",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: ObjectJsonSchemaPropertyInput.self
+        )
     }
 }
