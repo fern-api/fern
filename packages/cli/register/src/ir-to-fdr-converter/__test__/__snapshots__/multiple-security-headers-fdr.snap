@@ -1,0 +1,812 @@
+{
+  "auth": {
+    "description": "The web3 wallet of the end user",
+    "headerWireValue": "x-coinflow-auth-wallet",
+    "nameOverride": "apiKey",
+    "prefix": undefined,
+    "type": "header",
+  },
+  "authSchemes": {
+    "admin": {
+      "description": undefined,
+      "headerWireValue": "Authorization",
+      "nameOverride": "apiKey",
+      "prefix": undefined,
+      "type": "header",
+    },
+    "blockchain": {
+      "description": "The blockchain associated with the end user",
+      "headerWireValue": "x-coinflow-auth-blockchain",
+      "nameOverride": "apiKey",
+      "prefix": undefined,
+      "type": "header",
+    },
+    "merchant": {
+      "description": "The API key of the merchant",
+      "headerWireValue": "Authorization",
+      "nameOverride": "apiKey",
+      "prefix": undefined,
+      "type": "header",
+    },
+    "userId": {
+      "description": "The external identifier of the end user",
+      "headerWireValue": "x-coinflow-auth-user-id",
+      "nameOverride": "apiKey",
+      "prefix": undefined,
+      "type": "header",
+    },
+    "wallet": {
+      "description": "The web3 wallet of the end user",
+      "headerWireValue": "x-coinflow-auth-wallet",
+      "nameOverride": "apiKey",
+      "prefix": undefined,
+      "type": "header",
+    },
+  },
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": true,
+        "authV2": [
+          "wallet",
+          "blockchain",
+        ],
+        "availability": undefined,
+        "defaultEnvironment": "https://api.example.com/v1",
+        "description": undefined,
+        "environments": [
+          {
+            "baseUrl": "https://api.example.com/v1",
+            "id": "https://api.example.com/v1",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [
+          {
+            "availability": undefined,
+            "description": "Unauthorized",
+            "examples": [],
+            "name": "UnauthorizedError",
+            "statusCode": 401,
+            "type": {
+              "type": "alias",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "Error",
+              },
+            },
+          },
+        ],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/transaction",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": {
+              "amount": 100.5,
+              "currency": "USD",
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "amount": 100.5,
+                "currency": "USD",
+              },
+            },
+            "responseBody": {
+              "id": "txn_123456",
+              "status": "completed",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "id": "txn_123456",
+                "status": "completed",
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "createTransaction",
+        "includeInApiExplorer": undefined,
+        "method": "POST",
+        "name": "Create a transaction requiring multiple auth headers",
+        "originalEndpointId": "endpoint_.createTransaction",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/transaction",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": {
+          "description": undefined,
+          "type": {
+            "contentType": "application/json",
+            "description": undefined,
+            "shape": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "TransactionRequest",
+              },
+            },
+            "type": "json",
+          },
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "description": undefined,
+              "type": {
+                "contentType": "application/json",
+                "description": undefined,
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "TransactionRequest",
+                  },
+                },
+                "type": "json",
+              },
+            },
+          ],
+        },
+        "response": {
+          "description": "Transaction created successfully",
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "TransactionResponse",
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Transaction created successfully",
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "TransactionResponse",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+      {
+        "auth": true,
+        "authV2": [
+          "userId",
+          "blockchain",
+        ],
+        "availability": undefined,
+        "defaultEnvironment": "https://api.example.com/v1",
+        "description": undefined,
+        "environments": [
+          {
+            "baseUrl": "https://api.example.com/v1",
+            "id": "https://api.example.com/v1",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/user-transaction",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": {
+              "amount": 100.5,
+              "currency": "USD",
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "amount": 100.5,
+                "currency": "USD",
+              },
+            },
+            "responseBody": {
+              "id": "txn_123456",
+              "status": "completed",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "id": "txn_123456",
+                "status": "completed",
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "createUserTransaction",
+        "includeInApiExplorer": undefined,
+        "method": "POST",
+        "name": "Create a user transaction with user ID auth",
+        "originalEndpointId": "endpoint_.createUserTransaction",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/user-transaction",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": {
+          "description": undefined,
+          "type": {
+            "contentType": "application/json",
+            "description": undefined,
+            "shape": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "TransactionRequest",
+              },
+            },
+            "type": "json",
+          },
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "description": undefined,
+              "type": {
+                "contentType": "application/json",
+                "description": undefined,
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "TransactionRequest",
+                  },
+                },
+                "type": "json",
+              },
+            },
+          ],
+        },
+        "response": {
+          "description": "Transaction created successfully",
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "TransactionResponse",
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Transaction created successfully",
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "TransactionResponse",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+      {
+        "auth": true,
+        "authV2": [
+          "merchant",
+        ],
+        "availability": undefined,
+        "defaultEnvironment": "https://api.example.com/v1",
+        "description": undefined,
+        "environments": [
+          {
+            "baseUrl": "https://api.example.com/v1",
+            "id": "https://api.example.com/v1",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/merchant/settings",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
+            "responseBody": {
+              "merchantId": "merchant_123",
+              "name": "Example Merchant",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "merchantId": "merchant_123",
+                "name": "Example Merchant",
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "getMerchantSettings",
+        "includeInApiExplorer": undefined,
+        "method": "GET",
+        "name": "Get merchant settings",
+        "originalEndpointId": "endpoint_.getMerchantSettings",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/merchant/settings",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": undefined,
+        "requestsV2": {
+          "requests": undefined,
+        },
+        "response": {
+          "description": "Merchant settings",
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "MerchantSettings",
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Merchant settings",
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "MerchantSettings",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+      {
+        "auth": true,
+        "authV2": [
+          "admin",
+        ],
+        "availability": undefined,
+        "defaultEnvironment": "https://api.example.com/v1",
+        "description": undefined,
+        "environments": [
+          {
+            "baseUrl": "https://api.example.com/v1",
+            "id": "https://api.example.com/v1",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/admin/users",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
+            "responseBody": [
+              {
+                "email": "user@example.com",
+                "id": "user_123",
+              },
+            ],
+            "responseBodyV3": {
+              "type": "json",
+              "value": [
+                {
+                  "email": "user@example.com",
+                  "id": "user_123",
+                },
+              ],
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "listUsers",
+        "includeInApiExplorer": undefined,
+        "method": "GET",
+        "name": "List all users (admin only)",
+        "originalEndpointId": "endpoint_.listUsers",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/admin/users",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": undefined,
+        "requestsV2": {
+          "requests": undefined,
+        },
+        "response": {
+          "description": "List of users",
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "User",
+              },
+              "type": "list",
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "List of users",
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "itemType": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "User",
+                  },
+                  "type": "list",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+    ],
+    "pointsTo": undefined,
+    "subpackages": [],
+    "types": [
+      "TransactionRequest",
+      "TransactionResponse",
+      "MerchantSettings",
+      "User",
+      "Error",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {},
+  "types": {
+    "Error": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "Error",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "code",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "message",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "MerchantSettings": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "MerchantSettings",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Merchant identifier",
+            "key": "merchantId",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Merchant name",
+            "key": "name",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "TransactionRequest": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "TransactionRequest",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Transaction amount",
+            "key": "amount",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "double",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Currency code",
+            "key": "currency",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "TransactionResponse": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "TransactionResponse",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Transaction identifier",
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Transaction status",
+            "key": "status",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "User": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "User",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "User identifier",
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "User email",
+            "key": "email",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}
