@@ -1,0 +1,40 @@
+displayName: Java SDK (Remote vs Local)
+irVersion: v61
+image: fernapi/fern-java-sdk
+changelogLocation: ../../generators/java/sdk/versions.yml
+
+test:
+  docker:
+    image: fernapi/fern-java-sdk:latest
+
+language: java
+generatorType: SDK
+defaultOutputMode: github
+
+# Opt-in fixtures for remote vs local testing
+# Only these fixtures will be tested (not all fixtures like regular seed tests)
+fixtures:
+  imdb:
+    - outputFolder: remote
+      customConfig: null
+      publishConfig:
+        type: maven
+        coordinate: "com.fern-test:imdb-sdk"
+        registryUrl: ""
+        username: ""
+        password: ""
+      github:
+        repository: ${GITHUB_TEST_REPO}
+        mode: pull-request
+
+    - outputFolder: local
+      customConfig: null
+      publishConfig:
+        type: maven
+        coordinate: "com.fern-test:imdb-sdk"
+        registryUrl: ""
+        username: ""
+        password: ""
+      github:
+        uri: ${GITHUB_TEST_REPO}
+        mode: pull-request

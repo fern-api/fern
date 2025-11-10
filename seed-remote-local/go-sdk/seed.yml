@@ -1,0 +1,28 @@
+displayName: Go SDK (Remote vs Local)
+irVersion: v60
+image: fernapi/fern-go-sdk
+changelogLocation: ../../generators/go/sdk/versions.yml
+
+test:
+  docker:
+    image: fernapi/fern-go-sdk:latest
+
+language: go
+generatorType: SDK
+defaultOutputMode: github
+
+# Opt-in fixtures for remote vs local testing
+# Only these fixtures will be tested (not all fixtures like regular seed tests)
+fixtures:
+  imdb:
+    - outputFolder: remote
+      customConfig: null
+      github:
+        repository: ${GITHUB_TEST_REPO}
+        mode: pull-request
+
+    - outputFolder: local
+      customConfig: null
+      github:
+        uri: ${GITHUB_TEST_REPO}
+        mode: pull-request
