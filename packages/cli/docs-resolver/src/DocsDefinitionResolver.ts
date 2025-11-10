@@ -640,8 +640,10 @@ export class DocsDefinitionResolver {
             theme:
                 this.parsedDocsConfig.theme != null
                     ? {
-                          ...this.parsedDocsConfig.theme,
-                          "page-actions": undefined
+                          sidebar: this.parsedDocsConfig.theme.sidebar,
+                          body: this.parsedDocsConfig.theme.body,
+                          tabs: this.parsedDocsConfig.theme.tabs,
+                          "page-actions": this.parsedDocsConfig.theme.pageActions
                       }
                     : undefined,
             // deprecated
