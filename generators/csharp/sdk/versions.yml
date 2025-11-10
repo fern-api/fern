@@ -6,7 +6,7 @@
         Refactor package dependencies in c# generation so Dynamic Snippets in the browser can work.
   createdAt: "2025-11-10"
   irVersion: 61
-  
+
 - version: 2.7.2
   changelogEntry:
     - type: fix
