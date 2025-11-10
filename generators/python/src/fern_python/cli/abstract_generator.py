@@ -35,10 +35,7 @@ class AbstractGenerator(ABC):
         generator_config: GeneratorConfig,
     ) -> None:
         project_config = generator_config.output.mode.visit(
-            download_files=lambda: ProjectConfig(
-                package_name=generator_config.organization,
-                package_version="0.0.1",
-            ),
+            download_files=lambda: None,
             publish=lambda publish: ProjectConfig(
                 package_name=publish.registries_v_2.pypi.package_name,
                 package_version=publish.version,
@@ -189,19 +186,12 @@ class AbstractGenerator(ABC):
 
     def _get_pypi_metadata(self, generator_config: GeneratorConfig) -> Optional[PypiMetadata]:
         return generator_config.output.mode.visit(
-            download_files=lambda: self._get_pypi_metadata_from_ir(generator_config),
+            download_files=lambda: None,
             publish=lambda publish: publish.registries_v_2.pypi.pypi_metadata,
             github=lambda github: cast(PypiGithubPublishInfo, github.publish_info.get_as_union()).pypi_metadata
             if github.publish_info is not None and github.publish_info.get_as_union().type == "pypi"
             else None,
         )
-
-    def _get_pypi_metadata_from_ir(self, generator_config: GeneratorConfig) -> Optional[PypiMetadata]:
-        # For local/download_files mode, extract PyPI metadata from generator_config.publish
-        # This ensures local generation has the same metadata as remote generation
-        if generator_config.publish is not None:
-            return generator_config.publish.registries_v_2.pypi.pypi_metadata
-        return None
 
     def _publish(
         self,
@@ -343,9 +333,6 @@ jobs:
                 publish_info_union.should_generate_publish_workflow is None
                 or publish_info_union.should_generate_publish_workflow
             ):
-                # Use sensible defaults if environment variables are not provided
-                username_var = publish_info_union.username_environment_variable or "PYPI_USERNAME"
-                password_var = publish_info_union.password_environment_variable or "PYPI_PASSWORD"
                 workflow_yaml += f"""
   publish:
     needs: [compile, test]
@@ -366,10 +353,10 @@ jobs:
       - name: Publish to pypi
         run: |
           poetry config repositories.{AbstractGenerator._REMOTE_PYPI_REPO_NAME} {publish_info_union.registry_url}
-          poetry --no-interaction -v publish --build --repository {AbstractGenerator._REMOTE_PYPI_REPO_NAME} --username "${username_var}" --password "${password_var}"
+          poetry --no-interaction -v publish --build --repository {AbstractGenerator._REMOTE_PYPI_REPO_NAME} --username "${publish_info_union.username_environment_variable}" --password "${publish_info_union.password_environment_variable}"
         env:
-          {username_var}: ${{{{ secrets.{username_var} }}}}
-          {password_var}: ${{{{ secrets.{password_var} }}}}
+          {publish_info_union.username_environment_variable}: ${{{{ secrets.{publish_info_union.username_environment_variable} }}}}
+          {publish_info_union.password_environment_variable}: ${{{{ secrets.{publish_info_union.password_environment_variable} }}}}
 """
         return workflow_yaml
 
