@@ -13,23 +13,80 @@ function generateSlug(text: string): string {
     return text
         .toLowerCase()
         .trim()
-        .replace(/[^\w\s-]/g, "") // Remove special characters
-        .replace(/\s+/g, "-") // Replace spaces with hyphens
-        .replace(/-+/g, "-") // Replace multiple hyphens with single hyphen
-        .replace(/^-+|-+$/g, ""); // Remove leading/trailing hyphens
+        .replace(/[^\w\s-]/g, "")
+        .replace(/\s+/g, "-")
+        .replace(/-+/g, "-")
+        .replace(/^-+|-+$/g, "");
 }
 
-/**
- * Checks if an object is a navigation entry that needs a slug
- * @param obj - The object to check
- * @returns True if the object has a "page" field with a "path" field
- */
-function isNavigationEntry(obj: unknown): obj is Record<string, unknown> {
+function isPageConfiguration(obj: unknown): obj is Record<string, unknown> {
     if (typeof obj !== "object" || obj === null) {
         return false;
     }
     const record = obj as Record<string, unknown>;
     return typeof record["page"] === "string" && typeof record["path"] === "string";
+}
+
+function isSectionConfiguration(obj: unknown): obj is Record<string, unknown> {
+    if (typeof obj !== "object" || obj === null) {
+        return false;
+    }
+    const record = obj as Record<string, unknown>;
+    return typeof record["section"] === "string" && Array.isArray(record["contents"]);
+}
+
+function isApiReferenceConfiguration(obj: unknown): obj is Record<string, unknown> {
+    if (typeof obj !== "object" || obj === null) {
+        return false;
+    }
+    const record = obj as Record<string, unknown>;
+    return typeof record["api"] === "string";
+}
+
+function isChangelogConfiguration(obj: unknown): obj is Record<string, unknown> {
+    if (typeof obj !== "object" || obj === null) {
+        return false;
+    }
+    const record = obj as Record<string, unknown>;
+    return typeof record["changelog"] === "string";
+}
+
+function computeSlugForNavigationItem(sourceRecord: Record<string, unknown>): string | undefined {
+    if (typeof sourceRecord["slug"] === "string") {
+        return sourceRecord["slug"];
+    }
+
+    if (sourceRecord["skip-slug"] === true) {
+        return undefined;
+    }
+
+    if (isPageConfiguration(sourceRecord)) {
+        return generateSlug(sourceRecord["page"] as string);
+    }
+
+    if (isSectionConfiguration(sourceRecord)) {
+        return generateSlug(sourceRecord["section"] as string);
+    }
+
+    if (isApiReferenceConfiguration(sourceRecord)) {
+        const apiName = sourceRecord["api-name"];
+        const api = sourceRecord["api"];
+        return generateSlug((typeof apiName === "string" ? apiName : api) as string);
+    }
+
+    if (isChangelogConfiguration(sourceRecord)) {
+        const title = sourceRecord["title"];
+        if (typeof title === "string") {
+            return generateSlug(title);
+        }
+        const changelog = sourceRecord["changelog"];
+        if (typeof changelog === "string") {
+            const basename = changelog.split("/").pop() || changelog;
+            return generateSlug(basename);
+        }
+    }
+
+    return undefined;
 }
 
 export async function translateYamlObject(
@@ -62,14 +119,16 @@ export async function translateYamlObject(
         const sourceRecord =
             typeof sourceObj === "object" && sourceObj !== null ? (sourceObj as Record<string, unknown>) : undefined;
 
-        if (isNavigationEntry(obj) && sourceRecord) {
-            const sourceTitle = sourceRecord["page"];
-            if (typeof sourceTitle === "string") {
-                result["slug"] = generateSlug(sourceTitle);
-            }
+        let computedSlug: string | undefined;
+        if (sourceRecord) {
+            computedSlug = computeSlugForNavigationItem(sourceRecord);
         }
 
         for (const [key, value] of Object.entries(obj)) {
+            if (key === "slug") {
+                continue;
+            }
+
             if (shouldTranslateValue(key, value)) {
                 result[key] = await translateText({ text: value as string, language, sourceLanguage, cliContext });
             } else {
@@ -82,6 +141,10 @@ export async function translateYamlObject(
                     sourceRecord?.[key]
                 );
             }
+        }
+
+        if (computedSlug !== undefined) {
+            result["slug"] = computedSlug;
         }
 
         return result;
