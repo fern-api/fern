@@ -198,7 +198,17 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         requestInterface.extends = interfaceExtends;
 
         context.sourceFile.addInterface(requestInterface);
+        const hasDefaults = this.hasDefaults(context);
+        const hasLiterals = this.hasLiterals(context);
+
         this.generateDefaultsConst(context);
+        this.generateLiteralsConst(context);
+
+        // Generate namespace with withDefaults function if we have defaults or literals
+        if (hasDefaults || hasLiterals) {
+            this.generateWithDefaultsNamespace(context, hasDefaults, hasLiterals);
+        }
+
         if (requestBody == null) {
             return;
         }
@@ -1149,8 +1159,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 }
             ]
         });
+    }
 
-        // Generate the namespace with withDefaults function
+    private generateWithDefaultsNamespace(context: SdkContext, hasDefaults: boolean, hasLiterals: boolean): void {
         context.sourceFile.addModule({
             name: this.wrapperName,
             isExported: true,
@@ -1167,9 +1178,133 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                     writer.newLine();
                     writer.write(`export function withDefaults(request: ${this.wrapperName}): WithDefaults {`);
                     writer.newLine();
-                    writer.write("    return { ...DEFAULTS, ...request };");
+
+                    // Build the spread expression based on what we have
+                    const spreads: string[] = [];
+                    if (hasDefaults) {
+                        spreads.push("...DEFAULTS");
+                    }
+                    if (hasLiterals) {
+                        spreads.push("...LITERALS");
+                    }
+                    spreads.push("...request");
+
+                    writer.write(`    return { ${spreads.join(", ")} };`);
                     writer.newLine();
                     writer.write("}");
+                }
+            ]
+        });
+    }
+
+    public hasLiterals(context: SdkContext): boolean {
+        // Only check inlined request body properties (not query parameters or headers)
+        const requestBody = this.endpoint.requestBody;
+        if (requestBody != null) {
+            return HttpRequestBody._visit<boolean>(requestBody, {
+                inlinedRequestBody: (inlinedRequestBody) => {
+                    for (const property of inlinedRequestBody.properties) {
+                        if (this.isLiteral(property.valueType, context)) {
+                            return true;
+                        }
+                    }
+                    return false;
+                },
+                reference: () => false,
+                fileUpload: () => false,
+                bytes: () => false,
+                _other: () => false
+            });
+        }
+
+        return false;
+    }
+
+    private isLiteral(typeReference: TypeReference, context: SdkContext): boolean {
+        const resolvedType = context.type.resolveTypeReference(typeReference);
+        // Only return true for non-optional, non-nullable literals
+        // Optional/nullable literals should remain in the request type
+        if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+            return true;
+        }
+        return false;
+    }
+
+    private extractLiteralValue(typeReference: TypeReference, context: SdkContext): ts.Expression | undefined {
+        const resolvedType = context.type.resolveTypeReference(typeReference);
+
+        // Only extract values for non-optional, non-nullable literals
+        if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+            return resolvedType.container.literal._visit<ts.Expression>({
+                string: (val: string) => ts.factory.createStringLiteral(val),
+                boolean: (val: boolean) => (val ? ts.factory.createTrue() : ts.factory.createFalse()),
+                _other: () => {
+                    throw new Error("Encountered non-boolean, non-string literal");
+                }
+            });
+        }
+        return undefined;
+    }
+
+    private generateLiteralsConst(context: SdkContext): void {
+        // Only generate if there are actual literals
+        if (!this.hasLiterals(context)) {
+            return;
+        }
+
+        const literalsMap: Record<string, ts.Expression> = {};
+
+        // Only collect literals from inlined request body properties
+        // (not query parameters or headers)
+        const requestBody = this.endpoint.requestBody;
+        if (requestBody != null) {
+            HttpRequestBody._visit(requestBody, {
+                inlinedRequestBody: (inlinedRequestBody) => {
+                    for (const property of inlinedRequestBody.properties) {
+                        if (this.isLiteral(property.valueType, context)) {
+                            const literalValue = this.extractLiteralValue(property.valueType, context);
+                            if (literalValue != null) {
+                                const propertyName = this.getInlinedRequestBodyPropertyKey(property);
+                                literalsMap[propertyName.propertyName] = literalValue;
+                            }
+                        }
+                    }
+                },
+                reference: noop,
+                fileUpload: noop,
+                bytes: noop,
+                _other: () => {
+                    throw new Error("Unknown HttpRequestBody: " + this.endpoint.requestBody?.type);
+                }
+            });
+        }
+
+        // Only generate if we have collected literals
+        if (Object.keys(literalsMap).length === 0) {
+            return;
+        }
+
+        // Generate the LITERALS const
+        context.sourceFile.addVariableStatement({
+            declarationKind: VariableDeclarationKind.Const,
+            isExported: false,
+            leadingTrivia: "\n",
+            declarations: [
+                {
+                    name: "LITERALS",
+                    initializer: (writer) => {
+                        writer.write("{");
+                        writer.newLine();
+                        const entries = Object.entries(literalsMap);
+                        entries.forEach(([key, value], index) => {
+                            writer.write(`    ${key}: ${getTextOfTsNode(value)}`);
+                            if (index < entries.length - 1) {
+                                writer.write(",");
+                            }
+                            writer.newLine();
+                        });
+                        writer.write("} as const");
+                    }
                 }
             ]
         });

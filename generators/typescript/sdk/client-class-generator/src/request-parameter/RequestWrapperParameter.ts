@@ -47,21 +47,17 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         { variablesInScope }: { variablesInScope: string[] }
     ): ts.Statement[] {
         this.nonBodyKeyAliases = {};
-
         const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
-        const nonBodyKeys = generatedRequestWrapper.getNonBodyKeysWithData(context);
-
-        if (nonBodyKeys.length === 0) {
-            return [];
-        }
 
         const hasDefaults = generatedRequestWrapper.hasDefaults(context);
+        const hasLiterals = generatedRequestWrapper.hasLiterals(context);
 
         const statements: ts.Statement[] = [];
 
-        // If there are defaults, call withDefaults() first
-        const sourceVariableName = hasDefaults ? "_request" : this.getRequestParameterName();
-        if (hasDefaults) {
+        // If there are defaults or literals, call withDefaults() first
+        const hasDefaultsOrLiterals = hasDefaults || hasLiterals;
+        const sourceVariableName = hasDefaultsOrLiterals ? "_request" : this.getRequestParameterName();
+        if (hasDefaultsOrLiterals) {
             const requestWrapperExpression = context.requestWrapper.getReferenceToRequestWrapperExpression(
                 this.packageId,
                 this.endpoint.name
@@ -87,6 +83,11 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                     )
                 )
             );
+        }
+
+        const nonBodyKeys = generatedRequestWrapper.getNonBodyKeysWithData(context);
+        if (nonBodyKeys.length === 0) {
+            return statements;
         }
 
         const usedNames = new Set(variablesInScope);
@@ -157,10 +158,14 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         if (this.endpoint.requestBody == null) {
             return undefined;
         }
-        if (this.getGeneratedRequestWrapper(context).getNonBodyKeys(context).length > 0) {
+        const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
+        if (generatedRequestWrapper.getNonBodyKeys(context).length > 0) {
             return ts.factory.createIdentifier(RequestWrapperParameter.BODY_VARIABLE_NAME);
         } else {
-            return ts.factory.createIdentifier(this.getRequestParameterName());
+            // If we have defaults or literals, we create _request variable and should reference that
+            const hasDefaultsOrLiterals =
+                generatedRequestWrapper.hasDefaults(context) || generatedRequestWrapper.hasLiterals(context);
+            return ts.factory.createIdentifier(hasDefaultsOrLiterals ? "_request" : this.getRequestParameterName());
         }
     }
 
