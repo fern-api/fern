@@ -94,6 +94,46 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     groupEnvironmentsByHost: false
 };
 
+function mergeOptions<T extends Record<string, unknown>>(params: {
+    defaults: T;
+    options?: Partial<T>;
+    overrides?: Partial<T>;
+    overrideOnly?: Set<keyof T>;
+    undefinedIfAbsent?: Set<keyof T>;
+    keys?: (keyof T)[];
+}): T {
+    const { defaults, options, overrides, overrideOnly = new Set(), undefinedIfAbsent = new Set(), keys } = params;
+    const result = {} as T;
+
+    const keysToIterate = keys ?? (Object.keys(defaults) as (keyof T)[]);
+    const seen = new Set<keyof T>();
+
+    for (const key of keysToIterate) {
+        seen.add(key);
+        if (overrideOnly.has(key)) {
+            result[key] = (overrides?.[key] !== undefined ? overrides[key] : defaults[key]) as T[typeof key];
+        } else if (undefinedIfAbsent.has(key)) {
+            result[key] = (
+                overrides?.[key] !== undefined
+                    ? overrides[key]
+                    : options?.[key] !== undefined
+                      ? options[key]
+                      : undefined
+            ) as T[typeof key];
+        } else {
+            result[key] = (overrides?.[key] ?? options?.[key] ?? defaults[key]) as T[typeof key];
+        }
+    }
+
+    for (const key of Object.keys(defaults) as (keyof T)[]) {
+        if (!seen.has(key)) {
+            result[key] = (overrides?.[key] ?? options?.[key] ?? defaults[key]) as T[typeof key];
+        }
+    }
+
+    return result;
+}
+
 export function getConvertOptions({
     options,
     overrides
@@ -101,54 +141,25 @@ export function getConvertOptions({
     options?: Partial<ConvertOpenAPIOptions>;
     overrides?: Partial<ConvertOpenAPIOptions>;
 }): ConvertOpenAPIOptions {
-    return {
-        enableUniqueErrorsPerEndpoint:
-            overrides?.enableUniqueErrorsPerEndpoint ??
-            options?.enableUniqueErrorsPerEndpoint ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.enableUniqueErrorsPerEndpoint,
-        detectGlobalHeaders:
-            overrides?.detectGlobalHeaders ??
-            options?.detectGlobalHeaders ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.detectGlobalHeaders,
-        objectQueryParameters:
-            overrides?.objectQueryParameters ??
-            options?.objectQueryParameters ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.objectQueryParameters,
-        respectReadonlySchemas:
-            overrides?.respectReadonlySchemas ??
-            options?.respectReadonlySchemas ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.respectReadonlySchemas,
-        respectNullableSchemas:
-            overrides?.respectNullableSchemas ??
-            options?.respectNullableSchemas ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.respectNullableSchemas,
-        onlyIncludeReferencedSchemas:
-            overrides?.onlyIncludeReferencedSchemas ??
-            options?.onlyIncludeReferencedSchemas ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.onlyIncludeReferencedSchemas,
-        inlinePathParameters:
-            overrides?.inlinePathParameters ??
-            options?.inlinePathParameters ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.inlinePathParameters,
-        useBytesForBinaryResponse:
-            overrides?.useBytesForBinaryResponse ??
-            options?.useBytesForBinaryResponse ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.useBytesForBinaryResponse,
-        respectForwardCompatibleEnums:
-            overrides?.respectForwardCompatibleEnums ??
-            options?.respectForwardCompatibleEnums ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.respectForwardCompatibleEnums,
-        wrapReferencesToNullableInOptional:
-            overrides?.wrapReferencesToNullableInOptional ??
-            options?.wrapReferencesToNullableInOptional ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.wrapReferencesToNullableInOptional,
-        coerceOptionalSchemasToNullable:
-            overrides?.coerceOptionalSchemasToNullable ??
-            options?.coerceOptionalSchemasToNullable ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.coerceOptionalSchemasToNullable,
-        groupEnvironmentsByHost:
-            overrides?.groupEnvironmentsByHost ??
-            options?.groupEnvironmentsByHost ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.groupEnvironmentsByHost
-    };
+    const orderedKeys: (keyof ConvertOpenAPIOptions)[] = [
+        "enableUniqueErrorsPerEndpoint",
+        "detectGlobalHeaders",
+        "objectQueryParameters",
+        "respectReadonlySchemas",
+        "respectNullableSchemas",
+        "onlyIncludeReferencedSchemas",
+        "inlinePathParameters",
+        "useBytesForBinaryResponse",
+        "respectForwardCompatibleEnums",
+        "wrapReferencesToNullableInOptional",
+        "coerceOptionalSchemasToNullable",
+        "groupEnvironmentsByHost"
+    ];
+
+    return mergeOptions<ConvertOpenAPIOptions>({
+        defaults: DEFAULT_CONVERT_OPENAPI_OPTIONS,
+        options,
+        overrides,
+        keys: orderedKeys
+    });
 }
