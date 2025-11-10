@@ -19,10 +19,12 @@ import { DockerScriptRunner, LocalScriptRunner, ScriptRunner } from "./commands/
 import { TaskContextFactory } from "./commands/test/TaskContextFactory";
 import { DockerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/test-runner";
 import { FIXTURES, LANGUAGE_SPECIFIC_FIXTURE_PREFIXES, testGenerator } from "./commands/test/testWorkspaceFixtures";
+import { TestRemoteVsLocalRunner } from "./commands/test-remote-vs-local/TestRemoteVsLocalRunner";
 import { validateCliRelease } from "./commands/validate/validateCliChangelog";
 import { validateGenerator } from "./commands/validate/validateGeneratorChangelog";
 import { validateVersionsYml } from "./commands/validate/validateVersionsYml";
 import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
+import { loadRemoteVsLocalWorkspaces } from "./loadRemoteVsLocalWorkspaces";
 import { Semaphore } from "./Semaphore";
 
 void tryRunCli();
@@ -40,6 +42,7 @@ export async function tryRunCli(): Promise<void> {
         });
 
     addTestCommand(cli);
+    addTestRemoteVsLocalCommand(cli);
     addRunCommand(cli);
     addGetAvailableFixturesCommand(cli);
     addRegisterCommands(cli);
@@ -221,6 +224,88 @@ function addTestCommand(cli: Argv) {
             // If any of the tests failed and allow-unexpected-failures is false, exit with a non-zero status code
             if (results.includes(false) && !argv["allow-unexpected-failures"]) {
                 process.exit(1);
+            }
+        }
+    );
+}
+
+function addTestRemoteVsLocalCommand(cli: Argv) {
+    cli.command(
+        "test-remote-vs-local",
+        "Test remote (Fiddle) vs local (Docker) generation by comparing snapshots",
+        (yargs) =>
+            yargs
+                .option("generator", {
+                    type: "string",
+                    demandOption: false,
+                    alias: "g",
+                    description: "Specific generator to test (e.g., ts-sdk, java-sdk). Tests all if not specified."
+                })
+                .option("fixture", {
+                    type: "string",
+                    demandOption: false,
+                    alias: "f",
+                    description: "Specific fixture to test. Tests all opt-in fixtures if not specified."
+                })
+                .option("update-snapshots", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description: "Update committed snapshots instead of comparing"
+                })
+                .option("log-level", {
+                    default: LogLevel.Info,
+                    choices: LOG_LEVELS
+                }),
+        async (argv) => {
+            const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+            const context = taskContextFactory.create("test-remote-vs-local");
+
+            try {
+                const workspaces = await loadRemoteVsLocalWorkspaces();
+
+                if (workspaces.length === 0) {
+                    context.logger.warn("No remote-vs-local workspaces found in seed-remote-local/");
+                    return;
+                }
+
+                let targetWorkspace = undefined;
+                if (argv.generator) {
+                    targetWorkspace = workspaces.find((w) => w.workspaceName === argv.generator);
+                    if (!targetWorkspace) {
+                        context.failAndThrow(
+                            `Generator ${argv.generator} not found. Available: ${workspaces.map((w) => w.workspaceName).join(", ")}`
+                        );
+                        return;
+                    }
+                }
+
+                const runner = new TestRemoteVsLocalRunner();
+                const results = await runner.run({
+                    workspace: targetWorkspace,
+                    fixture: argv.fixture,
+                    updateSnapshots: argv.updateSnapshots,
+                    context
+                });
+
+                // Print summary
+                const passed = results.filter((r) => r.passed).length;
+                const failed = results.filter((r) => !r.passed).length;
+
+                context.logger.info(`\n📊 Test Summary:`);
+                context.logger.info(`  ✅ Passed: ${passed}`);
+                if (failed > 0) {
+                    context.logger.error(`  ❌ Failed: ${failed}`);
+                }
+
+                // Exit with error if any tests failed
+                if (failed > 0) {
+                    process.exit(1);
+                }
+            } catch (error) {
+                context.failAndThrow(
+                    `Remote vs local testing failed: ${error instanceof Error ? error.message : String(error)}`
+                );
             }
         }
     );
