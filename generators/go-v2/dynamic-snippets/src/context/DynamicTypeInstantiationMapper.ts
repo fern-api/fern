@@ -187,9 +187,51 @@ export class DynamicTypeInstantiationMapper {
                         arguments_: [this.convertLiteralValue(aliasType.typeReference.value)]
                     })
                 );
+            case "named": {
+                const underlyingNamed = this.resolveUnderlyingNamedType(aliasType.typeReference);
+                if (underlyingNamed?.type === "object") {
+                    return this.convertObject({
+                        object_: underlyingNamed,
+                        value,
+                        typeReferenceOverride: go.typeReference({
+                            name: this.context.getTypeName(aliasType.declaration.name),
+                            importPath: this.context.getImportPath(aliasType.declaration.fernFilepath)
+                        })
+                    });
+                }
+                return this.convert({ typeReference: aliasType.typeReference, value, as });
+            }
             default:
                 return this.convert({ typeReference: aliasType.typeReference, value, as });
         }
+    }
+
+    /**
+     * Resolves through alias chains to find the underlying named type.
+     * Returns the final non-alias named type, or undefined if not found.
+     */
+    private resolveUnderlyingNamedType(
+        typeReference: FernIr.dynamic.TypeReference,
+        depth = 0
+    ): FernIr.dynamic.NamedType | undefined {
+        if (depth > 10) {
+            return undefined;
+        }
+
+        if (typeReference.type !== "named") {
+            return undefined;
+        }
+
+        const named = this.context.resolveNamedType({ typeId: typeReference.value });
+        if (named == null) {
+            return undefined;
+        }
+
+        if (named.type === "alias") {
+            return this.resolveUnderlyingNamedType(named.typeReference, depth + 1);
+        }
+
+        return named;
     }
 
     private convertLiteralValue(literal: FernIr.dynamic.LiteralType): go.TypeInstantiation {
@@ -315,20 +357,24 @@ export class DynamicTypeInstantiationMapper {
 
     private convertObject({
         object_,
-        value
+        value,
+        typeReferenceOverride
     }: {
         object_: FernIr.dynamic.ObjectType;
         value: unknown;
+        typeReferenceOverride?: go.TypeReference;
     }): go.TypeInstantiation {
         const properties = this.context.associateByWireValue({
             parameters: object_.properties,
             values: this.context.getRecord(value) ?? {}
         });
         return go.TypeInstantiation.structPointer({
-            typeReference: go.typeReference({
-                name: this.context.getTypeName(object_.declaration.name),
-                importPath: this.context.getImportPath(object_.declaration.fernFilepath)
-            }),
+            typeReference:
+                typeReferenceOverride ??
+                go.typeReference({
+                    name: this.context.getTypeName(object_.declaration.name),
+                    importPath: this.context.getImportPath(object_.declaration.fernFilepath)
+                }),
             fields: properties.map((property) => {
                 this.context.errors.scope(property.name.wireValue);
                 try {
