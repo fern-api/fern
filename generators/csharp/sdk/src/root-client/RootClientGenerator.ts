@@ -56,7 +56,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         this.rawClient = new RawClient(context);
         this.serviceId = this.context.ir.rootPackage.service;
         this.grpcClientInfo =
-            this.serviceId != null ? this.context.getGrpcClientInfoForServiceId(this.serviceId) : undefined;
+            this.serviceId != null ? this.context.common.getGrpcClientInfoForServiceId(this.serviceId) : undefined;
     }
 
     private members = lazy({
@@ -84,7 +84,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             // add functions to create the websocket api client
             for (const subpackage of this.getSubpackages()) {
                 if (subpackage.websocket != null) {
-                    const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
+                    const websocketChannel = this.context.common.getWebsocketChannel(subpackage.websocket);
                     if (websocketChannel != null) {
                         WebSocketClientGenerator.createWebSocketApiFactories(
                             cls,
@@ -137,7 +137,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     access: ast.Access.Public,
                     get: true,
                     origin: subpackage,
-                    type: this.csharp.Type.reference(this.context.getSubpackageClassReference(subpackage))
+                    type: this.csharp.Type.reference(this.context.common.getSubpackageClassReference(subpackage))
                 });
             }
         }
@@ -146,7 +146,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
 
         const rootServiceId = this.context.ir.rootPackage.service;
         if (rootServiceId != null) {
-            const service = this.context.getHttpServiceOrThrow(rootServiceId);
+            const service = this.context.common.getHttpServiceOrThrow(rootServiceId);
             service.endpoints.flatMap((endpoint) => {
                 return this.context.endpointGenerator.generate(class_, {
                     serviceId: rootServiceId,
@@ -248,7 +248,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         });
         headerEntries.push({
             key: this.csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
-            value: this.context.getCurrentVersionValueAccess()
+            value: this.context.common.getCurrentVersionValueAccess()
         });
         if (platformHeaders.userAgent != null) {
             headerEntries.push({
@@ -319,7 +319,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 writer.endControlFlow();
 
                 if (this.oauth != null) {
-                    const authClientClassReference = this.context.getSubpackageClassReferenceForServiceIdOrThrow(
+                    const authClientClassReference = this.context.common.getSubpackageClassReferenceForServiceIdOrThrow(
                         this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
                     );
 
@@ -372,7 +372,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                         writer.writeLine(`${subpackage.name.pascalCase.safeName} = `);
                         writer.writeNodeStatement(
                             this.csharp.instantiateClass({
-                                classReference: this.context.getSubpackageClassReference(subpackage),
+                                classReference: this.context.common.getSubpackageClassReference(subpackage),
                                 arguments_
                             })
                         );

@@ -34,15 +34,15 @@ export function generateField(
     }
 ): ast.Field {
     const fieldType = context.csharpTypeMapper.convert({ reference: property.valueType });
-    const maybeLiteralInitializer = context.getLiteralInitializerFromTypeReference({
+    const maybeLiteralInitializer = context.common.getLiteralInitializerFromTypeReference({
         typeReference: property.valueType
     });
     const fieldAttributes = [];
     if (jsonProperty) {
         if ("propertyAccess" in property && property.propertyAccess) {
-            fieldAttributes.push(context.createJsonAccessAttribute(property.propertyAccess));
+            fieldAttributes.push(context.common.createJsonAccessAttribute(property.propertyAccess));
         }
-        fieldAttributes.push(context.createJsonPropertyNameAttribute(property.name.wireValue));
+        fieldAttributes.push(context.common.createJsonPropertyNameAttribute(property.name.wireValue));
     }
     // if we are using readonly constants, we need to generate the accessors and initializer
     // so that deserialization works correctly  (ie, throws deserializing an incorrect value to a readonly constant)

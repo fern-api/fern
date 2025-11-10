@@ -1,4 +1,5 @@
 using SeedWebsocket.Core;
+using SeedWebsocket.Empty;
 
 namespace SeedWebsocket;
 
@@ -26,7 +27,10 @@ public partial class SeedWebsocketClient
             }
         }
         _client = new RawClient(clientOptions);
+        Empty = new EmptyClient(_client);
     }
+
+    public EmptyClient Empty { get; }
 
     public RealtimeApi CreateRealtimeApi(RealtimeApi.Options options)
     {

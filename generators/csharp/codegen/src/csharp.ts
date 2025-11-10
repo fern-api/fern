@@ -197,9 +197,9 @@ export class CSharp {
         // there isn't anything registered that looks like the one we want.
         // we're going to complain, but give them the expected name for now.
         // when we have the order of creation sorted all out, this should be an error.
-        this.generation.logger.warn(
-            `NOTE: getPropertyName: ${enclosingType.fullyQualifiedName} using unregistered property ${expectedName}`
-        );
+        // this.generation.logger.warn(
+        //   `NOTE: getPropertyName: ${enclosingType.fullyQualifiedName} using unregistered property ${expectedName}`
+        // );
         return expectedName;
     }
 
