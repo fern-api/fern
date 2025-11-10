@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...commons.types.variable_value import VariableValue
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
@@ -48,6 +49,7 @@ class ProblemDescriptionBoard_TestCaseId(UniversalBaseModel):
             smart_union = True
 
 
-ProblemDescriptionBoard = typing.Union[
-    ProblemDescriptionBoard_Html, ProblemDescriptionBoard_Variable, ProblemDescriptionBoard_TestCaseId
+ProblemDescriptionBoard = typing_extensions.Annotated[
+    typing.Union[ProblemDescriptionBoard_Html, ProblemDescriptionBoard_Variable, ProblemDescriptionBoard_TestCaseId],
+    pydantic.Field(discriminator="type"),
 ]

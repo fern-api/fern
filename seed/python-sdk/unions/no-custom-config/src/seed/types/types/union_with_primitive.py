@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
@@ -39,4 +40,6 @@ from seed.types import UnionWithPrimitive_Integer
 
 UnionWithPrimitive_Integer(value=9)
 """
-UnionWithPrimitive = typing.Union[UnionWithPrimitive_Integer, UnionWithPrimitive_String]
+UnionWithPrimitive = typing_extensions.Annotated[
+    typing.Union[UnionWithPrimitive_Integer, UnionWithPrimitive_String], pydantic.Field(discriminator="type")
+]

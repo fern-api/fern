@@ -13,6 +13,19 @@
                 "async_client": "import asyncio\n\nfrom seed import AsyncSeedObjectsWithImports\n\nclient = AsyncSeedObjectsWithImports(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.optional.send_optional_body(\n        request={\"string\": {\"key\": \"value\"}},\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/send-optional-typed-body",
+                "method": "POST",
+                "identifier_override": "endpoint_optional.sendOptionalTypedBody"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedObjectsWithImports\nfrom seed.optional import SendOptionalBodyRequest\n\nclient = SeedObjectsWithImports(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.optional.send_optional_typed_body(\n    request=SendOptionalBodyRequest(\n        message=\"message\",\n    ),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedObjectsWithImports\nfrom seed.optional import SendOptionalBodyRequest\n\nclient = AsyncSeedObjectsWithImports(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.optional.send_optional_typed_body(\n        request=SendOptionalBodyRequest(\n            message=\"message\",\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
         }
     ]
 }
