@@ -487,6 +487,7 @@ async function getVersionedNavigationConfiguration({
             navigation: versionNavigation,
             availability: version.availability,
             slug: version.slug,
+            hidden: version.hidden,
             viewers: parseRoles(version.viewers),
             orphaned: version.orphaned,
             featureFlags: convertFeatureFlag(version.featureFlag)
