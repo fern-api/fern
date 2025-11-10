@@ -6837,6 +6837,9 @@ importers:
       '@fern-api/lazy-fern-workspace':
         specifier: workspace:*
         version: link:../workspace/lazy-fern-workspace
+      '@fern-api/project-loader':
+        specifier: workspace:*
+        version: link:../project-loader
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
@@ -6850,6 +6853,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../configs
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../workspace/loader
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
