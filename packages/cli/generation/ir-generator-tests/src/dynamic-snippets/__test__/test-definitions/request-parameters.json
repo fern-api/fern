@@ -420,6 +420,39 @@
                     },
                     "propertyAccess": null,
                     "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "literal",
+                            "camelCase": {
+                                "unsafeName": "literal",
+                                "safeName": "literal"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "literal",
+                                "safeName": "literal"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LITERAL",
+                                "safeName": "LITERAL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Literal",
+                                "safeName": "Literal"
+                            }
+                        },
+                        "wireValue": "literal"
+                    },
+                    "typeReference": {
+                        "type": "literal",
+                        "value": {
+                            "type": "string",
+                            "value": "should be serialized out"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -858,6 +891,39 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "literal",
+                                    "camelCase": {
+                                        "unsafeName": "literal",
+                                        "safeName": "literal"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "literal",
+                                        "safeName": "literal"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "LITERAL",
+                                        "safeName": "LITERAL"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Literal",
+                                        "safeName": "Literal"
+                                    }
+                                },
+                                "wireValue": "literal"
+                            },
+                            "typeReference": {
+                                "type": "literal",
+                                "value": {
+                                    "type": "string",
+                                    "value": "should be serialized out"
+                                }
                             },
                             "propertyAccess": null,
                             "variable": null

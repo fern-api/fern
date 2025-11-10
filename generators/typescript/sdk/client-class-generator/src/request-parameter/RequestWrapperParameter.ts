@@ -47,12 +47,47 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         { variablesInScope }: { variablesInScope: string[] }
     ): ts.Statement[] {
         this.nonBodyKeyAliases = {};
-
         const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
-        const nonBodyKeys = generatedRequestWrapper.getNonBodyKeysWithData(context);
 
+        const hasDefaults = generatedRequestWrapper.hasDefaults(context);
+        const hasLiterals = generatedRequestWrapper.hasLiterals(context);
+
+        const statements: ts.Statement[] = [];
+
+        // If there are defaults or literals, call withDefaults() first
+        const hasDefaultsOrLiterals = hasDefaults || hasLiterals;
+        const sourceVariableName = hasDefaultsOrLiterals ? "_request" : this.getRequestParameterName();
+        if (hasDefaultsOrLiterals) {
+            const requestWrapperExpression = context.requestWrapper.getReferenceToRequestWrapperExpression(
+                this.packageId,
+                this.endpoint.name
+            );
+
+            statements.push(
+                ts.factory.createVariableStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                "_request",
+                                undefined,
+                                undefined,
+                                ts.factory.createCallExpression(
+                                    ts.factory.createPropertyAccessExpression(requestWrapperExpression, "withDefaults"),
+                                    undefined,
+                                    [ts.factory.createIdentifier(this.getRequestParameterName())]
+                                )
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    )
+                )
+            );
+        }
+
+        const nonBodyKeys = generatedRequestWrapper.getNonBodyKeysWithData(context);
         if (nonBodyKeys.length === 0) {
-            return [];
+            return statements;
         }
 
         const usedNames = new Set(variablesInScope);
@@ -69,28 +104,13 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             const nonConflictingName = getNonConflictingName(defaultName);
             this.nonBodyKeyAliases[defaultName] = nonConflictingName;
 
-            const useDefaultValues = (context.config.customConfig as { useDefaultRequestParameterValues?: boolean })
-                ?.useDefaultRequestParameterValues;
-
-            let defaultValue: ts.Expression | undefined;
-            if (useDefaultValues) {
-                if (nonBodyKey.originalParameter != null) {
-                    if (nonBodyKey.originalParameter.type !== "file") {
-                        defaultValue = this.extractDefaultValue(
-                            nonBodyKey.originalParameter.parameter.valueType,
-                            context
-                        );
-                    }
-                }
-            }
-
             return ts.factory.createBindingElement(
                 undefined,
                 nonConflictingName !== nonBodyKey.propertyName
                     ? ts.factory.createStringLiteral(nonBodyKey.propertyName)
                     : undefined,
                 nonConflictingName,
-                defaultValue
+                undefined
             );
         });
 
@@ -114,7 +134,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             }
         }
 
-        return [
+        statements.push(
             ts.factory.createVariableStatement(
                 undefined,
                 ts.factory.createVariableDeclarationList(
@@ -123,23 +143,29 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                             ts.factory.createObjectBindingPattern(bindingElements),
                             undefined,
                             undefined,
-                            ts.factory.createIdentifier(this.getRequestParameterName())
+                            ts.factory.createIdentifier(sourceVariableName)
                         )
                     ],
                     ts.NodeFlags.Const
                 )
             )
-        ];
+        );
+
+        return statements;
     }
 
     public getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined {
         if (this.endpoint.requestBody == null) {
             return undefined;
         }
-        if (this.getGeneratedRequestWrapper(context).getNonBodyKeys(context).length > 0) {
+        const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
+        if (generatedRequestWrapper.getNonBodyKeys(context).length > 0) {
             return ts.factory.createIdentifier(RequestWrapperParameter.BODY_VARIABLE_NAME);
         } else {
-            return ts.factory.createIdentifier(this.getRequestParameterName());
+            // If we have defaults or literals, we create _request variable and should reference that
+            const hasDefaultsOrLiterals =
+                generatedRequestWrapper.hasDefaults(context) || generatedRequestWrapper.hasLiterals(context);
+            return ts.factory.createIdentifier(hasDefaultsOrLiterals ? "_request" : this.getRequestParameterName());
         }
     }
 
@@ -247,7 +273,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             }
         }
 
-        const useBigInt = (context.config.customConfig as { useBigInt?: boolean })?.useBigInt;
+        const useBigInt = context.useBigInt;
 
         if (resolvedType.type === "primitive" && resolvedType.primitive.v2 != null) {
             return resolvedType.primitive.v2._visit<ts.Expression | undefined>({

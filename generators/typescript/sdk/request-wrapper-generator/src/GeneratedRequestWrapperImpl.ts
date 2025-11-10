@@ -1,6 +1,9 @@
 import { noop, SetRequired } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
+    BigIntegerType,
+    BooleanType,
+    DoubleType,
     ExampleEndpointCall,
     FileProperty,
     FileUploadRequest,
@@ -12,11 +15,14 @@ import {
     HttpService,
     InlinedRequestBody,
     InlinedRequestBodyProperty,
+    IntegerType,
+    LongType,
     Name,
     NameAndWireValue,
     ObjectProperty,
     PathParameter,
     QueryParameter,
+    StringType,
     TypeDeclaration,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
@@ -45,6 +51,7 @@ import {
     StatementStructures,
     StructureKind,
     ts,
+    VariableDeclarationKind,
     WriterFunction
 } from "ts-morph";
 import { RequestWrapperExampleGenerator } from "./RequestWrapperExampleGenerator";
@@ -62,6 +69,8 @@ export declare namespace GeneratedRequestWrapperImpl {
         shouldInlinePathParameters: boolean;
         formDataSupport: "Node16" | "Node18";
         flattenRequestParameters: boolean;
+        useDefaultRequestParameterValues: boolean;
+        useBigInt: boolean;
     }
 }
 
@@ -79,6 +88,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private _shouldInlinePathParameters: boolean;
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly flattenRequestParameters: boolean;
+    private readonly useDefaultRequestParameterValues: boolean;
+    private readonly useBigInt: boolean;
 
     constructor({
         service,
@@ -91,7 +102,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         enableInlineTypes,
         shouldInlinePathParameters,
         formDataSupport,
-        flattenRequestParameters
+        flattenRequestParameters,
+        useDefaultRequestParameterValues,
+        useBigInt
     }: GeneratedRequestWrapperImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
@@ -104,6 +117,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         this._shouldInlinePathParameters = shouldInlinePathParameters;
         this.formDataSupport = formDataSupport;
         this.flattenRequestParameters = flattenRequestParameters;
+        this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
+        this.useBigInt = useBigInt;
     }
 
     public shouldInlinePathParameters(): boolean {
@@ -183,6 +198,17 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         requestInterface.extends = interfaceExtends;
 
         context.sourceFile.addInterface(requestInterface);
+        const hasDefaults = this.hasDefaults(context);
+        const hasLiterals = this.hasLiterals(context);
+
+        this.generateDefaultsConst(context);
+        this.generateLiteralsConst(context);
+
+        // Generate namespace with withDefaults function if we have defaults or literals
+        if (hasDefaults || hasLiterals) {
+            this.generateWithDefaultsNamespace(context, hasDefaults, hasLiterals);
+        }
+
         if (requestBody == null) {
             return;
         }
@@ -836,10 +862,447 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     private hasDefaultValue(typeReference: TypeReference, context: SdkContext): boolean {
         const hasDefaultValue = context.type.hasDefaultValue(typeReference);
-        const useDefaultValues = (context.config.customConfig as { useDefaultRequestParameterValues?: boolean })
-            ?.useDefaultRequestParameterValues;
+        const useDefaultValues = this.useDefaultRequestParameterValues;
 
-        return hasDefaultValue && Boolean(useDefaultValues);
+        return hasDefaultValue && useDefaultValues;
+    }
+
+    private extractDefaultValue(typeReference: TypeReference, context: SdkContext): ts.Expression | undefined {
+        const resolvedType = context.type.resolveTypeReference(typeReference);
+
+        if (resolvedType.type === "container") {
+            if (resolvedType.container.type === "optional") {
+                return this.extractDefaultValue(resolvedType.container.optional, context);
+            }
+            if (resolvedType.container.type === "nullable") {
+                return this.extractDefaultValue(resolvedType.container.nullable, context);
+            }
+        }
+
+        const useBigInt = this.useBigInt;
+
+        if (resolvedType.type === "primitive" && resolvedType.primitive.v2 != null) {
+            return resolvedType.primitive.v2._visit<ts.Expression | undefined>({
+                integer: (integerType: IntegerType) => {
+                    if (integerType.default != null) {
+                        return ts.factory.createNumericLiteral(integerType.default.toString());
+                    }
+                    return undefined;
+                },
+                long: (longType: LongType) => {
+                    if (longType.default != null) {
+                        if (useBigInt) {
+                            return ts.factory.createCallExpression(ts.factory.createIdentifier("BigInt"), undefined, [
+                                ts.factory.createStringLiteral(longType.default.toString())
+                            ]);
+                        }
+                        return ts.factory.createNumericLiteral(longType.default.toString());
+                    }
+                    return undefined;
+                },
+                double: (doubleType: DoubleType) => {
+                    if (doubleType.default != null) {
+                        return ts.factory.createNumericLiteral(doubleType.default.toString());
+                    }
+                    return undefined;
+                },
+                string: (stringType: StringType) => {
+                    if (stringType.default != null) {
+                        return ts.factory.createStringLiteral(stringType.default);
+                    }
+                    return undefined;
+                },
+                boolean: (booleanType: BooleanType) => {
+                    if (booleanType.default != null) {
+                        return booleanType.default ? ts.factory.createTrue() : ts.factory.createFalse();
+                    }
+                    return undefined;
+                },
+                bigInteger: (bigIntegerType: BigIntegerType) => {
+                    if (bigIntegerType.default != null) {
+                        if (useBigInt) {
+                            return ts.factory.createCallExpression(ts.factory.createIdentifier("BigInt"), undefined, [
+                                ts.factory.createStringLiteral(bigIntegerType.default)
+                            ]);
+                        }
+                        return ts.factory.createStringLiteral(bigIntegerType.default);
+                    }
+                    return undefined;
+                },
+                uint: () => undefined,
+                uint64: () => undefined,
+                float: () => undefined,
+                date: () => undefined,
+                dateTime: () => undefined,
+                uuid: () => undefined,
+                base64: () => undefined,
+                _other: () => undefined
+            });
+        }
+        return undefined;
+    }
+
+    public hasDefaults(context: SdkContext): boolean {
+        const useDefaultValues = this.useDefaultRequestParameterValues;
+
+        if (!useDefaultValues) {
+            return false;
+        }
+
+        // Check path parameters
+        for (const pathParameter of this.getPathParamsForRequestWrapper()) {
+            if (context.type.hasDefaultValue(pathParameter.valueType)) {
+                return true;
+            }
+        }
+
+        // Check query parameters
+        for (const queryParameter of this.getAllQueryParameters()) {
+            if (context.type.hasDefaultValue(queryParameter.valueType)) {
+                return true;
+            }
+        }
+
+        // Check headers
+        for (const header of this.getAllNonLiteralHeaders(context)) {
+            if (context.type.hasDefaultValue(header.valueType)) {
+                return true;
+            }
+        }
+
+        // Check request body properties
+        const requestBody = this.endpoint.requestBody;
+        if (requestBody != null) {
+            return HttpRequestBody._visit<boolean>(requestBody, {
+                inlinedRequestBody: (inlinedRequestBody) => {
+                    for (const property of this.getAllNonLiteralPropertiesFromInlinedRequest({
+                        inlinedRequestBody,
+                        context
+                    })) {
+                        if (context.type.hasDefaultValue(property.valueType)) {
+                            return true;
+                        }
+                    }
+                    return false;
+                },
+                reference: (referenceToRequestBody) => {
+                    if (this.flattenRequestParameters && referenceToRequestBody.requestBodyType.type === "named") {
+                        const typeDeclaration = this.getTypeDeclaration(
+                            referenceToRequestBody.requestBodyType,
+                            context
+                        );
+                        if (typeDeclaration?.shape.type === "object") {
+                            for (const property of typeDeclaration.shape.properties) {
+                                if (context.type.hasDefaultValue(property.valueType)) {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                    return false;
+                },
+                fileUpload: (fileUploadRequest) => {
+                    for (const property of fileUploadRequest.properties) {
+                        const hasDefault = FileUploadRequestProperty._visit(property, {
+                            file: () => false,
+                            bodyProperty: (inlinedProperty) => context.type.hasDefaultValue(inlinedProperty.valueType),
+                            _other: () => false
+                        });
+                        if (hasDefault) {
+                            return true;
+                        }
+                    }
+                    return false;
+                },
+                bytes: () => false,
+                _other: () => false
+            });
+        }
+
+        return false;
+    }
+
+    private generateDefaultsConst(context: SdkContext): void {
+        // Only generate if there are actual defaults
+        if (!this.hasDefaults(context)) {
+            return;
+        }
+
+        const defaultsMap: Record<string, ts.Expression> = {};
+
+        // Collect defaults from path parameters
+        for (const pathParameter of this.getPathParamsForRequestWrapper()) {
+            if (context.type.hasDefaultValue(pathParameter.valueType)) {
+                const defaultValue = this.extractDefaultValue(pathParameter.valueType, context);
+                if (defaultValue != null) {
+                    const propertyName = this.getPropertyNameOfPathParameter(pathParameter);
+                    defaultsMap[propertyName.propertyName] = defaultValue;
+                }
+            }
+        }
+
+        // Collect defaults from query parameters
+        for (const queryParameter of this.getAllQueryParameters()) {
+            if (context.type.hasDefaultValue(queryParameter.valueType)) {
+                const defaultValue = this.extractDefaultValue(queryParameter.valueType, context);
+                if (defaultValue != null) {
+                    const propertyName = this.getPropertyNameOfQueryParameter(queryParameter);
+                    defaultsMap[propertyName.propertyName] = defaultValue;
+                }
+            }
+        }
+
+        // Collect defaults from headers
+        for (const header of this.getAllNonLiteralHeaders(context)) {
+            if (context.type.hasDefaultValue(header.valueType)) {
+                const defaultValue = this.extractDefaultValue(header.valueType, context);
+                if (defaultValue != null) {
+                    const headerName = this.getPropertyNameOfNonLiteralHeader(header);
+                    defaultsMap[headerName.propertyName] = defaultValue;
+                }
+            }
+        }
+
+        // Collect defaults from request body properties
+        const requestBody = this.endpoint.requestBody;
+        if (requestBody != null) {
+            HttpRequestBody._visit(requestBody, {
+                inlinedRequestBody: (inlinedRequestBody) => {
+                    for (const property of this.getAllNonLiteralPropertiesFromInlinedRequest({
+                        inlinedRequestBody,
+                        context
+                    })) {
+                        if (context.type.hasDefaultValue(property.valueType)) {
+                            const defaultValue = this.extractDefaultValue(property.valueType, context);
+                            if (defaultValue != null) {
+                                const propertyName = this.getInlinedRequestBodyPropertyKey(property);
+                                defaultsMap[propertyName.propertyName] = defaultValue;
+                            }
+                        }
+                    }
+                },
+                reference: (referenceToRequestBody) => {
+                    if (this.flattenRequestParameters && referenceToRequestBody.requestBodyType.type === "named") {
+                        const typeDeclaration = this.getTypeDeclaration(
+                            referenceToRequestBody.requestBodyType,
+                            context
+                        );
+                        if (typeDeclaration?.shape.type === "object") {
+                            for (const property of typeDeclaration.shape.properties) {
+                                if (context.type.hasDefaultValue(property.valueType)) {
+                                    const defaultValue = this.extractDefaultValue(property.valueType, context);
+                                    if (defaultValue != null) {
+                                        const propertyName = this.getPropertyNameOfTypeDeclarationProperty(property);
+                                        defaultsMap[propertyName.propertyName] = defaultValue;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                fileUpload: (fileUploadRequest) => {
+                    for (const property of fileUploadRequest.properties) {
+                        FileUploadRequestProperty._visit(property, {
+                            file: noop,
+                            bodyProperty: (inlinedProperty) => {
+                                if (context.type.hasDefaultValue(inlinedProperty.valueType)) {
+                                    const defaultValue = this.extractDefaultValue(inlinedProperty.valueType, context);
+                                    if (defaultValue != null) {
+                                        const propertyName = this.getInlinedRequestBodyPropertyKey(inlinedProperty);
+                                        defaultsMap[propertyName.propertyName] = defaultValue;
+                                    }
+                                }
+                            },
+                            _other: () => {
+                                throw new Error("Unknown FileUploadRequestProperty: " + property.type);
+                            }
+                        });
+                    }
+                },
+                bytes: noop,
+                _other: () => {
+                    throw new Error("Unknown HttpRequestBody: " + this.endpoint.requestBody?.type);
+                }
+            });
+        }
+
+        // Only generate if we have collected defaults
+        if (Object.keys(defaultsMap).length === 0) {
+            return;
+        }
+
+        // Generate the DEFAULTS const
+        context.sourceFile.addVariableStatement({
+            declarationKind: VariableDeclarationKind.Const,
+            isExported: false,
+            declarations: [
+                {
+                    name: "DEFAULTS",
+                    initializer: (writer) => {
+                        writer.write("{");
+                        writer.newLine();
+                        const entries = Object.entries(defaultsMap);
+                        entries.forEach(([key, value], index) => {
+                            writer.write(`    ${key}: ${getTextOfTsNode(value)}`);
+                            if (index < entries.length - 1) {
+                                writer.write(",");
+                            }
+                            writer.newLine();
+                        });
+                        writer.write("} as const");
+                    }
+                }
+            ]
+        });
+    }
+
+    private generateWithDefaultsNamespace(context: SdkContext, hasDefaults: boolean, hasLiterals: boolean): void {
+        context.sourceFile.addModule({
+            name: this.wrapperName,
+            isExported: true,
+            hasDeclareKeyword: false,
+            declarationKind: ModuleDeclarationKind.Namespace,
+            statements: [
+                {
+                    kind: StructureKind.TypeAlias,
+                    name: "WithDefaults",
+                    type: this.wrapperName,
+                    isExported: true
+                },
+                (writer) => {
+                    writer.newLine();
+                    writer.write(`export function withDefaults(request: ${this.wrapperName}): WithDefaults {`);
+                    writer.newLine();
+
+                    // Build the spread expression based on what we have
+                    const spreads: string[] = [];
+                    if (hasDefaults) {
+                        spreads.push("...DEFAULTS");
+                    }
+                    if (hasLiterals) {
+                        spreads.push("...LITERALS");
+                    }
+                    spreads.push("...request");
+
+                    writer.write(`    return { ${spreads.join(", ")} };`);
+                    writer.newLine();
+                    writer.write("}");
+                }
+            ]
+        });
+    }
+
+    public hasLiterals(context: SdkContext): boolean {
+        // Only check inlined request body properties (not query parameters or headers)
+        const requestBody = this.endpoint.requestBody;
+        if (requestBody != null) {
+            return HttpRequestBody._visit<boolean>(requestBody, {
+                inlinedRequestBody: (inlinedRequestBody) => {
+                    for (const property of inlinedRequestBody.properties) {
+                        if (this.isLiteral(property.valueType, context)) {
+                            return true;
+                        }
+                    }
+                    return false;
+                },
+                reference: () => false,
+                fileUpload: () => false,
+                bytes: () => false,
+                _other: () => false
+            });
+        }
+
+        return false;
+    }
+
+    private isLiteral(typeReference: TypeReference, context: SdkContext): boolean {
+        const resolvedType = context.type.resolveTypeReference(typeReference);
+        // Only return true for non-optional, non-nullable literals
+        // Optional/nullable literals should remain in the request type
+        if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+            return true;
+        }
+        return false;
+    }
+
+    private extractLiteralValue(typeReference: TypeReference, context: SdkContext): ts.Expression | undefined {
+        const resolvedType = context.type.resolveTypeReference(typeReference);
+
+        // Only extract values for non-optional, non-nullable literals
+        if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+            return resolvedType.container.literal._visit<ts.Expression>({
+                string: (val: string) => ts.factory.createStringLiteral(val),
+                boolean: (val: boolean) => (val ? ts.factory.createTrue() : ts.factory.createFalse()),
+                _other: () => {
+                    throw new Error("Encountered non-boolean, non-string literal");
+                }
+            });
+        }
+        return undefined;
+    }
+
+    private generateLiteralsConst(context: SdkContext): void {
+        // Only generate if there are actual literals
+        if (!this.hasLiterals(context)) {
+            return;
+        }
+
+        const literalsMap: Record<string, ts.Expression> = {};
+
+        // Only collect literals from inlined request body properties
+        // (not query parameters or headers)
+        const requestBody = this.endpoint.requestBody;
+        if (requestBody != null) {
+            HttpRequestBody._visit(requestBody, {
+                inlinedRequestBody: (inlinedRequestBody) => {
+                    for (const property of inlinedRequestBody.properties) {
+                        if (this.isLiteral(property.valueType, context)) {
+                            const literalValue = this.extractLiteralValue(property.valueType, context);
+                            if (literalValue != null) {
+                                const propertyName = this.getInlinedRequestBodyPropertyKey(property);
+                                literalsMap[propertyName.propertyName] = literalValue;
+                            }
+                        }
+                    }
+                },
+                reference: noop,
+                fileUpload: noop,
+                bytes: noop,
+                _other: () => {
+                    throw new Error("Unknown HttpRequestBody: " + this.endpoint.requestBody?.type);
+                }
+            });
+        }
+
+        // Only generate if we have collected literals
+        if (Object.keys(literalsMap).length === 0) {
+            return;
+        }
+
+        // Generate the LITERALS const
+        context.sourceFile.addVariableStatement({
+            declarationKind: VariableDeclarationKind.Const,
+            isExported: false,
+            leadingTrivia: "\n",
+            declarations: [
+                {
+                    name: "LITERALS",
+                    initializer: (writer) => {
+                        writer.write("{");
+                        writer.newLine();
+                        const entries = Object.entries(literalsMap);
+                        entries.forEach(([key, value], index) => {
+                            writer.write(`    ${key}: ${getTextOfTsNode(value)}`);
+                            if (index < entries.length - 1) {
+                                writer.write(",");
+                            }
+                            writer.newLine();
+                        });
+                        writer.write("} as const");
+                    }
+                }
+            ]
+        });
     }
 
     private getFlattenedInlinedRequestBodyProperties(

@@ -9,12 +9,16 @@
     },
     "name": {
       "type": "string"
+    },
+    "literal": {
+      "const": "should be serialized out"
     }
   },
   "required": [
     "username",
     "password",
-    "name"
+    "name",
+    "literal"
   ],
   "additionalProperties": false,
   "definitions": {}

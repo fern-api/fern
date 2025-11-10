@@ -30,7 +30,6 @@ export declare namespace SdkClientClassGenerator {
         formDataSupport: "Node16" | "Node18";
         exportsManager: ExportsManager;
         omitFernHeaders: boolean;
-        useDefaultRequestParameterValues: boolean;
         generateEndpointMetadata: boolean;
     }
 
@@ -67,7 +66,6 @@ export class SdkClientClassGenerator {
     private readonly fileResponseType: "stream" | "binary-response";
     private readonly exportsManager: ExportsManager;
     private readonly omitFernHeaders: boolean;
-    private readonly useDefaultRequestParameterValues: boolean;
     private readonly generateEndpointMetadata: boolean;
 
     constructor({
@@ -93,7 +91,6 @@ export class SdkClientClassGenerator {
         exportsManager,
         formDataSupport,
         omitFernHeaders,
-        useDefaultRequestParameterValues,
         generateEndpointMetadata
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
@@ -118,7 +115,6 @@ export class SdkClientClassGenerator {
         this.exportsManager = exportsManager;
         this.formDataSupport = formDataSupport;
         this.omitFernHeaders = omitFernHeaders;
-        this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
         this.generateEndpointMetadata = generateEndpointMetadata;
     }
 
@@ -155,7 +151,6 @@ export class SdkClientClassGenerator {
             fileResponseType: this.fileResponseType,
             formDataSupport: this.formDataSupport,
             omitFernHeaders: this.omitFernHeaders,
-            useDefaultRequestParameterValues: this.useDefaultRequestParameterValues,
             generateEndpointMetadata: this.generateEndpointMetadata
         });
     }

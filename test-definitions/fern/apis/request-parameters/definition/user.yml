@@ -14,6 +14,7 @@ types:
       name:
         type: string
         default: "test"
+      literal: literal<"should be serialized out">
   CreateUsernameBodyOptionalProperties:
     properties:
       username: optional<string>
@@ -38,6 +39,7 @@ service:
             name:
               type: string
               default: "test"
+            literal: literal<"should be serialized out">
         query-parameters:
           tags:
             type: list<string>
