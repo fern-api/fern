@@ -60,10 +60,8 @@ export class OneOfSchemaConverter extends AbstractConverter<
         }
 
         if (
-            this.schema.discriminator != null &&
-            !this.unionVariantsContainLiteral({
-                discriminantProperty: this.schema.discriminator.propertyName
-            })
+            this.schema.discriminator?.propertyName != null &&
+            Object.keys(this.schema.discriminator.mapping ?? {}).length > 0
         ) {
             return this.convertAsDiscriminatedUnion();
         }
