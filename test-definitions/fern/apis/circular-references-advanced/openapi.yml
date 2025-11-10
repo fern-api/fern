@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: circular-references-advanced
-  version: '1.0.0'
+  version: "1.0.0"
 paths:
   /test:
     post:
@@ -12,14 +12,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ObjectJsonSchemaPropertyInput'
+              $ref: "#/components/schemas/ObjectJsonSchemaPropertyInput"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ObjectJsonSchemaPropertyInput'
+                $ref: "#/components/schemas/ObjectJsonSchemaPropertyInput"
 components:
   schemas:
     LiteralJsonSchemaProperty:
@@ -47,7 +47,7 @@ components:
         properties:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/ObjectJsonSchemaPropertyInputPropertiesValue'
+            $ref: "#/components/schemas/ObjectJsonSchemaPropertyInputPropertiesValue"
       additionalProperties: true
 
     ArrayJsonSchemaPropertyInput:
@@ -60,17 +60,17 @@ components:
         description:
           type: string
         items:
-          $ref: '#/components/schemas/ArrayJsonSchemaPropertyInputItems'
+          $ref: "#/components/schemas/ArrayJsonSchemaPropertyInputItems"
       additionalProperties: true
 
     ObjectJsonSchemaPropertyInputPropertiesValue:
       oneOf:
-        - $ref: '#/components/schemas/LiteralJsonSchemaProperty'
-        - $ref: '#/components/schemas/ObjectJsonSchemaPropertyInput'
-        - $ref: '#/components/schemas/ArrayJsonSchemaPropertyInput'
+        - $ref: "#/components/schemas/LiteralJsonSchemaProperty"
+        - $ref: "#/components/schemas/ObjectJsonSchemaPropertyInput"
+        - $ref: "#/components/schemas/ArrayJsonSchemaPropertyInput"
 
     ArrayJsonSchemaPropertyInputItems:
       oneOf:
-        - $ref: '#/components/schemas/LiteralJsonSchemaProperty'
-        - $ref: '#/components/schemas/ObjectJsonSchemaPropertyInput'
-        - $ref: '#/components/schemas/ArrayJsonSchemaPropertyInput'
+        - $ref: "#/components/schemas/LiteralJsonSchemaProperty"
+        - $ref: "#/components/schemas/ObjectJsonSchemaPropertyInput"
+        - $ref: "#/components/schemas/ArrayJsonSchemaPropertyInput"
