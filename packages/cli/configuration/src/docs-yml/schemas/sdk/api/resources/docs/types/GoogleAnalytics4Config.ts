@@ -3,5 +3,6 @@
  */
 
 export interface GoogleAnalytics4Config {
+    /** Your Google Analytics 4 measurement ID. Must start with "G-". */
     measurementId: string;
 }

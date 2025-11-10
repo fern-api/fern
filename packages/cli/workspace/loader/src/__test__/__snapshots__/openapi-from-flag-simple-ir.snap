@@ -1,0 +1,2683 @@
+{
+  "apiDisplayName": undefined,
+  "apiDocs": undefined,
+  "apiName": {
+    "camelCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+    "originalName": "",
+    "pascalCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+    "screamingSnakeCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+    "snakeCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+  },
+  "apiVersion": undefined,
+  "audiences": undefined,
+  "auth": {
+    "docs": undefined,
+    "requirement": "ALL",
+    "schemes": [],
+  },
+  "basePath": undefined,
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "dynamic": undefined,
+  "environments": {
+    "defaultEnvironment": "Production server",
+    "environments": {
+      "_visit": [Function],
+      "environments": [
+        {
+          "docs": "Production server",
+          "id": "Production server",
+          "name": {
+            "camelCase": {
+              "safeName": "productionServer",
+              "unsafeName": "productionServer",
+            },
+            "originalName": "Production server",
+            "pascalCase": {
+              "safeName": "ProductionServer",
+              "unsafeName": "ProductionServer",
+            },
+            "screamingSnakeCase": {
+              "safeName": "PRODUCTION_SERVER",
+              "unsafeName": "PRODUCTION_SERVER",
+            },
+            "snakeCase": {
+              "safeName": "production_server",
+              "unsafeName": "production_server",
+            },
+          },
+          "url": "https://api.example.com/v1",
+        },
+      ],
+      "type": "singleBaseUrl",
+    },
+  },
+  "errorDiscriminationStrategy": {
+    "_visit": [Function],
+    "type": "statusCode",
+  },
+  "errors": {
+    "CreateUserRequestBadRequestError": {
+      "discriminantValue": {
+        "name": {
+          "camelCase": {
+            "safeName": "createUserRequestBadRequestError",
+            "unsafeName": "createUserRequestBadRequestError",
+          },
+          "originalName": "CreateUserRequestBadRequestError",
+          "pascalCase": {
+            "safeName": "CreateUserRequestBadRequestError",
+            "unsafeName": "CreateUserRequestBadRequestError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_USER_REQUEST_BAD_REQUEST_ERROR",
+            "unsafeName": "CREATE_USER_REQUEST_BAD_REQUEST_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "create_user_request_bad_request_error",
+            "unsafeName": "create_user_request_bad_request_error",
+          },
+        },
+        "wireValue": "CreateUserRequestBadRequestError",
+      },
+      "displayName": "BadRequestError",
+      "docs": "Invalid user data",
+      "examples": [],
+      "name": {
+        "errorId": "CreateUserRequestBadRequestError",
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "createUserRequestBadRequestError",
+            "unsafeName": "createUserRequestBadRequestError",
+          },
+          "originalName": "CreateUserRequestBadRequestError",
+          "pascalCase": {
+            "safeName": "CreateUserRequestBadRequestError",
+            "unsafeName": "CreateUserRequestBadRequestError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_USER_REQUEST_BAD_REQUEST_ERROR",
+            "unsafeName": "CREATE_USER_REQUEST_BAD_REQUEST_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "create_user_request_bad_request_error",
+            "unsafeName": "create_user_request_bad_request_error",
+          },
+        },
+      },
+      "statusCode": 400,
+      "type": {
+        "_visit": [Function],
+        "default": undefined,
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "inline": false,
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
+        "type": "named",
+        "typeId": "Error",
+      },
+      "v2Examples": {
+        "autogeneratedExamples": {},
+        "userSpecifiedExamples": {},
+      },
+    },
+    "GetHealthRequestServiceUnavailableError": {
+      "discriminantValue": {
+        "name": {
+          "camelCase": {
+            "safeName": "getHealthRequestServiceUnavailableError",
+            "unsafeName": "getHealthRequestServiceUnavailableError",
+          },
+          "originalName": "GetHealthRequestServiceUnavailableError",
+          "pascalCase": {
+            "safeName": "GetHealthRequestServiceUnavailableError",
+            "unsafeName": "GetHealthRequestServiceUnavailableError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "GET_HEALTH_REQUEST_SERVICE_UNAVAILABLE_ERROR",
+            "unsafeName": "GET_HEALTH_REQUEST_SERVICE_UNAVAILABLE_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "get_health_request_service_unavailable_error",
+            "unsafeName": "get_health_request_service_unavailable_error",
+          },
+        },
+        "wireValue": "GetHealthRequestServiceUnavailableError",
+      },
+      "displayName": "ServiceUnavailableError",
+      "docs": "Service is unhealthy",
+      "examples": [],
+      "name": {
+        "errorId": "GetHealthRequestServiceUnavailableError",
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "getHealthRequestServiceUnavailableError",
+            "unsafeName": "getHealthRequestServiceUnavailableError",
+          },
+          "originalName": "GetHealthRequestServiceUnavailableError",
+          "pascalCase": {
+            "safeName": "GetHealthRequestServiceUnavailableError",
+            "unsafeName": "GetHealthRequestServiceUnavailableError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "GET_HEALTH_REQUEST_SERVICE_UNAVAILABLE_ERROR",
+            "unsafeName": "GET_HEALTH_REQUEST_SERVICE_UNAVAILABLE_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "get_health_request_service_unavailable_error",
+            "unsafeName": "get_health_request_service_unavailable_error",
+          },
+        },
+      },
+      "statusCode": 503,
+      "type": {
+        "_visit": [Function],
+        "default": undefined,
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "inline": false,
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
+        "type": "named",
+        "typeId": "Error",
+      },
+      "v2Examples": {
+        "autogeneratedExamples": {},
+        "userSpecifiedExamples": {},
+      },
+    },
+    "GetUserRequestNotFoundError": {
+      "discriminantValue": {
+        "name": {
+          "camelCase": {
+            "safeName": "getUserRequestNotFoundError",
+            "unsafeName": "getUserRequestNotFoundError",
+          },
+          "originalName": "GetUserRequestNotFoundError",
+          "pascalCase": {
+            "safeName": "GetUserRequestNotFoundError",
+            "unsafeName": "GetUserRequestNotFoundError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "GET_USER_REQUEST_NOT_FOUND_ERROR",
+            "unsafeName": "GET_USER_REQUEST_NOT_FOUND_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "get_user_request_not_found_error",
+            "unsafeName": "get_user_request_not_found_error",
+          },
+        },
+        "wireValue": "GetUserRequestNotFoundError",
+      },
+      "displayName": "NotFoundError",
+      "docs": "User not found",
+      "examples": [],
+      "name": {
+        "errorId": "GetUserRequestNotFoundError",
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "getUserRequestNotFoundError",
+            "unsafeName": "getUserRequestNotFoundError",
+          },
+          "originalName": "GetUserRequestNotFoundError",
+          "pascalCase": {
+            "safeName": "GetUserRequestNotFoundError",
+            "unsafeName": "GetUserRequestNotFoundError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "GET_USER_REQUEST_NOT_FOUND_ERROR",
+            "unsafeName": "GET_USER_REQUEST_NOT_FOUND_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "get_user_request_not_found_error",
+            "unsafeName": "get_user_request_not_found_error",
+          },
+        },
+      },
+      "statusCode": 404,
+      "type": {
+        "_visit": [Function],
+        "default": undefined,
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "inline": false,
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
+        "type": "named",
+        "typeId": "Error",
+      },
+      "v2Examples": {
+        "autogeneratedExamples": {},
+        "userSpecifiedExamples": {},
+      },
+    },
+  },
+  "fdrApiDefinitionId": undefined,
+  "generationMetadata": undefined,
+  "headers": [],
+  "idempotencyHeaders": [],
+  "pathParameters": [],
+  "publishConfig": undefined,
+  "readmeConfig": undefined,
+  "rootPackage": {
+    "docs": undefined,
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": undefined,
+      "packagePath": [],
+    },
+    "hasEndpointsInTree": false,
+    "navigationConfig": undefined,
+    "service": "service_",
+    "subpackages": [],
+    "types": [
+      "HealthResponse",
+      "User",
+      "CreateUserRequest",
+      "Error",
+    ],
+    "webhooks": undefined,
+    "websocket": undefined,
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": true,
+    "platformHeaders": {
+      "language": "",
+      "sdkName": "",
+      "sdkVersion": "",
+      "userAgent": undefined,
+    },
+  },
+  "selfHosted": false,
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {},
+  },
+  "services": {
+    "service_": {
+      "audiences": undefined,
+      "availability": undefined,
+      "basePath": {
+        "head": "",
+        "parts": [],
+      },
+      "displayName": undefined,
+      "encoding": undefined,
+      "endpoints": [
+        {
+          "allPathParameters": [],
+          "audiences": [],
+          "auth": false,
+          "autogeneratedExamples": [],
+          "availability": undefined,
+          "basePath": undefined,
+          "baseUrl": "Production server",
+          "displayName": "Health check endpoint",
+          "docs": "Returns the health status of the service",
+          "errors": [
+            {
+              "docs": "Service is unhealthy",
+              "error": {
+                "errorId": "GetHealthRequestServiceUnavailableError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "file": undefined,
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "getHealthRequestServiceUnavailableError",
+                    "unsafeName": "getHealthRequestServiceUnavailableError",
+                  },
+                  "originalName": "GetHealthRequestServiceUnavailableError",
+                  "pascalCase": {
+                    "safeName": "GetHealthRequestServiceUnavailableError",
+                    "unsafeName": "GetHealthRequestServiceUnavailableError",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "GET_HEALTH_REQUEST_SERVICE_UNAVAILABLE_ERROR",
+                    "unsafeName": "GET_HEALTH_REQUEST_SERVICE_UNAVAILABLE_ERROR",
+                  },
+                  "snakeCase": {
+                    "safeName": "get_health_request_service_unavailable_error",
+                    "unsafeName": "get_health_request_service_unavailable_error",
+                  },
+                },
+              },
+            },
+          ],
+          "fullPath": {
+            "head": "/health",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_.getHealth",
+          "idempotent": false,
+          "method": "GET",
+          "name": {
+            "camelCase": {
+              "safeName": "getHealth",
+              "unsafeName": "getHealth",
+            },
+            "originalName": "getHealth",
+            "pascalCase": {
+              "safeName": "GetHealth",
+              "unsafeName": "GetHealth",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET_HEALTH",
+              "unsafeName": "GET_HEALTH",
+            },
+            "snakeCase": {
+              "safeName": "get_health",
+              "unsafeName": "get_health",
+            },
+          },
+          "pagination": undefined,
+          "path": {
+            "head": "/health",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": undefined,
+          "response": {
+            "body": {
+              "_visit": [Function],
+              "type": "json",
+              "value": {
+                "_visit": [Function],
+                "docs": "Service is healthy",
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "healthResponse",
+                      "unsafeName": "healthResponse",
+                    },
+                    "originalName": "HealthResponse",
+                    "pascalCase": {
+                      "safeName": "HealthResponse",
+                      "unsafeName": "HealthResponse",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "HEALTH_RESPONSE",
+                      "unsafeName": "HEALTH_RESPONSE",
+                    },
+                    "snakeCase": {
+                      "safeName": "health_response",
+                      "unsafeName": "health_response",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "HealthResponse",
+                },
+                "type": "response",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "getHealthExample": {
+                      "status": "healthy",
+                      "timestamp": "2024-01-15T09:30:00Z",
+                      "version": "1.0.0",
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            },
+            "statusCode": 200,
+          },
+          "retries": undefined,
+          "sdkRequest": undefined,
+          "security": undefined,
+          "source": {
+            "_visit": [Function],
+            "type": "openapi",
+          },
+          "transport": undefined,
+          "userSpecifiedExamples": [],
+          "v2BaseUrls": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "base_getHealthExample_200": {
+                "codeSamples": undefined,
+                "displayName": "getHealthExample",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "GET",
+                    "path": "/health",
+                  },
+                  "environment": "Production server",
+                  "headers": {},
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "requestBody": undefined,
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "status": "healthy",
+                      "timestamp": "2024-01-15T09:30:00Z",
+                      "version": "1.0.0",
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 200,
+                },
+              },
+            },
+            "userSpecifiedExamples": {},
+          },
+          "v2RequestBodies": {
+            "requestBodies": undefined,
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "body": {
+                  "_visit": [Function],
+                  "type": "json",
+                  "value": {
+                    "_visit": [Function],
+                    "docs": "Service is healthy",
+                    "responseBodyType": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "displayName": undefined,
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": undefined,
+                        "packagePath": [],
+                      },
+                      "inline": false,
+                      "name": {
+                        "camelCase": {
+                          "safeName": "healthResponse",
+                          "unsafeName": "healthResponse",
+                        },
+                        "originalName": "HealthResponse",
+                        "pascalCase": {
+                          "safeName": "HealthResponse",
+                          "unsafeName": "HealthResponse",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "HEALTH_RESPONSE",
+                          "unsafeName": "HEALTH_RESPONSE",
+                        },
+                        "snakeCase": {
+                          "safeName": "health_response",
+                          "unsafeName": "health_response",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "HealthResponse",
+                    },
+                    "type": "response",
+                    "v2Examples": {
+                      "autogeneratedExamples": {
+                        "getHealthExample": {
+                          "status": "healthy",
+                          "timestamp": "2024-01-15T09:30:00Z",
+                          "version": "1.0.0",
+                        },
+                      },
+                      "userSpecifiedExamples": {},
+                    },
+                  },
+                },
+                "statusCode": 200,
+              },
+            ],
+          },
+        },
+        {
+          "allPathParameters": [
+            {
+              "docs": "The unique identifier of the user",
+              "location": "ENDPOINT",
+              "name": {
+                "camelCase": {
+                  "safeName": "userId",
+                  "unsafeName": "userId",
+                },
+                "originalName": "userId",
+                "pascalCase": {
+                  "safeName": "UserId",
+                  "unsafeName": "UserId",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "USER_ID",
+                  "unsafeName": "USER_ID",
+                },
+                "snakeCase": {
+                  "safeName": "user_id",
+                  "unsafeName": "user_id",
+                },
+              },
+              "v2Examples": {
+                "autogeneratedExamples": {
+                  "userId_example": "user123",
+                },
+                "userSpecifiedExamples": {},
+              },
+              "valueType": {
+                "_visit": [Function],
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "_visit": [Function],
+                    "default": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                },
+                "type": "primitive",
+              },
+              "variable": undefined,
+            },
+          ],
+          "audiences": [],
+          "auth": false,
+          "autogeneratedExamples": [],
+          "availability": undefined,
+          "basePath": undefined,
+          "baseUrl": "Production server",
+          "displayName": "Get user by ID",
+          "docs": "Retrieves a user by their unique identifier",
+          "errors": [
+            {
+              "docs": "User not found",
+              "error": {
+                "errorId": "GetUserRequestNotFoundError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "file": undefined,
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "getUserRequestNotFoundError",
+                    "unsafeName": "getUserRequestNotFoundError",
+                  },
+                  "originalName": "GetUserRequestNotFoundError",
+                  "pascalCase": {
+                    "safeName": "GetUserRequestNotFoundError",
+                    "unsafeName": "GetUserRequestNotFoundError",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "GET_USER_REQUEST_NOT_FOUND_ERROR",
+                    "unsafeName": "GET_USER_REQUEST_NOT_FOUND_ERROR",
+                  },
+                  "snakeCase": {
+                    "safeName": "get_user_request_not_found_error",
+                    "unsafeName": "get_user_request_not_found_error",
+                  },
+                },
+              },
+            },
+          ],
+          "fullPath": {
+            "head": "/users/",
+            "parts": [
+              {
+                "pathParameter": "userId",
+                "tail": "",
+              },
+            ],
+          },
+          "headers": [],
+          "id": "endpoint_.getUser",
+          "idempotent": false,
+          "method": "GET",
+          "name": {
+            "camelCase": {
+              "safeName": "getUser",
+              "unsafeName": "getUser",
+            },
+            "originalName": "getUser",
+            "pascalCase": {
+              "safeName": "GetUser",
+              "unsafeName": "GetUser",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET_USER",
+              "unsafeName": "GET_USER",
+            },
+            "snakeCase": {
+              "safeName": "get_user",
+              "unsafeName": "get_user",
+            },
+          },
+          "pagination": undefined,
+          "path": {
+            "head": "/users/",
+            "parts": [
+              {
+                "pathParameter": "userId",
+                "tail": "",
+              },
+            ],
+          },
+          "pathParameters": [
+            {
+              "docs": "The unique identifier of the user",
+              "location": "ENDPOINT",
+              "name": {
+                "camelCase": {
+                  "safeName": "userId",
+                  "unsafeName": "userId",
+                },
+                "originalName": "userId",
+                "pascalCase": {
+                  "safeName": "UserId",
+                  "unsafeName": "UserId",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "USER_ID",
+                  "unsafeName": "USER_ID",
+                },
+                "snakeCase": {
+                  "safeName": "user_id",
+                  "unsafeName": "user_id",
+                },
+              },
+              "v2Examples": {
+                "autogeneratedExamples": {
+                  "userId_example": "user123",
+                },
+                "userSpecifiedExamples": {},
+              },
+              "valueType": {
+                "_visit": [Function],
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "_visit": [Function],
+                    "default": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                },
+                "type": "primitive",
+              },
+              "variable": undefined,
+            },
+          ],
+          "queryParameters": [
+            {
+              "allowMultiple": false,
+              "availability": undefined,
+              "docs": "Whether to include user metadata",
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "includeMetadata",
+                    "unsafeName": "includeMetadata",
+                  },
+                  "originalName": "includeMetadata",
+                  "pascalCase": {
+                    "safeName": "IncludeMetadata",
+                    "unsafeName": "IncludeMetadata",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "INCLUDE_METADATA",
+                    "unsafeName": "INCLUDE_METADATA",
+                  },
+                  "snakeCase": {
+                    "safeName": "include_metadata",
+                    "unsafeName": "include_metadata",
+                  },
+                },
+                "wireValue": "includeMetadata",
+              },
+              "v2Examples": {
+                "autogeneratedExamples": {
+                  "includeMetadata_example": false,
+                },
+                "userSpecifiedExamples": {},
+              },
+              "valueType": {
+                "_visit": [Function],
+                "container": {
+                  "_visit": [Function],
+                  "optional": {
+                    "_visit": [Function],
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": {
+                        "_visit": [Function],
+                        "default": false,
+                        "type": "boolean",
+                      },
+                    },
+                    "type": "primitive",
+                  },
+                  "type": "optional",
+                },
+                "type": "container",
+              },
+            },
+          ],
+          "requestBody": undefined,
+          "response": {
+            "body": {
+              "_visit": [Function],
+              "type": "json",
+              "value": {
+                "_visit": [Function],
+                "docs": "User found successfully",
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "user",
+                      "unsafeName": "user",
+                    },
+                    "originalName": "User",
+                    "pascalCase": {
+                      "safeName": "User",
+                      "unsafeName": "User",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "USER",
+                      "unsafeName": "USER",
+                    },
+                    "snakeCase": {
+                      "safeName": "user",
+                      "unsafeName": "user",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "User",
+                },
+                "type": "response",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "getUserExample": {
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "email": "user@example.com",
+                      "firstName": "John",
+                      "id": "user123",
+                      "lastName": "Doe",
+                      "metadata": {},
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            },
+            "statusCode": 200,
+          },
+          "retries": undefined,
+          "sdkRequest": undefined,
+          "security": undefined,
+          "source": {
+            "_visit": [Function],
+            "type": "openapi",
+          },
+          "transport": undefined,
+          "userSpecifiedExamples": [],
+          "v2BaseUrls": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "base_getUserExample_200": {
+                "codeSamples": undefined,
+                "displayName": "getUserExample",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "GET",
+                    "path": "/users/user123",
+                  },
+                  "environment": "Production server",
+                  "headers": {},
+                  "pathParameters": {
+                    "userId": "user123",
+                  },
+                  "queryParameters": {},
+                  "requestBody": undefined,
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "email": "user@example.com",
+                      "firstName": "John",
+                      "id": "user123",
+                      "lastName": "Doe",
+                      "metadata": {},
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 200,
+                },
+              },
+            },
+            "userSpecifiedExamples": {},
+          },
+          "v2RequestBodies": {
+            "requestBodies": undefined,
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "body": {
+                  "_visit": [Function],
+                  "type": "json",
+                  "value": {
+                    "_visit": [Function],
+                    "docs": "User found successfully",
+                    "responseBodyType": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "displayName": undefined,
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": undefined,
+                        "packagePath": [],
+                      },
+                      "inline": false,
+                      "name": {
+                        "camelCase": {
+                          "safeName": "user",
+                          "unsafeName": "user",
+                        },
+                        "originalName": "User",
+                        "pascalCase": {
+                          "safeName": "User",
+                          "unsafeName": "User",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "USER",
+                          "unsafeName": "USER",
+                        },
+                        "snakeCase": {
+                          "safeName": "user",
+                          "unsafeName": "user",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "User",
+                    },
+                    "type": "response",
+                    "v2Examples": {
+                      "autogeneratedExamples": {
+                        "getUserExample": {
+                          "createdAt": "2024-01-15T09:30:00Z",
+                          "email": "user@example.com",
+                          "firstName": "John",
+                          "id": "user123",
+                          "lastName": "Doe",
+                          "metadata": {},
+                        },
+                      },
+                      "userSpecifiedExamples": {},
+                    },
+                  },
+                },
+                "statusCode": 200,
+              },
+            ],
+          },
+        },
+        {
+          "allPathParameters": [],
+          "audiences": [],
+          "auth": false,
+          "autogeneratedExamples": [],
+          "availability": undefined,
+          "basePath": undefined,
+          "baseUrl": "Production server",
+          "displayName": "Create a new user",
+          "docs": "Creates a new user with the provided information",
+          "errors": [
+            {
+              "docs": "Invalid user data",
+              "error": {
+                "errorId": "CreateUserRequestBadRequestError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "file": undefined,
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "createUserRequestBadRequestError",
+                    "unsafeName": "createUserRequestBadRequestError",
+                  },
+                  "originalName": "CreateUserRequestBadRequestError",
+                  "pascalCase": {
+                    "safeName": "CreateUserRequestBadRequestError",
+                    "unsafeName": "CreateUserRequestBadRequestError",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "CREATE_USER_REQUEST_BAD_REQUEST_ERROR",
+                    "unsafeName": "CREATE_USER_REQUEST_BAD_REQUEST_ERROR",
+                  },
+                  "snakeCase": {
+                    "safeName": "create_user_request_bad_request_error",
+                    "unsafeName": "create_user_request_bad_request_error",
+                  },
+                },
+              },
+            },
+          ],
+          "fullPath": {
+            "head": "/users",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_.createUser",
+          "idempotent": false,
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "createUser",
+              "unsafeName": "createUser",
+            },
+            "originalName": "createUser",
+            "pascalCase": {
+              "safeName": "CreateUser",
+              "unsafeName": "CreateUser",
+            },
+            "screamingSnakeCase": {
+              "safeName": "CREATE_USER",
+              "unsafeName": "CREATE_USER",
+            },
+            "snakeCase": {
+              "safeName": "create_user",
+              "unsafeName": "create_user",
+            },
+          },
+          "pagination": undefined,
+          "path": {
+            "head": "/users",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": {
+            "_visit": [Function],
+            "contentType": "application/json",
+            "docs": undefined,
+            "requestBodyType": {
+              "_visit": [Function],
+              "default": undefined,
+              "displayName": undefined,
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "inline": false,
+              "name": {
+                "camelCase": {
+                  "safeName": "createUserRequest",
+                  "unsafeName": "createUserRequest",
+                },
+                "originalName": "CreateUserRequest",
+                "pascalCase": {
+                  "safeName": "CreateUserRequest",
+                  "unsafeName": "CreateUserRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CREATE_USER_REQUEST",
+                  "unsafeName": "CREATE_USER_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "create_user_request",
+                  "unsafeName": "create_user_request",
+                },
+              },
+              "type": "named",
+              "typeId": "CreateUserRequest",
+            },
+            "type": "reference",
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "createUserExample": {
+                  "email": "newuser@example.com",
+                },
+              },
+              "userSpecifiedExamples": {},
+            },
+          },
+          "response": {
+            "body": {
+              "_visit": [Function],
+              "type": "json",
+              "value": {
+                "_visit": [Function],
+                "docs": "User created successfully",
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "user",
+                      "unsafeName": "user",
+                    },
+                    "originalName": "User",
+                    "pascalCase": {
+                      "safeName": "User",
+                      "unsafeName": "User",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "USER",
+                      "unsafeName": "USER",
+                    },
+                    "snakeCase": {
+                      "safeName": "user",
+                      "unsafeName": "user",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "User",
+                },
+                "type": "response",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "createUserExample": {
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "email": "user@example.com",
+                      "firstName": "John",
+                      "id": "user123",
+                      "lastName": "Doe",
+                      "metadata": {},
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            },
+            "statusCode": 201,
+          },
+          "retries": undefined,
+          "sdkRequest": undefined,
+          "security": undefined,
+          "source": {
+            "_visit": [Function],
+            "type": "openapi",
+          },
+          "transport": undefined,
+          "userSpecifiedExamples": [],
+          "v2BaseUrls": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "createUserExample_201": {
+                "codeSamples": undefined,
+                "displayName": "createUserExample",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "POST",
+                    "path": "/users",
+                  },
+                  "environment": "Production server",
+                  "headers": {},
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "requestBody": {
+                    "email": "newuser@example.com",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "email": "user@example.com",
+                      "firstName": "John",
+                      "id": "user123",
+                      "lastName": "Doe",
+                      "metadata": {},
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 201,
+                },
+              },
+            },
+            "userSpecifiedExamples": {},
+          },
+          "v2RequestBodies": {
+            "requestBodies": [
+              {
+                "_visit": [Function],
+                "contentType": "application/json",
+                "docs": undefined,
+                "requestBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "createUserRequest",
+                      "unsafeName": "createUserRequest",
+                    },
+                    "originalName": "CreateUserRequest",
+                    "pascalCase": {
+                      "safeName": "CreateUserRequest",
+                      "unsafeName": "CreateUserRequest",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "CREATE_USER_REQUEST",
+                      "unsafeName": "CREATE_USER_REQUEST",
+                    },
+                    "snakeCase": {
+                      "safeName": "create_user_request",
+                      "unsafeName": "create_user_request",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "CreateUserRequest",
+                },
+                "type": "reference",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "createUserExample": {
+                      "email": "newuser@example.com",
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            ],
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "body": {
+                  "_visit": [Function],
+                  "type": "json",
+                  "value": {
+                    "_visit": [Function],
+                    "docs": "User created successfully",
+                    "responseBodyType": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "displayName": undefined,
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": undefined,
+                        "packagePath": [],
+                      },
+                      "inline": false,
+                      "name": {
+                        "camelCase": {
+                          "safeName": "user",
+                          "unsafeName": "user",
+                        },
+                        "originalName": "User",
+                        "pascalCase": {
+                          "safeName": "User",
+                          "unsafeName": "User",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "USER",
+                          "unsafeName": "USER",
+                        },
+                        "snakeCase": {
+                          "safeName": "user",
+                          "unsafeName": "user",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "User",
+                    },
+                    "type": "response",
+                    "v2Examples": {
+                      "autogeneratedExamples": {
+                        "createUserExample": {
+                          "createdAt": "2024-01-15T09:30:00Z",
+                          "email": "user@example.com",
+                          "firstName": "John",
+                          "id": "user123",
+                          "lastName": "Doe",
+                          "metadata": {},
+                        },
+                      },
+                      "userSpecifiedExamples": {},
+                    },
+                  },
+                },
+                "statusCode": 201,
+              },
+            ],
+          },
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+      "transport": undefined,
+    },
+  },
+  "sourceConfig": undefined,
+  "subpackages": {},
+  "types": {
+    "CreateUserRequest": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "createUserRequest",
+            "unsafeName": "createUserRequest",
+          },
+          "originalName": "CreateUserRequest",
+          "pascalCase": {
+            "safeName": "CreateUserRequest",
+            "unsafeName": "CreateUserRequest",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_USER_REQUEST",
+            "unsafeName": "CREATE_USER_REQUEST",
+          },
+          "snakeCase": {
+            "safeName": "create_user_request",
+            "unsafeName": "create_user_request",
+          },
+        },
+        "typeId": "CreateUserRequest",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "User's email address",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "email",
+                  "unsafeName": "email",
+                },
+                "originalName": "email",
+                "pascalCase": {
+                  "safeName": "Email",
+                  "unsafeName": "Email",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "EMAIL",
+                  "unsafeName": "EMAIL",
+                },
+                "snakeCase": {
+                  "safeName": "email",
+                  "unsafeName": "email",
+                },
+              },
+              "wireValue": "email",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "CreateUserRequestEmail_example_0": "newuser@example.com",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": "email",
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "User's first name",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "firstName",
+                  "unsafeName": "firstName",
+                },
+                "originalName": "firstName",
+                "pascalCase": {
+                  "safeName": "FirstName",
+                  "unsafeName": "FirstName",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "FIRST_NAME",
+                  "unsafeName": "FIRST_NAME",
+                },
+                "snakeCase": {
+                  "safeName": "first_name",
+                  "unsafeName": "first_name",
+                },
+              },
+              "wireValue": "firstName",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "CreateUserRequestFirstName_example_0": "Jane",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "User's last name",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "lastName",
+                  "unsafeName": "lastName",
+                },
+                "originalName": "lastName",
+                "pascalCase": {
+                  "safeName": "LastName",
+                  "unsafeName": "LastName",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "LAST_NAME",
+                  "unsafeName": "LAST_NAME",
+                },
+                "snakeCase": {
+                  "safeName": "last_name",
+                  "unsafeName": "last_name",
+                },
+              },
+              "wireValue": "lastName",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "CreateUserRequestLastName_example_0": "Smith",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Additional user metadata",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "metadata",
+                  "unsafeName": "metadata",
+                },
+                "originalName": "metadata",
+                "pascalCase": {
+                  "safeName": "Metadata",
+                  "unsafeName": "Metadata",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "METADATA",
+                  "unsafeName": "METADATA",
+                },
+                "snakeCase": {
+                  "safeName": "metadata",
+                  "unsafeName": "metadata",
+                },
+              },
+              "wireValue": "metadata",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "CreateUserRequestMetadata_example_autogenerated": {},
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "container": {
+                    "_visit": [Function],
+                    "keyType": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "type": "string",
+                          "validation": undefined,
+                        },
+                      },
+                      "type": "primitive",
+                    },
+                    "type": "map",
+                    "valueType": {
+                      "_visit": [Function],
+                      "type": "unknown",
+                    },
+                  },
+                  "type": "container",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "CreateUserRequest_example_autogenerated": {
+            "email": "newuser@example.com",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "Error": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
+        "typeId": "Error",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Error code",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "code",
+                  "unsafeName": "code",
+                },
+                "originalName": "code",
+                "pascalCase": {
+                  "safeName": "Code",
+                  "unsafeName": "Code",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CODE",
+                  "unsafeName": "CODE",
+                },
+                "snakeCase": {
+                  "safeName": "code",
+                  "unsafeName": "code",
+                },
+              },
+              "wireValue": "code",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ErrorCode_example_0": "USER_NOT_FOUND",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Human-readable error message",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+                "originalName": "message",
+                "pascalCase": {
+                  "safeName": "Message",
+                  "unsafeName": "Message",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MESSAGE",
+                  "unsafeName": "MESSAGE",
+                },
+                "snakeCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+              },
+              "wireValue": "message",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ErrorMessage_example_0": "The requested user could not be found",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Additional error details",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "details",
+                  "unsafeName": "details",
+                },
+                "originalName": "details",
+                "pascalCase": {
+                  "safeName": "Details",
+                  "unsafeName": "Details",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "DETAILS",
+                  "unsafeName": "DETAILS",
+                },
+                "snakeCase": {
+                  "safeName": "details",
+                  "unsafeName": "details",
+                },
+              },
+              "wireValue": "details",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ErrorDetails_example_autogenerated": {},
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "container": {
+                    "_visit": [Function],
+                    "keyType": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "type": "string",
+                          "validation": undefined,
+                        },
+                      },
+                      "type": "primitive",
+                    },
+                    "type": "map",
+                    "valueType": {
+                      "_visit": [Function],
+                      "type": "unknown",
+                    },
+                  },
+                  "type": "container",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "Error_example_autogenerated": {
+            "code": "USER_NOT_FOUND",
+            "message": "The requested user could not be found",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "HealthResponse": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "healthResponse",
+            "unsafeName": "healthResponse",
+          },
+          "originalName": "HealthResponse",
+          "pascalCase": {
+            "safeName": "HealthResponse",
+            "unsafeName": "HealthResponse",
+          },
+          "screamingSnakeCase": {
+            "safeName": "HEALTH_RESPONSE",
+            "unsafeName": "HEALTH_RESPONSE",
+          },
+          "snakeCase": {
+            "safeName": "health_response",
+            "unsafeName": "health_response",
+          },
+        },
+        "typeId": "HealthResponse",
+      },
+      "referencedTypes": Set {
+        "HealthResponseStatus",
+      },
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "The current health status",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "status",
+                  "unsafeName": "status",
+                },
+                "originalName": "status",
+                "pascalCase": {
+                  "safeName": "Status",
+                  "unsafeName": "Status",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "STATUS",
+                  "unsafeName": "STATUS",
+                },
+                "snakeCase": {
+                  "safeName": "status",
+                  "unsafeName": "status",
+                },
+              },
+              "wireValue": "status",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "HealthResponseStatus_example_autogenerated": "healthy",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "default": undefined,
+              "displayName": undefined,
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "inline": false,
+              "name": {
+                "camelCase": {
+                  "safeName": "healthResponseStatus",
+                  "unsafeName": "healthResponseStatus",
+                },
+                "originalName": "HealthResponseStatus",
+                "pascalCase": {
+                  "safeName": "HealthResponseStatus",
+                  "unsafeName": "HealthResponseStatus",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "HEALTH_RESPONSE_STATUS",
+                  "unsafeName": "HEALTH_RESPONSE_STATUS",
+                },
+                "snakeCase": {
+                  "safeName": "health_response_status",
+                  "unsafeName": "health_response_status",
+                },
+              },
+              "type": "named",
+              "typeId": "HealthResponseStatus",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "When the health check was performed",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "timestamp",
+                  "unsafeName": "timestamp",
+                },
+                "originalName": "timestamp",
+                "pascalCase": {
+                  "safeName": "Timestamp",
+                  "unsafeName": "Timestamp",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TIMESTAMP",
+                  "unsafeName": "TIMESTAMP",
+                },
+                "snakeCase": {
+                  "safeName": "timestamp",
+                  "unsafeName": "timestamp",
+                },
+              },
+              "wireValue": "timestamp",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "HealthResponseTimestamp_example_autogenerated": "2024-01-15T09:30:00Z",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": "date-time",
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Service version",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "version",
+                  "unsafeName": "version",
+                },
+                "originalName": "version",
+                "pascalCase": {
+                  "safeName": "Version",
+                  "unsafeName": "Version",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "VERSION",
+                  "unsafeName": "VERSION",
+                },
+                "snakeCase": {
+                  "safeName": "version",
+                  "unsafeName": "version",
+                },
+              },
+              "wireValue": "version",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "HealthResponseVersion_example_0": "1.0.0",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "HealthResponse_example_autogenerated": {
+            "status": "healthy",
+            "timestamp": "2024-01-15T09:30:00Z",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "HealthResponseStatus": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": "The current health status",
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "healthResponseStatus",
+            "unsafeName": "healthResponseStatus",
+          },
+          "originalName": "HealthResponseStatus",
+          "pascalCase": {
+            "safeName": "HealthResponseStatus",
+            "unsafeName": "HealthResponseStatus",
+          },
+          "screamingSnakeCase": {
+            "safeName": "HEALTH_RESPONSE_STATUS",
+            "unsafeName": "HEALTH_RESPONSE_STATUS",
+          },
+          "snakeCase": {
+            "safeName": "health_response_status",
+            "unsafeName": "health_response_status",
+          },
+        },
+        "typeId": "HealthResponseStatus",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "healthy",
+                  "unsafeName": "healthy",
+                },
+                "originalName": "healthy",
+                "pascalCase": {
+                  "safeName": "Healthy",
+                  "unsafeName": "Healthy",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "HEALTHY",
+                  "unsafeName": "HEALTHY",
+                },
+                "snakeCase": {
+                  "safeName": "healthy",
+                  "unsafeName": "healthy",
+                },
+              },
+              "wireValue": "healthy",
+            },
+          },
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "degraded",
+                  "unsafeName": "degraded",
+                },
+                "originalName": "degraded",
+                "pascalCase": {
+                  "safeName": "Degraded",
+                  "unsafeName": "Degraded",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "DEGRADED",
+                  "unsafeName": "DEGRADED",
+                },
+                "snakeCase": {
+                  "safeName": "degraded",
+                  "unsafeName": "degraded",
+                },
+              },
+              "wireValue": "degraded",
+            },
+          },
+        ],
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "HealthResponseStatus_example_autogenerated": "healthy",
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "User": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "user",
+            "unsafeName": "user",
+          },
+          "originalName": "User",
+          "pascalCase": {
+            "safeName": "User",
+            "unsafeName": "User",
+          },
+          "screamingSnakeCase": {
+            "safeName": "USER",
+            "unsafeName": "USER",
+          },
+          "snakeCase": {
+            "safeName": "user",
+            "unsafeName": "user",
+          },
+        },
+        "typeId": "User",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Unique user identifier",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "wireValue": "id",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "UserId_example_0": "user123",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "User's email address",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "email",
+                  "unsafeName": "email",
+                },
+                "originalName": "email",
+                "pascalCase": {
+                  "safeName": "Email",
+                  "unsafeName": "Email",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "EMAIL",
+                  "unsafeName": "EMAIL",
+                },
+                "snakeCase": {
+                  "safeName": "email",
+                  "unsafeName": "email",
+                },
+              },
+              "wireValue": "email",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "UserEmail_example_0": "user@example.com",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": "email",
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "User's first name",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "firstName",
+                  "unsafeName": "firstName",
+                },
+                "originalName": "firstName",
+                "pascalCase": {
+                  "safeName": "FirstName",
+                  "unsafeName": "FirstName",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "FIRST_NAME",
+                  "unsafeName": "FIRST_NAME",
+                },
+                "snakeCase": {
+                  "safeName": "first_name",
+                  "unsafeName": "first_name",
+                },
+              },
+              "wireValue": "firstName",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "UserFirstName_example_0": "John",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "User's last name",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "lastName",
+                  "unsafeName": "lastName",
+                },
+                "originalName": "lastName",
+                "pascalCase": {
+                  "safeName": "LastName",
+                  "unsafeName": "LastName",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "LAST_NAME",
+                  "unsafeName": "LAST_NAME",
+                },
+                "snakeCase": {
+                  "safeName": "last_name",
+                  "unsafeName": "last_name",
+                },
+              },
+              "wireValue": "lastName",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "UserLastName_example_0": "Doe",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "When the user was created",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "createdAt",
+                  "unsafeName": "createdAt",
+                },
+                "originalName": "createdAt",
+                "pascalCase": {
+                  "safeName": "CreatedAt",
+                  "unsafeName": "CreatedAt",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CREATED_AT",
+                  "unsafeName": "CREATED_AT",
+                },
+                "snakeCase": {
+                  "safeName": "created_at",
+                  "unsafeName": "created_at",
+                },
+              },
+              "wireValue": "createdAt",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "UserCreatedAt_example_autogenerated": "2024-01-15T09:30:00Z",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": "date-time",
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Additional user metadata",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "metadata",
+                  "unsafeName": "metadata",
+                },
+                "originalName": "metadata",
+                "pascalCase": {
+                  "safeName": "Metadata",
+                  "unsafeName": "Metadata",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "METADATA",
+                  "unsafeName": "METADATA",
+                },
+                "snakeCase": {
+                  "safeName": "metadata",
+                  "unsafeName": "metadata",
+                },
+              },
+              "wireValue": "metadata",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "UserMetadata_example_autogenerated": {},
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "container": {
+                    "_visit": [Function],
+                    "keyType": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "type": "string",
+                          "validation": undefined,
+                        },
+                      },
+                      "type": "primitive",
+                    },
+                    "type": "map",
+                    "valueType": {
+                      "_visit": [Function],
+                      "type": "unknown",
+                    },
+                  },
+                  "type": "container",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "User_example_autogenerated": {
+            "createdAt": "2024-01-15T09:30:00Z",
+            "email": "user@example.com",
+            "id": "user123",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+  },
+  "variables": [],
+  "webhookGroups": {},
+  "websocketChannels": undefined,
+}

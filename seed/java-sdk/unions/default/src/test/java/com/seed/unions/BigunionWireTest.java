@@ -96,14 +96,7 @@ public class BigunionWireTest {
         Assertions.assertEquals("PATCH", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = ""
-                + "{\n"
-                + "  \"type\": \"normalSweet\",\n"
-                + "  \"value\": \"value\",\n"
-                + "  \"id\": \"id\",\n"
-                + "  \"created-at\": \"2024-01-15T09:30:00Z\",\n"
-                + "  \"archived-at\": \"2024-01-15T09:30:00Z\"\n"
-                + "}";
+        String expectedRequestBody = "" + "{\n" + "  \"type\": \"normalSweet\",\n" + "  \"value\": \"value\"\n" + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
@@ -183,17 +176,11 @@ public class BigunionWireTest {
                 + "[\n"
                 + "  {\n"
                 + "    \"type\": \"normalSweet\",\n"
-                + "    \"value\": \"value\",\n"
-                + "    \"id\": \"id\",\n"
-                + "    \"created-at\": \"2024-01-15T09:30:00Z\",\n"
-                + "    \"archived-at\": \"2024-01-15T09:30:00Z\"\n"
+                + "    \"value\": \"value\"\n"
                 + "  },\n"
                 + "  {\n"
                 + "    \"type\": \"normalSweet\",\n"
-                + "    \"value\": \"value\",\n"
-                + "    \"id\": \"id\",\n"
-                + "    \"created-at\": \"2024-01-15T09:30:00Z\",\n"
-                + "    \"archived-at\": \"2024-01-15T09:30:00Z\"\n"
+                + "    \"value\": \"value\"\n"
                 + "  }\n"
                 + "]";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);

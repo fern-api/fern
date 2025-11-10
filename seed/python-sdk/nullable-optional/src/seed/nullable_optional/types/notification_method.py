@@ -71,4 +71,7 @@ class NotificationMethod_Push(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-NotificationMethod = typing.Union[NotificationMethod_Email, NotificationMethod_Sms, NotificationMethod_Push]
+NotificationMethod = typing_extensions.Annotated[
+    typing.Union[NotificationMethod_Email, NotificationMethod_Sms, NotificationMethod_Push],
+    pydantic.Field(discriminator="type"),
+]

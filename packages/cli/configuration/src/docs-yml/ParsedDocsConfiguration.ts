@@ -305,6 +305,7 @@ export declare namespace DocsNavigationItem {
         availability: Availability | undefined;
         showErrors: boolean;
         snippetsConfiguration: SnippetsConfiguration | undefined;
+        postman: string | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;
         navigation: ParsedApiReferenceLayoutItem[];
         collapsed: boolean | undefined;

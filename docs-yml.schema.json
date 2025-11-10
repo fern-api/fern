@@ -2060,6 +2060,16 @@
             }
           ]
         },
+        "postman": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "summary": {
           "oneOf": [
             {
@@ -4540,6 +4550,13 @@
         "bubble"
       ]
     },
+    "docs.PageActionsThemeConfig": {
+      "type": "string",
+      "enum": [
+        "default",
+        "toolbar"
+      ]
+    },
     "docs.ThemeConfig": {
       "type": "object",
       "properties": {
@@ -4551,12 +4568,16 @@
         },
         "tabs": {
           "$ref": "#/definitions/docs.TabsThemeConfig"
+        },
+        "page-actions": {
+          "$ref": "#/definitions/docs.PageActionsThemeConfig"
         }
       },
       "required": [
         "sidebar",
         "body",
-        "tabs"
+        "tabs",
+        "page-actions"
       ],
       "additionalProperties": false
     },

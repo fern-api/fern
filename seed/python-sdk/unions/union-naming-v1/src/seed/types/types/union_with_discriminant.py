@@ -38,4 +38,6 @@ class BarUnionWithDiscriminant(UniversalBaseModel):
             smart_union = True
 
 
-UnionWithDiscriminant = typing.Union[FooUnionWithDiscriminant, BarUnionWithDiscriminant]
+UnionWithDiscriminant = typing_extensions.Annotated[
+    typing.Union[FooUnionWithDiscriminant, BarUnionWithDiscriminant], pydantic.Field(discriminator="_type")
+]

@@ -20,7 +20,6 @@ const CASE_LABELS_BY_SWIFT_SYMBOL_NAME: Record<swift.SwiftTypeSymbolName, string
 const CASE_LABELS_BY_FOUNDATION_SYMBOL_NAME: Record<swift.FoundationTypeSymbolName, string> = {
     Data: "data",
     Date: "date",
-    URLSession: "urlSession",
     UUID: "uuid"
 };
 

@@ -84,7 +84,7 @@ export function validateExampleEndpointCallParameters<T>({
                             breadcrumbs,
                             depth: 0
                         }).map((val): RuleViolation => {
-                            return { severity: "fatal", message: val.message };
+                            return { severity: val.severity ?? "fatal", message: val.message };
                         })
                     );
                 }

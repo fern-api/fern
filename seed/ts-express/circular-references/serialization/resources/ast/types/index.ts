@@ -1,6 +1,7 @@
 export * from "./ContainerValue";
 export * from "./FieldValue";
 export * from "./JsonLike";
+export * from "./JsonLikeWithNullAndUndefined";
 export * from "./ObjectValue";
 export * from "./PrimitiveValue";
 export * from "./T";

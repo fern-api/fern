@@ -1,3 +1,11 @@
+- version: 3.14.2
+  changelogEntry:
+    - summary: |
+        Fix double-wrapping of Optional.empty() in request bodies. Wire tests and dynamic snippets now correctly generate Optional.empty() instead of Optional.of(Optional.empty()) for optional request bodies.
+      type: fix
+  createdAt: "2025-11-07"
+  irVersion: 61
+
 - version: 3.14.1
   changelogEntry:
     - summary: |

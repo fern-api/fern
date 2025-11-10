@@ -36,7 +36,7 @@ class RealtimeClient:
     @contextmanager
     def connect(
         self,
-        id: str,
+        session_id: str,
         *,
         model: typing.Optional[str] = None,
         temperature: typing.Optional[int] = None,
@@ -45,7 +45,7 @@ class RealtimeClient:
         """
         Parameters
         ----------
-        id : str
+        session_id : str
 
         model : typing.Optional[str]
 
@@ -104,7 +104,7 @@ class AsyncRealtimeClient:
     @asynccontextmanager
     async def connect(
         self,
-        id: str,
+        session_id: str,
         *,
         model: typing.Optional[str] = None,
         temperature: typing.Optional[int] = None,
@@ -113,7 +113,7 @@ class AsyncRealtimeClient:
         """
         Parameters
         ----------
-        id : str
+        session_id : str
 
         model : typing.Optional[str]
 

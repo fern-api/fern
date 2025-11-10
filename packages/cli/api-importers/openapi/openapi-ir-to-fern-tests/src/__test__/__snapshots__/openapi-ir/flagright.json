@@ -20061,16 +20061,24 @@
             "key": "publishedAt",
             "schema": {
               "generatedName": "ThingPublishedAt",
+              "description": "PublishedAt is the time at which the Thing was published.\n",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ThingPublishedAt",
+                "description": "PublishedAt is the time at which the Thing was published.\n",
+                "value": {
+                  "description": "PublishedAt is the time at which the Thing was published.\n",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ThingPublishedAt",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true

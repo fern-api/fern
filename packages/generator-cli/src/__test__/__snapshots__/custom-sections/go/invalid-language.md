@@ -5,6 +5,13 @@
 
 The IMDB Inc Go library provides convenient access to the IMDB Inc APIs from Go.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Preexisting Custom Section](#preexisting-custom-section)
+- [Custom Section](#custom-section)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh

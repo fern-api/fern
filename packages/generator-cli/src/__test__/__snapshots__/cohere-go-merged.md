@@ -7,6 +7,23 @@
 
 The Cohere Go library provides convenient access to the Cohere APIs from Go.
 
+## Table of Contents
+
+- [Documentation](#documentation)
+- [Installation](#installation)
+- [Zero](#zero)
+- [Usage](#usage)
+- [Custom](#custom)
+- [One](#one)
+- [Two](#two)
+- [Errors](#errors)
+- [Three](#three)
+- [Advanced](#advanced)
+  - [Timeouts](#timeouts)
+- [Four](#four)
+- [Contributing](#contributing)
+- [Five](#five)
+
 ## Documentation
 
 API reference documentation is available [here](https://docs.cohere.com).

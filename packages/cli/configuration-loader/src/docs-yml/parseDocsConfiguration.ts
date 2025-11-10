@@ -370,7 +370,8 @@ function convertThemeConfig(
     return {
         sidebar: theme.sidebar ?? "default",
         tabs: theme.tabs ?? "default",
-        body: theme.body ?? "default"
+        body: theme.body ?? "default",
+        pageActions: theme.pageActions ?? "default"
     };
 }
 
@@ -988,6 +989,7 @@ async function convertNavigationItem({
                 rawConfig.snippets != null
                     ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets })
                     : undefined,
+            postman: rawConfig.postman,
             navigation:
                 rawConfig.layout?.flatMap((item) => parseApiReferenceLayoutItem(item, absolutePathToConfig)) ?? [],
             overviewAbsolutePath: resolveFilepath(rawConfig.summary, absolutePathToConfig),

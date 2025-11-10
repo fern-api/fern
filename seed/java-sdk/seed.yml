@@ -261,6 +261,10 @@ fixtures:
     - customConfig:
         collapse-optional-nullable: true
       outputFolder: collapse-optional-nullable
+  optional:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: wire-tests
 scripts:
   - docker: fernapi/java-seed
     commands:

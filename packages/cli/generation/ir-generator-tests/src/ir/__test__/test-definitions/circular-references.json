@@ -2397,6 +2397,361 @@
             "v2Examples": null,
             "availability": null,
             "docs": null
+        },
+        "type_ast:JsonLikeWithNullAndUndefined": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "JsonLikeWithNullAndUndefined",
+                    "camelCase": {
+                        "unsafeName": "jsonLikeWithNullAndUndefined",
+                        "safeName": "jsonLikeWithNullAndUndefined"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "json_like_with_null_and_undefined",
+                        "safeName": "json_like_with_null_and_undefined"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "JSON_LIKE_WITH_NULL_AND_UNDEFINED",
+                        "safeName": "JSON_LIKE_WITH_NULL_AND_UNDEFINED"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "JSONLikeWithNullAndUndefined",
+                        "safeName": "JSONLikeWithNullAndUndefined"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "ast",
+                            "camelCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AST",
+                                "safeName": "AST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ast",
+                                "safeName": "Ast"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "ast",
+                        "camelCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ast",
+                            "safeName": "ast"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AST",
+                            "safeName": "AST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ast",
+                            "safeName": "Ast"
+                        }
+                    }
+                },
+                "displayName": null,
+                "typeId": "type_ast:JsonLikeWithNullAndUndefined"
+            },
+            "shape": {
+                "_type": "undiscriminatedUnion",
+                "members": [
+                    {
+                        "type": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "list",
+                                "list": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "optional",
+                                        "optional": {
+                                            "_type": "container",
+                                            "container": {
+                                                "_type": "nullable",
+                                                "nullable": {
+                                                    "_type": "named",
+                                                    "name": {
+                                                        "originalName": "JsonLikeWithNullAndUndefined",
+                                                        "camelCase": {
+                                                            "unsafeName": "jsonLikeWithNullAndUndefined",
+                                                            "safeName": "jsonLikeWithNullAndUndefined"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "json_like_with_null_and_undefined",
+                                                            "safeName": "json_like_with_null_and_undefined"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "JSON_LIKE_WITH_NULL_AND_UNDEFINED",
+                                                            "safeName": "JSON_LIKE_WITH_NULL_AND_UNDEFINED"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "JSONLikeWithNullAndUndefined",
+                                                            "safeName": "JSONLikeWithNullAndUndefined"
+                                                        }
+                                                    },
+                                                    "fernFilepath": {
+                                                        "allParts": [
+                                                            {
+                                                                "originalName": "ast",
+                                                                "camelCase": {
+                                                                    "unsafeName": "ast",
+                                                                    "safeName": "ast"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "ast",
+                                                                    "safeName": "ast"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "AST",
+                                                                    "safeName": "AST"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Ast",
+                                                                    "safeName": "Ast"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "packagePath": [],
+                                                        "file": {
+                                                            "originalName": "ast",
+                                                            "camelCase": {
+                                                                "unsafeName": "ast",
+                                                                "safeName": "ast"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "ast",
+                                                                "safeName": "ast"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "AST",
+                                                                "safeName": "AST"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Ast",
+                                                                "safeName": "Ast"
+                                                            }
+                                                        }
+                                                    },
+                                                    "displayName": null,
+                                                    "typeId": "type_ast:JsonLikeWithNullAndUndefined",
+                                                    "default": null,
+                                                    "inline": null
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "map",
+                                "keyType": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                },
+                                "valueType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "optional",
+                                        "optional": {
+                                            "_type": "container",
+                                            "container": {
+                                                "_type": "nullable",
+                                                "nullable": {
+                                                    "_type": "named",
+                                                    "name": {
+                                                        "originalName": "JsonLikeWithNullAndUndefined",
+                                                        "camelCase": {
+                                                            "unsafeName": "jsonLikeWithNullAndUndefined",
+                                                            "safeName": "jsonLikeWithNullAndUndefined"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "json_like_with_null_and_undefined",
+                                                            "safeName": "json_like_with_null_and_undefined"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "JSON_LIKE_WITH_NULL_AND_UNDEFINED",
+                                                            "safeName": "JSON_LIKE_WITH_NULL_AND_UNDEFINED"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "JSONLikeWithNullAndUndefined",
+                                                            "safeName": "JSONLikeWithNullAndUndefined"
+                                                        }
+                                                    },
+                                                    "fernFilepath": {
+                                                        "allParts": [
+                                                            {
+                                                                "originalName": "ast",
+                                                                "camelCase": {
+                                                                    "unsafeName": "ast",
+                                                                    "safeName": "ast"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "ast",
+                                                                    "safeName": "ast"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "AST",
+                                                                    "safeName": "AST"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Ast",
+                                                                    "safeName": "Ast"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "packagePath": [],
+                                                        "file": {
+                                                            "originalName": "ast",
+                                                            "camelCase": {
+                                                                "unsafeName": "ast",
+                                                                "safeName": "ast"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "ast",
+                                                                "safeName": "ast"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "AST",
+                                                                "safeName": "AST"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Ast",
+                                                                "safeName": "Ast"
+                                                            }
+                                                        }
+                                                    },
+                                                    "displayName": null,
+                                                    "typeId": "type_ast:JsonLikeWithNullAndUndefined",
+                                                    "default": null,
+                                                    "inline": null
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "INTEGER",
+                                                "v2": {
+                                                    "type": "integer",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "BOOLEAN",
+                                                "v2": {
+                                                    "type": "boolean",
+                                                    "default": null
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [
+                "type_ast:JsonLikeWithNullAndUndefined"
+            ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": null
         }
     },
     "errors": {},
@@ -2445,7 +2800,8 @@
             "type_ast:ContainerValue",
             "type_ast:PrimitiveValue",
             "type_ast:ObjectValue",
-            "type_ast:JsonLike"
+            "type_ast:JsonLike",
+            "type_ast:JsonLikeWithNullAndUndefined"
         ]
     },
     "webhookGroups": {},
@@ -3575,6 +3931,135 @@
                         "value": "BOOLEAN"
                     }
                 ]
+            },
+            "type_ast:JsonLikeWithNullAndUndefined": {
+                "type": "undiscriminatedUnion",
+                "declaration": {
+                    "name": {
+                        "originalName": "JsonLikeWithNullAndUndefined",
+                        "camelCase": {
+                            "unsafeName": "jsonLikeWithNullAndUndefined",
+                            "safeName": "jsonLikeWithNullAndUndefined"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "json_like_with_null_and_undefined",
+                            "safeName": "json_like_with_null_and_undefined"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "JSON_LIKE_WITH_NULL_AND_UNDEFINED",
+                            "safeName": "JSON_LIKE_WITH_NULL_AND_UNDEFINED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "JSONLikeWithNullAndUndefined",
+                            "safeName": "JSONLikeWithNullAndUndefined"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "ast",
+                                "camelCase": {
+                                    "unsafeName": "ast",
+                                    "safeName": "ast"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "ast",
+                                    "safeName": "ast"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "AST",
+                                    "safeName": "AST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Ast",
+                                    "safeName": "Ast"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "ast",
+                            "camelCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ast",
+                                "safeName": "ast"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AST",
+                                "safeName": "AST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ast",
+                                "safeName": "Ast"
+                            }
+                        }
+                    }
+                },
+                "types": [
+                    {
+                        "type": "list",
+                        "value": {
+                            "type": "optional",
+                            "value": {
+                                "type": "nullable",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_ast:JsonLikeWithNullAndUndefined"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "type": "map",
+                        "key": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "value": {
+                            "type": "optional",
+                            "value": {
+                                "type": "nullable",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_ast:JsonLikeWithNullAndUndefined"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "type": "optional",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        }
+                    },
+                    {
+                        "type": "optional",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "INTEGER"
+                            }
+                        }
+                    },
+                    {
+                        "type": "optional",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "BOOLEAN"
+                            }
+                        }
+                    }
+                ]
             }
         },
         "headers": [],
@@ -3736,7 +4221,8 @@
                 "type_ast:ContainerValue",
                 "type_ast:PrimitiveValue",
                 "type_ast:ObjectValue",
-                "type_ast:JsonLike"
+                "type_ast:JsonLike",
+                "type_ast:JsonLikeWithNullAndUndefined"
             ],
             "errors": [],
             "subpackages": [],

@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "38aa8829",
+            "id": {
+                "method": "GET",
+                "path": "/users",
+                "identifier_override": "endpoint_retries.getUsers"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.noRetries.SeedNoRetriesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedNoRetriesClient client = SeedNoRetriesClient\n            .builder()\n            .build();\n\n        client.retries().getUsers();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.noRetries.SeedNoRetriesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedNoRetriesClient client = SeedNoRetriesClient\n            .builder()\n            .build();\n\n        client.retries().getUsers();\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

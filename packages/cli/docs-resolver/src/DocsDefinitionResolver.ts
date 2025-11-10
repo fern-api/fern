@@ -637,7 +637,13 @@ export class DocsDefinitionResolver {
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
             pageActions: this.parsedDocsConfig.pageActions,
-            theme: this.parsedDocsConfig.theme,
+            theme:
+                this.parsedDocsConfig.theme != null
+                    ? {
+                          ...this.parsedDocsConfig.theme,
+                          "page-actions": undefined
+                      }
+                    : undefined,
             // deprecated
             logo: undefined,
             logoV2: undefined,

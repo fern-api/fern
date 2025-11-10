@@ -11,7 +11,7 @@ import {
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
 import { Audiences } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
-import { AbsoluteFilePath, cwd, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
@@ -201,7 +201,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         globalHeaderOverrides,
                         enableUniqueErrorsPerEndpoint,
                         generateV1Examples,
-                        settings: getOpenAPISettings({ options: document.settings })
+                        settings: getOpenAPISettings({ options: document.settings }),
+                        documentBaseDir: dirname(absoluteFilepathToSpec)
                     });
                     const converter = new OpenAPI3_1Converter({ context: converterContext, audiences });
                     result = await converter.convert();

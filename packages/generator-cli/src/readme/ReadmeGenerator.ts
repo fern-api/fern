@@ -44,12 +44,14 @@ export class ReadmeGenerator {
 
     public async generateReadme({ output }: { output: fs.WriteStream | NodeJS.Process["stdout"] }): Promise<void> {
         const blocks = await this.generateBlocks();
+        const mergedBlocks = await this.mergeBlocks({ blocks });
 
         const writer = new StreamWriter(output);
         await this.writeHeader({ writer });
+        await this.writeTableOfContents({ writer, blocks: mergedBlocks });
         await this.writeBlocks({
             writer,
-            blocks: await this.mergeBlocks({ blocks })
+            blocks: mergedBlocks
         });
         await writer.end();
     }
@@ -285,6 +287,68 @@ export class ReadmeGenerator {
                 : `The ${this.apiName} ${this.languageTitle} library provides convenient access to the ${this.apiName} APIs from ${this.languageTitle}.`
         );
         await writer.writeLine();
+    }
+
+    private async writeTableOfContents({ writer, blocks }: { writer: Writer; blocks: Block[] }): Promise<void> {
+        if (blocks.length === 0) {
+            return;
+        }
+
+        await writer.writeLine("## Table of Contents");
+        await writer.writeLine();
+
+        for (const block of blocks) {
+            const title = this.getBlockTitle(block.id);
+            const anchor = this.getBlockAnchor(title);
+
+            if (block.id === this.ADVANCED_FEATURE_ID) {
+                await writer.writeLine(`- [${title}](#${anchor})`);
+
+                const advancedFeatures = this.readmeConfig.features?.filter((feat) => this.isAdvanced(feat)) ?? [];
+                for (const feature of advancedFeatures) {
+                    if (this.shouldSkipFeature({ feature })) {
+                        continue;
+                    }
+                    const featureTitle = featureIDToTitle(feature.id);
+                    const featureAnchor = this.getBlockAnchor(featureTitle);
+                    await writer.writeLine(`  - [${featureTitle}](#${featureAnchor})`);
+                }
+            } else {
+                await writer.writeLine(`- [${title}](#${anchor})`);
+            }
+        }
+
+        await writer.writeLine();
+    }
+
+    private getBlockTitle(blockId: string): string {
+        if (blockId === this.ADVANCED_FEATURE_ID) {
+            return featureIDToTitle(blockId);
+        }
+
+        switch (blockId.toUpperCase()) {
+            case "DOCUMENTATION":
+                return "Documentation";
+            case "REFERENCE":
+                return "Reference";
+            case "REQUIREMENTS":
+                return "Requirements";
+            case "INSTALLATION":
+                return "Installation";
+            case "CONTRIBUTING":
+                return "Contributing";
+            default:
+                return featureIDToTitle(blockId);
+        }
+    }
+
+    private getBlockAnchor(title: string): string {
+        return title
+            .toLowerCase()
+            .replace(/[^\w\s-]/g, "")
+            .replace(/\s+/g, "-")
+            .replace(/-+/g, "-")
+            .trim();
     }
 
     private async generateDocumentation({ docsLink }: { docsLink: string }): Promise<Block> {

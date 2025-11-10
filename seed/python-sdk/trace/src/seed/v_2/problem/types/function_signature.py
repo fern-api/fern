@@ -57,8 +57,9 @@ class FunctionSignature_VoidThatTakesActualResult(UniversalBaseModel):
 
 from ....commons.types.variable_type import VariableType  # noqa: E402, I001
 
-FunctionSignature = typing.Union[
-    FunctionSignature_Void, FunctionSignature_NonVoid, FunctionSignature_VoidThatTakesActualResult
+FunctionSignature = typing_extensions.Annotated[
+    typing.Union[FunctionSignature_Void, FunctionSignature_NonVoid, FunctionSignature_VoidThatTakesActualResult],
+    pydantic.Field(discriminator="type"),
 ]
 update_forward_refs(FunctionSignature_Void)
 update_forward_refs(FunctionSignature_NonVoid)

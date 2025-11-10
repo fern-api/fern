@@ -500,11 +500,23 @@ export class EndpointSnippetGenerator {
                         );
                     }
 
+                    const convertedValue = this.context.dynamicTypeLiteralMapper.convert({
+                        typeReference: body.value.value,
+                        value
+                    });
+
+                    // Check if the converted value is already Optional.empty() to avoid double-wrapping
+                    const convertedValueStr = convertedValue.toString({
+                        packageName: "com.example",
+                        customConfig: this.context.customConfig
+                    });
+
+                    if (convertedValueStr.includes("Optional.empty()")) {
+                        return convertedValue;
+                    }
+
                     return java.TypeLiteral.optional({
-                        value: this.context.dynamicTypeLiteralMapper.convert({
-                            typeReference: body.value.value,
-                            value
-                        }),
+                        value: convertedValue,
                         useOf: true
                     });
                 }

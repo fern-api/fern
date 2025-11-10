@@ -101,7 +101,7 @@ const TestAsIsFileSpecs = {
     // Utilities
     HTTPStub: {
         relativePathToDir: "Utilities",
-        filenameWithoutExtension: "HTTPStub",
+        filenameWithoutExtension: "HTTPStub.Template",
         symbols: [{ name: "HTTPStub", shape: { type: "class" } }]
     }
 } satisfies Record<string, swift.AsIsFileSpec<string>>;

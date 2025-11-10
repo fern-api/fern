@@ -53,4 +53,7 @@ class ErrorInfo_InternalError(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-ErrorInfo = typing.Union[ErrorInfo_CompileError, ErrorInfo_RuntimeError, ErrorInfo_InternalError]
+ErrorInfo = typing_extensions.Annotated[
+    typing.Union[ErrorInfo_CompileError, ErrorInfo_RuntimeError, ErrorInfo_InternalError],
+    pydantic.Field(discriminator="type"),
+]

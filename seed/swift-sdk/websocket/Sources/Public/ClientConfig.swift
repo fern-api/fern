@@ -1,26 +1,26 @@
 import Foundation
 
-public final class ClientConfig: Sendable {
-    public typealias CredentialProvider = @Sendable () async throws -> String
+public final class ClientConfig: Swift.Sendable {
+    public typealias CredentialProvider = @Sendable () async throws -> Swift.String
 
     struct Defaults {
-        static let timeout: Int = 60
-        static let maxRetries: Int = 2
+        static let timeout: Swift.Int = 60
+        static let maxRetries: Swift.Int = 2
     }
 
     struct HeaderAuth {
-        let key: String
-        let header: String
+        let key: Swift.String
+        let header: Swift.String
     }
 
     struct BearerAuth {
         let token: Token
 
-        enum Token: Sendable {
-            case staticToken(String)
+        enum Token: Swift.Sendable {
+            case staticToken(Swift.String)
             case provider(CredentialProvider)
 
-            func retrieve() async throws -> String {
+            func retrieve() async throws -> Swift.String {
                 switch self {
                 case .staticToken(let token):
                     return token
@@ -32,37 +32,37 @@ public final class ClientConfig: Sendable {
     }
 
     struct BasicAuth {
-        let username: String?
-        let password: String?
+        let username: Swift.String?
+        let password: Swift.String?
 
-        var token: String? {
+        var token: Swift.String? {
             if let username, let password {
-                let credentials: String = "\(username):\(password)"
-                let data = credentials.data(using: .utf8) ?? Data()
+                let credentials: Swift.String = "\(username):\(password)"
+                let data = credentials.data(using: .utf8) ?? Foundation.Data()
                 return data.base64EncodedString()
             }
             return nil
         }
     }
 
-    let baseURL: String
+    let baseURL: Swift.String
     let headerAuth: HeaderAuth?
     let bearerAuth: BearerAuth?
     let basicAuth: BasicAuth?
-    let headers: [String: String]?
-    let timeout: Int
-    let maxRetries: Int
-    let urlSession: URLSession
+    let headers: [Swift.String: Swift.String]?
+    let timeout: Swift.Int
+    let maxRetries: Swift.Int
+    let urlSession: Networking.URLSession
 
     init(
-        baseURL: String,
+        baseURL: Swift.String,
         headerAuth: HeaderAuth? = nil,
         bearerAuth: BearerAuth? = nil,
         basicAuth: BasicAuth? = nil,
-        headers: [String: String]? = nil,
-        timeout: Int? = nil,
-        maxRetries: Int? = nil,
-        urlSession: URLSession? = nil
+        headers: [Swift.String: Swift.String]? = nil,
+        timeout: Swift.Int? = nil,
+        maxRetries: Swift.Int? = nil,
+        urlSession: Networking.URLSession? = nil
     ) {
         self.baseURL = baseURL
         self.headerAuth = headerAuth
@@ -75,8 +75,8 @@ public final class ClientConfig: Sendable {
     }
 }
 
-private func buildURLSession(timeoutSeconds: Int) -> URLSession {
-    let configuration = URLSessionConfiguration.default
+private func buildURLSession(timeoutSeconds: Swift.Int) -> Networking.URLSession {
+    let configuration = Networking.URLSessionConfiguration.default
     configuration.timeoutIntervalForRequest = .init(timeoutSeconds)
     return .init(configuration: configuration)
 }

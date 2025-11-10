@@ -3,6 +3,7 @@
  */
 
 export interface PostHogConfig {
+    /** Your PostHog project API key. Defaults to the api-host of "https://us.i.posthog.com". */
     apiKey: string;
     endpoint?: string;
 }
