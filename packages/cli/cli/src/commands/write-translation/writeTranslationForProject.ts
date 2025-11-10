@@ -264,7 +264,11 @@ export async function writeTranslationForProject({
         const hasDocsConfig = existsSync(originalDocsConfigPath);
 
         for (const language of targetLanguages) {
-            const languageDirectory = join(translationsDirectory, RelativeFilePath.of(language), RelativeFilePath.of("fern"));
+            const languageDirectory = join(
+                translationsDirectory,
+                RelativeFilePath.of(language),
+                RelativeFilePath.of("fern")
+            );
 
             if (!existsSync(languageDirectory)) {
                 await mkdir(languageDirectory, { recursive: true });
@@ -348,7 +352,11 @@ export async function writeTranslationForProject({
                 );
 
                 for (const language of targetLanguages) {
-                    const languageDirectory = join(translationsDirectory, RelativeFilePath.of(language), RelativeFilePath.of("fern"));
+                    const languageDirectory = join(
+                        translationsDirectory,
+                        RelativeFilePath.of(language),
+                        RelativeFilePath.of("fern")
+                    );
                     const destPath = join(languageDirectory, relativePath);
 
                     const destDir = path.dirname(destPath);

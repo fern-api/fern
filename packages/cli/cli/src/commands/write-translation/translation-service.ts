@@ -62,10 +62,10 @@ export async function translateText({
         }
 
         const result = await response.json();
-        
+
         // small delay to avoid timeout issues
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
+        await new Promise((resolve) => setTimeout(resolve, 500));
+
         return result["translated_text"] ?? text;
     } catch (error) {
         if (error instanceof Error && error.message.includes("403")) {
