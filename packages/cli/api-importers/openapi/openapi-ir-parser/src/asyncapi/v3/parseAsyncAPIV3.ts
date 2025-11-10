@@ -258,7 +258,8 @@ export function parseAsyncAPIV3({
                     schema: parameterSchema,
                     variableReference: undefined,
                     availability: convertAvailability(parameter),
-                    source
+                    source,
+                    explode: undefined
                 };
 
                 if (type === "header") {
@@ -344,12 +345,14 @@ export function parseAsyncAPIV3({
                     })),
                     queryParameters: queryParameters.map((param) => ({
                         ...param,
-                        schema: convertSchemaWithExampleToSchema(param.schema)
+                        schema: convertSchemaWithExampleToSchema(param.schema),
+                        explode: param.explode
                     })),
                     pathParameters: pathParameters.map((param) => ({
                         ...param,
                         parameterNameOverride: undefined,
-                        schema: convertSchemaWithExampleToSchema(param.schema)
+                        schema: convertSchemaWithExampleToSchema(param.schema),
+                        explode: param.explode
                     }))
                 },
                 groupName: context.resolveGroupName(

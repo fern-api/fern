@@ -301,4 +301,86 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         const rootApi = definition.rootApiFile?.contents;
         expect(rootApi).toBeDefined();
     });
+
+    it("should track explode parameter from OpenAPI spec", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/explode-parameter-test")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "explode-parameter-test"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate that explode parameter is tracked in IR
+        expect(intermediateRepresentation.services).toBeDefined();
+        const service = Object.values(intermediateRepresentation.services)[0];
+        expect(service).toBeDefined();
+
+        if (service && typeof service === "object" && "endpoints" in service) {
+            const serviceWithEndpoints = service as { endpoints?: Array<{
+                pathParameters?: Array<{ explode?: boolean }>;
+                queryParameters?: Array<{ explode?: boolean }>;
+            }> };
+            expect(serviceWithEndpoints.endpoints).toBeDefined();
+            expect(serviceWithEndpoints.endpoints?.length).toBe(1);
+
+            const endpoint = serviceWithEndpoints.endpoints?.[0];
+            expect(endpoint).toBeDefined();
+
+            // Verify path parameter has explode: false
+            expect(endpoint?.pathParameters).toBeDefined();
+            expect(endpoint?.pathParameters?.length).toBeGreaterThan(0);
+            expect(endpoint?.pathParameters?.[0]?.explode).toBe(false);
+
+            // Verify query parameters have explode: false
+            expect(endpoint?.queryParameters).toBeDefined();
+            expect(endpoint?.queryParameters?.length).toBeGreaterThan(0);
+            endpoint?.queryParameters?.forEach((param) => {
+                expect(param.explode).toBe(false);
+            });
+        }
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/explode-parameter-test-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/explode-parameter-test-ir.snap");
+    });
 });

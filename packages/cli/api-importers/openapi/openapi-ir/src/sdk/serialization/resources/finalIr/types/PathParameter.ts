@@ -18,6 +18,7 @@ export const PathParameter: core.serialization.ObjectSchema<
         schema: core.serialization.lazy(() => serializers.Schema),
         variableReference: core.serialization.string().optional(),
         parameterNameOverride: core.serialization.string().optional(),
+        explode: core.serialization.boolean().optional(),
     })
     .extend(WithDescription)
     .extend(WithAvailability)
@@ -29,5 +30,6 @@ export declare namespace PathParameter {
         schema: serializers.Schema.Raw;
         variableReference?: string | null;
         parameterNameOverride?: string | null;
+        explode?: boolean | null;
     }
 }

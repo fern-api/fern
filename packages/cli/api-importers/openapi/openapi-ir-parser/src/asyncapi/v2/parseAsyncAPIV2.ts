@@ -107,7 +107,8 @@ export function parseAsyncAPIV2({
                               }),
                     variableReference: undefined,
                     availability: convertAvailability(parameter),
-                    source
+                    source,
+                    explode: undefined
                 });
             }
         }
@@ -184,7 +185,8 @@ export function parseAsyncAPIV2({
                             description: resolvedSchema.description,
                             parameterNameOverride: undefined,
                             availability: convertAvailability(resolvedSchema),
-                            source
+                            source,
+                            explode: undefined
                         });
                         continue;
                     }
@@ -206,7 +208,8 @@ export function parseAsyncAPIV2({
                         description: schema.description,
                         parameterNameOverride: undefined,
                         availability: convertAvailability(schema),
-                        source
+                        source,
+                        explode: undefined
                     });
                 }
             }
@@ -329,14 +332,16 @@ export function parseAsyncAPIV2({
                     queryParameters: queryParameters.map((param) => {
                         return {
                             ...param,
-                            schema: convertSchemaWithExampleToSchema(param.schema)
+                            schema: convertSchemaWithExampleToSchema(param.schema),
+                            explode: param.explode
                         };
                     }),
                     pathParameters: pathParameters.map((param) => {
                         return {
                             ...param,
                             parameterNameOverride: undefined, // come back
-                            schema: convertSchemaWithExampleToSchema(param.schema)
+                            schema: convertSchemaWithExampleToSchema(param.schema),
+                            explode: param.explode
                         };
                     })
                 },

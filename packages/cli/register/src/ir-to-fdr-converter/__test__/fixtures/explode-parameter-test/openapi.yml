@@ -1,0 +1,44 @@
+openapi: 3.0.3
+info:
+  title: Explode Parameter Test API
+  version: 1.0.0
+paths:
+  /search/{category}:
+    get:
+      operationId: searchItems
+      summary: Search items with explode parameter test
+      parameters:
+        - name: category
+          in: path
+          required: true
+          explode: false
+          schema:
+            type: string
+        - name: tags
+          in: query
+          required: false
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: filters
+          in: query
+          required: false
+          explode: false
+          schema:
+            type: object
+            additionalProperties:
+              type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: string

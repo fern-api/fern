@@ -167,7 +167,8 @@ export function convertParameters({
             description: resolvedParameter.description,
             parameterNameOverride: getParameterName(resolvedParameter),
             availability,
-            source
+            source,
+            explode: resolvedParameter.explode
         };
         if (resolvedParameter.in === "query") {
             convertedParameters.queryParameters.push(convertedParameter);
