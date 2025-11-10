@@ -179,20 +179,16 @@ export class WireTestGenerator {
                         Expression.await(
                             Expression.methodCall({
                                 target: Expression.methodCall({
-                                    target: Expression.methodCall({
-                                        target: Expression.functionCall("Client::new", []),
-                                        method: "delete",
-                                        args: [
-                                            Expression.functionCall("format", [
-                                                Expression.stringLiteral("{}/requests"),
-                                                Expression.reference("wiremock_admin_url")
-                                            ])
-                                        ]
-                                    }),
-                                    method: "send",
-                                    args: []
+                                    target: Expression.functionCall("Client::new", []),
+                                    method: "delete",
+                                    args: [
+                                        Expression.macroCall("format", [
+                                            Expression.stringLiteral("{}/requests"),
+                                            Expression.reference("wiremock_admin_url")
+                                        ])
+                                    ]
                                 }),
-                                method: "await",
+                                method: "send",
                                 args: []
                             })
                         )
@@ -279,7 +275,7 @@ export class WireTestGenerator {
                                         target: Expression.functionCall("Client::new", []),
                                         method: "post",
                                         args: [
-                                            Expression.functionCall("format", [
+                                            Expression.macroCall("format", [
                                                 Expression.stringLiteral("{}/requests/find"),
                                                 Expression.reference("wiremock_admin_url")
                                             ])
