@@ -1,0 +1,76 @@
+openapi: 3.0.3
+info:
+  title: circular-references-advanced
+  version: '1.0.0'
+paths:
+  /test:
+    post:
+      operationId: testEndpoint
+      description: Test endpoint to ensure types are generated
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObjectJsonSchemaPropertyInput'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectJsonSchemaPropertyInput'
+components:
+  schemas:
+    LiteralJsonSchemaProperty:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: ["string", "number", "boolean"]
+        description:
+          type: string
+      additionalProperties: false
+
+    ObjectJsonSchemaPropertyInput:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: ["object"]
+        required:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ObjectJsonSchemaPropertyInputPropertiesValue'
+      additionalProperties: true
+
+    ArrayJsonSchemaPropertyInput:
+      type: object
+      required: [items]
+      properties:
+        type:
+          type: string
+          enum: ["array"]
+        description:
+          type: string
+        items:
+          $ref: '#/components/schemas/ArrayJsonSchemaPropertyInputItems'
+      additionalProperties: true
+
+    ObjectJsonSchemaPropertyInputPropertiesValue:
+      oneOf:
+        - $ref: '#/components/schemas/LiteralJsonSchemaProperty'
+        - $ref: '#/components/schemas/ObjectJsonSchemaPropertyInput'
+        - $ref: '#/components/schemas/ArrayJsonSchemaPropertyInput'
+
+    ArrayJsonSchemaPropertyInputItems:
+      oneOf:
+        - $ref: '#/components/schemas/LiteralJsonSchemaProperty'
+        - $ref: '#/components/schemas/ObjectJsonSchemaPropertyInput'
+        - $ref: '#/components/schemas/ArrayJsonSchemaPropertyInput'

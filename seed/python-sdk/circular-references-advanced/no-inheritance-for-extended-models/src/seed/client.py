@@ -4,6 +4,13 @@ import typing
 
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .core.request_options import RequestOptions
+from .raw_client import AsyncRawSeedApi, RawSeedApi
+from .types.object_json_schema_property_input import ObjectJsonSchemaPropertyInput
+from .types.object_json_schema_property_input_properties_value import ObjectJsonSchemaPropertyInputPropertiesValue
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class SeedApi:
@@ -58,6 +65,66 @@ class SeedApi:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._raw_client = RawSeedApi(client_wrapper=self._client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawSeedApi:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawSeedApi
+        """
+        return self._raw_client
+
+    def test_endpoint(
+        self,
+        *,
+        type: typing.Optional[typing.Literal["object"]] = OMIT,
+        required: typing.Optional[typing.Sequence[str]] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        properties: typing.Optional[typing.Dict[str, ObjectJsonSchemaPropertyInputPropertiesValue]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ObjectJsonSchemaPropertyInput:
+        """
+        Test endpoint to ensure types are generated
+
+        Parameters
+        ----------
+        type : typing.Optional[typing.Literal["object"]]
+
+        required : typing.Optional[typing.Sequence[str]]
+
+        description : typing.Optional[str]
+
+        properties : typing.Optional[typing.Dict[str, ObjectJsonSchemaPropertyInputPropertiesValue]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectJsonSchemaPropertyInput
+            Success
+
+        Examples
+        --------
+        from seed import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.test_endpoint()
+        """
+        _response = self._raw_client.test_endpoint(
+            type=type,
+            required=required,
+            description=description,
+            properties=properties,
+            request_options=request_options,
+        )
+        return _response.data
 
 
 class AsyncSeedApi:
@@ -112,3 +179,71 @@ class AsyncSeedApi:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._raw_client = AsyncRawSeedApi(client_wrapper=self._client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawSeedApi:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawSeedApi
+        """
+        return self._raw_client
+
+    async def test_endpoint(
+        self,
+        *,
+        type: typing.Optional[typing.Literal["object"]] = OMIT,
+        required: typing.Optional[typing.Sequence[str]] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        properties: typing.Optional[typing.Dict[str, ObjectJsonSchemaPropertyInputPropertiesValue]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ObjectJsonSchemaPropertyInput:
+        """
+        Test endpoint to ensure types are generated
+
+        Parameters
+        ----------
+        type : typing.Optional[typing.Literal["object"]]
+
+        required : typing.Optional[typing.Sequence[str]]
+
+        description : typing.Optional[str]
+
+        properties : typing.Optional[typing.Dict[str, ObjectJsonSchemaPropertyInputPropertiesValue]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectJsonSchemaPropertyInput
+            Success
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.test_endpoint()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.test_endpoint(
+            type=type,
+            required=required,
+            description=description,
+            properties=properties,
+            request_options=request_options,
+        )
+        return _response.data
