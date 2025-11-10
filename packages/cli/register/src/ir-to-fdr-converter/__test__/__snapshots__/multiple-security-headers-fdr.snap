@@ -118,6 +118,7 @@
         "id": "createTransaction",
         "includeInApiExplorer": undefined,
         "method": "POST",
+        "multiAuth": undefined,
         "name": "Create a transaction requiring multiple auth headers",
         "originalEndpointId": "endpoint_.createTransaction",
         "path": {
@@ -258,6 +259,7 @@
         "id": "createUserTransaction",
         "includeInApiExplorer": undefined,
         "method": "POST",
+        "multiAuth": undefined,
         "name": "Create a user transaction with user ID auth",
         "originalEndpointId": "endpoint_.createUserTransaction",
         "path": {
@@ -388,6 +390,7 @@
         "id": "getMerchantSettings",
         "includeInApiExplorer": undefined,
         "method": "GET",
+        "multiAuth": undefined,
         "name": "Get merchant settings",
         "originalEndpointId": "endpoint_.getMerchantSettings",
         "path": {
@@ -490,6 +493,7 @@
         "id": "listUsers",
         "includeInApiExplorer": undefined,
         "method": "GET",
+        "multiAuth": undefined,
         "name": "List all users (admin only)",
         "originalEndpointId": "endpoint_.listUsers",
         "path": {
