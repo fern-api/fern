@@ -260,8 +260,6 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
             (type) => type.name.name.originalName === "EventRequest"
         );
         expect(eventRequestType).toBeDefined();
-        // Note: v3 parser may produce "union" or "undiscriminatedUnion" depending on discriminator processing
-        // expect(["union", "undiscriminatedUnion"]).toContain(eventRequestType?.shape.type);
 
         // Validate FDR structure for union types
         expect(fdrApiDefinition.types).toBeDefined();
@@ -269,8 +267,6 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
             (type): type is { name: string } => typeof type.name === "string" && type.name === "EventRequest"
         );
         expect(fdrEventRequestType).toBeDefined();
-        // FDR structure should also have union-like shape
-        // expect(["union", "undiscriminatedUnion"]).toContain((fdrEventRequestType as any)?.shape?.type);
 
         // Snapshot the complete output for regression testing
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/oneOf-references-mapping-fdr.snap");

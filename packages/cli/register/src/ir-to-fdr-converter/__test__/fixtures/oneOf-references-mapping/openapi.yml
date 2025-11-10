@@ -42,6 +42,7 @@ components:
         - $ref: "#/components/schemas/SystemEvent"
         - $ref: "#/components/schemas/ErrorEvent"
       discriminator:
+        propertyName: type
         mapping:
           user: "#/components/schemas/UserEvent"
           system: "#/components/schemas/SystemEvent"
