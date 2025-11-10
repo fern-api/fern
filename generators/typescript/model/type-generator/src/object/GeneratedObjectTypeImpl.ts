@@ -80,8 +80,14 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
             switch (nonUndefined.length) {
                 case 0:
                     return ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword);
-                case 1:
-                    return nonUndefined[0]!;
+                case 1: {
+                    const only = nonUndefined[0];
+                    if (only == null) {
+                        // Defensive fallback; should be unreachable given length === 1
+                        return ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword);
+                    }
+                    return only;
+                }
                 default:
                     return ts.factory.createUnionTypeNode(nonUndefined);
             }
