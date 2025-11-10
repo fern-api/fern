@@ -6,7 +6,7 @@
         This ensures that the `Accept` header is set consistently across runtimes. 
         Unlike all other runtimes, Cloudflare Workers and Vercel Edge Runtime do not set a default `Accept` header in their `fetch` implementations.
       type: fix
-  createdAt: "2025-11-06"
+  createdAt: "2025-11-10"
   irVersion: 61
 
 - version: 3.28.7
