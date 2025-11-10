@@ -73,11 +73,15 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                     if (irProperty) {
                         const inlineUnionRef = context.type.getReferenceToTypeForInlineUnion(irProperty.valueType);
                         const shouldIncludeUndefined = hasQuestionToken && !this.includeSerdeLayer;
+                        const baseType = inlineUnionRef.typeNodeWithoutUndefined;
                         propertyValue = hasQuestionToken
                             ? shouldIncludeUndefined
-                                ? inlineUnionRef.typeNode
-                                : inlineUnionRef.typeNodeWithoutUndefined
-                            : inlineUnionRef.typeNodeWithoutUndefined;
+                                ? ts.factory.createUnionTypeNode([
+                                      baseType,
+                                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                                  ])
+                                : baseType
+                            : baseType;
                     }
                     return ts.factory.createPropertySignature(
                         undefined,
@@ -98,13 +102,16 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                                       irProperty.valueType
                                   );
                                   const shouldIncludeUndefined = hasQuestionToken && !this.includeSerdeLayer;
+                                  const baseType = inlineUnionRef.requestTypeNodeWithoutUndefined ??
+                                      inlineUnionRef.typeNodeWithoutUndefined;
                                   propertyValue = hasQuestionToken
                                       ? shouldIncludeUndefined
-                                          ? (inlineUnionRef.requestTypeNode ?? inlineUnionRef.typeNode)
-                                          : (inlineUnionRef.requestTypeNodeWithoutUndefined ??
-                                            inlineUnionRef.typeNodeWithoutUndefined)
-                                      : (inlineUnionRef.requestTypeNodeWithoutUndefined ??
-                                        inlineUnionRef.typeNodeWithoutUndefined);
+                                          ? ts.factory.createUnionTypeNode([
+                                                baseType,
+                                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                                            ])
+                                          : baseType
+                                      : baseType;
                               }
                               return ts.factory.createPropertySignature(
                                   undefined,
@@ -126,13 +133,16 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                                       irProperty.valueType
                                   );
                                   const shouldIncludeUndefined = hasQuestionToken && !this.includeSerdeLayer;
+                                  const baseType = inlineUnionRef.responseTypeNodeWithoutUndefined ??
+                                      inlineUnionRef.typeNodeWithoutUndefined;
                                   propertyValue = hasQuestionToken
                                       ? shouldIncludeUndefined
-                                          ? (inlineUnionRef.responseTypeNode ?? inlineUnionRef.typeNode)
-                                          : (inlineUnionRef.responseTypeNodeWithoutUndefined ??
-                                            inlineUnionRef.typeNodeWithoutUndefined)
-                                      : (inlineUnionRef.responseTypeNodeWithoutUndefined ??
-                                        inlineUnionRef.typeNodeWithoutUndefined);
+                                          ? ts.factory.createUnionTypeNode([
+                                                baseType,
+                                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                                            ])
+                                          : baseType
+                                      : baseType;
                               }
                               return ts.factory.createPropertySignature(
                                   undefined,
@@ -187,25 +197,29 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         const props = this.shape.properties.map((property) => {
             const value = this.getTypeForObjectProperty(context, property);
 
-            // When noSerdeLayer is true (i.e., !includeSerdeLayer), use typeNode which includes | undefined
             const shouldIncludeUndefined = value.isOptional && !this.includeSerdeLayer;
+            const undefinedKw = ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword);
+            
+            const baseType = value.typeNodeWithoutUndefined;
             const typeNodeToUse = this.noOptionalProperties
                 ? value.typeNode
                 : shouldIncludeUndefined
-                  ? value.typeNode
-                  : value.typeNodeWithoutUndefined;
+                  ? ts.factory.createUnionTypeNode([baseType, undefinedKw])
+                  : baseType;
 
+            const baseReq = value.requestTypeNodeWithoutUndefined ?? value.typeNodeWithoutUndefined;
             const requestTypeNodeToUse = this.noOptionalProperties
                 ? value.requestTypeNode
                 : shouldIncludeUndefined
-                  ? value.requestTypeNode
-                  : value.requestTypeNodeWithoutUndefined;
+                  ? ts.factory.createUnionTypeNode([baseReq, undefinedKw])
+                  : baseReq;
 
+            const baseResp = value.responseTypeNodeWithoutUndefined ?? value.typeNodeWithoutUndefined;
             const responseTypeNodeToUse = this.noOptionalProperties
                 ? value.responseTypeNode
                 : shouldIncludeUndefined
-                  ? value.responseTypeNode
-                  : value.responseTypeNodeWithoutUndefined;
+                  ? ts.factory.createUnionTypeNode([baseResp, undefinedKw])
+                  : baseResp;
 
             const propertyNode: Property = {
                 name: getPropertyKey(this.getPropertyKeyFromProperty(property)),
