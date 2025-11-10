@@ -211,7 +211,8 @@ export async function writeFilesToDiskAndRunGenerator({
         absolutePathToLocalSnippetJSON,
         absolutePathToLocalSnippetTemplateJSON,
         absolutePathToTmpSnippetJSON,
-        absolutePathToTmpSnippetTemplatesJSON
+        absolutePathToTmpSnippetTemplatesJSON,
+        absolutePathToLicenseFile
     });
     await taskHandler.copyGeneratedFiles();
 

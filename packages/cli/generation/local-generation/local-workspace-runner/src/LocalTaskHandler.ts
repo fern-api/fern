@@ -15,6 +15,7 @@ export declare namespace LocalTaskHandler {
         absolutePathToLocalOutput: AbsoluteFilePath;
         absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
         absolutePathToTmpSnippetTemplatesJSON: AbsoluteFilePath | undefined;
+        absolutePathToLicenseFile: AbsoluteFilePath | undefined;
     }
 }
 
@@ -26,6 +27,7 @@ export class LocalTaskHandler {
     private absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath | undefined;
     private absolutePathToLocalOutput: AbsoluteFilePath;
     private absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
+    private absolutePathToLicenseFile: AbsoluteFilePath | undefined;
 
     constructor({
         context,
@@ -34,7 +36,8 @@ export class LocalTaskHandler {
         absolutePathToLocalSnippetTemplateJSON,
         absolutePathToLocalOutput,
         absolutePathToLocalSnippetJSON,
-        absolutePathToTmpSnippetTemplatesJSON
+        absolutePathToTmpSnippetTemplatesJSON,
+        absolutePathToLicenseFile
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -43,6 +46,7 @@ export class LocalTaskHandler {
         this.absolutePathToLocalSnippetJSON = absolutePathToLocalSnippetJSON;
         this.absolutePathToLocalSnippetTemplateJSON = absolutePathToLocalSnippetTemplateJSON;
         this.absolutePathToTmpSnippetTemplatesJSON = absolutePathToTmpSnippetTemplatesJSON;
+        this.absolutePathToLicenseFile = absolutePathToLicenseFile;
     }
 
     public async copyGeneratedFiles(): Promise<void> {
@@ -71,6 +75,13 @@ export class LocalTaskHandler {
                 absolutePathToTmpSnippetJSON: this.absolutePathToTmpSnippetTemplatesJSON,
                 absolutePathToLocalSnippetJSON: this.absolutePathToLocalSnippetTemplateJSON
             });
+        }
+
+        // Copy LICENSE file if it exists
+        if (this.absolutePathToLicenseFile != null && (await doesPathExist(this.absolutePathToLicenseFile))) {
+            const licenseDestination = join(this.absolutePathToLocalOutput, RelativeFilePath.of("LICENSE"));
+            this.context.logger.debug(`Copying LICENSE file to ${licenseDestination}`);
+            await cp(this.absolutePathToLicenseFile, licenseDestination);
         }
     }
 

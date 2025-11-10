@@ -306,10 +306,274 @@ export function getGeneratorConfig({
             throw new Error("Output type did not match any of the types supported by Fern");
         }
     });
+    // For GitHub output modes, populate a minimal publish config to enable platform headers
+    // in generated code (e.g., X-Fern-SDK-Name and X-Fern-SDK-Version in Java ClientOptions)
+    let publishConfig: FernGeneratorExec.GeneratorPublishConfig | undefined = undefined;
+    generatorInvocation.outputMode._visit({
+        github: (githubMode) => {
+            const publishInfo = githubMode.publishInfo;
+            if (publishInfo != null) {
+                // Extract coordinate/package name from publish info
+                const registriesV2: Partial<FernGeneratorExec.GeneratorRegistriesConfigV2> = {};
+
+                FiddleGithubPublishInfo._visit(publishInfo, {
+                    maven: (value) => {
+                        registriesV2.maven = {
+                            registryUrl: value.registryUrl,
+                            username: "",
+                            password: "",
+                            coordinate: value.coordinate,
+                            signature: undefined
+                        };
+                    },
+                    npm: (value) => {
+                        registriesV2.npm = {
+                            registryUrl: value.registryUrl,
+                            token: "",
+                            packageName: value.packageName
+                        };
+                    },
+                    pypi: (value) => {
+                        registriesV2.pypi = {
+                            registryUrl: value.registryUrl,
+                            username: "",
+                            password: "",
+                            packageName: value.packageName,
+                            pypiMetadata: undefined
+                        };
+                    },
+                    rubygems: (value) => {
+                        registriesV2.rubygems = {
+                            registryUrl: value.registryUrl,
+                            apiKey: "",
+                            packageName: value.packageName
+                        };
+                    },
+                    nuget: (value) => {
+                        registriesV2.nuget = {
+                            registryUrl: value.registryUrl,
+                            apiKey: "",
+                            packageName: value.packageName
+                        };
+                    },
+                    crates: (value) => {
+                        registriesV2.crates = {
+                            registryUrl: value.registryUrl,
+                            token: "",
+                            packageName: value.packageName
+                        };
+                    },
+                    postman: () => {
+                        // No registriesV2 entry for postman
+                    },
+                    _other: () => {
+                        // Unknown publish type
+                    }
+                });
+
+                // Only create publish config if we have at least one registry
+                if (Object.keys(registriesV2).length > 0) {
+                    // Fill in all required registry types with the one we have or empty defaults
+                    const completeRegistriesV2: FernGeneratorExec.GeneratorRegistriesConfigV2 = {
+                        maven: registriesV2.maven || {
+                            registryUrl: "",
+                            username: "",
+                            password: "",
+                            coordinate: "",
+                            signature: undefined
+                        },
+                        npm: registriesV2.npm || {
+                            registryUrl: "",
+                            token: "",
+                            packageName: ""
+                        },
+                        pypi: registriesV2.pypi || {
+                            registryUrl: "",
+                            username: "",
+                            password: "",
+                            packageName: "",
+                            pypiMetadata: undefined
+                        },
+                        rubygems: registriesV2.rubygems || {
+                            registryUrl: "",
+                            apiKey: "",
+                            packageName: ""
+                        },
+                        nuget: registriesV2.nuget || {
+                            registryUrl: "",
+                            apiKey: "",
+                            packageName: ""
+                        },
+                        crates: registriesV2.crates || {
+                            registryUrl: "",
+                            token: "",
+                            packageName: ""
+                        }
+                    };
+
+                    publishConfig = {
+                        registries: {
+                            maven: {
+                                registryUrl: "",
+                                username: "",
+                                password: "",
+                                group: "",
+                                signature: undefined
+                            },
+                            npm: {
+                                registryUrl: "",
+                                token: "",
+                                scope: ""
+                            }
+                        },
+                        registriesV2: completeRegistriesV2,
+                        publishTarget: undefined,
+                        version: outputVersion
+                    };
+                }
+            }
+        },
+        githubV2: (githubMode) => {
+            const publishInfo = githubMode.publishInfo;
+            if (publishInfo != null) {
+                // Extract coordinate/package name from publish info
+                const registriesV2: Partial<FernGeneratorExec.GeneratorRegistriesConfigV2> = {};
+
+                FiddleGithubPublishInfo._visit(publishInfo, {
+                    maven: (value) => {
+                        registriesV2.maven = {
+                            registryUrl: value.registryUrl,
+                            username: "",
+                            password: "",
+                            coordinate: value.coordinate,
+                            signature: undefined
+                        };
+                    },
+                    npm: (value) => {
+                        registriesV2.npm = {
+                            registryUrl: value.registryUrl,
+                            token: "",
+                            packageName: value.packageName
+                        };
+                    },
+                    pypi: (value) => {
+                        registriesV2.pypi = {
+                            registryUrl: value.registryUrl,
+                            username: "",
+                            password: "",
+                            packageName: value.packageName,
+                            pypiMetadata: undefined
+                        };
+                    },
+                    rubygems: (value) => {
+                        registriesV2.rubygems = {
+                            registryUrl: value.registryUrl,
+                            apiKey: "",
+                            packageName: value.packageName
+                        };
+                    },
+                    nuget: (value) => {
+                        registriesV2.nuget = {
+                            registryUrl: value.registryUrl,
+                            apiKey: "",
+                            packageName: value.packageName
+                        };
+                    },
+                    crates: (value) => {
+                        registriesV2.crates = {
+                            registryUrl: value.registryUrl,
+                            token: "",
+                            packageName: value.packageName
+                        };
+                    },
+                    postman: () => {
+                        // No registriesV2 entry for postman
+                    },
+                    _other: () => {
+                        // Unknown publish type
+                    }
+                });
+
+                // Only create publish config if we have at least one registry
+                if (Object.keys(registriesV2).length > 0) {
+                    // Fill in all required registry types with the one we have or empty defaults
+                    const completeRegistriesV2: FernGeneratorExec.GeneratorRegistriesConfigV2 = {
+                        maven: registriesV2.maven || {
+                            registryUrl: "",
+                            username: "",
+                            password: "",
+                            coordinate: "",
+                            signature: undefined
+                        },
+                        npm: registriesV2.npm || {
+                            registryUrl: "",
+                            token: "",
+                            packageName: ""
+                        },
+                        pypi: registriesV2.pypi || {
+                            registryUrl: "",
+                            username: "",
+                            password: "",
+                            packageName: "",
+                            pypiMetadata: undefined
+                        },
+                        rubygems: registriesV2.rubygems || {
+                            registryUrl: "",
+                            apiKey: "",
+                            packageName: ""
+                        },
+                        nuget: registriesV2.nuget || {
+                            registryUrl: "",
+                            apiKey: "",
+                            packageName: ""
+                        },
+                        crates: registriesV2.crates || {
+                            registryUrl: "",
+                            token: "",
+                            packageName: ""
+                        }
+                    };
+
+                    publishConfig = {
+                        registries: {
+                            maven: {
+                                registryUrl: "",
+                                username: "",
+                                password: "",
+                                group: "",
+                                signature: undefined
+                            },
+                            npm: {
+                                registryUrl: "",
+                                token: "",
+                                scope: ""
+                            }
+                        },
+                        registriesV2: completeRegistriesV2,
+                        publishTarget: undefined,
+                        version: outputVersion
+                    };
+                }
+            }
+        },
+        publish: () => {
+            // publish mode - no platform headers needed
+        },
+        publishV2: () => {
+            // publishV2 mode - no platform headers needed
+        },
+        downloadFiles: () => {
+            // downloadFiles mode - no platform headers needed
+        },
+        _other: () => {
+            // Other modes - no platform headers needed
+        }
+    });
+
     return {
         irFilepath: irPath,
         output,
-        publish: undefined,
+        publish: publishConfig,
         customConfig: enhancedCustomConfig,
         workspaceName,
         organization,
