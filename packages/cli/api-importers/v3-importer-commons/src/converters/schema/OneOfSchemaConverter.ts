@@ -59,10 +59,11 @@ export class OneOfSchemaConverter extends AbstractConverter<
             return this.convertAsUndiscriminatedUnion();
         }
 
-        if (
-            this.schema.discriminator?.propertyName != null &&
-            Object.keys(this.schema.discriminator.mapping ?? {}).length > 0
-        ) {
+        const hasDiscriminator = this.schema.discriminator != null;
+        const hasMapping = hasDiscriminator && Object.keys(this.schema.discriminator.mapping ?? {}).length > 0;
+        const hasPropertyName = hasDiscriminator && this.schema.discriminator.propertyName != null;
+
+        if (hasMapping || hasPropertyName) {
             return this.convertAsDiscriminatedUnion();
         }
 
@@ -184,12 +185,21 @@ export class OneOfSchemaConverter extends AbstractConverter<
             referencedTypes.add(typeId);
         }
 
+        const discriminantProperty = this.inferDiscriminantProperty();
+        if (discriminantProperty == null) {
+            this.context.errorCollector.addError({
+                message: "Cannot determine discriminant property for discriminated union",
+                breadcrumbs: this.breadcrumbs
+            });
+            return undefined;
+        }
+
         return {
             type: Type.union({
                 baseProperties,
                 discriminant: this.context.casingsGenerator.generateNameAndWireValue({
-                    name: this.schema.discriminator.propertyName,
-                    wireValue: this.schema.discriminator.propertyName
+                    name: discriminantProperty,
+                    wireValue: discriminantProperty
                 }),
                 extends: extends_,
                 types: unionTypes
@@ -464,5 +474,70 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
     private getDiscriminatorKeyForRef(subSchema: OpenAPIV3_1.ReferenceObject): string | undefined {
         return Object.entries(this.schema.discriminator?.mapping ?? {}).find(([_, ref]) => ref === subSchema.$ref)?.[0];
+    }
+
+    private inferDiscriminantProperty(): string | undefined {
+        if (this.schema.discriminator?.propertyName != null) {
+            return this.schema.discriminator.propertyName;
+        }
+
+        const mapping = this.schema.discriminator?.mapping ?? {};
+        const mappingEntries = Object.entries(mapping);
+        
+        if (mappingEntries.length === 0) {
+            return undefined;
+        }
+
+        // Collect all properties from all mapped schemas
+        const propertyNames = new Set<string>();
+        for (const [discriminantValue, reference] of mappingEntries) {
+            const resolved = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
+                reference: { $ref: reference },
+                breadcrumbs: [...this.breadcrumbs, "discriminator", "mapping", discriminantValue]
+            });
+            
+            if (resolved.resolved && resolved.value.properties) {
+                for (const propName of Object.keys(resolved.value.properties)) {
+                    propertyNames.add(propName);
+                }
+            }
+        }
+
+        for (const propName of propertyNames) {
+            let isCommonDiscriminant = true;
+            
+            for (const [discriminantValue, reference] of mappingEntries) {
+                const resolved = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
+                    reference: { $ref: reference },
+                    breadcrumbs: [...this.breadcrumbs, "discriminator", "mapping", discriminantValue]
+                });
+                
+                if (!resolved.resolved) {
+                    isCommonDiscriminant = false;
+                    break;
+                }
+
+                const prop = resolved.value.properties?.[propName];
+                if (!prop) {
+                    isCommonDiscriminant = false;
+                    break;
+                }
+
+                const hasConstOrEnum = 
+                    ('const' in prop) || 
+                    ('enum' in prop && Array.isArray(prop.enum) && prop.enum.length > 0);
+                
+                if (!hasConstOrEnum) {
+                    isCommonDiscriminant = false;
+                    break;
+                }
+            }
+
+            if (isCommonDiscriminant) {
+                return propName;
+            }
+        }
+
+        return undefined;
     }
 }

@@ -273,6 +273,71 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/oneOf-references-mapping-ir.snap");
     });
 
+    it("should handle OpenAPI with oneOf discriminator mapping WITHOUT propertyName (backwards compatibility)", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/oneOf-mapping-no-propertyName")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "oneOf-mapping-no-propertyName"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        expect(intermediateRepresentation.types).toBeDefined();
+        expect(Object.keys(intermediateRepresentation.types)).toContain("EventRequest");
+
+        const eventRequestType = Object.values(intermediateRepresentation.types).find(
+            (type) => type.name.name.originalName === "EventRequest"
+        );
+        expect(eventRequestType).toBeDefined();
+
+        expect(fdrApiDefinition.types).toBeDefined();
+        const fdrEventRequestType = Object.values(fdrApiDefinition.types as Record<string, { name?: unknown }>).find(
+            (type): type is { name: string } => typeof type.name === "string" && type.name === "EventRequest"
+        );
+        expect(fdrEventRequestType).toBeDefined();
+
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/oneOf-mapping-no-propertyName-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/oneOf-mapping-no-propertyName-ir.snap");
+    });
+
     it("should validate OpenAPI fixture structure", async () => {
         // Basic validation that our test fixture is properly structured
         const context = createMockTaskContext();
