@@ -3,5 +3,5 @@
 import type * as SeedExhaustive from "../../../../../index.js";
 
 export interface PutResponse {
-    errors?: SeedExhaustive.endpoints.Error_[];
+    errors?: SeedExhaustive.endpoints.Error_[] | undefined;
 }
