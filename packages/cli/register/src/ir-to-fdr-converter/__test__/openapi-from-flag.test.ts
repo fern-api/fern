@@ -260,17 +260,18 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
             (type) => type.name.name.originalName === "EventRequest"
         );
         expect(eventRequestType).toBeDefined();
-        // Note: v3 parser may produce "union" or "undiscriminatedUnion" depending on discriminator processing
-        // expect(["union", "undiscriminatedUnion"]).toContain(eventRequestType?.shape.type);
+        // OpenAPI oneOf with discriminator.propertyName and mapping should create discriminated union
+        // In IR format, discriminated unions are represented as type: "union"
+        expect(eventRequestType?.shape.type).toBe("union");
 
-        // Validate FDR structure for union types
-        expect(fdrApiDefinition.types).toBeDefined();
-        const fdrEventRequestType = Object.values(fdrApiDefinition.types as Record<string, { name?: unknown }>).find(
-            (type): type is { name: string } => typeof type.name === "string" && type.name === "EventRequest"
+        // Also verify the FDR representation shows discriminatedUnion
+        const fdrEventRequestType = Object.values(
+            fdrApiDefinition.types as Record<string, { name?: unknown; shape?: { type?: string } }>
+        ).find(
+            (type): type is { name: string; shape: { type: string } } =>
+                typeof type.name === "string" && type.name === "EventRequest"
         );
-        expect(fdrEventRequestType).toBeDefined();
-        // FDR structure should also have union-like shape
-        // expect(["union", "undiscriminatedUnion"]).toContain((fdrEventRequestType as any)?.shape?.type);
+        expect(fdrEventRequestType?.shape.type).toBe("discriminatedUnion");
 
         // Snapshot the complete output for regression testing
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/oneOf-references-mapping-fdr.snap");

@@ -59,12 +59,15 @@ export class OneOfSchemaConverter extends AbstractConverter<
             return this.convertAsUndiscriminatedUnion();
         }
 
-        if (
-            this.schema.discriminator != null &&
-            !this.unionVariantsContainLiteral({
-                discriminantProperty: this.schema.discriminator.propertyName
-            })
-        ) {
+        const containsLiteral =
+            this.schema.discriminator != null
+                ? this.unionVariantsContainLiteral({
+                      discriminantProperty: this.schema.discriminator.propertyName
+                  })
+                : false;
+
+        // Use discriminated union when discriminator mapping exists and variants have discriminant property
+        if (this.schema.discriminator != null && this.schema.discriminator.mapping != null) {
             return this.convertAsDiscriminatedUnion();
         }
 
@@ -94,6 +97,15 @@ export class OneOfSchemaConverter extends AbstractConverter<
         let inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> = {};
 
         for (const [discriminant, reference] of Object.entries(this.schema.discriminator.mapping ?? {})) {
+            // Resolve the referenced schema to get its description
+            const resolvedSchemaReference = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
+                reference: { $ref: reference },
+                breadcrumbs: this.breadcrumbs
+            });
+            const referencedSchemaDescription = resolvedSchemaReference.resolved
+                ? resolvedSchemaReference.value.description
+                : undefined;
+
             const singleUnionTypeSchemaConverter = new SchemaOrReferenceConverter({
                 context: this.context,
                 schemaOrReference: { $ref: reference },
@@ -117,7 +129,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 });
 
                 unionTypes.push({
-                    docs: undefined,
+                    docs: referencedSchemaDescription,
                     discriminantValue: nameAndWireValue,
                     availability: convertedSchema.availability,
                     displayName: discriminant,
