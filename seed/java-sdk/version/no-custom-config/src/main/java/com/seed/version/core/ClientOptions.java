@@ -21,6 +21,8 @@ public final class ClientOptions {
 
     private final int timeout;
 
+    private final int maxRetries;
+
     /**
      * version.toString() is sent as the "X-API-Version" header.
      */
@@ -35,6 +37,7 @@ public final class ClientOptions {
             Map<String, Supplier<String>> headerSuppliers,
             OkHttpClient httpClient,
             int timeout,
+            int maxRetries,
             Optional<ApiVersion> version) {
         this.environment = environment;
         this.headers = new HashMap<>();
@@ -48,6 +51,7 @@ public final class ClientOptions {
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
         this.timeout = timeout;
+        this.maxRetries = maxRetries;
         this.version = version.orElse(ApiVersion.V_2);
         this.headers.put("X-API-Version", this.version.toString());
     }
@@ -96,6 +100,10 @@ public final class ClientOptions {
                 .writeTimeout(0, TimeUnit.SECONDS)
                 .readTimeout(0, TimeUnit.SECONDS)
                 .build();
+    }
+
+    public int maxRetries() {
+        return this.maxRetries;
     }
 
     public static Builder builder() {
@@ -191,7 +199,8 @@ public final class ClientOptions {
             this.httpClient = httpClientBuilder.build();
             this.timeout = Optional.of(httpClient.callTimeoutMillis() / 1000);
 
-            return new ClientOptions(environment, headers, headerSuppliers, httpClient, this.timeout.get(), version);
+            return new ClientOptions(
+                    environment, headers, headerSuppliers, httpClient, this.timeout.get(), this.maxRetries, version);
         }
 
         /**

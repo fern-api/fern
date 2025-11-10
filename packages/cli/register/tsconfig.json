@@ -9,13 +9,7 @@
   "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../workspace/loader"
-    },
-    {
       "path": "../task-context"
-    },
-    {
-      "path": "../project-loader"
     },
     {
       "path": "../workspace/lazy-fern-workspace"

@@ -880,9 +880,27 @@ export function convertSchemaObject(
                     const firstSchema = schema.oneOf[0];
                     const secondSchema = schema.oneOf[1];
                     if (!isReferenceObject(firstSchema) && (firstSchema.type as string) === "null") {
-                        return convertSchema(secondSchema, false, true, context, breadcrumbs, source, namespace);
+                        const convertedSchema = convertSchema(
+                            secondSchema,
+                            wrapAsOptional,
+                            true,
+                            context,
+                            breadcrumbs,
+                            source,
+                            namespace
+                        );
+                        return maybeInjectDescriptionOrGroupName(convertedSchema, description, namespace, groupName);
                     } else if (!isReferenceObject(secondSchema) && (secondSchema.type as string) === "null") {
-                        return convertSchema(firstSchema, false, true, context, breadcrumbs, source, namespace);
+                        const convertedSchema = convertSchema(
+                            firstSchema,
+                            wrapAsOptional,
+                            true,
+                            context,
+                            breadcrumbs,
+                            source,
+                            namespace
+                        );
+                        return maybeInjectDescriptionOrGroupName(convertedSchema, description, namespace, groupName);
                     }
                 }
 
@@ -978,7 +996,7 @@ export function convertSchemaObject(
                     if (!isReferenceObject(firstSchema) && (firstSchema.type as unknown) === "null") {
                         const convertedSchema = convertSchema(
                             secondSchema,
-                            false,
+                            wrapAsOptional,
                             true,
                             context,
                             breadcrumbs,
@@ -989,7 +1007,7 @@ export function convertSchemaObject(
                     } else if (!isReferenceObject(secondSchema) && (secondSchema.type as unknown) === "null") {
                         const convertedSchema = convertSchema(
                             firstSchema,
-                            false,
+                            wrapAsOptional,
                             true,
                             context,
                             breadcrumbs,
@@ -1324,11 +1342,12 @@ function maybeInjectDescriptionOrGroupName(
             groupName
         });
     } else if (schema.type === "optional") {
+        const innerValue = maybeInjectDescriptionOrGroupName(schema.value, description, namespace, groupName);
         return SchemaWithExample.optional({
             nameOverride: schema.nameOverride,
             generatedName: schema.generatedName,
             title: schema.title,
-            value: schema.value,
+            value: innerValue,
             description,
             availability: schema.availability,
             namespace,
@@ -1336,16 +1355,22 @@ function maybeInjectDescriptionOrGroupName(
             inline: undefined
         });
     } else if (schema.type === "nullable") {
+        const innerValue = maybeInjectDescriptionOrGroupName(schema.value, description, namespace, groupName);
         return SchemaWithExample.nullable({
             nameOverride: schema.nameOverride,
             generatedName: schema.generatedName,
             title: schema.title,
-            value: schema.value,
+            value: innerValue,
             description,
             availability: schema.availability,
             namespace,
             groupName,
             inline: undefined
+        });
+    } else if (schema.type === "primitive" && description != null && schema.description == null) {
+        return SchemaWithExample.primitive({
+            ...schema,
+            description
         });
     }
     return schema;

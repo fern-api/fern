@@ -151,9 +151,7 @@ client.user().createUsernameWithReferencedType(
 
 ```java
 client.user().createUsernameOptional(
-    Optional.of(
-        Optional.empty()
-    )
+    Optional.empty()
 );
 ```
 </dd>

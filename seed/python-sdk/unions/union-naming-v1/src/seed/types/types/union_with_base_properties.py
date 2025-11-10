@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
@@ -82,6 +83,7 @@ from seed.types import IntegerUnionWithBaseProperties
 
 IntegerUnionWithBaseProperties(value=5)
 """
-UnionWithBaseProperties = typing.Union[
-    IntegerUnionWithBaseProperties, StringUnionWithBaseProperties, FooUnionWithBaseProperties
+UnionWithBaseProperties = typing_extensions.Annotated[
+    typing.Union[IntegerUnionWithBaseProperties, StringUnionWithBaseProperties, FooUnionWithBaseProperties],
+    pydantic.Field(discriminator="type"),
 ]

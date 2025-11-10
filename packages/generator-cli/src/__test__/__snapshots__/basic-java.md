@@ -5,6 +5,11 @@
 
 The Basic Java library provides convenient access to the Basic APIs from Java.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Contributing](#contributing)
+
 ## Installation
 
 ### Gradle

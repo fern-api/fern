@@ -84,8 +84,7 @@ public class UnionWireTest {
         Assertions.assertEquals("PATCH", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody =
-                "" + "{\n" + "  \"type\": \"circle\",\n" + "  \"radius\": 1.1,\n" + "  \"id\": \"id\"\n" + "}";
+        String expectedRequestBody = "" + "{\n" + "  \"type\": \"circle\",\n" + "  \"radius\": 1.1\n" + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");

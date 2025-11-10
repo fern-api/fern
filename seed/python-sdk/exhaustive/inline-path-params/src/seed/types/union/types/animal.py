@@ -40,4 +40,4 @@ class Animal_Cat(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-Animal = typing.Union[Animal_Dog, Animal_Cat]
+Animal = typing_extensions.Annotated[typing.Union[Animal_Dog, Animal_Cat], pydantic.Field(discriminator="animal")]

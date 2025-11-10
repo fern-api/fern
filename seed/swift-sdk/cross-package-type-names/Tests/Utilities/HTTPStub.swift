@@ -1,18 +1,19 @@
+import CrossPackageTypeNames
 import Foundation
 
 final class HTTPStub {
     private static func buildURLSession(stubId: String, operationQueue: OperationQueue)
-        -> URLSession
+        -> Networking.URLSession
     {
         let config = buildURLSessionConfiguration(stubId: stubId)
         if let uuid = UUID(uuidString: stubId) {
             StubURLProtocol.register(queue: operationQueue, id: uuid)
         }
-        return URLSession(configuration: config, delegate: nil, delegateQueue: operationQueue)
+        return Networking.URLSession(configuration: config, delegate: nil, delegateQueue: operationQueue)
     }
 
-    private static func buildURLSessionConfiguration(stubId: String) -> URLSessionConfiguration {
-        let config = URLSessionConfiguration.ephemeral
+    private static func buildURLSessionConfiguration(stubId: String) -> Networking.URLSessionConfiguration {
+        let config = Networking.URLSessionConfiguration.ephemeral
         config.protocolClasses = [StubURLProtocol.self]
         config.requestCachePolicy = .reloadIgnoringLocalCacheData
         config.urlCache = nil
@@ -27,7 +28,7 @@ final class HTTPStub {
         return queue
     }
 
-    private let session: URLSession
+    private let session: Networking.URLSession
     private let delegateQueue: OperationQueue
     private let identifier: UUID
 
@@ -43,7 +44,7 @@ final class HTTPStub {
         #endif
     }
 
-    var urlSession: URLSession {
+    var urlSession: Networking.URLSession {
         session
     }
 
@@ -70,7 +71,7 @@ final class HTTPStub {
         StubURLProtocol.configureSequence(id: identifier, responses: responses)
     }
 
-    func takeLastRequest() -> URLRequest? {
+    func takeLastRequest() -> Networking.URLRequest? {
         StubURLProtocol.takeLastRequest(for: identifier)
     }
 
@@ -87,18 +88,18 @@ final class HTTPStub {
     }
 }
 
-private final class StubURLProtocol: URLProtocol {
+private final class StubURLProtocol: Networking.URLProtocol {
     struct Response {
         let statusCode: Int
         let headers: [String: String]
         let body: Data
-        var lastRequest: URLRequest?
+        var lastRequest: Networking.URLRequest?
     }
 
     struct ResponseSequence {
         var responses: [Response]
         var currentIndex: Int = 0
-        var lastRequest: URLRequest?
+        var lastRequest: Networking.URLRequest?
 
         mutating func nextResponse() -> Response? {
             guard currentIndex < responses.count else { return nil }
@@ -144,7 +145,7 @@ private final class StubURLProtocol: URLProtocol {
         lock.unlock()
     }
 
-    static func takeLastRequest(for id: UUID) -> URLRequest? {
+    static func takeLastRequest(for id: UUID) -> Networking.URLRequest? {
         lock.lock()
         defer { lock.unlock() }
 
@@ -208,7 +209,7 @@ private final class StubURLProtocol: URLProtocol {
         }
     #endif
 
-    override class func canInit(with request: URLRequest) -> Bool {
+    override class func canInit(with request: Networking.URLRequest) -> Bool {
         #if canImport(Darwin)
             return request.value(forHTTPHeaderField: "Stub-ID") != nil
         #else
@@ -218,7 +219,7 @@ private final class StubURLProtocol: URLProtocol {
         #endif
     }
 
-    override class func canonicalRequest(for request: URLRequest) -> URLRequest {
+    override class func canonicalRequest(for request: Networking.URLRequest) -> Networking.URLRequest {
         request
     }
 
@@ -273,7 +274,7 @@ private final class StubURLProtocol: URLProtocol {
                 return
             }
 
-            let httpResponse = HTTPURLResponse(
+            let httpResponse = Networking.HTTPURLResponse(
                 url: url,
                 statusCode: response.statusCode,
                 httpVersion: "HTTP/1.1",
@@ -300,7 +301,7 @@ private final class StubURLProtocol: URLProtocol {
             return
         }
 
-        let httpResponse = HTTPURLResponse(
+        let httpResponse = Networking.HTTPURLResponse(
             url: url,
             statusCode: response.statusCode,
             httpVersion: "HTTP/1.1",

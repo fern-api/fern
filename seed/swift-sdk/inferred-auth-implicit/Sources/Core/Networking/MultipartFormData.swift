@@ -2,17 +2,17 @@ import Foundation
 
 /// Helper class for building multipart form data requests
 class MultipartFormData {
-    let boundary: String
-    private var bodyData: Data
+    let boundary: Swift.String
+    private var bodyData: Foundation.Data
 
     init() {
-        self.boundary = "Boundary-\(UUID().uuidString)"
-        self.bodyData = Data()
+        self.boundary = "Boundary-\(Foundation.UUID().uuidString)"
+        self.bodyData = Foundation.Data()
     }
 
     /// Append a file field to the form data
     func appendFile(
-        _ data: Data, withName name: String, fileName: String? = nil
+        _ data: Foundation.Data, withName name: Swift.String, fileName: Swift.String? = nil
     ) {
         bodyData.appendUTF8String("--\(boundary)\r\n")
         var contentDisposition = "Content-Disposition: form-data; name=\"\(name)\""
@@ -28,7 +28,7 @@ class MultipartFormData {
     }
 
     /// Append a text field to the form data
-    func appendField(_ value: String, withName name: String) {
+    func appendField(_ value: Swift.String, withName name: Swift.String) {
         bodyData.appendUTF8String("--\(boundary)\r\n")
         bodyData.appendUTF8String(
             "Content-Disposition: form-data; name=\"\(name)\"\r\n\r\n")
@@ -37,7 +37,7 @@ class MultipartFormData {
     }
 
     /// Returns the complete multipart form data with closing boundary
-    func data() -> Data {
+    func data() -> Foundation.Data {
         var finalData = bodyData
         finalData.appendUTF8String("--\(boundary)--\r\n")
         return finalData

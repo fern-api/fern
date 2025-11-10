@@ -35,8 +35,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.requestParameters.SeedRequestParametersClient;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedRequestParametersClient client = SeedRequestParametersClient\n            .builder()\n            .build();\n\n        client.user().createUsernameOptional(\n            Optional.of(\n                Optional.empty()\n            )\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.requestParameters.SeedRequestParametersClient;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedRequestParametersClient client = SeedRequestParametersClient\n            .builder()\n            .build();\n\n        client.user().createUsernameOptional(\n            Optional.of(\n                Optional.empty()\n            )\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.requestParameters.SeedRequestParametersClient;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedRequestParametersClient client = SeedRequestParametersClient\n            .builder()\n            .build();\n\n        client.user().createUsernameOptional(\n            Optional.empty()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.requestParameters.SeedRequestParametersClient;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedRequestParametersClient client = SeedRequestParametersClient\n            .builder()\n            .build();\n\n        client.user().createUsernameOptional(\n            Optional.empty()\n        );\n    }\n}\n"
             }
         },
         {

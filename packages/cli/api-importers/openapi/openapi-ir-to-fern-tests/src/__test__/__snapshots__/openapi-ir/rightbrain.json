@@ -861,9 +861,6 @@
                     },
                     "multipleRolesNotAllowedError": {
                       "properties": {
-                        "resource": {
-                          "type": "null"
-                        },
                         "roles": {
                           "value": [
                             {
@@ -995,14 +992,7 @@
                     "type": "primitive"
                   },
                   "invalidMemberError": {
-                    "properties": {
-                      "resource": {
-                        "type": "null"
-                      },
-                      "subject": {
-                        "type": "null"
-                      }
-                    },
+                    "properties": {},
                     "type": "object"
                   }
                 },
@@ -1280,11 +1270,7 @@
                       "type": "primitive"
                     },
                     "invalidSubjectTypeError": {
-                      "properties": {
-                        "subject": {
-                          "type": "null"
-                        }
-                      },
+                      "properties": {},
                       "type": "object"
                     },
                     "reason": {
@@ -1403,14 +1389,7 @@
                     "type": "primitive"
                   },
                   "invalidMemberError": {
-                    "properties": {
-                      "resource": {
-                        "type": "null"
-                      },
-                      "subject": {
-                        "type": "null"
-                      }
-                    },
+                    "properties": {},
                     "type": "object"
                   }
                 },
@@ -1542,6 +1521,7 @@
             "value": {
               "generatedName": "OrgListOrgGetRequestMembership",
               "schema": "OrgMembership",
+              "groupName": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -2660,6 +2640,7 @@
             "value": {
               "generatedName": "OrgInvitesListOrgOrgIdInviteGetRequestShow",
               "schema": "OrgInviteShow",
+              "groupName": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -8023,9 +8004,6 @@
                     },
                     "multipleRolesNotAllowedError": {
                       "properties": {
-                        "resource": {
-                          "type": "null"
-                        },
                         "roles": {
                           "value": [
                             {
@@ -8157,14 +8135,7 @@
                     "type": "primitive"
                   },
                   "invalidMemberError": {
-                    "properties": {
-                      "resource": {
-                        "type": "null"
-                      },
-                      "subject": {
-                        "type": "null"
-                      }
-                    },
+                    "properties": {},
                     "type": "object"
                   }
                 },
@@ -8468,11 +8439,7 @@
                       "type": "primitive"
                     },
                     "invalidSubjectTypeError": {
-                      "properties": {
-                        "subject": {
-                          "type": "null"
-                        }
-                      },
+                      "properties": {},
                       "type": "object"
                     },
                     "reason": {
@@ -8591,14 +8558,7 @@
                     "type": "primitive"
                   },
                   "invalidMemberError": {
-                    "properties": {
-                      "resource": {
-                        "type": "null"
-                      },
-                      "subject": {
-                        "type": "null"
-                      }
-                    },
+                    "properties": {},
                     "type": "object"
                   }
                 },
@@ -9120,9 +9080,6 @@
                           "value": [
                             {
                               "properties": {
-                                "config": {
-                                  "type": "null"
-                                },
                                 "id": {
                                   "value": {
                                     "value": "id",
@@ -10647,6 +10604,7 @@
             "value": {
               "generatedName": "ListChatsOrgOrgIdProjectProjectIdCollectionCollectionIdChatGetRequestShow",
               "schema": "CollectionChatShow",
+              "groupName": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -13350,9 +13308,6 @@
                     },
                     "multipleRolesNotAllowedError": {
                       "properties": {
-                        "resource": {
-                          "type": "null"
-                        },
                         "roles": {
                           "value": [
                             {
@@ -13484,14 +13439,7 @@
                     "type": "primitive"
                   },
                   "invalidMemberError": {
-                    "properties": {
-                      "resource": {
-                        "type": "null"
-                      },
-                      "subject": {
-                        "type": "null"
-                      }
-                    },
+                    "properties": {},
                     "type": "object"
                   }
                 },
@@ -13821,11 +13769,7 @@
                       "type": "primitive"
                     },
                     "invalidSubjectTypeError": {
-                      "properties": {
-                        "subject": {
-                          "type": "null"
-                        }
-                      },
+                      "properties": {},
                       "type": "object"
                     },
                     "reason": {
@@ -13944,14 +13888,7 @@
                     "type": "primitive"
                   },
                   "invalidMemberError": {
-                    "properties": {
-                      "resource": {
-                        "type": "null"
-                      },
-                      "subject": {
-                        "type": "null"
-                      }
-                    },
+                    "properties": {},
                     "type": "object"
                   }
                 },
@@ -14691,9 +14628,6 @@
                           "value": [
                             {
                               "properties": {
-                                "config": {
-                                  "type": "null"
-                                },
                                 "id": {
                                   "value": {
                                     "value": "id",
@@ -15451,9 +15385,6 @@
                       "value": [
                         {
                           "properties": {
-                            "config": {
-                              "type": "null"
-                            },
                             "id": {
                               "value": {
                                 "value": "id",
@@ -18755,9 +18686,6 @@
                     },
                     "multipleRolesNotAllowedError": {
                       "properties": {
-                        "resource": {
-                          "type": "null"
-                        },
                         "roles": {
                           "value": [
                             {
@@ -18889,14 +18817,7 @@
                     "type": "primitive"
                   },
                   "invalidMemberError": {
-                    "properties": {
-                      "resource": {
-                        "type": "null"
-                      },
-                      "subject": {
-                        "type": "null"
-                      }
-                    },
+                    "properties": {},
                     "type": "object"
                   }
                 },
@@ -19226,11 +19147,7 @@
                       "type": "primitive"
                     },
                     "invalidSubjectTypeError": {
-                      "properties": {
-                        "subject": {
-                          "type": "null"
-                        }
-                      },
+                      "properties": {},
                       "type": "object"
                     },
                     "reason": {
@@ -19349,14 +19266,7 @@
                     "type": "primitive"
                   },
                   "invalidMemberError": {
-                    "properties": {
-                      "resource": {
-                        "type": "null"
-                      },
-                      "subject": {
-                        "type": "null"
-                      }
-                    },
+                    "properties": {},
                     "type": "object"
                   }
                 },
@@ -22205,9 +22115,6 @@
                     },
                     "multipleRolesNotAllowedError": {
                       "properties": {
-                        "resource": {
-                          "type": "null"
-                        },
                         "roles": {
                           "value": [
                             {
@@ -22339,14 +22246,7 @@
                     "type": "primitive"
                   },
                   "invalidMemberError": {
-                    "properties": {
-                      "resource": {
-                        "type": "null"
-                      },
-                      "subject": {
-                        "type": "null"
-                      }
-                    },
+                    "properties": {},
                     "type": "object"
                   }
                 },
@@ -22624,11 +22524,7 @@
                       "type": "primitive"
                     },
                     "invalidSubjectTypeError": {
-                      "properties": {
-                        "subject": {
-                          "type": "null"
-                        }
-                      },
+                      "properties": {},
                       "type": "object"
                     },
                     "reason": {
@@ -22747,14 +22643,7 @@
                     "type": "primitive"
                   },
                   "invalidMemberError": {
-                    "properties": {
-                      "resource": {
-                        "type": "null"
-                      },
-                      "subject": {
-                        "type": "null"
-                      }
-                    },
+                    "properties": {},
                     "type": "object"
                   }
                 },
@@ -24701,18 +24590,6 @@
                         },
                         "datasource_connection": {
                           "properties": {
-                            "private": {
-                              "type": "null"
-                            },
-                            "project_id": {
-                              "type": "null"
-                            },
-                            "datasource_id": {
-                              "type": "null"
-                            },
-                            "created_by": {
-                              "type": "null"
-                            },
                             "id": {
                               "value": {
                                 "value": "id",
@@ -27746,18 +27623,6 @@
                         },
                         "datasource_connection": {
                           "properties": {
-                            "private": {
-                              "type": "null"
-                            },
-                            "project_id": {
-                              "type": "null"
-                            },
-                            "datasource_id": {
-                              "type": "null"
-                            },
-                            "created_by": {
-                              "type": "null"
-                            },
                             "id": {
                               "value": {
                                 "value": "id",
@@ -30791,18 +30656,6 @@
                         },
                         "datasource_connection": {
                           "properties": {
-                            "private": {
-                              "type": "null"
-                            },
-                            "project_id": {
-                              "type": "null"
-                            },
-                            "datasource_id": {
-                              "type": "null"
-                            },
-                            "created_by": {
-                              "type": "null"
-                            },
                             "id": {
                               "value": {
                                 "value": "id",
@@ -33836,18 +33689,6 @@
                         },
                         "datasource_connection": {
                           "properties": {
-                            "private": {
-                              "type": "null"
-                            },
-                            "project_id": {
-                              "type": "null"
-                            },
-                            "datasource_id": {
-                              "type": "null"
-                            },
-                            "created_by": {
-                              "type": "null"
-                            },
                             "id": {
                               "value": {
                                 "value": "id",
@@ -36881,18 +36722,6 @@
                         },
                         "datasource_connection": {
                           "properties": {
-                            "private": {
-                              "type": "null"
-                            },
-                            "project_id": {
-                              "type": "null"
-                            },
-                            "datasource_id": {
-                              "type": "null"
-                            },
-                            "created_by": {
-                              "type": "null"
-                            },
                             "id": {
                               "value": {
                                 "value": "id",
@@ -39926,18 +39755,6 @@
                         },
                         "datasource_connection": {
                           "properties": {
-                            "private": {
-                              "type": "null"
-                            },
-                            "project_id": {
-                              "type": "null"
-                            },
-                            "datasource_id": {
-                              "type": "null"
-                            },
-                            "created_by": {
-                              "type": "null"
-                            },
                             "id": {
                               "value": {
                                 "value": "id",
@@ -42971,18 +42788,6 @@
                         },
                         "datasource_connection": {
                           "properties": {
-                            "private": {
-                              "type": "null"
-                            },
-                            "project_id": {
-                              "type": "null"
-                            },
-                            "datasource_id": {
-                              "type": "null"
-                            },
-                            "created_by": {
-                              "type": "null"
-                            },
                             "id": {
                               "value": {
                                 "value": "id",
@@ -44748,9 +44553,6 @@
                                 "type": {
                                   "value": "info",
                                   "type": "enum"
-                                },
-                                "context": {
-                                  "type": "null"
                                 }
                               },
                               "type": "object"
@@ -44932,9 +44734,6 @@
                                 "type": {
                                   "value": "info",
                                   "type": "enum"
-                                },
-                                "context": {
-                                  "type": "null"
                                 }
                               },
                               "type": "object"
@@ -45998,18 +45797,6 @@
                         },
                         "datasource_connection": {
                           "properties": {
-                            "private": {
-                              "type": "null"
-                            },
-                            "project_id": {
-                              "type": "null"
-                            },
-                            "datasource_id": {
-                              "type": "null"
-                            },
-                            "created_by": {
-                              "type": "null"
-                            },
                             "id": {
                               "value": {
                                 "value": "id",
@@ -47596,6 +47383,7 @@
             "generatedName": "GetAllTasksRequestName",
             "description": "Filter tasks by name. Supports partial matches.",
             "value": {
+              "description": "Filter tasks by name. Supports partial matches.",
               "schema": {
                 "type": "string"
               },
@@ -47618,6 +47406,7 @@
             "generatedName": "GetAllTasksRequestPageLimit",
             "description": "The maximum number of items to return per page. Defaults to `100` if not specified.",
             "value": {
+              "description": "The maximum number of items to return per page. Defaults to `100` if not specified.",
               "schema": {
                 "minimum": 1,
                 "maximum": 100,
@@ -47642,6 +47431,7 @@
             "generatedName": "GetAllTasksRequestCursor",
             "description": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
             "value": {
+              "description": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
               "schema": {
                 "format": "uuid",
                 "type": "string"
@@ -48027,12 +47817,6 @@
                                     }
                                   ],
                                   "type": "map"
-                                },
-                                "task_forwarder_id": {
-                                  "type": "null"
-                                },
-                                "rag": {
-                                  "type": "null"
                                 },
                                 "image_required": {
                                   "value": {
@@ -49696,6 +49480,7 @@
             "generatedName": "GetTaskRunsRequestPageLimit",
             "description": "The maximum number of items to return per page. Defaults to `100` if not specified.",
             "value": {
+              "description": "The maximum number of items to return per page. Defaults to `100` if not specified.",
               "schema": {
                 "minimum": 1,
                 "maximum": 100,
@@ -49720,6 +49505,7 @@
             "generatedName": "GetTaskRunsRequestCursor",
             "description": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
             "value": {
+              "description": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
               "schema": {
                 "format": "uuid",
                 "type": "string"
@@ -49743,6 +49529,7 @@
             "generatedName": "GetTaskRunsRequestTaskRevisionId",
             "description": "The specific Task Revision to reference.",
             "value": {
+              "description": "The specific Task Revision to reference.",
               "schema": {
                 "format": "uuid",
                 "type": "string"
@@ -51442,9 +51229,6 @@
                     },
                     "multipleRolesNotAllowedError": {
                       "properties": {
-                        "resource": {
-                          "type": "null"
-                        },
                         "roles": {
                           "value": [
                             {
@@ -51576,14 +51360,7 @@
                     "type": "primitive"
                   },
                   "invalidMemberError": {
-                    "properties": {
-                      "resource": {
-                        "type": "null"
-                      },
-                      "subject": {
-                        "type": "null"
-                      }
-                    },
+                    "properties": {},
                     "type": "object"
                   }
                 },
@@ -51913,11 +51690,7 @@
                       "type": "primitive"
                     },
                     "invalidSubjectTypeError": {
-                      "properties": {
-                        "subject": {
-                          "type": "null"
-                        }
-                      },
+                      "properties": {},
                       "type": "object"
                     },
                     "reason": {
@@ -52036,14 +51809,7 @@
                     "type": "primitive"
                   },
                   "invalidMemberError": {
-                    "properties": {
-                      "resource": {
-                        "type": "null"
-                      },
-                      "subject": {
-                        "type": "null"
-                      }
-                    },
+                    "properties": {},
                     "type": "object"
                   }
                 },
@@ -52239,6 +52005,7 @@
             "generatedName": "GetAllTaskForwardersRequestPageLimit",
             "description": "The maximum number of items to return per page. Defaults to `100` if not specified.",
             "value": {
+              "description": "The maximum number of items to return per page. Defaults to `100` if not specified.",
               "schema": {
                 "minimum": 1,
                 "maximum": 100,
@@ -52263,6 +52030,7 @@
             "generatedName": "GetAllTaskForwardersRequestCursor",
             "description": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
             "value": {
+              "description": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
               "schema": {
                 "format": "uuid",
                 "type": "string"
@@ -55533,15 +55301,20 @@
             "schema": {
               "generatedName": "ChatTitle",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ChatTitle",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ChatTitle",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -55552,15 +55325,20 @@
             "schema": {
               "generatedName": "ChatDescription",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ChatDescription",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ChatDescription",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -55571,15 +55349,20 @@
             "schema": {
               "generatedName": "ChatSummary",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ChatSummary",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ChatSummary",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -55638,15 +55421,20 @@
             "schema": {
               "generatedName": "ChatLastMessage",
               "value": {
-                "schema": {
-                  "type": "datetime"
-                },
                 "generatedName": "ChatLastMessage",
+                "value": {
+                  "schema": {
+                    "type": "datetime"
+                  },
+                  "generatedName": "ChatLastMessage",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -55853,20 +55641,25 @@
             "schema": {
               "generatedName": "ChatConfigInputChatSystemCommands",
               "value": {
-                "value": {
-                  "schema": {
-                    "type": "string"
-                  },
-                  "generatedName": "ChatConfigInputChatSystemCommandsItem",
-                  "groupName": [],
-                  "type": "primitive"
-                },
                 "generatedName": "ChatConfigInputChatSystemCommands",
+                "value": {
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "ChatConfigInputChatSystemCommandsItem",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "generatedName": "ChatConfigInputChatSystemCommands",
+                  "groupName": [],
+                  "type": "array"
+                },
                 "groupName": [],
-                "type": "array"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -55879,15 +55672,23 @@
               "description": "Conversational Guardrails can be defined to run against Chat `input` (i.e. the users query) or on Chat `output` (i.e. the LLM output)",
               "value": {
                 "generatedName": "ChatConfigInputChatGuardrails",
-                "schema": "ConversationalGuardrails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "Conversational Guardrails can be defined to run against Chat `input` (i.e. the users query) or on Chat `output` (i.e. the LLM output)",
+                "value": {
+                  "description": "Conversational Guardrails can be defined to run against Chat `input` (i.e. the users query) or on Chat `output` (i.e. the LLM output)",
+                  "generatedName": "ChatConfigInputChatGuardrails",
+                  "schema": "ConversationalGuardrails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -56079,20 +55880,25 @@
             "schema": {
               "generatedName": "ChatConfigOutputChatSystemCommands",
               "value": {
-                "value": {
-                  "schema": {
-                    "type": "string"
-                  },
-                  "generatedName": "ChatConfigOutputChatSystemCommandsItem",
-                  "groupName": [],
-                  "type": "primitive"
-                },
                 "generatedName": "ChatConfigOutputChatSystemCommands",
+                "value": {
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "ChatConfigOutputChatSystemCommandsItem",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "generatedName": "ChatConfigOutputChatSystemCommands",
+                  "groupName": [],
+                  "type": "array"
+                },
                 "groupName": [],
-                "type": "array"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -56105,15 +55911,23 @@
               "description": "Conversational Guardrails can be defined to run against Chat `input` (i.e. the users query) or on Chat `output` (i.e. the LLM output)",
               "value": {
                 "generatedName": "ChatConfigOutputChatGuardrails",
-                "schema": "ConversationalGuardrails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "Conversational Guardrails can be defined to run against Chat `input` (i.e. the users query) or on Chat `output` (i.e. the LLM output)",
+                "value": {
+                  "description": "Conversational Guardrails can be defined to run against Chat `input` (i.e. the users query) or on Chat `output` (i.e. the LLM output)",
+                  "generatedName": "ChatConfigOutputChatGuardrails",
+                  "schema": "ConversationalGuardrails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -56164,15 +55978,20 @@
             "schema": {
               "generatedName": "ChatCreateTitle",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ChatCreateTitle",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ChatCreateTitle",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -56183,15 +56002,20 @@
             "schema": {
               "generatedName": "ChatCreateDescription",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ChatCreateDescription",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ChatCreateDescription",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -56202,15 +56026,20 @@
             "schema": {
               "generatedName": "ChatCreateSummary",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ChatCreateSummary",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ChatCreateSummary",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -56285,15 +56114,20 @@
             "schema": {
               "generatedName": "ChatDocumentDescription",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ChatDocumentDescription",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ChatDocumentDescription",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -56305,62 +56139,67 @@
               "generatedName": "ChatDocumentSource",
               "value": {
                 "generatedName": "ChatDocumentSource",
-                "values": [
-                  {
-                    "generatedName": "upload",
-                    "value": "upload",
-                    "casing": {}
+                "value": {
+                  "generatedName": "ChatDocumentSource",
+                  "values": [
+                    {
+                      "generatedName": "upload",
+                      "value": "upload",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "gdrive",
+                      "value": "gdrive",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "onedrive",
+                      "value": "onedrive",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "web_scrape",
+                      "value": "web_scrape",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "notion",
+                      "value": "notion",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "confluence",
+                      "value": "confluence",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "box",
+                      "value": "box",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "dropbox",
+                      "value": "dropbox",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "sharepoint",
+                      "value": "sharepoint",
+                      "casing": {}
+                    }
+                  ],
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
                   },
-                  {
-                    "generatedName": "gdrive",
-                    "value": "gdrive",
-                    "casing": {}
-                  },
-                  {
-                    "generatedName": "onedrive",
-                    "value": "onedrive",
-                    "casing": {}
-                  },
-                  {
-                    "generatedName": "web_scrape",
-                    "value": "web_scrape",
-                    "casing": {}
-                  },
-                  {
-                    "generatedName": "notion",
-                    "value": "notion",
-                    "casing": {}
-                  },
-                  {
-                    "generatedName": "confluence",
-                    "value": "confluence",
-                    "casing": {}
-                  },
-                  {
-                    "generatedName": "box",
-                    "value": "box",
-                    "casing": {}
-                  },
-                  {
-                    "generatedName": "dropbox",
-                    "value": "dropbox",
-                    "casing": {}
-                  },
-                  {
-                    "generatedName": "sharepoint",
-                    "value": "sharepoint",
-                    "casing": {}
-                  }
-                ],
-                "groupName": [],
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                  "type": "enum"
                 },
-                "type": "enum"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -56387,24 +56226,29 @@
             "schema": {
               "generatedName": "ChatDocumentSourceMeta",
               "value": {
-                "key": {
-                  "schema": {
-                    "type": "string"
-                  },
-                  "generatedName": "ChatDocumentSourceMetaKey",
-                  "groupName": [],
-                  "type": "primitive"
-                },
-                "value": {
-                  "generatedName": "ChatDocumentSourceMetaValue",
-                  "type": "unknown"
-                },
                 "generatedName": "ChatDocumentSourceMeta",
+                "value": {
+                  "key": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "ChatDocumentSourceMetaKey",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "value": {
+                    "generatedName": "ChatDocumentSourceMetaValue",
+                    "type": "unknown"
+                  },
+                  "generatedName": "ChatDocumentSourceMeta",
+                  "groupName": [],
+                  "type": "map"
+                },
                 "groupName": [],
-                "type": "map"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -56415,16 +56259,21 @@
             "schema": {
               "generatedName": "ChatDocumentConnectionId",
               "value": {
-                "schema": {
-                  "format": "uuid",
-                  "type": "string"
-                },
                 "generatedName": "ChatDocumentConnectionId",
+                "value": {
+                  "schema": {
+                    "format": "uuid",
+                    "type": "string"
+                  },
+                  "generatedName": "ChatDocumentConnectionId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -56524,24 +56373,29 @@
             "schema": {
               "generatedName": "ChatDocumentEmbeddingInstanceConfig",
               "value": {
-                "key": {
-                  "schema": {
-                    "type": "string"
-                  },
-                  "generatedName": "ChatDocumentEmbeddingInstanceConfigKey",
-                  "groupName": [],
-                  "type": "primitive"
-                },
-                "value": {
-                  "generatedName": "ChatDocumentEmbeddingInstanceConfigValue",
-                  "type": "unknown"
-                },
                 "generatedName": "ChatDocumentEmbeddingInstanceConfig",
+                "value": {
+                  "key": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "ChatDocumentEmbeddingInstanceConfigKey",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "value": {
+                    "generatedName": "ChatDocumentEmbeddingInstanceConfigValue",
+                    "type": "unknown"
+                  },
+                  "generatedName": "ChatDocumentEmbeddingInstanceConfig",
+                  "groupName": [],
+                  "type": "map"
+                },
                 "groupName": [],
-                "type": "map"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -56745,15 +56599,20 @@
             "schema": {
               "generatedName": "ChatDocumentUpdateDescription",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ChatDocumentUpdateDescription",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ChatDocumentUpdateDescription",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -56988,15 +56847,22 @@
               "generatedName": "ChatIamMemberRoleUpdateRemoveAll",
               "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
               "value": {
-                "schema": {
-                  "type": "boolean"
-                },
                 "generatedName": "ChatIamMemberRoleUpdateRemoveAll",
+                "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
+                "value": {
+                  "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "generatedName": "ChatIamMemberRoleUpdateRemoveAll",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -57098,15 +56964,20 @@
             "schema": {
               "generatedName": "ChatIamPermissionTestMember",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ChatIamPermissionTestMember",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ChatIamPermissionTestMember",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -57378,15 +57249,20 @@
             "schema": {
               "generatedName": "CollectionSummary",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "CollectionSummary",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "CollectionSummary",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -57689,15 +57565,22 @@
               "generatedName": "CollectionIamMemberRoleUpdateRemoveAll",
               "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
               "value": {
-                "schema": {
-                  "type": "boolean"
-                },
                 "generatedName": "CollectionIamMemberRoleUpdateRemoveAll",
+                "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
+                "value": {
+                  "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "generatedName": "CollectionIamMemberRoleUpdateRemoveAll",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -57819,15 +57702,20 @@
             "schema": {
               "generatedName": "CollectionIamPermissionTestMember",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "CollectionIamPermissionTestMember",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "CollectionIamPermissionTestMember",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -58056,15 +57944,20 @@
             "schema": {
               "generatedName": "ComposeInitTopic",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ComposeInitTopic",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ComposeInitTopic",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -58075,15 +57968,20 @@
             "schema": {
               "generatedName": "ComposeInitPurpose",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ComposeInitPurpose",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ComposeInitPurpose",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -58094,15 +57992,20 @@
             "schema": {
               "generatedName": "ComposeInitAudience",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ComposeInitAudience",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ComposeInitAudience",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -58113,15 +58016,20 @@
             "schema": {
               "generatedName": "ComposeInitNumSections",
               "value": {
-                "schema": {
-                  "type": "int"
-                },
                 "generatedName": "ComposeInitNumSections",
+                "value": {
+                  "schema": {
+                    "type": "int"
+                  },
+                  "generatedName": "ComposeInitNumSections",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -58132,15 +58040,20 @@
             "schema": {
               "generatedName": "ComposeInitWordCount",
               "value": {
-                "schema": {
-                  "type": "int"
-                },
                 "generatedName": "ComposeInitWordCount",
+                "value": {
+                  "schema": {
+                    "type": "int"
+                  },
+                  "generatedName": "ComposeInitWordCount",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -58151,15 +58064,20 @@
             "schema": {
               "generatedName": "ComposeInitVoice",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ComposeInitVoice",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ComposeInitVoice",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -58170,15 +58088,20 @@
             "schema": {
               "generatedName": "ComposeInitDomain",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ComposeInitDomain",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ComposeInitDomain",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -58189,15 +58112,20 @@
             "schema": {
               "generatedName": "ComposeInitTone",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ComposeInitTone",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ComposeInitTone",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -58208,15 +58136,20 @@
             "schema": {
               "generatedName": "ComposeInitFavourableWords",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ComposeInitFavourableWords",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ComposeInitFavourableWords",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -58227,15 +58160,20 @@
             "schema": {
               "generatedName": "ComposeInitDenyWords",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ComposeInitDenyWords",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ComposeInitDenyWords",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -58246,15 +58184,20 @@
             "schema": {
               "generatedName": "ComposeInitKeywords",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ComposeInitKeywords",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ComposeInitKeywords",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -58265,15 +58208,20 @@
             "schema": {
               "generatedName": "ComposeInitCta",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ComposeInitCta",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ComposeInitCta",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -58284,15 +58232,20 @@
             "schema": {
               "generatedName": "ComposeInitContent",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ComposeInitContent",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ComposeInitContent",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -58473,15 +58426,20 @@
             "schema": {
               "generatedName": "ComposeSectionUpdateText",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ComposeSectionUpdateText",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ComposeSectionUpdateText",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -58758,15 +58716,20 @@
             "schema": {
               "generatedName": "DatasourceConnectionPrivate",
               "value": {
-                "schema": {
-                  "type": "boolean"
-                },
                 "generatedName": "DatasourceConnectionPrivate",
+                "value": {
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "generatedName": "DatasourceConnectionPrivate",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -58777,16 +58740,21 @@
             "schema": {
               "generatedName": "DatasourceConnectionProjectId",
               "value": {
-                "schema": {
-                  "format": "uuid",
-                  "type": "string"
-                },
                 "generatedName": "DatasourceConnectionProjectId",
+                "value": {
+                  "schema": {
+                    "format": "uuid",
+                    "type": "string"
+                  },
+                  "generatedName": "DatasourceConnectionProjectId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -58797,16 +58765,21 @@
             "schema": {
               "generatedName": "DatasourceConnectionDatasourceId",
               "value": {
-                "schema": {
-                  "format": "uuid",
-                  "type": "string"
-                },
                 "generatedName": "DatasourceConnectionDatasourceId",
+                "value": {
+                  "schema": {
+                    "format": "uuid",
+                    "type": "string"
+                  },
+                  "generatedName": "DatasourceConnectionDatasourceId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -58873,16 +58846,21 @@
             "schema": {
               "generatedName": "DatasourceConnectionCreatedBy",
               "value": {
-                "schema": {
-                  "format": "uuid",
-                  "type": "string"
-                },
                 "generatedName": "DatasourceConnectionCreatedBy",
+                "value": {
+                  "schema": {
+                    "format": "uuid",
+                    "type": "string"
+                  },
+                  "generatedName": "DatasourceConnectionCreatedBy",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -59104,15 +59082,20 @@
             "schema": {
               "generatedName": "DatasourceSyncRunTaskId",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "DatasourceSyncRunTaskId",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "DatasourceSyncRunTaskId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -59184,24 +59167,29 @@
             "schema": {
               "generatedName": "DatasourceSyncRunRunOutput",
               "value": {
-                "key": {
-                  "schema": {
-                    "type": "string"
-                  },
-                  "generatedName": "DatasourceSyncRunRunOutputKey",
-                  "groupName": [],
-                  "type": "primitive"
-                },
-                "value": {
-                  "generatedName": "DatasourceSyncRunRunOutputValue",
-                  "type": "unknown"
-                },
                 "generatedName": "DatasourceSyncRunRunOutput",
+                "value": {
+                  "key": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "DatasourceSyncRunRunOutputKey",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "value": {
+                    "generatedName": "DatasourceSyncRunRunOutputValue",
+                    "type": "unknown"
+                  },
+                  "generatedName": "DatasourceSyncRunRunOutput",
+                  "groupName": [],
+                  "type": "map"
+                },
                 "groupName": [],
-                "type": "map"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -59262,15 +59250,21 @@
               "generatedName": "DatasourceSyncRunDatasourceConnection",
               "value": {
                 "generatedName": "DatasourceSyncRunDatasourceConnection",
-                "schema": "DatasourceConnection",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "DatasourceSyncRunDatasourceConnection",
+                  "schema": "DatasourceConnection",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -59361,24 +59355,29 @@
             "schema": {
               "generatedName": "DocumentCreateTaskInfo",
               "value": {
-                "key": {
-                  "schema": {
-                    "type": "string"
-                  },
-                  "generatedName": "DocumentCreateTaskInfoKey",
-                  "groupName": [],
-                  "type": "primitive"
-                },
-                "value": {
-                  "generatedName": "DocumentCreateTaskInfoValue",
-                  "type": "unknown"
-                },
                 "generatedName": "DocumentCreateTaskInfo",
+                "value": {
+                  "key": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "DocumentCreateTaskInfoKey",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "value": {
+                    "generatedName": "DocumentCreateTaskInfoValue",
+                    "type": "unknown"
+                  },
+                  "generatedName": "DocumentCreateTaskInfo",
+                  "groupName": [],
+                  "type": "map"
+                },
                 "groupName": [],
-                "type": "map"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -59502,15 +59501,22 @@
               "generatedName": "DocumentIamMemberRoleUpdateRemoveAll",
               "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
               "value": {
-                "schema": {
-                  "type": "boolean"
-                },
                 "generatedName": "DocumentIamMemberRoleUpdateRemoveAll",
+                "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
+                "value": {
+                  "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "generatedName": "DocumentIamMemberRoleUpdateRemoveAll",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -59612,15 +59618,20 @@
             "schema": {
               "generatedName": "DocumentIamPermissionTestMember",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "DocumentIamPermissionTestMember",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "DocumentIamPermissionTestMember",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -59944,15 +59955,22 @@
               "generatedName": "IamMemberName",
               "description": "The name of the member.",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "IamMemberName",
+                "description": "The name of the member.",
+                "value": {
+                  "description": "The name of the member.",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "IamMemberName",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -59964,15 +59982,22 @@
               "generatedName": "IamMemberAvatarUrl",
               "description": "If avatar of the member, if it is supported by their subject type.",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "IamMemberAvatarUrl",
+                "description": "If avatar of the member, if it is supported by their subject type.",
+                "value": {
+                  "description": "If avatar of the member, if it is supported by their subject type.",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "IamMemberAvatarUrl",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -60039,15 +60064,20 @@
             "schema": {
               "generatedName": "IamObjectErrorDetailsId",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "IamObjectErrorDetailsId",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "IamObjectErrorDetailsId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -60095,15 +60125,20 @@
             "schema": {
               "generatedName": "IamPermissionTestMember",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "IamPermissionTestMember",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "IamPermissionTestMember",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -60162,20 +60197,25 @@
             "schema": {
               "generatedName": "InitialComposeSectionIdeas",
               "value": {
-                "value": {
-                  "schema": {
-                    "type": "string"
-                  },
-                  "generatedName": "InitialComposeSectionIdeasItem",
-                  "groupName": [],
-                  "type": "primitive"
-                },
                 "generatedName": "InitialComposeSectionIdeas",
+                "value": {
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "InitialComposeSectionIdeasItem",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "generatedName": "InitialComposeSectionIdeas",
+                  "groupName": [],
+                  "type": "array"
+                },
                 "groupName": [],
-                "type": "array"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -60248,15 +60288,21 @@
               "generatedName": "InvalidMemberErrorDetailsResource",
               "value": {
                 "generatedName": "InvalidMemberErrorDetailsResource",
-                "schema": "IAMObjectErrorDetails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "InvalidMemberErrorDetailsResource",
+                  "schema": "IAMObjectErrorDetails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -60268,15 +60314,21 @@
               "generatedName": "InvalidMemberErrorDetailsSubject",
               "value": {
                 "generatedName": "InvalidMemberErrorDetailsSubject",
-                "schema": "IAMObjectErrorDetails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "InvalidMemberErrorDetailsSubject",
+                  "schema": "IAMObjectErrorDetails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -60354,15 +60406,21 @@
               "generatedName": "InvalidRoleErrorDetailsResource",
               "value": {
                 "generatedName": "InvalidRoleErrorDetailsResource",
-                "schema": "IAMObjectErrorDetails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "InvalidRoleErrorDetailsResource",
+                  "schema": "IAMObjectErrorDetails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -60456,15 +60514,21 @@
               "generatedName": "InvalidSubjectTypeErrorDetailsSubject",
               "value": {
                 "generatedName": "InvalidSubjectTypeErrorDetailsSubject",
-                "schema": "IAMObjectErrorDetails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "InvalidSubjectTypeErrorDetailsSubject",
+                  "schema": "IAMObjectErrorDetails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -60560,6 +60624,7 @@
               "value": {
                 "generatedName": "KratosIdentityTraits",
                 "schema": "KratosIdentityTraits",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -60594,16 +60659,21 @@
             "schema": {
               "generatedName": "KratosIdentityTraitsEmail",
               "value": {
-                "schema": {
-                  "format": "email",
-                  "type": "string"
-                },
                 "generatedName": "KratosIdentityTraitsEmail",
+                "value": {
+                  "schema": {
+                    "format": "email",
+                    "type": "string"
+                  },
+                  "generatedName": "KratosIdentityTraitsEmail",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -60614,15 +60684,20 @@
             "schema": {
               "generatedName": "KratosIdentityTraitsName",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "KratosIdentityTraitsName",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "KratosIdentityTraitsName",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -60633,15 +60708,20 @@
             "schema": {
               "generatedName": "KratosIdentityTraitsAvatarUrl",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "KratosIdentityTraitsAvatarUrl",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "KratosIdentityTraitsAvatarUrl",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -60652,16 +60732,21 @@
             "schema": {
               "generatedName": "KratosIdentityTraitsProjectId",
               "value": {
-                "schema": {
-                  "format": "uuid",
-                  "type": "string"
-                },
                 "generatedName": "KratosIdentityTraitsProjectId",
+                "value": {
+                  "schema": {
+                    "format": "uuid",
+                    "type": "string"
+                  },
+                  "generatedName": "KratosIdentityTraitsProjectId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -60672,16 +60757,21 @@
             "schema": {
               "generatedName": "KratosIdentityTraitsOrgId",
               "value": {
-                "schema": {
-                  "format": "uuid",
-                  "type": "string"
-                },
                 "generatedName": "KratosIdentityTraitsOrgId",
+                "value": {
+                  "schema": {
+                    "format": "uuid",
+                    "type": "string"
+                  },
+                  "generatedName": "KratosIdentityTraitsOrgId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -60692,15 +60782,20 @@
             "schema": {
               "generatedName": "KratosIdentityTraitsSsoEmailVerified",
               "value": {
-                "schema": {
-                  "type": "boolean"
-                },
                 "generatedName": "KratosIdentityTraitsSsoEmailVerified",
+                "value": {
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "generatedName": "KratosIdentityTraitsSsoEmailVerified",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -60743,16 +60838,21 @@
             "schema": {
               "generatedName": "KratosWebhookEmail",
               "value": {
-                "schema": {
-                  "format": "email",
-                  "type": "string"
-                },
                 "generatedName": "KratosWebhookEmail",
+                "value": {
+                  "schema": {
+                    "format": "email",
+                    "type": "string"
+                  },
+                  "generatedName": "KratosWebhookEmail",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -60763,15 +60863,20 @@
             "schema": {
               "generatedName": "KratosWebhookBio",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "KratosWebhookBio",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "KratosWebhookBio",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -60782,16 +60887,21 @@
             "schema": {
               "generatedName": "KratosWebhookFlowId",
               "value": {
-                "schema": {
-                  "format": "uuid",
-                  "type": "string"
-                },
                 "generatedName": "KratosWebhookFlowId",
+                "value": {
+                  "schema": {
+                    "format": "uuid",
+                    "type": "string"
+                  },
+                  "generatedName": "KratosWebhookFlowId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -60802,15 +60912,20 @@
             "schema": {
               "generatedName": "KratosWebhookFlowType",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "KratosWebhookFlowType",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "KratosWebhookFlowType",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -60822,15 +60937,21 @@
               "generatedName": "KratosWebhookIdentity",
               "value": {
                 "generatedName": "KratosWebhookIdentity",
-                "schema": "KratosIdentity",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "KratosWebhookIdentity",
+                  "schema": "KratosIdentity",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -60841,24 +60962,29 @@
             "schema": {
               "generatedName": "KratosWebhookCtx",
               "value": {
-                "key": {
-                  "schema": {
-                    "type": "string"
-                  },
-                  "generatedName": "KratosWebhookCtxKey",
-                  "groupName": [],
-                  "type": "primitive"
-                },
-                "value": {
-                  "generatedName": "KratosWebhookCtxValue",
-                  "type": "unknown"
-                },
                 "generatedName": "KratosWebhookCtx",
+                "value": {
+                  "key": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "KratosWebhookCtxKey",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "value": {
+                    "generatedName": "KratosWebhookCtxValue",
+                    "type": "unknown"
+                  },
+                  "generatedName": "KratosWebhookCtx",
+                  "groupName": [],
+                  "type": "map"
+                },
                 "groupName": [],
-                "type": "map"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -60957,10 +61083,15 @@
               "generatedName": "KratosWebhookDetailedMessageContext",
               "value": {
                 "generatedName": "KratosWebhookDetailedMessageContext",
-                "type": "unknown"
+                "value": {
+                  "generatedName": "KratosWebhookDetailedMessageContext",
+                  "type": "unknown"
+                },
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -61049,21 +61180,26 @@
             "schema": {
               "generatedName": "KratosWebhookResponseMessages",
               "value": {
-                "value": {
-                  "generatedName": "KratosWebhookResponseMessagesItem",
-                  "schema": "KratosWebhookErrorMessage",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
-                  },
-                  "type": "reference"
-                },
                 "generatedName": "KratosWebhookResponseMessages",
+                "value": {
+                  "value": {
+                    "generatedName": "KratosWebhookResponseMessagesItem",
+                    "schema": "KratosWebhookErrorMessage",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  },
+                  "generatedName": "KratosWebhookResponseMessages",
+                  "groupName": [],
+                  "type": "array"
+                },
                 "groupName": [],
-                "type": "array"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -61312,15 +61448,21 @@
               "generatedName": "MultipleRolesNotAllowedErrorDetailsResource",
               "value": {
                 "generatedName": "MultipleRolesNotAllowedErrorDetailsResource",
-                "schema": "IAMObjectErrorDetails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "MultipleRolesNotAllowedErrorDetailsResource",
+                  "schema": "IAMObjectErrorDetails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -61441,6 +61583,7 @@
               "value": {
                 "generatedName": "OAuthClientCreateProfile",
                 "schema": "OAuthClientProfile",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -61459,20 +61602,25 @@
             "schema": {
               "generatedName": "OAuthClientCreateRedirectUris",
               "value": {
-                "value": {
-                  "schema": {
-                    "type": "string"
-                  },
-                  "generatedName": "OAuthClientCreateRedirectUrisItem",
-                  "groupName": [],
-                  "type": "primitive"
-                },
                 "generatedName": "OAuthClientCreateRedirectUris",
+                "value": {
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "OAuthClientCreateRedirectUrisItem",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "generatedName": "OAuthClientCreateRedirectUris",
+                  "groupName": [],
+                  "type": "array"
+                },
                 "groupName": [],
-                "type": "array"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -61695,15 +61843,20 @@
             "schema": {
               "generatedName": "ObjectSize",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ObjectSize",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ObjectSize",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -61714,15 +61867,20 @@
             "schema": {
               "generatedName": "ObjectMimeType",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ObjectMimeType",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ObjectMimeType",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -61733,15 +61891,20 @@
             "schema": {
               "generatedName": "ObjectCreatedTime",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ObjectCreatedTime",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ObjectCreatedTime",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -61752,15 +61915,20 @@
             "schema": {
               "generatedName": "ObjectModifiedTime",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ObjectModifiedTime",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ObjectModifiedTime",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -61773,6 +61941,7 @@
               "value": {
                 "generatedName": "ObjectType",
                 "schema": "ObjectType",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -61930,15 +62099,20 @@
             "schema": {
               "generatedName": "OrgAvatarUrl",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "OrgAvatarUrl",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "OrgAvatarUrl",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -62046,20 +62220,25 @@
             "schema": {
               "generatedName": "OrgInviteBaseRoles",
               "value": {
-                "value": {
-                  "schema": {
-                    "type": "string"
-                  },
-                  "generatedName": "OrgInviteBaseRolesItem",
-                  "groupName": [],
-                  "type": "primitive"
-                },
                 "generatedName": "OrgInviteBaseRoles",
+                "value": {
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "OrgInviteBaseRolesItem",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "generatedName": "OrgInviteBaseRoles",
+                  "groupName": [],
+                  "type": "array"
+                },
                 "groupName": [],
-                "type": "array"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -62147,16 +62326,21 @@
             "schema": {
               "generatedName": "OrgUpdateContactEmail",
               "value": {
-                "schema": {
-                  "format": "email",
-                  "type": "string"
-                },
                 "generatedName": "OrgUpdateContactEmail",
+                "value": {
+                  "schema": {
+                    "format": "email",
+                    "type": "string"
+                  },
+                  "generatedName": "OrgUpdateContactEmail",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -62390,15 +62574,22 @@
               "generatedName": "OrganizationIamMemberRoleUpdateRemoveAll",
               "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
               "value": {
-                "schema": {
-                  "type": "boolean"
-                },
                 "generatedName": "OrganizationIamMemberRoleUpdateRemoveAll",
+                "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
+                "value": {
+                  "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "generatedName": "OrganizationIamMemberRoleUpdateRemoveAll",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -62500,15 +62691,20 @@
             "schema": {
               "generatedName": "OrganizationIamPermissionTestMember",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "OrganizationIamPermissionTestMember",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "OrganizationIamPermissionTestMember",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -62551,20 +62747,25 @@
             "schema": {
               "generatedName": "OrganizationInviteRoles",
               "value": {
-                "value": {
-                  "schema": {
-                    "type": "string"
-                  },
-                  "generatedName": "OrganizationInviteRolesItem",
-                  "groupName": [],
-                  "type": "primitive"
-                },
                 "generatedName": "OrganizationInviteRoles",
+                "value": {
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "OrganizationInviteRolesItem",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "generatedName": "OrganizationInviteRoles",
+                  "groupName": [],
+                  "type": "array"
+                },
                 "groupName": [],
-                "type": "array"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -62835,15 +63036,23 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetChatDocumentEmbeddingRecordPagination",
-                "schema": "PaginationDetails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "Contains pagination information for the result set.",
+                "value": {
+                  "description": "Contains pagination information for the result set.",
+                  "generatedName": "PaginatedResultSetChatDocumentEmbeddingRecordPagination",
+                  "schema": "PaginationDetails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -62894,15 +63103,23 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetChatDocumentPagination",
-                "schema": "PaginationDetails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "Contains pagination information for the result set.",
+                "value": {
+                  "description": "Contains pagination information for the result set.",
+                  "generatedName": "PaginatedResultSetChatDocumentPagination",
+                  "schema": "PaginationDetails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -62953,15 +63170,23 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetChatPagination",
-                "schema": "PaginationDetails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "Contains pagination information for the result set.",
+                "value": {
+                  "description": "Contains pagination information for the result set.",
+                  "generatedName": "PaginatedResultSetChatPagination",
+                  "schema": "PaginationDetails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -63012,15 +63237,23 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetCollectionPagination",
-                "schema": "PaginationDetails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "Contains pagination information for the result set.",
+                "value": {
+                  "description": "Contains pagination information for the result set.",
+                  "generatedName": "PaginatedResultSetCollectionPagination",
+                  "schema": "PaginationDetails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -63071,15 +63304,23 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetDatasourceSyncRunPagination",
-                "schema": "PaginationDetails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "Contains pagination information for the result set.",
+                "value": {
+                  "description": "Contains pagination information for the result set.",
+                  "generatedName": "PaginatedResultSetDatasourceSyncRunPagination",
+                  "schema": "PaginationDetails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -63130,15 +63371,23 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetIamMemberPagination",
-                "schema": "PaginationDetails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "Contains pagination information for the result set.",
+                "value": {
+                  "description": "Contains pagination information for the result set.",
+                  "generatedName": "PaginatedResultSetIamMemberPagination",
+                  "schema": "PaginationDetails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -63189,15 +63438,23 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetOrganizationDomainPagination",
-                "schema": "PaginationDetails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "Contains pagination information for the result set.",
+                "value": {
+                  "description": "Contains pagination information for the result set.",
+                  "generatedName": "PaginatedResultSetOrganizationDomainPagination",
+                  "schema": "PaginationDetails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -63248,15 +63505,23 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetOrganizationInvitePagination",
-                "schema": "PaginationDetails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "Contains pagination information for the result set.",
+                "value": {
+                  "description": "Contains pagination information for the result set.",
+                  "generatedName": "PaginatedResultSetOrganizationInvitePagination",
+                  "schema": "PaginationDetails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -63307,15 +63572,23 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetProjectPagination",
-                "schema": "PaginationDetails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "Contains pagination information for the result set.",
+                "value": {
+                  "description": "Contains pagination information for the result set.",
+                  "generatedName": "PaginatedResultSetProjectPagination",
+                  "schema": "PaginationDetails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -63366,15 +63639,23 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetTaskForwarderPagination",
-                "schema": "PaginationDetails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "Contains pagination information for the result set.",
+                "value": {
+                  "description": "Contains pagination information for the result set.",
+                  "generatedName": "PaginatedResultSetTaskForwarderPagination",
+                  "schema": "PaginationDetails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -63425,15 +63706,23 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetTaskRunPagination",
-                "schema": "PaginationDetails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "Contains pagination information for the result set.",
+                "value": {
+                  "description": "Contains pagination information for the result set.",
+                  "generatedName": "PaginatedResultSetTaskRunPagination",
+                  "schema": "PaginationDetails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -63484,15 +63773,23 @@
               "description": "Contains pagination information for the result set.",
               "value": {
                 "generatedName": "PaginatedResultSetTaskPagination",
-                "schema": "PaginationDetails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "Contains pagination information for the result set.",
+                "value": {
+                  "description": "Contains pagination information for the result set.",
+                  "generatedName": "PaginatedResultSetTaskPagination",
+                  "schema": "PaginationDetails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -63542,15 +63839,22 @@
               "generatedName": "PaginationDetailsNextCursor",
               "description": "A token used to retrieve the next page of results. If `null`, there are no more results.",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "PaginationDetailsNextCursor",
+                "description": "A token used to retrieve the next page of results. If `null`, there are no more results.",
+                "value": {
+                  "description": "A token used to retrieve the next page of results. If `null`, there are no more results.",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "PaginationDetailsNextCursor",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -63562,15 +63866,22 @@
               "generatedName": "PaginationDetailsHasNext",
               "description": "Indicates whether there are more results available in the next page.",
               "value": {
-                "schema": {
-                  "type": "boolean"
-                },
                 "generatedName": "PaginationDetailsHasNext",
+                "description": "Indicates whether there are more results available in the next page.",
+                "value": {
+                  "description": "Indicates whether there are more results available in the next page.",
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "generatedName": "PaginationDetailsHasNext",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -63582,15 +63893,22 @@
               "generatedName": "PaginationDetailsPageLimit",
               "description": "The maximum number of items returned per page.",
               "value": {
-                "schema": {
-                  "type": "int"
-                },
                 "generatedName": "PaginationDetailsPageLimit",
+                "description": "The maximum number of items returned per page.",
+                "value": {
+                  "description": "The maximum number of items returned per page.",
+                  "schema": {
+                    "type": "int"
+                  },
+                  "generatedName": "PaginationDetailsPageLimit",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -63618,15 +63936,21 @@
               "generatedName": "PermissionCheckFailedErrorDetailsSubject",
               "value": {
                 "generatedName": "PermissionCheckFailedErrorDetailsSubject",
-                "schema": "IAMObjectErrorDetails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "PermissionCheckFailedErrorDetailsSubject",
+                  "schema": "IAMObjectErrorDetails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -63638,15 +63962,21 @@
               "generatedName": "PermissionCheckFailedErrorDetailsResource",
               "value": {
                 "generatedName": "PermissionCheckFailedErrorDetailsResource",
-                "schema": "IAMObjectErrorDetails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "PermissionCheckFailedErrorDetailsResource",
+                  "schema": "IAMObjectErrorDetails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -63755,15 +64085,20 @@
             "schema": {
               "generatedName": "ProjectAvatarUrl",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ProjectAvatarUrl",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ProjectAvatarUrl",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -63807,16 +64142,21 @@
             "schema": {
               "generatedName": "ProjectTasksOauthClientId",
               "value": {
-                "schema": {
-                  "format": "uuid",
-                  "type": "string"
-                },
                 "generatedName": "ProjectTasksOauthClientId",
+                "value": {
+                  "schema": {
+                    "format": "uuid",
+                    "type": "string"
+                  },
+                  "generatedName": "ProjectTasksOauthClientId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -63984,20 +64324,25 @@
             "schema": {
               "generatedName": "ProjectConfigInputChatSystemCommands",
               "value": {
-                "value": {
-                  "schema": {
-                    "type": "string"
-                  },
-                  "generatedName": "ProjectConfigInputChatSystemCommandsItem",
-                  "groupName": [],
-                  "type": "primitive"
-                },
                 "generatedName": "ProjectConfigInputChatSystemCommands",
+                "value": {
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "ProjectConfigInputChatSystemCommandsItem",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "generatedName": "ProjectConfigInputChatSystemCommands",
+                  "groupName": [],
+                  "type": "array"
+                },
                 "groupName": [],
-                "type": "array"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -64009,15 +64354,21 @@
               "generatedName": "ProjectConfigInputChatGuardrails",
               "value": {
                 "generatedName": "ProjectConfigInputChatGuardrails",
-                "schema": "ConversationalGuardrails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ProjectConfigInputChatGuardrails",
+                  "schema": "ConversationalGuardrails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -64209,20 +64560,25 @@
             "schema": {
               "generatedName": "ProjectConfigOutputChatSystemCommands",
               "value": {
-                "value": {
-                  "schema": {
-                    "type": "string"
-                  },
-                  "generatedName": "ProjectConfigOutputChatSystemCommandsItem",
-                  "groupName": [],
-                  "type": "primitive"
-                },
                 "generatedName": "ProjectConfigOutputChatSystemCommands",
+                "value": {
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "ProjectConfigOutputChatSystemCommandsItem",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "generatedName": "ProjectConfigOutputChatSystemCommands",
+                  "groupName": [],
+                  "type": "array"
+                },
                 "groupName": [],
-                "type": "array"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -64234,15 +64590,21 @@
               "generatedName": "ProjectConfigOutputChatGuardrails",
               "value": {
                 "generatedName": "ProjectConfigOutputChatGuardrails",
-                "schema": "ConversationalGuardrails",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ProjectConfigOutputChatGuardrails",
+                  "schema": "ConversationalGuardrails",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -64472,15 +64834,22 @@
               "generatedName": "ProjectIamMemberRoleUpdateRemoveAll",
               "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
               "value": {
-                "schema": {
-                  "type": "boolean"
-                },
                 "generatedName": "ProjectIamMemberRoleUpdateRemoveAll",
+                "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
+                "value": {
+                  "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "generatedName": "ProjectIamMemberRoleUpdateRemoveAll",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -64662,15 +65031,20 @@
             "schema": {
               "generatedName": "ProjectIamPermissionTestMember",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ProjectIamPermissionTestMember",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ProjectIamPermissionTestMember",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -64697,15 +65071,20 @@
             "schema": {
               "generatedName": "ProjectUpdateName",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ProjectUpdateName",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ProjectUpdateName",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -64748,15 +65127,20 @@
             "schema": {
               "generatedName": "ProjectWithDatasourcesAvatarUrl",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ProjectWithDatasourcesAvatarUrl",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ProjectWithDatasourcesAvatarUrl",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -64800,16 +65184,21 @@
             "schema": {
               "generatedName": "ProjectWithDatasourcesTasksOauthClientId",
               "value": {
-                "schema": {
-                  "format": "uuid",
-                  "type": "string"
-                },
                 "generatedName": "ProjectWithDatasourcesTasksOauthClientId",
+                "value": {
+                  "schema": {
+                    "format": "uuid",
+                    "type": "string"
+                  },
+                  "generatedName": "ProjectWithDatasourcesTasksOauthClientId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -65039,15 +65428,22 @@
               "generatedName": "TaskDescription",
               "description": "A longer description of the Task for internal reference.",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "TaskDescription",
+                "description": "A longer description of the Task for internal reference.",
+                "value": {
+                  "description": "A longer description of the Task for internal reference.",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "TaskDescription",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -65283,8 +65679,10 @@
               "generatedName": "TaskCreateLlmConfig",
               "description": "Specific configuration parameters for the LLM model.",
               "value": {
+                "description": "Specific configuration parameters for the LLM model.",
                 "generatedName": "TaskCreateLlmConfig",
                 "schema": "TaskLLMConfig",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -65372,16 +65770,23 @@
               "generatedName": "TaskCreateTaskForwarderId",
               "description": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
               "value": {
-                "schema": {
-                  "format": "uuid",
-                  "type": "string"
-                },
                 "generatedName": "TaskCreateTaskForwarderId",
+                "description": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
+                "value": {
+                  "description": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
+                  "schema": {
+                    "format": "uuid",
+                    "type": "string"
+                  },
+                  "generatedName": "TaskCreateTaskForwarderId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -65394,15 +65799,23 @@
               "description": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
               "value": {
                 "generatedName": "TaskCreateRag",
-                "schema": "TaskRAG",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
+                "value": {
+                  "description": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
+                  "generatedName": "TaskCreateRag",
+                  "schema": "TaskRAG",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [
               "paid"
@@ -65458,15 +65871,22 @@
               "generatedName": "TaskCreateDescription",
               "description": "A longer description of the Task for internal reference.",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "TaskCreateDescription",
+                "description": "A longer description of the Task for internal reference.",
+                "value": {
+                  "description": "A longer description of the Task for internal reference.",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "TaskCreateDescription",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -65528,15 +65948,22 @@
               "generatedName": "TaskForwarderDescription",
               "description": "Additional details about the Task Forwarder's purpose or configuration.",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "TaskForwarderDescription",
+                "description": "Additional details about the Task Forwarder's purpose or configuration.",
+                "value": {
+                  "description": "Additional details about the Task Forwarder's purpose or configuration.",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "TaskForwarderDescription",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -65549,15 +65976,23 @@
               "description": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
               "value": {
                 "generatedName": "TaskForwarderConfig",
-                "schema": "TaskForwarderConfig",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
+                "value": {
+                  "description": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
+                  "generatedName": "TaskForwarderConfig",
+                  "schema": "TaskForwarderConfig",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -65570,15 +66005,23 @@
               "description": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
               "value": {
                 "generatedName": "TaskForwarderConfigSensitive",
-                "schema": "TaskForwarderSensitiveConfig",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
+                "value": {
+                  "description": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
+                  "generatedName": "TaskForwarderConfigSensitive",
+                  "schema": "TaskForwarderSensitiveConfig",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -65724,15 +66167,22 @@
               "generatedName": "TaskForwarderCreateDescription",
               "description": "Additional details about the Task Forwarder's purpose or configuration.",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "TaskForwarderCreateDescription",
+                "description": "Additional details about the Task Forwarder's purpose or configuration.",
+                "value": {
+                  "description": "Additional details about the Task Forwarder's purpose or configuration.",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "TaskForwarderCreateDescription",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -65745,15 +66195,23 @@
               "description": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
               "value": {
                 "generatedName": "TaskForwarderCreateConfig",
-                "schema": "TaskForwarderConfig",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
+                "value": {
+                  "description": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
+                  "generatedName": "TaskForwarderCreateConfig",
+                  "schema": "TaskForwarderConfig",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -65766,15 +66224,23 @@
               "description": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
               "value": {
                 "generatedName": "TaskForwarderCreateConfigSensitive",
-                "schema": "TaskForwarderSensitiveConfig",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
+                "value": {
+                  "description": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
+                  "generatedName": "TaskForwarderCreateConfigSensitive",
+                  "schema": "TaskForwarderSensitiveConfig",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -65834,15 +66300,22 @@
               "generatedName": "TaskForwarderUpdateName",
               "description": "A descriptive name for the Task Forwarder.",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "TaskForwarderUpdateName",
+                "description": "A descriptive name for the Task Forwarder.",
+                "value": {
+                  "description": "A descriptive name for the Task Forwarder.",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "TaskForwarderUpdateName",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -65854,15 +66327,22 @@
               "generatedName": "TaskForwarderUpdateDescription",
               "description": "Additional details about the Task Forwarder's purpose or configuration.",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "TaskForwarderUpdateDescription",
+                "description": "Additional details about the Task Forwarder's purpose or configuration.",
+                "value": {
+                  "description": "Additional details about the Task Forwarder's purpose or configuration.",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "TaskForwarderUpdateDescription",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -65875,15 +66355,23 @@
               "description": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
               "value": {
                 "generatedName": "TaskForwarderUpdateConfig",
-                "schema": "TaskForwarderConfig",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
+                "value": {
+                  "description": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
+                  "generatedName": "TaskForwarderUpdateConfig",
+                  "schema": "TaskForwarderConfig",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -65896,15 +66384,23 @@
               "description": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
               "value": {
                 "generatedName": "TaskForwarderUpdateConfigSensitive",
-                "schema": "TaskForwarderSensitiveConfig",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
+                "value": {
+                  "description": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
+                  "generatedName": "TaskForwarderUpdateConfigSensitive",
+                  "schema": "TaskForwarderSensitiveConfig",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -66028,15 +66524,22 @@
               "generatedName": "TaskIamMemberRoleUpdateRemoveAll",
               "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
               "value": {
-                "schema": {
-                  "type": "boolean"
-                },
                 "generatedName": "TaskIamMemberRoleUpdateRemoveAll",
+                "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
+                "value": {
+                  "description": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "generatedName": "TaskIamMemberRoleUpdateRemoveAll",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -66138,15 +66641,20 @@
             "schema": {
               "generatedName": "TaskIamPermissionTestMember",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "TaskIamPermissionTestMember",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "TaskIamPermissionTestMember",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -66365,8 +66873,10 @@
               "generatedName": "TaskRevisionLlmConfig",
               "description": "Specific configuration parameters for the LLM model.",
               "value": {
+                "description": "Specific configuration parameters for the LLM model.",
                 "generatedName": "TaskRevisionLlmConfig",
                 "schema": "TaskLLMConfig",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -66454,16 +66964,23 @@
               "generatedName": "TaskRevisionTaskForwarderId",
               "description": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
               "value": {
-                "schema": {
-                  "format": "uuid",
-                  "type": "string"
-                },
                 "generatedName": "TaskRevisionTaskForwarderId",
+                "description": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
+                "value": {
+                  "description": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
+                  "schema": {
+                    "format": "uuid",
+                    "type": "string"
+                  },
+                  "generatedName": "TaskRevisionTaskForwarderId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -66476,15 +66993,23 @@
               "description": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
               "value": {
                 "generatedName": "TaskRevisionRag",
-                "schema": "TaskRAG",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
+                "value": {
+                  "description": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
+                  "generatedName": "TaskRevisionRag",
+                  "schema": "TaskRAG",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [
               "paid"
@@ -66737,10 +67262,16 @@
               "description": "The system prompt that is used to set the LLM context.",
               "value": {
                 "generatedName": "TaskUpdateSystemPrompt",
-                "type": "unknown"
+                "description": "The system prompt that is used to set the LLM context.",
+                "value": {
+                  "generatedName": "TaskUpdateSystemPrompt",
+                  "type": "unknown"
+                },
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -66753,10 +67284,16 @@
               "description": "The description of the Task. It is not required to mention the outputs in the prompt, but it can help the model to understand the context better. Any input strings should be referenced with the dynamic `{...}` syntax, this informs the model to look for those values in the input data.",
               "value": {
                 "generatedName": "TaskUpdateUserPrompt",
-                "type": "unknown"
+                "description": "The description of the Task. It is not required to mention the outputs in the prompt, but it can help the model to understand the context better. Any input strings should be referenced with the dynamic `{...}` syntax, this informs the model to look for those values in the input data.",
+                "value": {
+                  "generatedName": "TaskUpdateUserPrompt",
+                  "type": "unknown"
+                },
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -66769,77 +67306,83 @@
               "description": "The LLM model to use for the Task.",
               "value": {
                 "generatedName": "TaskUpdateLlmModel",
-                "values": [
-                  {
-                    "generatedName": "Gpt4O",
-                    "value": "gpt-4o",
-                    "casing": {}
+                "description": "The LLM model to use for the Task.",
+                "value": {
+                  "generatedName": "TaskUpdateLlmModel",
+                  "values": [
+                    {
+                      "generatedName": "Gpt4O",
+                      "value": "gpt-4o",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "Gpt35Turbo",
+                      "value": "gpt-3.5-turbo",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "Gpt4",
+                      "value": "gpt-4",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "Gpt4Turbo",
+                      "value": "gpt-4-turbo",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "Gpt4TurboPreview",
+                      "value": "gpt-4-turbo-preview",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "Gpt41106Preview",
+                      "value": "gpt-4-1106-preview",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "Claude35Sonnet20240620",
+                      "value": "claude-3-5-sonnet-20240620",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "Claude3Haiku20240307",
+                      "value": "claude-3-haiku-20240307",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "Claude3Sonnet20240229",
+                      "value": "claude-3-sonnet-20240229",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "Claude3Opus20240229",
+                      "value": "claude-3-opus-20240229",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "Gemini15ProLatest",
+                      "value": "gemini-1.5-pro-latest",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "GeminiPro",
+                      "value": "gemini-pro",
+                      "casing": {}
+                    }
+                  ],
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
                   },
-                  {
-                    "generatedName": "Gpt35Turbo",
-                    "value": "gpt-3.5-turbo",
-                    "casing": {}
-                  },
-                  {
-                    "generatedName": "Gpt4",
-                    "value": "gpt-4",
-                    "casing": {}
-                  },
-                  {
-                    "generatedName": "Gpt4Turbo",
-                    "value": "gpt-4-turbo",
-                    "casing": {}
-                  },
-                  {
-                    "generatedName": "Gpt4TurboPreview",
-                    "value": "gpt-4-turbo-preview",
-                    "casing": {}
-                  },
-                  {
-                    "generatedName": "Gpt41106Preview",
-                    "value": "gpt-4-1106-preview",
-                    "casing": {}
-                  },
-                  {
-                    "generatedName": "Claude35Sonnet20240620",
-                    "value": "claude-3-5-sonnet-20240620",
-                    "casing": {}
-                  },
-                  {
-                    "generatedName": "Claude3Haiku20240307",
-                    "value": "claude-3-haiku-20240307",
-                    "casing": {}
-                  },
-                  {
-                    "generatedName": "Claude3Sonnet20240229",
-                    "value": "claude-3-sonnet-20240229",
-                    "casing": {}
-                  },
-                  {
-                    "generatedName": "Claude3Opus20240229",
-                    "value": "claude-3-opus-20240229",
-                    "casing": {}
-                  },
-                  {
-                    "generatedName": "Gemini15ProLatest",
-                    "value": "gemini-1.5-pro-latest",
-                    "casing": {}
-                  },
-                  {
-                    "generatedName": "GeminiPro",
-                    "value": "gemini-pro",
-                    "casing": {}
-                  }
-                ],
-                "groupName": [],
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                  "type": "enum"
                 },
-                "type": "enum"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -66852,15 +67395,23 @@
               "description": "Specific configuration parameters for the LLM model.",
               "value": {
                 "generatedName": "TaskUpdateLlmConfig",
-                "schema": "TaskLLMConfig",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "Specific configuration parameters for the LLM model.",
+                "value": {
+                  "description": "Specific configuration parameters for the LLM model.",
+                  "generatedName": "TaskUpdateLlmConfig",
+                  "schema": "TaskLLMConfig",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -66872,73 +67423,79 @@
               "generatedName": "TaskUpdateOutputFormat",
               "description": "This gives control over the structure of how the Task responds. Supports shorthand notation or an object with `type` can be specified for each attribute. In most instances, the LLM will be able to generate the desired output into the relevant property, but an optional `description` can be passed to provide it with additional context.",
               "value": {
-                "key": {
-                  "schema": {
-                    "type": "string"
-                  },
-                  "generatedName": "TaskUpdateOutputFormatKey",
-                  "groupName": [],
-                  "type": "primitive"
-                },
+                "generatedName": "TaskUpdateOutputFormat",
+                "description": "This gives control over the structure of how the Task responds. Supports shorthand notation or an object with `type` can be specified for each attribute. In most instances, the LLM will be able to generate the desired output into the relevant property, but an optional `description` can be passed to provide it with additional context.",
                 "value": {
-                  "generatedName": "TaskUpdateOutputFormatValue",
+                  "key": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "TaskUpdateOutputFormatKey",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
                   "value": {
                     "generatedName": "TaskUpdateOutputFormatValue",
-                    "values": [
-                      {
-                        "generatedName": "str",
-                        "value": "str",
-                        "casing": {}
+                    "value": {
+                      "generatedName": "TaskUpdateOutputFormatValue",
+                      "values": [
+                        {
+                          "generatedName": "str",
+                          "value": "str",
+                          "casing": {}
+                        },
+                        {
+                          "generatedName": "string",
+                          "value": "string",
+                          "casing": {}
+                        },
+                        {
+                          "generatedName": "boolean",
+                          "value": "boolean",
+                          "casing": {}
+                        },
+                        {
+                          "generatedName": "bool",
+                          "value": "bool",
+                          "casing": {}
+                        },
+                        {
+                          "generatedName": "int",
+                          "value": "int",
+                          "casing": {}
+                        },
+                        {
+                          "generatedName": "integer",
+                          "value": "integer",
+                          "casing": {}
+                        },
+                        {
+                          "generatedName": "list",
+                          "value": "list",
+                          "casing": {}
+                        }
+                      ],
+                      "groupName": [],
+                      "source": {
+                        "file": "../openapi.yml",
+                        "type": "openapi"
                       },
-                      {
-                        "generatedName": "string",
-                        "value": "string",
-                        "casing": {}
-                      },
-                      {
-                        "generatedName": "boolean",
-                        "value": "boolean",
-                        "casing": {}
-                      },
-                      {
-                        "generatedName": "bool",
-                        "value": "bool",
-                        "casing": {}
-                      },
-                      {
-                        "generatedName": "int",
-                        "value": "int",
-                        "casing": {}
-                      },
-                      {
-                        "generatedName": "integer",
-                        "value": "integer",
-                        "casing": {}
-                      },
-                      {
-                        "generatedName": "list",
-                        "value": "list",
-                        "casing": {}
-                      }
-                    ],
-                    "groupName": [],
-                    "source": {
-                      "file": "../openapi.yml",
-                      "type": "openapi"
+                      "inline": true,
+                      "type": "enum"
                     },
+                    "groupName": [],
                     "inline": true,
-                    "type": "enum"
+                    "type": "nullable"
                   },
+                  "generatedName": "TaskUpdateOutputFormat",
                   "groupName": [],
-                  "inline": true,
-                  "type": "nullable"
+                  "type": "map"
                 },
-                "generatedName": "TaskUpdateOutputFormat",
                 "groupName": [],
-                "type": "map"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -66950,16 +67507,23 @@
               "generatedName": "TaskUpdateTaskForwarderId",
               "description": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
               "value": {
-                "schema": {
-                  "format": "uuid",
-                  "type": "string"
-                },
                 "generatedName": "TaskUpdateTaskForwarderId",
+                "description": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
+                "value": {
+                  "description": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
+                  "schema": {
+                    "format": "uuid",
+                    "type": "string"
+                  },
+                  "generatedName": "TaskUpdateTaskForwarderId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -66972,15 +67536,23 @@
               "description": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
               "value": {
                 "generatedName": "TaskUpdateRag",
-                "schema": "TaskRAG",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
+                "value": {
+                  "description": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
+                  "generatedName": "TaskUpdateRag",
+                  "schema": "TaskRAG",
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [
               "paid"
@@ -66995,15 +67567,22 @@
               "generatedName": "TaskUpdateImageRequired",
               "description": "When `true` it requires an image to be sent in the Task Run request.",
               "value": {
-                "schema": {
-                  "type": "boolean"
-                },
                 "generatedName": "TaskUpdateImageRequired",
+                "description": "When `true` it requires an image to be sent in the Task Run request.",
+                "value": {
+                  "description": "When `true` it requires an image to be sent in the Task Run request.",
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "generatedName": "TaskUpdateImageRequired",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -67015,15 +67594,22 @@
               "generatedName": "TaskUpdateName",
               "description": "A name or reference for the Task.",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "TaskUpdateName",
+                "description": "A name or reference for the Task.",
+                "value": {
+                  "description": "A name or reference for the Task.",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "TaskUpdateName",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -67035,15 +67621,22 @@
               "generatedName": "TaskUpdateDescription",
               "description": "A longer description of the Task for internal reference.",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "TaskUpdateDescription",
+                "description": "A longer description of the Task for internal reference.",
+                "value": {
+                  "description": "A longer description of the Task for internal reference.",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "TaskUpdateDescription",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -67055,15 +67648,22 @@
               "generatedName": "TaskUpdateEnabled",
               "description": "When `true` the Task is active and callable. `false` denotes the Task is not yet operational.",
               "value": {
-                "schema": {
-                  "type": "boolean"
-                },
                 "generatedName": "TaskUpdateEnabled",
+                "description": "When `true` the Task is active and callable. `false` denotes the Task is not yet operational.",
+                "value": {
+                  "description": "When `true` the Task is active and callable. `false` denotes the Task is not yet operational.",
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "generatedName": "TaskUpdateEnabled",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }
@@ -67126,15 +67726,20 @@
             "schema": {
               "generatedName": "UserBio",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "UserBio",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "UserBio",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -67145,15 +67750,20 @@
             "schema": {
               "generatedName": "UserAvatarUrl",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "UserAvatarUrl",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "UserAvatarUrl",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -67197,15 +67807,20 @@
             "schema": {
               "generatedName": "UserProfileUpdateName",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "UserProfileUpdateName",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "UserProfileUpdateName",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           },
@@ -67216,15 +67831,20 @@
             "schema": {
               "generatedName": "UserProfileUpdateBio",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "UserProfileUpdateBio",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "UserProfileUpdateBio",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": []
           }

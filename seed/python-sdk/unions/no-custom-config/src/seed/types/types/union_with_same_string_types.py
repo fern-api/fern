@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
@@ -52,8 +53,11 @@ from seed.types import UnionWithSameStringTypes_CustomFormat
 
 UnionWithSameStringTypes_CustomFormat(value="custom-123")
 """
-UnionWithSameStringTypes = typing.Union[
-    UnionWithSameStringTypes_CustomFormat,
-    UnionWithSameStringTypes_RegularString,
-    UnionWithSameStringTypes_PatternString,
+UnionWithSameStringTypes = typing_extensions.Annotated[
+    typing.Union[
+        UnionWithSameStringTypes_CustomFormat,
+        UnionWithSameStringTypes_RegularString,
+        UnionWithSameStringTypes_PatternString,
+    ],
+    pydantic.Field(discriminator="type"),
 ]

@@ -61,4 +61,6 @@ EventInfo_Metadata(
     json_string='{"one": "two"}',
 )
 """
-EventInfo = typing.Union[EventInfo_Metadata, EventInfo_Tag]
+EventInfo = typing_extensions.Annotated[
+    typing.Union[EventInfo_Metadata, EventInfo_Tag], pydantic.Field(discriminator="type")
+]

@@ -74,14 +74,19 @@ class SocketClientGenerator:
                 ):
                     receive_message_types.append(body_union.body_type)
 
-        return AST.TypeAliasDeclaration(
-            name=self._get_response_type_name(),
-            type_hint=AST.TypeHint.union(
+        if len(receive_message_types) == 0:
+            type_hint = AST.TypeHint.any()
+        else:
+            type_hint = AST.TypeHint.union(
                 *[
                     self._context.pydantic_generator_context.get_type_hint_for_type_reference(t)
                     for t in receive_message_types
                 ]
-            ),
+            )
+
+        return AST.TypeAliasDeclaration(
+            name=self._get_response_type_name(),
+            type_hint=type_hint,
         )
 
     def _create_class_declaration(self, is_async: bool) -> AST.ClassDeclaration:

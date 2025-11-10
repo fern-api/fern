@@ -2,4 +2,11 @@
 
 import type * as SeedApi from "../../../index";
 
-export type JsonLike = SeedApi.JsonLike[] | Record<string, SeedApi.JsonLike> | string | number | boolean;
+export type JsonLike =
+    | SeedApi.JsonLike[]
+    | {
+          [key: string]: JsonLike;
+      }
+    | string
+    | number
+    | boolean;

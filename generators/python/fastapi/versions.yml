@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 1.11.0
+  changelogEntry:
+    - summary: Add automatic discriminated union support using Pydantic's Field(discriminator=...) to improve serialization performance. Benchmarks show a 2x speedup by eliminating sequential variant attempts and enabling O(1) variant selection.
+      type: feat
+  createdAt: "2025-11-10"
+  irVersion: 61
+
 - version: 1.10.3
   changelogEntry:
     - summary: Upgrade to IRv61

@@ -85,10 +85,13 @@ class WorkspaceSubmissionStatus_Traced(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-WorkspaceSubmissionStatus = typing.Union[
-    WorkspaceSubmissionStatus_Stopped,
-    WorkspaceSubmissionStatus_Errored,
-    WorkspaceSubmissionStatus_Running,
-    WorkspaceSubmissionStatus_Ran,
-    WorkspaceSubmissionStatus_Traced,
+WorkspaceSubmissionStatus = typing_extensions.Annotated[
+    typing.Union[
+        WorkspaceSubmissionStatus_Stopped,
+        WorkspaceSubmissionStatus_Errored,
+        WorkspaceSubmissionStatus_Running,
+        WorkspaceSubmissionStatus_Ran,
+        WorkspaceSubmissionStatus_Traced,
+    ],
+    pydantic.Field(discriminator="type"),
 ]
