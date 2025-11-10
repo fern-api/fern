@@ -880,9 +880,9 @@ export function convertSchemaObject(
                     const firstSchema = schema.oneOf[0];
                     const secondSchema = schema.oneOf[1];
                     if (!isReferenceObject(firstSchema) && (firstSchema.type as string) === "null") {
-                        return convertSchema(secondSchema, false, true, context, breadcrumbs, source, namespace);
+                        return convertSchema(secondSchema, wrapAsOptional, true, context, breadcrumbs, source, namespace);
                     } else if (!isReferenceObject(secondSchema) && (secondSchema.type as string) === "null") {
-                        return convertSchema(firstSchema, false, true, context, breadcrumbs, source, namespace);
+                        return convertSchema(firstSchema, wrapAsOptional, true, context, breadcrumbs, source, namespace);
                     }
                 }
 
@@ -978,7 +978,7 @@ export function convertSchemaObject(
                     if (!isReferenceObject(firstSchema) && (firstSchema.type as unknown) === "null") {
                         const convertedSchema = convertSchema(
                             secondSchema,
-                            false,
+                            wrapAsOptional,
                             true,
                             context,
                             breadcrumbs,
@@ -989,7 +989,7 @@ export function convertSchemaObject(
                     } else if (!isReferenceObject(secondSchema) && (secondSchema.type as unknown) === "null") {
                         const convertedSchema = convertSchema(
                             firstSchema,
-                            false,
+                            wrapAsOptional,
                             true,
                             context,
                             breadcrumbs,
