@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...commons.types.problem_id import ProblemId
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .create_problem_error import CreateProblemError
@@ -36,4 +37,6 @@ class CreateProblemResponse_Error(UniversalBaseModel):
             smart_union = True
 
 
-CreateProblemResponse = typing.Union[CreateProblemResponse_Success, CreateProblemResponse_Error]
+CreateProblemResponse = typing_extensions.Annotated[
+    typing.Union[CreateProblemResponse_Success, CreateProblemResponse_Error], pydantic.Field(discriminator="type")
+]

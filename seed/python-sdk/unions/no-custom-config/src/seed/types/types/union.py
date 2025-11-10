@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .bar import Bar
 from .foo import Foo
@@ -36,4 +37,4 @@ class Union_Bar(UniversalBaseModel):
             smart_union = True
 
 
-Union = typing.Union[Union_Foo, Union_Bar]
+Union = typing_extensions.Annotated[typing.Union[Union_Foo, Union_Bar], pydantic.Field(discriminator="type")]
