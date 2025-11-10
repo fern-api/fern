@@ -1,0 +1,48 @@
+types:
+  StringMap:
+    docs: An alias to a map type (nilable).
+    type: map<string, string>
+    examples:
+      - name: Example
+        value:
+          key1: value1
+          key2: value2
+
+  StringList:
+    docs: An alias to a list type (nilable).
+    type: list<string>
+    examples:
+      - name: Example
+        value:
+          - item1
+          - item2
+
+  CreateRequest:
+    docs: A request type with alias fields.
+    properties:
+      mapField: optional<StringMap>
+      listField: optional<StringList>
+    examples:
+      - name: Example
+        value:
+          mapField:
+            foo: bar
+          listField:
+            - hello
+            - world
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    create:
+      docs: Creates a resource with alias-typed fields.
+      method: POST
+      path: /create
+      request: CreateRequest
+      examples:
+        - request:
+            mapField:
+              key: value
+            listField:
+              - test
