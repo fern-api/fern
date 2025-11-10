@@ -352,6 +352,134 @@ navigation:
         });
     });
 
+    describe("TabConfiguration", () => {
+        it("should add slug to tab entries using display-name", async () => {
+            const sourceYaml = `
+tabs:
+  getting-started:
+    display-name: Getting Started
+    icon: fa-solid fa-book
+`;
+
+            const result = await translateYamlContent(sourceYaml, "es", "en", "docs.yml", mockCliContext);
+            const parsed = yaml.load(result) as Record<string, unknown>;
+
+            type TabsRecord = Record<string, { "display-name": string; icon: string; slug?: string }>;
+            const tabs = parsed.tabs as TabsRecord;
+            expect(tabs["getting-started"]!["display-name"]).toBe("[TRANSLATED] Getting Started");
+            expect(tabs["getting-started"]!.slug).toBe("getting-started");
+        });
+
+        it("should preserve existing slug from source for tabs", async () => {
+            const sourceYaml = `
+tabs:
+  api:
+    display-name: API Reference
+    slug: custom-api-slug
+`;
+
+            const result = await translateYamlContent(sourceYaml, "es", "en", "docs.yml", mockCliContext);
+            const parsed = yaml.load(result) as Record<string, unknown>;
+
+            type TabsRecord = Record<string, { "display-name": string; slug?: string }>;
+            const tabs = parsed.tabs as TabsRecord;
+            expect(tabs.api!.slug).toBe("custom-api-slug");
+        });
+
+        it("should respect skip-slug for tabs", async () => {
+            const sourceYaml = `
+tabs:
+  docs:
+    display-name: Documentation
+    skip-slug: true
+`;
+
+            const result = await translateYamlContent(sourceYaml, "es", "en", "docs.yml", mockCliContext);
+            const parsed = yaml.load(result) as Record<string, unknown>;
+
+            type TabsRecord = Record<string, { "display-name": string; slug?: string }>;
+            const tabs = parsed.tabs as TabsRecord;
+            expect(tabs.docs!.slug).toBeUndefined();
+        });
+
+        it("should handle multiple tabs with slug generation", async () => {
+            const sourceYaml = `
+tabs:
+  api-v1:
+    display-name: V1 API Reference
+  documentation:
+    display-name: Documentation
+`;
+
+            const result = await translateYamlContent(sourceYaml, "es", "en", "docs.yml", mockCliContext);
+            const parsed = yaml.load(result) as Record<string, unknown>;
+
+            type TabsRecord = Record<string, { "display-name": string; slug?: string }>;
+            const tabs = parsed.tabs as TabsRecord;
+            expect(tabs["api-v1"]!.slug).toBe("v1-api-reference");
+            expect(tabs.documentation!.slug).toBe("documentation");
+        });
+    });
+
+    describe("ProductConfiguration", () => {
+        it("should add slug to product entries using display-name", async () => {
+            const sourceYaml = `
+products:
+  - display-name: Core Platform
+    icon: fa-solid fa-server
+    path: ./products/core-platform.yml
+`;
+
+            const result = await translateYamlContent(sourceYaml, "es", "en", "docs.yml", mockCliContext);
+            const parsed = yaml.load(result) as Record<string, unknown>;
+
+            type ProductItem = { "display-name": string; icon: string; path: string; slug?: string };
+            type ProductsDoc = { products: ProductItem[] };
+            const doc = parsed as ProductsDoc;
+            expect(doc.products[0]!["display-name"]).toBe("[TRANSLATED] Core Platform");
+            expect(doc.products[0]!.slug).toBe("core-platform");
+        });
+
+        it("should preserve existing slug from source for products", async () => {
+            const sourceYaml = `
+products:
+  - display-name: Analytics
+    path: ./products/analytics.yml
+    slug: custom-analytics-slug
+`;
+
+            const result = await translateYamlContent(sourceYaml, "es", "en", "docs.yml", mockCliContext);
+            const parsed = yaml.load(result) as Record<string, unknown>;
+
+            type ProductItem = { "display-name": string; path: string; slug?: string };
+            type ProductsDoc = { products: ProductItem[] };
+            const doc = parsed as ProductsDoc;
+            expect(doc.products[0]!.slug).toBe("custom-analytics-slug");
+        });
+
+        it("should handle multiple products with slug generation", async () => {
+            const sourceYaml = `
+products:
+  - display-name: Core Platform
+    path: ./products/core-platform.yml
+  - display-name: Mobile SDK
+    path: ./products/mobile-sdk.yml
+  - display-name: Enterprise Features
+    path: ./products/enterprise-features.yml
+`;
+
+            const result = await translateYamlContent(sourceYaml, "es", "en", "docs.yml", mockCliContext);
+            const parsed = yaml.load(result) as Record<string, unknown>;
+
+            type ProductItem = { "display-name": string; path: string; slug?: string };
+            type ProductsDoc = { products: ProductItem[] };
+            const doc = parsed as ProductsDoc;
+            expect(doc.products[0]!.slug).toBe("core-platform");
+            expect(doc.products[1]!.slug).toBe("mobile-sdk");
+            expect(doc.products[2]!.slug).toBe("enterprise-features");
+        });
+    });
+
     describe("Source language preservation", () => {
         it("should not modify source language content", async () => {
             const sourceYaml = `

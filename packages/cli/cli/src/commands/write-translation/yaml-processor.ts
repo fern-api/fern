@@ -51,6 +51,25 @@ function isChangelogConfiguration(obj: unknown): obj is Record<string, unknown> 
     return typeof record["changelog"] === "string";
 }
 
+function isTabConfiguration(obj: unknown): obj is Record<string, unknown> {
+    if (typeof obj !== "object" || obj === null) {
+        return false;
+    }
+    const record = obj as Record<string, unknown>;
+    return typeof record["display-name"] === "string" || typeof record["displayName"] === "string";
+}
+
+function isProductConfiguration(obj: unknown): obj is Record<string, unknown> {
+    if (typeof obj !== "object" || obj === null) {
+        return false;
+    }
+    const record = obj as Record<string, unknown>;
+    return (
+        (typeof record["display-name"] === "string" || typeof record["displayName"] === "string") &&
+        typeof record["path"] === "string"
+    );
+}
+
 function computeSlugForNavigationItem(sourceRecord: unknown): string | undefined {
     if (typeof sourceRecord !== "object" || sourceRecord === null) {
         return undefined;
@@ -89,6 +108,20 @@ function computeSlugForNavigationItem(sourceRecord: unknown): string | undefined
         if (typeof changelog === "string") {
             const basename = changelog.split("/").pop() || changelog;
             return generateSlug(basename);
+        }
+    }
+
+    if (isTabConfiguration(sourceRecord)) {
+        const displayName = sourceRecord["display-name"] || sourceRecord["displayName"];
+        if (typeof displayName === "string") {
+            return generateSlug(displayName);
+        }
+    }
+
+    if (isProductConfiguration(sourceRecord)) {
+        const displayName = sourceRecord["display-name"] || sourceRecord["displayName"];
+        if (typeof displayName === "string") {
+            return generateSlug(displayName);
         }
     }
 
