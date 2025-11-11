@@ -2,7 +2,7 @@
 
 - changelogEntry:
     - summary: |
-        Add support for multiAuth field in FDR endpoint definitions to represent OpenAPI security with OR-of-AND semantics. The multiAuth field is an array of MultipleAuthType objects, where each object contains a schemes array representing authentication requirements that must ALL be satisfied (AND). The array of objects represents alternatives (OR). For example, an endpoint accepting either (wallet AND blockchain) OR (userId AND blockchain) is represented as multiAuth: [{schemes: ["wallet", "blockchain"]}, {schemes: ["userId", "blockchain"]}]. The auth and authV2 fields remain populated for backwards compatibility.
+        Add support for multiAuth field in FDR endpoint definitions to represent OpenAPI security with OR-of-AND semantics.
       type: feat
   irVersion: 61
   createdAt: "2025-11-11"
