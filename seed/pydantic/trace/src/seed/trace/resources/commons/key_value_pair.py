@@ -20,6 +20,7 @@ class KeyValuePair(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .variable_value import VariableValue  # noqa: E402, I001
+from .map_value import MapValue  # noqa: E402, F401, I001
+from .variable_value import VariableValue  # noqa: E402, F401, I001
 
 update_forward_refs(KeyValuePair)

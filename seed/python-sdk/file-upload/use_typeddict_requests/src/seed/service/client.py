@@ -48,7 +48,7 @@ class ServiceClient:
         maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
         maybe_integer: typing.Optional[int] = OMIT,
         optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
-        optional_metadata: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        optional_metadata: typing.Optional[typing.Any] = OMIT,
         optional_object_type: typing.Optional[ObjectType] = OMIT,
         optional_id: typing.Optional[Id] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -84,7 +84,7 @@ class ServiceClient:
 
         optional_list_of_strings : typing.Optional[typing.Sequence[str]]
 
-        optional_metadata : typing.Optional[typing.Optional[typing.Any]]
+        optional_metadata : typing.Optional[typing.Any]
 
         optional_object_type : typing.Optional[ObjectType]
 
@@ -260,7 +260,7 @@ class ServiceClient:
         maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
         maybe_integer: typing.Optional[int] = OMIT,
         optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
-        optional_metadata: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        optional_metadata: typing.Optional[typing.Any] = OMIT,
         optional_object_type: typing.Optional[ObjectType] = OMIT,
         optional_id: typing.Optional[Id] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -298,7 +298,7 @@ class ServiceClient:
 
         optional_list_of_strings : typing.Optional[typing.Sequence[str]]
 
-        optional_metadata : typing.Optional[typing.Optional[typing.Any]]
+        optional_metadata : typing.Optional[typing.Any]
 
         optional_object_type : typing.Optional[ObjectType]
 
@@ -336,7 +336,7 @@ class ServiceClient:
         self,
         *,
         image_file: typing.Optional[core.File] = OMIT,
-        request: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        request: typing.Optional[typing.Any] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> str:
         """
@@ -345,7 +345,7 @@ class ServiceClient:
         image_file : typing.Optional[core.File]
             See core.File for more documentation
 
-        request : typing.Optional[typing.Optional[typing.Any]]
+        request : typing.Optional[typing.Any]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -443,7 +443,7 @@ class AsyncServiceClient:
         maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
         maybe_integer: typing.Optional[int] = OMIT,
         optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
-        optional_metadata: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        optional_metadata: typing.Optional[typing.Any] = OMIT,
         optional_object_type: typing.Optional[ObjectType] = OMIT,
         optional_id: typing.Optional[Id] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -479,7 +479,7 @@ class AsyncServiceClient:
 
         optional_list_of_strings : typing.Optional[typing.Sequence[str]]
 
-        optional_metadata : typing.Optional[typing.Optional[typing.Any]]
+        optional_metadata : typing.Optional[typing.Any]
 
         optional_object_type : typing.Optional[ObjectType]
 
@@ -665,7 +665,7 @@ class AsyncServiceClient:
         maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
         maybe_integer: typing.Optional[int] = OMIT,
         optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
-        optional_metadata: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        optional_metadata: typing.Optional[typing.Any] = OMIT,
         optional_object_type: typing.Optional[ObjectType] = OMIT,
         optional_id: typing.Optional[Id] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -703,7 +703,7 @@ class AsyncServiceClient:
 
         optional_list_of_strings : typing.Optional[typing.Sequence[str]]
 
-        optional_metadata : typing.Optional[typing.Optional[typing.Any]]
+        optional_metadata : typing.Optional[typing.Any]
 
         optional_object_type : typing.Optional[ObjectType]
 
@@ -741,7 +741,7 @@ class AsyncServiceClient:
         self,
         *,
         image_file: typing.Optional[core.File] = OMIT,
-        request: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        request: typing.Optional[typing.Any] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> str:
         """
@@ -750,7 +750,7 @@ class AsyncServiceClient:
         image_file : typing.Optional[core.File]
             See core.File for more documentation
 
-        request : typing.Optional[typing.Optional[typing.Any]]
+        request : typing.Optional[typing.Any]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

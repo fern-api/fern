@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .test_case_grade import TestCaseGrade
 from .test_case_result import TestCaseResult
@@ -42,8 +43,14 @@ class SubmissionStatusForTestCase_Traced(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-SubmissionStatusForTestCase = typing.Union[
-    SubmissionStatusForTestCase_Graded, SubmissionStatusForTestCase_GradedV2, SubmissionStatusForTestCase_Traced
+from ..commons.key_value_pair import KeyValuePair  # noqa: E402, F401, I001
+from ..commons.map_value import MapValue  # noqa: E402, F401, I001
+
+SubmissionStatusForTestCase = typing_extensions.Annotated[
+    typing.Union[
+        SubmissionStatusForTestCase_Graded, SubmissionStatusForTestCase_GradedV2, SubmissionStatusForTestCase_Traced
+    ],
+    pydantic.Field(discriminator="type"),
 ]
 update_forward_refs(SubmissionStatusForTestCase_Graded)
 update_forward_refs(SubmissionStatusForTestCase_Traced)

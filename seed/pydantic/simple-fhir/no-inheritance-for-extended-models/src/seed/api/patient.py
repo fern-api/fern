@@ -24,8 +24,11 @@ class Patient(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .memo import Memo  # noqa: E402, I001
-from .script import Script  # noqa: E402, I001
-from .resource_list import ResourceList  # noqa: E402, I001
+from .account import Account  # noqa: E402, F401, I001
+from .base_resource import BaseResource  # noqa: E402, F401, I001
+from .memo import Memo  # noqa: E402, F401, I001
+from .practitioner import Practitioner  # noqa: E402, F401, I001
+from .script import Script  # noqa: E402, F401, I001
+from .resource_list import ResourceList  # noqa: E402, F401, I001
 
 update_forward_refs(Patient)
