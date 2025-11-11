@@ -1736,7 +1736,8 @@ export class SdkGenerator {
             formDataSupport: this.config.formDataSupport,
             useDefaultRequestParameterValues: this.config.useDefaultRequestParameterValues,
             generateReadWriteOnlyTypes: this.config.generateReadWriteOnlyTypes,
-            flattenRequestParameters: this.config.flattenRequestParameters
+            flattenRequestParameters: this.config.flattenRequestParameters,
+            parameterNaming: this.config.parameterNaming
         });
     }
 

@@ -38,8 +38,8 @@ describe("Organizations", () => {
             .build();
 
         const response = await client.organizations.getOrganizationUser({
-            organizationId: "organization_id",
-            userId: "user_id",
+            organization_id: "organization_id",
+            user_id: "user_id",
         });
         expect(response).toEqual({
             name: "name",

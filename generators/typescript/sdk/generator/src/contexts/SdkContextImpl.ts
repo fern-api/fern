@@ -142,6 +142,7 @@ export declare namespace SdkContextImpl {
         useDefaultRequestParameterValues: boolean;
         generateReadWriteOnlyTypes: boolean;
         flattenRequestParameters: boolean;
+        parameterNaming?: "originalName" | "wireValue" | "camelCase" | "snakeCase";
     }
 }
 
@@ -259,7 +260,8 @@ export class SdkContextImpl implements SdkContext {
         formDataSupport,
         useDefaultRequestParameterValues,
         generateReadWriteOnlyTypes,
-        flattenRequestParameters
+        flattenRequestParameters,
+        parameterNaming
     }: SdkContextImpl.Init) {
         this.logger = logger;
         this.ir = ir;
@@ -389,7 +391,8 @@ export class SdkContextImpl implements SdkContext {
             inlinePathParameters,
             enableInlineTypes,
             formDataSupport,
-            flattenRequestParameters
+            flattenRequestParameters,
+            parameterNaming
         });
         this.sdkInlinedRequestBodySchema = new SdkInlinedRequestBodySchemaContextImpl({
             importsManager,

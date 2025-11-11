@@ -9,6 +9,7 @@ export {
     getParameterNameForRootExamplePathParameter,
     getParameterNameForRootPathParameter
 } from "./codegen-utils/getParameterNameForPathParameter";
+export { getSdkParameterPropertyName } from "./codegen-utils/getSdkParameterPropertyName";
 export { getPropertyKey } from "./codegen-utils/getPropertyKey";
 export { getSchemaOptions } from "./codegen-utils/getSchemaOptions";
 export { getTextOfTsKeyword } from "./codegen-utils/getTextOfTsKeyword";

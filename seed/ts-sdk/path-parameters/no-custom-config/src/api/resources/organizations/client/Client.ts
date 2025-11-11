@@ -90,8 +90,8 @@ export class Organizations {
      *
      * @example
      *     await client.organizations.getOrganizationUser({
-     *         organizationId: "organization_id",
-     *         userId: "user_id"
+     *         organization_id: "organization_id",
+     *         user_id: "user_id"
      *     })
      */
     public getOrganizationUser(
@@ -105,7 +105,7 @@ export class Organizations {
         request: SeedPathParameters.GetOrganizationUserRequest,
         requestOptions?: Organizations.RequestOptions,
     ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
-        const { organizationId, userId } = request;
+        const { organization_id: organizationId, user_id: userId } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(

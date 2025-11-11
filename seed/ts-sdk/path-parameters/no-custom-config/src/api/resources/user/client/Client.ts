@@ -25,7 +25,7 @@ export class User {
      *
      * @example
      *     await client.user.getUser({
-     *         userId: "user_id"
+     *         user_id: "user_id"
      *     })
      */
     public getUser(
@@ -39,7 +39,7 @@ export class User {
         request: SeedPathParameters.GetUsersRequest,
         requestOptions?: User.RequestOptions,
     ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
-        const { userId } = request;
+        const { user_id: userId } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -164,7 +164,7 @@ export class User {
      *
      * @example
      *     await client.user.updateUser({
-     *         userId: "user_id",
+     *         user_id: "user_id",
      *         body: {
      *             name: "name",
      *             tags: ["tags", "tags"]
@@ -182,7 +182,7 @@ export class User {
         request: SeedPathParameters.UpdateUserRequest,
         requestOptions?: User.RequestOptions,
     ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
-        const { userId, body: _body } = request;
+        const { user_id: userId, body: _body } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -239,7 +239,7 @@ export class User {
      *
      * @example
      *     await client.user.searchUsers({
-     *         userId: "user_id",
+     *         user_id: "user_id",
      *         limit: 1
      *     })
      */
@@ -254,7 +254,7 @@ export class User {
         request: SeedPathParameters.SearchUsersRequest,
         requestOptions?: User.RequestOptions,
     ): Promise<core.WithRawResponse<SeedPathParameters.User[]>> {
-        const { userId, limit } = request;
+        const { user_id: userId, limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams.limit = limit.toString();
@@ -315,7 +315,7 @@ export class User {
      *
      * @example
      *     await client.user.getUserMetadata({
-     *         userId: "user_id",
+     *         user_id: "user_id",
      *         version: 1
      *     })
      */
@@ -330,7 +330,7 @@ export class User {
         request: SeedPathParameters.GetUserMetadataRequest,
         requestOptions?: User.RequestOptions,
     ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
-        const { userId, version } = request;
+        const { user_id: userId, version } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
