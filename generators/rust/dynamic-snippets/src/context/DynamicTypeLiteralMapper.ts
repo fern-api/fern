@@ -101,7 +101,7 @@ export class DynamicTypeLiteralMapper {
                 if (num == null) {
                     return rust.Expression.raw("Default::default()");
                 }
-                return rust.Expression.numberLiteral(num);
+                return rust.Expression.floatLiteral(num);
             }
             case "BOOLEAN": {
                 const bool = this.getValueAsBoolean({ value, as });
@@ -216,33 +216,9 @@ export class DynamicTypeLiteralMapper {
             return rust.Expression.reference("None");
         }
 
-        if (typeof value === "string") {
-            return rust.Expression.methodCall({
-                target: rust.Expression.stringLiteral(value),
-                method: "to_string",
-                args: []
-            });
-        }
-
-        if (typeof value === "number") {
-            return rust.Expression.numberLiteral(value);
-        }
-
-        if (typeof value === "boolean") {
-            return rust.Expression.booleanLiteral(value);
-        }
-
-        if (Array.isArray(value)) {
-            const elements = value.map((v) => this.convertUnknown({ value: v }));
-            return rust.Expression.vec(elements);
-        }
-
-        if (typeof value === "object") {
-            // Use serde_json for complex objects
-            return rust.Expression.raw(`serde_json::json!(${JSON.stringify(value)})`);
-        }
-
-        return rust.Expression.stringLiteral("");
+        // For unknown types, always use serde_json::json! to ensure proper type compatibility
+        // This is especially important for map<string, unknown> which expects serde_json::Value
+        return rust.Expression.raw(`serde_json::json!(${JSON.stringify(value)})`);
     }
 
     private convertNamed({
@@ -357,21 +333,30 @@ export class DynamicTypeLiteralMapper {
             });
         }
 
-        // Regular object handling
-        const properties = this.context.associateByWireValue({
-            parameters: objectType.properties,
-            values: valueRecord
-        });
+        // Regular object handling - include ALL properties, setting missing optional ones to None
+        const structFields: Array<{ name: string; value: rust.Expression }> = [];
 
-        const structFields = properties.map((property) => {
+        for (const property of objectType.properties) {
             this.context.scopeError(property.name.wireValue);
             try {
-                // Special handling for _fields properties that should contain base object data
                 const propertyName = this.context.getPropertyName(property.name.name);
+                const wireValue = property.name.wireValue;
+                const hasValue = wireValue in valueRecord;
+
                 let propertyValue: rust.Expression;
 
-                if (propertyName.endsWith("_fields") && property.typeReference.type === "named") {
-                    // This is likely a flattened base object - create it from the parent's data
+                if (!hasValue) {
+                    // Property not in value - check if it's optional
+                    const isOptional = this.context.isNullable(property.typeReference);
+                    if (isOptional) {
+                        propertyValue = rust.Expression.none();
+                    } else {
+                        // Required field missing - add error and use default
+                        this.context.addScopedError(`Required field '${wireValue}' is missing`, Severity.Critical);
+                        propertyValue = rust.Expression.raw("Default::default()");
+                    }
+                } else if (propertyName.endsWith("_fields") && property.typeReference.type === "named") {
+                    // Special handling for _fields properties that should contain base object data
                     const baseTypeId = property.typeReference.value;
                     const baseType = this.context.ir.types[baseTypeId];
 
@@ -383,24 +368,24 @@ export class DynamicTypeLiteralMapper {
                     } else {
                         propertyValue = this.convert({
                             typeReference: property.typeReference,
-                            value: property.value
+                            value: valueRecord[wireValue]
                         });
                     }
                 } else {
                     propertyValue = this.convert({
                         typeReference: property.typeReference,
-                        value: property.value
+                        value: valueRecord[wireValue]
                     });
                 }
 
-                return {
+                structFields.push({
                     name: propertyName,
                     value: propertyValue
-                };
+                });
             } finally {
                 this.context.unscopeError();
             }
-        });
+        }
 
         return rust.Expression.structConstruction(structName, structFields);
     }
