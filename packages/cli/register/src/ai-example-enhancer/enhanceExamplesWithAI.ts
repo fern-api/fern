@@ -1,7 +1,6 @@
 import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { writeFile } from "fs/promises";
 import { OpenAIExampleEnhancer } from "./openaiClient";
 import { AIExampleEnhancerConfig, ExampleEnhancementRequest } from "./types";
 import { EnhancedExampleRecord, writeAiExamplesOverride } from "./writeAiExamplesOverride";
