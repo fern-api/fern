@@ -34,19 +34,9 @@ export class OpenApiIrConverterContext {
     public environmentOverrides: RawSchemas.WithEnvironmentsSchema | undefined;
     public authOverrides: RawSchemas.WithAuthSchema | undefined;
     public globalHeaderOverrides: RawSchemas.WithHeadersSchema | undefined;
-    public detectGlobalHeaders!: boolean;
-    public objectQueryParameters!: boolean;
-    public respectReadonlySchemas!: boolean;
-    public respectNullableSchemas!: boolean;
-    public onlyIncludeReferencedSchemas!: boolean;
-    public inlinePathParameters!: boolean;
-    public useBytesForBinaryResponse!: boolean;
-    public respectForwardCompatibleEnums!: boolean;
-    public wrapReferencesToNullableInOptional!: boolean;
-    public coerceOptionalSchemasToNullable!: boolean;
-    public groupEnvironmentsByHost!: boolean;
+    public readonly options: ConvertOpenAPIOptions;
 
-    private enableUniqueErrorsPerEndpoint!: boolean;
+    private enableUniqueErrorsPerEndpoint: boolean;
     private defaultServerName: string | undefined = undefined;
     private unknownSchema: Set<number> = new Set();
 
@@ -93,9 +83,9 @@ export class OpenApiIrConverterContext {
         this.authOverrides = authOverrides;
         this.globalHeaderOverrides = globalHeaderOverrides;
 
-        const resolvedOptions = getConvertOptions({ options });
-        Object.assign(this, resolvedOptions);
-        this.referencedSchemaIds = resolvedOptions.onlyIncludeReferencedSchemas ? new Set() : undefined;
+        this.options = getConvertOptions({ options });
+        this.enableUniqueErrorsPerEndpoint = this.options.enableUniqueErrorsPerEndpoint;
+        this.referencedSchemaIds = this.options.onlyIncludeReferencedSchemas ? new Set() : undefined;
         this.builder = new FernDefinitionBuilderImpl(this.enableUniqueErrorsPerEndpoint);
         if (ir.title != null) {
             this.builder.setDisplayName({ displayName: ir.title });
@@ -215,7 +205,7 @@ export class OpenApiIrConverterContext {
     }
 
     public shouldMarkSchemaAsReferenced(): boolean {
-        return this.onlyIncludeReferencedSchemas && this.isInAnyState(State.Channel, State.Endpoint, State.Webhook);
+        return this.options.onlyIncludeReferencedSchemas && this.isInAnyState(State.Channel, State.Endpoint, State.Webhook);
     }
 
     /**

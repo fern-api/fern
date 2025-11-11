@@ -146,7 +146,7 @@ export function buildObjectTypeDeclaration({
 }): ConvertedTypeDeclaration {
     const shouldSkipReadonly =
         context.isInState(State.Request) &&
-        context.respectReadonlySchemas &&
+        context.options.respectReadonlySchemas &&
         (context.getEndpointMethod() === "POST" ||
             context.getEndpointMethod() === "PUT" ||
             context.getEndpointMethod() === "PATCH");
@@ -301,7 +301,7 @@ export function buildObjectTypeDeclaration({
 
     const name = schema.nameOverride ?? schema.generatedName;
     return {
-        name: readOnlyPropertyPresent && context.respectReadonlySchemas && !shouldSkipReadonly ? `${name}Read` : name,
+        name: readOnlyPropertyPresent && context.options.respectReadonlySchemas && !shouldSkipReadonly ? `${name}Read` : name,
         schema: objectTypeDeclaration
     };
 }
@@ -561,7 +561,7 @@ export function buildNullableTypeDeclaration({
     namespace: string | undefined;
     declarationDepth: number;
 }): ConvertedTypeDeclaration {
-    if (!context.respectNullableSchemas) {
+    if (!context.options.respectNullableSchemas) {
         return buildOptionalTypeDeclaration({
             schema,
             context,
