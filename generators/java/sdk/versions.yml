@@ -1,3 +1,11 @@
+- version: 3.14.4
+  changelogEntry:
+    - summary: |
+        Replace gradle wrapper command with resource copy to eliminate internet requests during SDK generation. Gradle wrapper files are now copied from bundled resources instead of being downloaded via `gradle wrapper` command. All `./gradlew` invocations during generation have been removed to avoid network calls and HTTP proxy issues.
+      type: fix
+  createdAt: "2025-11-11"
+  irVersion: 61
+
 - version: 3.14.3
   changelogEntry:
     - summary: |
