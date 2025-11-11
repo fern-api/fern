@@ -3987,7 +3987,7 @@
               },
               {
                 "docs": "Array format.",
-                "type": "list<MetadataCreateItem>",
+                "type": "list<MetadataCreateOneItem>",
               },
             ],
           },
@@ -4001,7 +4001,7 @@
               "openapi": "../openapi.yml",
             },
           },
-          "MetadataCreateItem": {
+          "MetadataCreateOneItem": {
             "docs": undefined,
             "inline": true,
             "properties": {
@@ -6779,7 +6779,7 @@
     source:
       openapi: ../openapi.yml
     inline: true
-  MetadataCreateItem:
+  MetadataCreateOneItem:
     properties:
       name: optional<string>
       value: optional<list<string>>
@@ -6795,7 +6795,7 @@
       - type: MetadataCreateExampleKey
         docs: Object format.
       - docs: Array format.
-        type: list<MetadataCreateItem>
+        type: list<MetadataCreateOneItem>
     source:
       openapi: ../openapi.yml
   ContainerCounts:

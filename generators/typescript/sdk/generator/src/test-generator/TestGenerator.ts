@@ -113,7 +113,7 @@ export class TestGenerator {
     }
 
     private async addJestConfigs(): Promise<void> {
-        const setupFilesAfterEnv = [];
+        const setupFilesAfterEnv = [`<rootDir>/${this.relativeTestPath}/setup.ts`];
         if (this.useBigInt) {
             setupFilesAfterEnv.push(`<rootDir>/${this.relativeTestPath}/bigint.setup.ts`);
         }
@@ -200,7 +200,8 @@ export class TestGenerator {
                                 environment: "node",
                                 root: "./${this.relativeTestPath}",
                                 include: ["**/*.test.{js,ts,jsx,tsx}"],
-                                exclude: ["wire/**"]
+                                exclude: ["wire/**"],
+                                setupFiles: ["./setup.ts"]
                             }
                         },
                         ${
@@ -211,7 +212,7 @@ export class TestGenerator {
                                         name: "wire",
                                         environment: "node",
                                         root: "./${this.relativeTestPath}/wire",
-                                        setupFiles: ["../mock-server/setup.ts"]
+                                        setupFiles: ["../setup.ts", "../mock-server/setup.ts"]
                                     }
                                 },`
                                 : ""

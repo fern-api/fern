@@ -9528,7 +9528,7 @@
             {
               "description": "Facts",
               "value": {
-                "generatedName": "DocumentContextDataItem",
+                "generatedName": "DocumentContextDataZeroItem",
                 "schema": "FactContext",
                 "source": {
                   "file": "../swagger.json",
@@ -9536,7 +9536,7 @@
                 },
                 "type": "reference"
               },
-              "generatedName": "DocumentContextData",
+              "generatedName": "DocumentContextDataZero",
               "nameOverride": "Facts",
               "title": "Facts",
               "groupName": [],
@@ -9557,7 +9557,7 @@
               "schema": {
                 "type": "string"
               },
-              "generatedName": "DocumentContextData",
+              "generatedName": "DocumentContextDataTwo",
               "nameOverride": "Text",
               "title": "Text",
               "groupName": [],

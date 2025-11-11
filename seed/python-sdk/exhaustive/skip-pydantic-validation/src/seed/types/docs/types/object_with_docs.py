@@ -12,6 +12,10 @@ class ObjectWithDocs(UncheckedBaseModel):
     """
     Characters that could lead to broken generated SDKs:
     
+    Markdown Escapes:
+    - \\_: Escaped underscore (e.g., FOO\\_BAR)
+    - \\*: Escaped asterisk
+    
     JSDoc (JavaScript/TypeScript):
     - @: Used for JSDoc tags
     - {: }: Used for type definitions

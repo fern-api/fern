@@ -5,6 +5,8 @@ package com.seed.objectsWithImports.resources.optional;
 
 import com.seed.objectsWithImports.core.ClientOptions;
 import com.seed.objectsWithImports.core.RequestOptions;
+import com.seed.objectsWithImports.resources.optional.types.DeployParams;
+import com.seed.objectsWithImports.resources.optional.types.DeployResponse;
 import com.seed.objectsWithImports.resources.optional.types.SendOptionalBodyRequest;
 import java.util.Map;
 import java.util.Optional;
@@ -51,5 +53,37 @@ public class AsyncOptionalClient {
     public CompletableFuture<String> sendOptionalTypedBody(
             Optional<SendOptionalBodyRequest> request, RequestOptions requestOptions) {
         return this.rawClient.sendOptionalTypedBody(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Tests optional(nullable(T)) where T has only optional properties.
+     * This should not generate wire tests expecting {} when Optional.empty() is passed.
+     */
+    public CompletableFuture<DeployResponse> sendOptionalNullableWithAllOptionalProperties(String actionId, String id) {
+        return this.rawClient
+                .sendOptionalNullableWithAllOptionalProperties(actionId, id)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * Tests optional(nullable(T)) where T has only optional properties.
+     * This should not generate wire tests expecting {} when Optional.empty() is passed.
+     */
+    public CompletableFuture<DeployResponse> sendOptionalNullableWithAllOptionalProperties(
+            String actionId, String id, Optional<DeployParams> request) {
+        return this.rawClient
+                .sendOptionalNullableWithAllOptionalProperties(actionId, id, request)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * Tests optional(nullable(T)) where T has only optional properties.
+     * This should not generate wire tests expecting {} when Optional.empty() is passed.
+     */
+    public CompletableFuture<DeployResponse> sendOptionalNullableWithAllOptionalProperties(
+            String actionId, String id, Optional<DeployParams> request, RequestOptions requestOptions) {
+        return this.rawClient
+                .sendOptionalNullableWithAllOptionalProperties(actionId, id, request, requestOptions)
+                .thenApply(response -> response.body());
     }
 }

@@ -1122,7 +1122,7 @@ class EndpointFunctionGenerator:
         # paginator type wraps the underlying HTTP response wrapper.
         if self.is_paginated:
             underlying_type_hint = self._get_pagination_results_type(type_hint)
-            return self._context.core_utilities.get_paginator_type(underlying_type_hint, is_async=is_async)
+            return self._context.core_utilities.get_paginator_type(underlying_type_hint, type_hint, is_async=is_async)
 
         # Handle streaming case
         is_streaming = response_body and is_streaming_endpoint(self._endpoint)

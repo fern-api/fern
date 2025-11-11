@@ -5,10 +5,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import AsyncIterator, Awaitable, Callable, Generic, Iterator, List, Optional, TypeVar
 
-from .http_response import BaseHttpResponse
-
 # Generic to represent the underlying type of the results within a page
 T = TypeVar("T")
+# Generic to represent the type of the API response
+R = TypeVar("R")
 
 
 # SDKs implement a Page ABC per-pagination request, the endpoint then returns a pager that wraps this type
@@ -23,11 +23,11 @@ T = TypeVar("T")
 
 
 @dataclass(frozen=True)
-class SyncPager(Generic[T]):
-    get_next: Optional[Callable[[], Optional[SyncPager[T]]]]
+class SyncPager(Generic[T, R]):
+    get_next: Optional[Callable[[], Optional[SyncPager[T, R]]]]
     has_next: bool
     items: Optional[List[T]]
-    response: Optional[BaseHttpResponse]
+    response: R
 
     # Here we type ignore the iterator to avoid a mypy error
     # caused by the type conflict with Pydanitc's __iter__ method
@@ -37,8 +37,8 @@ class SyncPager(Generic[T]):
             if page.items is not None:
                 yield from page.items
 
-    def iter_pages(self) -> Iterator[SyncPager[T]]:
-        page: Optional[SyncPager[T]] = self
+    def iter_pages(self) -> Iterator[SyncPager[T, R]]:
+        page: Optional[SyncPager[T, R]] = self
         while page is not None:
             yield page
 
@@ -49,16 +49,16 @@ class SyncPager(Generic[T]):
             if page is None or page.items is None or len(page.items) == 0:
                 return
 
-    def next_page(self) -> Optional[SyncPager[T]]:
+    def next_page(self) -> Optional[SyncPager[T, R]]:
         return self.get_next() if self.get_next is not None else None
 
 
 @dataclass(frozen=True)
-class AsyncPager(Generic[T]):
-    get_next: Optional[Callable[[], Awaitable[Optional[AsyncPager[T]]]]]
+class AsyncPager(Generic[T, R]):
+    get_next: Optional[Callable[[], Awaitable[Optional[AsyncPager[T, R]]]]]
     has_next: bool
     items: Optional[List[T]]
-    response: Optional[BaseHttpResponse]
+    response: R
 
     async def __aiter__(self) -> AsyncIterator[T]:
         async for page in self.iter_pages():
@@ -66,8 +66,8 @@ class AsyncPager(Generic[T]):
                 for item in page.items:
                     yield item
 
-    async def iter_pages(self) -> AsyncIterator[AsyncPager[T]]:
-        page: Optional[AsyncPager[T]] = self
+    async def iter_pages(self) -> AsyncIterator[AsyncPager[T, R]]:
+        page: Optional[AsyncPager[T, R]] = self
         while page is not None:
             yield page
 
@@ -78,5 +78,5 @@ class AsyncPager(Generic[T]):
             if page is None or page.items is None or len(page.items) == 0:
                 return
 
-    async def next_page(self) -> Optional[AsyncPager[T]]:
+    async def next_page(self) -> Optional[AsyncPager[T, R]]:
         return await self.get_next() if self.get_next is not None else None
