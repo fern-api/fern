@@ -76,7 +76,13 @@
         "id": "getProtected",
         "includeInApiExplorer": undefined,
         "method": "GET",
-        "multiAuth": undefined,
+        "multiAuth": [
+          {
+            "schemes": [
+              "bearerAuth",
+            ],
+          },
+        ],
         "name": "Get protected resource",
         "originalEndpointId": "endpoint_.getProtected",
         "path": {
