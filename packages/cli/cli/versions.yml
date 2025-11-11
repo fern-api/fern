@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Add support for multiAuth field in FDR endpoint definitions to represent OpenAPI security with OR-of-AND semantics.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.115.0
+
+- changelogEntry:
+    - summary: |
         Add new `remove-discriminants-from-schemas` setting for OpenAPI/AsyncAPI imports in generators.yml.
 
         If `"always"`, discriminant properties are removed from schemas when generating types, unless the schema is also used outside of a discriminated union.

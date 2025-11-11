@@ -172,7 +172,7 @@ function convertService(
             availability: convertIrAvailability(irEndpoint.availability ?? irService.availability),
             auth: irEndpoint.auth,
             authV2: convertEndpointSecurity(irEndpoint.security),
-            multiAuth: undefined,
+            multiAuth: convertMultiAuth(irEndpoint.security),
             description: irEndpoint.docs ?? undefined,
             method: convertHttpMethod(irEndpoint.method),
             defaultEnvironment:
@@ -401,6 +401,22 @@ function convertEndpointSecurity(
     const authSchemeKeys = new Set(security.flatMap((item) => Object.keys(item)));
 
     return Array.from(authSchemeKeys).map((key) => FdrCjsSdk.AuthSchemeId(key));
+}
+
+function convertMultiAuth(
+    security: Ir.http.HttpEndpointSecurityItem[] | undefined
+): FdrCjsSdk.MultipleAuthType[] | undefined {
+    if (security == null) {
+        return undefined;
+    }
+
+    if (security.length === 0) {
+        return [];
+    }
+
+    return security.map((securityItem) => ({
+        schemes: Object.keys(securityItem).map((key) => FdrCjsSdk.AuthSchemeId(key))
+    }));
 }
 
 export function convertIrAvailability(availability: Ir.Availability | undefined): FdrCjsSdk.Availability | undefined {
