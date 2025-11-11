@@ -1,3 +1,12 @@
+- version: 3.14.5
+  changelogEntry:
+    - summary: |
+        Fix SDK generation failures for OpenAPI specs with nullable container types. The generator now properly handles nullable containers in response parsing and pagination, treating them distinctly from optional containers. Also adds support for literal container detection with improved error diagnostics. 
+        This fixes "Unexpected container type" errors that occurred when processing APIs with nullable types or array examples in query parameters.
+      type: fix
+  createdAt: "2025-11-11"
+  irVersion: 61
+
 - version: 3.14.4
   changelogEntry:
     - summary: |
