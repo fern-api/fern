@@ -26,7 +26,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static readonly REQUEST_AND_RESPONSE_TYPES_FEATURE_ID: FernGeneratorCli.FeatureId =
         "REQUEST_AND_RESPONSE_TYPES";
     private static readonly RUNTIME_COMPATIBILITY_FEATURE_ID: FernGeneratorCli.FeatureId = "RUNTIME_COMPATIBILITY";
-    private static readonly STREAMING_FEATURE_ID: FernGeneratorCli.FeatureId = "STREAMING";
     private static readonly PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION";
     private static readonly RAW_RESPONSES_FEATURE_ID: FernGeneratorCli.FeatureId = "ACCESS_RAW_RESPONSE_DATA";
     private static readonly ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS";
@@ -34,6 +33,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         "ADDITIONAL_QUERY_STRING_PARAMETERS";
     public static readonly BINARY_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "BINARY_RESPONSE";
     public static readonly FILE_UPLOAD_REQUEST_FEATURE_ID: FernGeneratorCli.FeatureId = "FILE_UPLOADS";
+    public static readonly STREAMING_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "STREAMING_RESPONSE";
+    public static readonly LOGGING_FEATURE_ID: FernGeneratorCli.FeatureId = "LOGGING";
 
     private readonly context: SdkContext;
     private readonly isPaginationEnabled: boolean;
@@ -81,13 +82,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[ReadmeSnippetBuilder.ABORTING_REQUESTS_FEATURE_ID] = this.buildAbortSignalSnippets();
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
         snippets[ReadmeSnippetBuilder.RUNTIME_COMPATIBILITY_FEATURE_ID] = this.buildRuntimeCompatibilitySnippets();
-        snippets[ReadmeSnippetBuilder.STREAMING_FEATURE_ID] = this.buildStreamingSnippets();
+        snippets[ReadmeSnippetBuilder.STREAMING_RESPONSE_FEATURE_ID] = this.buildStreamingSnippets();
         snippets[ReadmeSnippetBuilder.FILE_UPLOAD_REQUEST_FEATURE_ID] = this.buildFileUploadRequestSnippet();
         snippets[ReadmeSnippetBuilder.BINARY_RESPONSE_FEATURE_ID] = this.buildBinaryResponseSnippet();
         snippets[ReadmeSnippetBuilder.RAW_RESPONSES_FEATURE_ID] = this.buildRawResponseSnippets();
         snippets[ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID] = this.buildAdditionalHeadersSnippets();
         snippets[ReadmeSnippetBuilder.ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID] =
             this.buildAdditionalQueryStringParametersSnippets();
+        snippets[ReadmeSnippetBuilder.LOGGING_FEATURE_ID] = this.buildLoggingSnippets();
 
         if (this.isPaginationEnabled) {
             snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
@@ -248,33 +250,53 @@ const response = await ${this.getMethodCall(queryStringEndpoint)}(..., {
     }
 
     private buildFileUploadRequestSnippet(): string[] {
-        const binaryRequestEndpoints = Object.values(this.context.ir.services).flatMap((service) =>
+        const fileUploadEndpoints = Object.values(this.context.ir.services).flatMap((service) =>
             service.endpoints
-                .filter((endpoint) => endpoint.requestBody?.type === "bytes")
+                .filter((endpoint) => {
+                    if (endpoint.requestBody == null) {
+                        return false;
+                    }
+                    if (endpoint.requestBody.type === "bytes") {
+                        return true;
+                    }
+                    if (
+                        endpoint.requestBody.type === "fileUpload" &&
+                        endpoint.requestBody.properties.some((property) => property.type === "file")
+                    ) {
+                        return true;
+                    }
+                    return false;
+                })
                 .map((endpoint) => ({
                     endpoint,
                     fernFilepath: service.name.fernFilepath
                 }))
         );
-        if (binaryRequestEndpoints.length === 0) {
-            return [];
-        }
-        const binaryRequestEndpoint = binaryRequestEndpoints[0] as EndpointWithFilepath;
-        return [
-            this.writeCode(
-                code`
+        for (const fileUploadEndpoint of fileUploadEndpoints) {
+            if (fileUploadEndpoint.endpoint.requestBody?.type === "bytes") {
+                return [
+                    this.writeCode(
+                        code`
 import { createReadStream } from "fs";
 
-await ${this.getMethodCall(binaryRequestEndpoint)}(createReadStream("path/to/file"), ...);
-await ${this.getMethodCall(binaryRequestEndpoint)}(new ReadableStream(), ...);
-await ${this.getMethodCall(binaryRequestEndpoint)}(Buffer.from('binary data'), ...);
-await ${this.getMethodCall(binaryRequestEndpoint)}(new Blob(['binary data'], { type: 'audio/mpeg' }), ...);
-await ${this.getMethodCall(binaryRequestEndpoint)}(new File(['binary data'], 'file.mp3'), ...);
-await ${this.getMethodCall(binaryRequestEndpoint)}(new ArrayBuffer(8), ...);
-await ${this.getMethodCall(binaryRequestEndpoint)}(new Uint8Array([0, 1, 2]), ...);
-`
-            )
-        ];
+await ${this.getMethodCall(fileUploadEndpoint)}(createReadStream("path/to/file"), ...);
+await ${this.getMethodCall(fileUploadEndpoint)}(new ReadableStream(), ...);
+await ${this.getMethodCall(fileUploadEndpoint)}(Buffer.from('binary data'), ...);
+await ${this.getMethodCall(fileUploadEndpoint)}(new Blob(['binary data'], { type: 'audio/mpeg' }), ...);
+await ${this.getMethodCall(fileUploadEndpoint)}(new File(['binary data'], 'file.mp3'), ...);
+await ${this.getMethodCall(fileUploadEndpoint)}(new ArrayBuffer(8), ...);
+await ${this.getMethodCall(fileUploadEndpoint)}(new Uint8Array([0, 1, 2]), ...);
+                `
+                    )
+                ];
+            }
+
+            const snippet = this.getSnippetForEndpointId(fileUploadEndpoint.endpoint.id);
+            if (snippet != null) {
+                return [snippet];
+            }
+        }
+        return [];
     }
 
     private buildBinaryResponseSnippet(): string[] {
@@ -284,7 +306,10 @@ await ${this.getMethodCall(binaryRequestEndpoint)}(new Uint8Array([0, 1, 2]), ..
 
         const binaryResponseEndpoints = Object.values(this.context.ir.services).flatMap((service) =>
             service.endpoints
-                .filter((endpoint) => endpoint.response?.body?.type === "fileDownload")
+                .filter(
+                    (endpoint) =>
+                        endpoint.response?.body?.type === "fileDownload" || endpoint.response?.body?.type === "bytes"
+                )
                 .map((endpoint) => ({
                     endpoint,
                     fernFilepath: service.name.fernFilepath
@@ -317,7 +342,10 @@ const bodyUsed = response.bodyUsed;
 
         const binaryResponseEndpoints = Object.values(this.context.ir.services).flatMap((service) =>
             service.endpoints
-                .filter((endpoint) => endpoint.response?.body?.type === "fileDownload")
+                .filter(
+                    (endpoint) =>
+                        endpoint.response?.body?.type === "fileDownload" || endpoint.response?.body?.type === "bytes"
+                )
                 .map((endpoint) => ({
                     endpoint,
                     fernFilepath: service.name.fernFilepath
@@ -374,6 +402,25 @@ controller.abort(); // aborts the request
 `
             )
         );
+    }
+
+    private buildLoggingSnippets(): string[] {
+        return [
+            this.writeCode(
+                code`
+import { ${this.rootClientConstructorName}, logging } from "${this.rootPackageName}";
+
+const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
+    ...
+    logging: {
+        level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info
+        logger: new logging.ConsoleLogger(), // defaults to ConsoleLogger
+        silent: false, // defaults to true, set to false to enable logging
+    }
+});
+`
+            )
+        ];
     }
 
     private buildRuntimeCompatibilitySnippets(): string[] {

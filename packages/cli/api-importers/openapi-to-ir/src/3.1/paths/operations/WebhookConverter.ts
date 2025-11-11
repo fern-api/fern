@@ -40,7 +40,7 @@ export class WebhookConverter extends AbstractOperationConverter {
             this.computeGroupNameAndLocationFromExtensions() ?? this.computeGroupNameFromTagAndOperationId();
 
         const payloadBreadcrumbs = [...this.breadcrumbs, "Payload"];
-        const { headers } = this.convertParameters({
+        const { headers, queryParameters } = this.convertParameters({
             breadcrumbs: payloadBreadcrumbs
         });
 
@@ -48,7 +48,8 @@ export class WebhookConverter extends AbstractOperationConverter {
             breadcrumbs: payloadBreadcrumbs,
             group,
             method,
-            streamingExtension: undefined
+            streamingExtension: undefined,
+            queryParameters
         });
         if (convertedRequestBody == null) {
             return undefined;

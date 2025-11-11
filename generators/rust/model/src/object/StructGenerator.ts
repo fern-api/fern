@@ -1,9 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
-
 import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
-
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils";
 import { isFieldRecursive } from "../utils/recursiveTypeUtils";
@@ -11,15 +9,7 @@ import {
     canDeriveHashAndEq,
     canDerivePartialEq,
     generateFieldAttributes,
-    generateFieldType,
-    getCustomTypesUsedInFields,
-    hasBigIntFields,
-    hasDateFields,
-    hasDateTimeOnlyFields,
-    hasFloatingPointSets,
-    hasHashMapFields,
-    hasHashSetFields,
-    hasUuidFields
+    generateFieldType
 } from "../utils/structUtils";
 
 export class StructGenerator {
@@ -66,81 +56,6 @@ export class StructGenerator {
         rustStruct.write(writer);
 
         return writer.toString();
-    }
-
-    private writeUseStatements(writer: rust.Writer): void {
-        // Add imports for custom named types referenced in fields FIRST
-        const customTypes = getCustomTypesUsedInFields(
-            this.objectTypeDeclaration.properties,
-            this.typeDeclaration.name.name.pascalCase.unsafeName
-        );
-        customTypes.forEach((typeName) => {
-            const modulePath = this.context.getModulePathForType(typeName.snakeCase.unsafeName);
-            const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
-            writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
-        });
-
-        // Add imports for parent types
-        if (this.objectTypeDeclaration.extends.length > 0) {
-            this.objectTypeDeclaration.extends.forEach((parentType) => {
-                // Use getUniqueTypeNameForReference to get the correct type name with fernFilepath prefix
-                const parentTypeName = this.context.getUniqueTypeNameForReference(parentType);
-                const modulePath = this.context.getModulePathForType(parentType.name.snakeCase.unsafeName);
-                const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
-                writer.writeLine(`use crate::${moduleNameEscaped}::${parentTypeName};`);
-            });
-        }
-
-        // Add chrono imports based on specific types needed
-        const hasDateOnly = hasDateFields(this.objectTypeDeclaration.properties);
-        const hasDateTimeOnly = hasDateTimeOnlyFields(this.objectTypeDeclaration.properties);
-
-        // TODO: @iamnamananand996 - use AST mechanism for all imports
-        if (hasDateOnly && hasDateTimeOnly) {
-            // Both date and datetime types present
-            writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
-        } else if (hasDateOnly) {
-            // Only date type present, import NaiveDate only
-            writer.writeLine("use chrono::NaiveDate;");
-        } else if (hasDateTimeOnly) {
-            // Only datetime type present, import DateTime and Utc only
-            writer.writeLine("use chrono::{DateTime, Utc};");
-        }
-
-        // Add std::collections imports based on specific collection types used
-        const needsHashMap = hasHashMapFields(this.objectTypeDeclaration.properties);
-        const needsHashSet = hasHashSetFields(this.objectTypeDeclaration.properties);
-
-        if (needsHashMap && needsHashSet) {
-            writer.writeLine("use std::collections::{HashMap, HashSet};");
-        } else if (needsHashMap) {
-            writer.writeLine("use std::collections::HashMap;");
-        } else if (needsHashSet) {
-            writer.writeLine("use std::collections::HashSet;");
-        }
-
-        // Add ordered_float if we have floating-point sets
-        if (hasFloatingPointSets(this.objectTypeDeclaration.properties)) {
-            writer.writeLine("use ordered_float::OrderedFloat;");
-        }
-
-        // Add uuid if we have UUID fields
-        if (hasUuidFields(this.objectTypeDeclaration.properties)) {
-            writer.writeLine("use uuid::Uuid;");
-        }
-
-        // Add num_bigint if we have BigInt fields
-        if (hasBigIntFields(this.objectTypeDeclaration.properties)) {
-            writer.writeLine("use num_bigint::BigInt;");
-        }
-
-        // TODO: @iamnamananand996 build to use serde_json::Value ---> Value directly
-        // if (hasJsonValueFields(properties)) {
-        //     writer.writeLine("use serde_json::Value;");
-        // }
-
-        // Add serde imports LAST
-        writer.writeLine("use serde::{Deserialize, Serialize};");
     }
 
     private generateStructForTypeDeclaration(): rust.Struct {

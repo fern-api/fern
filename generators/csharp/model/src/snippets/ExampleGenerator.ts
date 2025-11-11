@@ -1,5 +1,4 @@
-import { ast } from "@fern-api/csharp-codegen";
-
+import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
 import {
     ExampleContainer,
     ExampleNamedType,
@@ -9,20 +8,14 @@ import {
     ExampleUndiscriminatedUnionType,
     ExampleUnionType
 } from "@fern-fern/ir-sdk/api";
-
+import { fail } from "assert";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { ObjectGenerator } from "../object/ObjectGenerator";
 import { UnionGenerator } from "../union/UnionGenerator";
 
-export class ExampleGenerator {
-    private context: ModelGeneratorContext;
-
-    constructor(context: ModelGeneratorContext) {
-        this.context = context;
-    }
-
-    private get csharp() {
-        return this.context.csharp;
+export class ExampleGenerator extends WithGeneration {
+    constructor(private readonly context: ModelGeneratorContext) {
+        super(context);
     }
 
     public getSnippetForTypeReference({
@@ -38,10 +31,10 @@ export class ExampleGenerator {
             unknown: (value) => this.getSnippetForUnknown(value),
             named: (named) => this.getSnippetForNamed(named, parseDatetimes),
             _other: () => {
-                throw new Error("Unknown example type reference: " + exampleTypeReference.shape.type);
+                throw new Error(`Unknown example type reference: ${exampleTypeReference.shape.type}`);
             }
         });
-        return this.csharp.codeblock((writer) => writer.writeNode(astNode));
+        return this.csharp.codeblock((writer) => writer.write(astNode));
     }
 
     private getSnippetForUnknown(unknownExample: unknown): ast.AstNode {
@@ -57,7 +50,7 @@ export class ExampleGenerator {
                     const values = unknownExample.map((value) => this.getSnippetForUnknown(value));
                     return this.csharp.list({
                         entries: values,
-                        itemType: this.csharp.Type.optional(this.csharp.Type.object())
+                        itemType: this.csharp.Type.optional(this.csharp.Type.object)
                     });
                 } else if (unknownExample != null && unknownExample instanceof Object) {
                     const keys = Object.keys(unknownExample).sort();
@@ -66,8 +59,8 @@ export class ExampleGenerator {
                         value: this.getSnippetForUnknown((unknownExample as Record<string, unknown>)[key])
                     }));
                     return this.csharp.dictionary({
-                        keyType: this.csharp.Type.object(),
-                        valueType: this.csharp.Type.optional(this.csharp.Type.object()),
+                        keyType: this.csharp.Type.object,
+                        valueType: this.csharp.Type.optional(this.csharp.Type.object),
                         values: {
                             type: "entries",
                             entries
@@ -83,11 +76,18 @@ export class ExampleGenerator {
         return exampleNamedType.shape._visit<ast.AstNode>({
             alias: (exampleAliasType) =>
                 this.getSnippetForTypeReference({ exampleTypeReference: exampleAliasType.value, parseDatetimes }),
-            enum: (exampleEnumType) =>
-                this.csharp.enumInstantiation({
+            enum: (exampleEnumType) => {
+                const enumDecl = this.model.dereferenceType(exampleNamedType).typeDeclaration.shape;
+
+                if (!is.IR.Type.Enum(enumDecl)) {
+                    fail(`Expected enum type declaration, got: ${enumDecl.type}`);
+                }
+
+                return this.csharp.enumInstantiation({
                     reference: this.context.csharpTypeMapper.convertToClassReference(exampleNamedType.typeName),
-                    value: exampleEnumType.value.name.pascalCase.safeName
-                }),
+                    value: this.model.getEnumValueName(enumDecl, exampleEnumType)
+                });
+            },
             object: (exampleObjectType) =>
                 this.getSnippetForTypeId(exampleNamedType.typeName.typeId, exampleObjectType, parseDatetimes),
             union: (exampleUnionType) =>
@@ -95,7 +95,7 @@ export class ExampleGenerator {
             undiscriminatedUnion: (exampleUndiscriminatedUnionType) =>
                 this.getSnippetForUndiscriminatedUnion(exampleUndiscriminatedUnionType, parseDatetimes),
             _other: () => {
-                throw new Error("Unknown example type: " + exampleNamedType.shape.type);
+                throw new Error(`Unknown example type: ${exampleNamedType.shape.type}`);
             }
         });
     }
@@ -105,7 +105,7 @@ export class ExampleGenerator {
         exampleObjectType: ExampleObjectType,
         parseDatetimes: boolean
     ): ast.AstNode {
-        const typeDeclaration = this.context.getTypeDeclarationOrThrow(typeId);
+        const typeDeclaration = this.model.dereferenceType(typeId).typeDeclaration;
         if (typeDeclaration.shape.type !== "object") {
             throw new Error("Unexpected non object in Example Generator");
         }
@@ -130,8 +130,8 @@ export class ExampleGenerator {
         exampleUnionType: ExampleUnionType,
         parseDatetimes: boolean
     ): ast.AstNode {
-        if (this.context.shouldGenerateDiscriminatedUnions()) {
-            const typeDeclaration = this.context.getTypeDeclarationOrThrow(typeId);
+        if (this.settings.shouldGeneratedDiscriminatedUnions) {
+            const typeDeclaration = this.model.dereferenceType(typeId).typeDeclaration;
             if (typeDeclaration.shape.type !== "union") {
                 throw new Error("Unexpected non union in Example Generator");
             }
@@ -146,7 +146,7 @@ export class ExampleGenerator {
             // todo: figure out what to put here
             noProperties: () => this.csharp.codeblock('"no-properties-union"'),
             _other: (value) => {
-                throw new Error("Unknown example type reference: " + value.type);
+                throw new Error(`Unknown example type reference: ${value.type}`);
             }
         });
     }
@@ -155,13 +155,13 @@ export class ExampleGenerator {
         return c._visit<ast.AstNode>({
             literal: (p) =>
                 this.csharp.codeblock((writer) =>
-                    writer.writeNode(this.getSnippetForPrimitive(p.literal, parseDatetimes))
+                    writer.write(this.getSnippetForPrimitive(p.literal, parseDatetimes), "\n")
                 ),
             list: (p) => {
                 const entries = p.list.map((exampleTypeReference) =>
                     this.getSnippetForTypeReference({ exampleTypeReference, parseDatetimes })
                 );
-                if (this.context.isReadOnlyMemoryType(p.itemType)) {
+                if (this.context.common.isReadOnlyMemoryType(p.itemType)) {
                     return this.csharp.readOnlyMemory({
                         itemType: this.context.csharpTypeMapper.convert({
                             reference: p.itemType,
@@ -231,7 +231,7 @@ export class ExampleGenerator {
                 });
             },
             _other: (value) => {
-                throw new Error("Unknown example container: " + value.type);
+                throw new Error(`Unknown example container: ${value.type}`);
             }
         });
     }
@@ -252,9 +252,9 @@ export class ExampleGenerator {
             base64: (p) => this.csharp.InstantiatedPrimitive.string(p),
             bigInteger: (p) => this.csharp.InstantiatedPrimitive.string(p),
             _other: (value) => {
-                throw new Error("Unknown example type reference: " + value.type);
+                throw new Error(`Unknown example type reference: ${value.type}`);
             }
         });
-        return this.csharp.codeblock((writer) => writer.writeNode(instantiatedPrimitive));
+        return this.csharp.codeblock((writer) => writer.write(instantiatedPrimitive));
     }
 }

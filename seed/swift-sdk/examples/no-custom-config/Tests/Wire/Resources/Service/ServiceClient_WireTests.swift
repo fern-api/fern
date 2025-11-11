@@ -4,7 +4,7 @@ import Examples
 
 @Suite("ServiceClient_ Wire Tests") struct ServiceClient_WireTests {
     @Test func getMovie1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -62,12 +62,15 @@ import Examples
             ],
             revenue: 1000000
         )
-        let response = try await client.service.getMovie(movieId: "movie-c06a4ad7")
+        let response = try await client.service.getMovie(
+            movieId: "movie-c06a4ad7",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getMovie2() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -113,12 +116,15 @@ import Examples
             ],
             revenue: 1000000
         )
-        let response = try await client.service.getMovie(movieId: "movieId")
+        let response = try await client.service.getMovie(
+            movieId: "movieId",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func createMovie1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -132,33 +138,36 @@ import Examples
             urlSession: stub.urlSession
         )
         let expectedResponse = "movie-c06a4ad7"
-        let response = try await client.service.createMovie(request: Movie(
-            id: "movie-c06a4ad7",
-            prequel: "movie-cv9b914f",
-            title: "The Boy and the Heron",
-            from: "Hayao Miyazaki",
-            rating: 8,
-            type: .movie,
-            tag: "tag-wf9as23d",
-            metadata: [
-                "actors": .array([
-                    .string("Christian Bale"),
-                    .string("Florence Pugh"),
-                    .string("Willem Dafoe")
-                ]), 
-                "releaseDate": .string("2023-12-08"), 
-                "ratings": .object([
-                    "rottenTomatoes": .number(97), 
-                    "imdb": .number(7.6)
-                ])
-            ],
-            revenue: 1000000
-        ))
+        let response = try await client.service.createMovie(
+            request: Movie(
+                id: "movie-c06a4ad7",
+                prequel: "movie-cv9b914f",
+                title: "The Boy and the Heron",
+                from: "Hayao Miyazaki",
+                rating: 8,
+                type: .movie,
+                tag: "tag-wf9as23d",
+                metadata: [
+                    "actors": .array([
+                        .string("Christian Bale"),
+                        .string("Florence Pugh"),
+                        .string("Willem Dafoe")
+                    ]), 
+                    "releaseDate": .string("2023-12-08"), 
+                    "ratings": .object([
+                        "rottenTomatoes": .number(97), 
+                        "imdb": .number(7.6)
+                    ])
+                ],
+                revenue: 1000000
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func createMovie2() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -172,27 +181,30 @@ import Examples
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.service.createMovie(request: Movie(
-            id: "id",
-            prequel: "prequel",
-            title: "title",
-            from: "from",
-            rating: 1.1,
-            type: .movie,
-            tag: "tag",
-            book: "book",
-            metadata: [
-                "metadata": .object([
-                    "key": .string("value")
-                ])
-            ],
-            revenue: 1000000
-        ))
+        let response = try await client.service.createMovie(
+            request: Movie(
+                id: "id",
+                prequel: "prequel",
+                title: "title",
+                from: "from",
+                rating: 1.1,
+                type: .movie,
+                tag: "tag",
+                book: "book",
+                metadata: [
+                    "metadata": .object([
+                        "key": .string("value")
+                    ])
+                ],
+                revenue: 1000000
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getMetadata1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -219,13 +231,13 @@ import Examples
         let expectedResponse = "<head>...</head>"
         let response = try await client.service.getMetadata(
             shallow: false,
-            tag: 
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func getMetadata2() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -250,13 +262,13 @@ import Examples
         let expectedResponse = "string"
         let response = try await client.service.getMetadata(
             shallow: true,
-            tag: 
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func createBigEntity1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -308,237 +320,240 @@ import Examples
                 )
             ]
         )
-        let response = try await client.service.createBigEntity(request: BigEntity(
-            castMember: CastMember.actor(
-                Actor(
-                    name: "name",
-                    id: "id"
-                )
-            ),
-            extendedMovie: ExtendedMovie(
-                id: "id",
-                prequel: "prequel",
-                title: "title",
-                from: "from",
-                rating: 1.1,
-                type: .movie,
-                tag: "tag",
-                book: "book",
-                metadata: [
-                    "metadata": .object([
-                        "key": .string("value")
-                    ])
-                ],
-                revenue: 1000000,
-                cast: [
-                    "cast",
-                    "cast"
-                ]
-            ),
-            entity: Entity(
-                type: `Type`.basicType(
-                    .primitive
+        let response = try await client.service.createBigEntity(
+            request: BigEntity(
+                castMember: CastMember.actor(
+                    Actor(
+                        name: "name",
+                        id: "id"
+                    )
                 ),
-                name: "name"
-            ),
-            metadata: Metadata.html(
-                .init(
-                    extra: [
-                        "extra": "extra"
+                extendedMovie: ExtendedMovie(
+                    id: "id",
+                    prequel: "prequel",
+                    title: "title",
+                    from: "from",
+                    rating: 1.1,
+                    type: .movie,
+                    tag: "tag",
+                    book: "book",
+                    metadata: [
+                        "metadata": .object([
+                            "key": .string("value")
+                        ])
                     ],
-                    tags: ,
-                    html: 
-                )
-            ),
-            commonMetadata: Metadata(
-                id: "id",
-                data: [
-                    "data": "data"
-                ],
-                jsonString: "jsonString"
-            ),
-            eventInfo: EventInfo.metadata(
-                .init(
+                    revenue: 1000000,
+                    cast: [
+                        "cast",
+                        "cast"
+                    ]
+                ),
+                entity: Entity(
+                    type: `Type`.basicType(
+                        .primitive
+                    ),
+                    name: "name"
+                ),
+                metadata: MetadataType.html(
+                    .init(
+                        extra: [
+                            "extra": "extra"
+                        ],
+                        tags: ,
+                        html: 
+                    )
+                ),
+                commonMetadata: Metadata(
                     id: "id",
                     data: [
                         "data": "data"
                     ],
                     jsonString: "jsonString"
+                ),
+                eventInfo: EventInfo.metadata(
+                    .init(
+                        id: "id",
+                        data: [
+                            "data": "data"
+                        ],
+                        jsonString: "jsonString"
+                    )
+                ),
+                data: Data.string(
+                    .init(
+                        string: 
+                    )
+                ),
+                migration: Migration(
+                    name: "name",
+                    status: .running
+                ),
+                exception: Exception.generic(
+                    .init(
+                        exceptionType: "exceptionType",
+                        exceptionMessage: "exceptionMessage",
+                        exceptionStacktrace: "exceptionStacktrace"
+                    )
+                ),
+                test: Test.and(
+                    .init(
+                        and: 
+                    )
+                ),
+                node: Node(
+                    name: "name",
+                    nodes: [
+                        Node(
+                            name: "name",
+                            nodes: [
+                                Node(
+                                    name: "name",
+                                    nodes: [],
+                                    trees: []
+                                ),
+                                Node(
+                                    name: "name",
+                                    nodes: [],
+                                    trees: []
+                                )
+                            ],
+                            trees: [
+                                Tree(
+                                    nodes: []
+                                ),
+                                Tree(
+                                    nodes: []
+                                )
+                            ]
+                        ),
+                        Node(
+                            name: "name",
+                            nodes: [
+                                Node(
+                                    name: "name",
+                                    nodes: [],
+                                    trees: []
+                                ),
+                                Node(
+                                    name: "name",
+                                    nodes: [],
+                                    trees: []
+                                )
+                            ],
+                            trees: [
+                                Tree(
+                                    nodes: []
+                                ),
+                                Tree(
+                                    nodes: []
+                                )
+                            ]
+                        )
+                    ],
+                    trees: [
+                        Tree(
+                            nodes: [
+                                Node(
+                                    name: "name",
+                                    nodes: [],
+                                    trees: []
+                                ),
+                                Node(
+                                    name: "name",
+                                    nodes: [],
+                                    trees: []
+                                )
+                            ]
+                        ),
+                        Tree(
+                            nodes: [
+                                Node(
+                                    name: "name",
+                                    nodes: [],
+                                    trees: []
+                                ),
+                                Node(
+                                    name: "name",
+                                    nodes: [],
+                                    trees: []
+                                )
+                            ]
+                        )
+                    ]
+                ),
+                directory: Directory(
+                    name: "name",
+                    files: [
+                        File(
+                            name: "name",
+                            contents: "contents"
+                        ),
+                        File(
+                            name: "name",
+                            contents: "contents"
+                        )
+                    ],
+                    directories: [
+                        Directory(
+                            name: "name",
+                            files: [
+                                File(
+                                    name: "name",
+                                    contents: "contents"
+                                ),
+                                File(
+                                    name: "name",
+                                    contents: "contents"
+                                )
+                            ],
+                            directories: [
+                                Directory(
+                                    name: "name",
+                                    files: [],
+                                    directories: []
+                                ),
+                                Directory(
+                                    name: "name",
+                                    files: [],
+                                    directories: []
+                                )
+                            ]
+                        ),
+                        Directory(
+                            name: "name",
+                            files: [
+                                File(
+                                    name: "name",
+                                    contents: "contents"
+                                ),
+                                File(
+                                    name: "name",
+                                    contents: "contents"
+                                )
+                            ],
+                            directories: [
+                                Directory(
+                                    name: "name",
+                                    files: [],
+                                    directories: []
+                                ),
+                                Directory(
+                                    name: "name",
+                                    files: [],
+                                    directories: []
+                                )
+                            ]
+                        )
+                    ]
+                ),
+                moment: Moment(
+                    id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                    date: CalendarDate("2023-01-15")!,
+                    datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)
                 )
             ),
-            data: Data.string(
-                .init(
-                    string: 
-                )
-            ),
-            migration: Migration(
-                name: "name",
-                status: .running
-            ),
-            exception: Exception.generic(
-                .init(
-                    exceptionType: "exceptionType",
-                    exceptionMessage: "exceptionMessage",
-                    exceptionStacktrace: "exceptionStacktrace"
-                )
-            ),
-            test: Test.and(
-                .init(
-                    and: 
-                )
-            ),
-            node: Node(
-                name: "name",
-                nodes: [
-                    Node(
-                        name: "name",
-                        nodes: [
-                            Node(
-                                name: "name",
-                                nodes: [],
-                                trees: []
-                            ),
-                            Node(
-                                name: "name",
-                                nodes: [],
-                                trees: []
-                            )
-                        ],
-                        trees: [
-                            Tree(
-                                nodes: []
-                            ),
-                            Tree(
-                                nodes: []
-                            )
-                        ]
-                    ),
-                    Node(
-                        name: "name",
-                        nodes: [
-                            Node(
-                                name: "name",
-                                nodes: [],
-                                trees: []
-                            ),
-                            Node(
-                                name: "name",
-                                nodes: [],
-                                trees: []
-                            )
-                        ],
-                        trees: [
-                            Tree(
-                                nodes: []
-                            ),
-                            Tree(
-                                nodes: []
-                            )
-                        ]
-                    )
-                ],
-                trees: [
-                    Tree(
-                        nodes: [
-                            Node(
-                                name: "name",
-                                nodes: [],
-                                trees: []
-                            ),
-                            Node(
-                                name: "name",
-                                nodes: [],
-                                trees: []
-                            )
-                        ]
-                    ),
-                    Tree(
-                        nodes: [
-                            Node(
-                                name: "name",
-                                nodes: [],
-                                trees: []
-                            ),
-                            Node(
-                                name: "name",
-                                nodes: [],
-                                trees: []
-                            )
-                        ]
-                    )
-                ]
-            ),
-            directory: Directory(
-                name: "name",
-                files: [
-                    File(
-                        name: "name",
-                        contents: "contents"
-                    ),
-                    File(
-                        name: "name",
-                        contents: "contents"
-                    )
-                ],
-                directories: [
-                    Directory(
-                        name: "name",
-                        files: [
-                            File(
-                                name: "name",
-                                contents: "contents"
-                            ),
-                            File(
-                                name: "name",
-                                contents: "contents"
-                            )
-                        ],
-                        directories: [
-                            Directory(
-                                name: "name",
-                                files: [],
-                                directories: []
-                            ),
-                            Directory(
-                                name: "name",
-                                files: [],
-                                directories: []
-                            )
-                        ]
-                    ),
-                    Directory(
-                        name: "name",
-                        files: [
-                            File(
-                                name: "name",
-                                contents: "contents"
-                            ),
-                            File(
-                                name: "name",
-                                contents: "contents"
-                            )
-                        ],
-                        directories: [
-                            Directory(
-                                name: "name",
-                                files: [],
-                                directories: []
-                            ),
-                            Directory(
-                                name: "name",
-                                files: [],
-                                directories: []
-                            )
-                        ]
-                    )
-                ]
-            ),
-            moment: Moment(
-                id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-                date: try! CalendarDate("2023-01-15"),
-                datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)
-            )
-        ))
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

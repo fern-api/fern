@@ -24,7 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
-        "key": "BearerAuthScheme",
+        "key": "JWTBearer",
         "token": {
           "originalName": "token",
           "camelCase": {
@@ -7587,7 +7587,7 @@
     "endpoints": {
       "endpoint_agent.listAllAgents": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -7688,7 +7688,7 @@
       },
       "endpoint_agent.createAgent": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -8081,7 +8081,7 @@
       },
       "endpoint_agent.getAgent": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -8281,7 +8281,7 @@
       },
       "endpoint_agent.deleteAgent": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -8481,7 +8481,7 @@
       },
       "endpoint_agent.patchAgent": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -8716,7 +8716,7 @@
       },
       "endpoint_agent.promptAgent": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -8986,7 +8986,7 @@
       },
       "endpoint_auth.signIn": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -9218,7 +9218,7 @@
       },
       "endpoint_auth.signUp": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -9518,7 +9518,7 @@
       },
       "endpoint_user.readUserMe": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -9619,7 +9619,7 @@
       },
       "endpoint_user.readUser": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -9819,7 +9819,7 @@
       },
       "endpoint_apiToken.listApiTokens": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -9920,7 +9920,7 @@
       },
       "endpoint_apiToken.createApiToken": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -10124,7 +10124,7 @@
       },
       "endpoint_apiToken.getApiToken": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -10324,7 +10324,7 @@
       },
       "endpoint_apiToken.deleteApiToken": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -10524,7 +10524,7 @@
       },
       "endpoint_documents.listDocuments": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -10625,7 +10625,7 @@
       },
       "endpoint_documents.createDocument": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -11021,7 +11021,7 @@
       },
       "endpoint_documents.getDocument": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -11221,7 +11221,7 @@
       },
       "endpoint_documents.deleteDocument": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -11421,7 +11421,7 @@
       },
       "endpoint_prompts.listPrompts": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -11522,7 +11522,7 @@
       },
       "endpoint_prompts.createAPrompt": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -11784,7 +11784,7 @@
       },
       "endpoint_prompts.getPrompt": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -11984,7 +11984,7 @@
       },
       "endpoint_prompts.deletePrompt": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -12184,7 +12184,7 @@
       },
       "endpoint_prompts.patchPrompt": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -12419,7 +12419,7 @@
       },
       "endpoint_tools.listTools": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -12520,7 +12520,7 @@
       },
       "endpoint_tools.createATool": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -12789,7 +12789,7 @@
       },
       "endpoint_tools.getTool": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -12989,7 +12989,7 @@
       },
       "endpoint_tools.deleteTool": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -13189,7 +13189,7 @@
       },
       "endpoint_traces.listAgentTraces": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "JWTBearer",
           "token": {
             "originalName": "token",
             "camelCase": {

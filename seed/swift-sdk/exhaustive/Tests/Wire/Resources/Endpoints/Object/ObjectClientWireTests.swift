@@ -4,7 +4,7 @@ import Exhaustive
 
 @Suite("ObjectClient Wire Tests") struct ObjectClientWireTests {
     @Test func getAndReturnWithOptionalField1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -45,8 +45,8 @@ import Exhaustive
             double: Optional(1.1),
             bool: Optional(true),
             datetime: Optional(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-            date: Optional(try! CalendarDate("2023-01-15")),
-            uuid: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")),
+            date: Optional(CalendarDate("2023-01-15")!),
+            uuid: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!),
             base64: Optional("SGVsbG8gd29ybGQh"),
             list: Optional([
                 "list",
@@ -58,31 +58,32 @@ import Exhaustive
             ]),
             bigint: Optional("1000000")
         )
-        let response = try await client.endpoints.object.getAndReturnWithOptionalField(request: ObjectWithOptionalField(
-            string: "string",
-            integer: 1,
-            long: 1000000,
-            double: 1.1,
-            bool: true,
-            datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            date: try! CalendarDate("2023-01-15"),
-            uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            base64: "SGVsbG8gd29ybGQh",
-            list: [
-                "list",
-                "list"
-            ],
-            set: ,
-            map: [
-                1: "map"
-            ],
-            bigint: 
-        ))
+        let response = try await client.endpoints.object.getAndReturnWithOptionalField(
+            request: ObjectWithOptionalField(
+                string: "string",
+                integer: 1,
+                long: 1000000,
+                double: 1.1,
+                bool: true,
+                datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                date: CalendarDate("2023-01-15")!,
+                uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                base64: "SGVsbG8gd29ybGQh",
+                list: [
+                    "list",
+                    "list"
+                ],
+                map: [
+                    1: "map"
+                ]
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getAndReturnWithRequiredField1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -100,14 +101,17 @@ import Exhaustive
         let expectedResponse = ObjectWithRequiredField(
             string: "string"
         )
-        let response = try await client.endpoints.object.getAndReturnWithRequiredField(request: ObjectWithRequiredField(
-            string: "string"
-        ))
+        let response = try await client.endpoints.object.getAndReturnWithRequiredField(
+            request: ObjectWithRequiredField(
+                string: "string"
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getAndReturnWithMapOfMap1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -133,18 +137,21 @@ import Exhaustive
                 ]
             ]
         )
-        let response = try await client.endpoints.object.getAndReturnWithMapOfMap(request: ObjectWithMapOfMap(
-            map: [
-                "map": [
-                    "map": "map"
+        let response = try await client.endpoints.object.getAndReturnWithMapOfMap(
+            request: ObjectWithMapOfMap(
+                map: [
+                    "map": [
+                        "map": "map"
+                    ]
                 ]
-            ]
-        ))
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getAndReturnNestedWithOptionalField1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -190,8 +197,8 @@ import Exhaustive
                 double: Optional(1.1),
                 bool: Optional(true),
                 datetime: Optional(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                date: Optional(try! CalendarDate("2023-01-15")),
-                uuid: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")),
+                date: Optional(CalendarDate("2023-01-15")!),
+                uuid: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!),
                 base64: Optional("SGVsbG8gd29ybGQh"),
                 list: Optional([
                     "list",
@@ -204,34 +211,35 @@ import Exhaustive
                 bigint: Optional("1000000")
             ))
         )
-        let response = try await client.endpoints.object.getAndReturnNestedWithOptionalField(request: NestedObjectWithOptionalField(
-            string: "string",
-            nestedObject: ObjectWithOptionalField(
+        let response = try await client.endpoints.object.getAndReturnNestedWithOptionalField(
+            request: NestedObjectWithOptionalField(
                 string: "string",
-                integer: 1,
-                long: 1000000,
-                double: 1.1,
-                bool: true,
-                datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                date: try! CalendarDate("2023-01-15"),
-                uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-                base64: "SGVsbG8gd29ybGQh",
-                list: [
-                    "list",
-                    "list"
-                ],
-                set: ,
-                map: [
-                    1: "map"
-                ],
-                bigint: 
-            )
-        ))
+                nestedObject: ObjectWithOptionalField(
+                    string: "string",
+                    integer: 1,
+                    long: 1000000,
+                    double: 1.1,
+                    bool: true,
+                    datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                    date: CalendarDate("2023-01-15")!,
+                    uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                    base64: "SGVsbG8gd29ybGQh",
+                    list: [
+                        "list",
+                        "list"
+                    ],
+                    map: [
+                        1: "map"
+                    ]
+                )
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getAndReturnNestedWithRequiredField1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -277,8 +285,8 @@ import Exhaustive
                 double: Optional(1.1),
                 bool: Optional(true),
                 datetime: Optional(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                date: Optional(try! CalendarDate("2023-01-15")),
-                uuid: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")),
+                date: Optional(CalendarDate("2023-01-15")!),
+                uuid: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!),
                 base64: Optional("SGVsbG8gd29ybGQh"),
                 list: Optional([
                     "list",
@@ -302,26 +310,25 @@ import Exhaustive
                     double: 1.1,
                     bool: true,
                     datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    date: try! CalendarDate("2023-01-15"),
-                    uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+                    date: CalendarDate("2023-01-15")!,
+                    uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
                     base64: "SGVsbG8gd29ybGQh",
                     list: [
                         "list",
                         "list"
                     ],
-                    set: ,
                     map: [
                         1: "map"
-                    ],
-                    bigint: 
+                    ]
                 )
-            )
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func getAndReturnNestedWithRequiredFieldAsList1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -367,8 +374,8 @@ import Exhaustive
                 double: Optional(1.1),
                 bool: Optional(true),
                 datetime: Optional(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                date: Optional(try! CalendarDate("2023-01-15")),
-                uuid: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")),
+                date: Optional(CalendarDate("2023-01-15")!),
+                uuid: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!),
                 base64: Optional("SGVsbG8gd29ybGQh"),
                 list: Optional([
                     "list",
@@ -381,54 +388,53 @@ import Exhaustive
                 bigint: Optional("1000000")
             )
         )
-        let response = try await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(request: [
-            NestedObjectWithRequiredField(
-                string: "string",
-                nestedObject: ObjectWithOptionalField(
+        let response = try await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(
+            request: [
+                NestedObjectWithRequiredField(
                     string: "string",
-                    integer: 1,
-                    long: 1000000,
-                    double: 1.1,
-                    bool: true,
-                    datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    date: try! CalendarDate("2023-01-15"),
-                    uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-                    base64: "SGVsbG8gd29ybGQh",
-                    list: [
-                        "list",
-                        "list"
-                    ],
-                    set: ,
-                    map: [
-                        1: "map"
-                    ],
-                    bigint: 
-                )
-            ),
-            NestedObjectWithRequiredField(
-                string: "string",
-                nestedObject: ObjectWithOptionalField(
+                    nestedObject: ObjectWithOptionalField(
+                        string: "string",
+                        integer: 1,
+                        long: 1000000,
+                        double: 1.1,
+                        bool: true,
+                        datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                        date: CalendarDate("2023-01-15")!,
+                        uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                        base64: "SGVsbG8gd29ybGQh",
+                        list: [
+                            "list",
+                            "list"
+                        ],
+                        map: [
+                            1: "map"
+                        ]
+                    )
+                ),
+                NestedObjectWithRequiredField(
                     string: "string",
-                    integer: 1,
-                    long: 1000000,
-                    double: 1.1,
-                    bool: true,
-                    datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    date: try! CalendarDate("2023-01-15"),
-                    uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-                    base64: "SGVsbG8gd29ybGQh",
-                    list: [
-                        "list",
-                        "list"
-                    ],
-                    set: ,
-                    map: [
-                        1: "map"
-                    ],
-                    bigint: 
+                    nestedObject: ObjectWithOptionalField(
+                        string: "string",
+                        integer: 1,
+                        long: 1000000,
+                        double: 1.1,
+                        bool: true,
+                        datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                        date: CalendarDate("2023-01-15")!,
+                        uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                        base64: "SGVsbG8gd29ybGQh",
+                        list: [
+                            "list",
+                            "list"
+                        ],
+                        map: [
+                            1: "map"
+                        ]
+                    )
                 )
-            )
-        ])
+            ],
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

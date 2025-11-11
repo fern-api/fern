@@ -3,7 +3,7 @@ import Foundation
 /// Nested layer 2.
 public enum NestedUnionL2: Codable, Hashable, Sendable {
     case bool(Bool)
-    case json(JSONValue)
+    case jsonValue(JSONValue)
     case stringArray([String])
 
     public init(from decoder: Decoder) throws {
@@ -11,7 +11,7 @@ public enum NestedUnionL2: Codable, Hashable, Sendable {
         if let value = try? container.decode(Bool.self) {
             self = .bool(value)
         } else if let value = try? container.decode(JSONValue.self) {
-            self = .json(value)
+            self = .jsonValue(value)
         } else if let value = try? container.decode([String].self) {
             self = .stringArray(value)
         } else {
@@ -27,7 +27,7 @@ public enum NestedUnionL2: Codable, Hashable, Sendable {
         switch self {
         case .bool(let value):
             try container.encode(value)
-        case .json(let value):
+        case .jsonValue(let value):
             try container.encode(value)
         case .stringArray(let value):
             try container.encode(value)

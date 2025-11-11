@@ -60,63 +60,63 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
                 ],
                 superClassArguments: [this.csharp.codeblock("value")]
             },
-            annotations: [this.context.getSerializableAttribute()]
+            annotations: [this.extern.System.Serializable]
         });
 
         for (const operator of this.getProtoValueOperators()) {
             class_.addOperator(operator);
         }
 
-        class_.addMethod(this.context.getToStringMethod());
-        class_.addMethod(this.getToProtoMethod());
-        class_.addMethod(this.getFromProtoMethod());
+        this.context.common.getToStringMethod(class_);
+        this.getToProtoMethod(class_);
+        this.getFromProtoMethod(class_);
 
         return new CSharpFile({
             clazz: class_,
             directory: this.context.getDirectoryForTypeId(this.typeDeclaration.name.typeId),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.context.getNamespace(),
-            customConfig: this.context.customConfig
+            namespace: this.namespaces.root,
+            generation: this.generation
         });
     }
 
-    private getToProtoMethod(): ast.Method {
-        return this.csharp.method({
+    private getToProtoMethod(cls: ast.Class): ast.Method {
+        return cls.addMethod({
             name: "ToProto",
             access: ast.Access.Internal,
             isAsync: false,
             parameters: [],
-            return_: this.csharp.Type.reference(this.csharp.Google.Protobuf.WellKnownTypes.Value),
+            return_: this.csharp.Type.reference(this.extern.Google.Protobuf.WellKnownTypes.Value),
             body: this.csharp.codeblock((writer) => {
                 writer.write("return ");
                 writer.writeNodeStatement(
                     this.csharp.invokeMethod({
                         method: "Match",
-                        generics: [this.csharp.Type.reference(this.csharp.Google.Protobuf.WellKnownTypes.Value)],
+                        generics: [this.csharp.Type.reference(this.extern.Google.Protobuf.WellKnownTypes.Value)],
                         arguments_: [
                             this.csharp.codeblock((writer) => {
-                                writer.writeNode(this.csharp.Google.Protobuf.WellKnownTypes.Value);
+                                writer.writeNode(this.extern.Google.Protobuf.WellKnownTypes.Value);
                                 writer.write(".ForString");
                             }),
                             this.csharp.codeblock((writer) => {
-                                writer.writeNode(this.csharp.Google.Protobuf.WellKnownTypes.Value);
+                                writer.writeNode(this.extern.Google.Protobuf.WellKnownTypes.Value);
                                 writer.write(".ForNumber");
                             }),
                             this.csharp.codeblock((writer) => {
-                                writer.writeNode(this.csharp.Google.Protobuf.WellKnownTypes.Value);
+                                writer.writeNode(this.extern.Google.Protobuf.WellKnownTypes.Value);
                                 writer.write(".ForBool");
                             }),
                             this.csharp.codeblock((writer) => {
                                 writer.write("list => new ");
-                                writer.writeNode(this.csharp.Google.Protobuf.WellKnownTypes.Value);
+                                writer.writeNode(this.extern.Google.Protobuf.WellKnownTypes.Value);
                                 writer.write(" { ListValue = new ");
-                                writer.writeNode(this.csharp.Google.Protobuf.WellKnownTypes.ListValue);
+                                writer.writeNode(this.extern.Google.Protobuf.WellKnownTypes.ListValue);
                                 writer.write(" { Values = { list.Select(item => item?.ToProto()) } } }");
                             }),
                             this.csharp.codeblock((writer) => {
                                 writer.write("nested => new ");
-                                writer.writeNode(this.csharp.Google.Protobuf.WellKnownTypes.Value);
+                                writer.writeNode(this.extern.Google.Protobuf.WellKnownTypes.Value);
                                 writer.write(" { StructValue = ");
                                 writer.writeNode(
                                     this.csharp.invokeMethod({
@@ -134,8 +134,8 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
         });
     }
 
-    private getFromProtoMethod(): ast.Method {
-        return this.csharp.method({
+    private getFromProtoMethod(cls: ast.Class): ast.Method {
+        return cls.addMethod({
             name: "FromProto",
             access: ast.Access.Internal,
             type: ast.MethodType.STATIC,
@@ -143,7 +143,7 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
             parameters: [
                 this.csharp.parameter({
                     name: "value",
-                    type: this.csharp.Type.reference(this.csharp.Google.Protobuf.WellKnownTypes.Value)
+                    type: this.csharp.Type.reference(this.extern.Google.Protobuf.WellKnownTypes.Value)
                 })
             ],
             return_: this.csharp.Type.optional(this.csharp.Type.reference(this.classReference)),
@@ -156,7 +156,7 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
                             {
                                 label: this.csharp.codeblock((writer) => {
                                     writer.writeNode(
-                                        this.csharp.Type.reference(this.csharp.Google.Protobuf.WellKnownTypes.Value)
+                                        this.csharp.Type.reference(this.extern.Google.Protobuf.WellKnownTypes.Value)
                                     );
                                     writer.write(".KindOneofCase.StringValue");
                                 }),
@@ -165,7 +165,7 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
                             {
                                 label: this.csharp.codeblock((writer) => {
                                     writer.writeNode(
-                                        this.csharp.Type.reference(this.csharp.Google.Protobuf.WellKnownTypes.Value)
+                                        this.csharp.Type.reference(this.extern.Google.Protobuf.WellKnownTypes.Value)
                                     );
                                     writer.write(".KindOneofCase.NumberValue");
                                 }),
@@ -174,7 +174,7 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
                             {
                                 label: this.csharp.codeblock((writer) => {
                                     writer.writeNode(
-                                        this.csharp.Type.reference(this.csharp.Google.Protobuf.WellKnownTypes.Value)
+                                        this.csharp.Type.reference(this.extern.Google.Protobuf.WellKnownTypes.Value)
                                     );
                                     writer.write(".KindOneofCase.BoolValue");
                                 }),
@@ -183,7 +183,7 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
                             {
                                 label: this.csharp.codeblock((writer) => {
                                     writer.writeNode(
-                                        this.csharp.Type.reference(this.csharp.Google.Protobuf.WellKnownTypes.Value)
+                                        this.csharp.Type.reference(this.extern.Google.Protobuf.WellKnownTypes.Value)
                                     );
                                     writer.write(".KindOneofCase.ListValue");
                                 }),
@@ -192,7 +192,7 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
                             {
                                 label: this.csharp.codeblock((writer) => {
                                     writer.writeNode(
-                                        this.csharp.Type.reference(this.csharp.Google.Protobuf.WellKnownTypes.Value)
+                                        this.csharp.Type.reference(this.extern.Google.Protobuf.WellKnownTypes.Value)
                                     );
                                     writer.write(".KindOneofCase.StructValue");
                                 }),
@@ -215,9 +215,9 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
 
     private getProtoValueOneOfTypes(): ast.Type[] {
         return [
-            this.csharp.Type.string(),
-            this.csharp.Type.double(),
-            this.csharp.Type.boolean(),
+            this.csharp.Type.string,
+            this.csharp.Type.double,
+            this.csharp.Type.boolean,
             this.csharp.Type.list(this.csharp.Type.optional(this.csharp.Type.reference(this.classReference))),
             this.csharp.Type.reference(this.protoStructClassReference)
         ];
@@ -226,15 +226,15 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
     private getProtoValueOperators(): ast.Class.Operator[] {
         const operatorSpecs: OperatorSpec[] = [
             {
-                parameterType: this.csharp.Type.string(),
+                parameterType: this.csharp.Type.string,
                 body: this.newValue()
             },
             {
-                parameterType: this.csharp.Type.boolean(),
+                parameterType: this.csharp.Type.boolean,
                 body: this.newValue()
             },
             {
-                parameterType: this.csharp.Type.double(),
+                parameterType: this.csharp.Type.double,
                 body: this.newValue()
             },
             {
@@ -254,44 +254,44 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
                 body: this.newValue()
             },
             {
-                parameterType: this.csharp.Type.array(this.csharp.Type.string()),
+                parameterType: this.csharp.Type.array(this.csharp.Type.string),
 
                 body: this.linqMap(this.instantiateProtoValue())
             },
             {
-                parameterType: this.csharp.Type.array(this.csharp.Type.double()),
+                parameterType: this.csharp.Type.array(this.csharp.Type.double),
                 body: this.linqMap(this.instantiateProtoValue())
             },
             {
-                parameterType: this.csharp.Type.array(this.csharp.Type.optional(this.csharp.Type.double())),
+                parameterType: this.csharp.Type.array(this.csharp.Type.optional(this.csharp.Type.double)),
                 body: this.linqMap(this.wrapTernary(this.instantiateProtoValueWithOptional()))
             },
             {
-                parameterType: this.csharp.Type.array(this.csharp.Type.boolean()),
+                parameterType: this.csharp.Type.array(this.csharp.Type.boolean),
                 body: this.linqMap(this.instantiateProtoValue())
             },
             {
-                parameterType: this.csharp.Type.array(this.csharp.Type.optional(this.csharp.Type.boolean())),
+                parameterType: this.csharp.Type.array(this.csharp.Type.optional(this.csharp.Type.boolean)),
                 body: this.linqMap(this.wrapTernary(this.instantiateProtoValueWithOptional()))
             },
             {
-                parameterType: this.csharp.Type.listType(this.csharp.Type.string()),
+                parameterType: this.csharp.Type.listType(this.csharp.Type.string),
                 body: this.linqMap(this.instantiateProtoValue())
             },
             {
-                parameterType: this.csharp.Type.listType(this.csharp.Type.double()),
+                parameterType: this.csharp.Type.listType(this.csharp.Type.double),
                 body: this.linqMap(this.instantiateProtoValue())
             },
             {
-                parameterType: this.csharp.Type.listType(this.csharp.Type.optional(this.csharp.Type.double())),
+                parameterType: this.csharp.Type.listType(this.csharp.Type.optional(this.csharp.Type.double)),
                 body: this.linqMap(this.wrapTernary(this.instantiateProtoValueWithOptional()))
             },
             {
-                parameterType: this.csharp.Type.listType(this.csharp.Type.boolean()),
+                parameterType: this.csharp.Type.listType(this.csharp.Type.boolean),
                 body: this.linqMap(this.instantiateProtoValue())
             },
             {
-                parameterType: this.csharp.Type.listType(this.csharp.Type.optional(this.csharp.Type.boolean())),
+                parameterType: this.csharp.Type.listType(this.csharp.Type.optional(this.csharp.Type.boolean)),
                 body: this.linqMap(this.wrapTernary(this.instantiateProtoValueWithOptional()))
             }
         ];
@@ -341,9 +341,6 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
     }
 
     protected getFilepath(): RelativeFilePath {
-        return join(
-            this.context.project.filepaths.getSourceFileDirectory(),
-            RelativeFilePath.of(this.classReference.name + ".cs")
-        );
+        return join(this.constants.folders.sourceFiles, RelativeFilePath.of(`${this.classReference.name}.cs`));
     }
 }

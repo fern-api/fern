@@ -1,4 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- version: 1.18.0
+  changelogEntry:
+    - summary: |
+        Added Generation Metadata file to output
+      type: feat
+  createdAt: "2025-11-04"
+  irVersion: 61
+
+- version: 1.17.2
+  changelogEntry:
+    - summary: |
+        Fix enum string escaping and PHP reserved keyword handling.
+        - Enum values containing quotes are now properly escaped to prevent syntax errors.
+        - Class names that conflict with PHP reserved keywords (e.g., "eval", "list") automatically receive a trailing underscore (e.g., "Eval_").
+      type: fix
+  createdAt: "2025-10-17"
+  irVersion: 59
+
 - version: 1.17.1
   changelogEntry:
     - summary: |

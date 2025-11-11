@@ -24,7 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
-        "key": "BearerAuthScheme",
+        "key": "petstore_auth",
         "token": {
           "originalName": "token",
           "camelCase": {
@@ -22801,7 +22801,7 @@
     "endpoints": {
       "endpoint_petsV1/pet.addPet": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -22948,7 +22948,7 @@
       },
       "endpoint_petsV1/pet.updatePet": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -23095,7 +23095,7 @@
       },
       "endpoint_petsV1/pet.findPetsByStatus": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -23376,7 +23376,7 @@
       },
       "endpoint_petsV1/pet.findPetsByTags": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -23660,7 +23660,7 @@
       },
       "endpoint_petsV1/pet.getPetById": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -23938,7 +23938,7 @@
       },
       "endpoint_petsV1/pet.updatePetWithForm": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -24279,7 +24279,7 @@
       },
       "endpoint_petsV1/pet.deletePet": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -24557,7 +24557,7 @@
       },
       "endpoint_petsV1/pet.uploadFile": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -24892,7 +24892,7 @@
       },
       "endpoint_petsV1/store.getInventory": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -25032,7 +25032,7 @@
       },
       "endpoint_petsV1/store.placeOrder": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -25179,7 +25179,7 @@
       },
       "endpoint_petsV1/store.getOrderById": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -25457,7 +25457,7 @@
       },
       "endpoint_petsV1/store.deleteOrder": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -25735,7 +25735,7 @@
       },
       "endpoint_petsV1/user.createUser": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -25882,7 +25882,7 @@
       },
       "endpoint_petsV1/user.createUsersWithListInput": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -26032,7 +26032,7 @@
       },
       "endpoint_petsV1/user.loginUser": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -26344,7 +26344,7 @@
       },
       "endpoint_petsV1/user.logoutUser": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -26484,7 +26484,7 @@
       },
       "endpoint_petsV1/user.getUserByName": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -26762,7 +26762,7 @@
       },
       "endpoint_petsV1/user.updateUser": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -27069,7 +27069,7 @@
       },
       "endpoint_petsV1/user.deleteUser": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -27347,7 +27347,7 @@
       },
       "endpoint_petsV2/pet.addPet": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -27494,7 +27494,7 @@
       },
       "endpoint_petsV2/pet.updatePet": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -27641,7 +27641,7 @@
       },
       "endpoint_petsV2/pet.findPetsByStatus": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -27922,7 +27922,7 @@
       },
       "endpoint_petsV2/pet.findPetsByTags": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -28206,7 +28206,7 @@
       },
       "endpoint_petsV2/pet.getPetById": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -28484,7 +28484,7 @@
       },
       "endpoint_petsV2/pet.updatePetWithForm": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -28825,7 +28825,7 @@
       },
       "endpoint_petsV2/pet.deletePet": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -29103,7 +29103,7 @@
       },
       "endpoint_petsV2/pet.uploadFile": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -29438,7 +29438,7 @@
       },
       "endpoint_petsV2/store.getInventory": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -29578,7 +29578,7 @@
       },
       "endpoint_petsV2/store.placeOrder": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -29725,7 +29725,7 @@
       },
       "endpoint_petsV2/store.getOrderById": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -30003,7 +30003,7 @@
       },
       "endpoint_petsV2/store.deleteOrder": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -30281,7 +30281,7 @@
       },
       "endpoint_petsV2/user.createUser": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -30428,7 +30428,7 @@
       },
       "endpoint_petsV2/user.createUsersWithListInput": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -30578,7 +30578,7 @@
       },
       "endpoint_petsV2/user.loginUser": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -30890,7 +30890,7 @@
       },
       "endpoint_petsV2/user.logoutUser": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -31030,7 +31030,7 @@
       },
       "endpoint_petsV2/user.getUserByName": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -31308,7 +31308,7 @@
       },
       "endpoint_petsV2/user.updateUser": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -31615,7 +31615,7 @@
       },
       "endpoint_petsV2/user.deleteUser": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "petstore_auth",
           "token": {
             "originalName": "token",
             "camelCase": {

@@ -4,7 +4,7 @@ import Streaming
 
 @Suite("DummyClient Wire Tests") struct DummyClientWireTests {
     @Test func generate1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -23,15 +23,15 @@ import Streaming
             id: "id",
             name: Optional("name")
         )
-        let response = try await client.dummy.generate(request: .init(
-            stream: ,
-            numEvents: 5
-        ))
+        let response = try await client.dummy.generate(
+            request: .init(numEvents: 5),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func generate2() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -50,10 +50,10 @@ import Streaming
             id: "id",
             name: Optional("name")
         )
-        let response = try await client.dummy.generate(request: .init(
-            stream: ,
-            numEvents: 1
-        ))
+        let response = try await client.dummy.generate(
+            request: .init(numEvents: 1),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

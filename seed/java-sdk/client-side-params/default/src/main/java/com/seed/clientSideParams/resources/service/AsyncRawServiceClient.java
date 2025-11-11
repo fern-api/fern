@@ -69,6 +69,7 @@ public class AsyncRawServiceClient {
             ListResourcesRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("resources");
         QueryStringMapper.addQueryParameter(httpUrl, "page", request.getPage(), false);
         QueryStringMapper.addQueryParameter(
@@ -100,19 +101,17 @@ public class AsyncRawServiceClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedClientSideParamsHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBody.string(), new TypeReference<List<Resource>>() {}),
+                                        responseBodyString, new TypeReference<List<Resource>>() {}),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedClientSideParamsApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -144,6 +143,7 @@ public class AsyncRawServiceClient {
             String resourceId, GetResourceRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("resources")
                 .addPathSegment(resourceId);
         QueryStringMapper.addQueryParameter(
@@ -165,17 +165,15 @@ public class AsyncRawServiceClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedClientSideParamsHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Resource.class), response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Resource.class), response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedClientSideParamsApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -207,17 +205,14 @@ public class AsyncRawServiceClient {
             SearchResourcesRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("resources/search");
         QueryStringMapper.addQueryParameter(httpUrl, "limit", request.getLimit().orElse(100), false);
         QueryStringMapper.addQueryParameter(
                 httpUrl, "offset", request.getOffset().orElse(0), false);
         Map<String, Object> properties = new HashMap<>();
-        if (request.getQuery().isPresent()) {
-            properties.put("query", request.getQuery());
-        }
-        if (request.getFilters().isPresent()) {
-            properties.put("filters", request.getFilters());
-        }
+        properties.put("query", request.getQuery());
+        properties.put("filters", request.getFilters());
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -241,18 +236,16 @@ public class AsyncRawServiceClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedClientSideParamsHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), SearchResponse.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, SearchResponse.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedClientSideParamsApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -291,6 +284,7 @@ public class AsyncRawServiceClient {
             ListUsersRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("users");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -334,18 +328,16 @@ public class AsyncRawServiceClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedClientSideParamsHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PaginatedUserResponse.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, PaginatedUserResponse.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedClientSideParamsApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -384,6 +376,7 @@ public class AsyncRawServiceClient {
             String userId, GetUserRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("users")
                 .addPathSegment(userId);
         if (request.getFields().isPresent()) {
@@ -407,17 +400,15 @@ public class AsyncRawServiceClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedClientSideParamsHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), User.class), response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, User.class), response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedClientSideParamsApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -448,6 +439,7 @@ public class AsyncRawServiceClient {
             CreateUserRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("users")
                 .build();
         RequestBody body;
@@ -473,17 +465,15 @@ public class AsyncRawServiceClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedClientSideParamsHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), User.class), response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, User.class), response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedClientSideParamsApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -522,6 +512,7 @@ public class AsyncRawServiceClient {
             String userId, UpdateUserRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("users")
                 .addPathSegment(userId)
                 .build();
@@ -548,17 +539,15 @@ public class AsyncRawServiceClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedClientSideParamsHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), User.class), response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, User.class), response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedClientSideParamsApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -589,6 +578,7 @@ public class AsyncRawServiceClient {
             String userId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("users")
                 .addPathSegment(userId)
                 .build();
@@ -611,11 +601,9 @@ public class AsyncRawServiceClient {
                         return;
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedClientSideParamsApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -654,6 +642,7 @@ public class AsyncRawServiceClient {
             ListConnectionsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("connections");
         if (request.getStrategy().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -682,19 +671,17 @@ public class AsyncRawServiceClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedClientSideParamsHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBody.string(), new TypeReference<List<Connection>>() {}),
+                                        responseBodyString, new TypeReference<List<Connection>>() {}),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedClientSideParamsApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -733,6 +720,7 @@ public class AsyncRawServiceClient {
             String connectionId, GetConnectionRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("connections")
                 .addPathSegment(connectionId);
         if (request.getFields().isPresent()) {
@@ -754,18 +742,15 @@ public class AsyncRawServiceClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedClientSideParamsHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Connection.class),
-                                response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Connection.class), response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedClientSideParamsApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -804,6 +789,7 @@ public class AsyncRawServiceClient {
             ListClientsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("clients");
         if (request.getFields().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -852,19 +838,16 @@ public class AsyncRawServiceClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedClientSideParamsHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBody.string(), PaginatedClientResponse.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, PaginatedClientResponse.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedClientSideParamsApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -903,6 +886,7 @@ public class AsyncRawServiceClient {
             String clientId, GetClientRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("api")
                 .addPathSegments("clients")
                 .addPathSegment(clientId);
         if (request.getFields().isPresent()) {
@@ -928,17 +912,15 @@ public class AsyncRawServiceClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedClientSideParamsHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Client.class), response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Client.class), response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedClientSideParamsApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(

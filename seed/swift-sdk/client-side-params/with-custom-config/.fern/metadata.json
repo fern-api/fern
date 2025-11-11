@@ -1,0 +1,9 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-swift-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "moduleName": "MyCustomModule",
+    "clientClassName": "MyCustomClient"
+  }
+}

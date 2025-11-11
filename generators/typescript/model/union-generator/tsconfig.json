@@ -8,13 +8,16 @@
   "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../../../../packages/commons/core-utils"
+      "path": "../../../../packages/ir-sdk"
+    },
+    {
+      "path": "../../utils/contexts"
     },
     {
       "path": "../../utils/commons"
     },
     {
-      "path": "../../utils/contexts"
+      "path": "../../../../packages/commons/core-utils"
     }
   ]
 }

@@ -29,38 +29,46 @@ import org.jetbrains.annotations.Nullable;
 public final class ComplexProfile {
     private final String id;
 
+    @Nullable
     private final UserRole nullableRole;
 
     private final Optional<UserRole> optionalRole;
 
     private final Optional<UserRole> optionalNullableRole;
 
+    @Nullable
     private final UserStatus nullableStatus;
 
     private final Optional<UserStatus> optionalStatus;
 
     private final Optional<UserStatus> optionalNullableStatus;
 
+    @Nullable
     private final NotificationMethod nullableNotification;
 
     private final Optional<NotificationMethod> optionalNotification;
 
     private final Optional<NotificationMethod> optionalNullableNotification;
 
+    @Nullable
     private final SearchResult nullableSearchResult;
 
     private final Optional<SearchResult> optionalSearchResult;
 
+    @Nullable
     private final List<String> nullableArray;
 
     private final Optional<List<String>> optionalArray;
 
     private final Optional<List<String>> optionalNullableArray;
 
+    @Nullable
     private final List<String> nullableListOfNullables;
 
+    @Nullable
     private final Map<String, Address> nullableMapOfNullables;
 
+    @Nullable
     private final List<NotificationMethod> nullableListOfUnions;
 
     private final Optional<Map<String, UserRole>> optionalMapOfEnums;
@@ -69,23 +77,23 @@ public final class ComplexProfile {
 
     private ComplexProfile(
             String id,
-            UserRole nullableRole,
+            @Nullable UserRole nullableRole,
             Optional<UserRole> optionalRole,
             Optional<UserRole> optionalNullableRole,
-            UserStatus nullableStatus,
+            @Nullable UserStatus nullableStatus,
             Optional<UserStatus> optionalStatus,
             Optional<UserStatus> optionalNullableStatus,
-            NotificationMethod nullableNotification,
+            @Nullable NotificationMethod nullableNotification,
             Optional<NotificationMethod> optionalNotification,
             Optional<NotificationMethod> optionalNullableNotification,
-            SearchResult nullableSearchResult,
+            @Nullable SearchResult nullableSearchResult,
             Optional<SearchResult> optionalSearchResult,
-            List<String> nullableArray,
+            @Nullable List<String> nullableArray,
             Optional<List<String>> optionalArray,
             Optional<List<String>> optionalNullableArray,
-            List<String> nullableListOfNullables,
-            Map<String, Address> nullableMapOfNullables,
-            List<NotificationMethod> nullableListOfUnions,
+            @Nullable List<String> nullableListOfNullables,
+            @Nullable Map<String, Address> nullableMapOfNullables,
+            @Nullable List<NotificationMethod> nullableListOfUnions,
             Optional<Map<String, UserRole>> optionalMapOfEnums,
             Map<String, Object> additionalProperties) {
         this.id = id;
@@ -372,51 +380,50 @@ public final class ComplexProfile {
     public interface _FinalStage {
         ComplexProfile build();
 
-        _FinalStage nullableRole(@com.seed.nullableOptional.core.Nullable UserRole nullableRole);
+        _FinalStage nullableRole(@Nullable UserRole nullableRole);
 
         _FinalStage optionalRole(Optional<UserRole> optionalRole);
 
         _FinalStage optionalRole(UserRole optionalRole);
 
-        _FinalStage optionalNullableRole(Optional<UserRole> optionalNullableRole);
+        _FinalStage optionalNullableRole(@Nullable Optional<UserRole> optionalNullableRole);
 
         _FinalStage optionalNullableRole(UserRole optionalNullableRole);
 
         _FinalStage optionalNullableRole(com.seed.nullableOptional.core.Nullable<UserRole> optionalNullableRole);
 
-        _FinalStage nullableStatus(@com.seed.nullableOptional.core.Nullable UserStatus nullableStatus);
+        _FinalStage nullableStatus(@Nullable UserStatus nullableStatus);
 
         _FinalStage optionalStatus(Optional<UserStatus> optionalStatus);
 
         _FinalStage optionalStatus(UserStatus optionalStatus);
 
-        _FinalStage optionalNullableStatus(Optional<UserStatus> optionalNullableStatus);
+        _FinalStage optionalNullableStatus(@Nullable Optional<UserStatus> optionalNullableStatus);
 
         _FinalStage optionalNullableStatus(UserStatus optionalNullableStatus);
 
         _FinalStage optionalNullableStatus(com.seed.nullableOptional.core.Nullable<UserStatus> optionalNullableStatus);
 
-        _FinalStage nullableNotification(
-                @com.seed.nullableOptional.core.Nullable NotificationMethod nullableNotification);
+        _FinalStage nullableNotification(@Nullable NotificationMethod nullableNotification);
 
         _FinalStage optionalNotification(Optional<NotificationMethod> optionalNotification);
 
         _FinalStage optionalNotification(NotificationMethod optionalNotification);
 
-        _FinalStage optionalNullableNotification(Optional<NotificationMethod> optionalNullableNotification);
+        _FinalStage optionalNullableNotification(@Nullable Optional<NotificationMethod> optionalNullableNotification);
 
         _FinalStage optionalNullableNotification(NotificationMethod optionalNullableNotification);
 
         _FinalStage optionalNullableNotification(
                 com.seed.nullableOptional.core.Nullable<NotificationMethod> optionalNullableNotification);
 
-        _FinalStage nullableSearchResult(@com.seed.nullableOptional.core.Nullable SearchResult nullableSearchResult);
+        _FinalStage nullableSearchResult(@Nullable SearchResult nullableSearchResult);
 
         _FinalStage optionalSearchResult(Optional<SearchResult> optionalSearchResult);
 
         _FinalStage optionalSearchResult(SearchResult optionalSearchResult);
 
-        _FinalStage nullableArray(List<String> nullableArray);
+        _FinalStage nullableArray(@Nullable List<String> nullableArray);
 
         _FinalStage addNullableArray(String nullableArray);
 
@@ -426,25 +433,25 @@ public final class ComplexProfile {
 
         _FinalStage optionalArray(List<String> optionalArray);
 
-        _FinalStage optionalNullableArray(Optional<List<String>> optionalNullableArray);
+        _FinalStage optionalNullableArray(@Nullable Optional<List<String>> optionalNullableArray);
 
         _FinalStage optionalNullableArray(List<String> optionalNullableArray);
 
         _FinalStage optionalNullableArray(com.seed.nullableOptional.core.Nullable<List<String>> optionalNullableArray);
 
-        _FinalStage nullableListOfNullables(List<String> nullableListOfNullables);
+        _FinalStage nullableListOfNullables(@Nullable List<String> nullableListOfNullables);
 
         _FinalStage addNullableListOfNullables(String nullableListOfNullables);
 
         _FinalStage addAllNullableListOfNullables(List<String> nullableListOfNullables);
 
-        _FinalStage nullableMapOfNullables(Map<String, Address> nullableMapOfNullables);
+        _FinalStage nullableMapOfNullables(@Nullable Map<String, Address> nullableMapOfNullables);
 
         _FinalStage putAllNullableMapOfNullables(Map<String, Address> nullableMapOfNullables);
 
         _FinalStage nullableMapOfNullables(String key, Address value);
 
-        _FinalStage nullableListOfUnions(List<NotificationMethod> nullableListOfUnions);
+        _FinalStage nullableListOfUnions(@Nullable List<NotificationMethod> nullableListOfUnions);
 
         _FinalStage addNullableListOfUnions(NotificationMethod nullableListOfUnions);
 
@@ -560,7 +567,7 @@ public final class ComplexProfile {
 
         @java.lang.Override
         @JsonSetter(value = "nullableListOfUnions", nulls = Nulls.SKIP)
-        public _FinalStage nullableListOfUnions(List<NotificationMethod> nullableListOfUnions) {
+        public _FinalStage nullableListOfUnions(@Nullable List<NotificationMethod> nullableListOfUnions) {
             this.nullableListOfUnions.clear();
             if (nullableListOfUnions != null) {
                 this.nullableListOfUnions.addAll(nullableListOfUnions);
@@ -584,7 +591,7 @@ public final class ComplexProfile {
 
         @java.lang.Override
         @JsonSetter(value = "nullableMapOfNullables", nulls = Nulls.SKIP)
-        public _FinalStage nullableMapOfNullables(Map<String, Address> nullableMapOfNullables) {
+        public _FinalStage nullableMapOfNullables(@Nullable Map<String, Address> nullableMapOfNullables) {
             this.nullableMapOfNullables.clear();
             if (nullableMapOfNullables != null) {
                 this.nullableMapOfNullables.putAll(nullableMapOfNullables);
@@ -608,7 +615,7 @@ public final class ComplexProfile {
 
         @java.lang.Override
         @JsonSetter(value = "nullableListOfNullables", nulls = Nulls.SKIP)
-        public _FinalStage nullableListOfNullables(List<String> nullableListOfNullables) {
+        public _FinalStage nullableListOfNullables(@Nullable List<String> nullableListOfNullables) {
             this.nullableListOfNullables.clear();
             if (nullableListOfNullables != null) {
                 this.nullableListOfNullables.addAll(nullableListOfNullables);
@@ -637,7 +644,7 @@ public final class ComplexProfile {
 
         @java.lang.Override
         @JsonSetter(value = "optionalNullableArray", nulls = Nulls.SKIP)
-        public _FinalStage optionalNullableArray(Optional<List<String>> optionalNullableArray) {
+        public _FinalStage optionalNullableArray(@Nullable Optional<List<String>> optionalNullableArray) {
             this.optionalNullableArray = optionalNullableArray;
             return this;
         }
@@ -671,7 +678,7 @@ public final class ComplexProfile {
 
         @java.lang.Override
         @JsonSetter(value = "nullableArray", nulls = Nulls.SKIP)
-        public _FinalStage nullableArray(List<String> nullableArray) {
+        public _FinalStage nullableArray(@Nullable List<String> nullableArray) {
             this.nullableArray.clear();
             if (nullableArray != null) {
                 this.nullableArray.addAll(nullableArray);
@@ -694,8 +701,7 @@ public final class ComplexProfile {
 
         @java.lang.Override
         @JsonSetter("nullableSearchResult")
-        public _FinalStage nullableSearchResult(
-                @com.seed.nullableOptional.core.Nullable SearchResult nullableSearchResult) {
+        public _FinalStage nullableSearchResult(@Nullable SearchResult nullableSearchResult) {
             this.nullableSearchResult = nullableSearchResult;
             return this;
         }
@@ -721,7 +727,8 @@ public final class ComplexProfile {
 
         @java.lang.Override
         @JsonSetter(value = "optionalNullableNotification", nulls = Nulls.SKIP)
-        public _FinalStage optionalNullableNotification(Optional<NotificationMethod> optionalNullableNotification) {
+        public _FinalStage optionalNullableNotification(
+                @Nullable Optional<NotificationMethod> optionalNullableNotification) {
             this.optionalNullableNotification = optionalNullableNotification;
             return this;
         }
@@ -741,8 +748,7 @@ public final class ComplexProfile {
 
         @java.lang.Override
         @JsonSetter("nullableNotification")
-        public _FinalStage nullableNotification(
-                @com.seed.nullableOptional.core.Nullable NotificationMethod nullableNotification) {
+        public _FinalStage nullableNotification(@Nullable NotificationMethod nullableNotification) {
             this.nullableNotification = nullableNotification;
             return this;
         }
@@ -768,7 +774,7 @@ public final class ComplexProfile {
 
         @java.lang.Override
         @JsonSetter(value = "optionalNullableStatus", nulls = Nulls.SKIP)
-        public _FinalStage optionalNullableStatus(Optional<UserStatus> optionalNullableStatus) {
+        public _FinalStage optionalNullableStatus(@Nullable Optional<UserStatus> optionalNullableStatus) {
             this.optionalNullableStatus = optionalNullableStatus;
             return this;
         }
@@ -788,7 +794,7 @@ public final class ComplexProfile {
 
         @java.lang.Override
         @JsonSetter("nullableStatus")
-        public _FinalStage nullableStatus(@com.seed.nullableOptional.core.Nullable UserStatus nullableStatus) {
+        public _FinalStage nullableStatus(@Nullable UserStatus nullableStatus) {
             this.nullableStatus = nullableStatus;
             return this;
         }
@@ -814,7 +820,7 @@ public final class ComplexProfile {
 
         @java.lang.Override
         @JsonSetter(value = "optionalNullableRole", nulls = Nulls.SKIP)
-        public _FinalStage optionalNullableRole(Optional<UserRole> optionalNullableRole) {
+        public _FinalStage optionalNullableRole(@Nullable Optional<UserRole> optionalNullableRole) {
             this.optionalNullableRole = optionalNullableRole;
             return this;
         }
@@ -834,7 +840,7 @@ public final class ComplexProfile {
 
         @java.lang.Override
         @JsonSetter("nullableRole")
-        public _FinalStage nullableRole(@com.seed.nullableOptional.core.Nullable UserRole nullableRole) {
+        public _FinalStage nullableRole(@Nullable UserRole nullableRole) {
             this.nullableRole = nullableRole;
             return this;
         }

@@ -128,6 +128,10 @@ public abstract class AbstractEndpointWriter {
             return CodeBlock.of("$T.toString($L)", Double.class, reference);
         } else if (typeName.equals(TypeName.INT)) {
             return CodeBlock.of("$T.toString($L)", Integer.class, reference);
+        } else if (typeName.equals(TypeName.LONG)) {
+            return CodeBlock.of("$T.toString($L)", Long.class, reference);
+        } else if (typeName.equals(TypeName.BOOLEAN)) {
+            return CodeBlock.of("$T.toString($L)", Boolean.class, reference);
         } else {
             return CodeBlock.of("$L.toString()", reference);
         }
@@ -179,6 +183,8 @@ public abstract class AbstractEndpointWriter {
                         getEnvironmentToUrlMethod().name),
                 httpEndpoint,
                 httpService,
+                clientGeneratorContext.getIr().getBasePath().orElse(null),
+                convertPathParametersToSpecMap(clientGeneratorContext.getIr().getPathParameters()),
                 convertPathParametersToSpecMap(httpService.getPathParameters()),
                 convertPathParametersToSpecMap(httpEndpoint.getPathParameters()),
                 clientGeneratorContext);
@@ -368,14 +374,14 @@ public abstract class AbstractEndpointWriter {
     }
 
     private PathParamInfo convertPathParameter(PathParameter pathParameter) {
+        TypeName typeName =
+                clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, pathParameter.getValueType());
+        ParameterSpec.Builder paramBuilder = ParameterSpec.builder(
+                typeName, pathParameter.getName().getCamelCase().getSafeName());
+
         return PathParamInfo.builder()
                 .irParam(pathParameter)
-                .poetParam(ParameterSpec.builder(
-                                clientGeneratorContext
-                                        .getPoetTypeNameMapper()
-                                        .convertToTypeName(true, pathParameter.getValueType()),
-                                pathParameter.getName().getCamelCase().getSafeName())
-                        .build())
+                .poetParam(paramBuilder.build())
                 .build();
     }
 

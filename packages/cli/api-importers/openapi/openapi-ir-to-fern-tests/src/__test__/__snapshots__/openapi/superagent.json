@@ -2338,9 +2338,9 @@ imports:
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BearerAuthScheme",
+      "auth": "JWTBearer",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "JWTBearer": {
           "scheme": "bearer",
         },
       },
@@ -2363,9 +2363,9 @@ error-discrimination:
   strategy: status-code
 display-name: Superagent
 auth-schemes:
-  BearerAuthScheme:
+  JWTBearer:
     scheme: bearer
-auth: BearerAuthScheme
+auth: JWTBearer
 headers:
   X_SUPERAGENT_API_KEY:
     type: string

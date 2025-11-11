@@ -2,6 +2,7 @@ import { ts } from "ts-morph";
 
 import { DependencyManager, DependencyType } from "../dependency-manager/DependencyManager";
 import { CoreUtility } from "./CoreUtility";
+import { MANIFEST as LoggingManifest } from "./Logging";
 import { MANIFEST as RuntimeManifest } from "./Runtime";
 import { MANIFEST as UrlManifest } from "./UrlUtils";
 
@@ -25,6 +26,8 @@ export interface Fetcher {
                 duplex: "duplex";
                 timeoutMs: "timeoutMs";
                 endpointMetadata: "endpointMetadata";
+                fetchFn: "fetchFn";
+                logging: "logging";
             };
         };
         Error: {
@@ -148,10 +151,12 @@ export declare namespace Fetcher {
         withCredentials: boolean;
         timeoutInSeconds: ts.Expression;
         maxRetries?: ts.Expression;
-        requestType?: "json" | "file" | "bytes" | "other";
+        requestType?: "json" | "file" | "bytes" | "form" | "other";
         responseType?: "json" | "blob" | "sse" | "streaming" | "text" | "binary-response";
         duplex?: ts.Expression;
         endpointMetadata?: ts.Expression;
+        fetchFn?: ts.Expression;
+        logging?: ts.Expression;
     }
 }
 
@@ -187,7 +192,7 @@ export const MANIFEST: CoreUtility.Manifest = {
             type: DependencyType.DEV
         });
     },
-    dependsOn: [RuntimeManifest, UrlManifest],
+    dependsOn: [LoggingManifest, RuntimeManifest, UrlManifest],
     getFilesPatterns: (options) => {
         const ignore: string[] = [];
         if (options.streamType !== "wrapper") {
@@ -197,7 +202,7 @@ export const MANIFEST: CoreUtility.Manifest = {
             ignore.push("tests/unit/fetcher/getFetchFn.test.ts");
         }
         return {
-            patterns: ["src/core/fetcher/**", "tests/unit/fetcher/**"],
+            patterns: ["src/core/fetcher/**", "tests/unit/fetcher/**", "tests/setup.template.ts"],
             ignore
         };
     }
@@ -222,7 +227,9 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 abortSignal: "abortSignal",
                 duplex: "duplex",
                 timeoutInSeconds: "timeoutInSeconds",
-                endpointMetadata: "endpointMetadata"
+                endpointMetadata: "endpointMetadata",
+                fetchFn: "fetchFn",
+                logging: "logging"
             },
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("Args")
         },
@@ -331,6 +338,16 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                         this.Fetcher.Args.properties.endpointMetadata,
                         args.endpointMetadata
                     )
+                );
+            }
+            if (args.fetchFn != null) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.fetchFn, args.fetchFn)
+                );
+            }
+            if (args.logging != null) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.logging, args.logging)
                 );
             }
 

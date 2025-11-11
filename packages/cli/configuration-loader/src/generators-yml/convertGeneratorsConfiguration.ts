@@ -2,6 +2,7 @@ import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { visitRawApiAuth } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { parseRepository } from "@fern-api/github";
 import { TaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
@@ -33,7 +34,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     groupMultiApiEnvironments: undefined,
     groupEnvironmentsByHost: undefined,
     wrapReferencesToNullableInOptional: undefined,
-    coerceOptionalSchemasToNullable: undefined
+    coerceOptionalSchemasToNullable: undefined,
+    removeDiscriminantsFromSchemas: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -92,7 +94,10 @@ function parseDeprecatedApiDefinitionSettingsSchema(
         coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"] ?? false,
         onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
         inlinePathParameters: settings?.["inline-path-parameters"] ?? true,
-        shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"] ?? true
+        shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"] ?? true,
+        removeDiscriminantsFromSchemas: parseRemoveDiscriminantsFromSchemas(
+            settings?.["remove-discriminants-from-schemas"]
+        )
     };
 }
 
@@ -142,8 +147,22 @@ function parseBaseApiDefinitionSettingsSchema(
         respectNullableSchemas: settings?.["respect-nullable-schemas"] ?? true,
         wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"] ?? false,
         coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"] ?? false,
-        groupEnvironmentsByHost: settings?.["group-environments-by-host"]
+        groupEnvironmentsByHost: settings?.["group-environments-by-host"],
+        removeDiscriminantsFromSchemas: parseRemoveDiscriminantsFromSchemas(
+            settings?.["remove-discriminants-from-schemas"]
+        )
     };
+}
+
+function parseRemoveDiscriminantsFromSchemas(
+    option: string | undefined
+): generatorsYml.RemoveDiscriminantsFromSchemas | undefined {
+    if (option == null || option === "always") {
+        return generatorsYml.RemoveDiscriminantsFromSchemas.Always;
+    } else if (option === "never") {
+        return generatorsYml.RemoveDiscriminantsFromSchemas.Never;
+    }
+    throw new Error(`Unknown value for generators.yml API setting: remove-discriminants-from-schemas: ${option}`);
 }
 
 async function parseAPIConfigurationToApiLocations(
@@ -616,10 +635,9 @@ async function convertOutputMode({
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
 }): Promise<FernFiddle.OutputMode> {
     const downloadSnippets = generator.snippets != null && generator.snippets.path !== "";
-    if (generator.github != null && !isGithubSelfhosted(generator.github)) {
-        const indexOfFirstSlash = generator.github.repository.indexOf("/");
-        const owner = generator.github.repository.slice(0, indexOfFirstSlash);
-        const repo = generator.github.repository.slice(indexOfFirstSlash + 1);
+    if (generator.github) {
+        const repoString = isGithubSelfhosted(generator.github) ? generator.github.uri : generator.github.repository;
+        const { owner, repo } = parseRepository(repoString);
         const publishInfo =
             generator.output != null
                 ? getGithubPublishInfo(generator.output, maybeGroupLevelMetadata, maybeTopLevelMetadata)
@@ -925,8 +943,8 @@ function getGithubLicenseSchema(
         return generator["publish-metadata"].license;
     } else if (generator.metadata?.license != null) {
         return generator.metadata.license;
-    } else if (isGithubSelfhosted(generator.github)) {
-        return undefined;
+    } else if (isGithubSelfhosted(generator.github) && generator.github.license != null) {
+        return generator.github.license;
     }
     return generator.github?.license;
 }

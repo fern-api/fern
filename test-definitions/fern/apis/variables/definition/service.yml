@@ -7,3 +7,6 @@ service:
       path-parameters:
         endpointParam: $rootVariable
       method: POST
+      examples:
+        - path-parameters:
+            endpointParam: "endpointParam"

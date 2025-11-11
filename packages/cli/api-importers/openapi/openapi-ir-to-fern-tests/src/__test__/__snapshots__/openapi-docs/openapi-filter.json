@@ -310,6 +310,7 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
                       "segments": {
                         "segments": [
                           {
+                            "count": 3,
                             "created_at": 1394621988,
                             "id": "56203d253cba154d39010062",
                             "name": "Active",
@@ -363,6 +364,7 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
                       "segments": {
                         "segments": [
                           {
+                            "count": 3,
                             "created_at": 1394621988,
                             "id": "56203d253cba154d39010062",
                             "name": "Active",
@@ -625,6 +627,7 @@ service:
                     name: Active
                     created_at: 1394621988
                     updated_at: 1394622004
+                    count: 3
         - name: Bad Request
           headers:
             Intercom-Version: root.IntercomVersion
@@ -663,6 +666,7 @@ service:
                     name: Active
                     created_at: 1394621988
                     updated_at: 1394622004
+                    count: 3
   source:
     openapi: ../openapi.yml
   display-name: Companies
@@ -866,9 +870,9 @@ types:
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BearerAuthScheme",
+      "auth": "bearerAuth",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "bearerAuth": {
           "scheme": "bearer",
         },
       },
@@ -906,9 +910,9 @@ headers:
     type: optional<root.IntercomVersion>
     name: intercomVersion
 auth-schemes:
-  BearerAuthScheme:
+  bearerAuth:
     scheme: bearer
-auth: BearerAuthScheme
+auth: bearerAuth
 ",
   },
 }

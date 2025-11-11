@@ -44,12 +44,8 @@ public class RawFooClient {
                     httpUrl, "optionalString", request.getOptionalString().get(), false);
         }
         Map<String, Object> properties = new HashMap<>();
-        if (request.getPublicProperty().isPresent()) {
-            properties.put("publicProperty", request.getPublicProperty());
-        }
-        if (request.getPrivateProperty().isPresent()) {
-            properties.put("privateProperty", request.getPrivateProperty());
-        }
+        properties.put("publicProperty", request.getPublicProperty());
+        properties.put("privateProperty", request.getPrivateProperty());
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -70,16 +66,14 @@ public class RawFooClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new SeedAudiencesHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ImportingType.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ImportingType.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedAudiencesApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedAudiencesException("Network error executing HTTP request", e);
         }

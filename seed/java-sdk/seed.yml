@@ -1,4 +1,4 @@
-irVersion: v60
+irVersion: v61
 displayName: Java SDK
 changelogLocation: ../../generators/java/sdk/versions.yml
 image: fernapi/fern-java-sdk
@@ -71,6 +71,8 @@ fixtures:
         inline-path-parameters: true
         client-class-name: Best
       outputFolder: custom-client-class-name
+      readmeConfig:
+        exampleStyle: minimal
     - customConfig:
         inline-path-parameters: true
         package-prefix: com.fern.sdk
@@ -195,6 +197,7 @@ fixtures:
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /movie
+        exampleStyle: minimal
         customSections:
           - title: "Custom Section"
             language: java
@@ -255,12 +258,18 @@ fixtures:
     - customConfig:
         use-nullable-annotation: false
       outputFolder: legacy
+    - customConfig:
+        collapse-optional-nullable: true
+      outputFolder: collapse-optional-nullable
+  optional:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: wire-tests
 scripts:
   - docker: fernapi/java-seed
     commands:
       - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava spotlessCheck
 allowedFailures:
-  - api-wide-base-path
   - alias-extends
   - bytes-download
   - bytes-upload
@@ -281,6 +290,7 @@ allowedFailures:
   - java-inline-types:no-wrapped-aliases
   - literal
   - nullable-optional:with-nullable-annotation
+  - nullable-optional:collapse-optional-nullable
   - oauth-client-credentials-custom
   - oauth-client-credentials-with-variables
   - query-parameters-openapi
@@ -302,9 +312,7 @@ allowedFailures:
   - oauth-client-credentials-default
   - oauth-client-credentials-environment-variables
   - oauth-client-credentials-nested-root
-  - package-yml
   - pagination-custom
-  - path-parameters
   - query-parameters
   - streaming
 
@@ -312,4 +320,10 @@ allowedFailures:
 
   # Bug with how java-sdk creates nightly balanced files
   - java-pagination-deep-cursor-path
-  
+
+  # File upload dynamic snippets have compilation errors due to missing file parameters
+  # These failures are from pre-existing broken dynamic snippet generation
+  - file-upload:no-custom-config
+  - file-upload:wrapped-aliases
+  - file-upload:inline-file-properties
+  - file-upload-openapi

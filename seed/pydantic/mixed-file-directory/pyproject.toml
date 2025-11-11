@@ -30,7 +30,7 @@ packages = [
     { include = "seed/mixed_file_directory", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/mixed-file-directory/fern'
 
 [tool.poetry.dependencies]

@@ -9,6 +9,7 @@ import { PageConfiguration } from "./PageConfiguration";
 import { ApiReferenceConfiguration } from "./ApiReferenceConfiguration";
 import { LinkConfiguration } from "./LinkConfiguration";
 import { ChangelogConfiguration } from "./ChangelogConfiguration";
+import { FolderConfiguration } from "./FolderConfiguration";
 
 export const NavigationItem: core.serialization.Schema<serializers.NavigationItem.Raw, FernDocsConfig.NavigationItem> =
     core.serialization.undiscriminatedUnion([
@@ -17,6 +18,7 @@ export const NavigationItem: core.serialization.Schema<serializers.NavigationIte
         ApiReferenceConfiguration,
         LinkConfiguration,
         ChangelogConfiguration,
+        FolderConfiguration,
     ]);
 
 export declare namespace NavigationItem {
@@ -25,5 +27,6 @@ export declare namespace NavigationItem {
         | serializers.SectionConfiguration.Raw
         | ApiReferenceConfiguration.Raw
         | LinkConfiguration.Raw
-        | ChangelogConfiguration.Raw;
+        | ChangelogConfiguration.Raw
+        | FolderConfiguration.Raw;
 }

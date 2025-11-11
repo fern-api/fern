@@ -1,5 +1,5 @@
 import { BaseCsharpGeneratorContext } from "@fern-api/csharp-base";
-import { ast } from "@fern-api/csharp-codegen";
+import { ast, Writer } from "@fern-api/csharp-codegen";
 
 import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
@@ -20,53 +20,39 @@ export function getUndiscriminatedUnionSerializerAnnotation({
     isList: boolean;
 }): ast.Annotation {
     if (isList) {
-        return context.csharp.annotation({
-            reference: context.System.Text.Json.Serialization.JsonConverter(),
-            argument: context.csharp.codeblock((writer) => {
+        return context.common.csharp.annotation({
+            reference: context.common.System.Text.Json.Serialization.JsonConverter(),
+            argument: context.common.csharp.codeblock((writer: Writer) => {
                 writer.write("typeof(");
 
-                const oneOf = getOneOf({ context, undiscriminatedUnionDeclaration });
-                const oneOfSerializer = getOneOfSerializer({ context, undiscriminatedUnionDeclaration });
-                const collectionSerializer = context.getCollectionItemSerializerReference(oneOf, oneOfSerializer);
+                const oneOf = context.common.extern.OneOf.OneOf(
+                    undiscriminatedUnionDeclaration.members.map((member) => {
+                        return context.csharpTypeMapper.convert({
+                            reference: member.type,
+                            unboxOptionals: true
+                        });
+                    })
+                );
+
+                const oneOfSerializer = context.common.types.OneOfSerializer(oneOf);
+                const collectionSerializer = context.common.types.CollectionItemSerializer(oneOf, oneOfSerializer);
                 writer.writeNode(collectionSerializer);
                 writer.write(")");
             })
         });
     }
-    return context.csharp.annotation({
-        reference: context.System.Text.Json.Serialization.JsonConverter(),
-        argument: context.csharp.codeblock((writer) => {
+    return context.common.csharp.annotation({
+        reference: context.common.System.Text.Json.Serialization.JsonConverter(),
+        argument: context.common.csharp.codeblock((writer: Writer) => {
             writer.write("typeof(");
-            const oneOfSerializer = getOneOfSerializer({ context, undiscriminatedUnionDeclaration });
+            const oneOf = context.common.extern.OneOf.OneOf(
+                undiscriminatedUnionDeclaration.members.map((member) => {
+                    return context.csharpTypeMapper.convert({ reference: member.type, unboxOptionals: true });
+                })
+            );
+            const oneOfSerializer = context.common.types.OneOfSerializer(oneOf);
             writer.writeNode(oneOfSerializer);
             writer.write(")");
         })
     });
-}
-
-function getOneOfSerializer({
-    context,
-    undiscriminatedUnionDeclaration
-}: {
-    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    context: BaseCsharpGeneratorContext<any>;
-    undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration;
-}): ast.ClassReference {
-    const oneOf = getOneOf({ context, undiscriminatedUnionDeclaration });
-    return context.getOneOfSerializerClassReference(oneOf);
-}
-
-function getOneOf({
-    context,
-    undiscriminatedUnionDeclaration
-}: {
-    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    context: BaseCsharpGeneratorContext<any>;
-    undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration;
-}): ast.ClassReference {
-    return context.getOneOfClassReference(
-        undiscriminatedUnionDeclaration.members.map((member) => {
-            return context.csharpTypeMapper.convert({ reference: member.type, unboxOptionals: true });
-        })
-    );
 }

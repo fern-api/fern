@@ -1,5 +1,5 @@
 using SeedAudiences;
-using System.Threading.Tasks;
+using SeedAudiences.FolderA;
 
 namespace Usage;
 
@@ -12,7 +12,18 @@ public class Example0
             }
         );
 
-        await client.FolderA.Service.GetDirectThreadAsync();
+        await client.FolderA.Service.GetDirectThreadAsync(
+            new GetDirectThreadRequest {
+                Ids = new List<string>(){
+                    "ids",
+                }
+                ,
+                Tags = new List<string>(){
+                    "tags",
+                }
+
+            }
+        );
     }
 
 }

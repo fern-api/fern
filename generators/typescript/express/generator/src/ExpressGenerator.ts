@@ -69,6 +69,9 @@ export declare namespace ExpressGenerator {
         noOptionalProperties: boolean;
         packagePath: string | undefined;
         packageManager: "pnpm" | "yarn";
+        formatter: "prettier" | "biome" | "oxfmt";
+        linter: "biome" | "oxlint" | "none";
+        enableForwardCompatibleEnums: boolean;
     }
 }
 
@@ -138,7 +141,9 @@ export class ExpressGenerator {
             generateWireTests: false,
             relativePackagePath: this.getRelativePackagePath(),
             relativeTestPath: this.getRelativeTestPath(),
-            generatorType: "express"
+            generatorType: "express",
+            formatter: config.formatter,
+            linter: config.linter
         });
 
         this.project = new Project({
@@ -219,7 +224,8 @@ export class ExpressGenerator {
             retainOriginalCasing: config.retainOriginalCasing,
             noOptionalProperties: config.noOptionalProperties,
             enableInlineTypes: false,
-            generateReadWriteOnlyTypes: false
+            generateReadWriteOnlyTypes: false,
+            enableForwardCompatibleEnums: config.enableForwardCompatibleEnums
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
@@ -302,7 +308,9 @@ export class ExpressGenerator {
             exportSerde: false,
             useLegacyExports: true,
             packageManager: this.config.packageManager,
-            testPath: this.getRelativeTestPath()
+            testPath: this.getRelativeTestPath(),
+            formatter: this.config.formatter,
+            linter: this.config.linter
         });
     }
 

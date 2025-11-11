@@ -1,11 +1,11 @@
 use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
-pub struct FolderServiceClient {
+pub struct ServiceClient {
     pub http_client: HttpClient,
 }
 
-impl FolderServiceClient {
+impl ServiceClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             http_client: HttpClient::new(config.clone())?,

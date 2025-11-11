@@ -65,9 +65,9 @@ public class SeedPaginationApiException extends SeedPaginationException {
         return this.headers;
     }
 
-    @java.lang.Override
+    @Override
     public String toString() {
         return "SeedPaginationApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode + ", body: "
-                + body + "}";
+                + ObjectMappers.stringify(body) + "}";
     }
 }

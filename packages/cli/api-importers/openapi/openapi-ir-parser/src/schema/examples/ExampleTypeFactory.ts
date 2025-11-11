@@ -273,7 +273,6 @@ export class ExampleTypeFactory {
                     case "undiscriminated": {
                         const unionVariantSchema = this.getUnDiscriminatedUnionVariantSchema(schema.value, example);
                         if (unionVariantSchema != null) {
-                            // TODO (we should select the oneOf schema based on the example)
                             return this.buildExampleHelper({
                                 exampleId,
                                 example,
@@ -473,10 +472,14 @@ export class ExampleTypeFactory {
                     const required = property in requiredProperties;
                     const inExample = Object.keys(fullExample).includes(property);
 
+                    const propertyExampleFromParent = fullExample[property];
+                    const propertySchemaExample = this.getSchemaExample(schema.schema);
+                    const exampleToUse = propertyExampleFromParent ?? propertySchemaExample;
+
                     const propertyExample = this.buildExampleHelper({
                         schema: schema.schema,
                         exampleId,
-                        example: fullExample[property],
+                        example: exampleToUse,
                         visitedSchemaIds,
                         depth: depth + 1,
                         options: {
@@ -607,6 +610,13 @@ export class ExampleTypeFactory {
         fullExample: unknown
     ): SchemaWithExample | undefined {
         if (fullExample == null) {
+            const variantWithExample = schema.schemas.find((variant) =>
+                this.hasExample(variant, 0, new Set(), { ignoreOptionals: false, isParameter: false })
+            );
+            if (variantWithExample != null) {
+                return variantWithExample;
+            }
+            // Fall back to first variant if no variant has an example
             return schema.schemas[0];
         }
 
@@ -841,6 +851,26 @@ export class ExampleTypeFactory {
             schema = resolvedSchema;
         }
         return schema;
+    }
+
+    private getSchemaExample(schema: SchemaWithExample): unknown | undefined {
+        return schema._visit({
+            primitive: (s) => s.schema.example,
+            object: (s) => s.fullExamples?.[0]?.value,
+            array: (s) => s.example,
+            map: (s) => s.example,
+            optional: (s) => this.getSchemaExample(s.value),
+            enum: (s) => s.example,
+            reference: (s) => {
+                const resolved = this.schemas[s.schema];
+                return resolved != null ? this.getSchemaExample(resolved) : undefined;
+            },
+            literal: () => undefined,
+            oneOf: () => undefined,
+            nullable: (s) => this.getSchemaExample(s.value),
+            unknown: (s) => s.example,
+            _other: () => undefined
+        });
     }
 
     private buildExampleFromPrimitive({

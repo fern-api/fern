@@ -1,6 +1,6 @@
-auth: BearerAuthScheme
+auth: OAuth2
 auth-schemes:
-  BearerAuthScheme:
+  OAuth2:
     scheme: bearer
 default-environment: Production
 default-url: Base

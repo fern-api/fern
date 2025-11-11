@@ -18238,8 +18238,10 @@
               "generatedName": "AccountAllows",
               "description": "Flags which indicate the permissions the current authorized user has on this account resource.",
               "value": {
+                "description": "Flags which indicate the permissions the current authorized user has on this account resource.",
                 "generatedName": "AccountAllows",
                 "schema": "fullAccountPermissions",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -18906,8 +18908,10 @@
               "generatedName": "AccountItemId",
               "description": "The unique identifier for this account resource. This is an immutable opaque string.",
               "value": {
+                "description": "The unique identifier for this account resource. This is an immutable opaque string.",
                 "generatedName": "AccountItemId",
                 "schema": "readOnlyResourceId",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -19051,8 +19055,10 @@
               "generatedName": "AccountItemLocation",
               "description": "Indicates where an account is held.",
               "value": {
+                "description": "Indicates where an account is held.",
                 "generatedName": "AccountItemLocation",
                 "schema": "accountLocation",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -19317,8 +19323,10 @@
               "generatedName": "AccountBalanceAvailable",
               "description": "The available balance: the funds available for use. This is the string representation of the exact decimal amount.",
               "value": {
+                "description": "The available balance: the funds available for use. This is the string representation of the exact decimal amount.",
                 "generatedName": "AccountBalanceAvailable",
                 "schema": "creditOrDebitValue",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -19339,8 +19347,10 @@
               "generatedName": "AccountBalanceCurrent",
               "description": "The current balance. This is the balance at the end of the previous business day. This is the string representation of the exact decimal amount.",
               "value": {
+                "description": "The current balance. This is the balance at the end of the previous business day. This is the string representation of the exact decimal amount.",
                 "generatedName": "AccountBalanceCurrent",
                 "schema": "creditOrDebitValue",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -19383,8 +19393,10 @@
               "generatedName": "AccountBalanceCurrentWithPending",
               "description": "The current balance, with posted transactions. This is the string representation of the exact decimal amount.",
               "value": {
+                "description": "The current balance, with posted transactions. This is the string representation of the exact decimal amount.",
                 "generatedName": "AccountBalanceCurrentWithPending",
                 "schema": "creditOrDebitValue",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -22059,8 +22071,10 @@
               "generatedName": "TransferItemState",
               "description": "The state of this transfer resource.",
               "value": {
+                "description": "The state of this transfer resource.",
                 "generatedName": "TransferItemState",
                 "schema": "transferState",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"

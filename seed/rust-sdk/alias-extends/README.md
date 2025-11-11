@@ -30,7 +30,6 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_alias_extends::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

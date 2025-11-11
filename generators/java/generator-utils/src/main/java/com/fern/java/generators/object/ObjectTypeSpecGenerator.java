@@ -126,13 +126,27 @@ public final class ObjectTypeSpecGenerator {
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
                 .addModifiers(publicConstructorsEnabled ? Modifier.PUBLIC : Modifier.PRIVATE);
         allEnrichedProperties.stream()
-                .map(EnrichedObjectProperty::fieldSpec)
+                .map(enrichedProperty -> {
+                    Optional<FieldSpec> maybeFieldSpec = enrichedProperty.fieldSpec();
+                    if (maybeFieldSpec.isEmpty()) {
+                        return Optional.<ParameterSpec>empty();
+                    }
+                    FieldSpec fieldSpec = maybeFieldSpec.get();
+                    ParameterSpec.Builder paramBuilder = ParameterSpec.builder(fieldSpec.type, fieldSpec.name);
+
+                    boolean shouldUseNullableAnnotation = enrichedProperty.useNullableAnnotation()
+                            && EnrichedObjectProperty.isNullable(
+                                    enrichedProperty.objectProperty().getValueType());
+                    if (shouldUseNullableAnnotation && !fieldSpec.type.isPrimitive()) {
+                        paramBuilder.addAnnotation(com.fern.java.utils.NullableAnnotationUtils.getNullableAnnotation());
+                    }
+
+                    return Optional.of(paramBuilder.build());
+                })
                 .flatMap(Optional::stream)
-                .forEach(fieldSpec -> {
-                    ParameterSpec parameterSpec = ParameterSpec.builder(fieldSpec.type, fieldSpec.name)
-                            .build();
+                .forEach(parameterSpec -> {
                     constructorBuilder.addParameter(parameterSpec);
-                    constructorBuilder.addStatement("this.$L = $L", fieldSpec.name, fieldSpec.name);
+                    constructorBuilder.addStatement("this.$L = $L", parameterSpec.name, parameterSpec.name);
                 });
         if (supportAdditionalProperties) {
             String additionalPropertiesFieldName = getAdditionalPropertiesFieldName();

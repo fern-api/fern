@@ -13,6 +13,7 @@ describe("Test fetcherImpl", () => {
             body: { data: "test" },
             contentType: "application/json",
             requestType: "json",
+            maxRetries: 0,
             responseType: "json",
         };
 
@@ -33,7 +34,7 @@ describe("Test fetcherImpl", () => {
             "https://httpbin.org/post",
             expect.objectContaining({
                 method: "POST",
-                headers: expect.objectContaining({ "X-Test": "x-test-header" }),
+                headers: expect.toContainHeaders({ "X-Test": "x-test-header" }),
                 body: JSON.stringify({ data: "test" }),
             }),
         );
@@ -47,6 +48,7 @@ describe("Test fetcherImpl", () => {
             headers: { "X-Test": "x-test-header" },
             contentType: "application/octet-stream",
             requestType: "bytes",
+            maxRetries: 0,
             responseType: "json",
             body: fs.createReadStream(join(__dirname, "test-file.txt")),
         };
@@ -64,7 +66,7 @@ describe("Test fetcherImpl", () => {
             url,
             expect.objectContaining({
                 method: "POST",
-                headers: expect.objectContaining({ "X-Test": "x-test-header" }),
+                headers: expect.toContainHeaders({ "X-Test": "x-test-header" }),
                 body: expect.any(fs.ReadStream),
             }),
         );
@@ -80,6 +82,7 @@ describe("Test fetcherImpl", () => {
             url,
             method: "GET",
             headers: { "X-Test": "x-test-header" },
+            maxRetries: 0,
             responseType: "binary-response",
         };
 
@@ -99,7 +102,7 @@ describe("Test fetcherImpl", () => {
             url,
             expect.objectContaining({
                 method: "GET",
-                headers: expect.objectContaining({ "X-Test": "x-test-header" }),
+                headers: expect.toContainHeaders({ "X-Test": "x-test-header" }),
             }),
         );
         expect(result.ok).toBe(true);
@@ -125,6 +128,7 @@ describe("Test fetcherImpl", () => {
             url,
             method: "GET",
             headers: { "X-Test": "x-test-header" },
+            maxRetries: 0,
             responseType: "binary-response",
         };
 
@@ -144,7 +148,7 @@ describe("Test fetcherImpl", () => {
             url,
             expect.objectContaining({
                 method: "GET",
-                headers: expect.objectContaining({ "X-Test": "x-test-header" }),
+                headers: expect.toContainHeaders({ "X-Test": "x-test-header" }),
             }),
         );
         expect(result.ok).toBe(true);
@@ -170,6 +174,7 @@ describe("Test fetcherImpl", () => {
             url,
             method: "GET",
             headers: { "X-Test": "x-test-header" },
+            maxRetries: 0,
             responseType: "binary-response",
         };
 
@@ -189,7 +194,7 @@ describe("Test fetcherImpl", () => {
             url,
             expect.objectContaining({
                 method: "GET",
-                headers: expect.objectContaining({ "X-Test": "x-test-header" }),
+                headers: expect.toContainHeaders({ "X-Test": "x-test-header" }),
             }),
         );
         expect(result.ok).toBe(true);
@@ -213,6 +218,7 @@ describe("Test fetcherImpl", () => {
             url,
             method: "GET",
             headers: { "X-Test": "x-test-header" },
+            maxRetries: 0,
             responseType: "binary-response",
         };
 
@@ -232,7 +238,7 @@ describe("Test fetcherImpl", () => {
             url,
             expect.objectContaining({
                 method: "GET",
-                headers: expect.objectContaining({ "X-Test": "x-test-header" }),
+                headers: expect.toContainHeaders({ "X-Test": "x-test-header" }),
             }),
         );
         expect(result.ok).toBe(true);

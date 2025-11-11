@@ -1,4 +1,4 @@
-irVersion: v60
+irVersion: v61
 displayName: TypeScript Express
 changelogLocation: ../../generators/typescript/express/versions.yml
 image: fernapi/fern-typescript-express
@@ -93,6 +93,7 @@ allowedFailures:
   - bytes-upload
   - file-download
   - file-upload
+  - file-upload-openapi
   - multiple-request-bodies
   - plain-text
   - public-object

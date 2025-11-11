@@ -1,0 +1,8 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "improved_imports": true
+  }
+}

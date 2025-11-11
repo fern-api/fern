@@ -4,7 +4,7 @@ import HttpHead
 
 @Suite("UserClient Wire Tests") struct UserClientWireTests {
     @Test func list1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -47,7 +47,10 @@ import HttpHead
                 ]
             )
         ]
-        let response = try await client.user.list(limit: 1)
+        let response = try await client.user.list(
+            limit: 1,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

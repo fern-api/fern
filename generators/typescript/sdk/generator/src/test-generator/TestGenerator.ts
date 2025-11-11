@@ -113,7 +113,7 @@ export class TestGenerator {
     }
 
     private async addJestConfigs(): Promise<void> {
-        const setupFilesAfterEnv = [];
+        const setupFilesAfterEnv = [`<rootDir>/${this.relativeTestPath}/setup.ts`];
         if (this.useBigInt) {
             setupFilesAfterEnv.push(`<rootDir>/${this.relativeTestPath}/bigint.setup.ts`);
         }
@@ -187,7 +187,7 @@ export class TestGenerator {
 
     private async addVitestConfigs(): Promise<void> {
         const vitestConfig = this.rootDirectory.createSourceFile(
-            "vitest.config.ts",
+            "vitest.config.mts",
             code`
             import { defineConfig } from "vitest/config";
             export default defineConfig({
@@ -200,7 +200,8 @@ export class TestGenerator {
                                 environment: "node",
                                 root: "./${this.relativeTestPath}",
                                 include: ["**/*.test.{js,ts,jsx,tsx}"],
-                                exclude: ["wire/**"]
+                                exclude: ["wire/**"],
+                                setupFiles: ["./setup.ts"]
                             }
                         },
                         ${
@@ -211,7 +212,7 @@ export class TestGenerator {
                                         name: "wire",
                                         environment: "node",
                                         root: "./${this.relativeTestPath}/wire",
-                                        setupFiles: ["../mock-server/setup.ts"]
+                                        setupFiles: ["../setup.ts", "../mock-server/setup.ts"]
                                     }
                                 },`
                                 : ""
@@ -437,6 +438,7 @@ describe("test", () => {
             response: example.response,
             ir: this.ir
         });
+        const mockBodyMethod = this.getMockBodyMethod(endpoint);
 
         return code`
 export function mockAuth(server: MockServer) {
@@ -452,7 +454,7 @@ export function mockAuth(server: MockServer) {
                 `;
         })}${
             rawRequestBody
-                ? code`.jsonBody(rawRequestBody)
+                ? code`.${mockBodyMethod}(rawRequestBody)
             `
                 : ""
         }.respondWith()
@@ -663,17 +665,26 @@ export function mockAuth(server: MockServer) {
         });
 
         const baseOptions: Record<string, Code> = {};
-        if (this.ir.variables.length > 0) {
-            return; // not supported
-        }
+
+        // Add variables to baseOptions
+        this.ir.variables.forEach((variable) => {
+            const variableName = getParameterNameForVariable({
+                variableName: variable.name,
+                retainOriginalCasing: this.retainOriginalCasing
+            });
+            baseOptions[variableName] = code`${literalOf(variableName)}`;
+        });
 
         this.ir.pathParameters.forEach((pathParameter) => {
+            if (pathParameter.variable != null) {
+                return;
+            }
             baseOptions[
                 getParameterNameForRootPathParameter({
                     pathParameter,
                     retainOriginalCasing: this.retainOriginalCasing
                 })
-            ] = code`${literalOf(pathParameter.variable ?? pathParameter.name.camelCase.unsafeName)}`;
+            ] = code`${literalOf(pathParameter.name.camelCase.unsafeName)}`;
         });
         Object.assign(baseOptions, this.getAuthClientOptions(context));
         this.ir.headers.forEach((header) => {
@@ -809,6 +820,7 @@ describe("${serviceName}", () => {
             response: example.response,
             ir: this.ir
         });
+        const mockBodyMethod = this.getMockBodyMethod(endpoint);
 
         const willThrowError = responseStatusCode >= 400 && this.neverThrowErrors === false;
 
@@ -847,6 +859,27 @@ describe("${serviceName}", () => {
                     retainOriginalCasing: this.retainOriginalCasing
                 })
             ] = code`${literalOf(pathParameter.value.jsonExample)}`;
+        });
+
+        example.endpointPathParameters.forEach((examplePathParameter) => {
+            const pathParamDef = endpoint.pathParameters.find(
+                (p) => p.name.originalName === examplePathParameter.name.originalName
+            );
+
+            if (pathParamDef?.variable != null) {
+                const variable = this.ir.variables.find((v) => v.id === pathParamDef.variable);
+                if (variable != null) {
+                    const variableName = getParameterNameForVariable({
+                        variableName: variable.name,
+                        retainOriginalCasing: this.retainOriginalCasing
+                    });
+                    options[variableName] = code`${literalOf(examplePathParameter.value.jsonExample)}`;
+                } else {
+                    context.logger.warn(
+                        `Variable with id "${pathParamDef.variable}" not found for path parameter "${examplePathParameter.name.originalName}" in endpoint ${endpoint.id}`
+                    );
+                }
+            }
         });
 
         const isHeadersResponse = endpoint.response?.body === undefined && endpoint.method === HttpMethod.Head;
@@ -923,7 +956,7 @@ describe("${serviceName}", () => {
                     `;
             })}${
                 rawRequestBody
-                    ? code`.jsonBody(rawRequestBody)
+                    ? code`.${mockBodyMethod}(rawRequestBody)
                 `
                     : ""
             }.respondWith()
@@ -960,6 +993,14 @@ describe("${serviceName}", () => {
 
     private getName({ name, context }: { name: Name; context: SdkContext }): string {
         return context.retainOriginalCasing || !context.includeSerdeLayer ? name.originalName : name.camelCase.safeName;
+    }
+
+    private getMockBodyMethod(endpoint: HttpEndpoint): string {
+        const contentType = endpoint.requestBody?.contentType;
+        if (contentType === "application/x-www-form-urlencoded") {
+            return "formUrlEncodedBody";
+        }
+        return "jsonBody";
     }
 
     private shouldBuildTest(endpoint: HttpEndpoint): boolean {
@@ -1286,58 +1327,89 @@ describe("${serviceName}", () => {
                         )}`;
                     },
                     union: (value) => {
-                        return value.singleUnionType.shape._visit({
-                            noProperties: () => code`${literalOf(jsonExample)}`,
-                            singleProperty: () => code`${literalOf(jsonExample)}`,
+                        if (typeof jsonExample !== "object" || jsonExample == null) {
+                            // should not happen
+                            return code`${literalOf(jsonExample)}`;
+                        }
+                        const properties: Record<string, unknown> = {};
+                        properties[value.discriminant.wireValue] = (jsonExample as Record<string, unknown>)[
+                            value.discriminant.wireValue
+                        ];
+                        Object.assign(
+                            properties,
+                            Object.fromEntries(
+                                (value.baseProperties ?? []).map((property) => {
+                                    return [property.name.wireValue, property.value.jsonExample];
+                                })
+                            )
+                        );
+                        Object.assign(
+                            properties,
+                            Object.fromEntries(
+                                (value.extendProperties ?? []).map((property) => {
+                                    return [property.name.wireValue, property.value.jsonExample];
+                                })
+                            )
+                        );
+                        const singleUnionProperties = value.singleUnionType.shape._visit({
+                            noProperties: () => jsonExample as object | undefined | null,
+                            singleProperty: () => jsonExample as object | undefined | null,
                             samePropertiesAsObject: (memberValue) => {
-                                return code`${literalOf(
-                                    Object.fromEntries([
-                                        ...getUnusedPropertiesFromJsonExample(jsonExample, memberValue),
-                                        ...memberValue.object.properties
-                                            .filter((p) => {
-                                                if (typeof p.propertyAccess === "undefined") {
-                                                    return true;
-                                                }
-                                                if (
-                                                    filterOutReadonlyProps &&
-                                                    p.propertyAccess === ObjectPropertyAccess.ReadOnly
-                                                ) {
-                                                    return false;
-                                                }
-                                                if (
-                                                    filterOutWriteonlyProps &&
-                                                    p.propertyAccess === ObjectPropertyAccess.WriteOnly
-                                                ) {
-                                                    return false;
-                                                }
+                                return Object.fromEntries([
+                                    ...memberValue.object.properties
+                                        .filter((p) => {
+                                            if (typeof p.propertyAccess === "undefined") {
                                                 return true;
-                                            })
-                                            .map<[string, Code]>((property) => {
-                                                return [
-                                                    property.name.wireValue,
-                                                    createRawJsonExample({
-                                                        example: property.value,
-                                                        isForRequest,
-                                                        isForResponse
-                                                    })
-                                                ];
-                                            })
-                                            .filter(([_, value]) => !isCodeUndefined(value)),
-                                        ...(memberValue.object.extraProperties ?? [])
-                                            .map<[string, Code]>((property) => [
+                                            }
+                                            if (
+                                                filterOutReadonlyProps &&
+                                                p.propertyAccess === ObjectPropertyAccess.ReadOnly
+                                            ) {
+                                                return false;
+                                            }
+                                            if (
+                                                filterOutWriteonlyProps &&
+                                                p.propertyAccess === ObjectPropertyAccess.WriteOnly
+                                            ) {
+                                                return false;
+                                            }
+                                            return true;
+                                        })
+                                        .map<[string, Code]>((property) => {
+                                            return [
                                                 property.name.wireValue,
                                                 createRawJsonExample({
                                                     example: property.value,
                                                     isForRequest,
                                                     isForResponse
                                                 })
-                                            ])
-                                            .filter(([_, value]) => !isCodeUndefined(value))
-                                    ])
-                                )}`;
+                                            ];
+                                        })
+                                        .filter(([_, value]) => !isCodeUndefined(value)),
+                                    ...(memberValue.object.extraProperties ?? [])
+                                        .map<[string, Code]>((property) => [
+                                            property.name.wireValue,
+                                            createRawJsonExample({
+                                                example: property.value,
+                                                isForRequest,
+                                                isForResponse
+                                            })
+                                        ])
+                                        .filter(([_, value]) => !isCodeUndefined(value))
+                                ]);
                             },
-                            _other: () => code`${literalOf(jsonExample)}`
+                            _other: () => jsonExample as object | undefined | null
                         });
+                        if (singleUnionProperties != null) {
+                            Object.assign(properties, singleUnionProperties);
+                        }
+
+                        // for extra properties
+                        const otherProperties = Object.fromEntries(
+                            Object.entries(jsonExample).filter(([key]) => !Object.keys(properties).includes(key))
+                        );
+                        Object.assign(properties, otherProperties);
+                        return code`${literalOf(properties)}`;
                     },
                     undiscriminatedUnion: (value) => {
                         return createRawJsonExample({ example: value.singleUnionType, isForRequest, isForResponse });
@@ -1474,4 +1546,20 @@ function isCodeUndefined(code: Code): boolean {
 function isCodeEmptyObject(code: Code): boolean {
     const rawCode = code.toString().trim();
     return rawCode === "{}" || rawCode === "{ }";
+}
+
+/**
+ * Determines the casing of the variable name when used in client constructor options
+ */
+function getParameterNameForVariable({
+    variableName,
+    retainOriginalCasing
+}: {
+    variableName: Name;
+    retainOriginalCasing: boolean;
+}): string {
+    if (retainOriginalCasing) {
+        return variableName.originalName;
+    }
+    return variableName.camelCase.safeName;
 }

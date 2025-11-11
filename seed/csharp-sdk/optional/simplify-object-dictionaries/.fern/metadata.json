@@ -1,0 +1,8 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-csharp-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "simplify-object-dictionaries": true
+  }
+}

@@ -1,5 +1,4 @@
 use custom_imdb_sdk::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

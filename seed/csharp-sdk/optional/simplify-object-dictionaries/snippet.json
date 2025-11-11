@@ -12,6 +12,18 @@
                 "type": "csharp",
                 "client": "using SeedObjectsWithImports;\n\nvar client = new SeedObjectsWithImportsClient();\nawait client.Optional.SendOptionalBodyAsync(\n    new Dictionary<string, object?>()\n    {\n        {\n            \"string\",\n            new Dictionary<object, object?>() { { \"key\", \"value\" } }\n        },\n    }\n);\n"
             }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/send-optional-typed-body",
+                "method": "POST",
+                "identifier_override": "endpoint_optional.sendOptionalTypedBody"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedObjectsWithImports;\n\nvar client = new SeedObjectsWithImportsClient();\nawait client.Optional.SendOptionalTypedBodyAsync(\n    new SendOptionalBodyRequest { Message = \"message\" }\n);\n"
+            }
         }
     ]
 }

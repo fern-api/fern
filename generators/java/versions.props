@@ -8,7 +8,8 @@ org.immutables:* = 2.8.8
 org.apache.commons:commons-lang3 = 3.12.0
 
 # fern
-com.fern.fern:irV60 = 60.3.1
+# Package is still named irV60 but version 61.7.0 contains IR v61
+com.fern.fern:irV60 = 61.7.0
 com.fern.fern:generator-exec-client = 0.0.806
 
 # testing

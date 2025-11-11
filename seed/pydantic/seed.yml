@@ -10,6 +10,7 @@ buildScripts:
   compileScript:
     commands:
       - poetry run mypy .
+      - PYTHONWARNINGS=error::SyntaxWarning python -m compileall -q -f .
 
 publish:
   workingDirectory: generators/python
@@ -51,6 +52,7 @@ fixtures:
   exhaustive:
     - customConfig:
         version: v1
+        recursion_limit: 1234
       outputFolder: pydantic-v1
     - customConfig:
         version: v2
@@ -80,6 +82,5 @@ fixtures:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
 allowedFailures:
-  - websocket
   # Complex circular refs
   - simple-fhir

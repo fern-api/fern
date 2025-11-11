@@ -23647,6 +23647,7 @@
     "groupMultiApiEnvironments": false,
     "groupEnvironmentsByHost": false,
     "wrapReferencesToNullableInOptional": false,
-    "coerceOptionalSchemasToNullable": false
+    "coerceOptionalSchemasToNullable": false,
+    "removeDiscriminantsFromSchemas": "always"
   }
 }

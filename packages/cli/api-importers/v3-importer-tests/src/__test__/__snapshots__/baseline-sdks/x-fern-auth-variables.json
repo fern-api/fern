@@ -24,7 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
-        "key": "BasicAuthScheme",
+        "key": "BasicAuth",
         "username": {
           "originalName": "username",
           "camelCase": {
@@ -879,7 +879,7 @@
     "endpoints": {
       "endpoint_user.get": {
         "auth": {
-          "key": "BasicAuthScheme",
+          "key": "BasicAuth",
           "username": {
             "originalName": "username",
             "camelCase": {
@@ -1001,7 +1001,7 @@
       },
       "endpoint_user.get_all": {
         "auth": {
-          "key": "BasicAuthScheme",
+          "key": "BasicAuth",
           "username": {
             "originalName": "username",
             "camelCase": {

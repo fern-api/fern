@@ -32,9 +32,9 @@
     "test:update": "vitest --run -u"
   },
   "dependencies": {
+    "@fern-api/fdr-sdk": "0.140.0-a411fe32c",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.139.31-66c809cb8",
     "estree-walker": "^3.0.3",
     "gray-matter": "^4.0.3",
     "mdast-util-from-markdown": "^2.0.2",
@@ -57,7 +57,7 @@
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "diff": "^5.2.0",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "vitest": "^2.1.9",
     "zod": "^3.22.3"
   }

@@ -1434,6 +1434,7 @@ service:
                             {
                               "displayName": "660d83ce30f3a599ddb0bdb3_Screenshot%202024-03-20%20at%209.03.24%E2%80%AFPM-p-500.png",
                               "format": "png",
+                              "height": 900,
                               "hostedUrl": "https://s3.amazonaws.com/webflow-prod-assets/6258612d1ee792848f805dcf/660d83ce30f3a599ddb0bdb3_Screenshot%202024-03-20%20at%209.03.24%E2%80%AFPM-p-500.png",
                               "originalFileName": "Screenshot%202024-03-20%20at%209.03.24%E2%80%AFPM-p-500.png",
                               "quality": 100,
@@ -1501,6 +1502,7 @@ service:
                           "displayName": "emoji icons",
                           "id": "6390c49774a71f0e3c1a08ee",
                           "lastUpdated": "2022-12-07T16:51:37Z",
+                          "parentFolder": "6390c49774a71f99f21a08eb",
                           "siteId": "6390c49674a71f84b51a08d8",
                         },
                       ],
@@ -2603,6 +2605,7 @@ service:
                         660d83ce30f3a599ddb0bdb3_Screenshot%202024-03-20%20at%209.03.24%E2%80%AFPM-p-500.png
                       format: png
                       width: 500
+                      height: 900
                       quality: 100
                   altText: A red chair
     create:
@@ -2852,6 +2855,7 @@ service:
               assetFolders:
                 - id: 6390c49774a71f0e3c1a08ee
                   displayName: emoji icons
+                  parentFolder: 6390c49774a71f99f21a08eb
                   assets:
                     - 63e5889e7fe4eafa7384cea4
                     - 659595234426a9fcbad57043
@@ -3009,6 +3013,7 @@ service:
                       "fields": [
                         {
                           "displayName": "Name",
+                          "helpText": "helpText",
                           "id": "23cc2d952d4e4631ffd4345d2743db4e",
                           "isEditable": true,
                           "isRequired": true,
@@ -3178,6 +3183,7 @@ service:
                       "fields": [
                         {
                           "displayName": "Name",
+                          "helpText": "helpText",
                           "id": "23cc2d952d4e4631ffd4345d2743db4e",
                           "isEditable": true,
                           "isRequired": true,
@@ -3869,6 +3875,7 @@ service:
                   type: PlainText
                   slug: name
                   displayName: Name
+                  helpText: helpText
     get:
       path: /collections/{collection_id}
       method: GET
@@ -3915,6 +3922,7 @@ service:
                   type: PlainText
                   slug: name
                   displayName: Name
+                  helpText: helpText
     delete-collection:
       path: /collections/{collection_id}
       method: DELETE
@@ -8041,6 +8049,7 @@ service:
                         },
                         "660d5bcc9c0772150459dfb1": {
                           "displayName": "Name",
+                          "placeholder": "Enter your email",
                           "type": "Plain",
                           "userVisible": true,
                         },
@@ -8051,6 +8060,7 @@ service:
                       "pageId": "6419db964a9c43f6a3af6348",
                       "pageName": "Home",
                       "responseSettings": {
+                        "redirectAction": "POST https://example.com",
                         "redirectMethod": "GET",
                         "redirectUrl": "https://example.com",
                         "sendEmailConfirmation": true,
@@ -8175,10 +8185,12 @@ service:
                           "fields": {
                             "0": {
                               "displayName": "Email",
+                              "placeholder": "Enter your email",
                               "userVisible": true,
                             },
                             "1": {
                               "displayName": "Email",
+                              "placeholder": "Enter your email",
                               "userVisible": true,
                             },
                           },
@@ -8188,6 +8200,7 @@ service:
                           "pageId": "6419db964a9c43f6a3af6348",
                           "pageName": "Home",
                           "responseSettings": {
+                            "redirectAction": "POST https://example.com",
                             "redirectMethod": "GET",
                             "redirectUrl": "https://example.com",
                             "sendEmailConfirmation": true,
@@ -8202,6 +8215,7 @@ service:
                           "fields": {
                             "0": {
                               "displayName": "Email",
+                              "placeholder": "Enter your email",
                               "userVisible": true,
                             },
                           },
@@ -8211,6 +8225,7 @@ service:
                           "pageId": "6419db964a9c43f6a3af6348",
                           "pageName": "Home",
                           "responseSettings": {
+                            "redirectAction": "POST https://example.com",
                             "redirectMethod": "GET",
                             "redirectUrl": "https://example.com",
                             "sendEmailConfirmation": false,
@@ -9347,13 +9362,16 @@ service:
                   fields:
                     '0':
                       displayName: Email
+                      placeholder: Enter your email
                       userVisible: true
                     '1':
                       displayName: Email
+                      placeholder: Enter your email
                       userVisible: true
                   responseSettings:
                     redirectUrl: https://example.com
                     redirectMethod: GET
+                    redirectAction: POST https://example.com
                     sendEmailConfirmation: true
                   id: 589a331aa51e760df7ccb89e
                   siteId: 580e63e98c9a982ac9b8b741
@@ -9368,10 +9386,12 @@ service:
                   fields:
                     '0':
                       displayName: Email
+                      placeholder: Enter your email
                       userVisible: true
                   responseSettings:
                     redirectUrl: https://example.com
                     redirectMethod: GET
+                    redirectAction: POST https://example.com
                     sendEmailConfirmation: false
                   id: 580ff8d7ba3e45ba9fe588e9
                   siteId: 580e63e98c9a982ac9b8b741
@@ -9425,6 +9445,7 @@ service:
                 660d5bcc9c0772150459dfb1:
                   displayName: Name
                   type: Plain
+                  placeholder: Enter your email
                   userVisible: true
                 589a331aa51e760df7ccb89d:
                   displayName: Email
@@ -9434,6 +9455,7 @@ service:
               responseSettings:
                 redirectUrl: https://example.com
                 redirectMethod: GET
+                redirectAction: POST https://example.com
                 sendEmailConfirmation: true
               id: 589a331aa51e760df7ccb89e
               siteId: 580e63e98c9a982ac9b8b741
@@ -10847,6 +10869,14 @@ Required scope | `ecommerce:read`
                       "orderComment": "Please gift wrap with a personal note saying "Happy Birthday, Ford! 🎉",
                       "orderId": "fc7-128",
                       "paymentProcessor": "stripe",
+                      "paypalDetails": {
+                        "captureId": "qwe123rty456uio789p",
+                        "disputeId": "zxcvbnm987poiuytrewq",
+                        "orderId": "1a2b3c4d5e6f7g8h9i0j",
+                        "payerId": "9k8j7i6h5g4f3e2d1c0b",
+                        "refundId": "abcde12345fghij67890",
+                        "refundReason": "Customer requested refund",
+                      },
                       "purchasedItems": [
                         {
                           "count": 1,
@@ -10932,10 +10962,12 @@ Required scope | `ecommerce:read`
                       "stripeDetails": {
                         "chargeId": "ch_3OzmzDJYFi4lcbXW1ndkkrH2",
                         "customerId": "cus_PpRsNHwWdUoRKR",
+                        "disputeId": "disputeId",
                         "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
                         "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
                         "refundId": "re_3OzmzDJYFi4lcbXW1kFAmlBk",
                         "refundReason": "fraudulent",
+                        "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                       },
                       "totals": {
                         "extras": [
@@ -11094,6 +11126,9 @@ Required scope | `ecommerce:read`
                             "unit": "USD",
                             "value": "5892",
                           },
+                          "disputeLastStatus": "warning_needs_response",
+                          "disputeUpdatedOn": "2018-12-03T22:06:15Z",
+                          "disputedOn": "2018-12-03T22:06:15Z",
                           "downloadFiles": [
                             {
                               "id": "5e9a5eba75e0ac242e1b6f64",
@@ -11101,6 +11136,7 @@ Required scope | `ecommerce:read`
                               "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa",
                             },
                           ],
+                          "fulfilledOn": "2018-12-03T22:06:15Z",
                           "hasDownloads": false,
                           "isCustomerDeleted": false,
                           "isShippingRequired": false,
@@ -11115,6 +11151,14 @@ Required scope | `ecommerce:read`
                           "orderComment": "Please gift wrap with a personal note saying "Happy Birthday, Ford! 🎉",
                           "orderId": "7c1-9fd",
                           "paymentProcessor": "stripe",
+                          "paypalDetails": {
+                            "captureId": "qwe123rty456uio789p",
+                            "disputeId": "zxcvbnm987poiuytrewq",
+                            "orderId": "1a2b3c4d5e6f7g8h9i0j",
+                            "payerId": "9k8j7i6h5g4f3e2d1c0b",
+                            "refundId": "abcde12345fghij67890",
+                            "refundReason": "Customer requested refund",
+                          },
                           "purchasedItems": [
                             {
                               "count": 2,
@@ -11167,10 +11211,12 @@ Required scope | `ecommerce:read`
                               },
                               "variantSKU": "incredible-bronze-towels-sleek-frozen-incredible-metal",
                               "variantSlug": "incredible-bronze-towels-sleek-frozen-incredible-metal",
+                              "weight": 5,
                               "width": 19,
                             },
                           ],
                           "purchasedItemsCount": 3,
+                          "refundedOn": "2018-12-03T22:06:15Z",
                           "shippingAddress": {
                             "addressee": "Arthur Dent",
                             "city": "New York",
@@ -11200,6 +11246,8 @@ Required scope | `ecommerce:read`
                             "customerId": "cus_Ptod8KJBiiPgnH",
                             "paymentIntentId": "pi_3P410iJYFi4lcbXW0EKKgcVg",
                             "paymentMethod": "pm_1P410gJYFi4lcbXWbeKghqjK",
+                            "refundReason": "requested_by_customer",
+                            "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                           },
                           "totals": {
                             "extras": [
@@ -11270,6 +11318,9 @@ Required scope | `ecommerce:read`
                             "unit": "USD",
                             "value": "5892",
                           },
+                          "disputeLastStatus": "warning_needs_response",
+                          "disputeUpdatedOn": "2018-12-03T22:06:15Z",
+                          "disputedOn": "2018-12-03T22:06:15Z",
                           "downloadFiles": [
                             {
                               "id": "5e9a5eba75e0ac242e1b6f64",
@@ -11277,6 +11328,7 @@ Required scope | `ecommerce:read`
                               "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa",
                             },
                           ],
+                          "fulfilledOn": "2018-12-03T22:06:15Z",
                           "hasDownloads": false,
                           "isCustomerDeleted": false,
                           "isShippingRequired": true,
@@ -11291,6 +11343,14 @@ Required scope | `ecommerce:read`
                           "orderComment": "",
                           "orderId": "fc7-128",
                           "paymentProcessor": "stripe",
+                          "paypalDetails": {
+                            "captureId": "qwe123rty456uio789p",
+                            "disputeId": "zxcvbnm987poiuytrewq",
+                            "orderId": "1a2b3c4d5e6f7g8h9i0j",
+                            "payerId": "9k8j7i6h5g4f3e2d1c0b",
+                            "refundId": "abcde12345fghij67890",
+                            "refundReason": "Customer requested refund",
+                          },
                           "purchasedItems": [
                             {
                               "count": 1,
@@ -11379,6 +11439,7 @@ Required scope | `ecommerce:read`
                             "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
                             "refundId": "re_3OzmzDJYFi4lcbXW1kFAmlBk",
                             "refundReason": "fraudulent",
+                            "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                           },
                           "totals": {
                             "extras": [
@@ -11584,6 +11645,14 @@ Required scope | `ecommerce:write`
                       "orderComment": "Please gift wrap with a personal note saying "Happy Birthday, Ford! 🎉",
                       "orderId": "fc7-128",
                       "paymentProcessor": "stripe",
+                      "paypalDetails": {
+                        "captureId": "qwe123rty456uio789p",
+                        "disputeId": "zxcvbnm987poiuytrewq",
+                        "orderId": "1a2b3c4d5e6f7g8h9i0j",
+                        "payerId": "9k8j7i6h5g4f3e2d1c0b",
+                        "refundId": "abcde12345fghij67890",
+                        "refundReason": "Customer requested refund",
+                      },
                       "purchasedItems": [
                         {
                           "count": 1,
@@ -11669,10 +11738,12 @@ Required scope | `ecommerce:write`
                       "stripeDetails": {
                         "chargeId": "ch_3OzmzDJYFi4lcbXW1ndkkrH2",
                         "customerId": "cus_PpRsNHwWdUoRKR",
+                        "disputeId": "disputeId",
                         "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
                         "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
                         "refundId": "re_3OzmzDJYFi4lcbXW1kFAmlBk",
                         "refundReason": "fraudulent",
+                        "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                       },
                       "totals": {
                         "extras": [
@@ -11870,6 +11941,14 @@ Required scope | `ecommerce:write`
                       "orderComment": "Please gift wrap with a personal note saying "Happy Birthday, Ford! 🎉",
                       "orderId": "fc7-128",
                       "paymentProcessor": "stripe",
+                      "paypalDetails": {
+                        "captureId": "qwe123rty456uio789p",
+                        "disputeId": "zxcvbnm987poiuytrewq",
+                        "orderId": "1a2b3c4d5e6f7g8h9i0j",
+                        "payerId": "9k8j7i6h5g4f3e2d1c0b",
+                        "refundId": "abcde12345fghij67890",
+                        "refundReason": "Customer requested refund",
+                      },
                       "purchasedItems": [
                         {
                           "count": 1,
@@ -11955,10 +12034,12 @@ Required scope | `ecommerce:write`
                       "stripeDetails": {
                         "chargeId": "ch_3OzmzDJYFi4lcbXW1ndkkrH2",
                         "customerId": "cus_PpRsNHwWdUoRKR",
+                        "disputeId": "disputeId",
                         "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
                         "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
                         "refundId": "re_3OzmzDJYFi4lcbXW1kFAmlBk",
                         "refundReason": "fraudulent",
+                        "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                       },
                       "totals": {
                         "extras": [
@@ -12168,6 +12249,14 @@ Required scope | `ecommerce:write`
                       "orderComment": "Please gift wrap with a personal note saying "Happy Birthday, Ford! 🎉",
                       "orderId": "fc7-128",
                       "paymentProcessor": "stripe",
+                      "paypalDetails": {
+                        "captureId": "qwe123rty456uio789p",
+                        "disputeId": "zxcvbnm987poiuytrewq",
+                        "orderId": "1a2b3c4d5e6f7g8h9i0j",
+                        "payerId": "9k8j7i6h5g4f3e2d1c0b",
+                        "refundId": "abcde12345fghij67890",
+                        "refundReason": "Customer requested refund",
+                      },
                       "purchasedItems": [
                         {
                           "count": 1,
@@ -12253,10 +12342,12 @@ Required scope | `ecommerce:write`
                       "stripeDetails": {
                         "chargeId": "ch_3OzmzDJYFi4lcbXW1ndkkrH2",
                         "customerId": "cus_PpRsNHwWdUoRKR",
+                        "disputeId": "disputeId",
                         "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
                         "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
                         "refundId": "re_3OzmzDJYFi4lcbXW1kFAmlBk",
                         "refundReason": "fraudulent",
+                        "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                       },
                       "totals": {
                         "extras": [
@@ -12454,6 +12545,14 @@ Required scope | `ecommerce:write`
                       "orderComment": "Please gift wrap with a personal note saying "Happy Birthday, Ford! 🎉",
                       "orderId": "fc7-128",
                       "paymentProcessor": "stripe",
+                      "paypalDetails": {
+                        "captureId": "qwe123rty456uio789p",
+                        "disputeId": "zxcvbnm987poiuytrewq",
+                        "orderId": "1a2b3c4d5e6f7g8h9i0j",
+                        "payerId": "9k8j7i6h5g4f3e2d1c0b",
+                        "refundId": "abcde12345fghij67890",
+                        "refundReason": "Customer requested refund",
+                      },
                       "purchasedItems": [
                         {
                           "count": 1,
@@ -12539,10 +12638,12 @@ Required scope | `ecommerce:write`
                       "stripeDetails": {
                         "chargeId": "ch_3OzmzDJYFi4lcbXW1ndkkrH2",
                         "customerId": "cus_PpRsNHwWdUoRKR",
+                        "disputeId": "disputeId",
                         "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
                         "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
                         "refundId": "re_3OzmzDJYFi4lcbXW1kFAmlBk",
                         "refundReason": "fraudulent",
+                        "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                       },
                       "totals": {
                         "extras": [
@@ -20691,6 +20792,7 @@ Required scope | `ecommerce:write`
                     "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
                     "refundId": "re_3OzmzDJYFi4lcbXW1kFAmlBk",
                     "refundReason": "fraudulent",
+                    "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                   },
                   "totals": {
                     "extras": [
@@ -20918,6 +21020,7 @@ Required scope | `ecommerce:write`
                     "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
                     "refundId": "re_3OzmzDJYFi4lcbXW1kFAmlBk",
                     "refundReason": "fraudulent",
+                    "subscriptionId": "sub_1J6xwG2eZvKYlo2CXu9Zt0Tn",
                   },
                   "totals": {
                     "extras": [
@@ -26982,6 +27085,11 @@ service:
                     Please gift wrap with a personal note saying "Happy
                     Birthday, Ford! 🎉
                   acceptedOn: '2024-04-10T13:16:21Z'
+                  fulfilledOn: '2018-12-03T22:06:15Z'
+                  refundedOn: '2018-12-03T22:06:15Z'
+                  disputedOn: '2018-12-03T22:06:15Z'
+                  disputeUpdatedOn: '2018-12-03T22:06:15Z'
+                  disputeLastStatus: warning_needs_response
                   customerPaid:
                     unit: USD
                     value: '5892'
@@ -27081,15 +27189,18 @@ service:
                         unit: USD
                         value: '5892'
                         string: \$ 83.09 USD
+                      weight: 5
                       width: 19
                       height: 72
                       length: 18
                   purchasedItemsCount: 3
                   stripeDetails:
+                    subscriptionId: sub_1J6xwG2eZvKYlo2CXu9Zt0Tn
                     paymentMethod: pm_1P410gJYFi4lcbXWbeKghqjK
                     paymentIntentId: pi_3P410iJYFi4lcbXW0EKKgcVg
                     customerId: cus_Ptod8KJBiiPgnH
                     chargeId: ch_3P410iJYFi4lcbXW0DxUkzCH
+                    refundReason: requested_by_customer
                   stripeCard:
                     last4: '4242'
                     brand: Visa
@@ -27097,6 +27208,13 @@ service:
                     expires:
                       year: 2025
                       month: 4
+                  paypalDetails:
+                    orderId: 1a2b3c4d5e6f7g8h9i0j
+                    payerId: 9k8j7i6h5g4f3e2d1c0b
+                    captureId: qwe123rty456uio789p
+                    refundId: abcde12345fghij67890
+                    refundReason: Customer requested refund
+                    disputeId: zxcvbnm987poiuytrewq
                   customData:
                     - key: value
                   metadata:
@@ -27124,7 +27242,11 @@ service:
                   comment: Example comment to myself
                   orderComment: ''
                   acceptedOn: '2024-03-29T21:29:21Z'
+                  fulfilledOn: '2018-12-03T22:06:15Z'
                   refundedOn: '2024-04-08T18:25:04Z'
+                  disputedOn: '2018-12-03T22:06:15Z'
+                  disputeUpdatedOn: '2018-12-03T22:06:15Z'
+                  disputeLastStatus: warning_needs_response
                   customerPaid:
                     unit: USD
                     value: '5892'
@@ -27231,6 +27353,7 @@ service:
                       length: 40
                   purchasedItemsCount: 2
                   stripeDetails:
+                    subscriptionId: sub_1J6xwG2eZvKYlo2CXu9Zt0Tn
                     paymentMethod: pm_1OzmzBJYFi4lcbXWHKNdXU7j
                     paymentIntentId: pi_3OzmzDJYFi4lcbXW1hTBW6ft
                     customerId: cus_PpRsNHwWdUoRKR
@@ -27244,6 +27367,13 @@ service:
                     expires:
                       year: 2024
                       month: 4
+                  paypalDetails:
+                    orderId: 1a2b3c4d5e6f7g8h9i0j
+                    payerId: 9k8j7i6h5g4f3e2d1c0b
+                    captureId: qwe123rty456uio789p
+                    refundId: abcde12345fghij67890
+                    refundReason: Customer requested refund
+                    disputeId: zxcvbnm987poiuytrewq
                   customData:
                     - key: value
                   metadata:
@@ -27455,10 +27585,12 @@ service:
                   length: 40
               purchasedItemsCount: 2
               stripeDetails:
+                subscriptionId: sub_1J6xwG2eZvKYlo2CXu9Zt0Tn
                 paymentMethod: pm_1OzmzBJYFi4lcbXWHKNdXU7j
                 paymentIntentId: pi_3OzmzDJYFi4lcbXW1hTBW6ft
                 customerId: cus_PpRsNHwWdUoRKR
                 chargeId: ch_3OzmzDJYFi4lcbXW1ndkkrH2
+                disputeId: disputeId
                 refundId: re_3OzmzDJYFi4lcbXW1kFAmlBk
                 refundReason: fraudulent
               stripeCard:
@@ -27468,6 +27600,13 @@ service:
                 expires:
                   year: 2024
                   month: 4
+              paypalDetails:
+                orderId: 1a2b3c4d5e6f7g8h9i0j
+                payerId: 9k8j7i6h5g4f3e2d1c0b
+                captureId: qwe123rty456uio789p
+                refundId: abcde12345fghij67890
+                refundReason: Customer requested refund
+                disputeId: zxcvbnm987poiuytrewq
               customData:
                 - key: value
               metadata:
@@ -27692,10 +27831,12 @@ service:
                   length: 40
               purchasedItemsCount: 2
               stripeDetails:
+                subscriptionId: sub_1J6xwG2eZvKYlo2CXu9Zt0Tn
                 paymentMethod: pm_1OzmzBJYFi4lcbXWHKNdXU7j
                 paymentIntentId: pi_3OzmzDJYFi4lcbXW1hTBW6ft
                 customerId: cus_PpRsNHwWdUoRKR
                 chargeId: ch_3OzmzDJYFi4lcbXW1ndkkrH2
+                disputeId: disputeId
                 refundId: re_3OzmzDJYFi4lcbXW1kFAmlBk
                 refundReason: fraudulent
               stripeCard:
@@ -27705,6 +27846,13 @@ service:
                 expires:
                   year: 2024
                   month: 4
+              paypalDetails:
+                orderId: 1a2b3c4d5e6f7g8h9i0j
+                payerId: 9k8j7i6h5g4f3e2d1c0b
+                captureId: qwe123rty456uio789p
+                refundId: abcde12345fghij67890
+                refundReason: Customer requested refund
+                disputeId: zxcvbnm987poiuytrewq
               customData:
                 - key: value
               metadata:
@@ -27918,10 +28066,12 @@ service:
                   length: 40
               purchasedItemsCount: 2
               stripeDetails:
+                subscriptionId: sub_1J6xwG2eZvKYlo2CXu9Zt0Tn
                 paymentMethod: pm_1OzmzBJYFi4lcbXWHKNdXU7j
                 paymentIntentId: pi_3OzmzDJYFi4lcbXW1hTBW6ft
                 customerId: cus_PpRsNHwWdUoRKR
                 chargeId: ch_3OzmzDJYFi4lcbXW1ndkkrH2
+                disputeId: disputeId
                 refundId: re_3OzmzDJYFi4lcbXW1kFAmlBk
                 refundReason: fraudulent
               stripeCard:
@@ -27931,6 +28081,13 @@ service:
                 expires:
                   year: 2024
                   month: 4
+              paypalDetails:
+                orderId: 1a2b3c4d5e6f7g8h9i0j
+                payerId: 9k8j7i6h5g4f3e2d1c0b
+                captureId: qwe123rty456uio789p
+                refundId: abcde12345fghij67890
+                refundReason: Customer requested refund
+                disputeId: zxcvbnm987poiuytrewq
               customData:
                 - key: value
               metadata:
@@ -28136,10 +28293,12 @@ service:
                   length: 40
               purchasedItemsCount: 2
               stripeDetails:
+                subscriptionId: sub_1J6xwG2eZvKYlo2CXu9Zt0Tn
                 paymentMethod: pm_1OzmzBJYFi4lcbXWHKNdXU7j
                 paymentIntentId: pi_3OzmzDJYFi4lcbXW1hTBW6ft
                 customerId: cus_PpRsNHwWdUoRKR
                 chargeId: ch_3OzmzDJYFi4lcbXW1ndkkrH2
+                disputeId: disputeId
                 refundId: re_3OzmzDJYFi4lcbXW1kFAmlBk
                 refundReason: fraudulent
               stripeCard:
@@ -28149,6 +28308,13 @@ service:
                 expires:
                   year: 2024
                   month: 4
+              paypalDetails:
+                orderId: 1a2b3c4d5e6f7g8h9i0j
+                payerId: 9k8j7i6h5g4f3e2d1c0b
+                captureId: qwe123rty456uio789p
+                refundId: abcde12345fghij67890
+                refundReason: Customer requested refund
+                disputeId: zxcvbnm987poiuytrewq
               customData:
                 - key: value
               metadata:
@@ -28363,10 +28529,12 @@ service:
                   length: 40
               purchasedItemsCount: 2
               stripeDetails:
+                subscriptionId: sub_1J6xwG2eZvKYlo2CXu9Zt0Tn
                 paymentMethod: pm_1OzmzBJYFi4lcbXWHKNdXU7j
                 paymentIntentId: pi_3OzmzDJYFi4lcbXW1hTBW6ft
                 customerId: cus_PpRsNHwWdUoRKR
                 chargeId: ch_3OzmzDJYFi4lcbXW1ndkkrH2
+                disputeId: disputeId
                 refundId: re_3OzmzDJYFi4lcbXW1kFAmlBk
                 refundReason: fraudulent
               stripeCard:
@@ -28376,6 +28544,13 @@ service:
                 expires:
                   year: 2024
                   month: 4
+              paypalDetails:
+                orderId: 1a2b3c4d5e6f7g8h9i0j
+                payerId: 9k8j7i6h5g4f3e2d1c0b
+                captureId: qwe123rty456uio789p
+                refundId: abcde12345fghij67890
+                refundReason: Customer requested refund
+                disputeId: zxcvbnm987poiuytrewq
               customData:
                 - key: value
               metadata:
@@ -28550,6 +28725,7 @@ webhooks:
               length: 40
           purchasedItemsCount: 2
           stripeDetails:
+            subscriptionId: sub_1J6xwG2eZvKYlo2CXu9Zt0Tn
             paymentMethod: pm_1OzmzBJYFi4lcbXWHKNdXU7j
             paymentIntentId: pi_3OzmzDJYFi4lcbXW1hTBW6ft
             customerId: cus_PpRsNHwWdUoRKR
@@ -28733,6 +28909,7 @@ webhooks:
               length: 40
           purchasedItemsCount: 2
           stripeDetails:
+            subscriptionId: sub_1J6xwG2eZvKYlo2CXu9Zt0Tn
             paymentMethod: pm_1OzmzBJYFi4lcbXWHKNdXU7j
             paymentIntentId: pi_3OzmzDJYFi4lcbXW1hTBW6ft
             customerId: cus_PpRsNHwWdUoRKR
@@ -28939,6 +29116,7 @@ webhooks:
                     "body": {
                       "archived": false,
                       "canBranch": true,
+                      "collectionId": "6390c49774a71f12831a08e3",
                       "createdOn": "2024-03-11T10:42:00Z",
                       "draft": false,
                       "id": "6596da6045e56dee495bcbba",
@@ -28951,6 +29129,7 @@ webhooks:
                         "title": "Explore the Cosmos with The Ultimate Guide",
                         "titleCopied": false,
                       },
+                      "parentId": "6419db964a9c435aa3af6251",
                       "publishedPath": "/en-us/guide-to-the-galaxy",
                       "seo": {
                         "description": "Everything you need to know about the galaxy, from avoiding Vogon poetry to the importance of towels.",
@@ -29021,6 +29200,7 @@ webhooks:
                         {
                           "archived": false,
                           "canBranch": true,
+                          "collectionId": "6390c49774a71f12831a08e3",
                           "createdOn": "2024-03-11T10:42:00Z",
                           "draft": false,
                           "id": "6596da6045e56dee495bcbba",
@@ -29033,6 +29213,7 @@ webhooks:
                             "title": "Explore the Cosmos with The Ultimate Guide",
                             "titleCopied": false,
                           },
+                          "parentId": "6419db964a9c435aa3af6251",
                           "publishedPath": "/en-us/guide-to-the-galaxy",
                           "seo": {
                             "description": "Everything you need to know about the galaxy, from avoiding Vogon poetry to the importance of towels.",
@@ -29045,6 +29226,7 @@ webhooks:
                         {
                           "archived": false,
                           "canBranch": true,
+                          "collectionId": "6390c49774a71f12831a08e3",
                           "createdOn": "2024-05-25T09:00:00Z",
                           "draft": false,
                           "id": "6596da6045e56dee495bcbad",
@@ -29057,6 +29239,7 @@ webhooks:
                             "title": "Towel Day - Don't Panic",
                             "titleCopied": false,
                           },
+                          "parentId": "6419db964a9c435aa3af6251",
                           "publishedPath": "/en-us/towel-day",
                           "seo": {
                             "description": "A guide to celebrating Towel Day, in honor of the most massively useful thing an interstellar hitchhiker can have.",
@@ -29152,6 +29335,7 @@ webhooks:
                     "body": {
                       "archived": false,
                       "canBranch": true,
+                      "collectionId": "6390c49774a71f12831a08e3",
                       "createdOn": "2024-03-11T10:42:00Z",
                       "draft": false,
                       "id": "6596da6045e56dee495bcbba",
@@ -29164,6 +29348,7 @@ webhooks:
                         "title": "Explore the Cosmos with The Ultimate Guide",
                         "titleCopied": false,
                       },
+                      "parentId": "6419db964a9c435aa3af6251",
                       "publishedPath": "/en-us/guide-to-the-galaxy",
                       "seo": {
                         "description": "Everything you need to know about the galaxy, from avoiding Vogon poetry to the importance of towels.",
@@ -30741,6 +30926,8 @@ service:
                   siteId: 6258612d1ee792848f805dcf
                   title: Guide to the Galaxy
                   slug: guide-to-the-galaxy
+                  parentId: 6419db964a9c435aa3af6251
+                  collectionId: 6390c49774a71f12831a08e3
                   createdOn: '2024-03-11T10:42:00Z'
                   lastUpdated: '2024-03-11T10:42:42Z'
                   archived: false
@@ -30765,6 +30952,8 @@ service:
                   siteId: 6258612d1ee792848f805dcf
                   title: Towel Day Celebrations
                   slug: towel-day
+                  parentId: 6419db964a9c435aa3af6251
+                  collectionId: 6390c49774a71f12831a08e3
                   createdOn: '2024-05-25T09:00:00Z'
                   lastUpdated: '2024-05-25T09:42:00Z'
                   archived: false
@@ -30836,6 +31025,8 @@ service:
               siteId: 6258612d1ee792848f805dcf
               title: Guide to the Galaxy
               slug: guide-to-the-galaxy
+              parentId: 6419db964a9c435aa3af6251
+              collectionId: 6390c49774a71f12831a08e3
               createdOn: '2024-03-11T10:42:00Z'
               lastUpdated: '2024-03-11T10:42:42Z'
               archived: false
@@ -30929,6 +31120,8 @@ service:
               siteId: 6258612d1ee792848f805dcf
               title: Guide to the Galaxy
               slug: guide-to-the-galaxy
+              parentId: 6419db964a9c435aa3af6251
+              collectionId: 6390c49774a71f12831a08e3
               createdOn: '2024-03-11T10:42:00Z'
               lastUpdated: '2024-03-11T10:42:42Z'
               archived: false
@@ -39384,6 +39577,7 @@ service:
                           "displayName": "Alert",
                           "hostedLocation": "https://cdn.webflow.io/.../alert-0.0.1.js",
                           "id": "alert",
+                          "integrityHash": "integrityHash",
                           "lastUpdated": "lastUpdated",
                           "version": "0.0.1",
                         },
@@ -39393,6 +39587,7 @@ service:
                           "displayName": "Alert",
                           "hostedLocation": "https://cdn.webflow.io/.../alert-0.0.2.js",
                           "id": "alert",
+                          "integrityHash": "integrityHash",
                           "lastUpdated": "lastUpdated",
                           "version": "0.0.2",
                         },
@@ -39560,6 +39755,7 @@ service:
                       "displayName": "Alert",
                       "hostedLocation": "https://uploads-ssl.webflow.com/6258612d1ee792848f805dcf%2F64b6c769ff52ba6c3d904a91%2F660d6e15b3d1696f2d2b1447%2Falert-0.0.1.js",
                       "id": "alert",
+                      "integrityHash": "integrityHash",
                       "lastUpdated": "lastUpdated",
                       "version": "0.0.1",
                     },
@@ -39944,6 +40140,7 @@ service:
                   canCopy: false
                   displayName: Alert
                   hostedLocation: https://cdn.webflow.io/.../alert-0.0.1.js
+                  integrityHash: integrityHash
                   createdOn: '2022-10-26T00:28:54.191Z'
                   lastUpdated: lastUpdated
                   version: 0.0.1
@@ -39951,6 +40148,7 @@ service:
                   canCopy: false
                   displayName: Alert
                   hostedLocation: https://cdn.webflow.io/.../alert-0.0.2.js
+                  integrityHash: integrityHash
                   createdOn: '2022-10-26T00:28:54.191Z'
                   lastUpdated: lastUpdated
                   version: 0.0.2
@@ -40121,6 +40319,7 @@ service:
               displayName: Alert
               hostedLocation: >-
                 https://uploads-ssl.webflow.com/6258612d1ee792848f805dcf%2F64b6c769ff52ba6c3d904a91%2F660d6e15b3d1696f2d2b1447%2Falert-0.0.1.js
+              integrityHash: integrityHash
               createdOn: '2022-10-26T00:28:54.191Z'
               lastUpdated: lastUpdated
               version: 0.0.1
@@ -40393,6 +40592,7 @@ service:
                               },
                             ],
                           },
+                          "parentFolderId": "1as2d3f4g5h6j7k8l9z0x1c2v3b4n5m6",
                           "previewUrl": "https://d1otoma47x30pg.cloudfront.net/42e63e98c9a982ac9b8b742/198110121200.png",
                           "shortName": "paranoid-android",
                           "timeZone": "DeepSpace/Depression",
@@ -40432,6 +40632,7 @@ service:
                               },
                             ],
                           },
+                          "parentFolderId": "1as2d3f4g5h6j7k8l9z0x1c2v3b4n5m6",
                           "previewUrl": "https://d1otoma47x30pg.cloudfront.net/42e63e98c9a982ac9b8b743/198210121200.png",
                           "shortName": "vogon-poetry",
                           "timeZone": "Vogsphere/PoetryHall",
@@ -41432,6 +41633,7 @@ service:
                   previewUrl: >-
                     https://d1otoma47x30pg.cloudfront.net/42e63e98c9a982ac9b8b742/198110121200.png
                   timeZone: DeepSpace/Depression
+                  parentFolderId: 1as2d3f4g5h6j7k8l9z0x1c2v3b4n5m6
                   customDomains:
                     - id: 589a331aa51e760df7ccb89f
                       url: marvin.blog
@@ -41462,6 +41664,7 @@ service:
                   previewUrl: >-
                     https://d1otoma47x30pg.cloudfront.net/42e63e98c9a982ac9b8b743/198210121200.png
                   timeZone: Vogsphere/PoetryHall
+                  parentFolderId: 1as2d3f4g5h6j7k8l9z0x1c2v3b4n5m6
                   customDomains:
                     - id: 589a331aa51e760df7ccb8a0
                       url: vogonpoetry.galaxy
@@ -41700,6 +41903,11 @@ webhooks:
                           "event": "cms_collection",
                           "id": "654c16c7b229e56bcf26872d",
                           "lastUpdated": "2023-11-08T23:16:23Z",
+                          "newValue": "newValue",
+                          "payload": {
+                            "key": "value",
+                          },
+                          "previousValue": "previousValue",
                           "resourceId": "654c16c7b229e56bcf26870c",
                           "resourceName": "foo-bar",
                           "resourceOperation": "CREATED",
@@ -41951,6 +42159,10 @@ service:
                     displayName: John Doe
                   resourceId: 654c16c7b229e56bcf26870c
                   resourceName: foo-bar
+                  newValue: newValue
+                  previousValue: previousValue
+                  payload:
+                    key: value
               pagination:
                 limit: 25
                 offset: 0
@@ -42109,6 +42321,7 @@ service:
                         {
                           "createdOn": "2024-04-03T16:49:15Z",
                           "lastUpdated": "2024-04-03T16:49:15Z",
+                          "pageId": "pageId",
                           "scripts": [
                             {
                               "attributes": {
@@ -42997,6 +43210,7 @@ service:
             body:
               blocks:
                 - siteId: 6258612d1ee792848f805dcf
+                  pageId: pageId
                   type: site
                   scripts:
                     - id: chartjs
@@ -46513,6 +46727,9 @@ webhooks:
                   "response": {
                     "body": {
                       "createdOn": "2022-11-08T23:59:28Z",
+                      "filter": {
+                        "name": "My Form",
+                      },
                       "id": "582266e0cd48de0f0e3c6d8b",
                       "lastTriggered": "2023-02-08T23:59:28Z",
                       "siteId": "562ac0395358780a1f5e6fbd",
@@ -46631,6 +46848,9 @@ webhooks:
                   "response": {
                     "body": {
                       "createdOn": "2022-11-08T23:59:28Z",
+                      "filter": {
+                        "name": "My Form",
+                      },
                       "id": "582266e0cd48de0f0e3c6d8b",
                       "lastTriggered": "2023-02-08T23:59:28Z",
                       "siteId": "562ac0395358780a1f5e6fbd",
@@ -47890,6 +48110,8 @@ service:
               url: https://webhook.site/7f7f7f7f-7f7f-7f7f-7f7f-7f7f7f7f7f7f
               workspaceId: 4f4e46fd476ea8c507000001
               siteId: 562ac0395358780a1f5e6fbd
+              filter:
+                name: My Form
               lastTriggered: '2023-02-08T23:59:28Z'
               createdOn: '2022-11-08T23:59:28Z'
     get:
@@ -47925,6 +48147,8 @@ service:
               url: https://webhook.site/7f7f7f7f-7f7f-7f7f-7f7f-7f7f7f7f7f7f
               workspaceId: 4f4e46fd476ea8c507000001
               siteId: 562ac0395358780a1f5e6fbd
+              filter:
+                name: My Form
               lastTriggered: '2023-02-08T23:59:28Z'
               createdOn: '2022-11-08T23:59:28Z'
     delete:
@@ -47958,9 +48182,15 @@ service:
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BearerAuthScheme",
+      "auth": "OAuth2",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "ApiKey": {
+          "scheme": "bearer",
+          "token": {
+            "name": "access_token",
+          },
+        },
+        "OAuth2": {
           "scheme": "bearer",
         },
       },
@@ -47983,9 +48213,13 @@ environments:
   Default: https://api.webflow.com/v2
 default-environment: Default
 auth-schemes:
-  BearerAuthScheme:
+  OAuth2:
     scheme: bearer
-auth: BearerAuthScheme
+  ApiKey:
+    scheme: bearer
+    token:
+      name: access_token
+auth: OAuth2
 ",
   },
 }

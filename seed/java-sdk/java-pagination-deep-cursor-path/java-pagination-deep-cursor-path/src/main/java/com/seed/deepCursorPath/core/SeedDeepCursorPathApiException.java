@@ -65,9 +65,9 @@ public class SeedDeepCursorPathApiException extends SeedDeepCursorPathException 
         return this.headers;
     }
 
-    @java.lang.Override
+    @Override
     public String toString() {
         return "SeedDeepCursorPathApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode
-                + ", body: " + body + "}";
+                + ", body: " + ObjectMappers.stringify(body) + "}";
     }
 }

@@ -13091,11 +13091,18 @@
                     "account_number": "439291590",
                     "routing_number": "089690059",
                     "bank_name": "Chase",
-                    "account_type": "SAVINGS",
+                    "account_type": "CHECKING",
                     "remote_created_at": "2021-12-06T10:11:26Z",
                     "remote_was_deleted": true,
                     "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
+                    "field_mappings": {
+                      "organization_defined_targets": {
+                        "custom_key": "custom_value"
+                      },
+                      "linked_account_defined_targets": {
+                        "custom_key": "custom_value"
+                      }
+                    },
                     "remote_data": [
                       {
                         "path": "/bank-info",
@@ -13120,11 +13127,18 @@
                       "account_number": "439291590",
                       "routing_number": "089690059",
                       "bank_name": "Chase",
-                      "account_type": "SAVINGS",
+                      "account_type": "CHECKING",
                       "remote_created_at": "2021-12-06T10:11:26Z",
                       "remote_was_deleted": true,
                       "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
+                      "field_mappings": {
+                        "organization_defined_targets": {
+                          "custom_key": "custom_value"
+                        },
+                        "linked_account_defined_targets": {
+                          "custom_key": "custom_value"
+                        }
+                      },
                       "remote_data": [
                         {
                           "path": "/bank-info",
@@ -13307,11 +13321,18 @@
                 "account_number": "439291590",
                 "routing_number": "089690059",
                 "bank_name": "Chase",
-                "account_type": "SAVINGS",
+                "account_type": "CHECKING",
                 "remote_created_at": "2021-12-06T10:11:26Z",
                 "remote_was_deleted": true,
                 "modified_at": "2021-10-16T00:00:00Z",
-                "field_mappings": {},
+                "field_mappings": {
+                  "organization_defined_targets": {
+                    "custom_key": "custom_value"
+                  },
+                  "linked_account_defined_targets": {
+                    "custom_key": "custom_value"
+                  }
+                },
                 "remote_data": [
                   {
                     "path": "/bank-info",
@@ -13330,11 +13351,18 @@
                   "account_number": "439291590",
                   "routing_number": "089690059",
                   "bank_name": "Chase",
-                  "account_type": "SAVINGS",
+                  "account_type": "CHECKING",
                   "remote_created_at": "2021-12-06T10:11:26Z",
                   "remote_was_deleted": true,
                   "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
+                  "field_mappings": {
+                    "organization_defined_targets": {
+                      "custom_key": "custom_value"
+                    },
+                    "linked_account_defined_targets": {
+                      "custom_key": "custom_value"
+                    }
+                  },
                   "remote_data": [
                     {
                       "path": "/bank-info",
@@ -13603,13 +13631,20 @@
                     "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                     "provider_name": "Blue Shield of California",
                     "benefit_plan_type": "string",
-                    "employee_contribution": 23.6,
+                    "employee_contribution": 23.65,
                     "company_contribution": 150,
                     "start_date": "2020-11-15 00:59:25.309761+00:00",
                     "end_date": "2021-10-15 00:23:25.309761+00:00",
                     "remote_was_deleted": true,
                     "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
+                    "field_mappings": {
+                      "organization_defined_targets": {
+                        "custom_key": "custom_value"
+                      },
+                      "linked_account_defined_targets": {
+                        "custom_key": "custom_value"
+                      }
+                    },
                     "remote_data": [
                       {
                         "path": "/benefits",
@@ -13633,13 +13668,20 @@
                       "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                       "provider_name": "Blue Shield of California",
                       "benefit_plan_type": "string",
-                      "employee_contribution": 23.6,
+                      "employee_contribution": 23.65,
                       "company_contribution": 150,
                       "start_date": "2020-11-15 00:59:25.309761+00:00",
                       "end_date": "2021-10-15 00:23:25.309761+00:00",
                       "remote_was_deleted": true,
                       "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
+                      "field_mappings": {
+                        "organization_defined_targets": {
+                          "custom_key": "custom_value"
+                        },
+                        "linked_account_defined_targets": {
+                          "custom_key": "custom_value"
+                        }
+                      },
                       "remote_data": [
                         {
                           "path": "/benefits",
@@ -13797,13 +13839,20 @@
                 "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                 "provider_name": "Blue Shield of California",
                 "benefit_plan_type": "string",
-                "employee_contribution": 23.6,
+                "employee_contribution": 23.65,
                 "company_contribution": 150,
                 "start_date": "2020-11-15 00:59:25.309761+00:00",
                 "end_date": "2021-10-15 00:23:25.309761+00:00",
                 "remote_was_deleted": true,
                 "modified_at": "2021-10-16T00:00:00Z",
-                "field_mappings": {},
+                "field_mappings": {
+                  "organization_defined_targets": {
+                    "custom_key": "custom_value"
+                  },
+                  "linked_account_defined_targets": {
+                    "custom_key": "custom_value"
+                  }
+                },
                 "remote_data": [
                   {
                     "path": "/benefits",
@@ -13821,13 +13870,20 @@
                   "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                   "provider_name": "Blue Shield of California",
                   "benefit_plan_type": "string",
-                  "employee_contribution": 23.6,
+                  "employee_contribution": 23.65,
                   "company_contribution": 150,
                   "start_date": "2020-11-15 00:59:25.309761+00:00",
                   "end_date": "2021-10-15 00:23:25.309761+00:00",
                   "remote_was_deleted": true,
                   "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
+                  "field_mappings": {
+                    "organization_defined_targets": {
+                      "custom_key": "custom_value"
+                    },
+                    "linked_account_defined_targets": {
+                      "custom_key": "custom_value"
+                    }
+                  },
                   "remote_data": [
                     {
                       "path": "/benefits",
@@ -14076,7 +14132,14 @@
                     ],
                     "remote_was_deleted": true,
                     "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
+                    "field_mappings": {
+                      "organization_defined_targets": {
+                        "custom_key": "custom_value"
+                      },
+                      "linked_account_defined_targets": {
+                        "custom_key": "custom_value"
+                      }
+                    },
                     "remote_data": [
                       {
                         "path": "/companies",
@@ -14106,7 +14169,14 @@
                       ],
                       "remote_was_deleted": true,
                       "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
+                      "field_mappings": {
+                        "organization_defined_targets": {
+                          "custom_key": "custom_value"
+                        },
+                        "linked_account_defined_targets": {
+                          "custom_key": "custom_value"
+                        }
+                      },
                       "remote_data": [
                         {
                           "path": "/companies",
@@ -14257,7 +14327,14 @@
                 ],
                 "remote_was_deleted": true,
                 "modified_at": "2021-10-16T00:00:00Z",
-                "field_mappings": {},
+                "field_mappings": {
+                  "organization_defined_targets": {
+                    "custom_key": "custom_value"
+                  },
+                  "linked_account_defined_targets": {
+                    "custom_key": "custom_value"
+                  }
+                },
                 "remote_data": [
                   {
                     "path": "/companies",
@@ -14281,7 +14358,14 @@
                   ],
                   "remote_was_deleted": true,
                   "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
+                  "field_mappings": {
+                    "organization_defined_targets": {
+                      "custom_key": "custom_value"
+                    },
+                    "linked_account_defined_targets": {
+                      "custom_key": "custom_value"
+                    }
+                  },
                   "remote_data": [
                     {
                       "path": "/companies",
@@ -14722,8 +14806,8 @@
                     "remote_id": "19202938",
                     "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                     "payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                    "gross_pay": 1340,
-                    "net_pay": 866,
+                    "gross_pay": 1342.67,
+                    "net_pay": 865.78,
                     "start_date": "2020-11-08T00:00:00Z",
                     "end_date": "2020-11-09T00:00:00Z",
                     "check_date": "2020-11-10T00:00:00Z",
@@ -14757,7 +14841,14 @@
                     ],
                     "remote_was_deleted": true,
                     "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
+                    "field_mappings": {
+                      "organization_defined_targets": {
+                        "custom_key": "custom_value"
+                      },
+                      "linked_account_defined_targets": {
+                        "custom_key": "custom_value"
+                      }
+                    },
                     "remote_data": [
                       {
                         "path": "/employee-payroll",
@@ -14780,8 +14871,8 @@
                       "remote_id": "19202938",
                       "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                       "payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                      "gross_pay": 1340,
-                      "net_pay": 866,
+                      "gross_pay": 1342.67,
+                      "net_pay": 865.78,
                       "start_date": "2020-11-08T00:00:00Z",
                       "end_date": "2020-11-09T00:00:00Z",
                       "check_date": "2020-11-10T00:00:00Z",
@@ -14815,7 +14906,14 @@
                       ],
                       "remote_was_deleted": true,
                       "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
+                      "field_mappings": {
+                        "organization_defined_targets": {
+                          "custom_key": "custom_value"
+                        },
+                        "linked_account_defined_targets": {
+                          "custom_key": "custom_value"
+                        }
+                      },
                       "remote_data": [
                         {
                           "path": "/employee-payroll",
@@ -14972,8 +15070,8 @@
                 "remote_id": "19202938",
                 "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                 "payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                "gross_pay": 1340,
-                "net_pay": 866,
+                "gross_pay": 1342.67,
+                "net_pay": 865.78,
                 "start_date": "2020-11-08T00:00:00Z",
                 "end_date": "2020-11-09T00:00:00Z",
                 "check_date": "2020-11-10T00:00:00Z",
@@ -15007,7 +15105,14 @@
                 ],
                 "remote_was_deleted": true,
                 "modified_at": "2021-10-16T00:00:00Z",
-                "field_mappings": {},
+                "field_mappings": {
+                  "organization_defined_targets": {
+                    "custom_key": "custom_value"
+                  },
+                  "linked_account_defined_targets": {
+                    "custom_key": "custom_value"
+                  }
+                },
                 "remote_data": [
                   {
                     "path": "/employee-payroll",
@@ -15024,8 +15129,8 @@
                   "remote_id": "19202938",
                   "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                   "payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                  "gross_pay": 1340,
-                  "net_pay": 866,
+                  "gross_pay": 1342.67,
+                  "net_pay": 865.78,
                   "start_date": "2020-11-08T00:00:00Z",
                   "end_date": "2020-11-09T00:00:00Z",
                   "check_date": "2020-11-10T00:00:00Z",
@@ -15059,7 +15164,14 @@
                   ],
                   "remote_was_deleted": true,
                   "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
+                  "field_mappings": {
+                    "organization_defined_targets": {
+                      "custom_key": "custom_value"
+                    },
+                    "linked_account_defined_targets": {
+                      "custom_key": "custom_value"
+                    }
+                  },
                   "remote_data": [
                     {
                       "path": "/employee-payroll",
@@ -15583,19 +15695,26 @@
                     "pay_group": "ad1264e2-39be-4787-b749-f1aade9e3405",
                     "ssn": "1234567890",
                     "gender": "MALE",
-                    "ethnicity": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                    "ethnicity": "WHITE",
                     "marital_status": "SINGLE",
                     "date_of_birth": "1990-11-10T00:00:00Z",
                     "hire_date": "2020-10-10T00:00:00Z",
                     "start_date": "2020-10-11T00:00:00Z",
                     "remote_created_at": "2020-10-11T00:00:00Z",
-                    "employment_status": "ACTIVE",
+                    "employment_status": "INACTIVE",
                     "termination_date": "2021-10-12T00:00:00Z",
                     "avatar": "http://alturl.com/h2h8m",
                     "custom_fields": {},
                     "remote_was_deleted": true,
                     "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
+                    "field_mappings": {
+                      "organization_defined_targets": {
+                        "custom_key": "custom_value"
+                      },
+                      "linked_account_defined_targets": {
+                        "custom_key": "custom_value"
+                      }
+                    },
                     "remote_data": [
                       {
                         "path": "/people",
@@ -15638,19 +15757,26 @@
                       "pay_group": "ad1264e2-39be-4787-b749-f1aade9e3405",
                       "ssn": "1234567890",
                       "gender": "MALE",
-                      "ethnicity": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                      "ethnicity": "WHITE",
                       "marital_status": "SINGLE",
                       "date_of_birth": "1990-11-10T00:00:00Z",
                       "hire_date": "2020-10-10T00:00:00Z",
                       "start_date": "2020-10-11T00:00:00Z",
                       "remote_created_at": "2020-10-11T00:00:00Z",
-                      "employment_status": "ACTIVE",
+                      "employment_status": "INACTIVE",
                       "termination_date": "2021-10-12T00:00:00Z",
                       "avatar": "http://alturl.com/h2h8m",
                       "custom_fields": {},
                       "remote_was_deleted": true,
                       "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
+                      "field_mappings": {
+                        "organization_defined_targets": {
+                          "custom_key": "custom_value"
+                        },
+                        "linked_account_defined_targets": {
+                          "custom_key": "custom_value"
+                        }
+                      },
                       "remote_data": [
                         {
                           "path": "/people",
@@ -15879,19 +16005,26 @@
                   "pay_group": "ad1264e2-39be-4787-b749-f1aade9e3405",
                   "ssn": "1234567890",
                   "gender": "MALE",
-                  "ethnicity": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                  "ethnicity": "WHITE",
                   "marital_status": "SINGLE",
                   "date_of_birth": "1990-11-10T00:00:00Z",
                   "hire_date": "2020-10-10T00:00:00Z",
                   "start_date": "2020-10-11T00:00:00Z",
                   "remote_created_at": "2020-10-11T00:00:00Z",
-                  "employment_status": "ACTIVE",
+                  "employment_status": "INACTIVE",
                   "termination_date": "2021-10-12T00:00:00Z",
                   "avatar": "http://alturl.com/h2h8m",
                   "custom_fields": {},
                   "remote_was_deleted": true,
                   "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
+                  "field_mappings": {
+                    "organization_defined_targets": {
+                      "custom_key": "custom_value"
+                    },
+                    "linked_account_defined_targets": {
+                      "custom_key": "custom_value"
+                    }
+                  },
                   "remote_data": [
                     {
                       "path": "/people",
@@ -15961,19 +16094,26 @@
                     "pay_group": "ad1264e2-39be-4787-b749-f1aade9e3405",
                     "ssn": "1234567890",
                     "gender": "MALE",
-                    "ethnicity": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                    "ethnicity": "WHITE",
                     "marital_status": "SINGLE",
                     "date_of_birth": "1990-11-10T00:00:00Z",
                     "hire_date": "2020-10-10T00:00:00Z",
                     "start_date": "2020-10-11T00:00:00Z",
                     "remote_created_at": "2020-10-11T00:00:00Z",
-                    "employment_status": "ACTIVE",
+                    "employment_status": "INACTIVE",
                     "termination_date": "2021-10-12T00:00:00Z",
                     "avatar": "http://alturl.com/h2h8m",
                     "custom_fields": {},
                     "remote_was_deleted": true,
                     "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
+                    "field_mappings": {
+                      "organization_defined_targets": {
+                        "custom_key": "custom_value"
+                      },
+                      "linked_account_defined_targets": {
+                        "custom_key": "custom_value"
+                      }
+                    },
                     "remote_data": [
                       {
                         "path": "/people",
@@ -16217,19 +16357,26 @@
                 "pay_group": "ad1264e2-39be-4787-b749-f1aade9e3405",
                 "ssn": "1234567890",
                 "gender": "MALE",
-                "ethnicity": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                "ethnicity": "WHITE",
                 "marital_status": "SINGLE",
                 "date_of_birth": "1990-11-10T00:00:00Z",
                 "hire_date": "2020-10-10T00:00:00Z",
                 "start_date": "2020-10-11T00:00:00Z",
                 "remote_created_at": "2020-10-11T00:00:00Z",
-                "employment_status": "ACTIVE",
+                "employment_status": "INACTIVE",
                 "termination_date": "2021-10-12T00:00:00Z",
                 "avatar": "http://alturl.com/h2h8m",
                 "custom_fields": {},
                 "remote_was_deleted": true,
                 "modified_at": "2021-10-16T00:00:00Z",
-                "field_mappings": {},
+                "field_mappings": {
+                  "organization_defined_targets": {
+                    "custom_key": "custom_value"
+                  },
+                  "linked_account_defined_targets": {
+                    "custom_key": "custom_value"
+                  }
+                },
                 "remote_data": [
                   {
                     "path": "/people",
@@ -16266,19 +16413,26 @@
                   "pay_group": "ad1264e2-39be-4787-b749-f1aade9e3405",
                   "ssn": "1234567890",
                   "gender": "MALE",
-                  "ethnicity": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                  "ethnicity": "WHITE",
                   "marital_status": "SINGLE",
                   "date_of_birth": "1990-11-10T00:00:00Z",
                   "hire_date": "2020-10-10T00:00:00Z",
                   "start_date": "2020-10-11T00:00:00Z",
                   "remote_created_at": "2020-10-11T00:00:00Z",
-                  "employment_status": "ACTIVE",
+                  "employment_status": "INACTIVE",
                   "termination_date": "2021-10-12T00:00:00Z",
                   "avatar": "http://alturl.com/h2h8m",
                   "custom_fields": {},
                   "remote_was_deleted": true,
                   "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
+                  "field_mappings": {
+                    "organization_defined_targets": {
+                      "custom_key": "custom_value"
+                    },
+                    "linked_account_defined_targets": {
+                      "custom_key": "custom_value"
+                    }
+                  },
                   "remote_data": [
                     {
                       "path": "/people",
@@ -16902,16 +17056,23 @@
                     "employee": "0958cbc6-6040-430a-848e-aafacbadf4ae",
                     "job_title": "Executive Assistant to Tom Wambsgans",
                     "pay_rate": 50000,
-                    "pay_period": "HOUR",
-                    "pay_frequency": "WEEKLY",
-                    "pay_currency": "XUA",
+                    "pay_period": "YEAR",
+                    "pay_frequency": "BIWEEKLY",
+                    "pay_currency": "USD",
                     "pay_group": "d4e4837f-9900-484c-ac40-528365bb08ef",
                     "flsa_status": "EXEMPT",
                     "effective_date": "2023-10-06T18:42:34Z",
                     "employment_type": "FULL_TIME",
                     "remote_was_deleted": true,
                     "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
+                    "field_mappings": {
+                      "organization_defined_targets": {
+                        "custom_key": "custom_value"
+                      },
+                      "linked_account_defined_targets": {
+                        "custom_key": "custom_value"
+                      }
+                    },
                     "remote_data": [
                       {
                         "path": "/jobs",
@@ -16935,16 +17096,23 @@
                       "employee": "0958cbc6-6040-430a-848e-aafacbadf4ae",
                       "job_title": "Executive Assistant to Tom Wambsgans",
                       "pay_rate": 50000,
-                      "pay_period": "HOUR",
-                      "pay_frequency": "WEEKLY",
-                      "pay_currency": "XUA",
+                      "pay_period": "YEAR",
+                      "pay_frequency": "BIWEEKLY",
+                      "pay_currency": "USD",
                       "pay_group": "d4e4837f-9900-484c-ac40-528365bb08ef",
                       "flsa_status": "EXEMPT",
                       "effective_date": "2023-10-06T18:42:34Z",
                       "employment_type": "FULL_TIME",
                       "remote_was_deleted": true,
                       "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
+                      "field_mappings": {
+                        "organization_defined_targets": {
+                          "custom_key": "custom_value"
+                        },
+                        "linked_account_defined_targets": {
+                          "custom_key": "custom_value"
+                        }
+                      },
                       "remote_data": [
                         {
                           "path": "/jobs",
@@ -17126,16 +17294,23 @@
                 "employee": "0958cbc6-6040-430a-848e-aafacbadf4ae",
                 "job_title": "Executive Assistant to Tom Wambsgans",
                 "pay_rate": 50000,
-                "pay_period": "HOUR",
-                "pay_frequency": "WEEKLY",
-                "pay_currency": "XUA",
+                "pay_period": "YEAR",
+                "pay_frequency": "BIWEEKLY",
+                "pay_currency": "USD",
                 "pay_group": "d4e4837f-9900-484c-ac40-528365bb08ef",
                 "flsa_status": "EXEMPT",
                 "effective_date": "2023-10-06T18:42:34Z",
                 "employment_type": "FULL_TIME",
                 "remote_was_deleted": true,
                 "modified_at": "2021-10-16T00:00:00Z",
-                "field_mappings": {},
+                "field_mappings": {
+                  "organization_defined_targets": {
+                    "custom_key": "custom_value"
+                  },
+                  "linked_account_defined_targets": {
+                    "custom_key": "custom_value"
+                  }
+                },
                 "remote_data": [
                   {
                     "path": "/jobs",
@@ -17153,16 +17328,23 @@
                   "employee": "0958cbc6-6040-430a-848e-aafacbadf4ae",
                   "job_title": "Executive Assistant to Tom Wambsgans",
                   "pay_rate": 50000,
-                  "pay_period": "HOUR",
-                  "pay_frequency": "WEEKLY",
-                  "pay_currency": "XUA",
+                  "pay_period": "YEAR",
+                  "pay_frequency": "BIWEEKLY",
+                  "pay_currency": "USD",
                   "pay_group": "d4e4837f-9900-484c-ac40-528365bb08ef",
                   "flsa_status": "EXEMPT",
                   "effective_date": "2023-10-06T18:42:34Z",
                   "employment_type": "FULL_TIME",
                   "remote_was_deleted": true,
                   "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
+                  "field_mappings": {
+                    "organization_defined_targets": {
+                      "custom_key": "custom_value"
+                    },
+                    "linked_account_defined_targets": {
+                      "custom_key": "custom_value"
+                    }
+                  },
                   "remote_data": [
                     {
                       "path": "/jobs",
@@ -17616,10 +17798,17 @@
                     "remote_id": "800293",
                     "parent_group": "2ef51b11-2c4e-4b02-8d1d-50592d9e96ef",
                     "name": "COST_CENTER_US",
-                    "type": "TEAM",
+                    "type": "COST_CENTER",
                     "remote_was_deleted": true,
                     "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
+                    "field_mappings": {
+                      "organization_defined_targets": {
+                        "custom_key": "custom_value"
+                      },
+                      "linked_account_defined_targets": {
+                        "custom_key": "custom_value"
+                      }
+                    },
                     "remote_data": [
                       {
                         "path": "/group",
@@ -17642,10 +17831,17 @@
                       "remote_id": "800293",
                       "parent_group": "2ef51b11-2c4e-4b02-8d1d-50592d9e96ef",
                       "name": "COST_CENTER_US",
-                      "type": "TEAM",
+                      "type": "COST_CENTER",
                       "remote_was_deleted": true,
                       "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
+                      "field_mappings": {
+                        "organization_defined_targets": {
+                          "custom_key": "custom_value"
+                        },
+                        "linked_account_defined_targets": {
+                          "custom_key": "custom_value"
+                        }
+                      },
                       "remote_data": [
                         {
                           "path": "/group",
@@ -17814,10 +18010,17 @@
                 "remote_id": "800293",
                 "parent_group": "2ef51b11-2c4e-4b02-8d1d-50592d9e96ef",
                 "name": "COST_CENTER_US",
-                "type": "TEAM",
+                "type": "COST_CENTER",
                 "remote_was_deleted": true,
                 "modified_at": "2021-10-16T00:00:00Z",
-                "field_mappings": {},
+                "field_mappings": {
+                  "organization_defined_targets": {
+                    "custom_key": "custom_value"
+                  },
+                  "linked_account_defined_targets": {
+                    "custom_key": "custom_value"
+                  }
+                },
                 "remote_data": [
                   {
                     "path": "/group",
@@ -17834,10 +18037,17 @@
                   "remote_id": "800293",
                   "parent_group": "2ef51b11-2c4e-4b02-8d1d-50592d9e96ef",
                   "name": "COST_CENTER_US",
-                  "type": "TEAM",
+                  "type": "COST_CENTER",
                   "remote_was_deleted": true,
                   "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
+                  "field_mappings": {
+                    "organization_defined_targets": {
+                      "custom_key": "custom_value"
+                    },
+                    "linked_account_defined_targets": {
+                      "custom_key": "custom_value"
+                    }
+                  },
                   "remote_data": [
                     {
                       "path": "/group",
@@ -18112,7 +18322,7 @@
                     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "status": "ONGOING",
                     "error_description": "string",
-                    "end_user": {},
+                    "end_user": "b82302de-852e-4e60-b050-edf9da3b7c02",
                     "first_incident_time": "2022-12-05T16:19:15.161Z",
                     "last_incident_time": "2022-12-05T16:19:15.161Z",
                     "is_muted": true,
@@ -18133,7 +18343,7 @@
                       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "status": "ONGOING",
                       "error_description": "string",
-                      "end_user": {},
+                      "end_user": "b82302de-852e-4e60-b050-edf9da3b7c02",
                       "first_incident_time": "2022-12-05T16:19:15.161Z",
                       "last_incident_time": "2022-12-05T16:19:15.161Z",
                       "is_muted": true,
@@ -18248,7 +18458,7 @@
                 "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "status": "ONGOING",
                 "error_description": "string",
-                "end_user": {},
+                "end_user": "b82302de-852e-4e60-b050-edf9da3b7c02",
                 "first_incident_time": "2022-12-05T16:19:15.161Z",
                 "last_incident_time": "2022-12-05T16:19:15.161Z",
                 "is_muted": true,
@@ -18263,7 +18473,7 @@
                   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "status": "ONGOING",
                   "error_description": "string",
-                  "end_user": {},
+                  "end_user": "b82302de-852e-4e60-b050-edf9da3b7c02",
                   "first_incident_time": "2022-12-05T16:19:15.161Z",
                   "last_incident_time": "2022-12-05T16:19:15.161Z",
                   "is_muted": true,
@@ -19199,11 +19409,18 @@
                     "city": "New York ",
                     "state": "NY",
                     "zip_code": "10027",
-                    "country": "AF",
-                    "location_type": "HOME",
+                    "country": "US",
+                    "location_type": "WORK",
                     "remote_was_deleted": true,
                     "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
+                    "field_mappings": {
+                      "organization_defined_targets": {
+                        "custom_key": "custom_value"
+                      },
+                      "linked_account_defined_targets": {
+                        "custom_key": "custom_value"
+                      }
+                    },
                     "remote_data": [
                       {
                         "path": "/locations",
@@ -19231,11 +19448,18 @@
                       "city": "New York ",
                       "state": "NY",
                       "zip_code": "10027",
-                      "country": "AF",
-                      "location_type": "HOME",
+                      "country": "US",
+                      "location_type": "WORK",
                       "remote_was_deleted": true,
                       "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
+                      "field_mappings": {
+                        "organization_defined_targets": {
+                          "custom_key": "custom_value"
+                        },
+                        "linked_account_defined_targets": {
+                          "custom_key": "custom_value"
+                        }
+                      },
                       "remote_data": [
                         {
                           "path": "/locations",
@@ -19409,11 +19633,18 @@
                 "city": "New York ",
                 "state": "NY",
                 "zip_code": "10027",
-                "country": "AF",
-                "location_type": "HOME",
+                "country": "US",
+                "location_type": "WORK",
                 "remote_was_deleted": true,
                 "modified_at": "2021-10-16T00:00:00Z",
-                "field_mappings": {},
+                "field_mappings": {
+                  "organization_defined_targets": {
+                    "custom_key": "custom_value"
+                  },
+                  "linked_account_defined_targets": {
+                    "custom_key": "custom_value"
+                  }
+                },
                 "remote_data": [
                   {
                     "path": "/locations",
@@ -19435,11 +19666,18 @@
                   "city": "New York ",
                   "state": "NY",
                   "zip_code": "10027",
-                  "country": "AF",
-                  "location_type": "HOME",
+                  "country": "US",
+                  "location_type": "WORK",
                   "remote_was_deleted": true,
                   "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
+                  "field_mappings": {
+                    "organization_defined_targets": {
+                      "custom_key": "custom_value"
+                    },
+                    "linked_account_defined_targets": {
+                      "custom_key": "custom_value"
+                    }
+                  },
                   "remote_data": [
                     {
                       "path": "/locations",
@@ -19743,13 +19981,13 @@
                 "X-Account-Token": "X-Account-Token"
               },
               "requestBody": {
-                "method": "GET",
+                "method": "POST",
                 "path": "/scooters"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "method": "GET",
+                  "method": "POST",
                   "path": "/scooters"
                 }
               },
@@ -19759,9 +19997,14 @@
                 "path": "/scooters",
                 "status": 200,
                 "response": null,
-                "response_headers": {},
+                "response_headers": {
+                  "X-Page-Token": "value"
+                },
                 "response_type": "JSON",
-                "headers": {}
+                "headers": {
+                  "EXTRA-HEADER": "value",
+                  "Authorization": "<redacted>"
+                }
               },
               "responseBodyV3": {
                 "type": "json",
@@ -19770,9 +20013,14 @@
                   "path": "/scooters",
                   "status": 200,
                   "response": null,
-                  "response_headers": {},
+                  "response_headers": {
+                    "X-Page-Token": "value"
+                  },
                   "response_type": "JSON",
-                  "headers": {}
+                  "headers": {
+                    "EXTRA-HEADER": "value",
+                    "Authorization": "<redacted>"
+                  }
                 }
               }
             }
@@ -20007,7 +20255,14 @@
                     "pay_group_name": "contractor",
                     "remote_was_deleted": true,
                     "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
+                    "field_mappings": {
+                      "organization_defined_targets": {
+                        "custom_key": "custom_value"
+                      },
+                      "linked_account_defined_targets": {
+                        "custom_key": "custom_value"
+                      }
+                    },
                     "remote_data": [
                       {
                         "path": "/pay-group",
@@ -20031,7 +20286,14 @@
                       "pay_group_name": "contractor",
                       "remote_was_deleted": true,
                       "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
+                      "field_mappings": {
+                        "organization_defined_targets": {
+                          "custom_key": "custom_value"
+                        },
+                        "linked_account_defined_targets": {
+                          "custom_key": "custom_value"
+                        }
+                      },
                       "remote_data": [
                         {
                           "path": "/pay-group",
@@ -20176,7 +20438,14 @@
                 "pay_group_name": "contractor",
                 "remote_was_deleted": true,
                 "modified_at": "2021-10-16T00:00:00Z",
-                "field_mappings": {},
+                "field_mappings": {
+                  "organization_defined_targets": {
+                    "custom_key": "custom_value"
+                  },
+                  "linked_account_defined_targets": {
+                    "custom_key": "custom_value"
+                  }
+                },
                 "remote_data": [
                   {
                     "path": "/pay-group",
@@ -20194,7 +20463,14 @@
                   "pay_group_name": "contractor",
                   "remote_was_deleted": true,
                   "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
+                  "field_mappings": {
+                    "organization_defined_targets": {
+                      "custom_key": "custom_value"
+                    },
+                    "linked_account_defined_targets": {
+                      "custom_key": "custom_value"
+                    }
+                  },
                   "remote_data": [
                     {
                       "path": "/pay-group",
@@ -20528,7 +20804,14 @@
                     "check_date": "2020-11-15T00:00:00Z",
                     "remote_was_deleted": true,
                     "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
+                    "field_mappings": {
+                      "organization_defined_targets": {
+                        "custom_key": "custom_value"
+                      },
+                      "linked_account_defined_targets": {
+                        "custom_key": "custom_value"
+                      }
+                    },
                     "remote_data": [
                       {
                         "path": "/payroll",
@@ -20556,7 +20839,14 @@
                       "check_date": "2020-11-15T00:00:00Z",
                       "remote_was_deleted": true,
                       "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
+                      "field_mappings": {
+                        "organization_defined_targets": {
+                          "custom_key": "custom_value"
+                        },
+                        "linked_account_defined_targets": {
+                          "custom_key": "custom_value"
+                        }
+                      },
                       "remote_data": [
                         {
                           "path": "/payroll",
@@ -20730,7 +21020,14 @@
                 "check_date": "2020-11-15T00:00:00Z",
                 "remote_was_deleted": true,
                 "modified_at": "2021-10-16T00:00:00Z",
-                "field_mappings": {},
+                "field_mappings": {
+                  "organization_defined_targets": {
+                    "custom_key": "custom_value"
+                  },
+                  "linked_account_defined_targets": {
+                    "custom_key": "custom_value"
+                  }
+                },
                 "remote_data": [
                   {
                     "path": "/payroll",
@@ -20752,7 +21049,14 @@
                   "check_date": "2020-11-15T00:00:00Z",
                   "remote_was_deleted": true,
                   "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
+                  "field_mappings": {
+                    "organization_defined_targets": {
+                      "custom_key": "custom_value"
+                    },
+                    "linked_account_defined_targets": {
+                      "custom_key": "custom_value"
+                    }
+                  },
                   "remote_data": [
                     {
                       "path": "/payroll",
@@ -22016,7 +22320,14 @@
                     "parent_team": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
                     "remote_was_deleted": true,
                     "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
+                    "field_mappings": {
+                      "organization_defined_targets": {
+                        "custom_key": "custom_value"
+                      },
+                      "linked_account_defined_targets": {
+                        "custom_key": "custom_value"
+                      }
+                    },
                     "remote_data": [
                       {
                         "path": "/teams",
@@ -22041,7 +22352,14 @@
                       "parent_team": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
                       "remote_was_deleted": true,
                       "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
+                      "field_mappings": {
+                        "organization_defined_targets": {
+                          "custom_key": "custom_value"
+                        },
+                        "linked_account_defined_targets": {
+                          "custom_key": "custom_value"
+                        }
+                      },
                       "remote_data": [
                         {
                           "path": "/teams",
@@ -22200,7 +22518,14 @@
                 "parent_team": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
                 "remote_was_deleted": true,
                 "modified_at": "2021-10-16T00:00:00Z",
-                "field_mappings": {},
+                "field_mappings": {
+                  "organization_defined_targets": {
+                    "custom_key": "custom_value"
+                  },
+                  "linked_account_defined_targets": {
+                    "custom_key": "custom_value"
+                  }
+                },
                 "remote_data": [
                   {
                     "path": "/teams",
@@ -22219,7 +22544,14 @@
                   "parent_team": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
                   "remote_was_deleted": true,
                   "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
+                  "field_mappings": {
+                    "organization_defined_targets": {
+                      "custom_key": "custom_value"
+                    },
+                    "linked_account_defined_targets": {
+                      "custom_key": "custom_value"
+                    }
+                  },
                   "remote_data": [
                     {
                       "path": "/teams",
@@ -22547,16 +22879,23 @@
                     "remote_id": "19202938",
                     "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                     "approver": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                    "status": "REQUESTED",
+                    "status": "APPROVED",
                     "employee_note": "Moving into the new apartment Kendall Roy gave me!",
-                    "units": "HOURS",
+                    "units": "DAYS",
                     "amount": 3,
                     "request_type": "VACATION",
                     "start_time": "2020-11-10T00:00:00Z",
                     "end_time": "2020-11-17T00:00:00Z",
                     "remote_was_deleted": true,
                     "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
+                    "field_mappings": {
+                      "organization_defined_targets": {
+                        "custom_key": "custom_value"
+                      },
+                      "linked_account_defined_targets": {
+                        "custom_key": "custom_value"
+                      }
+                    },
                     "remote_data": [
                       {
                         "path": "/leave",
@@ -22579,16 +22918,23 @@
                       "remote_id": "19202938",
                       "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                       "approver": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                      "status": "REQUESTED",
+                      "status": "APPROVED",
                       "employee_note": "Moving into the new apartment Kendall Roy gave me!",
-                      "units": "HOURS",
+                      "units": "DAYS",
                       "amount": 3,
                       "request_type": "VACATION",
                       "start_time": "2020-11-10T00:00:00Z",
                       "end_time": "2020-11-17T00:00:00Z",
                       "remote_was_deleted": true,
                       "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
+                      "field_mappings": {
+                        "organization_defined_targets": {
+                          "custom_key": "custom_value"
+                        },
+                        "linked_account_defined_targets": {
+                          "custom_key": "custom_value"
+                        }
+                      },
                       "remote_data": [
                         {
                           "path": "/leave",
@@ -22797,16 +23143,23 @@
                   "remote_id": "19202938",
                   "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                   "approver": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                  "status": "REQUESTED",
+                  "status": "APPROVED",
                   "employee_note": "Moving into the new apartment Kendall Roy gave me!",
-                  "units": "HOURS",
+                  "units": "DAYS",
                   "amount": 3,
                   "request_type": "VACATION",
                   "start_time": "2020-11-10T00:00:00Z",
                   "end_time": "2020-11-17T00:00:00Z",
                   "remote_was_deleted": true,
                   "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
+                  "field_mappings": {
+                    "organization_defined_targets": {
+                      "custom_key": "custom_value"
+                    },
+                    "linked_account_defined_targets": {
+                      "custom_key": "custom_value"
+                    }
+                  },
                   "remote_data": [
                     {
                       "path": "/leave",
@@ -22856,16 +23209,23 @@
                     "remote_id": "19202938",
                     "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                     "approver": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                    "status": "REQUESTED",
+                    "status": "APPROVED",
                     "employee_note": "Moving into the new apartment Kendall Roy gave me!",
-                    "units": "HOURS",
+                    "units": "DAYS",
                     "amount": 3,
                     "request_type": "VACATION",
                     "start_time": "2020-11-10T00:00:00Z",
                     "end_time": "2020-11-17T00:00:00Z",
                     "remote_was_deleted": true,
                     "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
+                    "field_mappings": {
+                      "organization_defined_targets": {
+                        "custom_key": "custom_value"
+                      },
+                      "linked_account_defined_targets": {
+                        "custom_key": "custom_value"
+                      }
+                    },
                     "remote_data": [
                       {
                         "path": "/leave",
@@ -23076,16 +23436,23 @@
                 "remote_id": "19202938",
                 "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                 "approver": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                "status": "REQUESTED",
+                "status": "APPROVED",
                 "employee_note": "Moving into the new apartment Kendall Roy gave me!",
-                "units": "HOURS",
+                "units": "DAYS",
                 "amount": 3,
                 "request_type": "VACATION",
                 "start_time": "2020-11-10T00:00:00Z",
                 "end_time": "2020-11-17T00:00:00Z",
                 "remote_was_deleted": true,
                 "modified_at": "2021-10-16T00:00:00Z",
-                "field_mappings": {},
+                "field_mappings": {
+                  "organization_defined_targets": {
+                    "custom_key": "custom_value"
+                  },
+                  "linked_account_defined_targets": {
+                    "custom_key": "custom_value"
+                  }
+                },
                 "remote_data": [
                   {
                     "path": "/leave",
@@ -23102,16 +23469,23 @@
                   "remote_id": "19202938",
                   "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                   "approver": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                  "status": "REQUESTED",
+                  "status": "APPROVED",
                   "employee_note": "Moving into the new apartment Kendall Roy gave me!",
-                  "units": "HOURS",
+                  "units": "DAYS",
                   "amount": 3,
                   "request_type": "VACATION",
                   "start_time": "2020-11-10T00:00:00Z",
                   "end_time": "2020-11-17T00:00:00Z",
                   "remote_was_deleted": true,
                   "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
+                  "field_mappings": {
+                    "organization_defined_targets": {
+                      "custom_key": "custom_value"
+                    },
+                    "linked_account_defined_targets": {
+                      "custom_key": "custom_value"
+                    }
+                  },
                   "remote_data": [
                     {
                       "path": "/leave",
@@ -23532,7 +23906,14 @@
                     "policy_type": "VACATION",
                     "remote_was_deleted": true,
                     "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
+                    "field_mappings": {
+                      "organization_defined_targets": {
+                        "custom_key": "custom_value"
+                      },
+                      "linked_account_defined_targets": {
+                        "custom_key": "custom_value"
+                      }
+                    },
                     "remote_data": [
                       {
                         "path": "/leave",
@@ -23559,7 +23940,14 @@
                       "policy_type": "VACATION",
                       "remote_was_deleted": true,
                       "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
+                      "field_mappings": {
+                        "organization_defined_targets": {
+                          "custom_key": "custom_value"
+                        },
+                        "linked_account_defined_targets": {
+                          "custom_key": "custom_value"
+                        }
+                      },
                       "remote_data": [
                         {
                           "path": "/leave",
@@ -23744,7 +24132,14 @@
                 "policy_type": "VACATION",
                 "remote_was_deleted": true,
                 "modified_at": "2021-10-16T00:00:00Z",
-                "field_mappings": {},
+                "field_mappings": {
+                  "organization_defined_targets": {
+                    "custom_key": "custom_value"
+                  },
+                  "linked_account_defined_targets": {
+                    "custom_key": "custom_value"
+                  }
+                },
                 "remote_data": [
                   {
                     "path": "/leave",
@@ -23765,7 +24160,14 @@
                   "policy_type": "VACATION",
                   "remote_was_deleted": true,
                   "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
+                  "field_mappings": {
+                    "organization_defined_targets": {
+                      "custom_key": "custom_value"
+                    },
+                    "linked_account_defined_targets": {
+                      "custom_key": "custom_value"
+                    }
+                  },
                   "remote_data": [
                     {
                       "path": "/leave",

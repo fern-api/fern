@@ -7,5 +7,13 @@ async fn main() {
         ..Default::default()
     };
     let client = FileUploadClient::new(config).expect("Failed to build client");
-    client.service.simple(None).await;
+    client
+        .service
+        .just_file(
+            &JustFileRequest {
+                file: std::fs::read("path/to/file").expect("Failed to read file"),
+            },
+            None,
+        )
+        .await;
 }

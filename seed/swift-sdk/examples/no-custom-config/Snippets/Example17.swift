@@ -7,10 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.service.getMetadata(
-        shallow: false,
-        tag: 
-    )
+    _ = try await client.service.getMetadata(shallow: false)
 }
 
 try await main()

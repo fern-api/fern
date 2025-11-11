@@ -34,7 +34,12 @@ export class InlineUsers {
     public async listWithCursorPagination(
         request: SeedPagination.inlineUsers.ListUsersCursorPaginationRequest = {},
         requestOptions?: InlineUsers.RequestOptions,
-    ): Promise<core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item>> {
+    ): Promise<
+        core.Page<
+            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
+            SeedPagination.inlineUsers.ListUsersPaginationResponse
+        >
+    > {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.inlineUsers.ListUsersCursorPaginationRequest,
@@ -70,6 +75,8 @@ export class InlineUsers {
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
                 });
                 if (_response.ok) {
                     return {
@@ -102,9 +109,9 @@ export class InlineUsers {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<
-            SeedPagination.inlineUsers.ListUsersPaginationResponse,
-            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item
+        return new core.Page<
+            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
+            SeedPagination.inlineUsers.ListUsersPaginationResponse
         >({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
@@ -133,7 +140,12 @@ export class InlineUsers {
     public async listWithMixedTypeCursorPagination(
         request: SeedPagination.inlineUsers.ListUsersMixedTypeCursorPaginationRequest = {},
         requestOptions?: InlineUsers.RequestOptions,
-    ): Promise<core.Page<SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse.Data.Users.Item>> {
+    ): Promise<
+        core.Page<
+            SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse.Data.Users.Item,
+            SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse
+        >
+    > {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.inlineUsers.ListUsersMixedTypeCursorPaginationRequest,
@@ -160,6 +172,8 @@ export class InlineUsers {
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
                 });
                 if (_response.ok) {
                     return {
@@ -194,9 +208,9 @@ export class InlineUsers {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<
-            SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse,
-            SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse.Data.Users.Item
+        return new core.Page<
+            SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse.Data.Users.Item,
+            SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse
         >({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
@@ -223,7 +237,12 @@ export class InlineUsers {
     public async listWithBodyCursorPagination(
         request: SeedPagination.inlineUsers.ListUsersBodyCursorPaginationRequest = {},
         requestOptions?: InlineUsers.RequestOptions,
-    ): Promise<core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item>> {
+    ): Promise<
+        core.Page<
+            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
+            SeedPagination.inlineUsers.ListUsersPaginationResponse
+        >
+    > {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.inlineUsers.ListUsersBodyCursorPaginationRequest,
@@ -248,6 +267,8 @@ export class InlineUsers {
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
                 });
                 if (_response.ok) {
                     return {
@@ -282,9 +303,9 @@ export class InlineUsers {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<
-            SeedPagination.inlineUsers.ListUsersPaginationResponse,
-            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item
+        return new core.Page<
+            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
+            SeedPagination.inlineUsers.ListUsersPaginationResponse
         >({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
@@ -316,7 +337,12 @@ export class InlineUsers {
     public async listWithOffsetPagination(
         request: SeedPagination.inlineUsers.ListUsersOffsetPaginationRequest = {},
         requestOptions?: InlineUsers.RequestOptions,
-    ): Promise<core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item>> {
+    ): Promise<
+        core.Page<
+            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
+            SeedPagination.inlineUsers.ListUsersPaginationResponse
+        >
+    > {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.inlineUsers.ListUsersOffsetPaginationRequest,
@@ -352,6 +378,8 @@ export class InlineUsers {
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
                 });
                 if (_response.ok) {
                     return {
@@ -385,9 +413,9 @@ export class InlineUsers {
         );
         let _offset = request?.page != null ? request?.page : 0;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<
-            SeedPagination.inlineUsers.ListUsersPaginationResponse,
-            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item
+        return new core.Page<
+            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
+            SeedPagination.inlineUsers.ListUsersPaginationResponse
         >({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
@@ -415,7 +443,12 @@ export class InlineUsers {
     public async listWithDoubleOffsetPagination(
         request: SeedPagination.inlineUsers.ListUsersDoubleOffsetPaginationRequest = {},
         requestOptions?: InlineUsers.RequestOptions,
-    ): Promise<core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item>> {
+    ): Promise<
+        core.Page<
+            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
+            SeedPagination.inlineUsers.ListUsersPaginationResponse
+        >
+    > {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.inlineUsers.ListUsersDoubleOffsetPaginationRequest,
@@ -451,6 +484,8 @@ export class InlineUsers {
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
                 });
                 if (_response.ok) {
                     return {
@@ -484,9 +519,9 @@ export class InlineUsers {
         );
         let _offset = request?.page != null ? request?.page : 1;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<
-            SeedPagination.inlineUsers.ListUsersPaginationResponse,
-            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item
+        return new core.Page<
+            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
+            SeedPagination.inlineUsers.ListUsersPaginationResponse
         >({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
@@ -513,7 +548,12 @@ export class InlineUsers {
     public async listWithBodyOffsetPagination(
         request: SeedPagination.inlineUsers.ListUsersBodyOffsetPaginationRequest = {},
         requestOptions?: InlineUsers.RequestOptions,
-    ): Promise<core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item>> {
+    ): Promise<
+        core.Page<
+            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
+            SeedPagination.inlineUsers.ListUsersPaginationResponse
+        >
+    > {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.inlineUsers.ListUsersBodyOffsetPaginationRequest,
@@ -538,6 +578,8 @@ export class InlineUsers {
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
                 });
                 if (_response.ok) {
                     return {
@@ -573,9 +615,9 @@ export class InlineUsers {
         );
         let _offset = request?.pagination?.page != null ? request?.pagination?.page : 1;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<
-            SeedPagination.inlineUsers.ListUsersPaginationResponse,
-            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item
+        return new core.Page<
+            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
+            SeedPagination.inlineUsers.ListUsersPaginationResponse
         >({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
@@ -602,7 +644,12 @@ export class InlineUsers {
     public async listWithOffsetStepPagination(
         request: SeedPagination.inlineUsers.ListUsersOffsetStepPaginationRequest = {},
         requestOptions?: InlineUsers.RequestOptions,
-    ): Promise<core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item>> {
+    ): Promise<
+        core.Page<
+            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
+            SeedPagination.inlineUsers.ListUsersPaginationResponse
+        >
+    > {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.inlineUsers.ListUsersOffsetStepPaginationRequest,
@@ -635,6 +682,8 @@ export class InlineUsers {
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
                 });
                 if (_response.ok) {
                     return {
@@ -668,13 +717,13 @@ export class InlineUsers {
         );
         let _offset = request?.page != null ? request?.page : 1;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<
-            SeedPagination.inlineUsers.ListUsersPaginationResponse,
-            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item
+        return new core.Page<
+            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
+            SeedPagination.inlineUsers.ListUsersPaginationResponse
         >({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => (response?.data.users ?? []).length > 0,
+            hasNextPage: (response) => (response?.data.users ?? []).length >= (request?.limit ?? 1),
             getItems: (response) => response?.data.users ?? [],
             loadPage: (response) => {
                 _offset += response?.data.users != null ? response.data.users.length : 1;
@@ -697,7 +746,12 @@ export class InlineUsers {
     public async listWithOffsetPaginationHasNextPage(
         request: SeedPagination.inlineUsers.ListWithOffsetPaginationHasNextPageRequest = {},
         requestOptions?: InlineUsers.RequestOptions,
-    ): Promise<core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item>> {
+    ): Promise<
+        core.Page<
+            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
+            SeedPagination.inlineUsers.ListUsersPaginationResponse
+        >
+    > {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.inlineUsers.ListWithOffsetPaginationHasNextPageRequest,
@@ -730,6 +784,8 @@ export class InlineUsers {
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
                 });
                 if (_response.ok) {
                     return {
@@ -763,13 +819,14 @@ export class InlineUsers {
         );
         let _offset = request?.page != null ? request?.page : 1;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<
-            SeedPagination.inlineUsers.ListUsersPaginationResponse,
-            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item
+        return new core.Page<
+            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
+            SeedPagination.inlineUsers.ListUsersPaginationResponse
         >({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => response?.hasNextPage ?? (response?.data.users ?? []).length > 0,
+            hasNextPage: (response) =>
+                response?.hasNextPage ?? (response?.data.users ?? []).length >= (request?.limit ?? 1),
             getItems: (response) => response?.data.users ?? [],
             loadPage: (response) => {
                 _offset += response?.data.users != null ? response.data.users.length : 1;
@@ -790,7 +847,12 @@ export class InlineUsers {
     public async listWithExtendedResults(
         request: SeedPagination.inlineUsers.ListUsersExtendedRequest = {},
         requestOptions?: InlineUsers.RequestOptions,
-    ): Promise<core.Page<SeedPagination.inlineUsers.UserListContainer.Users.Item>> {
+    ): Promise<
+        core.Page<
+            SeedPagination.inlineUsers.UserListContainer.Users.Item,
+            SeedPagination.inlineUsers.ListUsersExtendedResponse
+        >
+    > {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.inlineUsers.ListUsersExtendedRequest,
@@ -817,6 +879,8 @@ export class InlineUsers {
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
                 });
                 if (_response.ok) {
                     return {
@@ -849,9 +913,9 @@ export class InlineUsers {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<
-            SeedPagination.inlineUsers.ListUsersExtendedResponse,
-            SeedPagination.inlineUsers.UserListContainer.Users.Item
+        return new core.Page<
+            SeedPagination.inlineUsers.UserListContainer.Users.Item,
+            SeedPagination.inlineUsers.ListUsersExtendedResponse
         >({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
@@ -876,7 +940,12 @@ export class InlineUsers {
     public async listWithExtendedResultsAndOptionalData(
         request: SeedPagination.inlineUsers.ListUsersExtendedRequestForOptionalData = {},
         requestOptions?: InlineUsers.RequestOptions,
-    ): Promise<core.Page<SeedPagination.inlineUsers.UserOptionalListContainer.Users.Item>> {
+    ): Promise<
+        core.Page<
+            SeedPagination.inlineUsers.UserOptionalListContainer.Users.Item,
+            SeedPagination.inlineUsers.ListUsersExtendedOptionalListResponse
+        >
+    > {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.inlineUsers.ListUsersExtendedRequestForOptionalData,
@@ -903,6 +972,8 @@ export class InlineUsers {
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
                 });
                 if (_response.ok) {
                     return {
@@ -935,9 +1006,9 @@ export class InlineUsers {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<
-            SeedPagination.inlineUsers.ListUsersExtendedOptionalListResponse,
-            SeedPagination.inlineUsers.UserOptionalListContainer.Users.Item
+        return new core.Page<
+            SeedPagination.inlineUsers.UserOptionalListContainer.Users.Item,
+            SeedPagination.inlineUsers.ListUsersExtendedOptionalListResponse
         >({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
@@ -962,7 +1033,7 @@ export class InlineUsers {
     public async listUsernames(
         request: SeedPagination.inlineUsers.ListUsernamesRequest = {},
         requestOptions?: InlineUsers.RequestOptions,
-    ): Promise<core.Page<string>> {
+    ): Promise<core.Page<string, SeedPagination.UsernameCursor>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.inlineUsers.ListUsernamesRequest,
@@ -989,6 +1060,8 @@ export class InlineUsers {
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
                 });
                 if (_response.ok) {
                     return {
@@ -1021,7 +1094,7 @@ export class InlineUsers {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<SeedPagination.UsernameCursor, string>({
+        return new core.Page<string, SeedPagination.UsernameCursor>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>
@@ -1046,7 +1119,7 @@ export class InlineUsers {
     public async listWithGlobalConfig(
         request: SeedPagination.inlineUsers.ListWithGlobalConfigRequest = {},
         requestOptions?: InlineUsers.RequestOptions,
-    ): Promise<core.Page<string>> {
+    ): Promise<core.Page<string, SeedPagination.inlineUsers.UsernameContainer>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.inlineUsers.ListWithGlobalConfigRequest,
@@ -1073,6 +1146,8 @@ export class InlineUsers {
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
                 });
                 if (_response.ok) {
                     return {
@@ -1106,7 +1181,7 @@ export class InlineUsers {
         );
         let _offset = request?.offset != null ? request?.offset : 1;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<SeedPagination.inlineUsers.UsernameContainer, string>({
+        return new core.Page<string, SeedPagination.inlineUsers.UsernameContainer>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) => (response?.results ?? []).length > 0,

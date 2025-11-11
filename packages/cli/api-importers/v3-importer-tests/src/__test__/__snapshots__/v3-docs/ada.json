@@ -4745,7 +4745,11 @@
                             "last_name": "Lovelace",
                             "email": "ada.lovelace@ada.cx",
                             "language": "en-US",
-                            "metadata": {},
+                            "metadata": {
+                              "example_key1": "example_string_value",
+                              "example_key2": true,
+                              "example_key3": 123
+                            },
                             "system_properties": {
                               "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
                               "device": "macos",
@@ -4803,7 +4807,11 @@
                             "last_name": "Lovelace",
                             "email": "ada.lovelace@ada.cx",
                             "language": "en-US",
-                            "metadata": {},
+                            "metadata": {
+                              "example_key1": "example_string_value",
+                              "example_key2": true,
+                              "example_key3": 123
+                            },
                             "system_properties": {
                               "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
                               "device": "macos",
@@ -4881,7 +4889,11 @@
                                 "last_name": "Lovelace",
                                 "email": "ada.lovelace@ada.cx",
                                 "language": "en-US",
-                                "metadata": {},
+                                "metadata": {
+                                  "example_key1": "example_string_value",
+                                  "example_key2": true,
+                                  "example_key3": 123
+                                },
                                 "system_properties": {
                                   "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
                                   "device": "macos",

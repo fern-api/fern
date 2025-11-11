@@ -46,10 +46,6 @@ class TestSubmissionUpdateInfo_GradedTestCase(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-from ..commons.key_value_pair import KeyValuePair  # noqa: E402, F401, I001
-from ..commons.map_value import MapValue  # noqa: E402, F401, I001
-
-
 class TestSubmissionUpdateInfo_RecordedTestCase(UniversalBaseModel):
     type: typing.Literal["recordedTestCase"] = "recordedTestCase"
     test_case_id: TestCaseId = pydantic.Field(alias="testCaseId")

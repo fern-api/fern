@@ -2,6 +2,7 @@
 
 # isort: skip_file
 
+from .service import UpdateFooRequest
 from .types import Foo
 
-__all__ = ["Foo"]
+__all__ = ["Foo", "UpdateFooRequest"]

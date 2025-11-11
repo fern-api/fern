@@ -30,7 +30,7 @@ packages = [
     { include = "seed", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/file-upload/fern'
 
 [tool.poetry.dependencies]

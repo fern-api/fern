@@ -453,7 +453,7 @@
             "id": "00000000-0000-0000-0000-000000000000",
             "bio": "Hello world",
             "username": "tmcw",
-            "profileImageUrl": null,
+            "profileImageUrl": "string",
             "url": "https://val.town/u/tmcw",
             "links": {
               "self": "string"
@@ -16458,7 +16458,7 @@
                       "id": "00000000-0000-0000-0000-000000000000",
                       "bio": "Hello world",
                       "username": "tmcw",
-                      "profileImageUrl": null,
+                      "profileImageUrl": "string",
                       "url": "https://val.town/u/tmcw",
                       "links": {
                         "self": "string"
@@ -16495,7 +16495,7 @@
                       "id": "00000000-0000-0000-0000-000000000000",
                       "bio": "Hello world",
                       "username": "tmcw",
-                      "profileImageUrl": null,
+                      "profileImageUrl": "string",
                       "url": "https://val.town/u/tmcw",
                       "links": {
                         "self": "string"
@@ -16550,7 +16550,7 @@
                           "id": "00000000-0000-0000-0000-000000000000",
                           "bio": "Hello world",
                           "username": "tmcw",
-                          "profileImageUrl": null,
+                          "profileImageUrl": "string",
                           "url": "https://val.town/u/tmcw",
                           "links": {
                             "self": "string"
@@ -17115,7 +17115,7 @@
                       "id": "00000000-0000-0000-0000-000000000000",
                       "bio": "Hello world",
                       "username": "tmcw",
-                      "profileImageUrl": null,
+                      "profileImageUrl": "string",
                       "url": "string",
                       "links": {
                         "self": "string"
@@ -17154,7 +17154,7 @@
                       "id": "00000000-0000-0000-0000-000000000000",
                       "bio": "Hello world",
                       "username": "tmcw",
-                      "profileImageUrl": null,
+                      "profileImageUrl": "string",
                       "url": "string",
                       "links": {
                         "self": "string"
@@ -17209,7 +17209,7 @@
                           "id": "00000000-0000-0000-0000-000000000000",
                           "bio": "Hello world",
                           "username": "tmcw",
-                          "profileImageUrl": null,
+                          "profileImageUrl": "string",
                           "url": "string",
                           "links": {
                             "self": "string"
@@ -19798,7 +19798,7 @@
                       "id": "00000000-0000-0000-0000-000000000000",
                       "bio": "Hello world",
                       "username": "tmcw",
-                      "profileImageUrl": null,
+                      "profileImageUrl": "string",
                       "url": "https://val.town/u/tmcw",
                       "links": {
                         "self": "string"
@@ -19835,7 +19835,7 @@
                       "id": "00000000-0000-0000-0000-000000000000",
                       "bio": "Hello world",
                       "username": "tmcw",
-                      "profileImageUrl": null,
+                      "profileImageUrl": "string",
                       "url": "https://val.town/u/tmcw",
                       "links": {
                         "self": "string"
@@ -19890,7 +19890,7 @@
                           "id": "00000000-0000-0000-0000-000000000000",
                           "bio": "Hello world",
                           "username": "tmcw",
-                          "profileImageUrl": null,
+                          "profileImageUrl": "string",
                           "url": "https://val.town/u/tmcw",
                           "links": {
                             "self": "string"

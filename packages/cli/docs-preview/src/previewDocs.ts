@@ -11,19 +11,48 @@ import {
     FernNavigation,
     SDKSnippetHolder
 } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, convertToFernHostAbsoluteFilePath, relative } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, convertToFernHostAbsoluteFilePath, doesPathExist, relative } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
+import grayMatter from "gray-matter";
 import { v4 as uuidv4 } from "uuid";
 
 import {
+    parseImagePaths,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
     replaceReferencedMarkdown
 } from "../../docs-markdown-utils/src";
+
+const frontmatterPositionCache = new Map<string, number | undefined>();
+
+/**
+ * Extracts and normalizes the position field from markdown frontmatter.
+ * Returns a finite number if position is valid, undefined otherwise.
+ * Matches the logic in navigationUtils.ts getFrontmatterPosition.
+ */
+function extractFrontmatterPosition(markdown: string): number | undefined {
+    try {
+        const { data } = grayMatter(markdown);
+
+        if (data.position == null) {
+            return undefined;
+        }
+
+        const position = typeof data.position === "string" ? parseFloat(data.position) : data.position;
+
+        if (typeof position === "number" && Number.isFinite(position)) {
+            return position;
+        }
+
+        return undefined;
+    } catch {
+        return undefined;
+    }
+}
 
 export async function getPreviewDocsDefinition({
     domain,
@@ -48,9 +77,37 @@ export async function getPreviewDocsDefinition({
         const allMarkdownFiles = editedAbsoluteFilepaths.every(
             (filepath) => filepath.endsWith(".mdx") || filepath.endsWith(".md")
         );
+        let navAffectingChange = false;
+
         for (const absoluteFilePath of editedAbsoluteFilepaths) {
             const relativePath = relative(docsWorkspace.absoluteFilePath, absoluteFilePath);
+            const pageId = FdrAPI.PageId(relativePath);
+            const previousValue = previousDocsDefinition.pages[pageId];
+
+            if (!(await doesPathExist(absoluteFilePath))) {
+                navAffectingChange = true;
+                continue;
+            }
+
             const markdown = (await readFile(absoluteFilePath)).toString();
+
+            const isNewFile = previousValue == null;
+            if (isNewFile) {
+                navAffectingChange = true;
+            }
+
+            const currentPosition = extractFrontmatterPosition(markdown);
+            const cachedPosition = frontmatterPositionCache.get(absoluteFilePath);
+            if (cachedPosition !== currentPosition) {
+                navAffectingChange = true;
+            }
+
+            frontmatterPositionCache.set(absoluteFilePath, currentPosition);
+
+            if (isNewFile) {
+                continue;
+            }
+
             const processedMarkdown = await replaceReferencedMarkdown({
                 markdown,
                 absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
@@ -58,21 +115,36 @@ export async function getPreviewDocsDefinition({
                 context
             });
 
-            const previousValue = previousDocsDefinition.pages[FdrAPI.PageId(relativePath)];
-            if (previousValue == null) {
-                continue;
+            const { markdown: markdownWithAbsPaths, filepaths } = parseImagePaths(processedMarkdown, {
+                absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                absolutePathToMarkdownFile: absoluteFilePath
+            });
+
+            if (previousDocsDefinition.filesV2 == null) {
+                previousDocsDefinition.filesV2 = {};
             }
 
             const fileIdsMap = new Map(
-                Object.entries(previousDocsDefinition.filesV2 ?? {}).map(([id, file]) => {
+                Object.entries(previousDocsDefinition.filesV2).map(([id, file]) => {
                     const path = "/" + file.url.replace("/_local/", "");
                     return [AbsoluteFilePath.of(path), id];
                 })
             );
 
+            for (const filepath of filepaths) {
+                if (!fileIdsMap.has(filepath)) {
+                    const fileId = FdrAPI.FileId(uuidv4());
+                    previousDocsDefinition.filesV2[fileId] = {
+                        type: "url",
+                        url: FernNavigation.Url(`/_local${convertToFernHostAbsoluteFilePath(filepath)}`)
+                    };
+                    fileIdsMap.set(filepath, fileId);
+                }
+            }
+
             // Then replace image paths with file IDs
             let finalMarkdown = replaceImagePathsAndUrls(
-                processedMarkdown,
+                markdownWithAbsPaths,
                 fileIdsMap,
                 {}, // markdownFilesToPathName - empty object since we don't need it for images
                 {
@@ -89,14 +161,14 @@ export async function getPreviewDocsDefinition({
                 context
             });
 
-            previousDocsDefinition.pages[FdrAPI.PageId(relativePath)] = {
+            previousDocsDefinition.pages[pageId] = {
                 markdown: finalMarkdown,
                 editThisPageUrl: previousValue.editThisPageUrl,
                 rawMarkdown: markdown
             };
         }
 
-        if (allMarkdownFiles) {
+        if (allMarkdownFiles && !navAffectingChange) {
             return previousDocsDefinition;
         }
     }
@@ -108,14 +180,14 @@ export async function getPreviewDocsDefinition({
 
     const filesV2: Record<string, DocsV1Read.File_> = {};
 
-    const resolver = new DocsDefinitionResolver(
+    const resolver = new DocsDefinitionResolver({
         domain,
         docsWorkspace,
         ossWorkspaces,
         apiWorkspaces,
-        context,
-        undefined,
-        async (files) =>
+        taskContext: context,
+        editThisPage: undefined,
+        uploadFiles: async (files) =>
             files.map((file) => {
                 const fileId = uuidv4();
                 filesV2[fileId] = {
@@ -128,8 +200,9 @@ export async function getPreviewDocsDefinition({
                     fileId
                 };
             }),
-        async (opts) => apiCollector.addReferencedAPI(opts)
-    );
+        registerApi: async (opts) => apiCollector.addReferencedAPI(opts),
+        targetAudiences: undefined
+    });
 
     const writeDocsDefinition = await resolver.resolve();
     const dbDocsDefinition = convertDocsDefinitionToDb({
@@ -139,6 +212,15 @@ export async function getPreviewDocsDefinition({
     const readDocsConfig = convertDbDocsConfigToRead({
         dbShape: dbDocsDefinition.config
     });
+
+    frontmatterPositionCache.clear();
+    for (const [pageId, page] of Object.entries(dbDocsDefinition.pages)) {
+        if (page.rawMarkdown != null) {
+            const absolutePath = AbsoluteFilePath.of(`${docsWorkspace.absoluteFilePath}/${pageId.replace("api/", "")}`);
+            const position = extractFrontmatterPosition(page.rawMarkdown);
+            frontmatterPositionCache.set(absolutePath, position);
+        }
+    }
 
     return {
         apis: apiCollector.getAPIsForDefinition(),

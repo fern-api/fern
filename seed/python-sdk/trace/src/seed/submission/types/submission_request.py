@@ -96,10 +96,13 @@ class SubmissionRequest_Stop(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-SubmissionRequest = typing.Union[
-    SubmissionRequest_InitializeProblemRequest,
-    SubmissionRequest_InitializeWorkspaceRequest,
-    SubmissionRequest_SubmitV2,
-    SubmissionRequest_WorkspaceSubmit,
-    SubmissionRequest_Stop,
+SubmissionRequest = typing_extensions.Annotated[
+    typing.Union[
+        SubmissionRequest_InitializeProblemRequest,
+        SubmissionRequest_InitializeWorkspaceRequest,
+        SubmissionRequest_SubmitV2,
+        SubmissionRequest_WorkspaceSubmit,
+        SubmissionRequest_Stop,
+    ],
+    pydantic.Field(discriminator="type"),
 ]

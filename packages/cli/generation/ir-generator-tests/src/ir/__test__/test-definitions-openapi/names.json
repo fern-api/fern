@@ -48,7 +48,7 @@
                     }
                 },
                 "tokenEnvVar": null,
-                "key": "BearerAuthScheme",
+                "key": "BearerAuth",
                 "docs": null
             }
         ],
@@ -3900,6 +3900,7 @@
         "generatorConfig": null
     },
     "audiences": null,
+    "generationMetadata": null,
     "subpackages": {
         "subpackage_telemetry": {
             "name": {

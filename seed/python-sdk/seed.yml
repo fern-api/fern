@@ -1,4 +1,4 @@
-irVersion: v60
+irVersion: v61
 displayName: Python SDK
 image: fernapi/fern-python-sdk
 changelogLocation: ../../generators/python/sdk/versions.yml
@@ -10,6 +10,7 @@ buildScripts:
   compileScript:
     commands:
       - poetry run mypy .
+      - PYTHONWARNINGS=error::SyntaxWarning python -m compileall -q -f .
 
 publish:
   workingDirectory: generators/python
@@ -134,6 +135,7 @@ fixtures:
       outputFolder: no-custom-config
     - customConfig:
         inline_path_params: true
+        recursion_limit: 1234
       outputFolder: inline-path-params
     - customConfig:
         timeout_in_seconds: infinity
@@ -159,6 +161,8 @@ fixtures:
           version: v2
           wrapped_aliases: True
       outputFolder: pydantic-v2-wrapped
+      skipScripts:
+        - test-pydantic-v1
     - customConfig:
         pydantic_config:
           version: v1
@@ -328,7 +332,8 @@ fixtures:
       outputFolder: use-typeddict-requests
 scripts:
   # Test Pydantic V2
-  - docker: fernapi/python-seed
+  - name: test-pydantic-v2
+    docker: fernapi/python-seed
     commands:
       # Tests now run a mock server, you can always run seed with --skip-scripts to save time
       - export NPM_CONFIG_CACHE="$(pwd)/.cache"
@@ -340,7 +345,8 @@ scripts:
       - poetry run mypy ./src ./tests
       - poetry run pytest -rP .
   # Test Pydantic V1
-  - docker: fernapi/python-seed
+  - name: test-pydantic-v1
+    docker: fernapi/python-seed
     commands:
       - export NPM_CONFIG_CACHE="$(pwd)/.cache"
       - export HOME="$(pwd)/"
@@ -352,8 +358,6 @@ scripts:
       - poetry run pytest -rP .
 allowedFailures:
   - any-auth
-  - enum:real-enum # NOTE(tjb9dc): Failing due to format due to unescaped strings in the enum values
-  - enum:real-enum-forward-compat # Same^
   - examples:client-filename
   - examples:legacy-wire-tests
   - exhaustive:additional_init_exports
@@ -364,3 +368,4 @@ allowedFailures:
   - response-property
   - streaming-parameter
   - trace
+  - websocket

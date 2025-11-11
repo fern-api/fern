@@ -84,6 +84,18 @@
                 "type": "csharp",
                 "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.SearchUsersAsync(\"tenant_id\", \"user_id\", new SearchUsersRequest { Limit = 1 });\n"
             }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/{tenant_id}/user/{user_id}/metadata/v/{version}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getUserMetadata"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetUserMetadataAsync(\"tenant_id\", \"user_id\", 1, new GetUserMetadataRequest());\n"
+            }
         }
     ]
 }

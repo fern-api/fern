@@ -1,5 +1,5 @@
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { docsYml, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
+import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
 import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
     parseImagePaths,
@@ -66,24 +66,145 @@ const defaultRegisterApi: RegisterApiFn = async ({ ir }) => {
     return `${ir.apiName.snakeCase.unsafeName}-${apiCounter}`;
 };
 
-const defaultConfigureAiChat: ConfigureAiChatFn = async ({ aiChatConfig }) => {
-    return;
-};
+export interface DocsDefinitionResolverArgs {
+    domain: string;
+    docsWorkspace: DocsWorkspace;
+    ossWorkspaces: OSSWorkspace[];
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
+    taskContext: TaskContext;
+    // Optional
+    editThisPage?: docsYml.RawSchemas.EditThisPageConfig;
+    uploadFiles?: UploadFilesFn;
+    registerApi?: RegisterApiFn;
+    targetAudiences?: string[];
+}
 
 export class DocsDefinitionResolver {
-    constructor(
-        private domain: string,
-        private docsWorkspace: DocsWorkspace,
-        private ossWorkspaces: OSSWorkspace[],
-        private apiWorkspaces: AbstractAPIWorkspace<unknown>[],
-        private taskContext: TaskContext,
-        // Optional
-        private editThisPage?: docsYml.RawSchemas.EditThisPageConfig,
-        private uploadFiles: UploadFilesFn = defaultUploadFiles,
-        private registerApi: RegisterApiFn = defaultRegisterApi
-    ) {}
+    private domain: string;
+    private docsWorkspace: DocsWorkspace;
+    private ossWorkspaces: OSSWorkspace[];
+    private apiWorkspaces: AbstractAPIWorkspace<unknown>[];
+    private taskContext: TaskContext;
+    private editThisPage?: docsYml.RawSchemas.EditThisPageConfig;
+    private uploadFiles: UploadFilesFn;
+    private registerApi: RegisterApiFn;
+    private targetAudiences?: string[];
+
+    constructor({
+        domain,
+        docsWorkspace,
+        ossWorkspaces,
+        apiWorkspaces,
+        taskContext,
+        editThisPage,
+        uploadFiles = defaultUploadFiles,
+        registerApi = defaultRegisterApi,
+        targetAudiences
+    }: DocsDefinitionResolverArgs) {
+        this.domain = domain;
+        this.docsWorkspace = docsWorkspace;
+        this.ossWorkspaces = ossWorkspaces;
+        this.apiWorkspaces = apiWorkspaces;
+        this.taskContext = taskContext;
+        this.editThisPage = editThisPage;
+        this.uploadFiles = uploadFiles;
+        this.registerApi = registerApi;
+        this.targetAudiences = targetAudiences;
+    }
 
     #idgen = NodeIdGenerator.init();
+
+    /**
+     * Checks if an item should be included based on its audiences and the target audiences.
+     * An item is included if:
+     * 1. It has no audiences specified (visible to all), OR
+     * 2. There are no target audiences (showing all content), OR
+     * 3. There's at least one audience overlap between the item and target audiences
+     */
+    private shouldIncludeByAudience(itemAudiences?: string[]): boolean {
+        // If no audiences specified on the item, it's visible to all
+        if (!itemAudiences || itemAudiences.length === 0) {
+            return true;
+        }
+
+        // If no target audiences specified, show all content
+        if (!this.targetAudiences || this.targetAudiences.length === 0) {
+            return true;
+        }
+
+        // Check for audience overlap
+        return itemAudiences.some((audience) => this.targetAudiences?.includes(audience));
+    }
+
+    /**
+     * Applies audience-based filtering to the parsed docs configuration.
+     * Filters products, versions, and navigation items based on target audiences.
+     */
+    private applyAudienceFiltering(
+        config: WithoutQuestionMarks<docsYml.ParsedDocsConfiguration>
+    ): WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> {
+        // Apply filtering by modifying the navigation in place
+        const filteredNavigation = this.filterNavigationByAudience(config.navigation);
+
+        return {
+            ...config,
+            navigation: filteredNavigation
+        };
+    }
+
+    /**
+     * Filters navigation configuration based on target audiences.
+     */
+    private filterNavigationByAudience(
+        navigation: docsYml.DocsNavigationConfiguration
+    ): docsYml.DocsNavigationConfiguration {
+        if (navigation.type === "untabbed") {
+            return navigation; // No filtering needed for untabbed navigation
+        }
+
+        if (navigation.type === "tabbed") {
+            return navigation; // No filtering needed for tabbed navigation
+        }
+
+        if (navigation.type === "versioned") {
+            return {
+                ...navigation,
+                versions: navigation.versions.filter((version) =>
+                    this.shouldIncludeByAudience(this.getRawVersionAudiences(version.version))
+                )
+            };
+        }
+
+        if (navigation.type === "productgroup") {
+            return {
+                ...navigation,
+                products: navigation.products.filter((product) => {
+                    const productAudiences = this.getRawProductAudiences(product.product);
+                    return this.shouldIncludeByAudience(productAudiences);
+                })
+            };
+        }
+
+        return navigation;
+    }
+
+    /**
+     * Gets the raw audiences for a product by looking up the original configuration.
+     */
+    private getRawProductAudiences(productName: string): string[] | undefined {
+        const rawProducts = this.docsWorkspace.config.products;
+        const product = rawProducts?.find((p) => p.displayName === productName);
+        return parseAudiences(product?.audiences);
+    }
+
+    /**
+     * Gets the raw audiences for a version by looking up the original configuration.
+     */
+    private getRawVersionAudiences(versionName: string): string[] | undefined {
+        const rawVersions = this.docsWorkspace.config.versions;
+        const version = rawVersions?.find((v) => v.displayName === versionName);
+        return parseAudiences(version?.audiences);
+    }
 
     private _parsedDocsConfig: WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> | undefined;
     private get parsedDocsConfig(): WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> {
@@ -104,6 +225,11 @@ export class DocsDefinitionResolver {
             absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
             absoluteFilepathToDocsConfig: this.docsWorkspace.absoluteFilepathToDocsConfig
         });
+
+        // Apply audience-based filtering to the navigation if target audiences are specified
+        if (this.targetAudiences && this.targetAudiences.length > 0) {
+            this._parsedDocsConfig = this.applyAudienceFiltering(this._parsedDocsConfig);
+        }
 
         // Store raw markdown content before any processing
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
@@ -174,8 +300,7 @@ export class DocsDefinitionResolver {
         }
 
         const filesToUploadSet = await collectFilesFromDocsConfig({
-            parsedDocsConfig: this.parsedDocsConfig,
-            docsWorkspace: this.docsWorkspace
+            parsedDocsConfig: this.parsedDocsConfig
         });
 
         // preprocess markdown files to extract image paths
@@ -427,10 +552,35 @@ export class DocsDefinitionResolver {
             navigation: undefined, // <-- this is now deprecated
             root,
             colorsV3: this.convertColorConfigImageReferences(),
-            navbarLinks: this.parsedDocsConfig.navbarLinks?.map((navbarLink) => ({
-                ...navbarLink,
-                url: DocsV1Write.Url(navbarLink.url)
-            })),
+            navbarLinks: this.parsedDocsConfig.navbarLinks?.map((navbarLink) => {
+                if (navbarLink.type === "dropdown") {
+                    return {
+                        ...navbarLink,
+                        links: navbarLink.links?.map((link) => ({
+                            ...link,
+                            url: DocsV1Write.Url(link.url),
+                            icon: this.resolveIconFileId(link.icon),
+                            rightIcon: this.resolveIconFileId(link.rightIcon)
+                        })),
+                        icon: this.resolveIconFileId(navbarLink.icon),
+                        rightIcon: this.resolveIconFileId(navbarLink.rightIcon)
+                    };
+                }
+
+                if (navbarLink.type === "github") {
+                    return {
+                        ...navbarLink,
+                        url: DocsV1Write.Url(navbarLink.url)
+                    };
+                }
+
+                return {
+                    ...navbarLink,
+                    url: DocsV1Write.Url(navbarLink.url),
+                    icon: this.resolveIconFileId(navbarLink.icon),
+                    rightIcon: this.resolveIconFileId(navbarLink.rightIcon)
+                };
+            }),
             typographyV2: this.convertDocsTypographyConfiguration(),
             layout: this.parsedDocsConfig.layout,
             settings: this.parsedDocsConfig.settings,
@@ -444,6 +594,7 @@ export class DocsDefinitionResolver {
                 value: DocsV1Write.Url(footerLink.value)
             })),
             defaultLanguage: this.parsedDocsConfig.defaultLanguage,
+            languages: this.parsedDocsConfig.languages,
             analyticsConfig: {
                 ...this.parsedDocsConfig.analyticsConfig,
                 segment: this.parsedDocsConfig.analyticsConfig?.segment,
@@ -486,6 +637,15 @@ export class DocsDefinitionResolver {
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
             pageActions: this.parsedDocsConfig.pageActions,
+            theme:
+                this.parsedDocsConfig.theme != null
+                    ? {
+                          sidebar: this.parsedDocsConfig.theme.sidebar,
+                          body: this.parsedDocsConfig.theme.body,
+                          tabs: this.parsedDocsConfig.theme.tabs,
+                          "page-actions": this.parsedDocsConfig.theme.pageActions
+                      }
+                    : undefined,
             // deprecated
             logo: undefined,
             logoV2: undefined,
@@ -594,7 +754,7 @@ export class DocsDefinitionResolver {
             id: this.#idgen.get(pageId),
             title: landingPageConfig.title,
             slug: slug.get(),
-            icon: landingPageConfig.icon,
+            icon: this.resolveIconFileId(landingPageConfig.icon),
             hidden: landingPageConfig.hidden,
             viewers: landingPageConfig.viewers,
             orphaned: landingPageConfig.orphaned,
@@ -666,57 +826,76 @@ export class DocsDefinitionResolver {
         product: docsYml.ProductInfo,
         parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.ProductNode> {
-        const slug = parentSlug.setProductSlug(product.slug ?? kebabCase(product.product));
-        let child: FernNavigation.V1.ProductChild;
-        switch (product.navigation.type) {
-            case "tabbed":
-                child = {
-                    type: "unversioned",
-                    id: this.#idgen.get(product.product),
-                    landingPage: undefined,
-                    child: await this.convertTabbedNavigation(
-                        this.#idgen.get(product.product),
-                        product.navigation.items,
-                        slug
-                    )
-                };
-                break;
-            case "untabbed":
-                child = {
-                    type: "unversioned",
-                    id: this.#idgen.get(product.product),
-                    landingPage: undefined,
-                    child: await this.toSidebarRootNode(
-                        this.#idgen.get(product.product),
-                        product.navigation.items,
-                        slug
-                    )
-                };
-                break;
-            case "versioned":
-                child = await this.toVersionedNode(product.navigation, slug);
-                break;
-            default:
-                assertNever(product.navigation);
+        if (product.type === "internal") {
+            const slug = parentSlug.setProductSlug(product.slug ?? kebabCase(product.product));
+            let child: FernNavigation.V1.ProductChild;
+            switch (product.navigation.type) {
+                case "tabbed":
+                    child = {
+                        type: "unversioned",
+                        id: this.#idgen.get(product.product),
+                        landingPage: undefined,
+                        child: await this.convertTabbedNavigation(
+                            this.#idgen.get(product.product),
+                            product.navigation.items,
+                            slug
+                        )
+                    };
+                    break;
+                case "untabbed":
+                    child = {
+                        type: "unversioned",
+                        id: this.#idgen.get(product.product),
+                        landingPage: undefined,
+                        child: await this.toSidebarRootNode(
+                            this.#idgen.get(product.product),
+                            product.navigation.items,
+                            slug
+                        )
+                    };
+                    break;
+                case "versioned":
+                    child = await this.toVersionedNode(product.navigation, slug);
+                    break;
+                default:
+                    assertNever(product.navigation);
+            }
+
+            return {
+                type: "product",
+                id: this.#idgen.get(product.product),
+                productId: FernNavigation.V1.ProductId(product.product),
+                title: product.product,
+                subtitle: product.subtitle ?? "",
+                slug: slug.get(),
+                child,
+                default: false,
+                hidden: undefined,
+                authed: undefined,
+                icon: this.resolveIconFileId(product.icon),
+                image: product.image != null ? this.getFileId(product.image) : undefined,
+                pointsTo: undefined,
+                viewers: product.viewers,
+                orphaned: product.orphaned,
+                featureFlags: product.featureFlags
+            };
+        } else {
+            return {
+                type: "productLink",
+                id: this.#idgen.get(product.product),
+                productId: FernNavigation.V1.ProductId(product.product),
+                title: product.product,
+                subtitle: product.subtitle ?? "",
+                href: DocsV1Write.Url(product.href ?? ""),
+                default: false,
+                hidden: undefined,
+                authed: undefined,
+                icon: this.resolveIconFileId(product.icon),
+                image: product.image != null ? this.getFileId(product.image) : undefined,
+                viewers: product.viewers,
+                orphaned: product.orphaned
+            };
         }
-        return {
-            type: "product",
-            id: this.#idgen.get(product.product),
-            productId: FernNavigation.V1.ProductId(product.product),
-            title: product.product,
-            subtitle: product.subtitle ?? "",
-            slug: slug.get(),
-            child,
-            default: false,
-            hidden: undefined,
-            authed: undefined,
-            icon: product.icon,
-            image: product.image != null ? this.getFileId(product.image) : undefined,
-            pointsTo: undefined,
-            viewers: product.viewers,
-            orphaned: product.orphaned,
-            featureFlags: product.featureFlags
-        };
     }
 
     private async toVersionNode(
@@ -795,6 +974,70 @@ export class DocsDefinitionResolver {
             id,
             children: grouped
         };
+    }
+
+    private async toSidebarRootNodeWithVariants(
+        prefix: string,
+        items: docsYml.TabVariant[],
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): Promise<FernNavigation.V1.SidebarRootNode> {
+        const id = this.#idgen.get(`${prefix}/root`);
+        return {
+            type: "sidebarRoot",
+            id,
+            children: [
+                {
+                    type: "varianted",
+                    id,
+                    children: await Promise.all(items.map((item) => this.toVariantNode(item, id, parentSlug)))
+                }
+            ]
+        };
+    }
+
+    private async toVariantNode(
+        item: docsYml.TabVariant,
+        prefix: string,
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): Promise<FernNavigation.V1.VariantNode> {
+        const id = this.#idgen.get(`${prefix}/variant/${item.slug ?? kebabCase(item.title)}`);
+        const variantSlug = parentSlug.apply({
+            urlSlug: item.slug ?? kebabCase(item.title),
+            skipUrlSlug: item.skipUrlSlug
+        });
+        const children = await Promise.all(item.layout.map((item) => this.toVariantChild(item, id, variantSlug)));
+        return {
+            type: "variant",
+            id,
+            variantId: FernNavigation.V1.VariantId(item.title),
+            subtitle: item.subtitle ?? "",
+            default: item.default ?? false,
+            image: undefined,
+            children,
+            title: item.title,
+            slug: variantSlug.get(),
+            icon: this.resolveIconFileId(item.icon),
+            hidden: item.hidden,
+            authed: undefined,
+            viewers: item.viewers,
+            orphaned: item.orphaned,
+            featureFlags: item.featureFlags,
+            pointsTo: undefined
+        };
+    }
+
+    private async toVariantChild(
+        item: docsYml.DocsNavigationItem,
+        prefix: string,
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): Promise<FernNavigation.V1.VariantChild> {
+        return visitDiscriminatedUnion(item)._visit<Promise<FernNavigation.V1.VariantChild>>({
+            page: async (value) => this.toPageNode({ item: value, parentSlug }),
+            apiSection: async (value) => this.toApiSectionNode({ item: value, parentSlug }),
+            section: async (value) => this.toSectionNode({ prefix, item: value, parentSlug }),
+            link: async (value) => this.toLinkNode(value),
+            changelog: async (value) => this.toChangelogNode(value, parentSlug)
+        });
     }
 
     private async toNavigationChild({
@@ -905,6 +1148,7 @@ export class DocsDefinitionResolver {
             this.markdownFilesToNoIndex,
             this.markdownFilesToTags,
             this.#idgen,
+            this.collectedFileIds,
             workspace,
             hideChildren,
             parentAvailability ?? item.availability
@@ -929,7 +1173,7 @@ export class DocsDefinitionResolver {
         return changelogResolver.toChangelogNode({
             parentSlug,
             title: item.title,
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             viewers: item.viewers,
             hidden: hideChildren || item.hidden,
             slug: item.slug
@@ -942,7 +1186,7 @@ export class DocsDefinitionResolver {
             id: this.#idgen.get(item.url),
             title: item.text,
             url: FernNavigation.V1.Url(item.url),
-            icon: item.icon
+            icon: this.resolveIconFileId(item.icon)
         };
     }
 
@@ -968,7 +1212,7 @@ export class DocsDefinitionResolver {
             type: "page",
             slug: slug.get(),
             title: item.title,
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             hidden: hideChildren || item.hidden,
             viewers: item.viewers,
             orphaned: item.orphaned,
@@ -1012,7 +1256,7 @@ export class DocsDefinitionResolver {
             overviewPageId: pageId,
             slug: slug.get(),
             title: item.title,
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             collapsed: item.collapsed,
             hidden: hiddenSection,
             viewers: item.viewers,
@@ -1057,7 +1301,8 @@ export class DocsDefinitionResolver {
         return visitDiscriminatedUnion(item.child)._visit<Promise<FernNavigation.V1.TabChild>>({
             link: ({ href }) => this.toTabLinkNode(item, href),
             layout: ({ layout }) => this.toTabNode(prefix, item, layout, parentSlug),
-            changelog: ({ changelog }) => this.toTabChangelogNode(item, changelog, parentSlug)
+            changelog: ({ changelog }) => this.toTabChangelogNode(item, changelog, parentSlug),
+            variants: ({ variants }) => this.toTabNodeWithVariants(prefix, item, variants, parentSlug)
         });
     }
 
@@ -1077,7 +1322,7 @@ export class DocsDefinitionResolver {
         return changelogResolver.toChangelogNode({
             parentSlug,
             title: item.title,
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             viewers: item.viewers,
             hidden: item.hidden,
             slug: item.slug
@@ -1090,7 +1335,7 @@ export class DocsDefinitionResolver {
             id: this.#idgen.get(href),
             title: item.title,
             url: FernNavigation.V1.Url(href),
-            icon: item.icon
+            icon: this.resolveIconFileId(item.icon)
         };
     }
 
@@ -1110,13 +1355,40 @@ export class DocsDefinitionResolver {
             id,
             title: item.title,
             slug: slug.get(),
-            icon: item.icon,
+            icon: this.resolveIconFileId(item.icon),
             hidden: item.hidden,
             authed: undefined,
             viewers: item.viewers,
             orphaned: item.orphaned,
             pointsTo: undefined,
             child: await this.toSidebarRootNode(id, layout, slug),
+            featureFlags: item.featureFlags
+        };
+    }
+
+    private async toTabNodeWithVariants(
+        prefix: string,
+        item: docsYml.TabbedNavigation,
+        variants: docsYml.TabVariant[],
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): Promise<FernNavigation.V1.TabNode> {
+        const id = this.#idgen.get(`${prefix}/tab`);
+        const slug = parentSlug.apply({
+            urlSlug: item.slug ?? kebabCase(item.title),
+            skipUrlSlug: item.skipUrlSlug
+        });
+        return {
+            type: "tab",
+            id,
+            title: item.title,
+            slug: slug.get(),
+            icon: this.resolveIconFileId(item.icon),
+            hidden: item.hidden,
+            authed: undefined,
+            viewers: item.viewers,
+            orphaned: item.orphaned,
+            pointsTo: undefined,
+            child: await this.toSidebarRootNodeWithVariants(id, variants, slug),
             featureFlags: item.featureFlags
         };
     }
@@ -1132,6 +1404,20 @@ export class DocsDefinitionResolver {
             return this.taskContext.failAndThrow("Failed to locate file after uploading: " + filepath);
         }
         return DocsV1Write.FileId(fileId);
+    }
+
+    private resolveIconFileId(
+        iconPath: string | AbsoluteFilePath | undefined
+    ): DocsV1Write.FileId | string | undefined {
+        if (iconPath == null) {
+            return undefined;
+        }
+
+        if (this.collectedFileIds.has(iconPath as AbsoluteFilePath)) {
+            return `file:${this.getFileId(iconPath as AbsoluteFilePath)}`;
+        }
+
+        return iconPath as string;
     }
 
     private convertColorConfigImageReferences(): DocsV1Write.ColorsConfigV3 | undefined {

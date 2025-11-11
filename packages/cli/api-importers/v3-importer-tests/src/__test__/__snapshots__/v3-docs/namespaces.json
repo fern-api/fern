@@ -8340,7 +8340,7 @@
                       "petId": 198772,
                       "quantity": 7,
                       "shipDate": "2024-01-15T09:30:00Z",
-                      "status": "placed",
+                      "status": "approved",
                       "complete": true
                     }
                   }
@@ -8374,7 +8374,7 @@
                       "petId": 198772,
                       "quantity": 7,
                       "shipDate": "2024-01-15T09:30:00Z",
-                      "status": "placed",
+                      "status": "approved",
                       "complete": true
                     },
                     "type": "json"
@@ -8427,7 +8427,7 @@
                           "petId": 198772,
                           "quantity": 7,
                           "shipDate": "2024-01-15T09:30:00Z",
-                          "status": "placed",
+                          "status": "approved",
                           "complete": true
                         }
                       }
@@ -8674,7 +8674,7 @@
                       "petId": 198772,
                       "quantity": 7,
                       "shipDate": "2024-01-15T09:30:00Z",
-                      "status": "placed",
+                      "status": "approved",
                       "complete": true
                     }
                   }
@@ -8709,7 +8709,7 @@
                       "petId": 198772,
                       "quantity": 7,
                       "shipDate": "2024-01-15T09:30:00Z",
-                      "status": "placed",
+                      "status": "approved",
                       "complete": true
                     },
                     "type": "json"
@@ -8762,7 +8762,7 @@
                           "petId": 198772,
                           "quantity": 7,
                           "shipDate": "2024-01-15T09:30:00Z",
-                          "status": "placed",
+                          "status": "approved",
                           "complete": true
                         }
                       }
@@ -15236,7 +15236,7 @@
                       "petId": 198772,
                       "quantity": 7,
                       "shipDate": "2024-01-15T09:30:00Z",
-                      "status": "placed",
+                      "status": "approved",
                       "complete": true
                     }
                   }
@@ -15270,7 +15270,7 @@
                       "petId": 198772,
                       "quantity": 7,
                       "shipDate": "2024-01-15T09:30:00Z",
-                      "status": "placed",
+                      "status": "approved",
                       "complete": true
                     },
                     "type": "json"
@@ -15323,7 +15323,7 @@
                           "petId": 198772,
                           "quantity": 7,
                           "shipDate": "2024-01-15T09:30:00Z",
-                          "status": "placed",
+                          "status": "approved",
                           "complete": true
                         }
                       }
@@ -15570,7 +15570,7 @@
                       "petId": 198772,
                       "quantity": 7,
                       "shipDate": "2024-01-15T09:30:00Z",
-                      "status": "placed",
+                      "status": "approved",
                       "complete": true
                     }
                   }
@@ -15605,7 +15605,7 @@
                       "petId": 198772,
                       "quantity": 7,
                       "shipDate": "2024-01-15T09:30:00Z",
-                      "status": "placed",
+                      "status": "approved",
                       "complete": true
                     },
                     "type": "json"
@@ -15658,7 +15658,7 @@
                           "petId": 198772,
                           "quantity": 7,
                           "shipDate": "2024-01-15T09:30:00Z",
-                          "status": "placed",
+                          "status": "approved",
                           "complete": true
                         }
                       }

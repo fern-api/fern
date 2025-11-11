@@ -166,7 +166,7 @@ name = "{self.name}"'''
 
             stringified_project_urls = ""
             if len(project_urls) > 0:
-                stringified_project_urls = "\n[project.urls]\n" + "\n".join(project_urls) + "\n"
+                stringified_project_urls = "\n[tool.poetry.urls]\n" + "\n".join(project_urls) + "\n"
 
             s += f"""
 description = "{description}"

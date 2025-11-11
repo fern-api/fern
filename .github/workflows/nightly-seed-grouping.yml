@@ -94,7 +94,7 @@ jobs:
   build-seed-groups:
     runs-on: ubuntu-latest
     timeout-minutes: 3
-    if: always() && (needs.run-seed-test.result == 'success' || needs.run-seed-test.result == 'failure')
+    if: always() && !cancelled() && (needs.run-seed-test.result == 'success' || needs.run-seed-test.result == 'failure')
     needs: [run-seed-test]
     strategy:
       fail-fast: false
@@ -141,7 +141,7 @@ jobs:
         with:
           path: ./artifacts
           name: ${{ matrix.sdk-name }}-seed-test-log.txt
-          github-token: ${{ secrets.FERN_GITHUB_PAT }}
+          github-token: ${{ secrets.ACTIONS_PAT }}
           repository: ${{ github.repository }}
           merge-multiple: true
 
@@ -171,7 +171,7 @@ jobs:
   pr-seed-group-files:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if: always() && (needs.build-seed-groups.result == 'success' || needs.build-seed-groups.result == 'failure')
+    if: always() && !cancelled() && (needs.build-seed-groups.result == 'success' || needs.build-seed-groups.result == 'failure')
     needs: [build-seed-groups]
     steps:
       - name: Checkout Repo
@@ -228,7 +228,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          token: ${{ secrets.ACTIONS_PAT }}
           commit-message: "chore(internal): update seed group files"
           title: "chore(internal): update seed group files"
           branch: update-seed-group-files
@@ -266,7 +266,7 @@ jobs:
         if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: peter-evans/enable-pull-request-automerge@v3
         with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
+          token: ${{ secrets.ACTIONS_PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
 

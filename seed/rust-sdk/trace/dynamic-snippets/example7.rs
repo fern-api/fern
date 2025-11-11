@@ -1,6 +1,4 @@
 use seed_trace::prelude::*;
-use std::collections::{HashMap, HashSet};
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {

@@ -32,7 +32,9 @@ export function getReferencedApiSections(config: docsYml.ParsedDocsConfiguration
             break;
         case "productgroup":
             config.navigation.products.forEach((product) => {
-                visitNavigation({ navigation: product.navigation, collector });
+                if (product.type === "internal") {
+                    visitNavigation({ navigation: product.navigation, collector });
+                }
             });
             break;
         default:
@@ -54,6 +56,12 @@ export function visitNavigation({
                 if (tab.child.type === "layout") {
                     tab.child.layout.forEach((item) => {
                         visitDocsNavigationItem({ item, collector });
+                    });
+                } else if (tab.child.type === "variants") {
+                    tab.child.variants.forEach((variant) => {
+                        variant.layout.forEach((item) => {
+                            visitDocsNavigationItem({ item, collector });
+                        });
                     });
                 }
             });

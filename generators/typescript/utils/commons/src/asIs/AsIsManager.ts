@@ -14,6 +14,8 @@ export namespace AsIsManager {
         relativePackagePath: string;
         relativeTestPath: string;
         generatorType: "sdk" | "model" | "express";
+        formatter: "prettier" | "biome" | "oxfmt";
+        linter: "biome" | "oxlint" | "none";
     }
 }
 
@@ -23,19 +25,25 @@ export class AsIsManager {
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
     private readonly generatorType: "sdk" | "model" | "express";
+    private readonly formatter: "prettier" | "biome" | "oxfmt";
+    private readonly linter: "biome" | "oxlint" | "none";
 
     constructor({
         useBigInt,
         generateWireTests,
         relativePackagePath,
         relativeTestPath,
-        generatorType
+        generatorType,
+        formatter,
+        linter
     }: AsIsManager.Init) {
         this.useBigInt = useBigInt;
         this.generateWireTests = generateWireTests;
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
         this.generatorType = generatorType;
+        this.formatter = formatter;
+        this.linter = linter;
     }
 
     /**
@@ -44,6 +52,7 @@ export class AsIsManager {
     private getAsIsFiles() {
         return {
             biomeJson: { "biome.json": "biome.json" },
+            oxfmtrcJson: { "oxfmtrc.json": ".oxfmtrc.json" },
             core: {
                 mergeHeaders: { "core/headers.ts": `${this.relativePackagePath}/core/headers.ts` },
                 json: {
@@ -69,7 +78,12 @@ export class AsIsManager {
         const filesToCopy: Record<string, string>[] = [];
         const asIsFiles = this.getAsIsFiles();
 
-        filesToCopy.push(asIsFiles.biomeJson);
+        if (this.formatter === "biome" || this.linter === "biome") {
+            filesToCopy.push(asIsFiles.biomeJson);
+        }
+        if (this.formatter === "oxfmt") {
+            filesToCopy.push(asIsFiles.oxfmtrcJson);
+        }
         if (this.generatorType === "sdk" || this.generatorType === "model") {
             filesToCopy.push(asIsFiles.core.mergeHeaders);
             filesToCopy.push(asIsFiles.scripts.renameToEsmFiles);

@@ -13,7 +13,6 @@
 
 ```rust
 use seed_package_yml::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

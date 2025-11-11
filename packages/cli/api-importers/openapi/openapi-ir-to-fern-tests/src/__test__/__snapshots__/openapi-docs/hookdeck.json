@@ -31348,12 +31348,12 @@ docs: >-
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BearerAuthScheme",
+      "auth": "bearerAuth",
       "auth-schemes": {
-        "BasicAuthScheme": {
+        "basicAuth": {
           "scheme": "basic",
         },
-        "BearerAuthScheme": {
+        "bearerAuth": {
           "scheme": "bearer",
         },
       },
@@ -31376,11 +31376,11 @@ environments:
   Default: https://api.hookdeck.com/2023-01-01
 default-environment: Default
 auth-schemes:
-  BearerAuthScheme:
+  bearerAuth:
     scheme: bearer
-  BasicAuthScheme:
+  basicAuth:
     scheme: basic
-auth: BearerAuthScheme
+auth: bearerAuth
 ",
   },
 }

@@ -32,21 +32,18 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "devDependencies": {
-    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
-    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/csharp-codegen": "workspace:*",
-    "@fern-api/dynamic-ir-sdk": "^61.0.0",
+    "@fern-api/dynamic-ir-sdk": "61.4.0",
     "@fern-api/path-utils": "workspace:*",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "lodash-es": "^4.17.21",
-    "string.prototype.replaceall": "^1.0.10",
     "tsup": "^8.5.0",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "vitest": "^2.1.9"
   }
 }

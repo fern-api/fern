@@ -1,24 +1,24 @@
 import Foundation
 
 public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
-    case stopped(Stopped)
     case errored(Errored)
-    case running(Running)
     case ran(Ran)
+    case running(Running)
+    case stopped(Stopped)
     case traced(Traced)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "stopped":
-            self = .stopped(try Stopped(from: decoder))
         case "errored":
             self = .errored(try Errored(from: decoder))
-        case "running":
-            self = .running(try Running(from: decoder))
         case "ran":
             self = .ran(try Ran(from: decoder))
+        case "running":
+            self = .running(try Running(from: decoder))
+        case "stopped":
+            self = .stopped(try Stopped(from: decoder))
         case "traced":
             self = .traced(try Traced(from: decoder))
         default:
@@ -33,13 +33,13 @@ public enum WorkspaceSubmissionStatus: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .stopped(let data):
-            try data.encode(to: encoder)
         case .errored(let data):
+            try data.encode(to: encoder)
+        case .ran(let data):
             try data.encode(to: encoder)
         case .running(let data):
             try data.encode(to: encoder)
-        case .ran(let data):
+        case .stopped(let data):
             try data.encode(to: encoder)
         case .traced(let data):
             try data.encode(to: encoder)

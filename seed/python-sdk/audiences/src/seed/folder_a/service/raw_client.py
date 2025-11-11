@@ -15,10 +15,20 @@ class RawServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_direct_thread(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Response]:
+    def get_direct_thread(
+        self,
+        *,
+        ids: typing.Union[str, typing.Sequence[str]],
+        tags: typing.Union[str, typing.Sequence[str]],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[Response]:
         """
         Parameters
         ----------
+        ids : typing.Union[str, typing.Sequence[str]]
+
+        tags : typing.Union[str, typing.Sequence[str]]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -28,6 +38,10 @@ class RawServiceClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             method="GET",
+            params={
+                "ids": ids,
+                "tags": tags,
+            },
             request_options=request_options,
         )
         try:
@@ -51,11 +65,19 @@ class AsyncRawServiceClient:
         self._client_wrapper = client_wrapper
 
     async def get_direct_thread(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        ids: typing.Union[str, typing.Sequence[str]],
+        tags: typing.Union[str, typing.Sequence[str]],
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Response]:
         """
         Parameters
         ----------
+        ids : typing.Union[str, typing.Sequence[str]]
+
+        tags : typing.Union[str, typing.Sequence[str]]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -65,6 +87,10 @@ class AsyncRawServiceClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="GET",
+            params={
+                "ids": ids,
+                "tags": tags,
+            },
             request_options=request_options,
         )
         try:

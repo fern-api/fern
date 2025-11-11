@@ -35,7 +35,7 @@ var items = await client.Complex.SearchAsync(
         Query = new SingleFilterSearchRequest
         {
             Field = "field",
-            Operator = SingleFilterSearchRequestOperator.Equals,
+            Operator = SingleFilterSearchRequestOperator.Equals_,
             Value = "value",
         },
     }
@@ -79,7 +79,7 @@ var items = await client.Complex.SearchAsync(
         Query = new SingleFilterSearchRequest
         {
             Field = "field",
-            Operator = SingleFilterSearchRequestOperator.Equals,
+            Operator = SingleFilterSearchRequestOperator.Equals_,
             Value = "value",
         },
     }
@@ -127,6 +127,35 @@ var response = await client.Complex.SearchAsync(
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
     }
 );
+```
+
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using SeedPagination;
+
+// Using a built-in value
+var multipleFilterSearchRequestOperator = MultipleFilterSearchRequestOperator.And;
+
+// Using a custom value
+var customMultipleFilterSearchRequestOperator = MultipleFilterSearchRequestOperator.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (multipleFilterSearchRequestOperator.Value)
+{
+    case MultipleFilterSearchRequestOperator.Values.And:
+        Console.WriteLine("And");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {multipleFilterSearchRequestOperator.Value}");
+        break;
+}
+
+// Explicit casting
+string multipleFilterSearchRequestOperatorString = (string)MultipleFilterSearchRequestOperator.And;
+MultipleFilterSearchRequestOperator multipleFilterSearchRequestOperatorFromString = (MultipleFilterSearchRequestOperator)"AND";
 ```
 
 ## Contributing

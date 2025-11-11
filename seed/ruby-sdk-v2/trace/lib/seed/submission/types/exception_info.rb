@@ -4,9 +4,9 @@ module Seed
   module Submission
     module Types
       class ExceptionInfo < Internal::Types::Model
-        field :exception_type, -> { String }, optional: false, nullable: false
-        field :exception_message, -> { String }, optional: false, nullable: false
-        field :exception_stacktrace, -> { String }, optional: false, nullable: false
+        field :exception_type, -> { String }, optional: false, nullable: false, api_name: "exceptionType"
+        field :exception_message, -> { String }, optional: false, nullable: false, api_name: "exceptionMessage"
+        field :exception_stacktrace, -> { String }, optional: false, nullable: false, api_name: "exceptionStacktrace"
       end
     end
   end

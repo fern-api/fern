@@ -4,6 +4,7 @@
 package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
+import com.seed.api.core.MediaTypes;
 import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.QueryStringMapper;
 import com.seed.api.core.RequestOptions;
@@ -11,8 +12,11 @@ import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.requests.GetFooRequest;
+import com.seed.api.requests.UpdateFooRequest;
 import com.seed.api.types.Foo;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -20,6 +24,7 @@ import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.jetbrains.annotations.NotNull;
@@ -73,17 +78,77 @@ public class AsyncRawSeedApiClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedApiHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Foo.class), response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Foo.class), response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedApiApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<SeedApiHttpResponse<Foo>> updateFoo(String id, UpdateFooRequest request) {
+        return updateFoo(id, request, null);
+    }
+
+    public CompletableFuture<SeedApiHttpResponse<Foo>> updateFoo(
+            String id, UpdateFooRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("foo")
+                .addPathSegment(id)
+                .build();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("nullable_text", request.getNullableText());
+        properties.put("nullable_number", request.getNullableNumber());
+        properties.put("non_nullable_text", request.getNonNullableText());
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl)
+                .method("PATCH", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
+        _requestBuilder.addHeader("X-Idempotency-Key", request.getXIdempotencyKey());
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedApiHttpResponse<Foo>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedApiHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Foo.class), response));
+                        return;
+                    }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                    future.completeExceptionally(new SeedApiApiException(
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));

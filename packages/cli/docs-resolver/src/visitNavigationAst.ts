@@ -37,9 +37,9 @@ export async function visitNavigationAst({
     if (navigationConfigIsTabbed(navigation)) {
         await Promise.all(
             navigation.map(async (tab) => {
-                if (tab.layout != null) {
+                if (tabbedNavigationItemHasLayout(tab)) {
                     await Promise.all(
-                        tab.layout.map(async (item) => {
+                        tab.layout.map(async (item: docsYml.RawSchemas.NavigationItem) => {
                             await visitNavigationItem({
                                 navigationItem: item,
                                 visitor,
@@ -47,6 +47,19 @@ export async function visitNavigationAst({
                                 context
                             });
                         })
+                    );
+                } else if (tabbedNavigationItemHasVariants(tab)) {
+                    await Promise.all(
+                        tab.variants.flatMap((variant) =>
+                            variant.layout.map(async (item: docsYml.RawSchemas.NavigationItem) => {
+                                await visitNavigationItem({
+                                    navigationItem: item,
+                                    visitor,
+                                    apiWorkspaces,
+                                    context
+                                });
+                            })
+                        )
                     );
                 }
             })
@@ -85,6 +98,7 @@ async function visitNavigationItem({
         summary: noop,
         title: noop,
         layout: noop,
+        collapsed: noop,
         icon: noop,
         slug: noop,
         hidden: noop,
@@ -96,6 +110,7 @@ async function visitNavigationItem({
         page: noop,
         featureFlag: noop,
         openrpc: noop,
+        postman: noop,
         contents: async (items: docsYml.RawSchemas.NavigationItem[] | undefined): Promise<void> => {
             if (items == null) {
                 return;
@@ -139,4 +154,20 @@ function navigationConfigIsTabbed(
     config: docsYml.RawSchemas.NavigationConfig
 ): config is docsYml.RawSchemas.TabbedNavigationConfig {
     return (config as docsYml.RawSchemas.TabbedNavigationConfig)[0]?.tab != null;
+}
+
+function tabbedNavigationItemHasLayout(
+    item: docsYml.RawSchemas.TabbedNavigationItem
+): item is docsYml.RawSchemas.TabbedNavigationItemWithLayout & {
+    layout: docsYml.RawSchemas.NavigationItem[];
+} {
+    return "layout" in item && Array.isArray(item.layout);
+}
+
+function tabbedNavigationItemHasVariants(
+    item: docsYml.RawSchemas.TabbedNavigationItem
+): item is docsYml.RawSchemas.TabbedNavigationItemWithVariants & {
+    variants: docsYml.RawSchemas.TabVariant[];
+} {
+    return "variants" in item && Array.isArray(item.variants);
 }

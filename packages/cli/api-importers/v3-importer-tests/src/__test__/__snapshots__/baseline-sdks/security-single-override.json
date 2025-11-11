@@ -24,7 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
-        "key": "BearerAuthScheme",
+        "key": "OAuth",
         "token": {
           "originalName": "token",
           "camelCase": {
@@ -792,7 +792,7 @@
     "endpoints": {
       "endpoint_.getPlantById": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "OAuth",
           "token": {
             "originalName": "token",
             "camelCase": {

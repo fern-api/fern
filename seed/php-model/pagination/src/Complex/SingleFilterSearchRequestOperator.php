@@ -13,5 +13,5 @@ enum SingleFilterSearchRequestOperator: string
     case Contains = "~";
     case DoesNotContain = "!~";
     case StartsWith = "^";
-    case EndsWith = "$";
+    case EndsWith = "\$";
 }

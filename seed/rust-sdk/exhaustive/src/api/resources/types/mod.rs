@@ -1,13 +1,13 @@
 use crate::{ApiError, ClientConfig, HttpClient};
 
 pub mod docs;
-pub use docs::TypesDocsClient;
+pub use docs::DocsClient;
 pub mod enum_;
-pub use enum_::TypesEnumClient;
+pub use enum_::EnumClient2;
 pub mod object;
-pub use object::TypesObjectClient;
+pub use object::ObjectClient2;
 pub mod union_;
-pub use union_::TypesUnionClient;
+pub use union_::UnionClient2;
 pub struct TypesClient {
     pub http_client: HttpClient,
 }

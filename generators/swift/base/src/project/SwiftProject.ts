@@ -1,13 +1,10 @@
 import { mkdir } from "node:fs/promises";
 import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { BaseSwiftCustomConfigSchema, swift } from "@fern-api/swift-codegen";
-import { SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
+import { BaseSwiftCustomConfigSchema, NameRegistry, swift } from "@fern-api/swift-codegen";
 import { AbstractSwiftGeneratorContext } from "../context";
-import { FileRegistry } from "./FileRegistry";
-import { SourceSymbolRegistry } from "./SourceSymbolRegistry";
+import { FileRegistry } from "./file-registry";
 import { SwiftFile } from "./SwiftFile";
-import { TestSymbolRegistry } from "./TestSymbolRegistry";
 
 interface FileCandidate {
     nameCandidateWithoutExtension: string;
@@ -23,18 +20,7 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
     /** Files stored in the `Tests` directory. */
     private readonly testFileRegistry = new FileRegistry();
 
-    public readonly srcSymbolRegistry: SourceSymbolRegistry;
-    public readonly testSymbolRegistry: TestSymbolRegistry;
-
-    private static createSrcSymbolRegistry(): SourceSymbolRegistry {
-        const additionalReservedSymbols = Object.values(SourceAsIsFiles).flatMap((file) => file.symbolNames);
-        return SourceSymbolRegistry.create(additionalReservedSymbols);
-    }
-
-    private static createTestSymbolRegistry(): TestSymbolRegistry {
-        const additionalReservedSymbols = Object.values(TestAsIsFiles).flatMap((file) => file.symbolNames);
-        return TestSymbolRegistry.create(additionalReservedSymbols);
-    }
+    public readonly nameRegistry: NameRegistry;
 
     public constructor({
         context
@@ -42,8 +28,7 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
         context: AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>;
     }) {
         super(context);
-        this.srcSymbolRegistry = SwiftProject.createSrcSymbolRegistry();
-        this.testSymbolRegistry = SwiftProject.createTestSymbolRegistry();
+        this.nameRegistry = NameRegistry.create();
     }
 
     public get sourcesDirectory(): RelativeFilePath {
@@ -99,6 +84,7 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
         context.logger.debug(`mkdir ${absolutePathToSourcesDirectory}`);
         await mkdir(absolutePathToSourcesDirectory, { recursive: true });
         await Promise.all([this.persistRootFiles(), this.persistSourceFiles(), this.persistTestFiles()]);
+        await this.writeRawFiles();
     }
 
     private async persistRootFiles(): Promise<void> {

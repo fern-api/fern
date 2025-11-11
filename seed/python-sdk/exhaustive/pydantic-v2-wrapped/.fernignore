@@ -1,0 +1,2 @@
+tests/custom/test_alias_serialization.py
+tests/custom/test_discriminated_unions.py

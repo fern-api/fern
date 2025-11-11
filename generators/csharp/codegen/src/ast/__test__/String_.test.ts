@@ -1,18 +1,26 @@
 /* eslint-disable no-useless-escape */
 
-import { CSharp } from "../..";
-import { String_ } from "../String_";
+import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { BaseCsharpCustomConfigSchema } from "../..";
+import { Generation } from "../../context/generation-info";
+import { String_ } from "../code/String_";
 
-const csharp = new CSharp();
+const generation = new Generation(
+    {} as unknown as IntermediateRepresentation,
+    "",
+    {} as BaseCsharpCustomConfigSchema,
+    {} as FernGeneratorExec.config.GeneratorConfig
+);
+
 describe("String_", () => {
     function getStringOutput(input: string): string {
-        const string_ = new String_({ string: input }, csharp);
+        const string_ = new String_({ string: input }, generation);
         return string_.toString({
             namespace: "",
             allNamespaceSegments: new Set<string>(),
             allTypeClassReferences: new Map<string, Set<string>>(),
-            rootNamespace: "",
-            customConfig: {}
+            generation
         });
     }
 

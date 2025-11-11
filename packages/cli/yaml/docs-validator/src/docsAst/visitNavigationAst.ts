@@ -34,9 +34,9 @@ export async function visitNavigationAst({
     if (navigationConfigIsTabbed(navigation)) {
         await Promise.all(
             navigation.map(async (tab, tabIdx) => {
-                if (tab.layout != null) {
+                if (tabbedNavigationItemHasLayout(tab)) {
                     await Promise.all(
-                        tab.layout.map(async (item, itemIdx) => {
+                        tab.layout.map(async (item: docsYml.RawSchemas.NavigationItem, itemIdx: number) => {
                             await visitNavigationItem({
                                 absolutePathToFernFolder,
                                 navigationItem: item,
@@ -47,6 +47,29 @@ export async function visitNavigationAst({
                                 context
                             });
                         })
+                    );
+                } else if (tabbedNavigationItemHasVariants(tab)) {
+                    await Promise.all(
+                        tab.variants.flatMap((variant, variantIdx) =>
+                            variant.layout.map(async (item: docsYml.RawSchemas.NavigationItem, itemIdx: number) => {
+                                await visitNavigationItem({
+                                    absolutePathToFernFolder,
+                                    navigationItem: item,
+                                    visitor,
+                                    nodePath: [
+                                        ...nodePath,
+                                        `${tabIdx}`,
+                                        "variants",
+                                        `${variantIdx}`,
+                                        "layout",
+                                        `${itemIdx}`
+                                    ],
+                                    absoluteFilepathToConfiguration,
+                                    apiWorkspaces,
+                                    context
+                                });
+                            })
+                        )
                     );
                 }
             })
@@ -107,6 +130,7 @@ async function visitNavigationItem({
         summary: noop,
         title: noop,
         layout: noop,
+        collapsed: noop,
         icon: noop,
         slug: noop,
         hidden: noop,
@@ -115,6 +139,7 @@ async function visitNavigationItem({
         playground: noop,
         flattened: noop,
         featureFlag: noop,
+        postman: noop,
         path: async (path: string | undefined): Promise<void> => {
             if (path == null) {
                 return;
@@ -260,4 +285,20 @@ function navigationConfigIsTabbed(
     config: docsYml.RawSchemas.NavigationConfig
 ): config is docsYml.RawSchemas.TabbedNavigationConfig {
     return (config as docsYml.RawSchemas.TabbedNavigationConfig)[0]?.tab != null;
+}
+
+function tabbedNavigationItemHasLayout(
+    item: docsYml.RawSchemas.TabbedNavigationItem
+): item is docsYml.RawSchemas.TabbedNavigationItemWithLayout & {
+    layout: docsYml.RawSchemas.NavigationItem[];
+} {
+    return "layout" in item && Array.isArray(item.layout);
+}
+
+function tabbedNavigationItemHasVariants(
+    item: docsYml.RawSchemas.TabbedNavigationItem
+): item is docsYml.RawSchemas.TabbedNavigationItemWithVariants & {
+    variants: docsYml.RawSchemas.TabVariant[];
+} {
+    return "variants" in item && Array.isArray(item.variants);
 }

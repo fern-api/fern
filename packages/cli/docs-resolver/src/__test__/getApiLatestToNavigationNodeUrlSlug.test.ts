@@ -23,13 +23,15 @@ it.skip("generates slug for endpoint", () => {
         defaultEnvironment: undefined,
         environments: [],
         auth: [],
+        multiAuth: undefined,
         responseHeaders: [],
         requests: [],
         errors: [],
         examples: [],
         snippetTemplates: undefined,
         protocol: undefined,
-        availability: undefined
+        availability: undefined,
+        includeInApiExplorer: undefined
     };
     expect(
         getApiLatestToNavigationNodeUrlSlug({

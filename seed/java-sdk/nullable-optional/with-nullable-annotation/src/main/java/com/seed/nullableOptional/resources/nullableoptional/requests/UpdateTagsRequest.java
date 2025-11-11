@@ -25,6 +25,7 @@ import org.jetbrains.annotations.Nullable;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UpdateTagsRequest.Builder.class)
 public final class UpdateTagsRequest {
+    @Nullable
     private final List<String> tags;
 
     private final Optional<List<String>> categories;
@@ -34,7 +35,7 @@ public final class UpdateTagsRequest {
     private final Map<String, Object> additionalProperties;
 
     private UpdateTagsRequest(
-            List<String> tags,
+            @Nullable List<String> tags,
             Optional<List<String>> categories,
             Optional<List<String>> labels,
             Map<String, Object> additionalProperties) {
@@ -125,7 +126,7 @@ public final class UpdateTagsRequest {
         }
 
         @JsonSetter(value = "tags", nulls = Nulls.SKIP)
-        public Builder tags(List<String> tags) {
+        public Builder tags(@Nullable List<String> tags) {
             this.tags.clear();
             if (tags != null) {
                 this.tags.addAll(tags);
@@ -157,7 +158,7 @@ public final class UpdateTagsRequest {
         }
 
         @JsonSetter(value = "labels", nulls = Nulls.SKIP)
-        public Builder labels(Optional<List<String>> labels) {
+        public Builder labels(@Nullable Optional<List<String>> labels) {
             this.labels = labels;
             return this;
         }

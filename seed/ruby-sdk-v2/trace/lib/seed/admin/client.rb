@@ -90,13 +90,16 @@ module Seed
 
       # @return [untyped]
       def store_traced_test_case(request_options: {}, **params)
-        _path_param_names = %w[submissionId testCaseId]
+        _path_param_names = %i[submission_id test_case_id]
+        _body = params.except(*_path_param_names)
+        _body_prop_names = %i[result trace_responses]
+        _body_bag = _body.slice(*_body_prop_names)
 
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/admin/store-test-trace/submission/#{params[:submissionId]}/testCase/#{params[:testCaseId]}",
-          body: params.except(*_path_param_names)
+          body: Seed::Admin::Types::StoreTracedTestCaseRequest.new(_body_bag).to_h
         )
         begin
           _response = @client.send(_request)
@@ -132,13 +135,16 @@ module Seed
 
       # @return [untyped]
       def store_traced_workspace(request_options: {}, **params)
-        _path_param_names = ["submissionId"]
+        _path_param_names = %i[submission_id]
+        _body = params.except(*_path_param_names)
+        _body_prop_names = %i[workspace_run_details trace_responses]
+        _body_bag = _body.slice(*_body_prop_names)
 
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/admin/store-workspace-trace/submission/#{params[:submissionId]}",
-          body: params.except(*_path_param_names)
+          body: Seed::Admin::Types::StoreTracedWorkspaceRequest.new(_body_bag).to_h
         )
         begin
           _response = @client.send(_request)

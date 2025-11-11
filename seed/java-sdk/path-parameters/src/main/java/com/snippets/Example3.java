@@ -5,9 +5,11 @@ import com.seed.pathParameters.resources.user.requests.GetUsersRequest;
 
 public class Example3 {
     public static void main(String[] args) {
-        SeedPathParametersClient client =
-                SeedPathParametersClient.builder().url("https://api.fern.com").build();
+        SeedPathParametersClient client = SeedPathParametersClient.builder()
+                .url("https://api.fern.com")
+                .tenantId("tenant_id")
+                .build();
 
-        client.user().getUser("tenant_id", "user_id", GetUsersRequest.builder().build());
+        client.user().getUser("user_id", GetUsersRequest.builder().build());
     }
 }

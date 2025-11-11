@@ -1,0 +1,360 @@
+{
+  "auth": {
+    "description": "JWT Bearer token authentication",
+    "tokenName": "token",
+    "type": "bearerAuth",
+  },
+  "authSchemes": {
+    "bearerAuth": {
+      "description": "JWT Bearer token authentication",
+      "tokenName": "token",
+      "type": "bearerAuth",
+    },
+  },
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": true,
+        "authV2": [
+          "bearerAuth",
+        ],
+        "availability": undefined,
+        "defaultEnvironment": "https://api.example.com/v1",
+        "description": undefined,
+        "environments": [
+          {
+            "baseUrl": "https://api.example.com/v1",
+            "id": "https://api.example.com/v1",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [
+          {
+            "availability": undefined,
+            "description": "Unauthorized",
+            "examples": [],
+            "name": "UnauthorizedError",
+            "statusCode": 401,
+            "type": {
+              "type": "alias",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "Error",
+              },
+            },
+          },
+        ],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/protected",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
+            "responseBody": {
+              "data": "sensitive information",
+              "id": "resource123",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "data": "sensitive information",
+                "id": "resource123",
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "getProtected",
+        "includeInApiExplorer": undefined,
+        "method": "GET",
+        "multiAuth": [
+          {
+            "schemes": [
+              "bearerAuth",
+            ],
+          },
+        ],
+        "name": "Get protected resource",
+        "originalEndpointId": "endpoint_.getProtected",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/protected",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": undefined,
+        "requestsV2": {
+          "requests": undefined,
+        },
+        "response": {
+          "description": "Protected resource accessed successfully",
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "ProtectedResource",
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Protected resource accessed successfully",
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "ProtectedResource",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": "https://api.example.com/v1",
+        "description": undefined,
+        "environments": [
+          {
+            "baseUrl": "https://api.example.com/v1",
+            "id": "https://api.example.com/v1",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/public",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
+            "responseBody": "public data",
+            "responseBodyV3": {
+              "type": "json",
+              "value": "public data",
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "getPublic",
+        "includeInApiExplorer": undefined,
+        "method": "GET",
+        "multiAuth": undefined,
+        "name": "Get public resource (no auth)",
+        "originalEndpointId": "endpoint_.getPublic",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/public",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": undefined,
+        "requestsV2": {
+          "requests": undefined,
+        },
+        "response": {
+          "description": "Public resource",
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Public resource",
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "regex": undefined,
+                    "type": "string",
+                  },
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+    ],
+    "pointsTo": undefined,
+    "subpackages": [],
+    "types": [
+      "ProtectedResource",
+      "Error",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {},
+  "types": {
+    "Error": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "Error",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "code",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "message",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "ProtectedResource": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "ProtectedResource",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Resource identifier",
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Protected data",
+            "key": "data",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}

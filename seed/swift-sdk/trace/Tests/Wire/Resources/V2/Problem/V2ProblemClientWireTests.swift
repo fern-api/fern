@@ -4,7 +4,7 @@ import Trace
 
 @Suite("V2ProblemClient Wire Tests") struct V2ProblemClientWireTests {
     @Test func getLightweightProblems1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -52,12 +52,12 @@ import Trace
                 variableTypes: []
             )
         ]
-        let response = try await client.v2.problem.getLightweightProblems()
+        let response = try await client.v2.problem.getLightweightProblems(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
     @Test func getProblems1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -673,15 +673,15 @@ import Trace
                                 Parameter(
                                     parameterId: "parameterId",
                                     name: "name",
-                                    variableType: .integerType()
+                                    variableType: .integerType(.init())
                                 ),
                                 Parameter(
                                     parameterId: "parameterId",
                                     name: "name",
-                                    variableType: .integerType()
+                                    variableType: .integerType(.init())
                                 )
                             ],
-                            returnType: .integerType()
+                            returnType: .integerType(.init())
                         ),
                         additionalFiles: [
                             .java: Files(
@@ -789,15 +789,15 @@ import Trace
                                                 Parameter(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType()
+                                                    variableType: .integerType(.init())
                                                 ),
                                                 Parameter(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType()
+                                                    variableType: .integerType(.init())
                                                 )
                                             ],
-                                            returnType: .integerType()
+                                            returnType: .integerType(.init())
                                         ),
                                         code: FunctionImplementationForMultipleLanguages(
                                             codeByLanguage: [
@@ -834,15 +834,15 @@ import Trace
                                                 Parameter(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType()
+                                                    variableType: .integerType(.init())
                                                 ),
                                                 Parameter(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType()
+                                                    variableType: .integerType(.init())
                                                 )
                                             ],
-                                            returnType: .integerType()
+                                            returnType: .integerType(.init())
                                         ),
                                         code: FunctionImplementationForMultipleLanguages(
                                             codeByLanguage: [
@@ -913,15 +913,15 @@ import Trace
                                 Parameter(
                                     parameterId: "parameterId",
                                     name: "name",
-                                    variableType: .integerType()
+                                    variableType: .integerType(.init())
                                 ),
                                 Parameter(
                                     parameterId: "parameterId",
                                     name: "name",
-                                    variableType: .integerType()
+                                    variableType: .integerType(.init())
                                 )
                             ],
-                            returnType: .integerType()
+                            returnType: .integerType(.init())
                         ),
                         additionalFiles: [
                             .java: Files(
@@ -1029,15 +1029,15 @@ import Trace
                                                 Parameter(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType()
+                                                    variableType: .integerType(.init())
                                                 ),
                                                 Parameter(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType()
+                                                    variableType: .integerType(.init())
                                                 )
                                             ],
-                                            returnType: .integerType()
+                                            returnType: .integerType(.init())
                                         ),
                                         code: FunctionImplementationForMultipleLanguages(
                                             codeByLanguage: [
@@ -1074,15 +1074,15 @@ import Trace
                                                 Parameter(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType()
+                                                    variableType: .integerType(.init())
                                                 ),
                                                 Parameter(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType()
+                                                    variableType: .integerType(.init())
                                                 )
                                             ],
-                                            returnType: .integerType()
+                                            returnType: .integerType(.init())
                                         ),
                                         code: FunctionImplementationForMultipleLanguages(
                                             codeByLanguage: [
@@ -1135,12 +1135,12 @@ import Trace
                 isPublic: true
             )
         ]
-        let response = try await client.v2.problem.getProblems()
+        let response = try await client.v2.problem.getProblems(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
     @Test func getLatestProblem1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -1464,15 +1464,15 @@ import Trace
                             Parameter(
                                 parameterId: "parameterId",
                                 name: "name",
-                                variableType: .integerType()
+                                variableType: .integerType(.init())
                             ),
                             Parameter(
                                 parameterId: "parameterId",
                                 name: "name",
-                                variableType: .integerType()
+                                variableType: .integerType(.init())
                             )
                         ],
-                        returnType: .integerType()
+                        returnType: .integerType(.init())
                     ),
                     additionalFiles: [
                         .java: Files(
@@ -1580,15 +1580,15 @@ import Trace
                                             Parameter(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType()
+                                                variableType: .integerType(.init())
                                             ),
                                             Parameter(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType()
+                                                variableType: .integerType(.init())
                                             )
                                         ],
-                                        returnType: .integerType()
+                                        returnType: .integerType(.init())
                                     ),
                                     code: FunctionImplementationForMultipleLanguages(
                                         codeByLanguage: [
@@ -1626,15 +1626,15 @@ import Trace
                                             Parameter(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType()
+                                                variableType: .integerType(.init())
                                             ),
                                             Parameter(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType()
+                                                variableType: .integerType(.init())
                                             )
                                         ],
-                                        returnType: .integerType()
+                                        returnType: .integerType(.init())
                                     ),
                                     code: FunctionImplementationForMultipleLanguages(
                                         codeByLanguage: [
@@ -1687,12 +1687,15 @@ import Trace
             ],
             isPublic: true
         )
-        let response = try await client.v2.problem.getLatestProblem(problemId: "problemId")
+        let response = try await client.v2.problem.getLatestProblem(
+            problemId: "problemId",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getProblemVersion1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -2016,15 +2019,15 @@ import Trace
                             Parameter(
                                 parameterId: "parameterId",
                                 name: "name",
-                                variableType: .integerType()
+                                variableType: .integerType(.init())
                             ),
                             Parameter(
                                 parameterId: "parameterId",
                                 name: "name",
-                                variableType: .integerType()
+                                variableType: .integerType(.init())
                             )
                         ],
-                        returnType: .integerType()
+                        returnType: .integerType(.init())
                     ),
                     additionalFiles: [
                         .java: Files(
@@ -2132,15 +2135,15 @@ import Trace
                                             Parameter(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType()
+                                                variableType: .integerType(.init())
                                             ),
                                             Parameter(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType()
+                                                variableType: .integerType(.init())
                                             )
                                         ],
-                                        returnType: .integerType()
+                                        returnType: .integerType(.init())
                                     ),
                                     code: FunctionImplementationForMultipleLanguages(
                                         codeByLanguage: [
@@ -2178,15 +2181,15 @@ import Trace
                                             Parameter(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType()
+                                                variableType: .integerType(.init())
                                             ),
                                             Parameter(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType()
+                                                variableType: .integerType(.init())
                                             )
                                         ],
-                                        returnType: .integerType()
+                                        returnType: .integerType(.init())
                                     ),
                                     code: FunctionImplementationForMultipleLanguages(
                                         codeByLanguage: [
@@ -2241,7 +2244,8 @@ import Trace
         )
         let response = try await client.v2.problem.getProblemVersion(
             problemId: "problemId",
-            problemVersion: 1
+            problemVersion: 1,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

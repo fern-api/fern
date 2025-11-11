@@ -1506,6 +1506,22 @@
                           },
                           "type": "object"
                         },
+                        "error": {
+                          "properties": {
+                            "code": {
+                              "value": "account_holder_not_found",
+                              "type": "enum"
+                            },
+                            "message": {
+                              "value": {
+                                "value": "message",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "created_at": {
                           "value": {
                             "value": "2024-03-30T00:00:00",
@@ -2138,8 +2154,10 @@
             "generatedName": "GetBatchesV3BatchesGetRequestStatus",
             "description": "If specified, only return batches with this status",
             "value": {
+              "description": "If specified, only return batches with this status",
               "generatedName": "GetBatchesV3BatchesGetRequestStatus",
               "schema": "BatchStatus",
+              "groupName": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -3226,8 +3244,10 @@
             "generatedName": "GetBankStatementsV3BankStatementsGetRequestStatus",
             "description": "If specified, only return bank statements with this status",
             "value": {
+              "description": "If specified, only return bank statements with this status",
               "generatedName": "GetBankStatementsV3BankStatementsGetRequestStatus",
               "schema": "DocumentStatus",
+              "groupName": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -7175,8 +7195,10 @@
             "generatedName": "GetReportsV3ReportsGetRequestStatus",
             "description": "If specified, only return reports with this status",
             "value": {
+              "description": "If specified, only return reports with this status",
               "generatedName": "GetReportsV3ReportsGetRequestStatus",
               "schema": "ReportStatus",
+              "groupName": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -10760,8 +10782,10 @@
               "generatedName": "CategoriesAccounting",
               "description": "The corresponding accounting category. Only available for `business` transactions.",
               "value": {
+                "description": "The corresponding accounting category. Only available for `business` transactions.",
                 "generatedName": "CategoriesAccounting",
                 "schema": "AccountingCategory",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -13783,8 +13807,10 @@
               "generatedName": "LocationStructured",
               "description": "When raw is set, a structured representation of it.",
               "value": {
+                "description": "When raw is set, a structured representation of it.",
                 "generatedName": "LocationStructured",
                 "schema": "LocationStructured",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"

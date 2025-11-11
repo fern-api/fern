@@ -4901,8 +4901,10 @@
               "generatedName": "DeploymentReadStatus",
               "description": "The current status of the deployment\n\n* `ACTIVE` - Active\n* `INACTIVE` - Inactive\n* `ARCHIVED` - Archived",
               "value": {
+                "description": "The current status of the deployment\n\n* `ACTIVE` - Active\n* `INACTIVE` - Inactive\n* `ARCHIVED` - Archived",
                 "generatedName": "DeploymentReadStatus",
                 "schema": "DeploymentReadStatusEnum",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -4922,8 +4924,10 @@
               "generatedName": "DeploymentReadEnvironment",
               "description": "The environment this deployment is used in\n\n* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production",
               "value": {
+                "description": "The environment this deployment is used in\n\n* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production",
                 "generatedName": "DeploymentReadEnvironment",
                 "schema": "EnvironmentEnum",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -5168,8 +5172,10 @@
               "generatedName": "DocumentDocumentToDocumentIndexIndexingState",
               "description": "An enum value representing where this document is along its indexing lifecycle for this index.\n\n* `AWAITING_PROCESSING` - Awaiting Processing\n* `QUEUED` - Queued\n* `INDEXING` - Indexing\n* `INDEXED` - Indexed\n* `FAILED` - Failed",
               "value": {
+                "description": "An enum value representing where this document is along its indexing lifecycle for this index.\n\n* `AWAITING_PROCESSING` - Awaiting Processing\n* `QUEUED` - Queued\n* `INDEXING` - Indexing\n* `INDEXED` - Indexed\n* `FAILED` - Failed",
                 "generatedName": "DocumentDocumentToDocumentIndexIndexingState",
                 "schema": "IndexingStateEnum",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -5237,8 +5243,10 @@
               "generatedName": "DocumentIndexCreateRequestStatus",
               "description": "The current status of the document index\n\n* `ACTIVE` - Active\n* `ARCHIVED` - Archived",
               "value": {
+                "description": "The current status of the document index\n\n* `ACTIVE` - Active\n* `ARCHIVED` - Archived",
                 "generatedName": "DocumentIndexCreateRequestStatus",
                 "schema": "DocumentIndexStatus",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -5258,8 +5266,10 @@
               "generatedName": "DocumentIndexCreateRequestEnvironment",
               "description": "The environment this document index is used in\n\n* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production",
               "value": {
+                "description": "The environment this document index is used in\n\n* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production",
                 "generatedName": "DocumentIndexCreateRequestEnvironment",
                 "schema": "EnvironmentEnum",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -5412,8 +5422,10 @@
               "generatedName": "DocumentIndexReadStatus",
               "description": "The current status of the document index\n\n* `ACTIVE` - Active\n* `ARCHIVED` - Archived",
               "value": {
+                "description": "The current status of the document index\n\n* `ACTIVE` - Active\n* `ARCHIVED` - Archived",
                 "generatedName": "DocumentIndexReadStatus",
                 "schema": "DocumentIndexStatus",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -5433,8 +5445,10 @@
               "generatedName": "DocumentIndexReadEnvironment",
               "description": "The environment this document index is used in\n\n* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production",
               "value": {
+                "description": "The environment this document index is used in\n\n* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production",
                 "generatedName": "DocumentIndexReadEnvironment",
                 "schema": "EnvironmentEnum",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -5572,8 +5586,10 @@
               "generatedName": "EnrichedNormalizedCompletionFinishReason",
               "description": "The reason the generation finished.\n\n* `LENGTH` - LENGTH\n* `STOP` - STOP\n* `UNKNOWN` - UNKNOWN",
               "value": {
+                "description": "The reason the generation finished.\n\n* `LENGTH` - LENGTH\n* `STOP` - STOP\n* `UNKNOWN` - UNKNOWN",
                 "generatedName": "EnrichedNormalizedCompletionFinishReason",
                 "schema": "FinishReasonEnum",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -5594,15 +5610,19 @@
               "description": "The logprobs of the completion. Only present if specified in the original request options.",
               "value": {
                 "generatedName": "EnrichedNormalizedCompletionLogprobs",
+                "description": "The logprobs of the completion. Only present if specified in the original request options.",
                 "value": {
+                  "description": "The logprobs of the completion. Only present if specified in the original request options.",
                   "generatedName": "EnrichedNormalizedCompletionLogprobs",
                   "schema": "NormalizedLogProbs",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -6016,15 +6036,19 @@
               "description": "Additional configuration that can be used to control what's included in the response.",
               "value": {
                 "generatedName": "GenerateBodyRequestOptions",
+                "description": "Additional configuration that can be used to control what's included in the response.",
                 "value": {
+                  "description": "Additional configuration that can be used to control what's included in the response.",
                   "generatedName": "GenerateBodyRequestOptions",
                   "schema": "GenerateOptionsRequest",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -6083,8 +6107,10 @@
               "generatedName": "GenerateOptionsRequestLogprobs",
               "description": "Which logprobs to include, if any. Defaults to NONE.\n\n* `ALL` - ALL\n* `NONE` - NONE",
               "value": {
+                "description": "Which logprobs to include, if any. Defaults to NONE.\n\n* `ALL` - ALL\n* `NONE` - NONE",
                 "generatedName": "GenerateOptionsRequestLogprobs",
                 "schema": "LogprobsEnum",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -6251,8 +6277,10 @@
               "generatedName": "GenerateResultData",
               "description": "An object containing the resulting generation. This key will be absent if the LLM provider experienced an error.",
               "value": {
+                "description": "An object containing the resulting generation. This key will be absent if the LLM provider experienced an error.",
                 "generatedName": "GenerateResultData",
                 "schema": "GenerateResultData",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -6272,8 +6300,10 @@
               "generatedName": "GenerateResultError",
               "description": "An object containing details about the error that occurred. This key will be absent if the LLM provider did not experience an error.",
               "value": {
+                "description": "An object containing details about the error that occurred. This key will be absent if the LLM provider did not experience an error.",
                 "generatedName": "GenerateResultError",
                 "schema": "GenerateResultError",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -6449,15 +6479,19 @@
               "description": "Additional configuration that can be used to control what's included in the response.",
               "value": {
                 "generatedName": "GenerateStreamBodyRequestOptions",
+                "description": "Additional configuration that can be used to control what's included in the response.",
                 "value": {
+                  "description": "Additional configuration that can be used to control what's included in the response.",
                   "generatedName": "GenerateStreamBodyRequestOptions",
                   "schema": "GenerateOptionsRequest",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -6730,15 +6764,19 @@
               "description": "Information about the sandbox snapshot that was used to create this model version, if applicable.",
               "value": {
                 "generatedName": "ModelVersionBuildConfigSandboxSnapshot",
+                "description": "Information about the sandbox snapshot that was used to create this model version, if applicable.",
                 "value": {
+                  "description": "Information about the sandbox snapshot that was used to create this model version, if applicable.",
                   "generatedName": "ModelVersionBuildConfigSandboxSnapshot",
                   "schema": "ModelVersionSandboxSnapshot",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -8052,12 +8090,14 @@
                 "value": {
                   "generatedName": "PromptTemplateBlockPropertiesChatRole",
                   "schema": "ChatMessageRole",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -8120,12 +8160,14 @@
                 "value": {
                   "generatedName": "PromptTemplateBlockPropertiesTemplateType",
                   "schema": "ContentType",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -8269,12 +8311,14 @@
                 "value": {
                   "generatedName": "PromptTemplateBlockPropertiesRequestChatRole",
                   "schema": "ChatMessageRole",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -8337,12 +8381,14 @@
                 "value": {
                   "generatedName": "PromptTemplateBlockPropertiesRequestTemplateType",
                   "schema": "ContentType",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -9395,12 +9441,14 @@
                 "value": {
                   "generatedName": "SandboxMetricInputParamsParams",
                   "schema": "EvaluationParams",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -9433,12 +9481,14 @@
                 "value": {
                   "generatedName": "SandboxMetricInputParamsRequestParams",
                   "schema": "EvaluationParamsRequest",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -9679,12 +9729,14 @@
                 "value": {
                   "generatedName": "ScenarioInputType",
                   "schema": "ScenarioInputTypeEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -9776,12 +9828,14 @@
                 "value": {
                   "generatedName": "ScenarioInputRequestType",
                   "schema": "ScenarioInputTypeEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -10161,15 +10215,19 @@
               "description": "Configuration options for the search.",
               "value": {
                 "generatedName": "SearchRequestBodyRequestOptions",
+                "description": "Configuration options for the search.",
                 "value": {
+                  "description": "Configuration options for the search.",
                   "generatedName": "SearchRequestBodyRequestOptions",
                   "schema": "SearchRequestOptionsRequest",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -10227,15 +10285,19 @@
               "description": "The weights to use for the search. Must add up to 1.0.",
               "value": {
                 "generatedName": "SearchRequestOptionsRequestWeights",
+                "description": "The weights to use for the search. Must add up to 1.0.",
                 "value": {
+                  "description": "The weights to use for the search. Must add up to 1.0.",
                   "generatedName": "SearchRequestOptionsRequestWeights",
                   "schema": "SearchWeightsRequest",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -10252,15 +10314,19 @@
               "description": "The configuration for merging results.",
               "value": {
                 "generatedName": "SearchRequestOptionsRequestResultMerging",
+                "description": "The configuration for merging results.",
                 "value": {
+                  "description": "The configuration for merging results.",
                   "generatedName": "SearchRequestOptionsRequestResultMerging",
                   "schema": "SearchResultMergingRequest",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -10277,15 +10343,19 @@
               "description": "The filters to apply to the search.",
               "value": {
                 "generatedName": "SearchRequestOptionsRequestFilters",
+                "description": "The filters to apply to the search.",
                 "value": {
+                  "description": "The filters to apply to the search.",
                   "generatedName": "SearchRequestOptionsRequestFilters",
                   "schema": "SearchFiltersRequest",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -10585,8 +10655,10 @@
               "generatedName": "SlimDocumentProcessingState",
               "description": "An enum value representing where this document is along its processing lifecycle. Note that this is different than its indexing lifecycle.\n\n* `QUEUED` - Queued\n* `PROCESSING` - Processing\n* `PROCESSED` - Processed\n* `FAILED` - Failed",
               "value": {
+                "description": "An enum value representing where this document is along its processing lifecycle. Note that this is different than its indexing lifecycle.\n\n* `QUEUED` - Queued\n* `PROCESSING` - Processing\n* `PROCESSED` - Processed\n* `FAILED` - Failed",
                 "generatedName": "SlimDocumentProcessingState",
                 "schema": "ProcessingStateEnum",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -10607,15 +10679,19 @@
               "description": "An enum value representing why the document could not be processed. Is null unless processing_state is FAILED.\n\n* `EXCEEDED_CHARACTER_LIMIT` - Exceeded Character Limit",
               "value": {
                 "generatedName": "SlimDocumentProcessingFailureReason",
+                "description": "An enum value representing why the document could not be processed. Is null unless processing_state is FAILED.\n\n* `EXCEEDED_CHARACTER_LIMIT` - Exceeded Character Limit",
                 "value": {
+                  "description": "An enum value representing why the document could not be processed. Is null unless processing_state is FAILED.\n\n* `EXCEEDED_CHARACTER_LIMIT` - Exceeded Character Limit",
                   "generatedName": "SlimDocumentProcessingFailureReason",
                   "schema": "ProcessingFailureReasonEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -10631,8 +10707,10 @@
               "generatedName": "SlimDocumentStatus",
               "description": "The document's current status.\n\n* `ACTIVE` - Active",
               "value": {
+                "description": "The document's current status.\n\n* `ACTIVE` - Active",
                 "generatedName": "SlimDocumentStatus",
                 "schema": "SlimDocumentStatusEnum",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -12105,6 +12183,7 @@
               "value": {
                 "generatedName": "WorkflowNodeResultEventData",
                 "schema": "WorkflowNodeResultData",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -12127,12 +12206,14 @@
                 "value": {
                   "generatedName": "WorkflowNodeResultEventError",
                   "schema": "WorkflowEventError",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -12430,6 +12511,7 @@
               "value": {
                 "generatedName": "WorkflowResultEventOutput",
                 "schema": "WorkflowResultEventOutputData",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -12452,12 +12534,14 @@
                 "value": {
                   "generatedName": "WorkflowResultEventError",
                   "schema": "WorkflowEventError",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],

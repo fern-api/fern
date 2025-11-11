@@ -30,7 +30,7 @@ packages = [
     { include = "seed/empty_clients", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/empty-clients/fern'
 
 [tool.poetry.dependencies]

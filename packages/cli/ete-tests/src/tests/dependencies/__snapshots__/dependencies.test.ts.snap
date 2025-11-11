@@ -938,6 +938,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
         "generatorConfig": null
     },
     "audiences": null,
+    "generationMetadata": null,
     "subpackages": {
         "subpackage_imported": {
             "name": {
@@ -1245,4 +1246,8 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
+<<<<<<< HEAD
 exports[`dependencies > file dependencies 1`] = `4897244`;
+=======
+exports[`dependencies > file dependencies 1`] = `4853086`;
+>>>>>>> 7561f048e1116508444f84681a418b2f4445cb9b

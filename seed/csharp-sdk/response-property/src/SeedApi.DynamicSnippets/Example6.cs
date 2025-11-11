@@ -1,5 +1,4 @@
 using SeedResponseProperty;
-using System.Threading.Tasks;
 
 namespace Usage;
 
@@ -12,7 +11,7 @@ public class Example6
             }
         );
 
-        await client.Service.GetMovieAsync(
+        await client.Service.GetOptionalMovieNameAsync(
             "string"
         );
     }

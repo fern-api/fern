@@ -64,12 +64,12 @@ public class AsyncRawCustomAuthClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedCustomAuthHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class), response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, boolean.class), response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     try {
                         if (response.code() == 401) {
                             future.completeExceptionally(new UnauthorizedRequest(
@@ -81,11 +81,9 @@ public class AsyncRawCustomAuthClient {
                     } catch (JsonProcessingException ignored) {
                         // unable to map error response, throwing generic error
                     }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedCustomAuthApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -140,12 +138,12 @@ public class AsyncRawCustomAuthClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedCustomAuthHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class), response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, boolean.class), response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     try {
                         switch (response.code()) {
                             case 400:
@@ -163,11 +161,9 @@ public class AsyncRawCustomAuthClient {
                     } catch (JsonProcessingException ignored) {
                         // unable to map error response, throwing generic error
                     }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedCustomAuthApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(

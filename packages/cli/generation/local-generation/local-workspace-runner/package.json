@@ -51,6 +51,7 @@
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/php-dynamic-snippets": "workspace:*",
     "@fern-api/python-dynamic-snippets": "workspace:*",
+    "@fern-api/remote-workspace-runner": "workspace:*",
     "@fern-api/ruby-dynamic-snippets": "workspace:*",
     "@fern-api/rust-dynamic-snippets": "workspace:*",
     "@fern-api/sdk": "0.12.3",
@@ -72,7 +73,7 @@
     "@types/node": "18.15.3",
     "@types/prettier2": "npm:@types/prettier@^2.7.3",
     "depcheck": "^1.4.7",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "vitest": "^2.1.9"
   }
 }

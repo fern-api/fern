@@ -4,7 +4,7 @@ import Pagination
 
 @Suite("InlineUsersInlineUsersClient Wire Tests") struct InlineUsersInlineUsersClientWireTests {
     @Test func listWithCursorPagination1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -70,13 +70,14 @@ import Pagination
             page: 1,
             perPage: 1,
             order: .asc,
-            startingAfter: "starting_after"
+            startingAfter: "starting_after",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func listWithMixedTypeCursorPagination1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -118,12 +119,15 @@ import Pagination
                 ]
             )
         )
-        let response = try await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination(cursor: "cursor")
+        let response = try await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination(
+            cursor: "cursor",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func listWithBodyCursorPagination1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -185,14 +189,17 @@ import Pagination
                 ]
             )
         )
-        let response = try await client.inlineUsers.inlineUsers.listWithBodyCursorPagination(request: .init(pagination: WithCursor(
-            cursor: "cursor"
-        )))
+        let response = try await client.inlineUsers.inlineUsers.listWithBodyCursorPagination(
+            request: .init(pagination: WithCursor(
+                cursor: "cursor"
+            )),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func listWithOffsetPagination1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -258,13 +265,14 @@ import Pagination
             page: 1,
             perPage: 1,
             order: .asc,
-            startingAfter: "starting_after"
+            startingAfter: "starting_after",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func listWithDoubleOffsetPagination1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -330,13 +338,14 @@ import Pagination
             page: 1.1,
             perPage: 1.1,
             order: .asc,
-            startingAfter: "starting_after"
+            startingAfter: "starting_after",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func listWithBodyOffsetPagination1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -398,14 +407,17 @@ import Pagination
                 ]
             )
         )
-        let response = try await client.inlineUsers.inlineUsers.listWithBodyOffsetPagination(request: .init(pagination: WithPage(
-            page: 1
-        )))
+        let response = try await client.inlineUsers.inlineUsers.listWithBodyOffsetPagination(
+            request: .init(pagination: WithPage(
+                page: 1
+            )),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func listWithOffsetStepPagination1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -470,13 +482,14 @@ import Pagination
         let response = try await client.inlineUsers.inlineUsers.listWithOffsetStepPagination(
             page: 1,
             limit: 1,
-            order: .asc
+            order: .asc,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func listWithOffsetPaginationHasNextPage1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -541,13 +554,14 @@ import Pagination
         let response = try await client.inlineUsers.inlineUsers.listWithOffsetPaginationHasNextPage(
             page: 1,
             limit: 1,
-            order: .asc
+            order: .asc,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func listWithExtendedResults1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -589,14 +603,17 @@ import Pagination
                     )
                 ]
             ),
-            next: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+            next: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!)
         )
-        let response = try await client.inlineUsers.inlineUsers.listWithExtendedResults(cursor: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+        let response = try await client.inlineUsers.inlineUsers.listWithExtendedResults(
+            cursor: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func listWithExtendedResultsAndOptionalData1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -638,14 +655,17 @@ import Pagination
                     )
                 ])
             ),
-            next: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+            next: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!)
         )
-        let response = try await client.inlineUsers.inlineUsers.listWithExtendedResultsAndOptionalData(cursor: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+        let response = try await client.inlineUsers.inlineUsers.listWithExtendedResultsAndOptionalData(
+            cursor: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func listUsernames1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -675,12 +695,15 @@ import Pagination
                 ]
             )
         )
-        let response = try await client.inlineUsers.inlineUsers.listUsernames(startingAfter: "starting_after")
+        let response = try await client.inlineUsers.inlineUsers.listUsernames(
+            startingAfter: "starting_after",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func listWithGlobalConfig1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -704,7 +727,10 @@ import Pagination
                 "results"
             ]
         )
-        let response = try await client.inlineUsers.inlineUsers.listWithGlobalConfig(offset: 1)
+        let response = try await client.inlineUsers.inlineUsers.listWithGlobalConfig(
+            offset: 1,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

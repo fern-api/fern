@@ -24,7 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
-        "key": "BearerAuthScheme",
+        "key": "HTTPBearer",
         "token": {
           "originalName": "token",
           "camelCase": {
@@ -83242,7 +83242,7 @@
     "endpoints": {
       "endpoint_organizations.list_organizations": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -83476,7 +83476,7 @@
       },
       "endpoint_organizations.create_organization": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -83745,7 +83745,7 @@
       },
       "endpoint_organizations.get_organization": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -83945,7 +83945,7 @@
       },
       "endpoint_organizations.delete_organization": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -84145,7 +84145,7 @@
       },
       "endpoint_organizations.update_organization": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -84418,7 +84418,7 @@
       },
       "endpoint_organizations.get_active_organization": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -84519,7 +84519,7 @@
       },
       "endpoint_projects.list_projects": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -84753,7 +84753,7 @@
       },
       "endpoint_projects.create_project": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -85115,7 +85115,7 @@
       },
       "endpoint_projects.get_project": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -85315,7 +85315,7 @@
       },
       "endpoint_projects.delete_project": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -85515,7 +85515,7 @@
       },
       "endpoint_projects.update_project": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -85850,7 +85850,7 @@
       },
       "endpoint_environments.stats_environments": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -86078,7 +86078,7 @@
       },
       "endpoint_environments.list_environments": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -86341,7 +86341,7 @@
       },
       "endpoint_environments.create_environment": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -86570,7 +86570,7 @@
       },
       "endpoint_environments.get_environment": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -86798,7 +86798,7 @@
       },
       "endpoint_environments.delete_environment": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -87026,7 +87026,7 @@
       },
       "endpoint_environments.update_environment": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -87420,7 +87420,7 @@
       },
       "endpoint_environments.copy_environment": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -87743,7 +87743,7 @@
       },
       "endpoint_resources.list_resources": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -88127,7 +88127,7 @@
       },
       "endpoint_resources.create_resource": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -88551,7 +88551,7 @@
       },
       "endpoint_resources.get_resource": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -88807,7 +88807,7 @@
       },
       "endpoint_resources.replace_resource": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -89231,7 +89231,7 @@
       },
       "endpoint_resources.delete_resource": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -89487,7 +89487,7 @@
       },
       "endpoint_resources.update_resource": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -89917,7 +89917,7 @@
       },
       "endpoint_resourceActions.list_resource_actions": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -90236,7 +90236,7 @@
       },
       "endpoint_resourceActions.create_resource_action": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -90621,7 +90621,7 @@
       },
       "endpoint_resourceActions.get_resource_action": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -90905,7 +90905,7 @@
       },
       "endpoint_resourceActions.delete_resource_action": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -91189,7 +91189,7 @@
       },
       "endpoint_resourceActions.update_resource_action": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -91577,7 +91577,7 @@
       },
       "endpoint_resourceActionGroups.list_resource_action_groups": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -91896,7 +91896,7 @@
       },
       "endpoint_resourceActionGroups.create_resource_action_group": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -92315,7 +92315,7 @@
       },
       "endpoint_resourceActionGroups.get_resource_action_group": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -92599,7 +92599,7 @@
       },
       "endpoint_resourceActionGroups.delete_resource_action_group": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -92883,7 +92883,7 @@
       },
       "endpoint_resourceActionGroups.update_resource_action_group": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -93305,7 +93305,7 @@
       },
       "endpoint_resourceRoles.list_resource_roles": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -93624,7 +93624,7 @@
       },
       "endpoint_resourceRoles.create_resource_role": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -94077,7 +94077,7 @@
       },
       "endpoint_resourceRoles.get_resource_role": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -94361,7 +94361,7 @@
       },
       "endpoint_resourceRoles.delete_resource_role": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -94645,7 +94645,7 @@
       },
       "endpoint_resourceRoles.update_resource_role": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -95101,7 +95101,7 @@
       },
       "endpoint_resourceRoles.assign_permissions_to_resource_role": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -95414,7 +95414,7 @@
       },
       "endpoint_resourceRoles.remove_permissions_from_resource_role": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -95727,7 +95727,7 @@
       },
       "endpoint_resourceRoles.get_resource_role_ancestors": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -96011,7 +96011,7 @@
       },
       "endpoint_resourceRoles.get_resource_role_descendants": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -96295,7 +96295,7 @@
       },
       "endpoint_resourceAttributes.list_resource_attributes": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -96614,7 +96614,7 @@
       },
       "endpoint_resourceAttributes.create_resource_attribute": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -96899,7 +96899,7 @@
       },
       "endpoint_resourceAttributes.get_resource_attribute": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -97183,7 +97183,7 @@
       },
       "endpoint_resourceAttributes.delete_resource_attribute": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -97530,7 +97530,7 @@
       },
       "endpoint_resourceAttributes.update_resource_attribute": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -97843,7 +97843,7 @@
       },
       "endpoint_userAttributes.list_user_attributes": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -98165,7 +98165,7 @@
       },
       "endpoint_userAttributes.create_user_attribute": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -98454,7 +98454,7 @@
       },
       "endpoint_userAttributes.get_user_attribute": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -98742,7 +98742,7 @@
       },
       "endpoint_userAttributes.delete_user_attribute": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -99092,7 +99092,7 @@
       },
       "endpoint_userAttributes.update_user_attribute": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -99409,7 +99409,7 @@
       },
       "endpoint_roles.list_roles": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -99762,7 +99762,7 @@
       },
       "endpoint_roles.create_role": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -100187,7 +100187,7 @@
       },
       "endpoint_roles.get_role": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -100443,7 +100443,7 @@
       },
       "endpoint_roles.delete_role": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -100699,7 +100699,7 @@
       },
       "endpoint_roles.update_role": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -101127,7 +101127,7 @@
       },
       "endpoint_roles.assign_permissions_to_role": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -101412,7 +101412,7 @@
       },
       "endpoint_roles.remove_permissions_from_role": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -101697,7 +101697,7 @@
       },
       "endpoint_roles.get_role_ancestors": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -101953,7 +101953,7 @@
       },
       "endpoint_roles.get_role_descendants": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -102209,7 +102209,7 @@
       },
       "endpoint_conditionSets.list_condition_sets": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -102593,7 +102593,7 @@
       },
       "endpoint_conditionSets.create_condition_set": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -103074,7 +103074,7 @@
       },
       "endpoint_conditionSets.get_condition_set": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -103330,7 +103330,7 @@
       },
       "endpoint_conditionSets.delete_condition_set": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -103586,7 +103586,7 @@
       },
       "endpoint_conditionSets.update_condition_set": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -103977,7 +103977,7 @@
       },
       "endpoint_conditionSets.get_condition_set_ancestors": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -104296,7 +104296,7 @@
       },
       "endpoint_conditionSets.get_condition_set_descendants": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -104615,7 +104615,7 @@
       },
       "endpoint_users.list_users": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -104968,7 +104968,7 @@
       },
       "endpoint_users.create_user": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -105225,7 +105225,7 @@
       },
       "endpoint_users.get_user": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -105481,7 +105481,7 @@
       },
       "endpoint_users.replace_user": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -105766,7 +105766,7 @@
       },
       "endpoint_users.delete_user": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -106022,7 +106022,7 @@
       },
       "endpoint_users.update_user": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -106413,7 +106413,7 @@
       },
       "endpoint_users.assign_role_to_user": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -106730,7 +106730,7 @@
       },
       "endpoint_users.unassign_role_from_user": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -107047,7 +107047,7 @@
       },
       "endpoint_tenants.list_tenant_users": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -107428,7 +107428,7 @@
       },
       "endpoint_tenants.list_tenants": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -107781,7 +107781,7 @@
       },
       "endpoint_tenants.create_tenant": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -108038,7 +108038,7 @@
       },
       "endpoint_tenants.get_tenant": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -108294,7 +108294,7 @@
       },
       "endpoint_tenants.delete_tenant": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -108550,7 +108550,7 @@
       },
       "endpoint_tenants.update_tenant": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -108910,7 +108910,7 @@
       },
       "endpoint_tenants.delete_tenant_user": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -109194,7 +109194,7 @@
       },
       "endpoint_roleAssignments.list_role_assignments": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -109578,7 +109578,7 @@
       },
       "endpoint_roleAssignments.assign_role": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -109835,7 +109835,7 @@
       },
       "endpoint_roleAssignments.unassign_role": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -110092,7 +110092,7 @@
       },
       "endpoint_roleAssignments.bulk_assign_role": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -110352,7 +110352,7 @@
       },
       "endpoint_roleAssignments.bulk_unassign_role": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -110612,7 +110612,7 @@
       },
       "endpoint_conditionSetRules.list_set_permissions": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -110996,7 +110996,7 @@
       },
       "endpoint_conditionSetRules.assign_set_permissions": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -111375,7 +111375,7 @@
       },
       "endpoint_conditionSetRules.unassign_set_permissions": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -111754,7 +111754,7 @@
       },
       "endpoint_resourceInstances.list_resource_instances": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -112045,7 +112045,7 @@
       },
       "endpoint_resourceInstances.create_resource_instance": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -112402,7 +112402,7 @@
       },
       "endpoint_resourceInstances.get_resource_instance": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -112658,7 +112658,7 @@
       },
       "endpoint_resourceInstances.delete_resource_instance": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -112914,7 +112914,7 @@
       },
       "endpoint_resourceInstances.update_resource_instance": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -113212,7 +113212,7 @@
       },
       "endpoint_bulkOperations.bulk_create_users": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -113476,7 +113476,7 @@
       },
       "endpoint_bulkOperations.bulk_replace_users": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -113740,7 +113740,7 @@
       },
       "endpoint_bulkOperations.bulk_delete_users": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -114004,7 +114004,7 @@
       },
       "endpoint_bulkOperations.bulk_create_tenants": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -114268,7 +114268,7 @@
       },
       "endpoint_bulkOperations.bulk_delete_tenants": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "HTTPBearer",
           "token": {
             "originalName": "token",
             "camelCase": {

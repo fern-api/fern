@@ -54,4 +54,7 @@ class ActualResult_ExceptionV2(UniversalBaseModel):
             smart_union = True
 
 
-ActualResult = typing.Union[ActualResult_Value, ActualResult_Exception, ActualResult_ExceptionV2]
+ActualResult = typing_extensions.Annotated[
+    typing.Union[ActualResult_Value, ActualResult_Exception, ActualResult_ExceptionV2],
+    pydantic.Field(discriminator="type"),
+]

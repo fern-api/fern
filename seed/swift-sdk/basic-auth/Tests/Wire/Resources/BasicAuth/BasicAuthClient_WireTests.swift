@@ -4,7 +4,7 @@ import BasicAuth
 
 @Suite("BasicAuthClient_ Wire Tests") struct BasicAuthClient_WireTests {
     @Test func getWithBasicAuth1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -19,12 +19,12 @@ import BasicAuth
             urlSession: stub.urlSession
         )
         let expectedResponse = true
-        let response = try await client.basicAuth.getWithBasicAuth()
+        let response = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
     @Test func getWithBasicAuth2() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -39,12 +39,12 @@ import BasicAuth
             urlSession: stub.urlSession
         )
         let expectedResponse = true
-        let response = try await client.basicAuth.getWithBasicAuth()
+        let response = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
     @Test func postWithBasicAuth1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -59,14 +59,17 @@ import BasicAuth
             urlSession: stub.urlSession
         )
         let expectedResponse = true
-        let response = try await client.basicAuth.postWithBasicAuth(request: .object([
-            "key": .string("value")
-        ]))
+        let response = try await client.basicAuth.postWithBasicAuth(
+            request: .object([
+                "key": .string("value")
+            ]),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func postWithBasicAuth2() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -81,9 +84,12 @@ import BasicAuth
             urlSession: stub.urlSession
         )
         let expectedResponse = true
-        let response = try await client.basicAuth.postWithBasicAuth(request: .object([
-            "key": .string("value")
-        ]))
+        let response = try await client.basicAuth.postWithBasicAuth(
+            request: .object([
+                "key": .string("value")
+            ]),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

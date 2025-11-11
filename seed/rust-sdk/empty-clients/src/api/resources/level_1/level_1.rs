@@ -1,6 +1,4 @@
-use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
-use reqwest::Method;
+use crate::{ClientConfig, ApiError, HttpClient};
 
 pub struct Level1Client {
     pub http_client: HttpClient,
@@ -9,7 +7,9 @@ pub struct Level1Client {
 impl Level1Client {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config.clone())?,
-        })
+    http_client: HttpClient::new(config.clone())?
+})
     }
+
 }
+

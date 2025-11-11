@@ -72,7 +72,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
     }): Promise<string> {
         const readmeConfig = this.getReadmeConfig({
             context,
-            remote: this.getRemote(),
+            remote: this.getRemote(context),
             featureConfig: await this.readFeatureConfig(),
             endpointSnippets
         });
@@ -86,6 +86,11 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
         const rawGithubConfig = this.getGitHubConfig({ context });
         const githubConfig = resolveGitHubConfig({ rawGithubConfig, logger: this.logger });
         return this.cli.pushToGitHub({ githubConfig, withPullRequest: githubConfig.mode === "pull-request" });
+    }
+
+    protected resolveGitHubConfig({ context }: { context: GeneratorContext }) {
+        const rawGithubConfig = this.getGitHubConfig({ context });
+        return resolveGitHubConfig({ rawGithubConfig, logger: this.logger });
     }
 
     /**
@@ -115,14 +120,14 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
         args: AbstractGeneratorAgent.GitHubConfigArgs<GeneratorContext>
     ): RawGithubConfig;
 
-    private async readFeatureConfig(): Promise<FernGeneratorCli.FeatureConfig> {
+    protected async readFeatureConfig(): Promise<FernGeneratorCli.FeatureConfig> {
         this.logger.debug("Reading feature configuration ...");
         const rawYaml = await this.getFeaturesConfig();
         const loaded = yaml.load(rawYaml) as FernGeneratorCli.FeatureConfig;
         return loaded;
     }
 
-    private getRemote(): FernGeneratorCli.Remote | undefined {
+    protected getRemote(context: GeneratorContext): FernGeneratorCli.Remote | undefined {
         const outputMode = this.config.output.mode.type === "github" ? this.config.output.mode : undefined;
         if (outputMode?.repoUrl != null && outputMode?.installationToken != null) {
             return FernGeneratorCli.Remote.github({
@@ -130,7 +135,34 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
                 installationToken: outputMode.installationToken
             });
         }
+
+        try {
+            const githubConfig = this.getGitHubConfig({ context });
+            if (githubConfig.uri != null && githubConfig.token != null) {
+                return FernGeneratorCli.Remote.github({
+                    repoUrl: this.normalizeRepoUrl(githubConfig.uri),
+                    installationToken: githubConfig.token
+                });
+            }
+        } catch (error) {
+            return undefined;
+        }
         return undefined;
+    }
+
+    private normalizeRepoUrl(repoUrl: string): string {
+        // If it's already a full URL, return as-is
+        if (repoUrl.startsWith("https://")) {
+            return repoUrl;
+        }
+
+        // If it's in owner/repo format, convert to full GitHub URL
+        if (repoUrl.match(/^[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+$/)) {
+            return `https://github.com/${repoUrl}`;
+        }
+
+        // Default: assume it's a GitHub URL and add prefix
+        return `https://github.com/${repoUrl}`;
     }
 
     private async getFeaturesConfig(): Promise<string> {

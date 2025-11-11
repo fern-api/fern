@@ -13,10 +13,10 @@
 <dd>
 
 ```typescript
-const response = await client.users.listUsernamesCustom({
+const pageableResponse = await client.users.listUsernamesCustom({
     starting_after: "starting_after"
 });
-for await (const item of response) {
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -27,6 +27,9 @@ let page = await client.users.listUsernamesCustom({
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>

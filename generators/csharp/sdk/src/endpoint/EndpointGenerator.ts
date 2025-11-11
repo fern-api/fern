@@ -16,32 +16,33 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         this.grpc = new GrpcEndpointGenerator({ context });
     }
 
-    public generate({
-        serviceId,
-        endpoint,
-        rawClientReference,
-        rawGrpcClientReference,
-        rawClient,
-        grpcClientInfo
-    }: {
-        serviceId: ServiceId;
-        endpoint: HttpEndpoint;
-        rawClientReference: string;
-        rawGrpcClientReference: string;
-        rawClient: RawClient;
-        grpcClientInfo: GrpcClientInfo | undefined;
-    }): ast.Method[] {
+    public generate(
+        cls: ast.Class,
+        {
+            serviceId,
+            endpoint,
+            rawClientReference,
+            rawGrpcClientReference,
+            rawClient,
+            grpcClientInfo
+        }: {
+            serviceId: ServiceId;
+            endpoint: HttpEndpoint;
+            rawClientReference: string;
+            rawGrpcClientReference: string;
+            rawClient: RawClient;
+            grpcClientInfo: GrpcClientInfo | undefined;
+        }
+    ) {
         if (this.isGrpcEndpoint(grpcClientInfo, endpoint)) {
-            return [
-                this.grpc.generate({
-                    serviceId,
-                    endpoint,
-                    rawGrpcClientReference,
-                    grpcClientInfo
-                })
-            ];
+            this.grpc.generate(cls, {
+                serviceId,
+                endpoint,
+                rawGrpcClientReference,
+                grpcClientInfo
+            });
         } else {
-            return this.http.generate({
+            return this.http.generate(cls, {
                 serviceId,
                 endpoint,
                 rawClientReference,

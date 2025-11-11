@@ -68,7 +68,25 @@
           },
           "type": "reference"
         },
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "value": {
+              "meta": {
+                "hasMore": true
+              },
+              "users": [
+                {
+                  "id": "123e4567-e89b-12d3-a456-426614174000",
+                  "name": "John Doe",
+                  "email": "john@example.com",
+                  "age": 30,
+                  "not_ignored_field": "visible",
+                  "ignored_field": "should-be-filtered-out"
+                }
+              ]
+            }
+          }
+        ],
         "source": {
           "file": "../openapi.yml",
           "type": "openapi"
@@ -109,29 +127,36 @@
                       "properties": {
                         "id": {
                           "value": {
-                            "value": "id",
+                            "value": "123e4567-e89b-12d3-a456-426614174000",
                             "type": "string"
                           },
                           "type": "primitive"
                         },
                         "name": {
                           "value": {
-                            "value": "name",
+                            "value": "John Doe",
                             "type": "string"
                           },
                           "type": "primitive"
                         },
                         "email": {
                           "value": {
-                            "value": "email",
+                            "value": "john@example.com",
                             "type": "string"
                           },
                           "type": "primitive"
                         },
                         "age": {
                           "value": {
-                            "value": 1,
+                            "value": 30,
                             "type": "int"
+                          },
+                          "type": "primitive"
+                        },
+                        "not_ignored_field": {
+                          "value": {
+                            "value": "visible",
+                            "type": "string"
                           },
                           "type": "primitive"
                         }
@@ -171,6 +196,7 @@
               "generatedName": "MetaHasMore",
               "value": {
                 "schema": {
+                  "example": true,
                   "type": "boolean"
                 },
                 "generatedName": "MetaHasMore",
@@ -265,6 +291,7 @@
               "value": {
                 "schema": {
                   "format": "uuid",
+                  "example": "123e4567-e89b-12d3-a456-426614174000",
                   "type": "string"
                 },
                 "generatedName": "UserId",
@@ -284,6 +311,7 @@
               "generatedName": "UserName",
               "value": {
                 "schema": {
+                  "example": "Jane Doe",
                   "type": "string"
                 },
                 "generatedName": "UserName",
@@ -303,6 +331,7 @@
               "generatedName": "UserEmail",
               "value": {
                 "schema": {
+                  "example": "jane@example.com",
                   "type": "string"
                 },
                 "generatedName": "UserEmail",
@@ -322,9 +351,30 @@
               "generatedName": "UserAge",
               "value": {
                 "schema": {
+                  "example": 25,
                   "type": "int"
                 },
                 "generatedName": "UserAge",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userNotIgnoredField",
+            "key": "not_ignored_field",
+            "schema": {
+              "generatedName": "UserNotIgnoredField",
+              "value": {
+                "schema": {
+                  "example": "this-field-is-visible",
+                  "type": "string"
+                },
+                "generatedName": "UserNotIgnoredField",
                 "groupName": [],
                 "type": "primitive"
               },

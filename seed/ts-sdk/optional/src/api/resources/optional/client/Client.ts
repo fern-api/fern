@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
+import type * as SeedObjectsWithImports from "../../../index.js";
 
 export declare namespace Optional {
     export interface Options extends BaseClientOptions {}
@@ -56,6 +57,8 @@ export class Optional {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return { data: _response.body as string, rawResponse: _response.rawResponse };
@@ -79,6 +82,76 @@ export class Optional {
             case "timeout":
                 throw new errors.SeedObjectsWithImportsTimeoutError(
                     "Timeout exceeded when calling POST /send-optional-body.",
+                );
+            case "unknown":
+                throw new errors.SeedObjectsWithImportsError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * @param {SeedObjectsWithImports.SendOptionalBodyRequest} request
+     * @param {Optional.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.optional.sendOptionalTypedBody({
+     *         message: "message"
+     *     })
+     */
+    public sendOptionalTypedBody(
+        request?: SeedObjectsWithImports.SendOptionalBodyRequest,
+        requestOptions?: Optional.RequestOptions,
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__sendOptionalTypedBody(request, requestOptions));
+    }
+
+    private async __sendOptionalTypedBody(
+        request?: SeedObjectsWithImports.SendOptionalBodyRequest,
+        requestOptions?: Optional.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "send-optional-typed-body",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request != null ? request : undefined,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as string, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedObjectsWithImportsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedObjectsWithImportsError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedObjectsWithImportsTimeoutError(
+                    "Timeout exceeded when calling POST /send-optional-typed-body.",
                 );
             case "unknown":
                 throw new errors.SeedObjectsWithImportsError({

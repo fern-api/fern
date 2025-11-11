@@ -625,9 +625,7 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidSubjectTypeError": {
-                    "subject": null,
-                  },
+                  "invalidSubjectTypeError": {},
                   "message": "message",
                   "reason": "INVALID_SUBJECT_TYPE",
                 },
@@ -659,11 +657,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {
-                    "resource": null,
-                    "subject": null,
-                  },
+                  "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -691,7 +687,6 @@
                 "value": {
                   "message": "message",
                   "multipleRolesNotAllowedError": {
-                    "resource": null,
                     "roles": [
                       "roles",
                     ],
@@ -726,11 +721,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {
-                    "resource": null,
-                    "subject": null,
-                  },
+                  "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -1131,9 +1124,7 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidSubjectTypeError": {
-                    "subject": null,
-                  },
+                  "invalidSubjectTypeError": {},
                   "message": "message",
                   "reason": "INVALID_SUBJECT_TYPE",
                 },
@@ -1165,11 +1156,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {
-                    "resource": null,
-                    "subject": null,
-                  },
+                  "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -1197,7 +1186,6 @@
                 "value": {
                   "message": "message",
                   "multipleRolesNotAllowedError": {
-                    "resource": null,
                     "roles": [
                       "roles",
                     ],
@@ -1232,11 +1220,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {
-                    "resource": null,
-                    "subject": null,
-                  },
+                  "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -1934,9 +1920,7 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidSubjectTypeError": {
-                    "subject": null,
-                  },
+                  "invalidSubjectTypeError": {},
                   "message": "message",
                   "reason": "INVALID_SUBJECT_TYPE",
                 },
@@ -1968,11 +1952,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {
-                    "resource": null,
-                    "subject": null,
-                  },
+                  "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -2000,7 +1982,6 @@
                 "value": {
                   "message": "message",
                   "multipleRolesNotAllowedError": {
-                    "resource": null,
                     "roles": [
                       "roles",
                     ],
@@ -2035,11 +2016,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {
-                    "resource": null,
-                    "subject": null,
-                  },
+                  "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -3894,9 +3873,7 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidSubjectTypeError": {
-                    "subject": null,
-                  },
+                  "invalidSubjectTypeError": {},
                   "message": "message",
                   "reason": "INVALID_SUBJECT_TYPE",
                 },
@@ -3928,11 +3905,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {
-                    "resource": null,
-                    "subject": null,
-                  },
+                  "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -3960,7 +3935,6 @@
                 "value": {
                   "message": "message",
                   "multipleRolesNotAllowedError": {
-                    "resource": null,
                     "roles": [
                       "roles",
                     ],
@@ -3995,11 +3969,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {
-                    "resource": null,
-                    "subject": null,
-                  },
+                  "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -4091,9 +4063,7 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidSubjectTypeError": {
-                    "subject": null,
-                  },
+                  "invalidSubjectTypeError": {},
                   "message": "message",
                   "reason": "INVALID_SUBJECT_TYPE",
                 },
@@ -4125,11 +4095,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {
-                    "resource": null,
-                    "subject": null,
-                  },
+                  "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -4157,7 +4125,6 @@
                 "value": {
                   "message": "message",
                   "multipleRolesNotAllowedError": {
-                    "resource": null,
                     "roles": [
                       "roles",
                     ],
@@ -4192,11 +4159,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {
-                    "resource": null,
-                    "subject": null,
-                  },
+                  "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -4783,9 +4748,7 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidSubjectTypeError": {
-                    "subject": null,
-                  },
+                  "invalidSubjectTypeError": {},
                   "message": "message",
                   "reason": "INVALID_SUBJECT_TYPE",
                 },
@@ -4817,11 +4780,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {
-                    "resource": null,
-                    "subject": null,
-                  },
+                  "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -4849,7 +4810,6 @@
                 "value": {
                   "message": "message",
                   "multipleRolesNotAllowedError": {
-                    "resource": null,
                     "roles": [
                       "roles",
                     ],
@@ -4884,11 +4844,9 @@
                 "docs": undefined,
                 "name": undefined,
                 "value": {
-                  "invalidMemberError": {
-                    "resource": null,
-                    "subject": null,
-                  },
+                  "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -5664,7 +5622,7 @@
                   "pattern": undefined,
                 },
               },
-              "description": "nullable<string>",
+              "description": "optional<nullable<string>>",
               "documents_have_been_modified": {
                 "default": false,
                 "type": "optional<boolean>",
@@ -5678,9 +5636,9 @@
                   "pattern": undefined,
                 },
               },
-              "last_message": "nullable<datetime>",
-              "summary": "nullable<string>",
-              "title": "nullable<string>",
+              "last_message": "optional<nullable<datetime>>",
+              "summary": "optional<nullable<string>>",
+              "title": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5692,9 +5650,9 @@
             "properties": {
               "chat_guardrails": {
                 "docs": "Conversational Guardrails can be defined to run against Chat `input` (i.e. the users query) or on Chat `output` (i.e. the LLM output)",
-                "type": "nullable<ConversationalGuardrails>",
+                "type": "optional<nullable<ConversationalGuardrails>>",
               },
-              "chat_system_commands": "nullable<list<string>>",
+              "chat_system_commands": "optional<nullable<list<string>>>",
               "knn": {
                 "default": 5,
                 "type": "optional<integer>",
@@ -5787,7 +5745,7 @@
             "properties": {
               "chunks": "integer",
               "connection_id": {
-                "type": "nullable<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -5795,7 +5753,7 @@
                   "pattern": undefined,
                 },
               },
-              "description": "nullable<string>",
+              "description": "optional<nullable<string>>",
               "embedding_instances": "nullable<list<ChatDocumentEmbeddingInstance>>",
               "id": {
                 "type": "string",
@@ -5816,8 +5774,8 @@
                   "pattern": undefined,
                 },
               },
-              "source": "nullable<ChatDocumentSource>",
-              "source_meta": "nullable<map<string, unknown>>",
+              "source": "optional<nullable<ChatDocumentSource>>",
+              "source_meta": "optional<nullable<map<string, unknown>>>",
               "strategy": "string",
               "title": "string",
             },
@@ -5838,7 +5796,7 @@
                   "pattern": undefined,
                 },
               },
-              "config": "nullable<map<string, unknown>>",
+              "config": "optional<nullable<map<string, unknown>>>",
               "id": {
                 "type": "string",
                 "validation": {
@@ -6315,7 +6273,7 @@
                   "pattern": undefined,
                 },
               },
-              "summary": "nullable<string>",
+              "summary": "optional<nullable<string>>",
               "title": "string",
             },
             "source": {
@@ -6578,24 +6536,24 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "audience": "nullable<string>",
-              "content": "nullable<string>",
-              "cta": "nullable<string>",
-              "deny_words": "nullable<string>",
-              "domain": "nullable<string>",
-              "favourable_words": "nullable<string>",
-              "keywords": "nullable<string>",
+              "audience": "optional<nullable<string>>",
+              "content": "optional<nullable<string>>",
+              "cta": "optional<nullable<string>>",
+              "deny_words": "optional<nullable<string>>",
+              "domain": "optional<nullable<string>>",
+              "favourable_words": "optional<nullable<string>>",
+              "keywords": "optional<nullable<string>>",
               "language": {
                 "default": "english_british",
                 "type": "optional<ComposeInitLanguage>",
               },
-              "num_sections": "nullable<integer>",
-              "purpose": "nullable<string>",
+              "num_sections": "optional<nullable<integer>>",
+              "purpose": "optional<nullable<string>>",
               "title": "string",
-              "tone": "nullable<string>",
-              "topic": "nullable<string>",
-              "voice": "nullable<string>",
-              "word_count": "nullable<integer>",
+              "tone": "optional<nullable<string>>",
+              "topic": "optional<nullable<string>>",
+              "voice": "optional<nullable<string>>",
+              "word_count": "optional<nullable<integer>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -6637,7 +6595,7 @@
               },
               "position": "integer",
               "section_title": "string",
-              "text": "nullable<string>",
+              "text": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -6789,7 +6747,7 @@
                 "type": "optional<map<string, unknown>>",
               },
               "created_by": {
-                "type": "nullable<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -6798,7 +6756,7 @@
                 },
               },
               "datasource_id": {
-                "type": "nullable<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -6815,9 +6773,9 @@
                   "pattern": undefined,
                 },
               },
-              "private": "nullable<boolean>",
+              "private": "optional<nullable<boolean>>",
               "project_id": {
-                "type": "nullable<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -6891,7 +6849,7 @@
               "created": {
                 "type": "datetime",
               },
-              "datasource_connection": "nullable<DatasourceConnection>",
+              "datasource_connection": "optional<nullable<DatasourceConnection>>",
               "id": {
                 "type": "string",
                 "validation": {
@@ -6904,12 +6862,12 @@
               "modified": {
                 "type": "datetime",
               },
-              "run_output": "nullable<map<string, unknown>>",
+              "run_output": "optional<nullable<map<string, unknown>>>",
               "status": {
                 "default": "pending",
                 "type": "optional<DatasourceSyncRunStatus>",
               },
-              "task_id": "nullable<string>",
+              "task_id": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -7078,7 +7036,7 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "info": "nullable<map<string, unknown>>",
+              "info": "optional<nullable<map<string, unknown>>>",
               "state": {
                 "type": "DocumentCreateTaskState",
               },
@@ -7776,7 +7734,7 @@
             "properties": {
               "avatar_url": {
                 "docs": "If avatar of the member, if it is supported by their subject type.",
-                "type": "nullable<string>",
+                "type": "optional<nullable<string>>",
               },
               "member": {
                 "docs": "The member identifier string, the format of which is '<subject_type>:<subject_id>'",
@@ -7784,7 +7742,7 @@
               },
               "name": {
                 "docs": "The name of the member.",
-                "type": "nullable<string>",
+                "type": "optional<nullable<string>>",
               },
               "roles": {
                 "docs": "A list of roles that the member holds on an entity.
@@ -7806,7 +7764,7 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "id": "nullable<string>",
+              "id": "optional<nullable<string>>",
               "type": "string",
             },
             "source": {
@@ -7817,7 +7775,7 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "member": "nullable<string>",
+              "member": "optional<nullable<string>>",
               "permissions": {
                 "type": "list<string>",
               },
@@ -7830,7 +7788,7 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "ideas": "nullable<list<string>>",
+              "ideas": "optional<nullable<list<string>>>",
               "position": "integer",
               "title": "string",
             },
@@ -7882,8 +7840,8 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "resource": "nullable<IamObjectErrorDetails>",
-              "subject": "nullable<IamObjectErrorDetails>",
+              "resource": "optional<nullable<IamObjectErrorDetails>>",
+              "subject": "optional<nullable<IamObjectErrorDetails>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -7901,6 +7859,10 @@ Some entities, such as Organizations, may contain members that exist without any
                 "docs": "Human readable representation of the error",
                 "type": "string",
               },
+              "reason": {
+                "docs": "The machine-readable error reason.",
+                "type": "literal<"INVALID_MEMBER">",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -7910,7 +7872,7 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "resource": "nullable<IamObjectErrorDetails>",
+              "resource": "optional<nullable<IamObjectErrorDetails>>",
               "role": "string",
             },
             "source": {
@@ -7938,7 +7900,7 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "subject": "nullable<IamObjectErrorDetails>",
+              "subject": "optional<nullable<IamObjectErrorDetails>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -7986,9 +7948,9 @@ Some entities, such as Organizations, may contain members that exist without any
             "extra-properties": true,
             "inline": undefined,
             "properties": {
-              "avatar_url": "nullable<string>",
+              "avatar_url": "optional<nullable<string>>",
               "email": {
-                "type": "nullable<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": "email",
                   "maxLength": undefined,
@@ -7996,9 +7958,9 @@ Some entities, such as Organizations, may contain members that exist without any
                   "pattern": undefined,
                 },
               },
-              "name": "nullable<string>",
+              "name": "optional<nullable<string>>",
               "org_id": {
-                "type": "nullable<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -8007,7 +7969,7 @@ Some entities, such as Organizations, may contain members that exist without any
                 },
               },
               "project_id": {
-                "type": "nullable<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -8015,7 +7977,7 @@ Some entities, such as Organizations, may contain members that exist without any
                   "pattern": undefined,
                 },
               },
-              "sso_email_verified": "nullable<boolean>",
+              "sso_email_verified": "optional<nullable<boolean>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -8025,10 +7987,10 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "bio": "nullable<string>",
-              "ctx": "nullable<map<string, unknown>>",
+              "bio": "optional<nullable<string>>",
+              "ctx": "optional<nullable<map<string, unknown>>>",
               "email": {
-                "type": "nullable<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": "email",
                   "maxLength": undefined,
@@ -8037,7 +7999,7 @@ Some entities, such as Organizations, may contain members that exist without any
                 },
               },
               "flow_id": {
-                "type": "nullable<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -8045,8 +8007,8 @@ Some entities, such as Organizations, may contain members that exist without any
                   "pattern": undefined,
                 },
               },
-              "flow_type": "nullable<string>",
-              "identity": "nullable<KratosIdentity>",
+              "flow_type": "optional<nullable<string>>",
+              "identity": "optional<nullable<KratosIdentity>>",
               "identity_id": {
                 "type": "string",
                 "validation": {
@@ -8066,7 +8028,7 @@ Some entities, such as Organizations, may contain members that exist without any
 https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "inline": undefined,
             "properties": {
-              "context": "nullable<unknown>",
+              "context": "optional<nullable<unknown>>",
               "id": "integer",
               "text": "string",
               "type": {
@@ -8111,7 +8073,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               "identity": {
                 "type": "optional<nullable<KratosWebhookResponseIdentity>>",
               },
-              "messages": "nullable<list<KratosWebhookErrorMessage>>",
+              "messages": "optional<nullable<list<KratosWebhookErrorMessage>>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -8336,6 +8298,10 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
                 "docs": "Human readable representation of the error",
                 "type": "string",
               },
+              "reason": {
+                "docs": "The machine-readable error reason.",
+                "type": "literal<"MALFORMED_RESOURCE_IDENTIFIER">",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -8362,7 +8328,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "resource": "nullable<IamObjectErrorDetails>",
+              "resource": "optional<nullable<IamObjectErrorDetails>>",
               "roles": {
                 "type": "list<string>",
               },
@@ -8431,12 +8397,12 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "createdTime": "nullable<string>",
+              "createdTime": "optional<nullable<string>>",
               "id": "string",
-              "mimeType": "nullable<string>",
-              "modifiedTime": "nullable<string>",
+              "mimeType": "optional<nullable<string>>",
+              "modifiedTime": "optional<nullable<string>>",
               "name": "string",
-              "size": "nullable<string>",
+              "size": "optional<nullable<string>>",
               "synced": {
                 "default": false,
                 "type": "optional<boolean>",
@@ -8477,7 +8443,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "avatar_url": "nullable<string>",
+              "avatar_url": "optional<nullable<string>>",
               "contact_email": {
                 "type": "string",
                 "validation": {
@@ -8903,7 +8869,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
                   "pattern": undefined,
                 },
               },
-              "roles": "nullable<list<string>>",
+              "roles": "optional<nullable<list<string>>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -8983,7 +8949,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "nullable<PaginationDetails>",
+                "type": "optional<nullable<PaginationDetails>>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -9000,7 +8966,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "nullable<PaginationDetails>",
+                "type": "optional<nullable<PaginationDetails>>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -9017,7 +8983,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "nullable<PaginationDetails>",
+                "type": "optional<nullable<PaginationDetails>>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -9034,7 +9000,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "nullable<PaginationDetails>",
+                "type": "optional<nullable<PaginationDetails>>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -9051,7 +9017,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "nullable<PaginationDetails>",
+                "type": "optional<nullable<PaginationDetails>>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -9068,7 +9034,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "nullable<PaginationDetails>",
+                "type": "optional<nullable<PaginationDetails>>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -9085,7 +9051,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "nullable<PaginationDetails>",
+                "type": "optional<nullable<PaginationDetails>>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -9102,7 +9068,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "nullable<PaginationDetails>",
+                "type": "optional<nullable<PaginationDetails>>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -9119,7 +9085,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "nullable<PaginationDetails>",
+                "type": "optional<nullable<PaginationDetails>>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -9136,7 +9102,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "nullable<PaginationDetails>",
+                "type": "optional<nullable<PaginationDetails>>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -9153,7 +9119,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "nullable<PaginationDetails>",
+                "type": "optional<nullable<PaginationDetails>>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -9170,7 +9136,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "pagination": {
                 "docs": "Contains pagination information for the result set.",
-                "type": "nullable<PaginationDetails>",
+                "type": "optional<nullable<PaginationDetails>>",
               },
               "results": {
                 "docs": "The list of items returned for the current page.",
@@ -9187,15 +9153,15 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "has_next": {
                 "docs": "Indicates whether there are more results available in the next page.",
-                "type": "nullable<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "next_cursor": {
                 "docs": "A token used to retrieve the next page of results. If `null`, there are no more results.",
-                "type": "nullable<string>",
+                "type": "optional<nullable<string>>",
               },
               "page_limit": {
                 "docs": "The maximum number of items returned per page.",
-                "type": "nullable<integer>",
+                "type": "optional<nullable<integer>>",
               },
             },
             "source": {
@@ -9207,8 +9173,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "inline": undefined,
             "properties": {
               "permission": "string",
-              "resource": "nullable<IamObjectErrorDetails>",
-              "subject": "nullable<IamObjectErrorDetails>",
+              "resource": "optional<nullable<IamObjectErrorDetails>>",
+              "subject": "optional<nullable<IamObjectErrorDetails>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -9235,7 +9201,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "avatar_url": "nullable<string>",
+              "avatar_url": "optional<nullable<string>>",
               "id": {
                 "type": "string",
                 "validation": {
@@ -9256,7 +9222,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
                 },
               },
               "tasks_oauth_client_id": {
-                "type": "nullable<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -9273,8 +9239,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "chat_guardrails": "nullable<ConversationalGuardrails>",
-              "chat_system_commands": "nullable<list<string>>",
+              "chat_guardrails": "optional<nullable<ConversationalGuardrails>>",
+              "chat_system_commands": "optional<nullable<list<string>>>",
               "knn": {
                 "default": 4,
                 "type": "optional<integer>",
@@ -9506,7 +9472,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "avatar_url": "nullable<string>",
+              "avatar_url": "optional<nullable<string>>",
               "datasource_connections": {
                 "type": "optional<list<DatasourceConnectionPublic>>",
               },
@@ -9530,7 +9496,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
                 },
               },
               "tasks_oauth_client_id": {
-                "type": "nullable<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -9835,7 +9801,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               },
               "description": {
                 "docs": "A longer description of the Task for internal reference.",
-                "type": "nullable<string>",
+                "type": "optional<nullable<string>>",
               },
               "enabled": {
                 "docs": "When `true` the Task is active and callable. `false` denotes the Task is not yet operational.",
@@ -9884,11 +9850,11 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "properties": {
               "config": {
                 "docs": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
-                "type": "nullable<TaskForwarderConfig>",
+                "type": "optional<nullable<TaskForwarderConfig>>",
               },
               "config_sensitive": {
                 "docs": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
-                "type": "nullable<TaskForwarderSensitiveConfig>",
+                "type": "optional<nullable<TaskForwarderSensitiveConfig>>",
               },
               "created": {
                 "docs": "When the Task Forwarder was created.",
@@ -9896,7 +9862,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               },
               "description": {
                 "docs": "Additional details about the Task Forwarder's purpose or configuration.",
-                "type": "nullable<string>",
+                "type": "optional<nullable<string>>",
               },
               "id": {
                 "docs": "The unique identifier of the Task Forwarder.",
@@ -10170,12 +10136,12 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
                 ],
                 "availability": "pre-release",
                 "docs": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
-                "type": "nullable<TaskRag>",
+                "type": "optional<nullable<TaskRag>>",
               },
               "system_prompt": "unknown",
               "task_forwarder_id": {
                 "docs": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
-                "type": "nullable<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -10432,8 +10398,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "avatar_url": "nullable<string>",
-              "bio": "nullable<string>",
+              "avatar_url": "optional<nullable<string>>",
+              "bio": "optional<nullable<string>>",
               "email": {
                 "type": "string",
                 "validation": {
@@ -10573,7 +10539,6 @@ errors:
       - value:
           message: message
           multipleRolesNotAllowedError:
-            resource: null
             roles:
               - roles
           reason: MULTIPLE_ROLES_NOT_ALLOWED
@@ -10593,9 +10558,8 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError:
-            resource: null
-            subject: null
+          reason: INVALID_MEMBER
+          invalidMemberError: {}
   OrganizationIamUpdateMemberRolesRequestUnprocessableEntityError:
     status-code: 422
     type: HttpValidationError
@@ -10609,8 +10573,7 @@ errors:
     examples:
       - value:
           message: message
-          invalidSubjectTypeError:
-            subject: null
+          invalidSubjectTypeError: {}
           reason: INVALID_SUBJECT_TYPE
   OrganizationIamTestPermissionsRequestForbiddenError:
     status-code: 403
@@ -10628,9 +10591,8 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError:
-            resource: null
-            subject: null
+          reason: INVALID_MEMBER
+          invalidMemberError: {}
   OrganizationIamTestPermissionsRequestUnprocessableEntityError:
     status-code: 422
     type: HttpValidationError
@@ -11032,7 +10994,6 @@ errors:
       - value:
           message: message
           multipleRolesNotAllowedError:
-            resource: null
             roles:
               - roles
           reason: MULTIPLE_ROLES_NOT_ALLOWED
@@ -11052,9 +11013,8 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError:
-            resource: null
-            subject: null
+          reason: INVALID_MEMBER
+          invalidMemberError: {}
   ProjectIamUpdateMemberRolesRequestUnprocessableEntityError:
     status-code: 422
     type: HttpValidationError
@@ -11068,8 +11028,7 @@ errors:
     examples:
       - value:
           message: message
-          invalidSubjectTypeError:
-            subject: null
+          invalidSubjectTypeError: {}
           reason: INVALID_SUBJECT_TYPE
   ProjectIamTestPermissionsRequestForbiddenError:
     status-code: 403
@@ -11087,9 +11046,8 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError:
-            resource: null
-            subject: null
+          reason: INVALID_MEMBER
+          invalidMemberError: {}
   ProjectIamTestPermissionsRequestUnprocessableEntityError:
     status-code: 422
     type: HttpValidationError
@@ -11342,7 +11300,6 @@ errors:
       - value:
           message: message
           multipleRolesNotAllowedError:
-            resource: null
             roles:
               - roles
           reason: MULTIPLE_ROLES_NOT_ALLOWED
@@ -11362,9 +11319,8 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError:
-            resource: null
-            subject: null
+          reason: INVALID_MEMBER
+          invalidMemberError: {}
   CollectionIamUpdateMemberRolesRequestUnprocessableEntityError:
     status-code: 422
     type: HttpValidationError
@@ -11378,8 +11334,7 @@ errors:
     examples:
       - value:
           message: message
-          invalidSubjectTypeError:
-            subject: null
+          invalidSubjectTypeError: {}
           reason: INVALID_SUBJECT_TYPE
   CollectionIamTestPermissionsRequestForbiddenError:
     status-code: 403
@@ -11397,9 +11352,8 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError:
-            resource: null
-            subject: null
+          reason: INVALID_MEMBER
+          invalidMemberError: {}
   CollectionIamTestPermissionsRequestUnprocessableEntityError:
     status-code: 422
     type: HttpValidationError
@@ -11637,7 +11591,6 @@ errors:
       - value:
           message: message
           multipleRolesNotAllowedError:
-            resource: null
             roles:
               - roles
           reason: MULTIPLE_ROLES_NOT_ALLOWED
@@ -11657,9 +11610,8 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError:
-            resource: null
-            subject: null
+          reason: INVALID_MEMBER
+          invalidMemberError: {}
   DocumentIamUpdateMemberRolesRequestUnprocessableEntityError:
     status-code: 422
     type: HttpValidationError
@@ -11673,8 +11625,7 @@ errors:
     examples:
       - value:
           message: message
-          invalidSubjectTypeError:
-            subject: null
+          invalidSubjectTypeError: {}
           reason: INVALID_SUBJECT_TYPE
   DocumentIamTestPermissionsRequestForbiddenError:
     status-code: 403
@@ -11692,9 +11643,8 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError:
-            resource: null
-            subject: null
+          reason: INVALID_MEMBER
+          invalidMemberError: {}
   DocumentIamTestPermissionsRequestUnprocessableEntityError:
     status-code: 422
     type: HttpValidationError
@@ -11867,7 +11817,6 @@ errors:
       - value:
           message: message
           multipleRolesNotAllowedError:
-            resource: null
             roles:
               - roles
           reason: MULTIPLE_ROLES_NOT_ALLOWED
@@ -11887,9 +11836,8 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError:
-            resource: null
-            subject: null
+          reason: INVALID_MEMBER
+          invalidMemberError: {}
   ChatIamUpdateMemberRolesRequestUnprocessableEntityError:
     status-code: 422
     type: HttpValidationError
@@ -11903,8 +11851,7 @@ errors:
     examples:
       - value:
           message: message
-          invalidSubjectTypeError:
-            subject: null
+          invalidSubjectTypeError: {}
           reason: INVALID_SUBJECT_TYPE
   ChatIamTestPermissionsRequestForbiddenError:
     status-code: 403
@@ -11922,9 +11869,8 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError:
-            resource: null
-            subject: null
+          reason: INVALID_MEMBER
+          invalidMemberError: {}
   ChatIamTestPermissionsRequestUnprocessableEntityError:
     status-code: 422
     type: HttpValidationError
@@ -13357,7 +13303,6 @@ errors:
       - value:
           message: message
           multipleRolesNotAllowedError:
-            resource: null
             roles:
               - roles
           reason: MULTIPLE_ROLES_NOT_ALLOWED
@@ -13377,9 +13322,8 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError:
-            resource: null
-            subject: null
+          reason: INVALID_MEMBER
+          invalidMemberError: {}
   TaskIamUpdateMemberRolesRequestUnprocessableEntityError:
     status-code: 422
     type: HttpValidationError
@@ -13393,8 +13337,7 @@ errors:
     examples:
       - value:
           message: message
-          invalidSubjectTypeError:
-            subject: null
+          invalidSubjectTypeError: {}
           reason: INVALID_SUBJECT_TYPE
   TaskIamTestPermissionsRequestForbiddenError:
     status-code: 403
@@ -13412,9 +13355,8 @@ errors:
     examples:
       - value:
           message: message
-          invalidMemberError:
-            resource: null
-            subject: null
+          reason: INVALID_MEMBER
+          invalidMemberError: {}
   TaskIamTestPermissionsRequestUnprocessableEntityError:
     status-code: 422
     type: HttpValidationError
@@ -15111,9 +15053,9 @@ types:
       openapi: ../openapi.yml
   Chat:
     properties:
-      title: nullable<string>
-      description: nullable<string>
-      summary: nullable<string>
+      title: optional<nullable<string>>
+      description: optional<nullable<string>>
+      summary: optional<nullable<string>>
       collection_id:
         type: string
         validation:
@@ -15124,7 +15066,7 @@ types:
         type: string
         validation:
           format: uuid
-      last_message: nullable<datetime>
+      last_message: optional<nullable<datetime>>
       id:
         type: string
         validation:
@@ -15178,9 +15120,9 @@ types:
       knn:
         type: optional<integer>
         default: 5
-      chat_system_commands: nullable<list<string>>
+      chat_system_commands: optional<nullable<list<string>>>
       chat_guardrails:
-        type: nullable<ConversationalGuardrails>
+        type: optional<nullable<ConversationalGuardrails>>
         docs: >-
           Conversational Guardrails can be defined to run against Chat `input`
           (i.e. the users query) or on Chat `output` (i.e. the LLM output)
@@ -15213,12 +15155,12 @@ types:
         type: string
         validation:
           format: uuid
-      description: nullable<string>
-      source: nullable<ChatDocumentSource>
+      description: optional<nullable<string>>
+      source: optional<nullable<ChatDocumentSource>>
       strategy: string
-      source_meta: nullable<map<string, unknown>>
+      source_meta: optional<nullable<map<string, unknown>>>
       connection_id:
-        type: nullable<string>
+        type: optional<nullable<string>>
         validation:
           format: uuid
       id:
@@ -15232,7 +15174,7 @@ types:
       openapi: ../openapi.yml
   ChatDocumentEmbeddingInstance:
     properties:
-      config: nullable<map<string, unknown>>
+      config: optional<nullable<map<string, unknown>>>
       id:
         type: string
         validation:
@@ -15349,7 +15291,7 @@ types:
         type: string
         validation:
           format: uuid
-      summary: nullable<string>
+      summary: optional<nullable<string>>
       created:
         type: datetime
       modified:
@@ -15405,19 +15347,19 @@ types:
   ComposeInit:
     properties:
       title: string
-      topic: nullable<string>
-      purpose: nullable<string>
-      audience: nullable<string>
-      num_sections: nullable<integer>
-      word_count: nullable<integer>
-      voice: nullable<string>
-      domain: nullable<string>
-      tone: nullable<string>
-      favourable_words: nullable<string>
-      deny_words: nullable<string>
-      keywords: nullable<string>
-      cta: nullable<string>
-      content: nullable<string>
+      topic: optional<nullable<string>>
+      purpose: optional<nullable<string>>
+      audience: optional<nullable<string>>
+      num_sections: optional<nullable<integer>>
+      word_count: optional<nullable<integer>>
+      voice: optional<nullable<string>>
+      domain: optional<nullable<string>>
+      tone: optional<nullable<string>>
+      favourable_words: optional<nullable<string>>
+      deny_words: optional<nullable<string>>
+      keywords: optional<nullable<string>>
+      cta: optional<nullable<string>>
+      content: optional<nullable<string>>
       language:
         type: optional<ComposeInitLanguage>
         default: english_british
@@ -15434,7 +15376,7 @@ types:
       section_title: string
       instructions:
         type: list<string>
-      text: nullable<string>
+      text: optional<nullable<string>>
     source:
       openapi: ../openapi.yml
   ConversationalGuardrails:
@@ -15465,13 +15407,13 @@ types:
       openapi: ../openapi.yml
   DatasourceConnection:
     properties:
-      private: nullable<boolean>
+      private: optional<nullable<boolean>>
       project_id:
-        type: nullable<string>
+        type: optional<nullable<string>>
         validation:
           format: uuid
       datasource_id:
-        type: nullable<string>
+        type: optional<nullable<string>>
         validation:
           format: uuid
       config:
@@ -15480,7 +15422,7 @@ types:
         type: optional<string>
         default: ''
       created_by:
-        type: nullable<string>
+        type: optional<nullable<string>>
         validation:
           format: uuid
       id:
@@ -15529,11 +15471,11 @@ types:
       openapi: ../openapi.yml
   DatasourceSyncRun:
     properties:
-      task_id: nullable<string>
+      task_id: optional<nullable<string>>
       status:
         type: optional<DatasourceSyncRunStatus>
         default: pending
-      run_output: nullable<map<string, unknown>>
+      run_output: optional<nullable<map<string, unknown>>>
       id:
         type: string
         validation:
@@ -15542,7 +15484,7 @@ types:
         type: datetime
       modified:
         type: datetime
-      datasource_connection: nullable<DatasourceConnection>
+      datasource_connection: optional<nullable<DatasourceConnection>>
     source:
       openapi: ../openapi.yml
   DocumentCreateTaskState:
@@ -15561,7 +15503,7 @@ types:
       task_id: string
       state:
         type: DocumentCreateTaskState
-      info: nullable<map<string, unknown>>
+      info: optional<nullable<map<string, unknown>>>
     source:
       openapi: ../openapi.yml
   DocumentStatusResponse:
@@ -15611,10 +15553,10 @@ types:
           Some entities, such as Organizations, may contain members that exist
           without any roles.
       name:
-        type: nullable<string>
+        type: optional<nullable<string>>
         docs: The name of the member.
       avatar_url:
-        type: nullable<string>
+        type: optional<nullable<string>>
         docs: If avatar of the member, if it is supported by their subject type.
       total_subjects:
         type: optional<integer>
@@ -15627,21 +15569,21 @@ types:
   IamObjectErrorDetails:
     properties:
       type: string
-      id: nullable<string>
+      id: optional<nullable<string>>
     source:
       openapi: ../openapi.yml
   IamPermissionTest:
     properties:
       permissions:
         type: list<string>
-      member: nullable<string>
+      member: optional<nullable<string>>
     source:
       openapi: ../openapi.yml
   InitialComposeSection:
     properties:
       position: integer
       title: string
-      ideas: nullable<list<string>>
+      ideas: optional<nullable<list<string>>>
     source:
       openapi: ../openapi.yml
   InputConversationalGuardrailDefinitionName:
@@ -15659,8 +15601,8 @@ types:
       openapi: ../openapi.yml
   InvalidMemberErrorDetails:
     properties:
-      resource: nullable<IamObjectErrorDetails>
-      subject: nullable<IamObjectErrorDetails>
+      resource: optional<nullable<IamObjectErrorDetails>>
+      subject: optional<nullable<IamObjectErrorDetails>>
     source:
       openapi: ../openapi.yml
   InvalidMemberErrorResponse:
@@ -15668,6 +15610,9 @@ types:
       message:
         type: string
         docs: Human readable representation of the error
+      reason:
+        type: literal<"INVALID_MEMBER">
+        docs: The machine-readable error reason.
       invalidMemberError:
         type: InvalidMemberErrorDetails
         docs: Metadata detailing more information about the error.
@@ -15675,7 +15620,7 @@ types:
       openapi: ../openapi.yml
   InvalidRoleErrorDetails:
     properties:
-      resource: nullable<IamObjectErrorDetails>
+      resource: optional<nullable<IamObjectErrorDetails>>
       role: string
     source:
       openapi: ../openapi.yml
@@ -15691,7 +15636,7 @@ types:
       openapi: ../openapi.yml
   InvalidSubjectTypeErrorDetails:
     properties:
-      subject: nullable<IamObjectErrorDetails>
+      subject: optional<nullable<IamObjectErrorDetails>>
     source:
       openapi: ../openapi.yml
   InvalidSubjectTypeErrorResponse:
@@ -15717,20 +15662,20 @@ types:
   KratosIdentityTraits:
     properties:
       email:
-        type: nullable<string>
+        type: optional<nullable<string>>
         validation:
           format: email
-      name: nullable<string>
-      avatar_url: nullable<string>
+      name: optional<nullable<string>>
+      avatar_url: optional<nullable<string>>
       project_id:
-        type: nullable<string>
+        type: optional<nullable<string>>
         validation:
           format: uuid
       org_id:
-        type: nullable<string>
+        type: optional<nullable<string>>
         validation:
           format: uuid
-      sso_email_verified: nullable<boolean>
+      sso_email_verified: optional<nullable<boolean>>
     extra-properties: true
     source:
       openapi: ../openapi.yml
@@ -15741,17 +15686,17 @@ types:
         validation:
           format: uuid
       email:
-        type: nullable<string>
+        type: optional<nullable<string>>
         validation:
           format: email
-      bio: nullable<string>
+      bio: optional<nullable<string>>
       flow_id:
-        type: nullable<string>
+        type: optional<nullable<string>>
         validation:
           format: uuid
-      flow_type: nullable<string>
-      identity: nullable<KratosIdentity>
-      ctx: nullable<map<string, unknown>>
+      flow_type: optional<nullable<string>>
+      identity: optional<nullable<KratosIdentity>>
+      ctx: optional<nullable<map<string, unknown>>>
     source:
       openapi: ../openapi.yml
   KratosWebhookDetailedMessageType:
@@ -15772,7 +15717,7 @@ types:
       text: string
       type:
         type: KratosWebhookDetailedMessageType
-      context: nullable<unknown>
+      context: optional<nullable<unknown>>
     source:
       openapi: ../openapi.yml
   KratosWebhookErrorMessage:
@@ -15798,7 +15743,7 @@ types:
       Sourced from rawHookResponse in:
       https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go
     properties:
-      messages: nullable<list<KratosWebhookErrorMessage>>
+      messages: optional<nullable<list<KratosWebhookErrorMessage>>>
       identity:
         type: optional<nullable<KratosWebhookResponseIdentity>>
     source:
@@ -15815,6 +15760,9 @@ types:
       message:
         type: string
         docs: Human readable representation of the error
+      reason:
+        type: literal<"MALFORMED_RESOURCE_IDENTIFIER">
+        docs: The machine-readable error reason.
       malformedResourceIdentifierError:
         type: MalformedResourceIdentifierErrorDetails
         docs: Metadata detailing more information about the error.
@@ -15832,7 +15780,7 @@ types:
       openapi: ../openapi.yml
   MultipleRolesNotAllowedErrorDetails:
     properties:
-      resource: nullable<IamObjectErrorDetails>
+      resource: optional<nullable<IamObjectErrorDetails>>
       roles:
         type: list<string>
     source:
@@ -15877,10 +15825,10 @@ types:
       synced:
         type: optional<boolean>
         default: false
-      size: nullable<string>
-      mimeType: nullable<string>
-      createdTime: nullable<string>
-      modifiedTime: nullable<string>
+      size: optional<nullable<string>>
+      mimeType: optional<nullable<string>>
+      createdTime: optional<nullable<string>>
+      modifiedTime: optional<nullable<string>>
       type: nullable<ObjectType>
       tags:
         type: optional<list<ObjectTags>>
@@ -15907,7 +15855,7 @@ types:
         type: string
         validation:
           format: email
-      avatar_url: nullable<string>
+      avatar_url: optional<nullable<string>>
       id:
         type: string
         validation:
@@ -15953,7 +15901,7 @@ types:
         type: string
         validation:
           format: email
-      roles: nullable<list<string>>
+      roles: optional<nullable<list<string>>>
       id:
         type: string
         validation:
@@ -16001,7 +15949,7 @@ types:
   PaginatedResultSetChatDocumentEmbeddingRecord:
     properties:
       pagination:
-        type: nullable<PaginationDetails>
+        type: optional<nullable<PaginationDetails>>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -16011,7 +15959,7 @@ types:
   PaginatedResultSetChatDocument:
     properties:
       pagination:
-        type: nullable<PaginationDetails>
+        type: optional<nullable<PaginationDetails>>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -16021,7 +15969,7 @@ types:
   PaginatedResultSetChat:
     properties:
       pagination:
-        type: nullable<PaginationDetails>
+        type: optional<nullable<PaginationDetails>>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -16031,7 +15979,7 @@ types:
   PaginatedResultSetCollection:
     properties:
       pagination:
-        type: nullable<PaginationDetails>
+        type: optional<nullable<PaginationDetails>>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -16041,7 +15989,7 @@ types:
   PaginatedResultSetDatasourceSyncRun:
     properties:
       pagination:
-        type: nullable<PaginationDetails>
+        type: optional<nullable<PaginationDetails>>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -16051,7 +15999,7 @@ types:
   PaginatedResultSetIamMember:
     properties:
       pagination:
-        type: nullable<PaginationDetails>
+        type: optional<nullable<PaginationDetails>>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -16061,7 +16009,7 @@ types:
   PaginatedResultSetOrganizationDomain:
     properties:
       pagination:
-        type: nullable<PaginationDetails>
+        type: optional<nullable<PaginationDetails>>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -16071,7 +16019,7 @@ types:
   PaginatedResultSetOrganizationInvite:
     properties:
       pagination:
-        type: nullable<PaginationDetails>
+        type: optional<nullable<PaginationDetails>>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -16081,7 +16029,7 @@ types:
   PaginatedResultSetProject:
     properties:
       pagination:
-        type: nullable<PaginationDetails>
+        type: optional<nullable<PaginationDetails>>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -16091,7 +16039,7 @@ types:
   PaginatedResultSetTaskForwarder:
     properties:
       pagination:
-        type: nullable<PaginationDetails>
+        type: optional<nullable<PaginationDetails>>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -16101,7 +16049,7 @@ types:
   PaginatedResultSetTaskRun:
     properties:
       pagination:
-        type: nullable<PaginationDetails>
+        type: optional<nullable<PaginationDetails>>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -16111,7 +16059,7 @@ types:
   PaginatedResultSetTask:
     properties:
       pagination:
-        type: nullable<PaginationDetails>
+        type: optional<nullable<PaginationDetails>>
         docs: Contains pagination information for the result set.
       results:
         docs: The list of items returned for the current page.
@@ -16121,22 +16069,22 @@ types:
   PaginationDetails:
     properties:
       next_cursor:
-        type: nullable<string>
+        type: optional<nullable<string>>
         docs: >-
           A token used to retrieve the next page of results. If `null`, there
           are no more results.
       has_next:
-        type: nullable<boolean>
+        type: optional<nullable<boolean>>
         docs: Indicates whether there are more results available in the next page.
       page_limit:
-        type: nullable<integer>
+        type: optional<nullable<integer>>
         docs: The maximum number of items returned per page.
     source:
       openapi: ../openapi.yml
   PermissionCheckFailedErrorDetails:
     properties:
-      subject: nullable<IamObjectErrorDetails>
-      resource: nullable<IamObjectErrorDetails>
+      subject: optional<nullable<IamObjectErrorDetails>>
+      resource: optional<nullable<IamObjectErrorDetails>>
       permission: string
     source:
       openapi: ../openapi.yml
@@ -16153,7 +16101,7 @@ types:
   Project:
     properties:
       name: string
-      avatar_url: nullable<string>
+      avatar_url: optional<nullable<string>>
       id:
         type: string
         validation:
@@ -16163,7 +16111,7 @@ types:
         validation:
           format: uuid
       tasks_oauth_client_id:
-        type: nullable<string>
+        type: optional<nullable<string>>
         validation:
           format: uuid
     source:
@@ -16212,8 +16160,8 @@ types:
       knn:
         type: optional<integer>
         default: 4
-      chat_system_commands: nullable<list<string>>
-      chat_guardrails: nullable<ConversationalGuardrails>
+      chat_system_commands: optional<nullable<list<string>>>
+      chat_guardrails: optional<nullable<ConversationalGuardrails>>
       query_expansion:
         type: optional<boolean>
         docs: >-
@@ -16225,7 +16173,7 @@ types:
   ProjectWithDatasources:
     properties:
       name: string
-      avatar_url: nullable<string>
+      avatar_url: optional<nullable<string>>
       id:
         type: string
         validation:
@@ -16235,7 +16183,7 @@ types:
         validation:
           format: uuid
       tasks_oauth_client_id:
-        type: nullable<string>
+        type: optional<nullable<string>>
         validation:
           format: uuid
       datasource_connections:
@@ -16269,7 +16217,7 @@ types:
         type: string
         docs: A name or reference for the Task.
       description:
-        type: nullable<string>
+        type: optional<nullable<string>>
         docs: A longer description of the Task for internal reference.
       enabled:
         type: boolean
@@ -16306,17 +16254,17 @@ types:
         type: string
         docs: A descriptive name for the Task Forwarder.
       description:
-        type: nullable<string>
+        type: optional<nullable<string>>
         docs: >-
           Additional details about the Task Forwarder's purpose or
           configuration.
       config:
-        type: nullable<TaskForwarderConfig>
+        type: optional<nullable<TaskForwarderConfig>>
         docs: >-
           Configuration parameters for the Task Forwarder such as a
           `destination` URL.
       config_sensitive:
-        type: nullable<TaskForwarderSensitiveConfig>
+        type: optional<nullable<TaskForwarderSensitiveConfig>>
         docs: Sensitive parameters for the Task Forwarder such as a `signing_key`.
       id:
         type: string
@@ -16440,14 +16388,14 @@ types:
           optional `description` can be passed to provide it with additional
           context.
       task_forwarder_id:
-        type: nullable<string>
+        type: optional<nullable<string>>
         docs: >-
           The unique identifier for a valid Task Forwarder. It is used to
           forward the Task output to another system or service.
         validation:
           format: uuid
       rag:
-        type: nullable<TaskRag>
+        type: optional<nullable<TaskRag>>
         docs: >-
           **Note: This is a Paid Tier feature.** Provide additional domain
           specific input to the LLM so that it is able to reference user
@@ -16511,8 +16459,8 @@ types:
         validation:
           format: email
       name: nullable<string>
-      bio: nullable<string>
-      avatar_url: nullable<string>
+      bio: optional<nullable<string>>
+      avatar_url: optional<nullable<string>>
       id:
         type: string
         validation:
@@ -16600,9 +16548,9 @@ types:
                         "pattern": undefined,
                       },
                     },
-                    "description": "nullable<string>",
-                    "summary": "nullable<string>",
-                    "title": "nullable<string>",
+                    "description": "optional<nullable<string>>",
+                    "summary": "optional<nullable<string>>",
+                    "title": "optional<nullable<string>>",
                   },
                 },
                 "content-type": "application/json",
@@ -16812,9 +16760,6 @@ types:
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "project_id": "project_id",
-                  },
                   "response": {
                     "body": [
                       {
@@ -16839,7 +16784,7 @@ types:
                 "name": "GetRecentChatsForUserChatRecentGetRequest",
                 "query-parameters": {
                   "project_id": {
-                    "type": "nullable<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -16882,9 +16827,6 @@ types:
                   "path-parameters": {
                     "chat_id": "chat_id",
                   },
-                  "query-parameters": {
-                    "type": "user",
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -16916,7 +16858,7 @@ types:
                   "chat_id": "string",
                 },
                 "query-parameters": {
-                  "type": "nullable<ChatIamListMembersRequestType>",
+                  "type": "optional<nullable<ChatIamListMembersRequestType>>",
                 },
               },
               "response": {
@@ -16973,7 +16915,7 @@ types:
               "request": {
                 "body": {
                   "properties": {
-                    "member": "nullable<string>",
+                    "member": "optional<nullable<string>>",
                     "permissions": {
                       "docs": "A list of permissions to test on the chat.",
                       "type": "list<ChatIamPermissionTestPermissionsItem>",
@@ -17056,7 +16998,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                     },
                     "remove_all": {
                       "docs": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
-                      "type": "nullable<boolean>",
+                      "type": "optional<nullable<boolean>>",
                     },
                   },
                 },
@@ -17193,9 +17135,9 @@ This may be combined with `remove_all` to replace the member's entire role list.
                   "properties": {
                     "chat_guardrails": {
                       "docs": "Conversational Guardrails can be defined to run against Chat `input` (i.e. the users query) or on Chat `output` (i.e. the LLM output)",
-                      "type": "nullable<root.ConversationalGuardrails>",
+                      "type": "optional<nullable<root.ConversationalGuardrails>>",
                     },
-                    "chat_system_commands": "nullable<list<string>>",
+                    "chat_system_commands": "optional<nullable<list<string>>>",
                     "knn": {
                       "default": 5,
                       "type": "optional<integer>",
@@ -17440,7 +17382,7 @@ service:
         name: GetRecentChatsForUserChatRecentGetRequest
         query-parameters:
           project_id:
-            type: nullable<string>
+            type: optional<nullable<string>>
             validation:
               format: uuid
       response:
@@ -17450,9 +17392,7 @@ service:
       errors:
         - root.GetRecentChatsForUserChatRecentGetRequestUnprocessableEntityError
       examples:
-        - query-parameters:
-            project_id: project_id
-          response:
+        - response:
             body:
               - title: title
                 description: description
@@ -17607,9 +17547,9 @@ service:
             knn:
               type: optional<integer>
               default: 5
-            chat_system_commands: nullable<list<string>>
+            chat_system_commands: optional<nullable<list<string>>>
             chat_guardrails:
-              type: nullable<root.ConversationalGuardrails>
+              type: optional<nullable<root.ConversationalGuardrails>>
               docs: >-
                 Conversational Guardrails can be defined to run against Chat
                 `input` (i.e. the users query) or on Chat `output` (i.e. the LLM
@@ -17661,9 +17601,9 @@ service:
         name: ChatCreate
         body:
           properties:
-            title: nullable<string>
-            description: nullable<string>
-            summary: nullable<string>
+            title: optional<nullable<string>>
+            description: optional<nullable<string>>
+            summary: optional<nullable<string>>
             collection_id:
               type: string
               validation:
@@ -17742,7 +17682,7 @@ service:
         path-parameters:
           chat_id: string
         query-parameters:
-          type: nullable<ChatIamListMembersRequestType>
+          type: optional<nullable<ChatIamListMembersRequestType>>
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
@@ -17754,8 +17694,6 @@ service:
       examples:
         - path-parameters:
             chat_id: chat_id
-          query-parameters:
-            type: user
           response:
             body:
               pagination:
@@ -17842,7 +17780,7 @@ service:
               type: optional<list<ChatIamMemberRoleUpdateRemoveItem>>
               docs: A list of chat roles to revoke from the member.
             remove_all:
-              type: nullable<boolean>
+              type: optional<nullable<boolean>>
               docs: >-
                 Removes all existing roles from the member. This may be combined
                 with `add` to replace all existing roles that the member holds.
@@ -17891,7 +17829,7 @@ service:
             permissions:
               docs: A list of permissions to test on the chat.
               type: list<ChatIamPermissionTestPermissionsItem>
-            member: nullable<string>
+            member: optional<nullable<string>>
         content-type: application/json
       response:
         docs: Successful Response
@@ -18520,9 +18458,6 @@ types:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "type": "user",
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -18556,7 +18491,7 @@ types:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "type": "nullable<CollectionIamListMembersRequestType>",
+                  "type": "optional<nullable<CollectionIamListMembersRequestType>>",
                 },
               },
               "response": {
@@ -18615,7 +18550,7 @@ types:
               "request": {
                 "body": {
                   "properties": {
-                    "member": "nullable<string>",
+                    "member": "optional<nullable<string>>",
                     "permissions": {
                       "docs": "A list of permissions to test on the collection.",
                       "type": "list<CollectionIamPermissionTestPermissionsItem>",
@@ -18702,7 +18637,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                     },
                     "remove_all": {
                       "docs": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
-                      "type": "nullable<boolean>",
+                      "type": "optional<nullable<boolean>>",
                     },
                   },
                 },
@@ -18751,9 +18686,6 @@ This may be combined with `remove_all` to replace the member's entire role list.
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "cursor": "cursor",
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -18790,7 +18722,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 },
                 "query-parameters": {
                   "cursor": {
-                    "type": "nullable<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -18838,10 +18770,6 @@ This may be combined with `remove_all` to replace the member's entire role list.
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "cursor": "cursor",
-                    "title": "title",
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -18855,7 +18783,6 @@ This may be combined with `remove_all` to replace the member's entire role list.
                           "embedding_instances": [
                             {
                               "chat_document_id": "chat_document_id",
-                              "config": null,
                               "id": "id",
                               "is_active": true,
                             },
@@ -18882,7 +18809,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 },
                 "query-parameters": {
                   "cursor": {
-                    "type": "nullable<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -18894,7 +18821,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                     "default": 100,
                     "type": "optional<integer>",
                   },
-                  "title": "nullable<string>",
+                  "title": "optional<nullable<string>>",
                 },
               },
               "response": {
@@ -19109,9 +19036,9 @@ service:
           org_id: string
           project_id: string
         query-parameters:
-          title: nullable<string>
+          title: optional<nullable<string>>
           cursor:
-            type: nullable<string>
+            type: optional<nullable<string>>
             validation:
               format: uuid
           page_limit:
@@ -19132,9 +19059,6 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
-          query-parameters:
-            title: title
-            cursor: cursor
           response:
             body:
               pagination:
@@ -19149,8 +19073,7 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   embedding_instances:
-                    - config: null
-                      id: id
+                    - id: id
                       chat_document_id: chat_document_id
                       is_active: true
     createCollection:
@@ -19364,7 +19287,7 @@ service:
         query-parameters:
           show: optional<root.CollectionChatShow>
           cursor:
-            type: nullable<string>
+            type: optional<nullable<string>>
             validation:
               format: uuid
           page_limit:
@@ -19386,8 +19309,6 @@ service:
             org_id: org_id
             project_id: project_id
             collection_id: collection_id
-          query-parameters:
-            cursor: cursor
           response:
             body:
               pagination:
@@ -19616,7 +19537,7 @@ service:
           project_id: string
           collection_id: string
         query-parameters:
-          type: nullable<CollectionIamListMembersRequestType>
+          type: optional<nullable<CollectionIamListMembersRequestType>>
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
@@ -19630,8 +19551,6 @@ service:
             org_id: org_id
             project_id: project_id
             collection_id: collection_id
-          query-parameters:
-            type: user
           response:
             body:
               pagination:
@@ -19726,7 +19645,7 @@ service:
               type: optional<list<CollectionIamMemberRoleUpdateRemoveItem>>
               docs: A list of collection roles to revoke from the member.
             remove_all:
-              type: nullable<boolean>
+              type: optional<nullable<boolean>>
               docs: >-
                 Removes all existing roles from the member. This may be combined
                 with `add` to replace all existing roles that the member holds.
@@ -19779,7 +19698,7 @@ service:
             permissions:
               docs: A list of permissions to test on the collection.
               type: list<CollectionIamPermissionTestPermissionsItem>
-            member: nullable<string>
+            member: optional<nullable<string>>
         content-type: application/json
       response:
         docs: Successful Response
@@ -20496,9 +20415,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "redirect_to": "redirect_to",
-                  },
                 },
               ],
               "method": "GET",
@@ -20512,7 +20428,7 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "redirect_to": "nullable<string>",
+                  "redirect_to": "optional<nullable<string>>",
                 },
               },
               "source": {
@@ -20532,10 +20448,6 @@ service:
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "code": "code",
-                    "state": "state",
-                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -20549,8 +20461,8 @@ service:
               "request": {
                 "name": "CallbackDatasourceBoxCallbackGetRequest",
                 "query-parameters": {
-                  "code": "nullable<string>",
-                  "state": "nullable<string>",
+                  "code": "optional<nullable<string>>",
+                  "state": "optional<nullable<string>>",
                 },
               },
               "response": {
@@ -20904,9 +20816,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "cursor": "cursor",
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -20918,11 +20827,7 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
-                            "created_by": null,
-                            "datasource_id": null,
                             "id": "id",
-                            "private": null,
-                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -20948,7 +20853,7 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "cursor": "nullable<string>",
+                  "cursor": "optional<nullable<string>>",
                   "page_limit": {
                     "default": 25,
                     "type": "optional<integer>",
@@ -21150,7 +21055,7 @@ service:
           project_id: string
           connection_id: nullable<string>
         query-parameters:
-          redirect_to: nullable<string>
+          redirect_to: optional<nullable<string>>
       errors:
         - >-
           root.AuthorizeOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdAuthorizeGetRequestBadRequestError
@@ -21163,8 +21068,6 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
-          query-parameters:
-            redirect_to: redirect_to
     delete:
       path: /org/{org_id}/project/{project_id}/datasource/box/{connection_id}
       method: DELETE
@@ -21218,7 +21121,7 @@ service:
           project_id: string
           connection_id: string
         query-parameters:
-          cursor: nullable<string>
+          cursor: optional<nullable<string>>
           page_limit:
             type: optional<integer>
             default: 25
@@ -21238,8 +21141,6 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
-          query-parameters:
-            cursor: cursor
           response:
             body:
               pagination:
@@ -21255,10 +21156,6 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
-                    private: null
-                    project_id: null
-                    datasource_id: null
-                    created_by: null
                     id: id
     checkStatus:
       path: /org/{org_id}/project/{project_id}/datasource/box/{connection_id}/run
@@ -21406,8 +21303,8 @@ service:
       request:
         name: CallbackDatasourceBoxCallbackGetRequest
         query-parameters:
-          code: nullable<string>
-          state: nullable<string>
+          code: optional<nullable<string>>
+          state: optional<nullable<string>>
       response:
         docs: Successful Response
         type: unknown
@@ -21415,10 +21312,7 @@ service:
       errors:
         - root.CallbackDatasourceBoxCallbackGetRequestUnprocessableEntityError
       examples:
-        - query-parameters:
-            code: code
-            state: state
-          response:
+        - response:
             body:
               key: value
   source:
@@ -21460,9 +21354,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "redirect_to": "redirect_to",
-                  },
                 },
               ],
               "method": "GET",
@@ -21476,7 +21367,7 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "redirect_to": "nullable<string>",
+                  "redirect_to": "optional<nullable<string>>",
                 },
               },
               "source": {
@@ -21496,10 +21387,6 @@ service:
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "code": "code",
-                    "state": "state",
-                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -21513,8 +21400,8 @@ service:
               "request": {
                 "name": "CallbackDatasourceConfluenceCallbackGetRequest",
                 "query-parameters": {
-                  "code": "nullable<string>",
-                  "state": "nullable<string>",
+                  "code": "optional<nullable<string>>",
+                  "state": "optional<nullable<string>>",
                 },
               },
               "response": {
@@ -21868,9 +21755,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "cursor": "cursor",
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -21882,11 +21766,7 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
-                            "created_by": null,
-                            "datasource_id": null,
                             "id": "id",
-                            "private": null,
-                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -21912,7 +21792,7 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "cursor": "nullable<string>",
+                  "cursor": "optional<nullable<string>>",
                   "page_limit": {
                     "default": 25,
                     "type": "optional<integer>",
@@ -22116,7 +21996,7 @@ service:
           project_id: string
           connection_id: nullable<string>
         query-parameters:
-          redirect_to: nullable<string>
+          redirect_to: optional<nullable<string>>
       errors:
         - >-
           root.AuthorizeOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdAuthorizeGetRequestBadRequestError
@@ -22129,8 +22009,6 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
-          query-parameters:
-            redirect_to: redirect_to
     delete:
       path: /org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}
       method: DELETE
@@ -22186,7 +22064,7 @@ service:
           project_id: string
           connection_id: string
         query-parameters:
-          cursor: nullable<string>
+          cursor: optional<nullable<string>>
           page_limit:
             type: optional<integer>
             default: 25
@@ -22206,8 +22084,6 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
-          query-parameters:
-            cursor: cursor
           response:
             body:
               pagination:
@@ -22223,10 +22099,6 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
-                    private: null
-                    project_id: null
-                    datasource_id: null
-                    created_by: null
                     id: id
     checkStatus:
       path: >-
@@ -22377,8 +22249,8 @@ service:
       request:
         name: CallbackDatasourceConfluenceCallbackGetRequest
         query-parameters:
-          code: nullable<string>
-          state: nullable<string>
+          code: optional<nullable<string>>
+          state: optional<nullable<string>>
       response:
         docs: Successful Response
         type: unknown
@@ -22387,10 +22259,7 @@ service:
         - >-
           root.CallbackDatasourceConfluenceCallbackGetRequestUnprocessableEntityError
       examples:
-        - query-parameters:
-            code: code
-            state: state
-          response:
+        - response:
             body:
               key: value
   source:
@@ -22432,9 +22301,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "redirect_to": "redirect_to",
-                  },
                 },
               ],
               "method": "GET",
@@ -22448,7 +22314,7 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "redirect_to": "nullable<string>",
+                  "redirect_to": "optional<nullable<string>>",
                 },
               },
               "source": {
@@ -22468,10 +22334,6 @@ service:
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "code": "code",
-                    "state": "state",
-                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -22485,8 +22347,8 @@ service:
               "request": {
                 "name": "CallbackDatasourceDropboxCallbackGetRequest",
                 "query-parameters": {
-                  "code": "nullable<string>",
-                  "state": "nullable<string>",
+                  "code": "optional<nullable<string>>",
+                  "state": "optional<nullable<string>>",
                 },
               },
               "response": {
@@ -22840,9 +22702,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "cursor": "cursor",
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -22854,11 +22713,7 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
-                            "created_by": null,
-                            "datasource_id": null,
                             "id": "id",
-                            "private": null,
-                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -22884,7 +22739,7 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "cursor": "nullable<string>",
+                  "cursor": "optional<nullable<string>>",
                   "page_limit": {
                     "default": 25,
                     "type": "optional<integer>",
@@ -23088,7 +22943,7 @@ service:
           project_id: string
           connection_id: nullable<string>
         query-parameters:
-          redirect_to: nullable<string>
+          redirect_to: optional<nullable<string>>
       errors:
         - >-
           root.AuthorizeOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdAuthorizeGetRequestBadRequestError
@@ -23101,8 +22956,6 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
-          query-parameters:
-            redirect_to: redirect_to
     delete:
       path: /org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}
       method: DELETE
@@ -23158,7 +23011,7 @@ service:
           project_id: string
           connection_id: string
         query-parameters:
-          cursor: nullable<string>
+          cursor: optional<nullable<string>>
           page_limit:
             type: optional<integer>
             default: 25
@@ -23178,8 +23031,6 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
-          query-parameters:
-            cursor: cursor
           response:
             body:
               pagination:
@@ -23195,10 +23046,6 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
-                    private: null
-                    project_id: null
-                    datasource_id: null
-                    created_by: null
                     id: id
     checkStatus:
       path: >-
@@ -23349,8 +23196,8 @@ service:
       request:
         name: CallbackDatasourceDropboxCallbackGetRequest
         query-parameters:
-          code: nullable<string>
-          state: nullable<string>
+          code: optional<nullable<string>>
+          state: optional<nullable<string>>
       response:
         docs: Successful Response
         type: unknown
@@ -23359,10 +23206,7 @@ service:
         - >-
           root.CallbackDatasourceDropboxCallbackGetRequestUnprocessableEntityError
       examples:
-        - query-parameters:
-            code: code
-            state: state
-          response:
+        - response:
             body:
               key: value
   source:
@@ -23404,9 +23248,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "redirect_to": "redirect_to",
-                  },
                 },
               ],
               "method": "GET",
@@ -23420,7 +23261,7 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "redirect_to": "nullable<string>",
+                  "redirect_to": "optional<nullable<string>>",
                 },
               },
               "source": {
@@ -23440,10 +23281,6 @@ service:
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "code": "code",
-                    "state": "state",
-                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -23457,8 +23294,8 @@ service:
               "request": {
                 "name": "CallbackDatasourceGdriveCallbackGetRequest",
                 "query-parameters": {
-                  "code": "nullable<string>",
-                  "state": "nullable<string>",
+                  "code": "optional<nullable<string>>",
+                  "state": "optional<nullable<string>>",
                 },
               },
               "response": {
@@ -23812,9 +23649,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "cursor": "cursor",
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -23826,11 +23660,7 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
-                            "created_by": null,
-                            "datasource_id": null,
                             "id": "id",
-                            "private": null,
-                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -23856,7 +23686,7 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "cursor": "nullable<string>",
+                  "cursor": "optional<nullable<string>>",
                   "page_limit": {
                     "default": 25,
                     "type": "optional<integer>",
@@ -24060,7 +23890,7 @@ service:
           project_id: string
           connection_id: nullable<string>
         query-parameters:
-          redirect_to: nullable<string>
+          redirect_to: optional<nullable<string>>
       errors:
         - >-
           root.AuthorizeOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdAuthorizeGetRequestBadRequestError
@@ -24073,8 +23903,6 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
-          query-parameters:
-            redirect_to: redirect_to
     delete:
       path: /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}
       method: DELETE
@@ -24130,7 +23958,7 @@ service:
           project_id: string
           connection_id: string
         query-parameters:
-          cursor: nullable<string>
+          cursor: optional<nullable<string>>
           page_limit:
             type: optional<integer>
             default: 25
@@ -24150,8 +23978,6 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
-          query-parameters:
-            cursor: cursor
           response:
             body:
               pagination:
@@ -24167,10 +23993,6 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
-                    private: null
-                    project_id: null
-                    datasource_id: null
-                    created_by: null
                     id: id
     checkStatus:
       path: /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/run
@@ -24320,8 +24142,8 @@ service:
       request:
         name: CallbackDatasourceGdriveCallbackGetRequest
         query-parameters:
-          code: nullable<string>
-          state: nullable<string>
+          code: optional<nullable<string>>
+          state: optional<nullable<string>>
       response:
         docs: Successful Response
         type: unknown
@@ -24330,10 +24152,7 @@ service:
         - >-
           root.CallbackDatasourceGdriveCallbackGetRequestUnprocessableEntityError
       examples:
-        - query-parameters:
-            code: code
-            state: state
-          response:
+        - response:
             body:
               key: value
   source:
@@ -24375,9 +24194,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "redirect_to": "redirect_to",
-                  },
                 },
               ],
               "method": "GET",
@@ -24391,7 +24207,7 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "redirect_to": "nullable<string>",
+                  "redirect_to": "optional<nullable<string>>",
                 },
               },
               "source": {
@@ -24411,10 +24227,6 @@ service:
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "code": "code",
-                    "state": "state",
-                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -24428,8 +24240,8 @@ service:
               "request": {
                 "name": "CallbackDatasourceNotionCallbackGetRequest",
                 "query-parameters": {
-                  "code": "nullable<string>",
-                  "state": "nullable<string>",
+                  "code": "optional<nullable<string>>",
+                  "state": "optional<nullable<string>>",
                 },
               },
               "response": {
@@ -24783,9 +24595,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "cursor": "cursor",
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -24797,11 +24606,7 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
-                            "created_by": null,
-                            "datasource_id": null,
                             "id": "id",
-                            "private": null,
-                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -24827,7 +24632,7 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "cursor": "nullable<string>",
+                  "cursor": "optional<nullable<string>>",
                   "page_limit": {
                     "default": 25,
                     "type": "optional<integer>",
@@ -25031,7 +24836,7 @@ service:
           project_id: string
           connection_id: nullable<string>
         query-parameters:
-          redirect_to: nullable<string>
+          redirect_to: optional<nullable<string>>
       errors:
         - >-
           root.AuthorizeOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdAuthorizeGetRequestBadRequestError
@@ -25044,8 +24849,6 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
-          query-parameters:
-            redirect_to: redirect_to
     delete:
       path: /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}
       method: DELETE
@@ -25101,7 +24904,7 @@ service:
           project_id: string
           connection_id: string
         query-parameters:
-          cursor: nullable<string>
+          cursor: optional<nullable<string>>
           page_limit:
             type: optional<integer>
             default: 25
@@ -25121,8 +24924,6 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
-          query-parameters:
-            cursor: cursor
           response:
             body:
               pagination:
@@ -25138,10 +24939,6 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
-                    private: null
-                    project_id: null
-                    datasource_id: null
-                    created_by: null
                     id: id
     checkStatus:
       path: /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/run
@@ -25291,8 +25088,8 @@ service:
       request:
         name: CallbackDatasourceNotionCallbackGetRequest
         query-parameters:
-          code: nullable<string>
-          state: nullable<string>
+          code: optional<nullable<string>>
+          state: optional<nullable<string>>
       response:
         docs: Successful Response
         type: unknown
@@ -25301,10 +25098,7 @@ service:
         - >-
           root.CallbackDatasourceNotionCallbackGetRequestUnprocessableEntityError
       examples:
-        - query-parameters:
-            code: code
-            state: state
-          response:
+        - response:
             body:
               key: value
   source:
@@ -25346,9 +25140,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "redirect_to": "redirect_to",
-                  },
                 },
               ],
               "method": "GET",
@@ -25362,7 +25153,7 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "redirect_to": "nullable<string>",
+                  "redirect_to": "optional<nullable<string>>",
                 },
               },
               "source": {
@@ -25382,10 +25173,6 @@ service:
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "code": "code",
-                    "state": "state",
-                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -25399,8 +25186,8 @@ service:
               "request": {
                 "name": "CallbackDatasourceOnedriveCallbackGetRequest",
                 "query-parameters": {
-                  "code": "nullable<string>",
-                  "state": "nullable<string>",
+                  "code": "optional<nullable<string>>",
+                  "state": "optional<nullable<string>>",
                 },
               },
               "response": {
@@ -25754,9 +25541,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "cursor": "cursor",
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -25768,11 +25552,7 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
-                            "created_by": null,
-                            "datasource_id": null,
                             "id": "id",
-                            "private": null,
-                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -25798,7 +25578,7 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "cursor": "nullable<string>",
+                  "cursor": "optional<nullable<string>>",
                   "page_limit": {
                     "default": 25,
                     "type": "optional<integer>",
@@ -26002,7 +25782,7 @@ service:
           project_id: string
           connection_id: nullable<string>
         query-parameters:
-          redirect_to: nullable<string>
+          redirect_to: optional<nullable<string>>
       errors:
         - >-
           root.AuthorizeOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdAuthorizeGetRequestBadRequestError
@@ -26015,8 +25795,6 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
-          query-parameters:
-            redirect_to: redirect_to
     delete:
       path: /org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}
       method: DELETE
@@ -26072,7 +25850,7 @@ service:
           project_id: string
           connection_id: string
         query-parameters:
-          cursor: nullable<string>
+          cursor: optional<nullable<string>>
           page_limit:
             type: optional<integer>
             default: 25
@@ -26092,8 +25870,6 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
-          query-parameters:
-            cursor: cursor
           response:
             body:
               pagination:
@@ -26109,10 +25885,6 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
-                    private: null
-                    project_id: null
-                    datasource_id: null
-                    created_by: null
                     id: id
     checkStatus:
       path: >-
@@ -26263,8 +26035,8 @@ service:
       request:
         name: CallbackDatasourceOnedriveCallbackGetRequest
         query-parameters:
-          code: nullable<string>
-          state: nullable<string>
+          code: optional<nullable<string>>
+          state: optional<nullable<string>>
       response:
         docs: Successful Response
         type: unknown
@@ -26273,10 +26045,7 @@ service:
         - >-
           root.CallbackDatasourceOnedriveCallbackGetRequestUnprocessableEntityError
       examples:
-        - query-parameters:
-            code: code
-            state: state
-          response:
+        - response:
             body:
               key: value
   source:
@@ -26318,9 +26087,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "redirect_to": "redirect_to",
-                  },
                 },
               ],
               "method": "GET",
@@ -26334,7 +26100,7 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "redirect_to": "nullable<string>",
+                  "redirect_to": "optional<nullable<string>>",
                 },
               },
               "source": {
@@ -26354,10 +26120,6 @@ service:
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "code": "code",
-                    "state": "state",
-                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -26371,8 +26133,8 @@ service:
               "request": {
                 "name": "CallbackDatasourceSharepointCallbackGetRequest",
                 "query-parameters": {
-                  "code": "nullable<string>",
-                  "state": "nullable<string>",
+                  "code": "optional<nullable<string>>",
+                  "state": "optional<nullable<string>>",
                 },
               },
               "response": {
@@ -26726,9 +26488,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "cursor": "cursor",
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -26740,11 +26499,7 @@ service:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
-                            "created_by": null,
-                            "datasource_id": null,
                             "id": "id",
-                            "private": null,
-                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -26770,7 +26525,7 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "cursor": "nullable<string>",
+                  "cursor": "optional<nullable<string>>",
                   "page_limit": {
                     "default": 25,
                     "type": "optional<integer>",
@@ -26974,7 +26729,7 @@ service:
           project_id: string
           connection_id: nullable<string>
         query-parameters:
-          redirect_to: nullable<string>
+          redirect_to: optional<nullable<string>>
       errors:
         - >-
           root.AuthorizeOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdAuthorizeGetRequestBadRequestError
@@ -26987,8 +26742,6 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
-          query-parameters:
-            redirect_to: redirect_to
     delete:
       path: /org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}
       method: DELETE
@@ -27044,7 +26797,7 @@ service:
           project_id: string
           connection_id: string
         query-parameters:
-          cursor: nullable<string>
+          cursor: optional<nullable<string>>
           page_limit:
             type: optional<integer>
             default: 25
@@ -27064,8 +26817,6 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
-          query-parameters:
-            cursor: cursor
           response:
             body:
               pagination:
@@ -27081,10 +26832,6 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
-                    private: null
-                    project_id: null
-                    datasource_id: null
-                    created_by: null
                     id: id
     checkStatus:
       path: >-
@@ -27235,8 +26982,8 @@ service:
       request:
         name: CallbackDatasourceSharepointCallbackGetRequest
         query-parameters:
-          code: nullable<string>
-          state: nullable<string>
+          code: optional<nullable<string>>
+          state: optional<nullable<string>>
       response:
         docs: Successful Response
         type: unknown
@@ -27245,10 +26992,7 @@ service:
         - >-
           root.CallbackDatasourceSharepointCallbackGetRequestUnprocessableEntityError
       examples:
-        - query-parameters:
-            code: code
-            state: state
-          response:
+        - response:
             body:
               key: value
   source:
@@ -27458,9 +27202,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "cursor": "cursor",
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -27490,7 +27231,7 @@ service:
                 },
                 "query-parameters": {
                   "cursor": {
-                    "type": "nullable<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -27610,14 +27351,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "collection_id": "collection_id",
-                    "connection_id": "connection_id",
-                    "cursor": "cursor",
-                    "source": "upload",
-                    "strategy": "strategy",
-                    "title": "title",
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -27633,7 +27366,6 @@ service:
                           "embedding_instances": [
                             {
                               "chat_document_id": "chat_document_id",
-                              "config": null,
                               "id": "id",
                               "is_active": true,
                             },
@@ -27664,7 +27396,7 @@ service:
                 },
                 "query-parameters": {
                   "collection_id": {
-                    "type": "nullable<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -27673,7 +27405,7 @@ service:
                     },
                   },
                   "connection_id": {
-                    "type": "nullable<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -27682,7 +27414,7 @@ service:
                     },
                   },
                   "cursor": {
-                    "type": "nullable<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -27694,9 +27426,9 @@ service:
                     "default": 25,
                     "type": "optional<integer>",
                   },
-                  "source": "nullable<DocumentListOrgOrgIdProjectProjectIdDocumentGetRequestSource>",
-                  "strategy": "nullable<string>",
-                  "title": "nullable<string>",
+                  "source": "optional<nullable<DocumentListOrgOrgIdProjectProjectIdDocumentGetRequestSource>>",
+                  "strategy": "optional<nullable<string>>",
+                  "title": "optional<nullable<string>>",
                 },
               },
               "response": {
@@ -27832,7 +27564,7 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "description": "nullable<string>",
+                    "description": "optional<nullable<string>>",
                     "title": "string",
                   },
                 },
@@ -27892,7 +27624,6 @@ service:
                         "embedding_instances": [
                           {
                             "chat_document_id": "chat_document_id",
-                            "config": null,
                             "id": "id",
                             "is_active": true,
                           },
@@ -28026,9 +27757,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "type": "user",
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -28062,7 +27790,7 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "type": "nullable<DocumentIamListMembersRequestType>",
+                  "type": "optional<nullable<DocumentIamListMembersRequestType>>",
                 },
               },
               "response": {
@@ -28121,7 +27849,7 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "member": "nullable<string>",
+                    "member": "optional<nullable<string>>",
                     "permissions": {
                       "docs": "A list of permissions to test on the document.",
                       "type": "list<DocumentIamPermissionTestPermissionsItem>",
@@ -28208,7 +27936,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                     },
                     "remove_all": {
                       "docs": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
-                      "type": "nullable<boolean>",
+                      "type": "optional<nullable<boolean>>",
                     },
                   },
                 },
@@ -28445,24 +28173,24 @@ service:
           project_id: string
         query-parameters:
           connection_id:
-            type: nullable<string>
+            type: optional<nullable<string>>
             validation:
               format: uuid
-          title: nullable<string>
+          title: optional<nullable<string>>
           cursor:
-            type: nullable<string>
+            type: optional<nullable<string>>
             validation:
               format: uuid
           collection_id:
-            type: nullable<string>
+            type: optional<nullable<string>>
             validation:
               format: uuid
           page_limit:
             type: optional<integer>
             default: 25
           source: >-
-            nullable<DocumentListOrgOrgIdProjectProjectIdDocumentGetRequestSource>
-          strategy: nullable<string>
+            optional<nullable<DocumentListOrgOrgIdProjectProjectIdDocumentGetRequestSource>>
+          strategy: optional<nullable<string>>
       response:
         docs: Successful Response
         type: root.PaginatedResultSetChatDocument
@@ -28478,13 +28206,6 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
-          query-parameters:
-            connection_id: connection_id
-            title: title
-            cursor: cursor
-            collection_id: collection_id
-            source: upload
-            strategy: strategy
           response:
             body:
               pagination:
@@ -28504,8 +28225,7 @@ service:
                   chunks: 1
                   original_mime: original_mime
                   embedding_instances:
-                    - config: null
-                      id: id
+                    - id: id
                       chat_document_id: chat_document_id
                       is_active: true
     documentCreate:
@@ -28607,8 +28327,7 @@ service:
                 chunks: 1
                 original_mime: original_mime
                 embedding_instances:
-                  - config: null
-                    id: id
+                  - id: id
                     chat_document_id: chat_document_id
                     is_active: true
     taskStatus:
@@ -28764,7 +28483,7 @@ service:
         body:
           properties:
             title: string
-            description: nullable<string>
+            description: optional<nullable<string>>
         content-type: application/json
       response:
         docs: Successful Response
@@ -28857,7 +28576,7 @@ service:
           document_id: string
         query-parameters:
           cursor:
-            type: nullable<string>
+            type: optional<nullable<string>>
             validation:
               format: uuid
           page_limit:
@@ -28879,8 +28598,6 @@ service:
             org_id: org_id
             project_id: project_id
             document_id: document_id
-          query-parameters:
-            cursor: cursor
           response:
             body:
               pagination:
@@ -28944,7 +28661,7 @@ service:
           project_id: string
           document_id: string
         query-parameters:
-          type: nullable<DocumentIamListMembersRequestType>
+          type: optional<nullable<DocumentIamListMembersRequestType>>
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
@@ -28958,8 +28675,6 @@ service:
             org_id: org_id
             project_id: project_id
             document_id: document_id
-          query-parameters:
-            type: user
           response:
             body:
               pagination:
@@ -29054,7 +28769,7 @@ service:
               type: optional<list<DocumentIamMemberRoleUpdateRemoveItem>>
               docs: A list of document roles to revoke from the member.
             remove_all:
-              type: nullable<boolean>
+              type: optional<nullable<boolean>>
               docs: >-
                 Removes all existing roles from the member. This may be combined
                 with `add` to replace all existing roles that the member holds.
@@ -29107,7 +28822,7 @@ service:
             permissions:
               docs: A list of permissions to test on the document.
               type: list<DocumentIamPermissionTestPermissionsItem>
-            member: nullable<string>
+            member: optional<nullable<string>>
         content-type: application/json
       response:
         docs: Successful Response
@@ -29198,7 +28913,7 @@ service:
                       },
                     },
                     "profile": "optional<root.OAuthClientProfile>",
-                    "redirect_uris": "nullable<list<string>>",
+                    "redirect_uris": "optional<nullable<list<string>>>",
                   },
                 },
                 "content-type": "application/json",
@@ -29292,7 +29007,6 @@ service:
                           "instance_ptr": "instance_ptr",
                           "messages": [
                             {
-                              "context": null,
                               "id": 1,
                               "text": "text",
                               "type": "info",
@@ -29344,7 +29058,6 @@ service:
                           "instance_ptr": "instance_ptr",
                           "messages": [
                             {
-                              "context": null,
                               "id": 1,
                               "text": "text",
                               "type": "info",
@@ -29438,7 +29151,7 @@ service:
                 minLength: 1
                 maxLength: 255
             profile: optional<root.OAuthClientProfile>
-            redirect_uris: nullable<list<string>>
+            redirect_uris: optional<nullable<list<string>>>
         content-type: application/json
       response:
         docs: Successful Response
@@ -29491,7 +29204,6 @@ service:
                     - id: 1
                       text: text
                       type: info
-                      context: null
               identity:
                 key: value
     webhookKratosSignupCommit:
@@ -29522,7 +29234,6 @@ service:
                     - id: 1
                       text: text
                       type: info
-                      context: null
               identity:
                 key: value
   source:
@@ -30231,7 +29942,7 @@ service:
                         "pattern": undefined,
                       },
                     },
-                    "roles": "nullable<list<string>>",
+                    "roles": "optional<nullable<list<string>>>",
                   },
                 },
                 "content-type": "application/json",
@@ -30314,9 +30025,6 @@ service:
                   "path-parameters": {
                     "org_id": "org_id",
                   },
-                  "query-parameters": {
-                    "cursor": "cursor",
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -30347,7 +30055,7 @@ service:
                 },
                 "query-parameters": {
                   "cursor": {
-                    "type": "nullable<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -30438,9 +30146,6 @@ service:
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "cursor": "cursor",
-                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -30455,7 +30160,7 @@ service:
                 "name": "OrgListOrgGetRequest",
                 "query-parameters": {
                   "cursor": {
-                    "type": "nullable<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -30520,7 +30225,7 @@ service:
                 "body": {
                   "properties": {
                     "contact_email": {
-                      "type": "nullable<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": "email",
                         "maxLength": undefined,
@@ -30688,9 +30393,6 @@ service:
                   "path-parameters": {
                     "org_id": "org_id",
                   },
-                  "query-parameters": {
-                    "type": "user",
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -30722,7 +30424,7 @@ service:
                   "org_id": "string",
                 },
                 "query-parameters": {
-                  "type": "nullable<OrganizationIamListMembersRequestType>",
+                  "type": "optional<nullable<OrganizationIamListMembersRequestType>>",
                 },
               },
               "response": {
@@ -30779,7 +30481,7 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "member": "nullable<string>",
+                    "member": "optional<nullable<string>>",
                     "permissions": {
                       "docs": "A list of permissions to test on the organization.",
                       "type": "list<OrganizationIamPermissionTestPermissionsItem>",
@@ -30862,7 +30564,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                     },
                     "remove_all": {
                       "docs": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
-                      "type": "nullable<boolean>",
+                      "type": "optional<nullable<boolean>>",
                     },
                   },
                 },
@@ -31007,7 +30709,7 @@ service:
         path-parameters:
           org_id: string
         query-parameters:
-          type: nullable<OrganizationIamListMembersRequestType>
+          type: optional<nullable<OrganizationIamListMembersRequestType>>
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
@@ -31019,8 +30721,6 @@ service:
       examples:
         - path-parameters:
             org_id: org_id
-          query-parameters:
-            type: user
           response:
             body:
               pagination:
@@ -31107,7 +30807,7 @@ service:
               type: optional<list<OrganizationIamMemberRoleUpdateRemoveItem>>
               docs: A list of organization roles to revoke from the member.
             remove_all:
-              type: nullable<boolean>
+              type: optional<nullable<boolean>>
               docs: >-
                 Removes all existing roles from the member. This may be combined
                 with `add` to replace all existing roles that the member holds.
@@ -31156,7 +30856,7 @@ service:
             permissions:
               docs: A list of permissions to test on the organization.
               type: list<OrganizationIamPermissionTestPermissionsItem>
-            member: nullable<string>
+            member: optional<nullable<string>>
         content-type: application/json
       response:
         docs: Successful Response
@@ -31191,7 +30891,7 @@ service:
         query-parameters:
           membership: optional<root.OrgMembership>
           cursor:
-            type: nullable<string>
+            type: optional<nullable<string>>
             validation:
               format: uuid
           page_limit:
@@ -31204,9 +30904,7 @@ service:
       errors:
         - root.OrgListOrgGetRequestUnprocessableEntityError
       examples:
-        - query-parameters:
-            cursor: cursor
-          response:
+        - response:
             body:
               key: value
     orgCreate:
@@ -31291,7 +30989,7 @@ service:
         body:
           properties:
             contact_email:
-              type: nullable<string>
+              type: optional<nullable<string>>
               validation:
                 format: email
         content-type: application/json
@@ -31363,7 +31061,7 @@ service:
         query-parameters:
           show: optional<root.OrgInviteShow>
           cursor:
-            type: nullable<string>
+            type: optional<nullable<string>>
             validation:
               format: uuid
           page_limit:
@@ -31380,8 +31078,6 @@ service:
       examples:
         - path-parameters:
             org_id: org_id
-          query-parameters:
-            cursor: cursor
           response:
             body:
               pagination:
@@ -31413,7 +31109,7 @@ service:
               type: string
               validation:
                 format: email
-            roles: nullable<list<string>>
+            roles: optional<nullable<list<string>>>
         content-type: application/json
       response:
         docs: Successful Response
@@ -31891,9 +31587,6 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "type": "user",
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -31926,7 +31619,7 @@ service:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "type": "nullable<ProjectIamListMembersRequestType>",
+                  "type": "optional<nullable<ProjectIamListMembersRequestType>>",
                 },
               },
               "response": {
@@ -31984,7 +31677,7 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "member": "nullable<string>",
+                    "member": "optional<nullable<string>>",
                     "permissions": {
                       "docs": "A list of permissions to test on the project.",
                       "type": "list<ProjectIamPermissionTestPermissionsItem>",
@@ -32069,7 +31762,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                     },
                     "remove_all": {
                       "docs": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
-                      "type": "nullable<boolean>",
+                      "type": "optional<nullable<boolean>>",
                     },
                   },
                 },
@@ -32115,9 +31808,6 @@ This may be combined with `remove_all` to replace the member's entire role list.
                   "path-parameters": {
                     "org_id": "org_id",
                   },
-                  "query-parameters": {
-                    "cursor": "cursor",
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -32147,7 +31837,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                   "org_id": "string",
                 },
                 "query-parameters": {
-                  "cursor": "nullable<string>",
+                  "cursor": "optional<nullable<string>>",
                   "page_limit": {
                     "default": 100,
                     "type": "optional<integer>",
@@ -32282,8 +31972,8 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "request": {
                 "body": {
                   "properties": {
-                    "chat_guardrails": "nullable<root.ConversationalGuardrails>",
-                    "chat_system_commands": "nullable<list<string>>",
+                    "chat_guardrails": "optional<nullable<root.ConversationalGuardrails>>",
+                    "chat_system_commands": "optional<nullable<list<string>>>",
                     "knn": {
                       "default": 4,
                       "type": "optional<integer>",
@@ -32370,7 +32060,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
               "request": {
                 "body": {
                   "properties": {
-                    "name": "nullable<string>",
+                    "name": "optional<nullable<string>>",
                   },
                 },
                 "content-type": "application/json",
@@ -32554,7 +32244,7 @@ service:
         path-parameters:
           org_id: string
         query-parameters:
-          cursor: nullable<string>
+          cursor: optional<nullable<string>>
           page_limit:
             type: optional<integer>
             default: 100
@@ -32569,8 +32259,6 @@ service:
       examples:
         - path-parameters:
             org_id: org_id
-          query-parameters:
-            cursor: cursor
           response:
             body:
               pagination:
@@ -32686,7 +32374,7 @@ service:
           project_id: string
         body:
           properties:
-            name: nullable<string>
+            name: optional<nullable<string>>
         content-type: application/json
       response:
         docs: Successful Response
@@ -32773,8 +32461,8 @@ service:
             knn:
               type: optional<integer>
               default: 4
-            chat_system_commands: nullable<list<string>>
-            chat_guardrails: nullable<root.ConversationalGuardrails>
+            chat_system_commands: optional<nullable<list<string>>>
+            chat_guardrails: optional<nullable<root.ConversationalGuardrails>>
             query_expansion:
               type: optional<boolean>
               docs: >-
@@ -32873,7 +32561,7 @@ service:
           org_id: string
           project_id: string
         query-parameters:
-          type: nullable<ProjectIamListMembersRequestType>
+          type: optional<nullable<ProjectIamListMembersRequestType>>
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
@@ -32886,8 +32574,6 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
-          query-parameters:
-            type: user
           response:
             body:
               pagination:
@@ -32977,7 +32663,7 @@ service:
               type: optional<list<ProjectIamMemberRoleUpdateRemoveItem>>
               docs: A list of project roles to revoke from the member.
             remove_all:
-              type: nullable<boolean>
+              type: optional<nullable<boolean>>
               docs: >-
                 Removes all existing roles from the member. This may be combined
                 with `add` to replace all existing roles that the member holds.
@@ -33028,7 +32714,7 @@ service:
             permissions:
               docs: A list of permissions to test on the project.
               type: list<ProjectIamPermissionTestPermissionsItem>
-            member: nullable<string>
+            member: optional<nullable<string>>
         content-type: application/json
       response:
         docs: Successful Response
@@ -33366,9 +33052,6 @@ types:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
-                  "query-parameters": {
-                    "cursor": "cursor",
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -33380,11 +33063,7 @@ types:
                         {
                           "created": "2024-01-15T09:30:00Z",
                           "datasource_connection": {
-                            "created_by": null,
-                            "datasource_id": null,
                             "id": "id",
-                            "private": null,
-                            "project_id": null,
                           },
                           "id": "id",
                           "modified": "2024-01-15T09:30:00Z",
@@ -33409,7 +33088,7 @@ types:
                   "project_id": "string",
                 },
                 "query-parameters": {
-                  "cursor": "nullable<string>",
+                  "cursor": "optional<nullable<string>>",
                   "page_limit": {
                     "default": 25,
                     "type": "optional<integer>",
@@ -33575,7 +33254,7 @@ service:
           org_id: string
           project_id: string
         query-parameters:
-          cursor: nullable<string>
+          cursor: optional<nullable<string>>
           page_limit:
             type: optional<integer>
             default: 25
@@ -33590,8 +33269,6 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
-          query-parameters:
-            cursor: cursor
           response:
             body:
               pagination:
@@ -33607,10 +33284,6 @@ service:
                   created: '2024-01-15T09:30:00Z'
                   modified: '2024-01-15T09:30:00Z'
                   datasource_connection:
-                    private: null
-                    project_id: null
-                    datasource_id: null
-                    created_by: null
                     id: id
   source:
     openapi: ../openapi.yml
@@ -33694,15 +33367,15 @@ service:
                   "properties": {
                     "config": {
                       "docs": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
-                      "type": "nullable<root.TaskForwarderConfig>",
+                      "type": "optional<nullable<root.TaskForwarderConfig>>",
                     },
                     "config_sensitive": {
                       "docs": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
-                      "type": "nullable<root.TaskForwarderSensitiveConfig>",
+                      "type": "optional<nullable<root.TaskForwarderSensitiveConfig>>",
                     },
                     "description": {
                       "docs": "Additional details about the Task Forwarder's purpose or configuration.",
-                      "type": "nullable<string>",
+                      "type": "optional<nullable<string>>",
                     },
                     "name": {
                       "docs": "A descriptive name for the Task Forwarder.",
@@ -33763,10 +33436,6 @@ service:
                     "org_id": "123e4567-e89b-12d3-a456-426614174000",
                     "project_id": "123e4567-e89b-12d3-a456-426614174001",
                   },
-                  "query-parameters": {
-                    "cursor": "cursor",
-                    "page_limit": 1,
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -33812,7 +33481,7 @@ service:
                 "query-parameters": {
                   "cursor": {
                     "docs": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
-                    "type": "nullable<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -33822,7 +33491,7 @@ service:
                   },
                   "page_limit": {
                     "docs": "The maximum number of items to return per page. Defaults to `100` if not specified.",
-                    "type": "nullable<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -33979,19 +33648,19 @@ service:
                   "properties": {
                     "config": {
                       "docs": "Configuration parameters for the Task Forwarder such as a `destination` URL.",
-                      "type": "nullable<root.TaskForwarderConfig>",
+                      "type": "optional<nullable<root.TaskForwarderConfig>>",
                     },
                     "config_sensitive": {
                       "docs": "Sensitive parameters for the Task Forwarder such as a `signing_key`.",
-                      "type": "nullable<root.TaskForwarderSensitiveConfig>",
+                      "type": "optional<nullable<root.TaskForwarderSensitiveConfig>>",
                     },
                     "description": {
                       "docs": "Additional details about the Task Forwarder's purpose or configuration.",
-                      "type": "nullable<string>",
+                      "type": "optional<nullable<string>>",
                     },
                     "name": {
                       "docs": "A descriptive name for the Task Forwarder.",
-                      "type": "nullable<string>",
+                      "type": "optional<nullable<string>>",
                     },
                   },
                 },
@@ -34056,7 +33725,7 @@ service:
             docs: The unique identifier of the project.
         query-parameters:
           page_limit:
-            type: nullable<integer>
+            type: optional<nullable<integer>>
             docs: >-
               The maximum number of items to return per page. Defaults to `100`
               if not specified.
@@ -34064,7 +33733,7 @@ service:
               min: 1
               max: 100
           cursor:
-            type: nullable<string>
+            type: optional<nullable<string>>
             docs: >-
               A cursor for pagination. Use the `next_cursor` value from the
               previous response to get the next page of results.
@@ -34083,9 +33752,6 @@ service:
         - path-parameters:
             org_id: 123e4567-e89b-12d3-a456-426614174000
             project_id: 123e4567-e89b-12d3-a456-426614174001
-          query-parameters:
-            page_limit: 1
-            cursor: cursor
           response:
             body:
               pagination:
@@ -34138,17 +33804,17 @@ service:
               type: string
               docs: A descriptive name for the Task Forwarder.
             description:
-              type: nullable<string>
+              type: optional<nullable<string>>
               docs: >-
                 Additional details about the Task Forwarder's purpose or
                 configuration.
             config:
-              type: nullable<root.TaskForwarderConfig>
+              type: optional<nullable<root.TaskForwarderConfig>>
               docs: >-
                 Configuration parameters for the Task Forwarder such as a
                 `destination` URL.
             config_sensitive:
-              type: nullable<root.TaskForwarderSensitiveConfig>
+              type: optional<nullable<root.TaskForwarderSensitiveConfig>>
               docs: >-
                 Sensitive parameters for the Task Forwarder such as a
                 `signing_key`.
@@ -34271,20 +33937,20 @@ service:
         body:
           properties:
             name:
-              type: nullable<string>
+              type: optional<nullable<string>>
               docs: A descriptive name for the Task Forwarder.
             description:
-              type: nullable<string>
+              type: optional<nullable<string>>
               docs: >-
                 Additional details about the Task Forwarder's purpose or
                 configuration.
             config:
-              type: nullable<root.TaskForwarderConfig>
+              type: optional<nullable<root.TaskForwarderConfig>>
               docs: >-
                 Configuration parameters for the Task Forwarder such as a
                 `destination` URL.
             config_sensitive:
-              type: nullable<root.TaskForwarderSensitiveConfig>
+              type: optional<nullable<root.TaskForwarderSensitiveConfig>>
               docs: >-
                 Sensitive parameters for the Task Forwarder such as a
                 `signing_key`.
@@ -34426,7 +34092,7 @@ service:
                   "properties": {
                     "description": {
                       "docs": "A longer description of the Task for internal reference.",
-                      "type": "nullable<string>",
+                      "type": "optional<nullable<string>>",
                     },
                     "enabled": {
                       "docs": "When `true` the Task is active and callable. `false` denotes the Task is not yet operational.",
@@ -34459,12 +34125,12 @@ service:
                       ],
                       "availability": "pre-release",
                       "docs": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
-                      "type": "nullable<root.TaskRag>",
+                      "type": "optional<nullable<root.TaskRag>>",
                     },
                     "system_prompt": "unknown",
                     "task_forwarder_id": {
                       "docs": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
-                      "type": "nullable<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": "uuid",
                         "maxLength": undefined,
@@ -34577,31 +34243,31 @@ service:
                   "properties": {
                     "description": {
                       "docs": "A longer description of the Task for internal reference.",
-                      "type": "nullable<string>",
+                      "type": "optional<nullable<string>>",
                     },
                     "enabled": {
                       "docs": "When `true` the Task is active and callable. `false` denotes the Task is not yet operational.",
-                      "type": "nullable<boolean>",
+                      "type": "optional<nullable<boolean>>",
                     },
                     "image_required": {
                       "docs": "When `true` it requires an image to be sent in the Task Run request.",
-                      "type": "nullable<boolean>",
+                      "type": "optional<nullable<boolean>>",
                     },
                     "llm_config": {
                       "docs": "Specific configuration parameters for the LLM model.",
-                      "type": "nullable<root.TaskLlmConfig>",
+                      "type": "optional<nullable<root.TaskLlmConfig>>",
                     },
                     "llm_model": {
                       "docs": "The LLM model to use for the Task.",
-                      "type": "nullable<TaskUpdateLlmModel>",
+                      "type": "optional<nullable<TaskUpdateLlmModel>>",
                     },
                     "name": {
                       "docs": "A name or reference for the Task.",
-                      "type": "nullable<string>",
+                      "type": "optional<nullable<string>>",
                     },
                     "output_format": {
                       "docs": "This gives control over the structure of how the Task responds. Supports shorthand notation or an object with `type` can be specified for each attribute. In most instances, the LLM will be able to generate the desired output into the relevant property, but an optional `description` can be passed to provide it with additional context.",
-                      "type": "nullable<map<string, nullable<TaskUpdateOutputFormatValue>>>",
+                      "type": "optional<nullable<map<string, nullable<TaskUpdateOutputFormatValue>>>>",
                     },
                     "rag": {
                       "audiences": [
@@ -34609,15 +34275,15 @@ service:
                       ],
                       "availability": "pre-release",
                       "docs": "**Note: This is a Paid Tier feature.** Provide additional domain specific input to the LLM so that it is able to reference user specific information when executing the Task. Examples of this could be a product catalogue, terms and conditions or a user manual.",
-                      "type": "nullable<root.TaskRag>",
+                      "type": "optional<nullable<root.TaskRag>>",
                     },
                     "system_prompt": {
                       "docs": "The system prompt that is used to set the LLM context.",
-                      "type": "nullable<unknown>",
+                      "type": "optional<nullable<unknown>>",
                     },
                     "task_forwarder_id": {
                       "docs": "The unique identifier for a valid Task Forwarder. It is used to forward the Task output to another system or service.",
-                      "type": "nullable<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": "uuid",
                         "maxLength": undefined,
@@ -34627,7 +34293,7 @@ service:
                     },
                     "user_prompt": {
                       "docs": "The description of the Task. It is not required to mention the outputs in the prompt, but it can help the model to understand the context better. Any input strings should be referenced with the dynamic `{...}` syntax, this informs the model to look for those values in the input data.",
-                      "type": "nullable<unknown>",
+                      "type": "optional<nullable<unknown>>",
                     },
                   },
                 },
@@ -34691,11 +34357,6 @@ service:
                     "org_id": "123e4567-e89b-12d3-a456-426614174000",
                     "project_id": "123e4567-e89b-12d3-a456-426614174001",
                   },
-                  "query-parameters": {
-                    "cursor": "cursor",
-                    "name": "name",
-                    "page_limit": 1,
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -34725,9 +34386,7 @@ service:
                                 "match": "str",
                                 "rationale": "str",
                               },
-                              "rag": null,
                               "system_prompt": "You are an expert software program specifically designed for the fintech industry that will be used for pre-triage tasks to ensure the best possible client UX and efficient 3rd party platform interoperability.",
-                              "task_forwarder_id": null,
                               "user_prompt": "Your task is to validate the uploaded image and determine whether it will be suitable for authentication and onboarding checks. If the image of the person is clear and typical of a passport style photo then set the compliance field to true. Provide rationale for your decision in the rationale field. If the compliance result is false, then provide a helpful hint for the customer who has submitted the photo informing them why it is unacceptable and some steps to remedy it, place this into the hint field. Determine whether the following description matches the provided image: {description}",
                             },
                           ],
@@ -34755,7 +34414,7 @@ service:
                 "query-parameters": {
                   "cursor": {
                     "docs": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
-                    "type": "nullable<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -34765,11 +34424,11 @@ service:
                   },
                   "name": {
                     "docs": "Filter tasks by name. Supports partial matches.",
-                    "type": "nullable<string>",
+                    "type": "optional<nullable<string>>",
                   },
                   "page_limit": {
                     "docs": "The maximum number of items to return per page. Defaults to `100` if not specified.",
-                    "type": "nullable<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -35008,11 +34667,6 @@ service:
                     "project_id": "123e4567-e89b-12d3-a456-426614174001",
                     "task_id": "01909843-3596-da54-4756-28af46917e74",
                   },
-                  "query-parameters": {
-                    "cursor": "cursor",
-                    "page_limit": 1,
-                    "task_revision_id": "task_revision_id",
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -35068,7 +34722,7 @@ service:
                 "query-parameters": {
                   "cursor": {
                     "docs": "A cursor for pagination. Use the `next_cursor` value from the previous response to get the next page of results.",
-                    "type": "nullable<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -35078,7 +34732,7 @@ service:
                   },
                   "page_limit": {
                     "docs": "The maximum number of items to return per page. Defaults to `100` if not specified.",
-                    "type": "nullable<integer>",
+                    "type": "optional<nullable<integer>>",
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
@@ -35089,7 +34743,7 @@ service:
                   },
                   "task_revision_id": {
                     "docs": "The specific Task Revision to reference.",
-                    "type": "nullable<string>",
+                    "type": "optional<nullable<string>>",
                     "validation": {
                       "format": "uuid",
                       "maxLength": undefined,
@@ -35298,9 +34952,6 @@ service:
                     "project_id": "project_id",
                     "task_id": "task_id",
                   },
-                  "query-parameters": {
-                    "type": "user",
-                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -35334,7 +34985,7 @@ service:
                   "task_id": "string",
                 },
                 "query-parameters": {
-                  "type": "nullable<TaskIamListMembersRequestType>",
+                  "type": "optional<nullable<TaskIamListMembersRequestType>>",
                 },
               },
               "response": {
@@ -35393,7 +35044,7 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "member": "nullable<string>",
+                    "member": "optional<nullable<string>>",
                     "permissions": {
                       "docs": "A list of permissions to test on the task.",
                       "type": "list<TaskIamPermissionTestPermissionsItem>",
@@ -35480,7 +35131,7 @@ This may be combined with `remove_all` to replace the member's entire role list.
                     },
                     "remove_all": {
                       "docs": "Removes all existing roles from the member. This may be combined with `add` to replace all existing roles that the member holds.",
-                      "type": "nullable<boolean>",
+                      "type": "optional<nullable<boolean>>",
                     },
                   },
                 },
@@ -35734,10 +35385,10 @@ service:
             docs: The unique identifier of the project.
         query-parameters:
           name:
-            type: nullable<string>
+            type: optional<nullable<string>>
             docs: Filter tasks by name. Supports partial matches.
           page_limit:
-            type: nullable<integer>
+            type: optional<nullable<integer>>
             docs: >-
               The maximum number of items to return per page. Defaults to `100`
               if not specified.
@@ -35745,7 +35396,7 @@ service:
               min: 1
               max: 100
           cursor:
-            type: nullable<string>
+            type: optional<nullable<string>>
             docs: >-
               A cursor for pagination. Use the `next_cursor` value from the
               previous response to get the next page of results.
@@ -35764,10 +35415,6 @@ service:
         - path-parameters:
             org_id: 123e4567-e89b-12d3-a456-426614174000
             project_id: 123e4567-e89b-12d3-a456-426614174001
-          query-parameters:
-            name: name
-            page_limit: 1
-            cursor: cursor
           response:
             body:
               pagination:
@@ -35807,8 +35454,6 @@ service:
                         hint: str
                         match: str
                         rationale: str
-                      task_forwarder_id: null
-                      rag: null
                       image_required: true
                       id: 019011e6-e530-3aca-6cf7-2973387c255d
                       created: '2024-06-13T14:01:03Z'
@@ -35859,14 +35504,14 @@ service:
                 but an optional `description` can be passed to provide it with
                 additional context.
             task_forwarder_id:
-              type: nullable<string>
+              type: optional<nullable<string>>
               docs: >-
                 The unique identifier for a valid Task Forwarder. It is used to
                 forward the Task output to another system or service.
               validation:
                 format: uuid
             rag:
-              type: nullable<root.TaskRag>
+              type: optional<nullable<root.TaskRag>>
               docs: >-
                 **Note: This is a Paid Tier feature.** Provide additional domain
                 specific input to the LLM so that it is able to reference user
@@ -35886,7 +35531,7 @@ service:
               type: string
               docs: A name or reference for the Task.
             description:
-              type: nullable<string>
+              type: optional<nullable<string>>
               docs: A longer description of the Task for internal reference.
             enabled:
               type: boolean
@@ -36086,10 +35731,10 @@ service:
         body:
           properties:
             system_prompt:
-              type: nullable<unknown>
+              type: optional<nullable<unknown>>
               docs: The system prompt that is used to set the LLM context.
             user_prompt:
-              type: nullable<unknown>
+              type: optional<nullable<unknown>>
               docs: >-
                 The description of the Task. It is not required to mention the
                 outputs in the prompt, but it can help the model to understand
@@ -36097,13 +35742,15 @@ service:
                 the dynamic `{...}` syntax, this informs the model to look for
                 those values in the input data.
             llm_model:
-              type: nullable<TaskUpdateLlmModel>
+              type: optional<nullable<TaskUpdateLlmModel>>
               docs: The LLM model to use for the Task.
             llm_config:
-              type: nullable<root.TaskLlmConfig>
+              type: optional<nullable<root.TaskLlmConfig>>
               docs: Specific configuration parameters for the LLM model.
             output_format:
-              type: nullable<map<string, nullable<TaskUpdateOutputFormatValue>>>
+              type: >-
+                optional<nullable<map<string,
+                nullable<TaskUpdateOutputFormatValue>>>>
               docs: >-
                 This gives control over the structure of how the Task responds.
                 Supports shorthand notation or an object with `type` can be
@@ -36112,14 +35759,14 @@ service:
                 but an optional `description` can be passed to provide it with
                 additional context.
             task_forwarder_id:
-              type: nullable<string>
+              type: optional<nullable<string>>
               docs: >-
                 The unique identifier for a valid Task Forwarder. It is used to
                 forward the Task output to another system or service.
               validation:
                 format: uuid
             rag:
-              type: nullable<root.TaskRag>
+              type: optional<nullable<root.TaskRag>>
               docs: >-
                 **Note: This is a Paid Tier feature.** Provide additional domain
                 specific input to the LLM so that it is able to reference user
@@ -36130,18 +35777,18 @@ service:
                 - paid
               availability: pre-release
             image_required:
-              type: nullable<boolean>
+              type: optional<nullable<boolean>>
               docs: >-
                 When `true` it requires an image to be sent in the Task Run
                 request.
             name:
-              type: nullable<string>
+              type: optional<nullable<string>>
               docs: A name or reference for the Task.
             description:
-              type: nullable<string>
+              type: optional<nullable<string>>
               docs: A longer description of the Task for internal reference.
             enabled:
-              type: nullable<boolean>
+              type: optional<nullable<boolean>>
               docs: >-
                 When `true` the Task is active and callable. `false` denotes the
                 Task is not yet operational.
@@ -36232,7 +35879,7 @@ service:
             docs: The specific Task to reference.
         query-parameters:
           page_limit:
-            type: nullable<integer>
+            type: optional<nullable<integer>>
             docs: >-
               The maximum number of items to return per page. Defaults to `100`
               if not specified.
@@ -36240,14 +35887,14 @@ service:
               min: 1
               max: 100
           cursor:
-            type: nullable<string>
+            type: optional<nullable<string>>
             docs: >-
               A cursor for pagination. Use the `next_cursor` value from the
               previous response to get the next page of results.
             validation:
               format: uuid
           task_revision_id:
-            type: nullable<string>
+            type: optional<nullable<string>>
             docs: The specific Task Revision to reference.
             validation:
               format: uuid
@@ -36265,10 +35912,6 @@ service:
             org_id: 123e4567-e89b-12d3-a456-426614174000
             project_id: 123e4567-e89b-12d3-a456-426614174001
             task_id: 01909843-3596-da54-4756-28af46917e74
-          query-parameters:
-            page_limit: 1
-            cursor: cursor
-            task_revision_id: task_revision_id
           response:
             body:
               pagination:
@@ -36403,7 +36046,7 @@ service:
           project_id: string
           task_id: string
         query-parameters:
-          type: nullable<TaskIamListMembersRequestType>
+          type: optional<nullable<TaskIamListMembersRequestType>>
       response:
         docs: Successful Response
         type: root.PaginatedResultSetIamMember
@@ -36417,8 +36060,6 @@ service:
             org_id: org_id
             project_id: project_id
             task_id: task_id
-          query-parameters:
-            type: user
           response:
             body:
               pagination:
@@ -36511,7 +36152,7 @@ service:
               type: optional<list<TaskIamMemberRoleUpdateRemoveItem>>
               docs: A list of task roles to revoke from the member.
             remove_all:
-              type: nullable<boolean>
+              type: optional<nullable<boolean>>
               docs: >-
                 Removes all existing roles from the member. This may be combined
                 with `add` to replace all existing roles that the member holds.
@@ -36564,7 +36205,7 @@ service:
             permissions:
               docs: A list of permissions to test on the task.
               type: list<TaskIamPermissionTestPermissionsItem>
-            member: nullable<string>
+            member: optional<nullable<string>>
         content-type: application/json
       response:
         docs: Successful Response
@@ -36859,8 +36500,8 @@ types:
               "request": {
                 "body": {
                   "properties": {
-                    "bio": "nullable<string>",
-                    "name": "nullable<string>",
+                    "bio": "optional<nullable<string>>",
+                    "name": "optional<nullable<string>>",
                   },
                 },
                 "content-type": "application/json",
@@ -36975,8 +36616,8 @@ service:
         name: UserProfileUpdate
         body:
           properties:
-            name: nullable<string>
-            bio: nullable<string>
+            name: optional<nullable<string>>
+            bio: optional<nullable<string>>
         content-type: application/json
       response:
         docs: Successful Response
@@ -37030,9 +36671,9 @@ service:
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BearerAuthScheme",
+      "auth": "HTTPBearer",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "HTTPBearer": {
           "scheme": "bearer",
         },
       },
@@ -37048,9 +36689,9 @@ error-discrimination:
   strategy: status-code
 display-name: brain core api
 auth-schemes:
-  BearerAuthScheme:
+  HTTPBearer:
     scheme: bearer
-auth: BearerAuthScheme
+auth: HTTPBearer
 ",
   },
 }

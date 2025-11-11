@@ -2024,7 +2024,506 @@
       }
     }
   ],
-  "webhooks": [],
+  "webhooks": [
+    {
+      "summary": "End user created webhook",
+      "audiences": [],
+      "method": "POST",
+      "operationId": "v1EndUserCreatedPost29a75ca0",
+      "tags": [
+        "Webhooks"
+      ],
+      "headers": [],
+      "generatedPayloadName": "PostV1EndUserCreatedPayload",
+      "payload": {
+        "generatedName": "PostV1EndUserCreatedPayload",
+        "schema": "EndUserCreatedWebhookPayload",
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "reference"
+      },
+      "description": "A webhook sent when a new end user is created",
+      "examples": [
+        {
+          "payload": {
+            "properties": {
+              "type": {
+                "value": {
+                  "value": "v1.end_user.created",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "timestamp": {
+                "value": {
+                  "value": "2024-01-17T22:23:35.835",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "data": {
+                "properties": {
+                  "end_user_id": {
+                    "value": {
+                      "value": "5f7e0e2c1e7c7e000f0f9c3a",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "profile": {
+                    "properties": {
+                      "first_name": {
+                        "value": {
+                          "value": "Ada",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "last_name": {
+                        "value": {
+                          "value": "Lovelace",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "email": {
+                        "value": {
+                          "value": "ada.lovelace@ada.cx",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "language": {
+                        "value": {
+                          "value": "en-US",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "metadata": {
+                        "value": [
+                          {
+                            "key": {
+                              "value": "example_key1",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": {
+                                  "value": "example_string_value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "type": "unknown"
+                            }
+                          },
+                          {
+                            "key": {
+                              "value": "example_key2",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": {
+                                  "value": true,
+                                  "type": "boolean"
+                                },
+                                "type": "primitive"
+                              },
+                              "type": "unknown"
+                            }
+                          },
+                          {
+                            "key": {
+                              "value": "example_key3",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": {
+                                  "value": 123,
+                                  "type": "int"
+                                },
+                                "type": "primitive"
+                              },
+                              "type": "unknown"
+                            }
+                          }
+                        ],
+                        "type": "map"
+                      },
+                      "system_properties": {
+                        "properties": {
+                          "user_agent": {
+                            "value": {
+                              "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "device": {
+                            "value": {
+                              "value": "macos",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "browser": {
+                            "value": {
+                              "value": "Chrome",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "browser_version": {
+                            "value": {
+                              "value": "119.0.0.0",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "introshown": {
+                            "value": {
+                              "value": false,
+                              "type": "boolean"
+                            },
+                            "type": "primitive"
+                          },
+                          "last_answer_id": {
+                            "value": {
+                              "value": "650071321ef45533437f6f29",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "last_question_asked": {
+                            "value": {
+                              "value": "What is my account balance?",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "sunshine_first_message_id": {
+                            "value": {
+                              "value": "65736922f17d0bf841d8eeb4",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "sunshine_conversation_id": {
+                            "value": {
+                              "value": "12345abc",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "sunshine_end_user_channel": {
+                            "value": {
+                              "value": "whatsapp",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "sunshine_signed_up_at": {
+                            "value": {
+                              "value": "2023-12-08T19:06:04.890000",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "sunshine_user_id": {
+                            "value": {
+                              "value": "5f7e0e2c1e7c7e000f0f9c3a",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "created_at": {
+                    "value": {
+                      "value": "2023-12-08T19:06:04.890000",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "updated_at": {
+                    "value": {
+                      "value": "2023-12-08T19:06:04.890000",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        }
+      ],
+      "source": {
+        "file": "../openapi.json",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "End user updated webhook",
+      "audiences": [],
+      "method": "POST",
+      "operationId": "v1EndUserUpdatedPost83bfd265",
+      "tags": [
+        "Webhooks"
+      ],
+      "headers": [],
+      "generatedPayloadName": "PostV1EndUserUpdatedPayload",
+      "payload": {
+        "generatedName": "PostV1EndUserUpdatedPayload",
+        "schema": "EndUserUpdatedWebhookPayload",
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "reference"
+      },
+      "description": "A webhook sent when an end user is updated",
+      "examples": [
+        {
+          "payload": {
+            "properties": {
+              "type": {
+                "value": {
+                  "value": "v1.end_user.updated",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "timestamp": {
+                "value": {
+                  "value": "2024-01-17T22:23:35.835",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "data": {
+                "properties": {
+                  "end_user_id": {
+                    "value": {
+                      "value": "5f7e0e2c1e7c7e000f0f9c3a",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "profile": {
+                    "properties": {
+                      "first_name": {
+                        "value": {
+                          "value": "Ada",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "last_name": {
+                        "value": {
+                          "value": "Lovelace",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "email": {
+                        "value": {
+                          "value": "ada.lovelace@ada.cx",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "language": {
+                        "value": {
+                          "value": "en-US",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "metadata": {
+                        "value": [
+                          {
+                            "key": {
+                              "value": "example_key1",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": {
+                                  "value": "example_string_value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "type": "unknown"
+                            }
+                          },
+                          {
+                            "key": {
+                              "value": "example_key2",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": {
+                                  "value": true,
+                                  "type": "boolean"
+                                },
+                                "type": "primitive"
+                              },
+                              "type": "unknown"
+                            }
+                          },
+                          {
+                            "key": {
+                              "value": "example_key3",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": {
+                                  "value": 123,
+                                  "type": "int"
+                                },
+                                "type": "primitive"
+                              },
+                              "type": "unknown"
+                            }
+                          }
+                        ],
+                        "type": "map"
+                      },
+                      "system_properties": {
+                        "properties": {
+                          "user_agent": {
+                            "value": {
+                              "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "device": {
+                            "value": {
+                              "value": "macos",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "browser": {
+                            "value": {
+                              "value": "Chrome",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "browser_version": {
+                            "value": {
+                              "value": "119.0.0.0",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "introshown": {
+                            "value": {
+                              "value": false,
+                              "type": "boolean"
+                            },
+                            "type": "primitive"
+                          },
+                          "last_answer_id": {
+                            "value": {
+                              "value": "650071321ef45533437f6f29",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "last_question_asked": {
+                            "value": {
+                              "value": "What is my account balance?",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "sunshine_first_message_id": {
+                            "value": {
+                              "value": "65736922f17d0bf841d8eeb4",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "sunshine_conversation_id": {
+                            "value": {
+                              "value": "12345abc",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "sunshine_end_user_channel": {
+                            "value": {
+                              "value": "whatsapp",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "sunshine_signed_up_at": {
+                            "value": {
+                              "value": "2023-12-08T19:06:04.890000",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "sunshine_user_id": {
+                            "value": {
+                              "value": "5f7e0e2c1e7c7e000f0f9c3a",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "created_at": {
+                    "value": {
+                      "value": "2023-12-08T19:06:04.890000",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "updated_at": {
+                    "value": {
+                      "value": "2023-12-08T19:06:04.890000",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        }
+      ],
+      "source": {
+        "file": "../openapi.json",
+        "type": "openapi"
+      }
+    }
+  ],
   "channels": {},
   "groupedSchemas": {
     "rootSchemas": {

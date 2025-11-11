@@ -1,7 +1,7 @@
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct ReceiveEvent {
     pub alpha: String,
-    pub beta: i32,
+    pub beta: i64,
 }

@@ -20613,10 +20613,10 @@
                       "state": "draft",
                       "created_at": 1719492719,
                       "updated_at": 1719492719,
-                      "url": null,
-                      "parent_id": null,
+                      "url": "http://intercom.test/help/en/articles/3-default-language",
+                      "parent_id": 125685,
                       "parent_ids": [],
-                      "parent_type": null
+                      "parent_type": "collection"
                     }
                   ],
                   "highlights": []
@@ -20646,10 +20646,10 @@
                         "state": "draft",
                         "created_at": 1719492719,
                         "updated_at": 1719492719,
-                        "url": null,
-                        "parent_id": null,
+                        "url": "http://intercom.test/help/en/articles/3-default-language",
+                        "parent_id": 125685,
                         "parent_ids": [],
-                        "parent_type": null
+                        "parent_type": "collection"
                       }
                     ],
                     "highlights": []
@@ -20816,21 +20816,21 @@
                     "url": "http://help-center.test/myapp-65/collection-17",
                     "icon": "bookmark",
                     "order": 17,
-                    "parent_id": null,
+                    "parent_id": "6871118",
                     "help_center_id": 79
                   },
                   {
                     "id": "160",
                     "workspace_id": "this_is_an_id65_that_should_be_at_least_4",
                     "name": "English section title",
-                    "description": null,
+                    "description": "Default language description",
                     "created_at": 1719492720,
                     "updated_at": 1719492720,
                     "url": "http://help-center.test/myapp-65/section-1",
                     "icon": "bookmark",
                     "order": 1,
                     "parent_id": "159",
-                    "help_center_id": null
+                    "help_center_id": 123
                   }
                 ]
               },
@@ -20856,21 +20856,21 @@
                       "url": "http://help-center.test/myapp-65/collection-17",
                       "icon": "bookmark",
                       "order": 17,
-                      "parent_id": null,
+                      "parent_id": "6871118",
                       "help_center_id": 79
                     },
                     {
                       "id": "160",
                       "workspace_id": "this_is_an_id65_that_should_be_at_least_4",
                       "name": "English section title",
-                      "description": null,
+                      "description": "Default language description",
                       "created_at": 1719492720,
                       "updated_at": 1719492720,
                       "url": "http://help-center.test/myapp-65/section-1",
                       "icon": "bookmark",
                       "order": 1,
                       "parent_id": "159",
-                      "help_center_id": null
+                      "help_center_id": 123
                     }
                   ]
                 }
@@ -21078,7 +21078,7 @@
                 "url": "http://help-center.test/myapp-69/",
                 "icon": "book-bookmark",
                 "order": 1,
-                "parent_id": null,
+                "parent_id": "6871118",
                 "help_center_id": 81
               },
               "responseBodyV3": {
@@ -21093,7 +21093,7 @@
                   "url": "http://help-center.test/myapp-69/",
                   "icon": "book-bookmark",
                   "order": 1,
-                  "parent_id": null,
+                  "parent_id": "6871118",
                   "help_center_id": 81
                 }
               }
@@ -21127,7 +21127,7 @@
                 "url": "http://help-center.test/myapp-69/",
                 "icon": "book-bookmark",
                 "order": 1,
-                "parent_id": null,
+                "parent_id": "6871118",
                 "help_center_id": 81
               },
               "responseBodyV3": {
@@ -21142,7 +21142,7 @@
                   "url": "http://help-center.test/myapp-69/",
                   "icon": "book-bookmark",
                   "order": 1,
-                  "parent_id": null,
+                  "parent_id": "6871118",
                   "help_center_id": 81
                 }
               }
@@ -21331,7 +21331,7 @@
                 "url": "http://help-center.test/myapp-75/collection-22",
                 "icon": "bookmark",
                 "order": 22,
-                "parent_id": null,
+                "parent_id": "6871118",
                 "help_center_id": 84
               },
               "responseBodyV3": {
@@ -21346,7 +21346,7 @@
                   "url": "http://help-center.test/myapp-75/collection-22",
                   "icon": "bookmark",
                   "order": 22,
-                  "parent_id": null,
+                  "parent_id": "6871118",
                   "help_center_id": 84
                 }
               }
@@ -21574,7 +21574,7 @@
                 "url": "http://help-center.test/myapp-81/collection-25",
                 "icon": "folder",
                 "order": 25,
-                "parent_id": null,
+                "parent_id": "6871118",
                 "help_center_id": 87
               },
               "responseBodyV3": {
@@ -21589,7 +21589,7 @@
                   "url": "http://help-center.test/myapp-81/collection-25",
                   "icon": "folder",
                   "order": 25,
-                  "parent_id": null,
+                  "parent_id": "6871118",
                   "help_center_id": 87
                 }
               }
@@ -21623,7 +21623,7 @@
                 "url": "http://help-center.test/myapp-81/collection-25",
                 "icon": "folder",
                 "order": 25,
-                "parent_id": null,
+                "parent_id": "6871118",
                 "help_center_id": 87
               },
               "responseBodyV3": {
@@ -21638,7 +21638,7 @@
                   "url": "http://help-center.test/myapp-81/collection-25",
                   "icon": "folder",
                   "order": 25,
-                  "parent_id": null,
+                  "parent_id": "6871118",
                   "help_center_id": 87
                 }
               }
@@ -24237,7 +24237,7 @@
                     }
                   }
                 ],
-                "total_count": null,
+                "total_count": 100,
                 "scroll_param": "12d403b5-dc79-47b5-8ea1-01a5ac8cb6cc",
                 "pages": {}
               },
@@ -24270,7 +24270,7 @@
                       }
                     }
                   ],
-                  "total_count": null,
+                  "total_count": 100,
                   "scroll_param": "12d403b5-dc79-47b5-8ea1-01a5ac8cb6cc",
                   "pages": {}
                 }
@@ -25105,7 +25105,7 @@
                 "pages": {
                   "type": "pages",
                   "page": 1,
-                  "next": null,
+                  "next": "string",
                   "per_page": 50,
                   "total_pages": 1
                 },
@@ -25144,7 +25144,7 @@
                   "pages": {
                     "type": "pages",
                     "page": 1,
-                    "next": null,
+                    "next": "string",
                     "per_page": 50,
                     "total_pages": 1
                   },
@@ -26002,39 +26002,39 @@
                 "workspace_id": "this_is_an_id252_that_should_be_at_least_",
                 "role": "user",
                 "email": "joe@bloggs.com",
-                "phone": null,
+                "phone": "+1123456789",
                 "name": "Joe Bloggs",
-                "owner_id": null,
+                "owner_id": 123,
                 "has_hard_bounced": false,
                 "marked_email_as_spam": false,
                 "unsubscribed_from_emails": false,
                 "created_at": 1719492777,
                 "updated_at": 1719492777,
                 "signed_up_at": 1719492777,
-                "last_seen_at": null,
-                "last_replied_at": null,
-                "last_contacted_at": null,
-                "last_email_opened_at": null,
-                "last_email_clicked_at": null,
-                "language_override": null,
-                "browser": null,
-                "browser_version": null,
-                "browser_language": null,
-                "os": null,
-                "android_app_name": null,
-                "android_app_version": null,
-                "android_device": null,
-                "android_os_version": null,
-                "android_sdk_version": null,
-                "android_last_seen_at": null,
-                "ios_app_name": null,
-                "ios_app_version": null,
-                "ios_device": null,
-                "ios_os_version": null,
-                "ios_sdk_version": null,
-                "ios_last_seen_at": null,
+                "last_seen_at": 1571672154,
+                "last_replied_at": 1571672154,
+                "last_contacted_at": 1571672154,
+                "last_email_opened_at": 1571672154,
+                "last_email_clicked_at": 1571672154,
+                "language_override": "en",
+                "browser": "Chrome",
+                "browser_version": "80.0.3987.132",
+                "browser_language": "en-US",
+                "os": "Mac OS X",
+                "android_app_name": "Intercom",
+                "android_app_version": "5.0.0",
+                "android_device": "Pixel 3",
+                "android_os_version": "10",
+                "android_sdk_version": "28",
+                "android_last_seen_at": 1571672154,
+                "ios_app_name": "Intercom",
+                "ios_app_version": "5.0.0",
+                "ios_device": "iPhone 11",
+                "ios_os_version": "13.3.1",
+                "ios_sdk_version": "13.3.1",
+                "ios_last_seen_at": 1571672154,
                 "custom_attributes": {},
-                "avatar": null,
+                "avatar": {},
                 "tags": {
                   "data": [],
                   "url": "/contacts/667d60a98a68186f43bafdb9/tags",
@@ -26058,9 +26058,9 @@
                 },
                 "location": {
                   "type": "location",
-                  "country": null,
-                  "region": null,
-                  "city": null,
+                  "country": "Ireland",
+                  "region": "Dublin",
+                  "city": "Dublin",
                   "country_code": {},
                   "continent_code": {}
                 },
@@ -26098,39 +26098,39 @@
                   "workspace_id": "this_is_an_id252_that_should_be_at_least_",
                   "role": "user",
                   "email": "joe@bloggs.com",
-                  "phone": null,
+                  "phone": "+1123456789",
                   "name": "Joe Bloggs",
-                  "owner_id": null,
+                  "owner_id": 123,
                   "has_hard_bounced": false,
                   "marked_email_as_spam": false,
                   "unsubscribed_from_emails": false,
                   "created_at": 1719492777,
                   "updated_at": 1719492777,
                   "signed_up_at": 1719492777,
-                  "last_seen_at": null,
-                  "last_replied_at": null,
-                  "last_contacted_at": null,
-                  "last_email_opened_at": null,
-                  "last_email_clicked_at": null,
-                  "language_override": null,
-                  "browser": null,
-                  "browser_version": null,
-                  "browser_language": null,
-                  "os": null,
-                  "android_app_name": null,
-                  "android_app_version": null,
-                  "android_device": null,
-                  "android_os_version": null,
-                  "android_sdk_version": null,
-                  "android_last_seen_at": null,
-                  "ios_app_name": null,
-                  "ios_app_version": null,
-                  "ios_device": null,
-                  "ios_os_version": null,
-                  "ios_sdk_version": null,
-                  "ios_last_seen_at": null,
+                  "last_seen_at": 1571672154,
+                  "last_replied_at": 1571672154,
+                  "last_contacted_at": 1571672154,
+                  "last_email_opened_at": 1571672154,
+                  "last_email_clicked_at": 1571672154,
+                  "language_override": "en",
+                  "browser": "Chrome",
+                  "browser_version": "80.0.3987.132",
+                  "browser_language": "en-US",
+                  "os": "Mac OS X",
+                  "android_app_name": "Intercom",
+                  "android_app_version": "5.0.0",
+                  "android_device": "Pixel 3",
+                  "android_os_version": "10",
+                  "android_sdk_version": "28",
+                  "android_last_seen_at": 1571672154,
+                  "ios_app_name": "Intercom",
+                  "ios_app_version": "5.0.0",
+                  "ios_device": "iPhone 11",
+                  "ios_os_version": "13.3.1",
+                  "ios_sdk_version": "13.3.1",
+                  "ios_last_seen_at": 1571672154,
                   "custom_attributes": {},
-                  "avatar": null,
+                  "avatar": {},
                   "tags": {
                     "data": [],
                     "url": "/contacts/667d60a98a68186f43bafdb9/tags",
@@ -26154,9 +26154,9 @@
                   },
                   "location": {
                     "type": "location",
-                    "country": null,
-                    "region": null,
-                    "city": null,
+                    "country": "Ireland",
+                    "region": "Dublin",
+                    "city": "Dublin",
                     "country_code": {},
                     "continent_code": {}
                   },
@@ -26378,39 +26378,39 @@
                 "workspace_id": "this_is_an_id248_that_should_be_at_least_",
                 "role": "user",
                 "email": "joebloggs@intercom.io",
-                "phone": null,
+                "phone": "+1123456789",
                 "name": "joe bloggs",
-                "owner_id": null,
+                "owner_id": 123,
                 "has_hard_bounced": false,
                 "marked_email_as_spam": false,
                 "unsubscribed_from_emails": false,
                 "created_at": 1719492776,
                 "updated_at": 1719492776,
                 "signed_up_at": 1719492776,
-                "last_seen_at": null,
-                "last_replied_at": null,
-                "last_contacted_at": null,
-                "last_email_opened_at": null,
-                "last_email_clicked_at": null,
-                "language_override": null,
-                "browser": null,
-                "browser_version": null,
-                "browser_language": null,
-                "os": null,
-                "android_app_name": null,
-                "android_app_version": null,
-                "android_device": null,
-                "android_os_version": null,
-                "android_sdk_version": null,
-                "android_last_seen_at": null,
-                "ios_app_name": null,
-                "ios_app_version": null,
-                "ios_device": null,
-                "ios_os_version": null,
-                "ios_sdk_version": null,
-                "ios_last_seen_at": null,
+                "last_seen_at": 1571672154,
+                "last_replied_at": 1571672154,
+                "last_contacted_at": 1571672154,
+                "last_email_opened_at": 1571672154,
+                "last_email_clicked_at": 1571672154,
+                "language_override": "en",
+                "browser": "Chrome",
+                "browser_version": "80.0.3987.132",
+                "browser_language": "en-US",
+                "os": "Mac OS X",
+                "android_app_name": "Intercom",
+                "android_app_version": "5.0.0",
+                "android_device": "Pixel 3",
+                "android_os_version": "10",
+                "android_sdk_version": "28",
+                "android_last_seen_at": 1571672154,
+                "ios_app_name": "Intercom",
+                "ios_app_version": "5.0.0",
+                "ios_device": "iPhone 11",
+                "ios_os_version": "13.3.1",
+                "ios_sdk_version": "13.3.1",
+                "ios_last_seen_at": 1571672154,
                 "custom_attributes": {},
-                "avatar": null,
+                "avatar": {},
                 "tags": {
                   "data": [],
                   "url": "/contacts/667d60a88a68186f43bafdb8/tags",
@@ -26434,9 +26434,9 @@
                 },
                 "location": {
                   "type": "location",
-                  "country": null,
-                  "region": null,
-                  "city": null,
+                  "country": "Ireland",
+                  "region": "Dublin",
+                  "city": "Dublin",
                   "country_code": {},
                   "continent_code": {}
                 },
@@ -26474,39 +26474,39 @@
                   "workspace_id": "this_is_an_id248_that_should_be_at_least_",
                   "role": "user",
                   "email": "joebloggs@intercom.io",
-                  "phone": null,
+                  "phone": "+1123456789",
                   "name": "joe bloggs",
-                  "owner_id": null,
+                  "owner_id": 123,
                   "has_hard_bounced": false,
                   "marked_email_as_spam": false,
                   "unsubscribed_from_emails": false,
                   "created_at": 1719492776,
                   "updated_at": 1719492776,
                   "signed_up_at": 1719492776,
-                  "last_seen_at": null,
-                  "last_replied_at": null,
-                  "last_contacted_at": null,
-                  "last_email_opened_at": null,
-                  "last_email_clicked_at": null,
-                  "language_override": null,
-                  "browser": null,
-                  "browser_version": null,
-                  "browser_language": null,
-                  "os": null,
-                  "android_app_name": null,
-                  "android_app_version": null,
-                  "android_device": null,
-                  "android_os_version": null,
-                  "android_sdk_version": null,
-                  "android_last_seen_at": null,
-                  "ios_app_name": null,
-                  "ios_app_version": null,
-                  "ios_device": null,
-                  "ios_os_version": null,
-                  "ios_sdk_version": null,
-                  "ios_last_seen_at": null,
+                  "last_seen_at": 1571672154,
+                  "last_replied_at": 1571672154,
+                  "last_contacted_at": 1571672154,
+                  "last_email_opened_at": 1571672154,
+                  "last_email_clicked_at": 1571672154,
+                  "language_override": "en",
+                  "browser": "Chrome",
+                  "browser_version": "80.0.3987.132",
+                  "browser_language": "en-US",
+                  "os": "Mac OS X",
+                  "android_app_name": "Intercom",
+                  "android_app_version": "5.0.0",
+                  "android_device": "Pixel 3",
+                  "android_os_version": "10",
+                  "android_sdk_version": "28",
+                  "android_last_seen_at": 1571672154,
+                  "ios_app_name": "Intercom",
+                  "ios_app_version": "5.0.0",
+                  "ios_device": "iPhone 11",
+                  "ios_os_version": "13.3.1",
+                  "ios_sdk_version": "13.3.1",
+                  "ios_last_seen_at": 1571672154,
                   "custom_attributes": {},
-                  "avatar": null,
+                  "avatar": {},
                   "tags": {
                     "data": [],
                     "url": "/contacts/667d60a88a68186f43bafdb8/tags",
@@ -26530,9 +26530,9 @@
                   },
                   "location": {
                     "type": "location",
-                    "country": null,
-                    "region": null,
-                    "city": null,
+                    "country": "Ireland",
+                    "region": "Dublin",
+                    "city": "Dublin",
                     "country_code": {},
                     "continent_code": {}
                   },
@@ -26893,39 +26893,39 @@
                 "workspace_id": "this_is_an_id260_that_should_be_at_least_",
                 "role": "user",
                 "email": "joe@bloggs.com",
-                "phone": null,
+                "phone": "+1123456789",
                 "name": "Joe Bloggs",
-                "owner_id": null,
+                "owner_id": 123,
                 "has_hard_bounced": false,
                 "marked_email_as_spam": false,
                 "unsubscribed_from_emails": false,
                 "created_at": 1719492780,
                 "updated_at": 1719492780,
                 "signed_up_at": 1719492780,
-                "last_seen_at": null,
-                "last_replied_at": null,
-                "last_contacted_at": null,
-                "last_email_opened_at": null,
-                "last_email_clicked_at": null,
-                "language_override": null,
-                "browser": null,
-                "browser_version": null,
-                "browser_language": null,
-                "os": null,
-                "android_app_name": null,
-                "android_app_version": null,
-                "android_device": null,
-                "android_os_version": null,
-                "android_sdk_version": null,
-                "android_last_seen_at": null,
-                "ios_app_name": null,
-                "ios_app_version": null,
-                "ios_device": null,
-                "ios_os_version": null,
-                "ios_sdk_version": null,
-                "ios_last_seen_at": null,
+                "last_seen_at": 1571672154,
+                "last_replied_at": 1571672154,
+                "last_contacted_at": 1571672154,
+                "last_email_opened_at": 1571672154,
+                "last_email_clicked_at": 1571672154,
+                "language_override": "en",
+                "browser": "Chrome",
+                "browser_version": "80.0.3987.132",
+                "browser_language": "en-US",
+                "os": "Mac OS X",
+                "android_app_name": "Intercom",
+                "android_app_version": "5.0.0",
+                "android_device": "Pixel 3",
+                "android_os_version": "10",
+                "android_sdk_version": "28",
+                "android_last_seen_at": 1571672154,
+                "ios_app_name": "Intercom",
+                "ios_app_version": "5.0.0",
+                "ios_device": "iPhone 11",
+                "ios_os_version": "13.3.1",
+                "ios_sdk_version": "13.3.1",
+                "ios_last_seen_at": 1571672154,
                 "custom_attributes": {},
-                "avatar": null,
+                "avatar": {},
                 "tags": {
                   "data": [],
                   "url": "/contacts/667d60ac8a68186f43bafdbc/tags",
@@ -26949,9 +26949,9 @@
                 },
                 "location": {
                   "type": "location",
-                  "country": null,
-                  "region": null,
-                  "city": null,
+                  "country": "Ireland",
+                  "region": "Dublin",
+                  "city": "Dublin",
                   "country_code": {},
                   "continent_code": {}
                 },
@@ -26989,39 +26989,39 @@
                   "workspace_id": "this_is_an_id260_that_should_be_at_least_",
                   "role": "user",
                   "email": "joe@bloggs.com",
-                  "phone": null,
+                  "phone": "+1123456789",
                   "name": "Joe Bloggs",
-                  "owner_id": null,
+                  "owner_id": 123,
                   "has_hard_bounced": false,
                   "marked_email_as_spam": false,
                   "unsubscribed_from_emails": false,
                   "created_at": 1719492780,
                   "updated_at": 1719492780,
                   "signed_up_at": 1719492780,
-                  "last_seen_at": null,
-                  "last_replied_at": null,
-                  "last_contacted_at": null,
-                  "last_email_opened_at": null,
-                  "last_email_clicked_at": null,
-                  "language_override": null,
-                  "browser": null,
-                  "browser_version": null,
-                  "browser_language": null,
-                  "os": null,
-                  "android_app_name": null,
-                  "android_app_version": null,
-                  "android_device": null,
-                  "android_os_version": null,
-                  "android_sdk_version": null,
-                  "android_last_seen_at": null,
-                  "ios_app_name": null,
-                  "ios_app_version": null,
-                  "ios_device": null,
-                  "ios_os_version": null,
-                  "ios_sdk_version": null,
-                  "ios_last_seen_at": null,
+                  "last_seen_at": 1571672154,
+                  "last_replied_at": 1571672154,
+                  "last_contacted_at": 1571672154,
+                  "last_email_opened_at": 1571672154,
+                  "last_email_clicked_at": 1571672154,
+                  "language_override": "en",
+                  "browser": "Chrome",
+                  "browser_version": "80.0.3987.132",
+                  "browser_language": "en-US",
+                  "os": "Mac OS X",
+                  "android_app_name": "Intercom",
+                  "android_app_version": "5.0.0",
+                  "android_device": "Pixel 3",
+                  "android_os_version": "10",
+                  "android_sdk_version": "28",
+                  "android_last_seen_at": 1571672154,
+                  "ios_app_name": "Intercom",
+                  "ios_app_version": "5.0.0",
+                  "ios_device": "iPhone 11",
+                  "ios_os_version": "13.3.1",
+                  "ios_sdk_version": "13.3.1",
+                  "ios_last_seen_at": 1571672154,
                   "custom_attributes": {},
-                  "avatar": null,
+                  "avatar": {},
                   "tags": {
                     "data": [],
                     "url": "/contacts/667d60ac8a68186f43bafdbc/tags",
@@ -27045,9 +27045,9 @@
                   },
                   "location": {
                     "type": "location",
-                    "country": null,
-                    "region": null,
-                    "city": null,
+                    "country": "Ireland",
+                    "region": "Dublin",
+                    "city": "Dublin",
                     "country_code": {},
                     "continent_code": {}
                   },
@@ -27598,43 +27598,43 @@
               "responseBody": {
                 "type": "contact",
                 "id": "667d60b08a68186f43bafdbf",
-                "external_id": null,
+                "external_id": "f3b87a2e09d514c6c2e79b9a",
                 "workspace_id": "this_is_an_id272_that_should_be_at_least_",
                 "role": "user",
                 "email": "joebloggs@intercom.io",
-                "phone": null,
-                "name": null,
-                "owner_id": null,
+                "phone": "+1123456789",
+                "name": "John Doe",
+                "owner_id": 123,
                 "has_hard_bounced": false,
                 "marked_email_as_spam": false,
                 "unsubscribed_from_emails": false,
                 "created_at": 1719492784,
                 "updated_at": 1719492784,
-                "signed_up_at": null,
-                "last_seen_at": null,
-                "last_replied_at": null,
-                "last_contacted_at": null,
-                "last_email_opened_at": null,
-                "last_email_clicked_at": null,
-                "language_override": null,
-                "browser": null,
-                "browser_version": null,
-                "browser_language": null,
-                "os": null,
-                "android_app_name": null,
-                "android_app_version": null,
-                "android_device": null,
-                "android_os_version": null,
-                "android_sdk_version": null,
-                "android_last_seen_at": null,
-                "ios_app_name": null,
-                "ios_app_version": null,
-                "ios_device": null,
-                "ios_os_version": null,
-                "ios_sdk_version": null,
-                "ios_last_seen_at": null,
+                "signed_up_at": 1571672154,
+                "last_seen_at": 1571672154,
+                "last_replied_at": 1571672154,
+                "last_contacted_at": 1571672154,
+                "last_email_opened_at": 1571672154,
+                "last_email_clicked_at": 1571672154,
+                "language_override": "en",
+                "browser": "Chrome",
+                "browser_version": "80.0.3987.132",
+                "browser_language": "en-US",
+                "os": "Mac OS X",
+                "android_app_name": "Intercom",
+                "android_app_version": "5.0.0",
+                "android_device": "Pixel 3",
+                "android_os_version": "10",
+                "android_sdk_version": "28",
+                "android_last_seen_at": 1571672154,
+                "ios_app_name": "Intercom",
+                "ios_app_version": "5.0.0",
+                "ios_device": "iPhone 11",
+                "ios_os_version": "13.3.1",
+                "ios_sdk_version": "13.3.1",
+                "ios_last_seen_at": 1571672154,
                 "custom_attributes": {},
-                "avatar": null,
+                "avatar": {},
                 "tags": {
                   "data": [],
                   "url": "/contacts/667d60b08a68186f43bafdbf/tags",
@@ -27658,9 +27658,9 @@
                 },
                 "location": {
                   "type": "location",
-                  "country": null,
-                  "region": null,
-                  "city": null,
+                  "country": "Ireland",
+                  "region": "Dublin",
+                  "city": "Dublin",
                   "country_code": {},
                   "continent_code": {}
                 },
@@ -27694,43 +27694,43 @@
                 "value": {
                   "type": "contact",
                   "id": "667d60b08a68186f43bafdbf",
-                  "external_id": null,
+                  "external_id": "f3b87a2e09d514c6c2e79b9a",
                   "workspace_id": "this_is_an_id272_that_should_be_at_least_",
                   "role": "user",
                   "email": "joebloggs@intercom.io",
-                  "phone": null,
-                  "name": null,
-                  "owner_id": null,
+                  "phone": "+1123456789",
+                  "name": "John Doe",
+                  "owner_id": 123,
                   "has_hard_bounced": false,
                   "marked_email_as_spam": false,
                   "unsubscribed_from_emails": false,
                   "created_at": 1719492784,
                   "updated_at": 1719492784,
-                  "signed_up_at": null,
-                  "last_seen_at": null,
-                  "last_replied_at": null,
-                  "last_contacted_at": null,
-                  "last_email_opened_at": null,
-                  "last_email_clicked_at": null,
-                  "language_override": null,
-                  "browser": null,
-                  "browser_version": null,
-                  "browser_language": null,
-                  "os": null,
-                  "android_app_name": null,
-                  "android_app_version": null,
-                  "android_device": null,
-                  "android_os_version": null,
-                  "android_sdk_version": null,
-                  "android_last_seen_at": null,
-                  "ios_app_name": null,
-                  "ios_app_version": null,
-                  "ios_device": null,
-                  "ios_os_version": null,
-                  "ios_sdk_version": null,
-                  "ios_last_seen_at": null,
+                  "signed_up_at": 1571672154,
+                  "last_seen_at": 1571672154,
+                  "last_replied_at": 1571672154,
+                  "last_contacted_at": 1571672154,
+                  "last_email_opened_at": 1571672154,
+                  "last_email_clicked_at": 1571672154,
+                  "language_override": "en",
+                  "browser": "Chrome",
+                  "browser_version": "80.0.3987.132",
+                  "browser_language": "en-US",
+                  "os": "Mac OS X",
+                  "android_app_name": "Intercom",
+                  "android_app_version": "5.0.0",
+                  "android_device": "Pixel 3",
+                  "android_os_version": "10",
+                  "android_sdk_version": "28",
+                  "android_last_seen_at": 1571672154,
+                  "ios_app_name": "Intercom",
+                  "ios_app_version": "5.0.0",
+                  "ios_device": "iPhone 11",
+                  "ios_os_version": "13.3.1",
+                  "ios_sdk_version": "13.3.1",
+                  "ios_last_seen_at": 1571672154,
                   "custom_attributes": {},
-                  "avatar": null,
+                  "avatar": {},
                   "tags": {
                     "data": [],
                     "url": "/contacts/667d60b08a68186f43bafdbf/tags",
@@ -27754,9 +27754,9 @@
                   },
                   "location": {
                     "type": "location",
-                    "country": null,
-                    "region": null,
-                    "city": null,
+                    "country": "Ireland",
+                    "region": "Dublin",
+                    "city": "Dublin",
                     "country_code": {},
                     "continent_code": {}
                   },
@@ -33515,17 +33515,17 @@
               "responseBody": {
                 "type": "conversation",
                 "id": "367",
-                "title": null,
+                "title": "Conversation Title",
                 "created_at": 1719492825,
                 "updated_at": 1719492825,
-                "waiting_since": null,
-                "snoozed_until": null,
+                "waiting_since": 1663597260,
+                "snoozed_until": 1663597260,
                 "open": false,
                 "state": "closed",
                 "read": false,
                 "priority": "not_priority",
-                "admin_assignee_id": null,
-                "team_assignee_id": null,
+                "admin_assignee_id": 0,
+                "team_assignee_id": "5017691",
                 "tags": {
                   "type": "tag.list",
                   "tags": []
@@ -33583,17 +33583,17 @@
                 "value": {
                   "type": "conversation",
                   "id": "367",
-                  "title": null,
+                  "title": "Conversation Title",
                   "created_at": 1719492825,
                   "updated_at": 1719492825,
-                  "waiting_since": null,
-                  "snoozed_until": null,
+                  "waiting_since": 1663597260,
+                  "snoozed_until": 1663597260,
                   "open": false,
                   "state": "closed",
                   "read": false,
                   "priority": "not_priority",
-                  "admin_assignee_id": null,
-                  "team_assignee_id": null,
+                  "admin_assignee_id": 0,
+                  "team_assignee_id": "5017691",
                   "tags": {
                     "type": "tag.list",
                     "tags": []
@@ -33918,17 +33918,17 @@
               "responseBody": {
                 "type": "conversation",
                 "id": "371",
-                "title": null,
+                "title": "Conversation Title",
                 "created_at": 1719492832,
                 "updated_at": 1719492834,
-                "waiting_since": null,
-                "snoozed_until": null,
+                "waiting_since": 1663597260,
+                "snoozed_until": 1663597260,
                 "open": false,
                 "state": "closed",
                 "read": true,
                 "priority": "not_priority",
-                "admin_assignee_id": null,
-                "team_assignee_id": null,
+                "admin_assignee_id": 0,
+                "team_assignee_id": "5017691",
                 "tags": {
                   "type": "tag.list",
                   "tags": []
@@ -33970,7 +33970,7 @@
                       "type": "conversation_part",
                       "id": "96",
                       "part_type": "conversation_attribute_updated_by_admin",
-                      "body": null,
+                      "body": "<p>Okay!</p>",
                       "created_at": 1719492834,
                       "updated_at": 1719492834,
                       "notified_at": 1719492834,
@@ -33982,14 +33982,14 @@
                         "email": "operator+this_is_an_id321_that_should_be_at_least_@intercom.io"
                       },
                       "attachments": [],
-                      "external_id": null,
+                      "external_id": "abcd1234",
                       "redacted": false
                     },
                     {
                       "type": "conversation_part",
                       "id": "97",
                       "part_type": "conversation_attribute_updated_by_admin",
-                      "body": null,
+                      "body": "<p>Okay!</p>",
                       "created_at": 1719492834,
                       "updated_at": 1719492834,
                       "notified_at": 1719492834,
@@ -34001,7 +34001,7 @@
                         "email": "operator+this_is_an_id321_that_should_be_at_least_@intercom.io"
                       },
                       "attachments": [],
-                      "external_id": null,
+                      "external_id": "abcd1234",
                       "redacted": false
                     }
                   ],
@@ -34028,17 +34028,17 @@
                 "value": {
                   "type": "conversation",
                   "id": "371",
-                  "title": null,
+                  "title": "Conversation Title",
                   "created_at": 1719492832,
                   "updated_at": 1719492834,
-                  "waiting_since": null,
-                  "snoozed_until": null,
+                  "waiting_since": 1663597260,
+                  "snoozed_until": 1663597260,
                   "open": false,
                   "state": "closed",
                   "read": true,
                   "priority": "not_priority",
-                  "admin_assignee_id": null,
-                  "team_assignee_id": null,
+                  "admin_assignee_id": 0,
+                  "team_assignee_id": "5017691",
                   "tags": {
                     "type": "tag.list",
                     "tags": []
@@ -34080,7 +34080,7 @@
                         "type": "conversation_part",
                         "id": "96",
                         "part_type": "conversation_attribute_updated_by_admin",
-                        "body": null,
+                        "body": "<p>Okay!</p>",
                         "created_at": 1719492834,
                         "updated_at": 1719492834,
                         "notified_at": 1719492834,
@@ -34092,14 +34092,14 @@
                           "email": "operator+this_is_an_id321_that_should_be_at_least_@intercom.io"
                         },
                         "attachments": [],
-                        "external_id": null,
+                        "external_id": "abcd1234",
                         "redacted": false
                       },
                       {
                         "type": "conversation_part",
                         "id": "97",
                         "part_type": "conversation_attribute_updated_by_admin",
-                        "body": null,
+                        "body": "<p>Okay!</p>",
                         "created_at": 1719492834,
                         "updated_at": 1719492834,
                         "notified_at": 1719492834,
@@ -34111,7 +34111,7 @@
                           "email": "operator+this_is_an_id321_that_should_be_at_least_@intercom.io"
                         },
                         "attachments": [],
-                        "external_id": null,
+                        "external_id": "abcd1234",
                         "redacted": false
                       }
                     ],
@@ -34167,17 +34167,17 @@
               "responseBody": {
                 "type": "conversation",
                 "id": "371",
-                "title": null,
+                "title": "Conversation Title",
                 "created_at": 1719492832,
                 "updated_at": 1719492834,
-                "waiting_since": null,
-                "snoozed_until": null,
+                "waiting_since": 1663597260,
+                "snoozed_until": 1663597260,
                 "open": false,
                 "state": "closed",
                 "read": true,
                 "priority": "not_priority",
-                "admin_assignee_id": null,
-                "team_assignee_id": null,
+                "admin_assignee_id": 0,
+                "team_assignee_id": "5017691",
                 "tags": {
                   "type": "tag.list",
                   "tags": []
@@ -34219,7 +34219,7 @@
                       "type": "conversation_part",
                       "id": "96",
                       "part_type": "conversation_attribute_updated_by_admin",
-                      "body": null,
+                      "body": "<p>Okay!</p>",
                       "created_at": 1719492834,
                       "updated_at": 1719492834,
                       "notified_at": 1719492834,
@@ -34231,14 +34231,14 @@
                         "email": "operator+this_is_an_id321_that_should_be_at_least_@intercom.io"
                       },
                       "attachments": [],
-                      "external_id": null,
+                      "external_id": "abcd1234",
                       "redacted": false
                     },
                     {
                       "type": "conversation_part",
                       "id": "97",
                       "part_type": "conversation_attribute_updated_by_admin",
-                      "body": null,
+                      "body": "<p>Okay!</p>",
                       "created_at": 1719492834,
                       "updated_at": 1719492834,
                       "notified_at": 1719492834,
@@ -34250,7 +34250,7 @@
                         "email": "operator+this_is_an_id321_that_should_be_at_least_@intercom.io"
                       },
                       "attachments": [],
-                      "external_id": null,
+                      "external_id": "abcd1234",
                       "redacted": false
                     }
                   ],
@@ -34277,17 +34277,17 @@
                 "value": {
                   "type": "conversation",
                   "id": "371",
-                  "title": null,
+                  "title": "Conversation Title",
                   "created_at": 1719492832,
                   "updated_at": 1719492834,
-                  "waiting_since": null,
-                  "snoozed_until": null,
+                  "waiting_since": 1663597260,
+                  "snoozed_until": 1663597260,
                   "open": false,
                   "state": "closed",
                   "read": true,
                   "priority": "not_priority",
-                  "admin_assignee_id": null,
-                  "team_assignee_id": null,
+                  "admin_assignee_id": 0,
+                  "team_assignee_id": "5017691",
                   "tags": {
                     "type": "tag.list",
                     "tags": []
@@ -34329,7 +34329,7 @@
                         "type": "conversation_part",
                         "id": "96",
                         "part_type": "conversation_attribute_updated_by_admin",
-                        "body": null,
+                        "body": "<p>Okay!</p>",
                         "created_at": 1719492834,
                         "updated_at": 1719492834,
                         "notified_at": 1719492834,
@@ -34341,14 +34341,14 @@
                           "email": "operator+this_is_an_id321_that_should_be_at_least_@intercom.io"
                         },
                         "attachments": [],
-                        "external_id": null,
+                        "external_id": "abcd1234",
                         "redacted": false
                       },
                       {
                         "type": "conversation_part",
                         "id": "97",
                         "part_type": "conversation_attribute_updated_by_admin",
-                        "body": null,
+                        "body": "<p>Okay!</p>",
                         "created_at": 1719492834,
                         "updated_at": 1719492834,
                         "notified_at": 1719492834,
@@ -34360,7 +34360,7 @@
                           "email": "operator+this_is_an_id321_that_should_be_at_least_@intercom.io"
                         },
                         "attachments": [],
-                        "external_id": null,
+                        "external_id": "abcd1234",
                         "redacted": false
                       }
                     ],
@@ -34544,17 +34544,17 @@
                   {
                     "type": "conversation",
                     "id": "378",
-                    "title": null,
+                    "title": "Conversation Title",
                     "created_at": 1719492843,
                     "updated_at": 1719492843,
-                    "waiting_since": null,
-                    "snoozed_until": null,
+                    "waiting_since": 1663597260,
+                    "snoozed_until": 1663597260,
                     "open": false,
                     "state": "closed",
                     "read": false,
                     "priority": "not_priority",
-                    "admin_assignee_id": null,
-                    "team_assignee_id": null,
+                    "admin_assignee_id": 0,
+                    "team_assignee_id": "5017691",
                     "tags": {
                       "type": "tag.list",
                       "tags": []
@@ -34619,17 +34619,17 @@
                     {
                       "type": "conversation",
                       "id": "378",
-                      "title": null,
+                      "title": "Conversation Title",
                       "created_at": 1719492843,
                       "updated_at": 1719492843,
-                      "waiting_since": null,
-                      "snoozed_until": null,
+                      "waiting_since": 1663597260,
+                      "snoozed_until": 1663597260,
                       "open": false,
                       "state": "closed",
                       "read": false,
                       "priority": "not_priority",
-                      "admin_assignee_id": null,
-                      "team_assignee_id": null,
+                      "admin_assignee_id": 0,
+                      "team_assignee_id": "5017691",
                       "tags": {
                         "type": "tag.list",
                         "tags": []
@@ -34940,17 +34940,17 @@
               "responseBody": {
                 "type": "conversation",
                 "id": "387",
-                "title": null,
+                "title": "Conversation Title",
                 "created_at": 1719492849,
                 "updated_at": 1719492850,
                 "waiting_since": 1719492850,
-                "snoozed_until": null,
+                "snoozed_until": 1663597260,
                 "open": true,
                 "state": "open",
                 "read": false,
                 "priority": "not_priority",
-                "admin_assignee_id": null,
-                "team_assignee_id": null,
+                "admin_assignee_id": 0,
+                "team_assignee_id": "5017691",
                 "tags": {
                   "type": "tag.list",
                   "tags": []
@@ -34985,7 +34985,7 @@
                 "first_contact_reply": {
                   "created_at": 1719492850,
                   "type": "conversation",
-                  "url": null
+                  "url": "https://developers.intercom.com/"
                 },
                 "conversation_parts": {
                   "type": "conversation_part.list",
@@ -35006,7 +35006,7 @@
                         "email": "joe@bloggs.com"
                       },
                       "attachments": [],
-                      "external_id": null,
+                      "external_id": "abcd1234",
                       "redacted": false
                     }
                   ],
@@ -35032,17 +35032,17 @@
                 "value": {
                   "type": "conversation",
                   "id": "387",
-                  "title": null,
+                  "title": "Conversation Title",
                   "created_at": 1719492849,
                   "updated_at": 1719492850,
                   "waiting_since": 1719492850,
-                  "snoozed_until": null,
+                  "snoozed_until": 1663597260,
                   "open": true,
                   "state": "open",
                   "read": false,
                   "priority": "not_priority",
-                  "admin_assignee_id": null,
-                  "team_assignee_id": null,
+                  "admin_assignee_id": 0,
+                  "team_assignee_id": "5017691",
                   "tags": {
                     "type": "tag.list",
                     "tags": []
@@ -35077,7 +35077,7 @@
                   "first_contact_reply": {
                     "created_at": 1719492850,
                     "type": "conversation",
-                    "url": null
+                    "url": "https://developers.intercom.com/"
                   },
                   "conversation_parts": {
                     "type": "conversation_part.list",
@@ -35098,7 +35098,7 @@
                           "email": "joe@bloggs.com"
                         },
                         "attachments": [],
-                        "external_id": null,
+                        "external_id": "abcd1234",
                         "redacted": false
                       }
                     ],
@@ -35149,17 +35149,17 @@
               "responseBody": {
                 "type": "conversation",
                 "id": "388",
-                "title": null,
+                "title": "Conversation Title",
                 "created_at": 1719492852,
                 "updated_at": 1719492853,
-                "waiting_since": null,
-                "snoozed_until": null,
+                "waiting_since": 1663597260,
+                "snoozed_until": 1663597260,
                 "open": false,
                 "state": "closed",
                 "read": false,
                 "priority": "not_priority",
-                "admin_assignee_id": null,
-                "team_assignee_id": null,
+                "admin_assignee_id": 0,
+                "team_assignee_id": "5017691",
                 "tags": {
                   "type": "tag.list",
                   "tags": []
@@ -35210,7 +35210,7 @@
                         "email": "admin183@email.com"
                       },
                       "attachments": [],
-                      "external_id": null,
+                      "external_id": "abcd1234",
                       "redacted": false
                     }
                   ],
@@ -35237,17 +35237,17 @@
                 "value": {
                   "type": "conversation",
                   "id": "388",
-                  "title": null,
+                  "title": "Conversation Title",
                   "created_at": 1719492852,
                   "updated_at": 1719492853,
-                  "waiting_since": null,
-                  "snoozed_until": null,
+                  "waiting_since": 1663597260,
+                  "snoozed_until": 1663597260,
                   "open": false,
                   "state": "closed",
                   "read": false,
                   "priority": "not_priority",
-                  "admin_assignee_id": null,
-                  "team_assignee_id": null,
+                  "admin_assignee_id": 0,
+                  "team_assignee_id": "5017691",
                   "tags": {
                     "type": "tag.list",
                     "tags": []
@@ -35298,7 +35298,7 @@
                           "email": "admin183@email.com"
                         },
                         "attachments": [],
-                        "external_id": null,
+                        "external_id": "abcd1234",
                         "redacted": false
                       }
                     ],
@@ -35350,17 +35350,17 @@
               "responseBody": {
                 "type": "conversation",
                 "id": "390",
-                "title": null,
+                "title": "Conversation Title",
                 "created_at": 1719492855,
                 "updated_at": 1719492856,
                 "waiting_since": 1719492856,
-                "snoozed_until": null,
+                "snoozed_until": 1663597260,
                 "open": true,
                 "state": "open",
                 "read": false,
                 "priority": "not_priority",
-                "admin_assignee_id": null,
-                "team_assignee_id": null,
+                "admin_assignee_id": 0,
+                "team_assignee_id": "5017691",
                 "tags": {
                   "type": "tag.list",
                   "tags": []
@@ -35395,7 +35395,7 @@
                 "first_contact_reply": {
                   "created_at": 1719492856,
                   "type": "conversation",
-                  "url": null
+                  "url": "https://developers.intercom.com/"
                 },
                 "conversation_parts": {
                   "type": "conversation_part.list",
@@ -35416,7 +35416,7 @@
                         "email": "joe@bloggs.com"
                       },
                       "attachments": [],
-                      "external_id": null,
+                      "external_id": "abcd1234",
                       "redacted": false
                     }
                   ],
@@ -35442,17 +35442,17 @@
                 "value": {
                   "type": "conversation",
                   "id": "390",
-                  "title": null,
+                  "title": "Conversation Title",
                   "created_at": 1719492855,
                   "updated_at": 1719492856,
                   "waiting_since": 1719492856,
-                  "snoozed_until": null,
+                  "snoozed_until": 1663597260,
                   "open": true,
                   "state": "open",
                   "read": false,
                   "priority": "not_priority",
-                  "admin_assignee_id": null,
-                  "team_assignee_id": null,
+                  "admin_assignee_id": 0,
+                  "team_assignee_id": "5017691",
                   "tags": {
                     "type": "tag.list",
                     "tags": []
@@ -35487,7 +35487,7 @@
                   "first_contact_reply": {
                     "created_at": 1719492856,
                     "type": "conversation",
-                    "url": null
+                    "url": "https://developers.intercom.com/"
                   },
                   "conversation_parts": {
                     "type": "conversation_part.list",
@@ -35508,7 +35508,7 @@
                           "email": "joe@bloggs.com"
                         },
                         "attachments": [],
-                        "external_id": null,
+                        "external_id": "abcd1234",
                         "redacted": false
                       }
                     ],
@@ -35559,17 +35559,17 @@
               "responseBody": {
                 "type": "conversation",
                 "id": "387",
-                "title": null,
+                "title": "Conversation Title",
                 "created_at": 1719492849,
                 "updated_at": 1719492850,
                 "waiting_since": 1719492850,
-                "snoozed_until": null,
+                "snoozed_until": 1663597260,
                 "open": true,
                 "state": "open",
                 "read": false,
                 "priority": "not_priority",
-                "admin_assignee_id": null,
-                "team_assignee_id": null,
+                "admin_assignee_id": 0,
+                "team_assignee_id": "5017691",
                 "tags": {
                   "type": "tag.list",
                   "tags": []
@@ -35604,7 +35604,7 @@
                 "first_contact_reply": {
                   "created_at": 1719492850,
                   "type": "conversation",
-                  "url": null
+                  "url": "https://developers.intercom.com/"
                 },
                 "conversation_parts": {
                   "type": "conversation_part.list",
@@ -35625,7 +35625,7 @@
                         "email": "joe@bloggs.com"
                       },
                       "attachments": [],
-                      "external_id": null,
+                      "external_id": "abcd1234",
                       "redacted": false
                     }
                   ],
@@ -35651,17 +35651,17 @@
                 "value": {
                   "type": "conversation",
                   "id": "387",
-                  "title": null,
+                  "title": "Conversation Title",
                   "created_at": 1719492849,
                   "updated_at": 1719492850,
                   "waiting_since": 1719492850,
-                  "snoozed_until": null,
+                  "snoozed_until": 1663597260,
                   "open": true,
                   "state": "open",
                   "read": false,
                   "priority": "not_priority",
-                  "admin_assignee_id": null,
-                  "team_assignee_id": null,
+                  "admin_assignee_id": 0,
+                  "team_assignee_id": "5017691",
                   "tags": {
                     "type": "tag.list",
                     "tags": []
@@ -35696,7 +35696,7 @@
                   "first_contact_reply": {
                     "created_at": 1719492850,
                     "type": "conversation",
-                    "url": null
+                    "url": "https://developers.intercom.com/"
                   },
                   "conversation_parts": {
                     "type": "conversation_part.list",
@@ -35717,7 +35717,7 @@
                           "email": "joe@bloggs.com"
                         },
                         "attachments": [],
-                        "external_id": null,
+                        "external_id": "abcd1234",
                         "redacted": false
                       }
                     ],
@@ -35992,17 +35992,17 @@
               "responseBody": {
                 "type": "conversation",
                 "id": "394",
-                "title": null,
+                "title": "Conversation Title",
                 "created_at": 1719492862,
                 "updated_at": 1719492862,
-                "waiting_since": null,
-                "snoozed_until": null,
+                "waiting_since": 1663597260,
+                "snoozed_until": 1663597260,
                 "open": false,
                 "state": "closed",
                 "read": false,
                 "priority": "not_priority",
-                "admin_assignee_id": null,
-                "team_assignee_id": null,
+                "admin_assignee_id": 0,
+                "team_assignee_id": "5017691",
                 "tags": {
                   "type": "tag.list",
                   "tags": []
@@ -36053,7 +36053,7 @@
                         "email": "admin189@email.com"
                       },
                       "attachments": [],
-                      "external_id": null,
+                      "external_id": "abcd1234",
                       "redacted": false
                     }
                   ],
@@ -36080,17 +36080,17 @@
                 "value": {
                   "type": "conversation",
                   "id": "394",
-                  "title": null,
+                  "title": "Conversation Title",
                   "created_at": 1719492862,
                   "updated_at": 1719492862,
-                  "waiting_since": null,
-                  "snoozed_until": null,
+                  "waiting_since": 1663597260,
+                  "snoozed_until": 1663597260,
                   "open": false,
                   "state": "closed",
                   "read": false,
                   "priority": "not_priority",
-                  "admin_assignee_id": null,
-                  "team_assignee_id": null,
+                  "admin_assignee_id": 0,
+                  "team_assignee_id": "5017691",
                   "tags": {
                     "type": "tag.list",
                     "tags": []
@@ -36141,7 +36141,7 @@
                           "email": "admin189@email.com"
                         },
                         "attachments": [],
-                        "external_id": null,
+                        "external_id": "abcd1234",
                         "redacted": false
                       }
                     ],
@@ -36191,17 +36191,17 @@
               "responseBody": {
                 "type": "conversation",
                 "id": "395",
-                "title": null,
+                "title": "Conversation Title",
                 "created_at": 1719492864,
                 "updated_at": 1719492864,
-                "waiting_since": null,
+                "waiting_since": 1663597260,
                 "snoozed_until": 1719496464,
                 "open": true,
                 "state": "snoozed",
                 "read": false,
                 "priority": "not_priority",
-                "admin_assignee_id": null,
-                "team_assignee_id": null,
+                "admin_assignee_id": 0,
+                "team_assignee_id": "5017691",
                 "tags": {
                   "type": "tag.list",
                   "tags": []
@@ -36240,7 +36240,7 @@
                       "type": "conversation_part",
                       "id": "103",
                       "part_type": "snoozed",
-                      "body": null,
+                      "body": "<p>Okay!</p>",
                       "created_at": 1719492864,
                       "updated_at": 1719492864,
                       "notified_at": 1719492864,
@@ -36252,7 +36252,7 @@
                         "email": "admin190@email.com"
                       },
                       "attachments": [],
-                      "external_id": null,
+                      "external_id": "abcd1234",
                       "redacted": false
                     }
                   ],
@@ -36279,17 +36279,17 @@
                 "value": {
                   "type": "conversation",
                   "id": "395",
-                  "title": null,
+                  "title": "Conversation Title",
                   "created_at": 1719492864,
                   "updated_at": 1719492864,
-                  "waiting_since": null,
+                  "waiting_since": 1663597260,
                   "snoozed_until": 1719496464,
                   "open": true,
                   "state": "snoozed",
                   "read": false,
                   "priority": "not_priority",
-                  "admin_assignee_id": null,
-                  "team_assignee_id": null,
+                  "admin_assignee_id": 0,
+                  "team_assignee_id": "5017691",
                   "tags": {
                     "type": "tag.list",
                     "tags": []
@@ -36328,7 +36328,7 @@
                         "type": "conversation_part",
                         "id": "103",
                         "part_type": "snoozed",
-                        "body": null,
+                        "body": "<p>Okay!</p>",
                         "created_at": 1719492864,
                         "updated_at": 1719492864,
                         "notified_at": 1719492864,
@@ -36340,7 +36340,7 @@
                           "email": "admin190@email.com"
                         },
                         "attachments": [],
-                        "external_id": null,
+                        "external_id": "abcd1234",
                         "redacted": false
                       }
                     ],
@@ -36391,14 +36391,14 @@
                 "title": "",
                 "created_at": 1719492863,
                 "updated_at": 1719492873,
-                "waiting_since": null,
-                "snoozed_until": null,
+                "waiting_since": 1663597260,
+                "snoozed_until": 1663597260,
                 "open": true,
                 "state": "open",
                 "read": true,
                 "priority": "not_priority",
-                "admin_assignee_id": null,
-                "team_assignee_id": null,
+                "admin_assignee_id": 0,
+                "team_assignee_id": "5017691",
                 "tags": {
                   "type": "tag.list",
                   "tags": []
@@ -36437,7 +36437,7 @@
                       "type": "conversation_part",
                       "id": "105",
                       "part_type": "open",
-                      "body": null,
+                      "body": "<p>Okay!</p>",
                       "created_at": 1719492873,
                       "updated_at": 1719492873,
                       "notified_at": 1719492873,
@@ -36449,7 +36449,7 @@
                         "email": "admin191@email.com"
                       },
                       "attachments": [],
-                      "external_id": null,
+                      "external_id": "abcd1234",
                       "redacted": false
                     }
                   ],
@@ -36479,14 +36479,14 @@
                   "title": "",
                   "created_at": 1719492863,
                   "updated_at": 1719492873,
-                  "waiting_since": null,
-                  "snoozed_until": null,
+                  "waiting_since": 1663597260,
+                  "snoozed_until": 1663597260,
                   "open": true,
                   "state": "open",
                   "read": true,
                   "priority": "not_priority",
-                  "admin_assignee_id": null,
-                  "team_assignee_id": null,
+                  "admin_assignee_id": 0,
+                  "team_assignee_id": "5017691",
                   "tags": {
                     "type": "tag.list",
                     "tags": []
@@ -36525,7 +36525,7 @@
                         "type": "conversation_part",
                         "id": "105",
                         "part_type": "open",
-                        "body": null,
+                        "body": "<p>Okay!</p>",
                         "created_at": 1719492873,
                         "updated_at": 1719492873,
                         "notified_at": 1719492873,
@@ -36537,7 +36537,7 @@
                           "email": "admin191@email.com"
                         },
                         "attachments": [],
-                        "external_id": null,
+                        "external_id": "abcd1234",
                         "redacted": false
                       }
                     ],
@@ -36589,17 +36589,17 @@
               "responseBody": {
                 "type": "conversation",
                 "id": "405",
-                "title": null,
+                "title": "Conversation Title",
                 "created_at": 1719492874,
                 "updated_at": 1719492875,
-                "waiting_since": null,
-                "snoozed_until": null,
+                "waiting_since": 1663597260,
+                "snoozed_until": 1663597260,
                 "open": true,
                 "state": "open",
                 "read": false,
                 "priority": "not_priority",
                 "admin_assignee_id": 991267615,
-                "team_assignee_id": null,
+                "team_assignee_id": "5017691",
                 "tags": {
                   "type": "tag.list",
                   "tags": []
@@ -36638,7 +36638,7 @@
                       "type": "conversation_part",
                       "id": "106",
                       "part_type": "assign_and_reopen",
-                      "body": null,
+                      "body": "<p>Okay!</p>",
                       "created_at": 1719492875,
                       "updated_at": 1719492875,
                       "notified_at": 1719492875,
@@ -36653,7 +36653,7 @@
                         "email": "admin193@email.com"
                       },
                       "attachments": [],
-                      "external_id": null,
+                      "external_id": "abcd1234",
                       "redacted": false
                     }
                   ],
@@ -36680,17 +36680,17 @@
                 "value": {
                   "type": "conversation",
                   "id": "405",
-                  "title": null,
+                  "title": "Conversation Title",
                   "created_at": 1719492874,
                   "updated_at": 1719492875,
-                  "waiting_since": null,
-                  "snoozed_until": null,
+                  "waiting_since": 1663597260,
+                  "snoozed_until": 1663597260,
                   "open": true,
                   "state": "open",
                   "read": false,
                   "priority": "not_priority",
                   "admin_assignee_id": 991267615,
-                  "team_assignee_id": null,
+                  "team_assignee_id": "5017691",
                   "tags": {
                     "type": "tag.list",
                     "tags": []
@@ -36729,7 +36729,7 @@
                         "type": "conversation_part",
                         "id": "106",
                         "part_type": "assign_and_reopen",
-                        "body": null,
+                        "body": "<p>Okay!</p>",
                         "created_at": 1719492875,
                         "updated_at": 1719492875,
                         "notified_at": 1719492875,
@@ -36744,7 +36744,7 @@
                           "email": "admin193@email.com"
                         },
                         "attachments": [],
-                        "external_id": null,
+                        "external_id": "abcd1234",
                         "redacted": false
                       }
                     ],
@@ -36796,17 +36796,17 @@
               "responseBody": {
                 "type": "conversation",
                 "id": "394",
-                "title": null,
+                "title": "Conversation Title",
                 "created_at": 1719492862,
                 "updated_at": 1719492862,
-                "waiting_since": null,
-                "snoozed_until": null,
+                "waiting_since": 1663597260,
+                "snoozed_until": 1663597260,
                 "open": false,
                 "state": "closed",
                 "read": false,
                 "priority": "not_priority",
-                "admin_assignee_id": null,
-                "team_assignee_id": null,
+                "admin_assignee_id": 0,
+                "team_assignee_id": "5017691",
                 "tags": {
                   "type": "tag.list",
                   "tags": []
@@ -36857,7 +36857,7 @@
                         "email": "admin189@email.com"
                       },
                       "attachments": [],
-                      "external_id": null,
+                      "external_id": "abcd1234",
                       "redacted": false
                     }
                   ],
@@ -36884,17 +36884,17 @@
                 "value": {
                   "type": "conversation",
                   "id": "394",
-                  "title": null,
+                  "title": "Conversation Title",
                   "created_at": 1719492862,
                   "updated_at": 1719492862,
-                  "waiting_since": null,
-                  "snoozed_until": null,
+                  "waiting_since": 1663597260,
+                  "snoozed_until": 1663597260,
                   "open": false,
                   "state": "closed",
                   "read": false,
                   "priority": "not_priority",
-                  "admin_assignee_id": null,
-                  "team_assignee_id": null,
+                  "admin_assignee_id": 0,
+                  "team_assignee_id": "5017691",
                   "tags": {
                     "type": "tag.list",
                     "tags": []
@@ -36945,7 +36945,7 @@
                           "email": "admin189@email.com"
                         },
                         "attachments": [],
-                        "external_id": null,
+                        "external_id": "abcd1234",
                         "redacted": false
                       }
                     ],
@@ -37176,17 +37176,17 @@
               "responseBody": {
                 "type": "conversation",
                 "id": "409",
-                "title": null,
+                "title": "Conversation Title",
                 "created_at": 1719492880,
                 "updated_at": 1719492881,
-                "waiting_since": null,
-                "snoozed_until": null,
+                "waiting_since": 1663597260,
+                "snoozed_until": 1663597260,
                 "open": false,
                 "state": "closed",
                 "read": false,
                 "priority": "not_priority",
-                "admin_assignee_id": null,
-                "team_assignee_id": null,
+                "admin_assignee_id": 0,
+                "team_assignee_id": "5017691",
                 "tags": {
                   "type": "tag.list",
                   "tags": []
@@ -37225,13 +37225,13 @@
                       "type": "conversation_part",
                       "id": "107",
                       "part_type": "default_assignment",
-                      "body": null,
+                      "body": "<p>Okay!</p>",
                       "created_at": 1719492881,
                       "updated_at": 1719492881,
                       "notified_at": 1719492881,
                       "assigned_to": {
                         "type": "nobody_admin",
-                        "id": null
+                        "id": "1a2b3c"
                       },
                       "author": {
                         "type": "bot",
@@ -37240,7 +37240,7 @@
                         "email": "operator+this_is_an_id364_that_should_be_at_least_@intercom.io"
                       },
                       "attachments": [],
-                      "external_id": null,
+                      "external_id": "abcd1234",
                       "redacted": false
                     }
                   ],
@@ -37267,17 +37267,17 @@
                 "value": {
                   "type": "conversation",
                   "id": "409",
-                  "title": null,
+                  "title": "Conversation Title",
                   "created_at": 1719492880,
                   "updated_at": 1719492881,
-                  "waiting_since": null,
-                  "snoozed_until": null,
+                  "waiting_since": 1663597260,
+                  "snoozed_until": 1663597260,
                   "open": false,
                   "state": "closed",
                   "read": false,
                   "priority": "not_priority",
-                  "admin_assignee_id": null,
-                  "team_assignee_id": null,
+                  "admin_assignee_id": 0,
+                  "team_assignee_id": "5017691",
                   "tags": {
                     "type": "tag.list",
                     "tags": []
@@ -37316,13 +37316,13 @@
                         "type": "conversation_part",
                         "id": "107",
                         "part_type": "default_assignment",
-                        "body": null,
+                        "body": "<p>Okay!</p>",
                         "created_at": 1719492881,
                         "updated_at": 1719492881,
                         "notified_at": 1719492881,
                         "assigned_to": {
                           "type": "nobody_admin",
-                          "id": null
+                          "id": "1a2b3c"
                         },
                         "author": {
                           "type": "bot",
@@ -37331,7 +37331,7 @@
                           "email": "operator+this_is_an_id364_that_should_be_at_least_@intercom.io"
                         },
                         "attachments": [],
-                        "external_id": null,
+                        "external_id": "abcd1234",
                         "redacted": false
                       }
                     ],
@@ -38340,17 +38340,17 @@
               "responseBody": {
                 "type": "conversation",
                 "id": "471",
-                "title": null,
+                "title": "Conversation Title",
                 "created_at": 1719492938,
                 "updated_at": 1719492940,
                 "waiting_since": 1719492939,
-                "snoozed_until": null,
+                "snoozed_until": 1663597260,
                 "open": true,
                 "state": "open",
                 "read": true,
                 "priority": "not_priority",
-                "admin_assignee_id": null,
-                "team_assignee_id": null,
+                "admin_assignee_id": 0,
+                "team_assignee_id": "5017691",
                 "tags": {
                   "type": "tag.list",
                   "tags": []
@@ -38385,7 +38385,7 @@
                 "first_contact_reply": {
                   "created_at": 1719492939,
                   "type": "conversation",
-                  "url": null
+                  "url": "https://developers.intercom.com/"
                 },
                 "conversation_parts": {
                   "type": "conversation_part.list",
@@ -38406,7 +38406,7 @@
                         "email": "joe@bloggs.com"
                       },
                       "attachments": [],
-                      "external_id": null,
+                      "external_id": "abcd1234",
                       "redacted": true
                     }
                   ],
@@ -38432,17 +38432,17 @@
                 "value": {
                   "type": "conversation",
                   "id": "471",
-                  "title": null,
+                  "title": "Conversation Title",
                   "created_at": 1719492938,
                   "updated_at": 1719492940,
                   "waiting_since": 1719492939,
-                  "snoozed_until": null,
+                  "snoozed_until": 1663597260,
                   "open": true,
                   "state": "open",
                   "read": true,
                   "priority": "not_priority",
-                  "admin_assignee_id": null,
-                  "team_assignee_id": null,
+                  "admin_assignee_id": 0,
+                  "team_assignee_id": "5017691",
                   "tags": {
                     "type": "tag.list",
                     "tags": []
@@ -38477,7 +38477,7 @@
                   "first_contact_reply": {
                     "created_at": 1719492939,
                     "type": "conversation",
-                    "url": null
+                    "url": "https://developers.intercom.com/"
                   },
                   "conversation_parts": {
                     "type": "conversation_part.list",
@@ -38498,7 +38498,7 @@
                           "email": "joe@bloggs.com"
                         },
                         "attachments": [],
-                        "external_id": null,
+                        "external_id": "abcd1234",
                         "redacted": true
                       }
                     ],
@@ -38545,17 +38545,17 @@
               "responseBody": {
                 "type": "conversation",
                 "id": "471",
-                "title": null,
+                "title": "Conversation Title",
                 "created_at": 1719492938,
                 "updated_at": 1719492940,
                 "waiting_since": 1719492939,
-                "snoozed_until": null,
+                "snoozed_until": 1663597260,
                 "open": true,
                 "state": "open",
                 "read": true,
                 "priority": "not_priority",
-                "admin_assignee_id": null,
-                "team_assignee_id": null,
+                "admin_assignee_id": 0,
+                "team_assignee_id": "5017691",
                 "tags": {
                   "type": "tag.list",
                   "tags": []
@@ -38590,7 +38590,7 @@
                 "first_contact_reply": {
                   "created_at": 1719492939,
                   "type": "conversation",
-                  "url": null
+                  "url": "https://developers.intercom.com/"
                 },
                 "conversation_parts": {
                   "type": "conversation_part.list",
@@ -38611,7 +38611,7 @@
                         "email": "joe@bloggs.com"
                       },
                       "attachments": [],
-                      "external_id": null,
+                      "external_id": "abcd1234",
                       "redacted": true
                     }
                   ],
@@ -38637,17 +38637,17 @@
                 "value": {
                   "type": "conversation",
                   "id": "471",
-                  "title": null,
+                  "title": "Conversation Title",
                   "created_at": 1719492938,
                   "updated_at": 1719492940,
                   "waiting_since": 1719492939,
-                  "snoozed_until": null,
+                  "snoozed_until": 1663597260,
                   "open": true,
                   "state": "open",
                   "read": true,
                   "priority": "not_priority",
-                  "admin_assignee_id": null,
-                  "team_assignee_id": null,
+                  "admin_assignee_id": 0,
+                  "team_assignee_id": "5017691",
                   "tags": {
                     "type": "tag.list",
                     "tags": []
@@ -38682,7 +38682,7 @@
                   "first_contact_reply": {
                     "created_at": 1719492939,
                     "type": "conversation",
-                    "url": null
+                    "url": "https://developers.intercom.com/"
                   },
                   "conversation_parts": {
                     "type": "conversation_part.list",
@@ -38703,7 +38703,7 @@
                           "email": "joe@bloggs.com"
                         },
                         "attachments": [],
-                        "external_id": null,
+                        "external_id": "abcd1234",
                         "redacted": true
                       }
                     ],
@@ -42784,7 +42784,7 @@
                     "state": "draft",
                     "newsfeed_assignments": [],
                     "labels": [],
-                    "cover_image_url": null,
+                    "cover_image_url": "https://example.com/cover.jpg",
                     "reactions": [
                       null,
                       null,
@@ -42805,7 +42805,7 @@
                     "state": "draft",
                     "newsfeed_assignments": [],
                     "labels": [],
-                    "cover_image_url": null,
+                    "cover_image_url": "https://example.com/cover.jpg",
                     "reactions": [
                       null,
                       null,
@@ -42840,7 +42840,7 @@
                       "state": "draft",
                       "newsfeed_assignments": [],
                       "labels": [],
-                      "cover_image_url": null,
+                      "cover_image_url": "https://example.com/cover.jpg",
                       "reactions": [
                         null,
                         null,
@@ -42861,7 +42861,7 @@
                       "state": "draft",
                       "newsfeed_assignments": [],
                       "labels": [],
-                      "cover_image_url": null,
+                      "cover_image_url": "https://example.com/cover.jpg",
                       "reactions": [
                         null,
                         null,
@@ -43094,7 +43094,7 @@
                   "Product",
                   "Update"
                 ],
-                "cover_image_url": null,
+                "cover_image_url": "https://example.com/cover.jpg",
                 "reactions": [
                   "😆",
                   "😅"
@@ -43124,7 +43124,7 @@
                     "Product",
                     "Update"
                   ],
-                  "cover_image_url": null,
+                  "cover_image_url": "https://example.com/cover.jpg",
                   "reactions": [
                     "😆",
                     "😅"
@@ -43324,7 +43324,7 @@
                   }
                 ],
                 "labels": [],
-                "cover_image_url": null,
+                "cover_image_url": "https://example.com/cover.jpg",
                 "reactions": [
                   null,
                   null,
@@ -43352,7 +43352,7 @@
                     }
                   ],
                   "labels": [],
-                  "cover_image_url": null,
+                  "cover_image_url": "https://example.com/cover.jpg",
                   "reactions": [
                     null,
                     null,
@@ -43599,7 +43599,7 @@
                 "state": "live",
                 "newsfeed_assignments": [],
                 "labels": [],
-                "cover_image_url": null,
+                "cover_image_url": "https://example.com/cover.jpg",
                 "reactions": [
                   "😝",
                   "😂"
@@ -43620,7 +43620,7 @@
                   "state": "live",
                   "newsfeed_assignments": [],
                   "labels": [],
-                  "cover_image_url": null,
+                  "cover_image_url": "https://example.com/cover.jpg",
                   "reactions": [
                     "😝",
                     "😂"
@@ -43672,7 +43672,7 @@
                 "state": "live",
                 "newsfeed_assignments": [],
                 "labels": [],
-                "cover_image_url": null,
+                "cover_image_url": "https://example.com/cover.jpg",
                 "reactions": [
                   "😝",
                   "😂"
@@ -43693,7 +43693,7 @@
                   "state": "live",
                   "newsfeed_assignments": [],
                   "labels": [],
-                  "cover_image_url": null,
+                  "cover_image_url": "https://example.com/cover.jpg",
                   "reactions": [
                     "😝",
                     "😂"
@@ -50494,12 +50494,12 @@
                 "user_id": "3ecf64d0-9ed1-4e9f-88e1-da7d6e6782f3",
                 "anonymous": true,
                 "email": "",
-                "phone": null,
-                "name": null,
-                "pseudonym": null,
+                "phone": "555-555-5555",
+                "name": "Jane Doe",
+                "pseudonym": "Red Duck from Dublin",
                 "avatar": {
                   "type": "avatar",
-                  "image_url": null
+                  "image_url": "https://example.com/avatar.png"
                 },
                 "app_id": "this_is_an_id677_that_should_be_at_least_",
                 "companies": {
@@ -50516,7 +50516,7 @@
                   "type": "social_profile.list",
                   "social_profiles": []
                 },
-                "owner_id": null,
+                "owner_id": "5169261",
                 "unsubscribed_from_emails": false,
                 "marked_email_as_spam": false,
                 "has_hard_bounced": false,
@@ -50529,13 +50529,13 @@
                   "segments": []
                 },
                 "custom_attributes": {},
-                "referrer": null,
-                "utm_campaign": null,
-                "utm_content": null,
-                "utm_medium": null,
-                "utm_source": null,
-                "utm_term": null,
-                "do_not_track": null,
+                "referrer": "https://www.google.com/",
+                "utm_campaign": "intercom-link",
+                "utm_content": "banner",
+                "utm_medium": "email",
+                "utm_source": "Intercom",
+                "utm_term": "messenger",
+                "do_not_track": false,
                 "last_request_at": {}
               },
               "responseBodyV3": {
@@ -50546,12 +50546,12 @@
                   "user_id": "3ecf64d0-9ed1-4e9f-88e1-da7d6e6782f3",
                   "anonymous": true,
                   "email": "",
-                  "phone": null,
-                  "name": null,
-                  "pseudonym": null,
+                  "phone": "555-555-5555",
+                  "name": "Jane Doe",
+                  "pseudonym": "Red Duck from Dublin",
                   "avatar": {
                     "type": "avatar",
-                    "image_url": null
+                    "image_url": "https://example.com/avatar.png"
                   },
                   "app_id": "this_is_an_id677_that_should_be_at_least_",
                   "companies": {
@@ -50568,7 +50568,7 @@
                     "type": "social_profile.list",
                     "social_profiles": []
                   },
-                  "owner_id": null,
+                  "owner_id": "5169261",
                   "unsubscribed_from_emails": false,
                   "marked_email_as_spam": false,
                   "has_hard_bounced": false,
@@ -50581,13 +50581,13 @@
                     "segments": []
                   },
                   "custom_attributes": {},
-                  "referrer": null,
-                  "utm_campaign": null,
-                  "utm_content": null,
-                  "utm_medium": null,
-                  "utm_source": null,
-                  "utm_term": null,
-                  "do_not_track": null,
+                  "referrer": "https://www.google.com/",
+                  "utm_campaign": "intercom-link",
+                  "utm_content": "banner",
+                  "utm_medium": "email",
+                  "utm_source": "Intercom",
+                  "utm_term": "messenger",
+                  "do_not_track": false,
                   "last_request_at": {}
                 }
               }
@@ -50786,7 +50786,7 @@
                 "user_id": "3ecf64d0-9ed1-4e9f-88e1-da7d6e6782f3",
                 "anonymous": true,
                 "email": "",
-                "phone": null,
+                "phone": "555-555-5555",
                 "name": "Gareth Bale",
                 "pseudonym": "Indigo Ghost",
                 "avatar": {
@@ -50808,7 +50808,7 @@
                   "type": "social_profile.list",
                   "social_profiles": []
                 },
-                "owner_id": null,
+                "owner_id": "5169261",
                 "unsubscribed_from_emails": false,
                 "marked_email_as_spam": false,
                 "has_hard_bounced": false,
@@ -50821,13 +50821,13 @@
                   "segments": []
                 },
                 "custom_attributes": {},
-                "referrer": null,
-                "utm_campaign": null,
-                "utm_content": null,
-                "utm_medium": null,
-                "utm_source": null,
-                "utm_term": null,
-                "do_not_track": null,
+                "referrer": "https://www.google.com/",
+                "utm_campaign": "intercom-link",
+                "utm_content": "banner",
+                "utm_medium": "email",
+                "utm_source": "Intercom",
+                "utm_term": "messenger",
+                "do_not_track": false,
                 "last_request_at": {}
               },
               "responseBodyV3": {
@@ -50838,7 +50838,7 @@
                   "user_id": "3ecf64d0-9ed1-4e9f-88e1-da7d6e6782f3",
                   "anonymous": true,
                   "email": "",
-                  "phone": null,
+                  "phone": "555-555-5555",
                   "name": "Gareth Bale",
                   "pseudonym": "Indigo Ghost",
                   "avatar": {
@@ -50860,7 +50860,7 @@
                     "type": "social_profile.list",
                     "social_profiles": []
                   },
-                  "owner_id": null,
+                  "owner_id": "5169261",
                   "unsubscribed_from_emails": false,
                   "marked_email_as_spam": false,
                   "has_hard_bounced": false,
@@ -50873,13 +50873,13 @@
                     "segments": []
                   },
                   "custom_attributes": {},
-                  "referrer": null,
-                  "utm_campaign": null,
-                  "utm_content": null,
-                  "utm_medium": null,
-                  "utm_source": null,
-                  "utm_term": null,
-                  "do_not_track": null,
+                  "referrer": "https://www.google.com/",
+                  "utm_campaign": "intercom-link",
+                  "utm_content": "banner",
+                  "utm_medium": "email",
+                  "utm_source": "Intercom",
+                  "utm_term": "messenger",
+                  "do_not_track": false,
                   "last_request_at": {}
                 }
               }
@@ -50903,7 +50903,7 @@
                 "user_id": "3ecf64d0-9ed1-4e9f-88e1-da7d6e6782f3",
                 "anonymous": true,
                 "email": "",
-                "phone": null,
+                "phone": "555-555-5555",
                 "name": "Gareth Bale",
                 "pseudonym": "Indigo Ghost",
                 "avatar": {
@@ -50925,7 +50925,7 @@
                   "type": "social_profile.list",
                   "social_profiles": []
                 },
-                "owner_id": null,
+                "owner_id": "5169261",
                 "unsubscribed_from_emails": false,
                 "marked_email_as_spam": false,
                 "has_hard_bounced": false,
@@ -50938,13 +50938,13 @@
                   "segments": []
                 },
                 "custom_attributes": {},
-                "referrer": null,
-                "utm_campaign": null,
-                "utm_content": null,
-                "utm_medium": null,
-                "utm_source": null,
-                "utm_term": null,
-                "do_not_track": null,
+                "referrer": "https://www.google.com/",
+                "utm_campaign": "intercom-link",
+                "utm_content": "banner",
+                "utm_medium": "email",
+                "utm_source": "Intercom",
+                "utm_term": "messenger",
+                "do_not_track": false,
                 "last_request_at": {}
               },
               "responseBodyV3": {
@@ -50955,7 +50955,7 @@
                   "user_id": "3ecf64d0-9ed1-4e9f-88e1-da7d6e6782f3",
                   "anonymous": true,
                   "email": "",
-                  "phone": null,
+                  "phone": "555-555-5555",
                   "name": "Gareth Bale",
                   "pseudonym": "Indigo Ghost",
                   "avatar": {
@@ -50977,7 +50977,7 @@
                     "type": "social_profile.list",
                     "social_profiles": []
                   },
-                  "owner_id": null,
+                  "owner_id": "5169261",
                   "unsubscribed_from_emails": false,
                   "marked_email_as_spam": false,
                   "has_hard_bounced": false,
@@ -50990,13 +50990,13 @@
                     "segments": []
                   },
                   "custom_attributes": {},
-                  "referrer": null,
-                  "utm_campaign": null,
-                  "utm_content": null,
-                  "utm_medium": null,
-                  "utm_source": null,
-                  "utm_term": null,
-                  "do_not_track": null,
+                  "referrer": "https://www.google.com/",
+                  "utm_campaign": "intercom-link",
+                  "utm_content": "banner",
+                  "utm_medium": "email",
+                  "utm_source": "Intercom",
+                  "utm_term": "messenger",
+                  "do_not_track": false,
                   "last_request_at": {}
                 }
               }
@@ -51169,43 +51169,43 @@
               "responseBody": {
                 "type": "contact",
                 "id": "667d61d08a68186f43bafea2",
-                "external_id": null,
+                "external_id": "f3b87a2e09d514c6c2e79b9a",
                 "workspace_id": "this_is_an_id683_that_should_be_at_least_",
                 "role": "user",
                 "email": "foo@bar.com",
-                "phone": null,
-                "name": null,
-                "owner_id": null,
+                "phone": "+1123456789",
+                "name": "John Doe",
+                "owner_id": 123,
                 "has_hard_bounced": false,
                 "marked_email_as_spam": false,
                 "unsubscribed_from_emails": false,
                 "created_at": 1719493072,
                 "updated_at": 1719493072,
                 "signed_up_at": 1719493072,
-                "last_seen_at": null,
-                "last_replied_at": null,
-                "last_contacted_at": null,
-                "last_email_opened_at": null,
-                "last_email_clicked_at": null,
-                "language_override": null,
-                "browser": null,
-                "browser_version": null,
-                "browser_language": null,
-                "os": null,
-                "android_app_name": null,
-                "android_app_version": null,
-                "android_device": null,
-                "android_os_version": null,
-                "android_sdk_version": null,
-                "android_last_seen_at": null,
-                "ios_app_name": null,
-                "ios_app_version": null,
-                "ios_device": null,
-                "ios_os_version": null,
-                "ios_sdk_version": null,
-                "ios_last_seen_at": null,
+                "last_seen_at": 1571672154,
+                "last_replied_at": 1571672154,
+                "last_contacted_at": 1571672154,
+                "last_email_opened_at": 1571672154,
+                "last_email_clicked_at": 1571672154,
+                "language_override": "en",
+                "browser": "Chrome",
+                "browser_version": "80.0.3987.132",
+                "browser_language": "en-US",
+                "os": "Mac OS X",
+                "android_app_name": "Intercom",
+                "android_app_version": "5.0.0",
+                "android_device": "Pixel 3",
+                "android_os_version": "10",
+                "android_sdk_version": "28",
+                "android_last_seen_at": 1571672154,
+                "ios_app_name": "Intercom",
+                "ios_app_version": "5.0.0",
+                "ios_device": "iPhone 11",
+                "ios_os_version": "13.3.1",
+                "ios_sdk_version": "13.3.1",
+                "ios_last_seen_at": 1571672154,
                 "custom_attributes": {},
-                "avatar": null,
+                "avatar": {},
                 "tags": {
                   "data": [],
                   "url": "/contacts/667d61d08a68186f43bafea2/tags",
@@ -51229,9 +51229,9 @@
                 },
                 "location": {
                   "type": "location",
-                  "country": null,
-                  "region": null,
-                  "city": null,
+                  "country": "Ireland",
+                  "region": "Dublin",
+                  "city": "Dublin",
                   "country_code": {},
                   "continent_code": {}
                 },
@@ -51265,43 +51265,43 @@
                 "value": {
                   "type": "contact",
                   "id": "667d61d08a68186f43bafea2",
-                  "external_id": null,
+                  "external_id": "f3b87a2e09d514c6c2e79b9a",
                   "workspace_id": "this_is_an_id683_that_should_be_at_least_",
                   "role": "user",
                   "email": "foo@bar.com",
-                  "phone": null,
-                  "name": null,
-                  "owner_id": null,
+                  "phone": "+1123456789",
+                  "name": "John Doe",
+                  "owner_id": 123,
                   "has_hard_bounced": false,
                   "marked_email_as_spam": false,
                   "unsubscribed_from_emails": false,
                   "created_at": 1719493072,
                   "updated_at": 1719493072,
                   "signed_up_at": 1719493072,
-                  "last_seen_at": null,
-                  "last_replied_at": null,
-                  "last_contacted_at": null,
-                  "last_email_opened_at": null,
-                  "last_email_clicked_at": null,
-                  "language_override": null,
-                  "browser": null,
-                  "browser_version": null,
-                  "browser_language": null,
-                  "os": null,
-                  "android_app_name": null,
-                  "android_app_version": null,
-                  "android_device": null,
-                  "android_os_version": null,
-                  "android_sdk_version": null,
-                  "android_last_seen_at": null,
-                  "ios_app_name": null,
-                  "ios_app_version": null,
-                  "ios_device": null,
-                  "ios_os_version": null,
-                  "ios_sdk_version": null,
-                  "ios_last_seen_at": null,
+                  "last_seen_at": 1571672154,
+                  "last_replied_at": 1571672154,
+                  "last_contacted_at": 1571672154,
+                  "last_email_opened_at": 1571672154,
+                  "last_email_clicked_at": 1571672154,
+                  "language_override": "en",
+                  "browser": "Chrome",
+                  "browser_version": "80.0.3987.132",
+                  "browser_language": "en-US",
+                  "os": "Mac OS X",
+                  "android_app_name": "Intercom",
+                  "android_app_version": "5.0.0",
+                  "android_device": "Pixel 3",
+                  "android_os_version": "10",
+                  "android_sdk_version": "28",
+                  "android_last_seen_at": 1571672154,
+                  "ios_app_name": "Intercom",
+                  "ios_app_version": "5.0.0",
+                  "ios_device": "iPhone 11",
+                  "ios_os_version": "13.3.1",
+                  "ios_sdk_version": "13.3.1",
+                  "ios_last_seen_at": 1571672154,
                   "custom_attributes": {},
-                  "avatar": null,
+                  "avatar": {},
                   "tags": {
                     "data": [],
                     "url": "/contacts/667d61d08a68186f43bafea2/tags",
@@ -51325,9 +51325,9 @@
                   },
                   "location": {
                     "type": "location",
-                    "country": null,
-                    "region": null,
-                    "city": null,
+                    "country": "Ireland",
+                    "region": "Dublin",
+                    "city": "Dublin",
                     "country_code": {},
                     "continent_code": {}
                   },

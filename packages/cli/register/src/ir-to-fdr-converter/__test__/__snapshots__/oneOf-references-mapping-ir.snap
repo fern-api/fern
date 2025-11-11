@@ -1,0 +1,2680 @@
+{
+  "apiDisplayName": undefined,
+  "apiDocs": undefined,
+  "apiName": {
+    "camelCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+    "originalName": "",
+    "pascalCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+    "screamingSnakeCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+    "snakeCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+  },
+  "apiVersion": undefined,
+  "audiences": undefined,
+  "auth": {
+    "docs": undefined,
+    "requirement": "ALL",
+    "schemes": [],
+  },
+  "basePath": undefined,
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "dynamic": undefined,
+  "environments": {
+    "defaultEnvironment": "https://api.example.com/v1",
+    "environments": {
+      "_visit": [Function],
+      "environments": [
+        {
+          "docs": undefined,
+          "id": "https://api.example.com/v1",
+          "name": {
+            "camelCase": {
+              "safeName": "httpsApiExampleComV1",
+              "unsafeName": "httpsApiExampleComV1",
+            },
+            "originalName": "https://api.example.com/v1",
+            "pascalCase": {
+              "safeName": "HttpsApiExampleComV1",
+              "unsafeName": "HttpsApiExampleComV1",
+            },
+            "screamingSnakeCase": {
+              "safeName": "HTTPS_API_EXAMPLE_COM_V_1",
+              "unsafeName": "HTTPS_API_EXAMPLE_COM_V_1",
+            },
+            "snakeCase": {
+              "safeName": "https_api_example_com_v_1",
+              "unsafeName": "https_api_example_com_v_1",
+            },
+          },
+          "url": "https://api.example.com/v1",
+        },
+      ],
+      "type": "singleBaseUrl",
+    },
+  },
+  "errorDiscriminationStrategy": {
+    "_visit": [Function],
+    "type": "statusCode",
+  },
+  "errors": {
+    "CreateEventRequestBadRequestError": {
+      "discriminantValue": {
+        "name": {
+          "camelCase": {
+            "safeName": "createEventRequestBadRequestError",
+            "unsafeName": "createEventRequestBadRequestError",
+          },
+          "originalName": "CreateEventRequestBadRequestError",
+          "pascalCase": {
+            "safeName": "CreateEventRequestBadRequestError",
+            "unsafeName": "CreateEventRequestBadRequestError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_EVENT_REQUEST_BAD_REQUEST_ERROR",
+            "unsafeName": "CREATE_EVENT_REQUEST_BAD_REQUEST_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "create_event_request_bad_request_error",
+            "unsafeName": "create_event_request_bad_request_error",
+          },
+        },
+        "wireValue": "CreateEventRequestBadRequestError",
+      },
+      "displayName": "BadRequestError",
+      "docs": "Bad request",
+      "examples": [],
+      "name": {
+        "errorId": "CreateEventRequestBadRequestError",
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "createEventRequestBadRequestError",
+            "unsafeName": "createEventRequestBadRequestError",
+          },
+          "originalName": "CreateEventRequestBadRequestError",
+          "pascalCase": {
+            "safeName": "CreateEventRequestBadRequestError",
+            "unsafeName": "CreateEventRequestBadRequestError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_EVENT_REQUEST_BAD_REQUEST_ERROR",
+            "unsafeName": "CREATE_EVENT_REQUEST_BAD_REQUEST_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "create_event_request_bad_request_error",
+            "unsafeName": "create_event_request_bad_request_error",
+          },
+        },
+      },
+      "statusCode": 400,
+      "type": {
+        "_visit": [Function],
+        "default": undefined,
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "inline": false,
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
+        "type": "named",
+        "typeId": "Error",
+      },
+      "v2Examples": {
+        "autogeneratedExamples": {},
+        "userSpecifiedExamples": {},
+      },
+    },
+  },
+  "fdrApiDefinitionId": undefined,
+  "generationMetadata": undefined,
+  "headers": [],
+  "idempotencyHeaders": [],
+  "pathParameters": [],
+  "publishConfig": undefined,
+  "readmeConfig": undefined,
+  "rootPackage": {
+    "docs": undefined,
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": undefined,
+      "packagePath": [],
+    },
+    "hasEndpointsInTree": false,
+    "navigationConfig": undefined,
+    "service": "service_",
+    "subpackages": [],
+    "types": [
+      "EventRequest",
+      "UserEvent",
+      "SystemEvent",
+      "ErrorEvent",
+      "EventResponse",
+      "Error",
+    ],
+    "webhooks": undefined,
+    "websocket": undefined,
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": true,
+    "platformHeaders": {
+      "language": "",
+      "sdkName": "",
+      "sdkVersion": "",
+      "userAgent": undefined,
+    },
+  },
+  "selfHosted": false,
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {},
+  },
+  "services": {
+    "service_": {
+      "audiences": undefined,
+      "availability": undefined,
+      "basePath": {
+        "head": "",
+        "parts": [],
+      },
+      "displayName": undefined,
+      "encoding": undefined,
+      "endpoints": [
+        {
+          "allPathParameters": [],
+          "audiences": [],
+          "auth": false,
+          "autogeneratedExamples": [],
+          "availability": undefined,
+          "basePath": undefined,
+          "baseUrl": "https://api.example.com/v1",
+          "displayName": "Create an event",
+          "docs": "Creates an event that can be of different types",
+          "errors": [
+            {
+              "docs": "Bad request",
+              "error": {
+                "errorId": "CreateEventRequestBadRequestError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "file": undefined,
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "createEventRequestBadRequestError",
+                    "unsafeName": "createEventRequestBadRequestError",
+                  },
+                  "originalName": "CreateEventRequestBadRequestError",
+                  "pascalCase": {
+                    "safeName": "CreateEventRequestBadRequestError",
+                    "unsafeName": "CreateEventRequestBadRequestError",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "CREATE_EVENT_REQUEST_BAD_REQUEST_ERROR",
+                    "unsafeName": "CREATE_EVENT_REQUEST_BAD_REQUEST_ERROR",
+                  },
+                  "snakeCase": {
+                    "safeName": "create_event_request_bad_request_error",
+                    "unsafeName": "create_event_request_bad_request_error",
+                  },
+                },
+              },
+            },
+          ],
+          "fullPath": {
+            "head": "/events",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_.createEvent",
+          "idempotent": false,
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "createEvent",
+              "unsafeName": "createEvent",
+            },
+            "originalName": "createEvent",
+            "pascalCase": {
+              "safeName": "CreateEvent",
+              "unsafeName": "CreateEvent",
+            },
+            "screamingSnakeCase": {
+              "safeName": "CREATE_EVENT",
+              "unsafeName": "CREATE_EVENT",
+            },
+            "snakeCase": {
+              "safeName": "create_event",
+              "unsafeName": "create_event",
+            },
+          },
+          "pagination": undefined,
+          "path": {
+            "head": "/events",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": {
+            "_visit": [Function],
+            "contentType": "application/json",
+            "docs": undefined,
+            "requestBodyType": {
+              "_visit": [Function],
+              "default": undefined,
+              "displayName": undefined,
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "inline": false,
+              "name": {
+                "camelCase": {
+                  "safeName": "eventRequest",
+                  "unsafeName": "eventRequest",
+                },
+                "originalName": "EventRequest",
+                "pascalCase": {
+                  "safeName": "EventRequest",
+                  "unsafeName": "EventRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "EVENT_REQUEST",
+                  "unsafeName": "EVENT_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "event_request",
+                  "unsafeName": "event_request",
+                },
+              },
+              "type": "named",
+              "typeId": "EventRequest",
+            },
+            "type": "reference",
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "createEventExample": {
+                  "action": "login",
+                  "type": "user",
+                  "userId": "user_123",
+                },
+              },
+              "userSpecifiedExamples": {},
+            },
+          },
+          "response": {
+            "body": {
+              "_visit": [Function],
+              "type": "json",
+              "value": {
+                "_visit": [Function],
+                "docs": "Event created successfully",
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "eventResponse",
+                      "unsafeName": "eventResponse",
+                    },
+                    "originalName": "EventResponse",
+                    "pascalCase": {
+                      "safeName": "EventResponse",
+                      "unsafeName": "EventResponse",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "EVENT_RESPONSE",
+                      "unsafeName": "EVENT_RESPONSE",
+                    },
+                    "snakeCase": {
+                      "safeName": "event_response",
+                      "unsafeName": "event_response",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "EventResponse",
+                },
+                "type": "response",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "createEventExample": {
+                      "event": {
+                        "action": "login",
+                        "timestamp": "2023-12-01T12:00:00Z",
+                        "type": "user",
+                        "userId": "user_123",
+                      },
+                      "id": "event_456",
+                      "status": "created",
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            },
+            "statusCode": 200,
+          },
+          "retries": undefined,
+          "sdkRequest": undefined,
+          "security": undefined,
+          "source": {
+            "_visit": [Function],
+            "type": "openapi",
+          },
+          "transport": undefined,
+          "userSpecifiedExamples": [],
+          "v2BaseUrls": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "createEventExample_200": {
+                "codeSamples": undefined,
+                "displayName": "createEventExample",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "POST",
+                    "path": "/events",
+                  },
+                  "environment": "https://api.example.com/v1",
+                  "headers": {},
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "requestBody": {
+                    "action": "login",
+                    "type": "user",
+                    "userId": "user_123",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "event": {
+                        "action": "login",
+                        "timestamp": "2023-12-01T12:00:00Z",
+                        "type": "user",
+                        "userId": "user_123",
+                      },
+                      "id": "event_456",
+                      "status": "created",
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 200,
+                },
+              },
+            },
+            "userSpecifiedExamples": {},
+          },
+          "v2RequestBodies": {
+            "requestBodies": [
+              {
+                "_visit": [Function],
+                "contentType": "application/json",
+                "docs": undefined,
+                "requestBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "eventRequest",
+                      "unsafeName": "eventRequest",
+                    },
+                    "originalName": "EventRequest",
+                    "pascalCase": {
+                      "safeName": "EventRequest",
+                      "unsafeName": "EventRequest",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "EVENT_REQUEST",
+                      "unsafeName": "EVENT_REQUEST",
+                    },
+                    "snakeCase": {
+                      "safeName": "event_request",
+                      "unsafeName": "event_request",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "EventRequest",
+                },
+                "type": "reference",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "createEventExample": {
+                      "action": "login",
+                      "type": "user",
+                      "userId": "user_123",
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            ],
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "body": {
+                  "_visit": [Function],
+                  "type": "json",
+                  "value": {
+                    "_visit": [Function],
+                    "docs": "Event created successfully",
+                    "responseBodyType": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "displayName": undefined,
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": undefined,
+                        "packagePath": [],
+                      },
+                      "inline": false,
+                      "name": {
+                        "camelCase": {
+                          "safeName": "eventResponse",
+                          "unsafeName": "eventResponse",
+                        },
+                        "originalName": "EventResponse",
+                        "pascalCase": {
+                          "safeName": "EventResponse",
+                          "unsafeName": "EventResponse",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "EVENT_RESPONSE",
+                          "unsafeName": "EVENT_RESPONSE",
+                        },
+                        "snakeCase": {
+                          "safeName": "event_response",
+                          "unsafeName": "event_response",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "EventResponse",
+                    },
+                    "type": "response",
+                    "v2Examples": {
+                      "autogeneratedExamples": {
+                        "createEventExample": {
+                          "event": {
+                            "action": "login",
+                            "timestamp": "2023-12-01T12:00:00Z",
+                            "type": "user",
+                            "userId": "user_123",
+                          },
+                          "id": "event_456",
+                          "status": "created",
+                        },
+                      },
+                      "userSpecifiedExamples": {},
+                    },
+                  },
+                },
+                "statusCode": 200,
+              },
+            ],
+          },
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+      "transport": undefined,
+    },
+  },
+  "sourceConfig": undefined,
+  "subpackages": {},
+  "types": {
+    "Error": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": "Error response schema",
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
+        "typeId": "Error",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "code",
+                  "unsafeName": "code",
+                },
+                "originalName": "code",
+                "pascalCase": {
+                  "safeName": "Code",
+                  "unsafeName": "Code",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CODE",
+                  "unsafeName": "CODE",
+                },
+                "snakeCase": {
+                  "safeName": "code",
+                  "unsafeName": "code",
+                },
+              },
+              "wireValue": "code",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ErrorCode_example_0": "INVALID_REQUEST",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+                "originalName": "message",
+                "pascalCase": {
+                  "safeName": "Message",
+                  "unsafeName": "Message",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MESSAGE",
+                  "unsafeName": "MESSAGE",
+                },
+                "snakeCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+              },
+              "wireValue": "message",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ErrorMessage_example_0": "The request was invalid",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "Error_example_autogenerated": {
+            "code": "INVALID_REQUEST",
+            "message": "The request was invalid",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "ErrorEvent": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": "Event representing an error condition",
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "errorEvent",
+            "unsafeName": "errorEvent",
+          },
+          "originalName": "ErrorEvent",
+          "pascalCase": {
+            "safeName": "ErrorEvent",
+            "unsafeName": "ErrorEvent",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR_EVENT",
+            "unsafeName": "ERROR_EVENT",
+          },
+          "snakeCase": {
+            "safeName": "error_event",
+            "unsafeName": "error_event",
+          },
+        },
+        "typeId": "ErrorEvent",
+      },
+      "referencedTypes": Set {
+        "ErrorEventType",
+        "ErrorEventSeverity",
+      },
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "type_",
+                  "unsafeName": "type",
+                },
+                "originalName": "type",
+                "pascalCase": {
+                  "safeName": "Type",
+                  "unsafeName": "Type",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TYPE",
+                  "unsafeName": "TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "type_",
+                  "unsafeName": "type",
+                },
+              },
+              "wireValue": "type",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ErrorEventType_example_0": "error",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "default": undefined,
+              "displayName": undefined,
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "inline": false,
+              "name": {
+                "camelCase": {
+                  "safeName": "errorEventType",
+                  "unsafeName": "errorEventType",
+                },
+                "originalName": "ErrorEventType",
+                "pascalCase": {
+                  "safeName": "ErrorEventType",
+                  "unsafeName": "ErrorEventType",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ERROR_EVENT_TYPE",
+                  "unsafeName": "ERROR_EVENT_TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "error_event_type",
+                  "unsafeName": "error_event_type",
+                },
+              },
+              "type": "named",
+              "typeId": "ErrorEventType",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Unique code identifying the error type",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "errorCode",
+                  "unsafeName": "errorCode",
+                },
+                "originalName": "errorCode",
+                "pascalCase": {
+                  "safeName": "ErrorCode",
+                  "unsafeName": "ErrorCode",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ERROR_CODE",
+                  "unsafeName": "ERROR_CODE",
+                },
+                "snakeCase": {
+                  "safeName": "error_code",
+                  "unsafeName": "error_code",
+                },
+              },
+              "wireValue": "errorCode",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ErrorEventErrorCode_example_0": "AUTH_FAILED",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Human-readable error message",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+                "originalName": "message",
+                "pascalCase": {
+                  "safeName": "Message",
+                  "unsafeName": "Message",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MESSAGE",
+                  "unsafeName": "MESSAGE",
+                },
+                "snakeCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+              },
+              "wireValue": "message",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ErrorEventMessage_example_0": "Authentication failed for user",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Severity level of the error",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "severity",
+                  "unsafeName": "severity",
+                },
+                "originalName": "severity",
+                "pascalCase": {
+                  "safeName": "Severity",
+                  "unsafeName": "Severity",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SEVERITY",
+                  "unsafeName": "SEVERITY",
+                },
+                "snakeCase": {
+                  "safeName": "severity",
+                  "unsafeName": "severity",
+                },
+              },
+              "wireValue": "severity",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ErrorEventSeverity_example_0": "high",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "errorEventSeverity",
+                      "unsafeName": "errorEventSeverity",
+                    },
+                    "originalName": "ErrorEventSeverity",
+                    "pascalCase": {
+                      "safeName": "ErrorEventSeverity",
+                      "unsafeName": "ErrorEventSeverity",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "ERROR_EVENT_SEVERITY",
+                      "unsafeName": "ERROR_EVENT_SEVERITY",
+                    },
+                    "snakeCase": {
+                      "safeName": "error_event_severity",
+                      "unsafeName": "error_event_severity",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "ErrorEventSeverity",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "ErrorEvent_example_autogenerated": {
+            "errorCode": "AUTH_FAILED",
+            "message": "Authentication failed for user",
+            "type": "error",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "ErrorEventSeverity": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": "Severity level of the error",
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "errorEventSeverity",
+            "unsafeName": "errorEventSeverity",
+          },
+          "originalName": "ErrorEventSeverity",
+          "pascalCase": {
+            "safeName": "ErrorEventSeverity",
+            "unsafeName": "ErrorEventSeverity",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR_EVENT_SEVERITY",
+            "unsafeName": "ERROR_EVENT_SEVERITY",
+          },
+          "snakeCase": {
+            "safeName": "error_event_severity",
+            "unsafeName": "error_event_severity",
+          },
+        },
+        "typeId": "ErrorEventSeverity",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "low",
+                  "unsafeName": "low",
+                },
+                "originalName": "low",
+                "pascalCase": {
+                  "safeName": "Low",
+                  "unsafeName": "Low",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "LOW",
+                  "unsafeName": "LOW",
+                },
+                "snakeCase": {
+                  "safeName": "low",
+                  "unsafeName": "low",
+                },
+              },
+              "wireValue": "low",
+            },
+          },
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "medium",
+                  "unsafeName": "medium",
+                },
+                "originalName": "medium",
+                "pascalCase": {
+                  "safeName": "Medium",
+                  "unsafeName": "Medium",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MEDIUM",
+                  "unsafeName": "MEDIUM",
+                },
+                "snakeCase": {
+                  "safeName": "medium",
+                  "unsafeName": "medium",
+                },
+              },
+              "wireValue": "medium",
+            },
+          },
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "high",
+                  "unsafeName": "high",
+                },
+                "originalName": "high",
+                "pascalCase": {
+                  "safeName": "High",
+                  "unsafeName": "High",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "HIGH",
+                  "unsafeName": "HIGH",
+                },
+                "snakeCase": {
+                  "safeName": "high",
+                  "unsafeName": "high",
+                },
+              },
+              "wireValue": "high",
+            },
+          },
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "critical",
+                  "unsafeName": "critical",
+                },
+                "originalName": "critical",
+                "pascalCase": {
+                  "safeName": "Critical",
+                  "unsafeName": "Critical",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CRITICAL",
+                  "unsafeName": "CRITICAL",
+                },
+                "snakeCase": {
+                  "safeName": "critical",
+                  "unsafeName": "critical",
+                },
+              },
+              "wireValue": "critical",
+            },
+          },
+        ],
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {},
+        "userSpecifiedExamples": {
+          "ErrorEventSeverity_example_0": "high",
+        },
+      },
+    },
+    "ErrorEventType": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "errorEventType",
+            "unsafeName": "errorEventType",
+          },
+          "originalName": "ErrorEventType",
+          "pascalCase": {
+            "safeName": "ErrorEventType",
+            "unsafeName": "ErrorEventType",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR_EVENT_TYPE",
+            "unsafeName": "ERROR_EVENT_TYPE",
+          },
+          "snakeCase": {
+            "safeName": "error_event_type",
+            "unsafeName": "error_event_type",
+          },
+        },
+        "typeId": "ErrorEventType",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "error",
+                  "unsafeName": "error",
+                },
+                "originalName": "error",
+                "pascalCase": {
+                  "safeName": "Error_",
+                  "unsafeName": "Error",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ERROR",
+                  "unsafeName": "ERROR",
+                },
+                "snakeCase": {
+                  "safeName": "error",
+                  "unsafeName": "error",
+                },
+              },
+              "wireValue": "error",
+            },
+          },
+        ],
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {},
+        "userSpecifiedExamples": {
+          "ErrorEventType_example_0": "error",
+        },
+      },
+    },
+    "EventRequest": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": "Request payload for creating events",
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "eventRequest",
+            "unsafeName": "eventRequest",
+          },
+          "originalName": "EventRequest",
+          "pascalCase": {
+            "safeName": "EventRequest",
+            "unsafeName": "EventRequest",
+          },
+          "screamingSnakeCase": {
+            "safeName": "EVENT_REQUEST",
+            "unsafeName": "EVENT_REQUEST",
+          },
+          "snakeCase": {
+            "safeName": "event_request",
+            "unsafeName": "event_request",
+          },
+        },
+        "typeId": "EventRequest",
+      },
+      "referencedTypes": Set {
+        "UserEvent",
+        "SystemEvent",
+        "ErrorEvent",
+      },
+      "shape": {
+        "_visit": [Function],
+        "baseProperties": [],
+        "discriminant": {
+          "name": {
+            "camelCase": {
+              "safeName": "",
+              "unsafeName": "",
+            },
+            "originalName": undefined,
+            "pascalCase": {
+              "safeName": "",
+              "unsafeName": "",
+            },
+            "screamingSnakeCase": {
+              "safeName": "",
+              "unsafeName": "",
+            },
+            "snakeCase": {
+              "safeName": "",
+              "unsafeName": "",
+            },
+          },
+          "wireValue": undefined,
+        },
+        "extends": [],
+        "type": "union",
+        "types": [
+          {
+            "availability": undefined,
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "user",
+                  "unsafeName": "user",
+                },
+                "originalName": "user",
+                "pascalCase": {
+                  "safeName": "User",
+                  "unsafeName": "User",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "USER",
+                  "unsafeName": "USER",
+                },
+                "snakeCase": {
+                  "safeName": "user",
+                  "unsafeName": "user",
+                },
+              },
+              "wireValue": "user",
+            },
+            "displayName": "user",
+            "docs": undefined,
+            "shape": {
+              "_visit": [Function],
+              "displayName": "user",
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "name": {
+                "camelCase": {
+                  "safeName": "userEvent",
+                  "unsafeName": "userEvent",
+                },
+                "originalName": "UserEvent",
+                "pascalCase": {
+                  "safeName": "UserEvent",
+                  "unsafeName": "UserEvent",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "USER_EVENT",
+                  "unsafeName": "USER_EVENT",
+                },
+                "snakeCase": {
+                  "safeName": "user_event",
+                  "unsafeName": "user_event",
+                },
+              },
+              "propertiesType": "samePropertiesAsObject",
+              "typeId": "UserEvent",
+            },
+          },
+          {
+            "availability": undefined,
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "system",
+                  "unsafeName": "system",
+                },
+                "originalName": "system",
+                "pascalCase": {
+                  "safeName": "System",
+                  "unsafeName": "System",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SYSTEM",
+                  "unsafeName": "SYSTEM",
+                },
+                "snakeCase": {
+                  "safeName": "system",
+                  "unsafeName": "system",
+                },
+              },
+              "wireValue": "system",
+            },
+            "displayName": "system",
+            "docs": undefined,
+            "shape": {
+              "_visit": [Function],
+              "displayName": "system",
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "name": {
+                "camelCase": {
+                  "safeName": "systemEvent",
+                  "unsafeName": "systemEvent",
+                },
+                "originalName": "SystemEvent",
+                "pascalCase": {
+                  "safeName": "SystemEvent",
+                  "unsafeName": "SystemEvent",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SYSTEM_EVENT",
+                  "unsafeName": "SYSTEM_EVENT",
+                },
+                "snakeCase": {
+                  "safeName": "system_event",
+                  "unsafeName": "system_event",
+                },
+              },
+              "propertiesType": "samePropertiesAsObject",
+              "typeId": "SystemEvent",
+            },
+          },
+          {
+            "availability": undefined,
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "error",
+                  "unsafeName": "error",
+                },
+                "originalName": "error",
+                "pascalCase": {
+                  "safeName": "Error_",
+                  "unsafeName": "Error",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ERROR",
+                  "unsafeName": "ERROR",
+                },
+                "snakeCase": {
+                  "safeName": "error",
+                  "unsafeName": "error",
+                },
+              },
+              "wireValue": "error",
+            },
+            "displayName": "error",
+            "docs": undefined,
+            "shape": {
+              "_visit": [Function],
+              "displayName": "error",
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "name": {
+                "camelCase": {
+                  "safeName": "errorEvent",
+                  "unsafeName": "errorEvent",
+                },
+                "originalName": "ErrorEvent",
+                "pascalCase": {
+                  "safeName": "ErrorEvent",
+                  "unsafeName": "ErrorEvent",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ERROR_EVENT",
+                  "unsafeName": "ERROR_EVENT",
+                },
+                "snakeCase": {
+                  "safeName": "error_event",
+                  "unsafeName": "error_event",
+                },
+              },
+              "propertiesType": "samePropertiesAsObject",
+              "typeId": "ErrorEvent",
+            },
+          },
+        ],
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "EventRequest_example_autogenerated": {
+            "action": "login",
+            "type": "user",
+            "userId": "user_123",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "EventResponse": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": "Response after creating an event",
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "eventResponse",
+            "unsafeName": "eventResponse",
+          },
+          "originalName": "EventResponse",
+          "pascalCase": {
+            "safeName": "EventResponse",
+            "unsafeName": "EventResponse",
+          },
+          "screamingSnakeCase": {
+            "safeName": "EVENT_RESPONSE",
+            "unsafeName": "EVENT_RESPONSE",
+          },
+          "snakeCase": {
+            "safeName": "event_response",
+            "unsafeName": "event_response",
+          },
+        },
+        "typeId": "EventResponse",
+      },
+      "referencedTypes": Set {
+        "EventResponseStatus",
+      },
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Unique identifier for the created event",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "wireValue": "id",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "EventResponseId_example_0": "event_456",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Status of the event processing",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "status",
+                  "unsafeName": "status",
+                },
+                "originalName": "status",
+                "pascalCase": {
+                  "safeName": "Status",
+                  "unsafeName": "Status",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "STATUS",
+                  "unsafeName": "STATUS",
+                },
+                "snakeCase": {
+                  "safeName": "status",
+                  "unsafeName": "status",
+                },
+              },
+              "wireValue": "status",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "EventResponseStatus_example_0": "created",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "default": undefined,
+              "displayName": undefined,
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "inline": false,
+              "name": {
+                "camelCase": {
+                  "safeName": "eventResponseStatus",
+                  "unsafeName": "eventResponseStatus",
+                },
+                "originalName": "EventResponseStatus",
+                "pascalCase": {
+                  "safeName": "EventResponseStatus",
+                  "unsafeName": "EventResponseStatus",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "EVENT_RESPONSE_STATUS",
+                  "unsafeName": "EVENT_RESPONSE_STATUS",
+                },
+                "snakeCase": {
+                  "safeName": "event_response_status",
+                  "unsafeName": "event_response_status",
+                },
+              },
+              "type": "named",
+              "typeId": "EventResponseStatus",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "event",
+                  "unsafeName": "event",
+                },
+                "originalName": "event",
+                "pascalCase": {
+                  "safeName": "Event",
+                  "unsafeName": "Event",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "EVENT",
+                  "unsafeName": "EVENT",
+                },
+                "snakeCase": {
+                  "safeName": "event",
+                  "unsafeName": "event",
+                },
+              },
+              "wireValue": "event",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "default": undefined,
+              "displayName": undefined,
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "inline": false,
+              "name": {
+                "camelCase": {
+                  "safeName": "eventRequest",
+                  "unsafeName": "eventRequest",
+                },
+                "originalName": "EventRequest",
+                "pascalCase": {
+                  "safeName": "EventRequest",
+                  "unsafeName": "EventRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "EVENT_REQUEST",
+                  "unsafeName": "EVENT_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "event_request",
+                  "unsafeName": "event_request",
+                },
+              },
+              "type": "named",
+              "typeId": "EventRequest",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "EventResponse_example_autogenerated": {
+            "event": {
+              "action": "login",
+              "type": "user",
+              "userId": "user_123",
+            },
+            "id": "event_456",
+            "status": "created",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "EventResponseStatus": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": "Status of the event processing",
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "eventResponseStatus",
+            "unsafeName": "eventResponseStatus",
+          },
+          "originalName": "EventResponseStatus",
+          "pascalCase": {
+            "safeName": "EventResponseStatus",
+            "unsafeName": "EventResponseStatus",
+          },
+          "screamingSnakeCase": {
+            "safeName": "EVENT_RESPONSE_STATUS",
+            "unsafeName": "EVENT_RESPONSE_STATUS",
+          },
+          "snakeCase": {
+            "safeName": "event_response_status",
+            "unsafeName": "event_response_status",
+          },
+        },
+        "typeId": "EventResponseStatus",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "created",
+                  "unsafeName": "created",
+                },
+                "originalName": "created",
+                "pascalCase": {
+                  "safeName": "Created",
+                  "unsafeName": "Created",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CREATED",
+                  "unsafeName": "CREATED",
+                },
+                "snakeCase": {
+                  "safeName": "created",
+                  "unsafeName": "created",
+                },
+              },
+              "wireValue": "created",
+            },
+          },
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "processed",
+                  "unsafeName": "processed",
+                },
+                "originalName": "processed",
+                "pascalCase": {
+                  "safeName": "Processed",
+                  "unsafeName": "Processed",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PROCESSED",
+                  "unsafeName": "PROCESSED",
+                },
+                "snakeCase": {
+                  "safeName": "processed",
+                  "unsafeName": "processed",
+                },
+              },
+              "wireValue": "processed",
+            },
+          },
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "failed",
+                  "unsafeName": "failed",
+                },
+                "originalName": "failed",
+                "pascalCase": {
+                  "safeName": "Failed",
+                  "unsafeName": "Failed",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "FAILED",
+                  "unsafeName": "FAILED",
+                },
+                "snakeCase": {
+                  "safeName": "failed",
+                  "unsafeName": "failed",
+                },
+              },
+              "wireValue": "failed",
+            },
+          },
+        ],
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {},
+        "userSpecifiedExamples": {
+          "EventResponseStatus_example_0": "created",
+        },
+      },
+    },
+    "SystemEvent": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": "Event generated by system processes",
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "systemEvent",
+            "unsafeName": "systemEvent",
+          },
+          "originalName": "SystemEvent",
+          "pascalCase": {
+            "safeName": "SystemEvent",
+            "unsafeName": "SystemEvent",
+          },
+          "screamingSnakeCase": {
+            "safeName": "SYSTEM_EVENT",
+            "unsafeName": "SYSTEM_EVENT",
+          },
+          "snakeCase": {
+            "safeName": "system_event",
+            "unsafeName": "system_event",
+          },
+        },
+        "typeId": "SystemEvent",
+      },
+      "referencedTypes": Set {
+        "SystemEventType",
+      },
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "type_",
+                  "unsafeName": "type",
+                },
+                "originalName": "type",
+                "pascalCase": {
+                  "safeName": "Type",
+                  "unsafeName": "Type",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TYPE",
+                  "unsafeName": "TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "type_",
+                  "unsafeName": "type",
+                },
+              },
+              "wireValue": "type",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "SystemEventType_example_0": "system",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "default": undefined,
+              "displayName": undefined,
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "inline": false,
+              "name": {
+                "camelCase": {
+                  "safeName": "systemEventType",
+                  "unsafeName": "systemEventType",
+                },
+                "originalName": "SystemEventType",
+                "pascalCase": {
+                  "safeName": "SystemEventType",
+                  "unsafeName": "SystemEventType",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SYSTEM_EVENT_TYPE",
+                  "unsafeName": "SYSTEM_EVENT_TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "system_event_type",
+                  "unsafeName": "system_event_type",
+                },
+              },
+              "type": "named",
+              "typeId": "SystemEventType",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Name of the service that generated the event",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+                "originalName": "service",
+                "pascalCase": {
+                  "safeName": "Service",
+                  "unsafeName": "Service",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SERVICE",
+                  "unsafeName": "SERVICE",
+                },
+                "snakeCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+              },
+              "wireValue": "service",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "SystemEventService_example_0": "auth-service",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "The system operation performed",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "operation",
+                  "unsafeName": "operation",
+                },
+                "originalName": "operation",
+                "pascalCase": {
+                  "safeName": "Operation",
+                  "unsafeName": "Operation",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "OPERATION",
+                  "unsafeName": "OPERATION",
+                },
+                "snakeCase": {
+                  "safeName": "operation",
+                  "unsafeName": "operation",
+                },
+              },
+              "wireValue": "operation",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "SystemEventOperation_example_0": "cleanup",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Additional system metadata",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "metadata",
+                  "unsafeName": "metadata",
+                },
+                "originalName": "metadata",
+                "pascalCase": {
+                  "safeName": "Metadata",
+                  "unsafeName": "Metadata",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "METADATA",
+                  "unsafeName": "METADATA",
+                },
+                "snakeCase": {
+                  "safeName": "metadata",
+                  "unsafeName": "metadata",
+                },
+              },
+              "wireValue": "metadata",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "SystemEventMetadata_example_autogenerated": {},
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "container": {
+                    "_visit": [Function],
+                    "keyType": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "type": "string",
+                          "validation": undefined,
+                        },
+                      },
+                      "type": "primitive",
+                    },
+                    "type": "map",
+                    "valueType": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "type": "string",
+                          "validation": {
+                            "format": undefined,
+                            "maxLength": undefined,
+                            "minLength": undefined,
+                            "pattern": undefined,
+                          },
+                        },
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "type": "container",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "SystemEvent_example_autogenerated": {
+            "operation": "cleanup",
+            "service": "auth-service",
+            "type": "system",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "SystemEventType": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "systemEventType",
+            "unsafeName": "systemEventType",
+          },
+          "originalName": "SystemEventType",
+          "pascalCase": {
+            "safeName": "SystemEventType",
+            "unsafeName": "SystemEventType",
+          },
+          "screamingSnakeCase": {
+            "safeName": "SYSTEM_EVENT_TYPE",
+            "unsafeName": "SYSTEM_EVENT_TYPE",
+          },
+          "snakeCase": {
+            "safeName": "system_event_type",
+            "unsafeName": "system_event_type",
+          },
+        },
+        "typeId": "SystemEventType",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "system",
+                  "unsafeName": "system",
+                },
+                "originalName": "system",
+                "pascalCase": {
+                  "safeName": "System",
+                  "unsafeName": "System",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SYSTEM",
+                  "unsafeName": "SYSTEM",
+                },
+                "snakeCase": {
+                  "safeName": "system",
+                  "unsafeName": "system",
+                },
+              },
+              "wireValue": "system",
+            },
+          },
+        ],
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {},
+        "userSpecifiedExamples": {
+          "SystemEventType_example_0": "system",
+        },
+      },
+    },
+    "UserEvent": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": "Event triggered by user actions",
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "userEvent",
+            "unsafeName": "userEvent",
+          },
+          "originalName": "UserEvent",
+          "pascalCase": {
+            "safeName": "UserEvent",
+            "unsafeName": "UserEvent",
+          },
+          "screamingSnakeCase": {
+            "safeName": "USER_EVENT",
+            "unsafeName": "USER_EVENT",
+          },
+          "snakeCase": {
+            "safeName": "user_event",
+            "unsafeName": "user_event",
+          },
+        },
+        "typeId": "UserEvent",
+      },
+      "referencedTypes": Set {
+        "UserEventType",
+      },
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "type_",
+                  "unsafeName": "type",
+                },
+                "originalName": "type",
+                "pascalCase": {
+                  "safeName": "Type",
+                  "unsafeName": "Type",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TYPE",
+                  "unsafeName": "TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "type_",
+                  "unsafeName": "type",
+                },
+              },
+              "wireValue": "type",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "UserEventType_example_0": "user",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "default": undefined,
+              "displayName": undefined,
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "inline": false,
+              "name": {
+                "camelCase": {
+                  "safeName": "userEventType",
+                  "unsafeName": "userEventType",
+                },
+                "originalName": "UserEventType",
+                "pascalCase": {
+                  "safeName": "UserEventType",
+                  "unsafeName": "UserEventType",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "USER_EVENT_TYPE",
+                  "unsafeName": "USER_EVENT_TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "user_event_type",
+                  "unsafeName": "user_event_type",
+                },
+              },
+              "type": "named",
+              "typeId": "UserEventType",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "ID of the user who triggered the event",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "userId",
+                  "unsafeName": "userId",
+                },
+                "originalName": "userId",
+                "pascalCase": {
+                  "safeName": "UserId",
+                  "unsafeName": "UserId",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "USER_ID",
+                  "unsafeName": "USER_ID",
+                },
+                "snakeCase": {
+                  "safeName": "user_id",
+                  "unsafeName": "user_id",
+                },
+              },
+              "wireValue": "userId",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "UserEventUserId_example_0": "user_123",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "The action performed by the user",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "action",
+                  "unsafeName": "action",
+                },
+                "originalName": "action",
+                "pascalCase": {
+                  "safeName": "Action",
+                  "unsafeName": "Action",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ACTION",
+                  "unsafeName": "ACTION",
+                },
+                "snakeCase": {
+                  "safeName": "action",
+                  "unsafeName": "action",
+                },
+              },
+              "wireValue": "action",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "UserEventAction_example_0": "login",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "When the event occurred",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "timestamp",
+                  "unsafeName": "timestamp",
+                },
+                "originalName": "timestamp",
+                "pascalCase": {
+                  "safeName": "Timestamp",
+                  "unsafeName": "Timestamp",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TIMESTAMP",
+                  "unsafeName": "TIMESTAMP",
+                },
+                "snakeCase": {
+                  "safeName": "timestamp",
+                  "unsafeName": "timestamp",
+                },
+              },
+              "wireValue": "timestamp",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "UserEventTimestamp_example_0": "2023-12-01T12:00:00Z",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "DATE_TIME",
+                    "v2": {
+                      "_visit": [Function],
+                      "type": "dateTime",
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "UserEvent_example_autogenerated": {
+            "action": "login",
+            "type": "user",
+            "userId": "user_123",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "UserEventType": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "userEventType",
+            "unsafeName": "userEventType",
+          },
+          "originalName": "UserEventType",
+          "pascalCase": {
+            "safeName": "UserEventType",
+            "unsafeName": "UserEventType",
+          },
+          "screamingSnakeCase": {
+            "safeName": "USER_EVENT_TYPE",
+            "unsafeName": "USER_EVENT_TYPE",
+          },
+          "snakeCase": {
+            "safeName": "user_event_type",
+            "unsafeName": "user_event_type",
+          },
+        },
+        "typeId": "UserEventType",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "user",
+                  "unsafeName": "user",
+                },
+                "originalName": "user",
+                "pascalCase": {
+                  "safeName": "User",
+                  "unsafeName": "User",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "USER",
+                  "unsafeName": "USER",
+                },
+                "snakeCase": {
+                  "safeName": "user",
+                  "unsafeName": "user",
+                },
+              },
+              "wireValue": "user",
+            },
+          },
+        ],
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {},
+        "userSpecifiedExamples": {
+          "UserEventType_example_0": "user",
+        },
+      },
+    },
+  },
+  "variables": [],
+  "webhookGroups": {},
+  "websocketChannels": undefined,
+}

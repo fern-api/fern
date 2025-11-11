@@ -16,33 +16,33 @@ export const V61_TO_V60_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT_SDK]: "3.7.2",
         [GeneratorName.TYPESCRIPT_EXPRESS]: "3.7.2",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA_MODEL]: "1.8.3",
+        [GeneratorName.JAVA_SDK]: "3.9.0",
+        [GeneratorName.JAVA_SPRING]: "1.8.4",
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PYTHON_FASTAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.PYTHON_FASTAPI]: "1.10.3",
+        [GeneratorName.PYTHON_PYDANTIC]: "1.8.2",
+        [GeneratorName.PYTHON_SDK]: "4.33.0",
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.GO_MODEL]: "0.23.9",
+        [GeneratorName.GO_SDK]: "1.14.0",
         [GeneratorName.RUBY_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.RUBY_SDK]: "1.0.0-rc34",
         [GeneratorName.CSHARP_MODEL]: "0.0.4",
         [GeneratorName.CSHARP_SDK]: "2.4.0",
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.SWIFT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.SWIFT_SDK]: "0.22.0",
         [GeneratorName.PHP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PHP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.PHP_SDK]: "1.18.0",
         [GeneratorName.RUST_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUST_SDK]: "0.7.2"
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V60.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: "passthrough", // Changed from "strip" to preserve isOptional flags
             skipValidation: true
         }),
     migrateBackwards: (
@@ -149,6 +149,7 @@ function convertPublishInfo(
 ): IrVersions.V60.dynamic.PublishInfo | undefined {
     return IrVersions.V61.dynamic.PublishInfo._visit<IrVersions.V60.dynamic.PublishInfo | undefined>(publishInfo, {
         go: IrVersions.V60.dynamic.PublishInfo.go,
+        swift: () => undefined,
         maven: IrVersions.V60.dynamic.PublishInfo.maven,
         npm: IrVersions.V60.dynamic.PublishInfo.npm,
         nuget: IrVersions.V60.dynamic.PublishInfo.nuget,

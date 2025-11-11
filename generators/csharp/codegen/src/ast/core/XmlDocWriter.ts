@@ -1,8 +1,7 @@
 import { AbstractAstNode } from "@fern-api/browser-compatible-base-generator";
-
-import { Writer } from "..";
-import { XmlDocBlock } from "../XmlDocBlock";
+import { XmlDocBlock } from "../language/XmlDocBlock";
 import { AstNode } from "./AstNode";
+import { Writer } from "./Writer";
 
 export class XmlDocWriter {
     private writer: Writer;
@@ -45,7 +44,7 @@ export class XmlDocWriter {
     }
 
     public writeNodeOrString(input: AbstractAstNode | string): void {
-        this.writer.writeNodeOrString(input);
+        this.writer.write(input);
     }
 
     public writePrefix(): this {
@@ -115,6 +114,160 @@ export class XmlDocWriter {
     }
 
     private escapeXmlDocContent(text: string): string {
+        text = this.decodeHtmlEntities(text);
         return text.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    }
+
+    private decodeHtmlEntities(text: string): string {
+        const entityMap: Record<string, string> = {
+            "&plus;": "+",
+            "&minus;": "-",
+            "&times;": "×",
+            "&divide;": "÷",
+            "&nbsp;": " ",
+            "&hellip;": "…",
+            "&middot;": "·",
+            "&copy;": "©",
+            "&reg;": "®",
+            "&trade;": "™",
+            "&deg;": "°",
+            "&plusmn;": "±",
+            "&frac14;": "¼",
+            "&frac12;": "½",
+            "&frac34;": "¾",
+            "&ndash;": "–",
+            "&mdash;": "—",
+            "&lsquo;": "\u2018",
+            "&rsquo;": "\u2019",
+            "&ldquo;": "\u201C",
+            "&rdquo;": "\u201D",
+            "&bull;": "•",
+            "&euro;": "€",
+            "&pound;": "£",
+            "&yen;": "¥",
+            "&cent;": "¢",
+            "&sect;": "§",
+            "&para;": "¶",
+            "&dagger;": "†",
+            "&Dagger;": "‡",
+            "&permil;": "‰",
+            "&lsaquo;": "‹",
+            "&rsaquo;": "›",
+            "&spades;": "♠",
+            "&clubs;": "♣",
+            "&hearts;": "♥",
+            "&diams;": "♦",
+            "&larr;": "←",
+            "&uarr;": "↑",
+            "&rarr;": "→",
+            "&darr;": "↓",
+            "&harr;": "↔",
+            "&crarr;": "↵",
+            "&lArr;": "⇐",
+            "&uArr;": "⇑",
+            "&rArr;": "⇒",
+            "&dArr;": "⇓",
+            "&hArr;": "⇔",
+            "&forall;": "∀",
+            "&part;": "∂",
+            "&exist;": "∃",
+            "&empty;": "∅",
+            "&nabla;": "∇",
+            "&isin;": "∈",
+            "&notin;": "∉",
+            "&ni;": "∋",
+            "&prod;": "∏",
+            "&sum;": "∑",
+            "&lowast;": "∗",
+            "&radic;": "√",
+            "&prop;": "∝",
+            "&infin;": "∞",
+            "&ang;": "∠",
+            "&and;": "∧",
+            "&or;": "∨",
+            "&cap;": "∩",
+            "&cup;": "∪",
+            "&int;": "∫",
+            "&there4;": "∴",
+            "&sim;": "∼",
+            "&cong;": "≅",
+            "&asymp;": "≈",
+            "&ne;": "≠",
+            "&equiv;": "≡",
+            "&le;": "≤",
+            "&ge;": "≥",
+            "&sub;": "⊂",
+            "&sup;": "⊃",
+            "&nsub;": "⊄",
+            "&sube;": "⊆",
+            "&supe;": "⊇",
+            "&oplus;": "⊕",
+            "&otimes;": "⊗",
+            "&perp;": "⊥",
+            "&sdot;": "⋅",
+            "&Alpha;": "Α",
+            "&Beta;": "Β",
+            "&Gamma;": "Γ",
+            "&Delta;": "Δ",
+            "&Epsilon;": "Ε",
+            "&Zeta;": "Ζ",
+            "&Eta;": "Η",
+            "&Theta;": "Θ",
+            "&Iota;": "Ι",
+            "&Kappa;": "Κ",
+            "&Lambda;": "Λ",
+            "&Mu;": "Μ",
+            "&Nu;": "Ν",
+            "&Xi;": "Ξ",
+            "&Omicron;": "Ο",
+            "&Pi;": "Π",
+            "&Rho;": "Ρ",
+            "&Sigma;": "Σ",
+            "&Tau;": "Τ",
+            "&Upsilon;": "Υ",
+            "&Phi;": "Φ",
+            "&Chi;": "Χ",
+            "&Psi;": "Ψ",
+            "&Omega;": "Ω",
+            "&alpha;": "α",
+            "&beta;": "β",
+            "&gamma;": "γ",
+            "&delta;": "δ",
+            "&epsilon;": "ε",
+            "&zeta;": "ζ",
+            "&eta;": "η",
+            "&theta;": "θ",
+            "&iota;": "ι",
+            "&kappa;": "κ",
+            "&lambda;": "λ",
+            "&mu;": "μ",
+            "&nu;": "ν",
+            "&xi;": "ξ",
+            "&omicron;": "ο",
+            "&pi;": "π",
+            "&rho;": "ρ",
+            "&sigmaf;": "ς",
+            "&sigma;": "σ",
+            "&tau;": "τ",
+            "&upsilon;": "υ",
+            "&phi;": "φ",
+            "&chi;": "χ",
+            "&psi;": "ψ",
+            "&omega;": "ω"
+        };
+
+        let result = text;
+        for (const [entity, char] of Object.entries(entityMap)) {
+            result = result.replaceAll(entity, char);
+        }
+
+        result = result.replace(/&#(\d+);/g, (match, dec) => {
+            return String.fromCharCode(parseInt(dec, 10));
+        });
+        result = result.replace(/&#x([0-9A-Fa-f]+);/g, (match, hex) => {
+            return String.fromCharCode(parseInt(hex, 16));
+        });
+
+        return result;
     }
 }

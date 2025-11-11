@@ -21,7 +21,8 @@ export const BaseJavaCustomConfigSchema = z.object({
     "json-include": z.enum(["non-absent", "non-empty"]).optional(),
     "enable-extensible-builders": z.boolean().optional(),
     "use-default-request-parameter-values": z.boolean().optional(),
-    "enable-wire-tests": z.boolean().default(true),
+    "enable-wire-tests": z.boolean().default(false),
+    "collapse-optional-nullable": z.boolean().optional(),
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
 
     // Deprecated.

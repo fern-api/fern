@@ -11,13 +11,16 @@
       "path": "../../../packages/commons/core-utils"
     },
     {
+      "path": "../ast"
+    },
+    {
       "path": "../../../packages/commons/fs-utils"
     },
     {
-      "path": "../../base"
+      "path": "../../../packages/commons/logging-execa"
     },
     {
-      "path": "../ast"
+      "path": "../../base"
     }
   ]
 }

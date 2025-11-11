@@ -24,7 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
-        "key": "BearerAuthScheme",
+        "key": "auth0",
         "token": {
           "originalName": "token",
           "camelCase": {
@@ -40064,7 +40064,7 @@
     "endpoints": {
       "endpoint_appV1.GetApps": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -40165,7 +40165,7 @@
       },
       "endpoint_appV1.CreateApp": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -40273,7 +40273,7 @@
       },
       "endpoint_appV1.UpdateApp": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -40502,7 +40502,7 @@
       },
       "endpoint_appV1.GetAppInfo": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -40702,7 +40702,7 @@
       },
       "endpoint_appV1.DeleteApp": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -40902,7 +40902,7 @@
       },
       "endpoint_authV1.LoginAnonymous": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -41102,7 +41102,7 @@
       },
       "endpoint_authV1.LoginNickname": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -41335,7 +41335,7 @@
       },
       "endpoint_authV1.LoginGoogle": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -41568,7 +41568,7 @@
       },
       "endpoint_buildV1.GetBuilds": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -41768,7 +41768,7 @@
       },
       "endpoint_buildV1.GetBuildInfo": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -41996,7 +41996,7 @@
       },
       "endpoint_buildV1.CreateBuild": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -42196,7 +42196,7 @@
       },
       "endpoint_buildV1.RunBuild": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -42452,7 +42452,7 @@
       },
       "endpoint_buildV1.DeleteBuild": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -42680,7 +42680,7 @@
       },
       "endpoint_deploymentV1.GetDeployments": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -42880,7 +42880,7 @@
       },
       "endpoint_deploymentV1.GetDeploymentInfo": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -43108,7 +43108,7 @@
       },
       "endpoint_deploymentV1.CreateDeployment": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -43365,7 +43365,7 @@
       },
       "endpoint_discoveryV1.GetPingServiceEndpoints": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -43466,7 +43466,7 @@
       },
       "endpoint_lobbyV1.CreatePrivateLobbyDeprecated": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -43729,7 +43729,7 @@
       },
       "endpoint_lobbyV1.CreatePublicLobbyDeprecated": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -43992,7 +43992,7 @@
       },
       "endpoint_lobbyV1.ListActivePublicLobbiesDeprecated": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -44255,7 +44255,7 @@
       },
       "endpoint_lobbyV2.CreatePrivateLobby": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -44554,7 +44554,7 @@
       },
       "endpoint_lobbyV2.CreatePublicLobby": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -44853,7 +44853,7 @@
       },
       "endpoint_lobbyV2.CreateLocalLobby": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -45152,7 +45152,7 @@
       },
       "endpoint_lobbyV2.CreateLobby": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -45479,7 +45479,7 @@
       },
       "endpoint_lobbyV2.ListActivePublicLobbies": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -45711,7 +45711,7 @@
       },
       "endpoint_lobbyV2.GetLobbyInfo": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -45939,7 +45939,7 @@
       },
       "endpoint_lobbyV2.SetLobbyState": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -46206,7 +46206,7 @@
       },
       "endpoint_logV1.GetLogsForApp": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -46500,7 +46500,7 @@
       },
       "endpoint_logV1.GetLogsForProcess": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -46791,7 +46791,7 @@
       },
       "endpoint_logV1.GetLogsForDeployment": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -47082,7 +47082,7 @@
       },
       "endpoint_metricsV1.GetMetrics": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -47438,7 +47438,7 @@
       },
       "endpoint_processesV1.GetRunningProcesses": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -47670,7 +47670,7 @@
       },
       "endpoint_processesV1.GetStoppedProcesses": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -47902,7 +47902,7 @@
       },
       "endpoint_processesV1.GetProcessInfo": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -48130,7 +48130,7 @@
       },
       "endpoint_roomV1.CreateRoom": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -48363,7 +48363,7 @@
       },
       "endpoint_roomV1.GetRoomInfo": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -48591,7 +48591,7 @@
       },
       "endpoint_roomV1.GetActiveRoomsForProcess": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -48819,7 +48819,7 @@
       },
       "endpoint_roomV1.GetInactiveRoomsForProcess": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -49047,7 +49047,7 @@
       },
       "endpoint_roomV1.DestroyRoom": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -49275,7 +49275,7 @@
       },
       "endpoint_roomV1.SuspendRoom": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -49503,7 +49503,7 @@
       },
       "endpoint_roomV1.GetConnectionInfo": {
         "auth": {
-          "key": "BearerAuthScheme",
+          "key": "auth0",
           "token": {
             "originalName": "token",
             "camelCase": {

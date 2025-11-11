@@ -14,7 +14,6 @@
 
 ```rust
 use seed_multi_url_environment_no_default::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
@@ -74,7 +73,6 @@ async fn main() {
 
 ```rust
 use seed_multi_url_environment_no_default::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

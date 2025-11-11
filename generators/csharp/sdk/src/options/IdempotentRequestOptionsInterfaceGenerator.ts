@@ -6,9 +6,6 @@ import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { BaseOptionsGenerator } from "./BaseOptionsGenerator";
 
-export const IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME = "IIdempotentRequestOptions";
-export const IDEMPOTENT_REQUEST_OPTIONS_PARAMETER_NAME = "options";
-
 export class IdempotentRequestOptionsInterfaceGenerator extends FileGenerator<
     CSharpFile,
     SdkCustomConfigSchema,
@@ -23,35 +20,34 @@ export class IdempotentRequestOptionsInterfaceGenerator extends FileGenerator<
 
     public doGenerate(): CSharpFile {
         const interface_ = this.csharp.interface_({
-            ...this.context.getIdempotentRequestOptionsInterfaceClassReference(),
+            ...this.types.IdempotentRequestOptionsInterface,
             access: ast.Access.Internal,
-            interfaceReferences: [this.context.getRequestOptionsInterfaceReference()]
+            interfaceReferences: [this.types.RequestOptionsInterface]
         });
-        interface_.addFields(this.context.getIdempotencyFields(false));
-        interface_.addMethod(
-            this.csharp.method({
-                name: "GetIdempotencyHeaders",
-                access: ast.Access.Internal,
-                parameters: [],
-                return_: this.csharp.Type.reference(this.context.getHeadersClassReference()),
-                type: ast.MethodType.INSTANCE,
-                noBody: true
-            })
-        );
+        this.context.common.getIdempotencyFields(interface_, false);
+
+        interface_.addMethod({
+            name: "GetIdempotencyHeaders",
+            access: ast.Access.Internal,
+            parameters: [],
+            return_: this.csharp.Type.reference(this.types.Headers),
+            type: ast.MethodType.INSTANCE,
+            noBody: true
+        });
         return new CSharpFile({
             clazz: interface_,
             directory: this.context.getCoreDirectory(),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.context.getCoreNamespace(),
-            customConfig: this.context.customConfig
+            namespace: this.namespaces.core,
+            generation: this.generation
         });
     }
 
     protected getFilepath(): RelativeFilePath {
         return join(
-            this.context.project.filepaths.getCoreFilesDirectory(),
-            RelativeFilePath.of(`${IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME}.cs`)
+            this.constants.folders.coreFiles,
+            RelativeFilePath.of(`${this.types.IdempotentRequestOptionsInterface.name}.cs`)
         );
     }
 }

@@ -197,6 +197,19 @@ types:
           - Add path segment if collision (e.g., "prod: https://api.com/foo" -> "foo")
           - Add protocol if still collision (e.g., "prod: wss://api.com/foo" -> "foo_wss", only for non-HTTPS protocols)
         default: false
+      remove-discriminants-from-schemas:
+        type: optional<RemoveDiscriminantsFromSchemas>
+        docs: |
+          If `always`, remove discriminant properties from schemas when generating types, unless the schema is also used outside of a discriminated union.
+          If `never`, keep discriminant properties in schemas when generating types.
+          Defaults to `always`.
+
+  RemoveDiscriminantsFromSchemas:
+    docs: |
+      Whether to remove discriminant properties from schemas when generating types, unless the schema is also used outside of a discriminated union.
+    enum:
+      - always
+      - never
 
   UnionSettingsSchema:
     enum:
@@ -288,7 +301,9 @@ types:
         type: optional<boolean>
         docs: Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to false.
       optional-additional-properties: optional<boolean>
-      coerce-enums-to-literals: optional<boolean>
+      coerce-enums-to-literals:
+        type: optional<boolean>
+        docs: Whether to coerce single value enums to literals. Defaults to true.
       idiomatic-request-names: optional<boolean>
       wrap-references-to-nullable-in-optional:
         type: optional<boolean>
@@ -313,6 +328,12 @@ types:
           - Add path segment if collision (e.g., "prod: https://api.com/foo" -> "foo")
           - Add protocol if still collision (e.g., "prod: wss://api.com/foo" -> "foo_wss", only for non-HTTPS protocols)
         default: false
+      remove-discriminants-from-schemas:
+        type: optional<RemoveDiscriminantsFromSchemas>
+        docs: |
+          If `always`, remove discriminant properties from schemas when generating types, unless the schema is also used outside of a discriminated union.
+          If `never`, keep discriminant properties in schemas when generating types.
+          Defaults to `always`.
 
   OpenAPISettingsSchema:
     extends:

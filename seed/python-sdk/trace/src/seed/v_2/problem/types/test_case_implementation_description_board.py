@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .parameter_id import ParameterId
 
@@ -35,6 +36,7 @@ class TestCaseImplementationDescriptionBoard_ParamId(UniversalBaseModel):
             smart_union = True
 
 
-TestCaseImplementationDescriptionBoard = typing.Union[
-    TestCaseImplementationDescriptionBoard_Html, TestCaseImplementationDescriptionBoard_ParamId
+TestCaseImplementationDescriptionBoard = typing_extensions.Annotated[
+    typing.Union[TestCaseImplementationDescriptionBoard_Html, TestCaseImplementationDescriptionBoard_ParamId],
+    pydantic.Field(discriminator="type"),
 ]

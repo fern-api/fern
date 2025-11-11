@@ -47,3 +47,12 @@ impl TorU {
     }
 
 }
+
+impl fmt::Display for TorU {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::T(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),
+            Self::U(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),
+        }
+    }
+}

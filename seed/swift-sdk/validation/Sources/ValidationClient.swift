@@ -16,7 +16,7 @@ public final class ValidationClient: Sendable {
         headers: [String: String]? = nil,
         timeout: Int? = nil,
         maxRetries: Int? = nil,
-        urlSession: URLSession? = nil
+        urlSession: Networking.URLSession? = nil
     ) {
         self.init(
             baseURL: baseURL,
@@ -38,7 +38,7 @@ public final class ValidationClient: Sendable {
         headers: [String: String]? = nil,
         timeout: Int? = nil,
         maxRetries: Int? = nil,
-        urlSession: URLSession? = nil
+        urlSession: Networking.URLSession? = nil
     ) {
         let config = ClientConfig(
             baseURL: baseURL,
@@ -63,7 +63,7 @@ public final class ValidationClient: Sendable {
         )
     }
 
-    public func get(decimal: Double, even: Int, name: String, requestOptions: RequestOptions? = nil) async throws -> Type {
+    public func get(decimal: Swift.Double, even: Int, name: String, requestOptions: RequestOptions? = nil) async throws -> Type {
         return try await httpClient.performRequest(
             method: .get,
             path: "/",

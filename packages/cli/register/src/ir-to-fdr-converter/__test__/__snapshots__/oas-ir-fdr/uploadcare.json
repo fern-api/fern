@@ -3488,7 +3488,24 @@
                     72
                   ]
                 },
-                "video_info": null,
+                "video_info": {
+                  "duration": 261827,
+                  "format": "mp4",
+                  "bitrate": 393,
+                  "audio": {
+                    "bitrate": 78,
+                    "codec": "aac",
+                    "sample_rate": 44100,
+                    "channels": "2"
+                  },
+                  "video": {
+                    "height": 360,
+                    "width": 640,
+                    "frame_rate": 30,
+                    "bitrate": 315,
+                    "codec": "h264"
+                  }
+                },
                 "content_info": {
                   "mime": {
                     "mime": "image/jpeg",
@@ -3549,7 +3566,24 @@
                       72
                     ]
                   },
-                  "video_info": null,
+                  "video_info": {
+                    "duration": 261827,
+                    "format": "mp4",
+                    "bitrate": 393,
+                    "audio": {
+                      "bitrate": 78,
+                      "codec": "aac",
+                      "sample_rate": 44100,
+                      "channels": "2"
+                    },
+                    "video": {
+                      "height": 360,
+                      "width": 640,
+                      "frame_rate": 30,
+                      "bitrate": 315,
+                      "codec": "h264"
+                    }
+                  },
                   "content_info": {
                     "mime": {
                       "mime": "image/jpeg",
@@ -4539,7 +4573,24 @@
                     72
                   ]
                 },
-                "video_info": null,
+                "video_info": {
+                  "duration": 261827,
+                  "format": "mp4",
+                  "bitrate": 393,
+                  "audio": {
+                    "bitrate": 78,
+                    "codec": "aac",
+                    "sample_rate": 44100,
+                    "channels": "2"
+                  },
+                  "video": {
+                    "height": 360,
+                    "width": 640,
+                    "frame_rate": 30,
+                    "bitrate": 315,
+                    "codec": "h264"
+                  }
+                },
                 "content_info": {
                   "mime": {
                     "mime": "image/jpeg",
@@ -4600,7 +4651,24 @@
                       72
                     ]
                   },
-                  "video_info": null,
+                  "video_info": {
+                    "duration": 261827,
+                    "format": "mp4",
+                    "bitrate": 393,
+                    "audio": {
+                      "bitrate": 78,
+                      "codec": "aac",
+                      "sample_rate": 44100,
+                      "channels": "2"
+                    },
+                    "video": {
+                      "height": 360,
+                      "width": 640,
+                      "frame_rate": 30,
+                      "bitrate": 315,
+                      "codec": "h264"
+                    }
+                  },
                   "content_info": {
                     "mime": {
                       "mime": "image/jpeg",
@@ -4876,7 +4944,7 @@
               "responseBody": {
                 "id": "0d712319-b970-4602-850c-bae1ced521a6~1",
                 "datetime_created": "2018-09-12T10:03:38.686710Z",
-                "datetime_stored": null,
+                "datetime_stored": "2024-01-15T09:30:00Z",
                 "files_count": 1,
                 "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                 "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
@@ -4889,7 +4957,7 @@
                 "value": {
                   "id": "0d712319-b970-4602-850c-bae1ced521a6~1",
                   "datetime_created": "2018-09-12T10:03:38.686710Z",
-                  "datetime_stored": null,
+                  "datetime_stored": "2024-01-15T09:30:00Z",
                   "files_count": 1,
                   "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                   "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
@@ -4993,7 +5061,7 @@
               "responseBody": {
                 "id": "0d712319-b970-4602-850c-bae1ced521a6~1",
                 "datetime_created": "2018-09-12T10:03:38.686710Z",
-                "datetime_stored": null,
+                "datetime_stored": "2024-01-15T09:30:00Z",
                 "files_count": 1,
                 "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                 "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
@@ -5006,7 +5074,7 @@
                 "value": {
                   "id": "0d712319-b970-4602-850c-bae1ced521a6~1",
                   "datetime_created": "2018-09-12T10:03:38.686710Z",
-                  "datetime_stored": null,
+                  "datetime_stored": "2024-01-15T09:30:00Z",
                   "files_count": 1,
                   "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                   "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",

@@ -44,6 +44,7 @@ export declare namespace GeneratedThrowingEndpointResponse {
             | HttpResponseBody.FileDownload
             | HttpResponseBody.Streaming
             | HttpResponseBody.Text
+            | HttpResponseBody.Bytes
             | undefined;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         errorResolver: ErrorResolver;
@@ -64,6 +65,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         | HttpResponseBody.FileDownload
         | HttpResponseBody.Streaming
         | HttpResponseBody.Text
+        | HttpResponseBody.Bytes
         | undefined;
     private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     private errorResolver: ErrorResolver;
@@ -298,7 +300,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             )
         );
 
-        // hasNextPage checks if the items are not empty
+        // hasNextPage
         const itemsPropertyAccess = context.type.generateGetterForResponseProperty({
             property: offset.results,
             variable: "response",
@@ -309,32 +311,70 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             variable: "response",
             noOptionalChaining: true
         });
-        let hasNextPage: ts.Expression = ts.factory.createBinaryExpression(
-            ts.factory.createPropertyAccessExpression(
-                ts.factory.createParenthesizedExpression(
-                    ts.factory.createBinaryExpression(
-                        itemsPropertyAccess,
-                        ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                        ts.factory.createArrayLiteralExpression([], false)
-                    )
-                ),
-                ts.factory.createIdentifier("length")
-            ),
-            ts.factory.createToken(ts.SyntaxKind.GreaterThanToken),
-            ts.factory.createNumericLiteral("0")
-        );
-        if (offset.hasNextPage != null) {
-            const hasNextPagePropertyAccess = context.type.generateGetterForResponseProperty({
-                property: offset.hasNextPage,
-                variable: "response",
-                isVariableOptional: true
-            });
-            hasNextPage = ts.factory.createBinaryExpression(
-                hasNextPagePropertyAccess,
-                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                hasNextPage
-            );
-        }
+
+        // Use offset.step if available to ensure that page is full before returning true
+        const baseHasNextPage: ts.Expression =
+            offset.step != null
+                ? // If step is defined, check if items.length >= step (got full page)
+                  (() => {
+                      const stepPropertyAccess = context.type.generateGetterForRequestProperty({
+                          property: offset.step,
+                          variable: "request",
+                          isVariableOptional: true
+                      });
+                      return ts.factory.createBinaryExpression(
+                          ts.factory.createPropertyAccessExpression(
+                              ts.factory.createParenthesizedExpression(
+                                  ts.factory.createBinaryExpression(
+                                      itemsPropertyAccess,
+                                      ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                      ts.factory.createArrayLiteralExpression([], false)
+                                  )
+                              ),
+                              ts.factory.createIdentifier("length")
+                          ),
+                          ts.factory.createToken(ts.SyntaxKind.GreaterThanEqualsToken),
+                          ts.factory.createParenthesizedExpression(
+                              ts.factory.createBinaryExpression(
+                                  stepPropertyAccess,
+                                  ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                  ts.factory.createNumericLiteral("1")
+                              )
+                          )
+                      );
+                  })()
+                : // Fallback: check if items.length > 0 (got something)
+                  ts.factory.createBinaryExpression(
+                      ts.factory.createPropertyAccessExpression(
+                          ts.factory.createParenthesizedExpression(
+                              ts.factory.createBinaryExpression(
+                                  itemsPropertyAccess,
+                                  ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                  ts.factory.createArrayLiteralExpression([], false)
+                              )
+                          ),
+                          ts.factory.createIdentifier("length")
+                      ),
+                      ts.factory.createToken(ts.SyntaxKind.GreaterThanToken),
+                      ts.factory.createNumericLiteral("0")
+                  );
+
+        // If explicit hasNextPage property exists, it takes priority (?? to fallback to base check)
+        const hasNextPage: ts.Expression =
+            offset.hasNextPage != null
+                ? (() => {
+                      const hasNextPagePropertyAccess = context.type.generateGetterForResponseProperty({
+                          property: offset.hasNextPage,
+                          variable: "response",
+                          isVariableOptional: true
+                      });
+                      return ts.factory.createBinaryExpression(
+                          hasNextPagePropertyAccess,
+                          ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                          baseHasNextPage
+                      );
+                  })()
+                : baseHasNextPage;
 
         // getItems gets the items
         const getItems = ts.factory.createBinaryExpression(

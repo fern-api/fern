@@ -1,6 +1,5 @@
+import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
-
-import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 
 import { Audiences } from "../commons";
 import {
@@ -9,7 +8,9 @@ import {
     Availability,
     DocsInstance,
     ExperimentalConfig,
+    Language,
     PlaygroundSettings,
+    ThemeConfig,
     VersionAvailability
 } from "./schemas";
 
@@ -41,9 +42,11 @@ export interface ParsedDocsConfiguration {
     typography: TypographyConfig | undefined;
     layout: CjsFdrSdk.docs.v1.commons.DocsLayoutConfig | undefined;
     settings: CjsFdrSdk.docs.v1.commons.DocsSettingsConfig | undefined;
+    languages: Language[] | undefined;
     defaultLanguage: CjsFdrSdk.docs.v1.commons.ProgrammingLanguage | undefined;
     analyticsConfig: CjsFdrSdk.docs.v1.commons.AnalyticsConfig | undefined;
     announcement: AnnouncementConfig | undefined;
+    theme: ThemeConfig | undefined;
 
     /* integrations */
     integrations: CjsFdrSdk.docs.v1.commons.IntegrationsConfig | undefined;
@@ -167,15 +170,29 @@ export interface VersionInfo
     slug: string | undefined;
 }
 
-export interface ProductInfo
+export type ProductInfo = InternalProduct | ExternalProduct;
+
+export interface InternalProduct
     extends CjsFdrSdk.navigation.v1.WithPermissions,
         CjsFdrSdk.navigation.latest.WithFeatureFlags {
+    type: "internal";
     landingPage: DocsNavigationItem.Page | undefined;
     subtitle: string | undefined;
     product: string;
     navigation: UnversionedNavigationConfiguration | VersionedDocsNavigation;
     slug: string | undefined;
-    icon: string;
+    icon: string | AbsoluteFilePath;
+    image: AbsoluteFilePath | undefined;
+}
+
+export interface ExternalProduct
+    extends CjsFdrSdk.navigation.v1.WithPermissions,
+        CjsFdrSdk.navigation.latest.WithFeatureFlags {
+    type: "external";
+    subtitle: string | undefined;
+    product: string;
+    href: string | undefined;
+    icon: string | AbsoluteFilePath;
     image: AbsoluteFilePath | undefined;
 }
 
@@ -192,7 +209,7 @@ export interface TabbedNavigation
         CjsFdrSdk.navigation.latest.WithFeatureFlags {
     // tab: string;
     title: string;
-    icon: string | undefined;
+    icon: string | AbsoluteFilePath | undefined;
     slug: string | undefined;
     skipUrlSlug: boolean | undefined;
     hidden: boolean | undefined;
@@ -202,7 +219,8 @@ export interface TabbedNavigation
 type TabbedNavigationChild =
     | TabbedNavigationChild.Layout
     | TabbedNavigationChild.Link
-    | TabbedNavigationChild.Changelog;
+    | TabbedNavigationChild.Changelog
+    | TabbedNavigationChild.Variants;
 
 export declare namespace TabbedNavigationChild {
     export interface Layout {
@@ -219,6 +237,24 @@ export declare namespace TabbedNavigationChild {
         type: "changelog";
         changelog: AbsoluteFilePath[];
     }
+
+    export interface Variants {
+        type: "variants";
+        variants: TabVariant[];
+    }
+}
+
+export interface TabVariant
+    extends CjsFdrSdk.navigation.v1.WithPermissions,
+        CjsFdrSdk.navigation.latest.WithFeatureFlags {
+    title: string;
+    subtitle: string | undefined;
+    icon: string | AbsoluteFilePath | undefined;
+    layout: DocsNavigationItem[];
+    slug: string | undefined;
+    skipUrlSlug: boolean | undefined;
+    hidden: boolean | undefined;
+    default: boolean | undefined;
 }
 
 export type DocsNavigationItem =
@@ -234,7 +270,7 @@ export declare namespace DocsNavigationItem {
             CjsFdrSdk.navigation.latest.WithFeatureFlags {
         type: "page";
         title: string;
-        icon: string | undefined;
+        icon: string | AbsoluteFilePath | undefined;
         absolutePath: AbsoluteFilePath;
         slug: string | undefined;
         hidden: boolean | undefined;
@@ -247,7 +283,7 @@ export declare namespace DocsNavigationItem {
             CjsFdrSdk.navigation.latest.WithFeatureFlags {
         type: "section";
         title: string;
-        icon: string | undefined;
+        icon: string | AbsoluteFilePath | undefined;
         contents: DocsNavigationItem[];
         collapsed: boolean | undefined;
         slug: string | undefined;
@@ -262,15 +298,17 @@ export declare namespace DocsNavigationItem {
             CjsFdrSdk.navigation.latest.WithFeatureFlags {
         type: "apiSection";
         title: string;
-        icon: string | undefined;
+        icon: string | AbsoluteFilePath | undefined;
         apiName: string | undefined;
         openrpc: string | undefined;
         audiences: Audiences;
         availability: Availability | undefined;
         showErrors: boolean;
         snippetsConfiguration: SnippetsConfiguration | undefined;
+        postman: string | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;
         navigation: ParsedApiReferenceLayoutItem[];
+        collapsed: boolean | undefined;
         hidden: boolean | undefined;
         slug: string | undefined;
         skipUrlSlug: boolean | undefined;
@@ -284,7 +322,7 @@ export declare namespace DocsNavigationItem {
         type: "link";
         text: string;
         url: string;
-        icon: string | undefined;
+        icon: string | AbsoluteFilePath | undefined;
     }
 
     export interface Changelog
@@ -293,7 +331,7 @@ export declare namespace DocsNavigationItem {
         type: "changelog";
         changelog: AbsoluteFilePath[];
         title: string;
-        icon: string | undefined;
+        icon: string | AbsoluteFilePath | undefined;
         hidden: boolean | undefined;
         slug: string | undefined;
     }
@@ -326,8 +364,9 @@ export declare namespace ParsedApiReferenceLayoutItem {
         contents: ParsedApiReferenceLayoutItem[];
         slug: string | undefined;
         hidden: boolean | undefined;
-        icon: string | undefined;
+        icon: string | AbsoluteFilePath | undefined;
         skipUrlSlug: boolean | undefined;
+        availability: Availability | undefined;
         playground: PlaygroundSettings | undefined;
     }
     export interface Package
@@ -340,8 +379,9 @@ export declare namespace ParsedApiReferenceLayoutItem {
         contents: ParsedApiReferenceLayoutItem[];
         slug: string | undefined;
         hidden: boolean | undefined;
-        icon: string | undefined;
+        icon: string | AbsoluteFilePath | undefined;
         skipUrlSlug: boolean | undefined;
+        availability: Availability | undefined;
         playground: PlaygroundSettings | undefined;
     }
 
@@ -351,9 +391,10 @@ export declare namespace ParsedApiReferenceLayoutItem {
         type: "endpoint";
         endpoint: string; // endpoint locator
         title: string | undefined;
-        icon: string | undefined;
+        icon: string | AbsoluteFilePath | undefined;
         slug: string | undefined;
         hidden: boolean | undefined;
+        availability: Availability | undefined;
         playground: PlaygroundSettings | undefined;
     }
 

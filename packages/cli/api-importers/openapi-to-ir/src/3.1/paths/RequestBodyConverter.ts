@@ -5,6 +5,7 @@ import {
     FileUploadRequestProperty,
     HttpRequestBody,
     ObjectProperty,
+    QueryParameter,
     TypeReference
 } from "@fern-api/ir-sdk";
 import { Converters } from "@fern-api/v3-importer-commons";
@@ -19,6 +20,7 @@ export declare namespace RequestBodyConverter {
         description: string | undefined;
         required: boolean | undefined;
         streamingExtension: FernStreamingExtension.Output | undefined;
+        queryParameters?: QueryParameter[];
     }
 
     export interface Output extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Output {
@@ -34,6 +36,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
     private readonly required: boolean | undefined;
     protected readonly schemaId: string;
     private readonly streamingExtension: FernStreamingExtension.Output | undefined;
+    private readonly queryParameters: QueryParameter[];
 
     constructor({
         context,
@@ -44,7 +47,8 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         required,
         group,
         method,
-        streamingExtension
+        streamingExtension,
+        queryParameters
     }: RequestBodyConverter.Args) {
         super({ context, breadcrumbs, group, method });
         this.contentType = contentType;
@@ -53,6 +57,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         this.required = required;
         this.schemaId = [...this.group, this.method, "Request"].join("_");
         this.streamingExtension = streamingExtension;
+        this.queryParameters = queryParameters ?? [];
     }
 
     public convert(): RequestBodyConverter.Output | undefined {
@@ -133,6 +138,24 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
 
         const requestBodyTypeShape = convertedSchema.schema?.typeDeclaration.shape;
         if (requestBodyTypeShape?.type === "object") {
+            const hasOverlap = this.hasBodyQueryParameterOverlap(requestBodyTypeShape.properties);
+
+            if (hasOverlap) {
+                return {
+                    requestBody: HttpRequestBody.reference({
+                        contentType,
+                        docs: this.description,
+                        requestBodyType: convertedSchema.type,
+                        v2Examples: this.convertMediaTypeObjectExamples({
+                            mediaTypeObject,
+                            exampleGenerationStrategy: "request"
+                        })
+                    }),
+                    streamRequestBody: undefined,
+                    inlinedTypes: convertedSchema.inlinedTypes ?? {}
+                };
+            }
+
             return {
                 requestBody: HttpRequestBody.inlinedRequestBody({
                     contentType,
@@ -452,6 +475,16 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             isOptional: isOptional ?? false,
             isArray: isArray ?? false
         };
+    }
+
+    private hasBodyQueryParameterOverlap(bodyProperties: ObjectProperty[]): boolean {
+        if (this.queryParameters.length === 0) {
+            return false;
+        }
+
+        const queryParameterNames = new Set(this.queryParameters.map((param) => param.name.wireValue.toLowerCase()));
+
+        return bodyProperties.some((property) => queryParameterNames.has(property.name.wireValue.toLowerCase()));
     }
 }
 

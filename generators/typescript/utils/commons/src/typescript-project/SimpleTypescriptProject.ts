@@ -1,11 +1,9 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { produce } from "immer";
-import yaml from "js-yaml";
 import { IPackageJson } from "package-json-type";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph";
 
 import { DependencyType } from "../dependency-manager/DependencyManager";
-import { JSR } from "./JSR";
 import { mergeExtraConfigs } from "./mergeExtraConfigs";
 import { TypescriptProject } from "./TypescriptProject";
 
@@ -30,24 +28,11 @@ export class SimpleTypescriptProject extends TypescriptProject {
     }
 
     protected async addFilesToVolume(): Promise<void> {
+        this.addCommonFilesToVolume();
         await this.generateGitIgnore();
         await this.generateNpmIgnore();
         await this.generateTsConfig();
         await this.generatePackageJson();
-        if (this.outputJsr) {
-            await this.generateJsrJson();
-        }
-        if (this.packageManager === "pnpm") {
-            await this.generatePnpmWorkspace();
-        }
-    }
-
-    protected getCheckFixCommand(): string[] {
-        return [SimpleTypescriptProject.CHECK_FIX_SCRIPT_NAME];
-    }
-
-    protected getBuildCommand(): string[] {
-        return [SimpleTypescriptProject.BUILD_SCRIPT_NAME];
     }
 
     private async generateGitIgnore(): Promise<void> {
@@ -55,10 +40,6 @@ export class SimpleTypescriptProject extends TypescriptProject {
             RelativeFilePath.of(TypescriptProject.GIT_IGNORE_FILENAME),
             ["node_modules", ".DS_Store", `/${SimpleTypescriptProject.DIST_DIRECTORY}`].join("\n")
         );
-    }
-
-    private async generatePnpmWorkspace(): Promise<void> {
-        await this.writeFileToVolume(RelativeFilePath.of(TypescriptProject.PNPM_WORKSPACE_FILENAME), "packages: ['.']");
     }
 
     private async generateNpmIgnore(): Promise<void> {
@@ -71,6 +52,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 SimpleTypescriptProject.GIT_IGNORE_FILENAME,
                 ".github",
                 SimpleTypescriptProject.FERN_IGNORE_FILENAME,
+                SimpleTypescriptProject.PRETTIER_RC_FILENAME,
                 "biome.json",
                 "tsconfig.json",
                 "yarn.lock",
@@ -216,7 +198,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 main: "./index.js",
                 types: "./index.d.ts",
                 scripts: {
-                    ...SimpleTypescriptProject.COMMON_SCRIPTS,
+                    ...this.getCommonScripts(),
                     [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: "tsc",
                     prepack: `cp -rv ${SimpleTypescriptProject.DIST_DIRECTORY}/. .`,
                     ...packageJson.scripts,
@@ -282,8 +264,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                     SimpleTypescriptProject.LICENSE_FILENAME
                 ],
                 scripts: {
-                    ...SimpleTypescriptProject.COMMON_SCRIPTS,
-                    [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: `${this.packageManager} ${SimpleTypescriptProject.BUILD_CJS_SCRIPT_NAME} && ${this.packageManager} ${SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME}`,
+                    ...this.getCommonScripts(),
                     [SimpleTypescriptProject.BUILD_CJS_SCRIPT_NAME]: `tsc --project ./${TypescriptProject.TS_CONFIG_CJS_FILENAME}`,
                     [SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME]: [
                         `tsc --project ./${TypescriptProject.TS_CONFIG_ESM_FILENAME}`,
@@ -300,9 +281,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 ...this.dependencies[DependencyType.PROD],
                 ...this.extraDependencies
             };
-            if (Object.keys(dependencies).length > 0) {
-                draft.dependencies = dependencies;
-            }
+            draft.dependencies = dependencies;
 
             const peerDependencies = {
                 ...this.dependencies[DependencyType.PEER],
@@ -339,7 +318,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 draft["packageManager"] = "yarn@1.22.22";
             }
             if (this.packageManager === "pnpm") {
-                draft["packageManager"] = "pnpm@10.14.0";
+                draft["packageManager"] = "pnpm@10.20.0";
             }
             draft["engines"] = {
                 node: ">=18.0.0"
@@ -352,22 +331,17 @@ export class SimpleTypescriptProject extends TypescriptProject {
         await this.writeFileToVolume(RelativeFilePath.of("package.json"), JSON.stringify(packageJson, undefined, 4));
     }
 
-    private async generateJsrJson(): Promise<void> {
-        if (this.npmPackage != null) {
-            const jsr: JSR = {
-                name: this.npmPackage?.packageName,
-                version: this.npmPackage.version,
-                exports: "src/index.ts"
-            };
-            await this.writeFileToVolume(RelativeFilePath.of("jsr.json"), JSON.stringify(jsr, undefined, 4));
+    protected getBuildCommandScript(): string {
+        if (this.useLegacyExports) {
+            return "tsc";
+        } else {
+            return `${this.packageManager} ${SimpleTypescriptProject.BUILD_CJS_SCRIPT_NAME} && ${this.packageManager} ${SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME}`;
         }
     }
 
     private getDevDependencies(): Record<string, string> {
         return {
-            "@types/node": "^18.19.70",
-            "@biomejs/biome": "2.2.5",
-            typescript: "~5.7.2"
+            ...this.getCommonDevDependencies()
         };
     }
 }

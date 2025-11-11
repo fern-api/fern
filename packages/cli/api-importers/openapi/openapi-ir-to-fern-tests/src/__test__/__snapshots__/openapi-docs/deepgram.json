@@ -9683,6 +9683,9 @@ channel:
                             "api_key_id": "1234567890abcdef1234567890abcdef",
                             "comment": "A comment",
                             "created": "2021-01-01T00:00:00Z",
+                            "scopes": [
+                              "admin",
+                            ],
                           },
                           "email": "john@test.com",
                           "first_name": "John",
@@ -9950,8 +9953,15 @@ channel:
                         {
                           "agent_hours": 41.33564388888889,
                           "grouping": {
+                            "accessor": "123456789012345678901234",
+                            "deployment": "self-hosted",
                             "end": "2025-01-16",
+                            "endpoint": "listen",
+                            "feature_set": "punctuate",
+                            "method": "async",
+                            "models": "Nova-2",
                             "start": "2025-01-16",
+                            "tags": "tag1",
                           },
                           "hours": 1619.7242069444444,
                           "requests": 373381,
@@ -10117,6 +10127,9 @@ Example: &model={model_id}&tags={tag}&accessor={accessor_id}
                             "color": "#BA80F5",
                             "image": "https://static.deepgram.com/examples/avatars/angus.jpg",
                             "sample": "https://static.deepgram.com/examples/voices/angus.wav",
+                            "tags": [
+                              "masculine",
+                            ],
                           },
                           "name": "angus",
                           "uuid": "eed36e9e-37aa-40a3-91fa-a2911e73a5da",
@@ -10372,6 +10385,10 @@ Example: &model={model_id}&tags={tag}&accessor={accessor_id}
                             "batch": true,
                             "canonical_name": "conversationalai",
                             "formatted_output": true,
+                            "languages": [
+                              "en",
+                              "en-us",
+                            ],
                             "name": "conversationalai",
                             "streaming": true,
                             "uuid": "6b28e919-8427-4f32-9847-492e2efd7daf",
@@ -10384,6 +10401,10 @@ Example: &model={model_id}&tags={tag}&accessor={accessor_id}
                           {
                             "architecture": "aura",
                             "canonical_name": "aura-zeus-en",
+                            "languages": [
+                              "en",
+                              "en-us",
+                            ],
                             "name": "zeus",
                             "uuid": "9c28bce5-f144-4d32-9034-843aa7aed63e",
                             "version": "2024-07-30.0",
@@ -13297,6 +13318,9 @@ service:
                 - - name: conversationalai
                     canonical_name: conversationalai
                     architecture: base
+                    languages:
+                      - en
+                      - en-us
                     version: 2021-11-10.1
                     uuid: 6b28e919-8427-4f32-9847-492e2efd7daf
                     batch: true
@@ -13306,6 +13330,9 @@ service:
                 - - name: zeus
                     canonical_name: aura-zeus-en
                     architecture: aura
+                    languages:
+                      - en
+                      - en-us
                     version: 2024-07-30.0
                     uuid: 9c28bce5-f144-4d32-9034-843aa7aed63e
     getProjectModel:
@@ -13456,6 +13483,8 @@ service:
                   api_key:
                     api_key_id: 1234567890abcdef1234567890abcdef
                     comment: A comment
+                    scopes:
+                      - admin
                     created: '2021-01-01T00:00:00Z'
     deleteProjectKey:
       path: /v1/projects/{project_id}/keys/{key_id}
@@ -14058,6 +14087,13 @@ service:
                   grouping:
                     start: '2025-01-16'
                     end: '2025-01-16'
+                    accessor: '123456789012345678901234'
+                    endpoint: listen
+                    feature_set: punctuate
+                    models: Nova-2
+                    method: async
+                    tags: tag1
+                    deployment: self-hosted
     listProjectPurchases:
       path: /v1/projects/{project_id}/purchases
       method: GET
@@ -14158,6 +14194,8 @@ service:
                     color: '#BA80F5'
                     image: https://static.deepgram.com/examples/avatars/angus.jpg
                     sample: https://static.deepgram.com/examples/voices/angus.wav
+                    tags:
+                      - masculine
     getModel:
       path: /v1/models/{model_id}
       method: GET

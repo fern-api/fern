@@ -1,4 +1,366 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.28.10
+  changelogEntry:
+    - summary: |
+        Set `Accept` header for JSON (`application/json`), text (`text/plain`), and other (`*/*`) response types.
+        This ensures that the `Accept` header is set consistently across runtimes. 
+        Unlike all other runtimes, Cloudflare Workers and Vercel Edge Runtime do not set a default `Accept` header in their `fetch` implementations.
+      type: fix
+  createdAt: "2025-11-10"
+  irVersion: 61
+
+- version: 3.28.9
+  changelogEntry:
+    - summary: Fix `Error._visit` to pass the correct type (`core.Fetcher.Error`) to the `_other` callback.
+      type: fix
+  createdAt: "2025-11-10"
+  irVersion: 61
+
+- version: 3.28.8
+  changelogEntry:
+    - summary: Clean up imports for requestWithRetries.test.ts.
+      type: fix
+  createdAt: "2025-11-10"
+  irVersion: 61
+
+- version: 3.28.7
+  changelogEntry:
+    - summary: |
+        Fix circular type alias errors (TS2456) in undiscriminated unions containing self-recursive Record types where the value is a union of itself with null and/or undefined.
+      type: fix
+  createdAt: "2025-11-08"
+  irVersion: 61
+
+- version: 3.28.6
+  changelogEntry:
+    - summary: |
+        Fix circular type alias errors (TS2456) in undiscriminated unions containing self-recursive Record types.
+      type: fix
+  createdAt: "2025-11-07"
+  irVersion: 61
+
+- version: 3.28.5
+  changelogEntry:
+    - summary: Fix issue where logs were logged even when the respective log level was disabled.
+      type: fix
+    - summary: Add tests for logging and the fetcher's redaction functionality.
+      type: chore
+    - summary: Improve unit test performance and refactor code to reduce duplication.
+      type: chore
+  createdAt: "2025-11-06"
+  irVersion: 61
+
+- version: 3.28.4
+  changelogEntry:
+    - summary: Fix a compilation error when a websocket channel has no send or receive messages.
+      type: fix
+  createdAt: "2025-11-06"
+  irVersion: 61
+
+- version: 3.28.3
+  changelogEntry:
+    - summary: |
+        Fix local GitHub generation to match remote generation.
+      type: fix
+  createdAt: "2025-11-06"
+  irVersion: 61
+
+- version: 3.28.2
+  changelogEntry:
+    - summary: |
+        Fix inconsistent path parameter casing in the WebSocket connect options.
+        The casing now follows the same rules as other HTTP path parameters:
+        - `retainOriginalCasing: true`: use the original casing from the OpenAPI spec, regardless of the `noSerdeLayer` setting.
+        - `noSerdeLayer: true`: use the original casing from the OpenAPI spec.
+        - `noSerdeLayer: false`: use camelCase for path parameters.
+      type: fix
+  createdAt: "2025-11-06"
+  irVersion: 61
+
+- version: 3.28.1
+  changelogEntry:
+    - summary: |
+        Always use vitest.config.mts for consistency across all generated SDKs. This ensures Vitest v3 can load the config as ESM in both CommonJS and ESM packages.
+      type: fix
+  createdAt: "2025-11-05"
+  irVersion: 61
+
+- version: 3.28.0
+  changelogEntry:
+    - summary: |
+        Added Generation Metadata file to output.
+      type: feat
+  createdAt: "2025-11-04"
+  irVersion: 61
+
+- version: 3.27.0
+  changelogEntry:
+    - summary: Add support for variables in wire tests.
+      type: feat
+  createdAt: "2025-11-05"
+  irVersion: 61
+
+- version: 3.26.0
+  changelogEntry:
+    - summary: |
+        Include `"dependencies": {}` in package.json when generating a TypeScript SDK without dependencies.
+      type: feat
+  createdAt: "2025-11-05"
+  irVersion: 61
+
+- version: 3.25.0
+  changelogEntry:
+    - summary: |
+        Add support for logging to the generated SDK.
+        Users can configure the logger by passing in a `logging` object to the client options.
+
+        ```ts
+        import { FooClient, logging } from "foo";
+
+        const client = new FooClient({
+            logging: {
+               level: logging.LogLevel.Info, // LogLevel.Info is the default
+               logger: new logging.ConsoleLogger(), // ConsoleLogger is the default
+               silent: false, // true is the default, set to false to enable logging
+            }
+        });
+        ```
+
+        The `logging` object can have the following properties:
+        - `level`: The log level to use. Defaults to `logging.LogLevel.Info`.
+        - `logger`: The logger to use. Defaults to `logging.ConsoleLogger`.
+        - `silent`: Whether to silence the logger. Defaults to `true`.
+
+        The `level` property can be one of the following values:
+        - `logging.LogLevel.Debug`
+        - `logging.LogLevel.Info`
+        - `logging.LogLevel.Warn`
+        - `logging.LogLevel.Error`
+
+        To provide a custom logger, users can pass in a custom logger implementation that implements the `logging.ILogger` interface.
+
+      type: feat
+  createdAt: "2025-11-04"
+  irVersion: 61
+
+- version: 3.24.0
+  changelogEntry:
+    - summary: |
+        Add support for forward-compatible enums.
+        To enable forward-compatible enums, add the following configuration to your _generators.yml_ file:
+        ```yaml
+        # In generators.yml
+        groups:
+          generators:
+            - name: fernapi/fern-typescript-sdk
+              config:
+                enableForwardCompatibleEnums: true
+        ```
+      type: feat
+  createdAt: "2025-11-03"
+  irVersion: 61
+
+- version: 3.23.0
+  changelogEntry:
+    - summary: |
+        Add support for bytes download responses.
+      type: feat
+  createdAt: "2025-11-03"
+  irVersion: 61
+
+- version: 3.22.0
+  changelogEntry:
+    - summary: |
+        Add support for oxfmt as the formatter.
+        This is a beta feature and not officially supported yet.
+      type: feat
+  createdAt: "2025-11-03"
+  irVersion: 61
+
+- version: 3.21.0
+  changelogEntry:
+    - summary: |
+        Add support for oxlint as the linter.
+        This is a beta feature and not officially supported yet.
+      type: feat
+  createdAt: "2025-11-03"
+  irVersion: 61
+
+- version: 3.20.0
+  changelogEntry:
+    - summary: |
+        Implement base and extend properties in discriminated union examples.
+      type: feat
+  createdAt: "2025-11-03"
+  irVersion: 61
+
+- version: 3.19.1
+  changelogEntry:
+    - summary: |
+        `mergeHeaders()` and `mergeOnlyDefinedHeaders()` are now case-insensitive.
+      type: fix
+  createdAt: "2025-11-03"
+  irVersion: 60
+
+- version: 3.19.0
+  changelogEntry:
+    - summary: |
+        Add support for application/x-www-form-urlencoded request bodies.
+      type: feat
+  createdAt: "2025-11-03"
+  irVersion: 60
+
+- version: 3.18.0
+  changelogEntry:
+    - summary: |
+        Users can now pass in a custom `fetch` function to the client options.
+      type: feat
+  createdAt: "2025-11-03"
+  irVersion: 60
+
+- version: 3.17.1
+  changelogEntry:
+    - summary: |
+        `hasNextPage()` now factors in `offset.step` if provided for offset-based pagination
+        such that `hasNextPage` now returns `false` if the returned page was not as large as requested.
+      type: fix
+  createdAt: "2025-10-31"
+  irVersion: 60
+
+- version: 3.17.0
+  changelogEntry:
+    - summary: |
+        Add `Page` to the top-level `exports.ts` files, which allows for `import { Page } from '...';` to work.
+        Remove `Pageable`, and use only `core.Page` for pagination everywhere.
+      type: feat
+  createdAt: "2025-10-29"
+  irVersion: 60
+
+- version: 3.16.0
+  changelogEntry:
+    - summary: |
+        Generate a CONTRIBUTING.md file.
+      type: feat
+  createdAt: "2025-10-29"
+  irVersion: 60
+
+- version: 3.15.0
+  changelogEntry:
+    - summary: |
+        Export types for `ReconnectingWebSocket`, `ReconnectingWebSocket.Event`, `ReconnectingWebSocket.CloseEvent`, and `ReconnectingWebSocket.ErrorEvent`.
+      type: feat
+  createdAt: "2025-10-29"
+  irVersion: 60
+
+- version: 3.14.0
+  changelogEntry:
+    - summary: |
+        Expose the underlying response on the `Page` type.
+      type: feat
+  createdAt: "2025-10-29"
+  irVersion: 60
+
+- version: 3.13.0
+  changelogEntry:
+    - summary: |
+        Improve pnpm and yarn caching in generator Docker images.
+      type: feat
+  createdAt: "2025-10-28"
+  irVersion: 60
+
+- version: 3.12.3
+  changelogEntry:
+    - summary: Fix `.github/workflows/ci.yml` file when using OIDC for npm publishing.
+      type: fix
+  createdAt: "2025-10-28"
+  irVersion: 60
+
+- version: 3.12.2
+  changelogEntry:
+    - summary: |
+        Add streaming tests; fix custom message terminators in streams; fix multi-byte character handling across chunk breaks in streams.
+      type: fix
+  createdAt: "2025-10-28"
+  irVersion: 60
+
+- version: 3.12.1
+  changelogEntry:
+    - summary: Update Biome to 2.3.1
+      type: chore
+  createdAt: "2025-10-28"
+  irVersion: 60
+
+- version: 3.12.0
+  changelogEntry:
+    - summary: |
+        Add support for [publishing to npmjs.org using OIDC from GitHub Actions](https://docs.npmjs.com/trusted-publishers).
+
+        To use OIDC for publishing to npmjs.org, you need to follow two steps:
+        1. Follow the instructions in ["Step 1: Add a trusted publisher on npmjs.com"](https://docs.npmjs.com/trusted-publishers#step-1-add-a-trusted-publisher-on-npmjscom).
+        2. Set the `output.token` field to `OIDC` in _generators.yml_ to enable this feature:
+
+            ```yml
+            # In generators.yml
+            groups:
+              ts-sdk:
+                generators:
+                  - name: fernapi/fern-typescript-sdk
+                    output:
+                      location: npm
+                      package-name: your-package-name
+                      token: OIDC # previously this would be set to something like ${NPM_TOKEN}
+                    ...
+            ```
+
+            This will take care of ["Step 2: Configure your CI/CD workflow"](https://docs.npmjs.com/trusted-publishers#step-2-configure-your-cicd-workflow).
+
+        For local generation, you'll need Fern CLI version 0.94.0 or later.
+      type: feat
+    - summary: |
+        Update GitHub Actions `setup-node` action to v4 in the generated CI workflow.
+      type: feat
+  createdAt: "2025-10-21"
+  irVersion: 60
+
+- version: 3.11.1
+  changelogEntry:
+    - summary: |
+        Generate streaming response section in README.md for streaming response endpoints.
+      type: fix
+  createdAt: "2025-10-21"
+  irVersion: 60
+
+- version: 3.11.0
+  changelogEntry:
+    - summary: |
+        Add `linter` and `formatter` configuration options to configure code linters and formatters for the generated SDK.
+        - `linter`:
+          - `biome`: Use Biome as the code linter. This is the default.
+          - `none`: Do not include a code linter.
+        - `formatter`:
+          - `biome`: Use Biome as the code formatter. This is the default.
+          - `prettier`: Use Prettier as the code formatter.
+
+        For consistency, the _package.json_ scripts will always include the following scripts:
+        - `lint`: Run the configured linter.
+        - `lint:fix`: Run the configured linter with auto-fix.
+        - `format`: Run the configured formatter.
+        - `format:check`: Run the configured formatter in check mode.
+        - `check`: Run both the linter and formatter in check mode.
+        - `check:fix`: Run both the linter and formatter with auto-fix.
+        When the `linter` is set to `none`, `lint` and `lint:fix` scripts will echo a message indicating that no linter is configured.
+      type: feat
+  createdAt: "2025-10-21"
+  irVersion: 60
+
+- version: 3.10.0
+  changelogEntry:
+    - summary: |
+        Generate file upload section in README.md for multipart-form file uploads.
+      type: feat
+  createdAt: "2025-10-20"
+  irVersion: 60
+
 - version: 3.9.3
   changelogEntry:
     - summary: |

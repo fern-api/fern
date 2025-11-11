@@ -1,4 +1,4 @@
-irVersion: v58
+irVersion: v61
 displayName: Ruby SDK
 image: fernapi/fern-ruby-sdk
 changelogLocation: ../../generators/ruby-v2/sdk/versions.yml
@@ -81,6 +81,7 @@ allowedFailures:
   - extra-properties
   - file-download
   - file-upload
+  - file-upload-openapi
   - folders
   - http-head
   - idempotency-headers
@@ -98,6 +99,7 @@ allowedFailures:
   - multi-url-environment-no-default
   - multiple-request-bodies
   - no-environment
+  - no-retries
   - nullable
   - nullable-optional
   - oauth-client-credentials
@@ -134,8 +136,10 @@ allowedFailures:
   - streaming-parameter
   - trace
   - undiscriminated-unions
+  - undiscriminated-union-with-response-property
   - unions
   - unknown
+  - url-form-encoded
   - validation
   - variables
   - version

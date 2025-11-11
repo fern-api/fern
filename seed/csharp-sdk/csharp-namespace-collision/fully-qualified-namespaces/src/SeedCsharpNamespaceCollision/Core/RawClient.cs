@@ -1,4 +1,3 @@
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using SystemTask = System.Threading.Tasks.Task;
@@ -119,7 +118,9 @@ internal partial class RawClient(ClientOptions clientOptions)
     {
         var httpClient = options?.HttpClient ?? Options.HttpClient;
         var maxRetries = options?.MaxRetries ?? Options.MaxRetries;
-        var response = await httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+        var response = await httpClient
+            .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
+            .ConfigureAwait(false);
         var isRetryableContent = IsRetryableContent(request);
 
         if (!isRetryableContent)
@@ -138,7 +139,11 @@ internal partial class RawClient(ClientOptions clientOptions)
             await SystemTask.Delay(delayMs, cancellationToken).ConfigureAwait(false);
             using var retryRequest = await CloneRequestAsync(request).ConfigureAwait(false);
             response = await httpClient
-                .SendAsync(retryRequest, cancellationToken)
+                .SendAsync(
+                    retryRequest,
+                    HttpCompletionOption.ResponseHeadersRead,
+                    cancellationToken
+                )
                 .ConfigureAwait(false);
         }
 

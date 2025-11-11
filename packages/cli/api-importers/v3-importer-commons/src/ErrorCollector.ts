@@ -130,13 +130,13 @@ export class ErrorCollector {
             }
             switch (error.level) {
                 case APIErrorLevel.ERROR:
-                    this.logger.log(LogLevel.Error, error.message);
+                    this.logger.log(LogLevel.Debug, error.message);
                     if (error.path && error.path.length > 0) {
                         const sourceLocation = await this.breadcrumbToLineNumberMapper?.getSourceLocation(error.path);
                         const locationInfo = sourceLocation
                             ? `${this.relativeFilepathToSpec}:${sourceLocation.line}:${sourceLocation.column}`
                             : error.path.join(" -> ");
-                        this.logger.log(LogLevel.Error, `\t- at location (${locationInfo})`);
+                        this.logger.log(LogLevel.Debug, `\t- at location (${locationInfo})`);
                     }
                     break;
             }

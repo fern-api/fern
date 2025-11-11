@@ -126,13 +126,14 @@ export class SubClientGenerator {
     }
 
     private generateImports(): UseStatement[] {
-        const hasTypes = this.hasTypes(this.context);
         const hasQueryParams = this.hasQueryParameters();
         const hasEndpoints = this.hasEndpoints();
         const typeAnalysis = this.analyzeRequiredImports();
         const hasSubClients = this.hasSubClients();
         const endpointsUseCustomTypes = this.endpointsUseCustomTypes();
         const hasBinaryEndpoints = this.hasBinaryEndpoints();
+        const hasSseEndpoints = this.hasSseEndpoints();
+        const hasJsonStreamingEndpoints = this.hasJsonStreamingEndpoints();
 
         // Build base crate imports conditionally
         const crateItems = ["ClientConfig", "ApiError", "HttpClient"];
@@ -145,6 +146,11 @@ export class SubClientGenerator {
         // Add ByteStream if we have binary endpoints (file downloads)
         if (hasBinaryEndpoints) {
             crateItems.push("ByteStream");
+        }
+
+        // Add SseStream if we have SSE endpoints
+        if (hasSseEndpoints) {
+            crateItems.push("SseStream");
         }
 
         if (hasQueryParams) {
@@ -164,6 +170,16 @@ export class SubClientGenerator {
                 new UseStatement({
                     path: "reqwest",
                     items: ["Method"]
+                })
+            );
+        }
+
+        // Add futures::Stream if we have JSON streaming endpoints (they return impl Stream<...>)
+        if (hasJsonStreamingEndpoints) {
+            imports.push(
+                new UseStatement({
+                    path: "futures",
+                    items: ["Stream"]
                 })
             );
         }
@@ -315,10 +331,6 @@ export class SubClientGenerator {
     // CAPABILITY DETECTION
     // =============================================================================
 
-    private hasTypes(context: SdkGeneratorContext): boolean {
-        return Object.keys(context.ir.types).length > 0;
-    }
-
     private hasEndpoints(): boolean {
         const endpoints = this.service?.endpoints || [];
         return endpoints.length > 0;
@@ -380,14 +392,7 @@ export class SubClientGenerator {
         return requestBody._visit({
             inlinedRequestBody: (inlinedBody) => {
                 // Check if any properties use custom types
-                const propertiesUseCustomTypes = inlinedBody.properties.some((prop) =>
-                    this.isCustomType(prop.valueType)
-                );
-
-                // Check if any extended types are custom
-                const extendsUseCustomTypes = inlinedBody.extends.length > 0;
-
-                return propertiesUseCustomTypes || extendsUseCustomTypes;
+                return true;
             },
             reference: (reference) => this.isCustomType(reference.requestBodyType),
             fileUpload: () => false, // File uploads don't typically use custom types
@@ -442,6 +447,16 @@ export class SubClientGenerator {
     private hasBinaryEndpoints(): boolean {
         const endpoints = this.service?.endpoints || [];
         return endpoints.some((endpoint) => this.isBinaryResponse(endpoint));
+    }
+
+    private hasSseEndpoints(): boolean {
+        const endpoints = this.service?.endpoints || [];
+        return endpoints.some((endpoint) => this.getResponseStreamType(endpoint) === "sse");
+    }
+
+    private hasJsonStreamingEndpoints(): boolean {
+        const endpoints = this.service?.endpoints || [];
+        return endpoints.some((endpoint) => this.getResponseStreamType(endpoint) === "json");
     }
 
     private analyzeRequiredImports(): ImportAnalysis {
@@ -770,21 +785,52 @@ export class SubClientGenerator {
             rust.Type.reference(rust.reference({ name: "ApiError" }))
         );
 
-        // Use streaming for binary responses (returns ByteStream)
-        const isBinaryResponse = this.isBinaryResponse(endpoint);
-        const executeMethod = isBinaryResponse ? "execute_stream_request" : "execute_request";
+        // Check if this is a file upload endpoint
+        const isFileUpload = this.isFileUploadEndpoint(endpoint);
+
+        // Determine which execute method to use based on request and response types
+        const responseType = this.getResponseStreamType(endpoint);
+        let executeMethod = "execute_request";
+        let typeParameter = "";
+        let executeArgs = "";
+
+        if (isFileUpload) {
+            // Use multipart request for file uploads
+            executeMethod = "execute_multipart_request";
+            const multipartBody = "request.clone().to_multipart()";
+            executeArgs = `
+            Method::${httpMethod},
+            ${pathExpression},
+            ${multipartBody},
+            ${this.buildQueryParameters(endpoint)},
+            options,`;
+        } else {
+            executeArgs = `
+            Method::${httpMethod},
+            ${pathExpression},
+            ${requestBody},
+            ${this.buildQueryParameters(endpoint)},
+            options,`;
+
+            if (responseType === "binary") {
+                executeMethod = "execute_stream_request";
+            } else if (responseType === "sse") {
+                executeMethod = "execute_sse_request";
+                const terminator = this.getSseTerminator(endpoint);
+                executeArgs += `\n            ${terminator},`;
+            } else if (responseType === "json") {
+                // JSON streaming needs explicit type parameter for inference
+                const innerType = this.getInnerResponseType(endpoint);
+                typeParameter = `::<${innerType}>`;
+            }
+        }
 
         return {
             name: endpoint.name.snakeCase.safeName,
             parameters,
             returnType: returnType.toString(),
             isAsync: true,
-            body: `self.http_client.${executeMethod}(
-            Method::${httpMethod},
-            ${pathExpression},
-            ${requestBody},
-            ${this.buildQueryParameters(endpoint)},
-            options,
+            body: `self.http_client.${executeMethod}${typeParameter}(${executeArgs}
         ).await`,
             docs: endpoint.docs
                 ? rust.docComment({
@@ -970,7 +1016,14 @@ export class SubClientGenerator {
                     map: () => "serialize",
                     set: () => "serialize",
                     list: () => "serialize",
-                    literal: () => "string",
+                    literal: (literal) => {
+                        // Handle literal types based on their actual type
+                        return literal._visit({
+                            string: () => "string",
+                            boolean: () => "bool",
+                            _other: () => "serialize"
+                        });
+                    },
                     _other: () => "serialize"
                 });
             },
@@ -1055,7 +1108,7 @@ export class SubClientGenerator {
 
     // Smart parameter source detection
     private getQueryParameterSource(queryParam: QueryParameter, endpoint?: HttpEndpoint): string {
-        const fieldName = queryParam.name.name.snakeCase.safeName;
+        const fieldName = this.context.escapeRustKeyword(queryParam.name.name.snakeCase.safeName);
 
         if (endpoint?.requestBody) {
             // MIXED or BODY-ONLY: Query params are in request struct
@@ -1224,6 +1277,13 @@ export class SubClientGenerator {
         return "None";
     }
 
+    private isFileUploadEndpoint(endpoint: HttpEndpoint): boolean {
+        if (!endpoint.requestBody) {
+            return false;
+        }
+        return endpoint.requestBody.type === "fileUpload";
+    }
+
     private getReturnType(endpoint: HttpEndpoint): rust.Type {
         if (endpoint.response?.body) {
             return endpoint.response.body._visit({
@@ -1236,13 +1296,70 @@ export class SubClientGenerator {
                 fileDownload: () => rust.Type.reference(rust.reference({ name: "ByteStream" })),
                 text: () => rust.Type.primitive(rust.PrimitiveType.String),
                 bytes: () => rust.Type.reference(rust.reference({ name: "ByteStream" })),
-                streaming: () => rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" })),
+                streaming: (streaming) => {
+                    return streaming._visit({
+                        json: (jsonChunk) => {
+                            // Newline-delimited JSON streaming - not yet fully implemented
+                            const payloadType = generateRustTypeForTypeReference(jsonChunk.payload, this.context);
+                            return rust.Type.reference(
+                                rust.reference({
+                                    name: `impl Stream<Item = Result<${payloadType.toString()}, ApiError>>`
+                                })
+                            );
+                        },
+                        sse: (sseChunk) => {
+                            // Server-Sent Events streaming
+                            const payloadType = generateRustTypeForTypeReference(sseChunk.payload, this.context);
+                            return rust.Type.reference(
+                                rust.reference({ name: `SseStream<${payloadType.toString()}>` })
+                            );
+                        },
+                        text: () => {
+                            // Text streaming not yet supported
+                            return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
+                        },
+                        _other: () => {
+                            return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
+                        }
+                    });
+                },
                 streamParameter: () => rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" })),
                 _other: () => rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }))
             });
         }
 
         return rust.Type.tuple([]);
+    }
+
+    private getInnerResponseType(endpoint: HttpEndpoint): string {
+        if (endpoint.response?.body) {
+            return endpoint.response.body._visit({
+                json: (jsonResponse) => {
+                    if (jsonResponse.responseBodyType) {
+                        return generateRustTypeForTypeReference(jsonResponse.responseBodyType, this.context).toString();
+                    }
+                    return "serde_json::Value";
+                },
+                streaming: (streaming) => {
+                    return streaming._visit({
+                        json: (jsonChunk) => {
+                            return generateRustTypeForTypeReference(jsonChunk.payload, this.context).toString();
+                        },
+                        sse: (sseChunk) => {
+                            return generateRustTypeForTypeReference(sseChunk.payload, this.context).toString();
+                        },
+                        text: () => "String",
+                        _other: () => "serde_json::Value"
+                    });
+                },
+                fileDownload: () => "ByteStream",
+                text: () => "String",
+                bytes: () => "ByteStream",
+                streamParameter: () => "serde_json::Value",
+                _other: () => "serde_json::Value"
+            });
+        }
+        return "()";
     }
 
     private isBinaryResponse(endpoint: HttpEndpoint): boolean {
@@ -1258,6 +1375,57 @@ export class SubClientGenerator {
             streaming: () => false,
             streamParameter: () => false,
             _other: () => false
+        });
+    }
+
+    private getResponseStreamType(endpoint: HttpEndpoint): "none" | "binary" | "sse" | "json" {
+        if (!endpoint.response?.body) {
+            return "none";
+        }
+
+        return endpoint.response.body._visit({
+            json: () => "none",
+            fileDownload: () => "binary",
+            text: () => "none",
+            bytes: () => "binary",
+            streaming: (streaming) => {
+                return streaming._visit({
+                    json: () => "json",
+                    sse: () => "sse",
+                    text: () => "none",
+                    _other: () => "none"
+                });
+            },
+            streamParameter: () => "none",
+            _other: () => "none"
+        });
+    }
+
+    private getSseTerminator(endpoint: HttpEndpoint): string {
+        if (!endpoint.response?.body) {
+            return "None";
+        }
+
+        return endpoint.response.body._visit({
+            json: () => "None",
+            fileDownload: () => "None",
+            text: () => "None",
+            bytes: () => "None",
+            streaming: (streaming) => {
+                return streaming._visit({
+                    json: () => "None",
+                    sse: (sseChunk) => {
+                        if (sseChunk.terminator) {
+                            return `Some("${sseChunk.terminator}".to_string())`;
+                        }
+                        return "None";
+                    },
+                    text: () => "None",
+                    _other: () => "None"
+                });
+            },
+            streamParameter: () => "None",
+            _other: () => "None"
         });
     }
 
@@ -1842,7 +2010,14 @@ export class SubClientGenerator {
                 fileDownload: () => "Streaming file download (use .into_bytes() to collect or stream chunks)",
                 text: () => "Text response",
                 bytes: () => "Streaming byte response (use .into_bytes() to collect or stream chunks)",
-                streaming: () => "Streaming response",
+                streaming: (streaming) => {
+                    return streaming._visit({
+                        json: () => "Newline-delimited JSON stream (use futures::StreamExt to iterate)",
+                        sse: () => "Server-Sent Events stream (use futures::StreamExt to iterate)",
+                        text: () => "Text streaming response",
+                        _other: () => "Streaming response"
+                    });
+                },
                 streamParameter: () => "Stream parameter response",
                 _other: () => "API response"
             });

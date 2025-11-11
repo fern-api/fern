@@ -16,7 +16,7 @@ public final class ApiClient: Sendable {
         headers: [String: String]? = nil,
         timeout: Int? = nil,
         maxRetries: Int? = nil,
-        urlSession: URLSession? = nil
+        urlSession: Networking.URLSession? = nil
     ) {
         self.init(
             baseURL: baseURL,
@@ -38,7 +38,7 @@ public final class ApiClient: Sendable {
         headers: [String: String]? = nil,
         timeout: Int? = nil,
         maxRetries: Int? = nil,
-        urlSession: URLSession? = nil
+        urlSession: Networking.URLSession? = nil
     ) {
         let config = ClientConfig(
             baseURL: baseURL,
@@ -63,17 +63,17 @@ public final class ApiClient: Sendable {
                 "date": .string(date), 
                 "deadline": .date(deadline), 
                 "bytes": .string(bytes), 
-                "user": .string(user.rawValue), 
-                "userList": userList.map { .string($0.rawValue) }, 
+                "user": .unknown(user), 
+                "userList": userList.map { .unknown($0) }, 
                 "optionalDeadline": optionalDeadline.map { .date($0) }, 
                 "keyValue": keyValue.map { .unknown($0) }, 
                 "optionalString": optionalString.map { .string($0) }, 
-                "nestedUser": nestedUser.map { .string($0.rawValue) }, 
-                "optionalUser": optionalUser.map { .string($0.rawValue) }, 
-                "excludeUser": excludeUser.map { .string($0.rawValue) }, 
+                "nestedUser": nestedUser.map { .unknown($0) }, 
+                "optionalUser": optionalUser.map { .unknown($0) }, 
+                "excludeUser": excludeUser.map { .unknown($0) }, 
                 "filter": filter.map { .string($0) }, 
-                "neighbor": neighbor.map { .string($0.rawValue) }, 
-                "neighborRequired": .string(neighborRequired.rawValue)
+                "neighbor": neighbor.map { .unknown($0) }, 
+                "neighborRequired": .unknown(neighborRequired)
             ],
             requestOptions: requestOptions,
             responseType: SearchResponse.self

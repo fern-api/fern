@@ -1,3 +1,254 @@
+- version: 3.14.2
+  changelogEntry:
+    - summary: |
+        Fix double-wrapping of Optional.empty() in request bodies. Wire tests and dynamic snippets now correctly generate Optional.empty() instead of Optional.of(Optional.empty()) for optional request bodies.
+      type: fix
+  createdAt: "2025-11-07"
+  irVersion: 61
+
+- version: 3.14.1
+  changelogEntry:
+    - summary: |
+        Fix wire test failures by pruning union base properties from expected JSON. The Java generator does not generate base properties for union types, so wire test expectations now exclude these fields to match actual SDK serialization behavior.
+      type: fix
+  createdAt: "2025-11-07"
+  irVersion: 61
+
+- version: 3.14.0
+  changelogEntry:
+    - summary: |
+        Add support for WebSocket channels with bidirectional communication. Generated WebSocket clients
+        provide automatic reconnection with exponential backoff, strongly-typed message handlers, and message
+        queuing during disconnections. Clients are accessible via factory methods in subpackage clients.
+
+        ```java
+        // Create WebSocket client with path and query parameters
+        RealtimeWebSocketClient ws = client.realtime().realtimeWebSocket(
+            "session-123",
+            Optional.of("gpt-4"),
+            Optional.of(0)
+        );
+
+        // Register handlers and connect
+        ws.onReceive(message -> System.out.println("Received: " + message.getAlpha()));
+        ws.onConnected(() -> System.out.println("Connected!"));
+        ws.connect().get();
+
+        // Send typed messages
+        ws.sendSend(SendEvent.builder()
+            .sendText("Hello WebSocket!")
+            .sendParam(42)
+            .build());
+        ```
+      type: feat
+  createdAt: "2025-11-07"
+  irVersion: 61
+
+- version: 3.13.0
+  changelogEntry:
+    - summary: |
+        Added Generation Metadata file to output.
+      type: feat
+  createdAt: "2025-11-05"
+  irVersion: 61
+
+- version: 3.12.1
+  changelogEntry:
+    - summary: |
+        Fix query and header parameters leaking into request body JSON. Only body parameters are now serialized in the request payload.
+      type: fix
+  createdAt: "2025-11-05"
+  irVersion: 61
+
+- version: 3.12.0
+  changelogEntry:
+    - summary: |
+        Add support for API-level path parameters. Path parameters defined at the API level (e.g., `/test/{pathParam}`) are now configurable via the root client builder (`.pathParam(value)`).
+      type: feat
+  createdAt: "2025-11-04"
+  irVersion: 61
+
+- version: 3.11.7
+  changelogEntry:
+    - summary: |
+        Fix ApiError toString() to display JSON-serialized body instead of hashcode (e.g., `{"title": "Bad Request", ...}` instead of `BadRequestProblems@4ac5ea99`).
+      type: fix
+  createdAt: "2025-11-04"
+  irVersion: 61
+
+- version: 3.11.6
+  changelogEntry:
+    - summary: |
+        Fix path parameter prefixes (e.g., v{version}) being split into separate segments, producing URLs like .../v/1 instead of .../v1.
+      type: fix
+  createdAt: "2025-11-04"
+  irVersion: 61
+
+- version: 3.11.5
+  changelogEntry:
+    - summary: |
+        Extract error body parsing to ObjectMappers.parseErrorBody() utility method. When servers return XML/HTML errors instead of JSON, the utility gracefully falls back to raw string instead of throwing JsonProcessingException, preserving HTTP status codes and error details.
+      type: fix
+  createdAt: "2025-11-04"
+  irVersion: 61
+
+- version: 3.11.4
+  changelogEntry:
+    - summary: |
+        The `NullableNonemptyFilter` now correctly handles `OptionalNullable.isAbsent()` to exclude absent fields from JSON serialization in PATCH requests.
+      type: fix
+  createdAt: "2025-11-04"
+  irVersion: 61
+
+- version: 3.11.3
+  changelogEntry:
+    - summary: |
+        Fix `collapse-optional-nullable` config not being applied in download files mode.
+      type: fix
+  createdAt: "2025-11-03"
+  irVersion: 61
+
+- version: 3.11.2
+  changelogEntry:
+    - summary: |
+        Fix IllegalStateException: closed on error responses. Generated clients were calling responseBody.string() twice (once in success handler, once in error handler), but OkHttp's ResponseBody can only be read once. Now pre-reads response body before success check for JSON/text responses.
+      type: fix
+  createdAt: "2025-11-03"
+  irVersion: 61
+
+- version: 3.11.1
+  changelogEntry:
+    - summary: |
+        Disable wire tests by default for Java SDKs while issues are being resolved.
+      type: fix
+  createdAt: "2025-11-03"
+  irVersion: 61
+
+- version: 3.11.0
+  changelogEntry:
+    - summary: |
+        Add support for three-state nullable fields in PATCH requests via `collapse-optional-nullable` config.
+        When enabled, optional nullable fields use `OptionalNullable<T>` to distinguish between omitted fields,
+        explicit null values, and actual values. This enables proper PATCH request semantics for APIs that need
+        to differentiate between "not specified" and "set to null".
+
+        ```yaml
+        customConfig:
+          collapse-optional-nullable: true
+        ```
+
+        Generated usage:
+        ```java
+        UpdateRequest.builder()
+            .fieldName(OptionalNullable.absent())    // Omit field
+            .anotherField(OptionalNullable.ofNull()) // Clear field
+            .valueField(OptionalNullable.of("value")) // Set value
+            .build();
+        ```
+      type: feat
+  createdAt: "2025-10-31"
+  irVersion: 61
+
+- version: 3.10.5
+  changelogEntry:
+    - summary: |
+        Revert support for three-state nullable fields in PATCH requests introduced in 3.10.0 (PR #10104).
+        Restores `Optional<T>` semantics and removes the `use-nullable-for-optional-fields` config and related `Nullable<T>` handling.
+      type: fix
+  createdAt: "2025-10-30"
+  irVersion: 61
+
+- version: 3.10.4
+  changelogEntry:
+    - summary: |
+        Fix compilation errors when using boolean or long query parameters.
+      type: fix
+  createdAt: "2025-10-29"
+  irVersion: 61
+
+- version: 3.10.3
+  changelogEntry:
+    - summary: |
+        Use Gradle wrapper for Spotless formatting instead of requiring gradle in PATH.
+      type: fix
+  createdAt: "2025-10-29"
+  irVersion: 61
+
+- version: 3.10.2
+  changelogEntry:
+    - summary: |
+        Fix sync client delegation causing array query parameter compilation errors. Generator was using
+        incorrect class names, breaking delegation and causing inline HTTP generation.
+      type: fix
+  createdAt: "2025-10-28"
+  irVersion: 61
+
+- version: 3.10.1
+  changelogEntry:
+    - summary: |
+        Fixed nullable annotation generation in builder setters when `use-nullable-annotation` is enabled.
+        Builder setter parameters for nullable fields now correctly use `@org.jetbrains.annotations.Nullable`
+        instead of incorrectly attempting to use the `Nullable<T>` container class as an annotation.
+        Also removed `@Nullable` from path parameters as they are always required in REST APIs.
+      type: fix
+  createdAt: "2025-10-28"
+  irVersion: 61
+
+- version: 3.10.0
+  changelogEntry:
+    - summary: |
+        Add support for three-state nullable fields in PATCH requests via `use-nullable-for-optional-fields` config.
+        When enabled, optional fields use `Nullable<T>` instead of `Optional<T>` to distinguish between
+        omitted fields, explicit null values, and actual values.
+      type: feat
+  createdAt: "2025-10-28"
+  irVersion: 61
+
+- version: 3.9.4
+  changelogEntry:
+    - summary: |
+        Documenting `.withRawResponse()` in `README.md`.
+      type: chore
+  createdAt: "2025-10-28"
+  irVersion: 61
+
+- version: 3.9.3
+  changelogEntry:
+    - summary: |
+        Retries now check `Retry-After` and `X-RateLimit-Reset` before defaulting to exponential backoff.
+      type: fix
+  createdAt: "2025-10-27"
+  irVersion: 61
+
+- version: 3.9.2
+  changelogEntry:
+    - summary: |
+        Fix nullable field serialization in PATCH requests with wrapped request bodies. Explicit null values
+        (Nullable.ofNull()) are now correctly serialized as `{"field": null}` instead of being omitted like
+        Nullable.empty().
+      type: fix
+  createdAt: "2025-10-23"
+  irVersion: 61
+
+- version: 3.9.1
+  changelogEntry:
+    - summary: |
+        Fix raw client methods to return union types instead of first variant when using response
+        properties (x-fern-sdk-return-value) with discriminated or undiscriminated unions.
+      type: fix
+  createdAt: "2025-10-23"
+  irVersion: 61
+
+- version: 3.9.0
+  changelogEntry:
+    - summary: |
+        Add support for README example style configuration via `exampleStyle` field. When set to "minimal",
+        generated README.md files show streamlined code examples with only required parameters, reducing
+        verbosity for better readability. Defaults to "comprehensive" to maintain backward compatibility.
+      type: feat
+  createdAt: "2025-10-21"
+  irVersion: 61
+
 - version: 3.8.12
   changelogEntry:
     - summary: |
@@ -229,7 +480,7 @@
 - version: 3.5.3
   changelogEntry:
     - summary: |
-        Fixes an issue where the generated usage snippets in the README.md was not prioritizing 
+        Fixes an issue where the generated usage snippets in the README.md was not prioritizing
         user defined example values over autogenerated example values.
       type: fix
   createdAt: "2025-09-17"
@@ -284,7 +535,7 @@
 - version: 3.3.0
   changelogEntry:
     - summary: |
-        Wire tests now automatically configure authentication based on the API's auth scheme (Bearer, Basic, Header/Custom, 
+        Wire tests now automatically configure authentication based on the API's auth scheme (Bearer, Basic, Header/Custom,
         OAuth, or Inferred) instead of using hardcoded tokens. Real authentication values are extracted from IR examples
         when available, making tests more accurate and maintainable.
       type: feat
@@ -339,10 +590,10 @@
 - version: 3.0.0
   changelogEntry:
     - summary: |
-        The SDK generator now defaults to forward-compatible enums, providing resilience against new enum variants 
+        The SDK generator now defaults to forward-compatible enums, providing resilience against new enum variants
         added on the backend. This is a breaking change that affects the structure of generated enum types.
 
-        To revert to the previous behavior with traditional Java enums, add the following configuration to your 
+        To revert to the previous behavior with traditional Java enums, add the following configuration to your
         `generators.yml` file:
         ```yaml
         generators:
@@ -352,14 +603,14 @@
         ```
       type: break
     - summary: |
-        Forward-compatible enums are now enabled by default. Generated SDKs will no longer throw errors when 
-        encountering unknown enum variants, instead handling them gracefully with an UNKNOWN value. This is 
+        Forward-compatible enums are now enabled by default. Generated SDKs will no longer throw errors when
+        encountering unknown enum variants, instead handling them gracefully with an UNKNOWN value. This is
         particularly important for:
         - Mobile applications that cannot be easily updated
         - Maintaining backward compatibility when backend adds new enum values
         - Arrays of enum values where new variants previously caused client failures
 
-        With forward-compatible enums, the generated code changes from traditional Java enums to class-based 
+        With forward-compatible enums, the generated code changes from traditional Java enums to class-based
         enums that support unknown values through a visitor pattern.
       type: feat
   createdAt: "2025-09-09"
@@ -404,7 +655,7 @@
 - version: 2.42.1
   changelogEntry:
     - summary: |
-        Fix nullable fields incorrectly requiring non-null values in staged builders when 
+        Fix nullable fields incorrectly requiring non-null values in staged builders when
         use-nullable-annotation is enabled.
       type: fix
   createdAt: "2025-08-27"
@@ -475,8 +726,8 @@
 - version: 2.40.0
   changelogEntry:
     - summary: |
-        Add support for client-side default parameter values via `use-default-request-parameter-values` flag. 
-        When enabled, query and header parameters with defaults become Optional types and defaults are automatically 
+        Add support for client-side default parameter values via `use-default-request-parameter-values` flag.
+        When enabled, query and header parameters with defaults become Optional types and defaults are automatically
         applied when not provided. Example:
 
         ```yaml
@@ -499,14 +750,14 @@
 - version: 2.39.6
   changelogEntry:
     - summary: |
-        Add opt-in extensible builder pattern via `enable-extensible-builders` flag. When enabled, builders use the self-type 
+        Add opt-in extensible builder pattern via `enable-extensible-builders` flag. When enabled, builders use the self-type
         pattern allowing users to extend generated builders while maintaining type safety. Example:
 
         ```java
         class CustomBuilder extends BaseClientBuilder<CustomBuilder> {
             @Override
             protected CustomBuilder self() { return this; }
-            
+
             public CustomBuilder workspaceId(String id) {
                 // custom logic
                 return this;
@@ -552,7 +803,7 @@
 - version: 2.39.1
   changelogEntry:
     - summary: |
-        Refactor builder extension pattern to use Template Method with dynamic generation. Configuration methods 
+        Refactor builder extension pattern to use Template Method with dynamic generation. Configuration methods
         are only generated based on API spec (auth, headers, variables). All methods are protected for override.
       type: fix
   createdAt: "2025-07-25"
@@ -561,9 +812,9 @@
 - version: 2.39.0
   changelogEntry:
     - summary: |
-        Enable builder extensibility for generated SDK clients. Builders are no longer marked as final, allowing users to extend them 
-        and customize client behavior. Added protected buildClientOptions() method for customization hooks and static from() method 
-        to ClientOptions.Builder for copying existing configurations. This enables use cases like environment variable expansion 
+        Enable builder extensibility for generated SDK clients. Builders are no longer marked as final, allowing users to extend them
+        and customize client behavior. Added protected buildClientOptions() method for customization hooks and static from() method
+        to ClientOptions.Builder for copying existing configurations. This enables use cases like environment variable expansion
         in URLs and custom authentication methods.
       type: feat
   createdAt: "2025-07-24"
@@ -630,8 +881,8 @@
     - summary: |
         Fix JavaDoc generation to properly escape dollar signs ($) when using JavaPoet.
 
-        When generating JavaDoc comments with JavaPoet, dollar signs need to be escaped as `$$` to prevent 
-        JavaPoet from interpreting them as template variables. This ensures that dollar signs in documentation 
+        When generating JavaDoc comments with JavaPoet, dollar signs need to be escaped as `$$` to prevent
+        JavaPoet from interpreting them as template variables. This ensures that dollar signs in documentation
         are rendered correctly in the final generated code.
       type: fix
   createdAt: "2025-06-23"
@@ -696,7 +947,7 @@
   version: 2.36.4
 - changelogEntry:
     - summary: |
-        Updates the generator to always commit changes, even if there are none, in self-hosted mode. This 
+        Updates the generator to always commit changes, even if there are none, in self-hosted mode. This
         allows users to make sure that the generator actually ran and attempted to make a commit.
       type: fix
   createdAt: "2025-05-20"

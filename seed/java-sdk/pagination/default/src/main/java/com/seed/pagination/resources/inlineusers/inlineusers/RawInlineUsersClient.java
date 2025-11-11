@@ -99,9 +99,10 @@ public class RawInlineUsersClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 ListUsersPaginationResponse parsedResponse =
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ListUsersPaginationResponse.class);
                 Optional<String> startingAfter =
                         parsedResponse.getPage().flatMap(Page::getNext).map(NextPage::getStartingAfter);
                 ListUsersCursorPaginationRequest nextRequest = ListUsersCursorPaginationRequest.builder()
@@ -116,12 +117,9 @@ public class RawInlineUsersClient {
                                         .body()),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPaginationApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPaginationException("Network error executing HTTP request", e);
         }
@@ -158,9 +156,10 @@ public class RawInlineUsersClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 ListUsersMixedTypePaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), ListUsersMixedTypePaginationResponse.class);
+                        responseBodyString, ListUsersMixedTypePaginationResponse.class);
                 String startingAfter = parsedResponse.getNext();
                 ListUsersMixedTypeCursorPaginationRequest nextRequest =
                         ListUsersMixedTypeCursorPaginationRequest.builder()
@@ -177,12 +176,9 @@ public class RawInlineUsersClient {
                                         .body()),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPaginationApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPaginationException("Network error executing HTTP request", e);
         }
@@ -224,9 +220,10 @@ public class RawInlineUsersClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 ListUsersPaginationResponse parsedResponse =
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ListUsersPaginationResponse.class);
                 Optional<String> startingAfter =
                         parsedResponse.getPage().flatMap(Page::getNext).map(NextPage::getStartingAfter);
                 Optional<WithCursor> pagination = request.getPagination()
@@ -246,12 +243,9 @@ public class RawInlineUsersClient {
                                         .body()),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPaginationApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPaginationException("Network error executing HTTP request", e);
         }
@@ -300,9 +294,10 @@ public class RawInlineUsersClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 ListUsersPaginationResponse parsedResponse =
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ListUsersPaginationResponse.class);
                 int newPageNumber =
                         request.getPage().map((Integer page) -> page + 1).orElse(1);
                 ListUsersOffsetPaginationRequest nextRequest = ListUsersOffsetPaginationRequest.builder()
@@ -316,12 +311,9 @@ public class RawInlineUsersClient {
                                 .body()),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPaginationApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPaginationException("Network error executing HTTP request", e);
         }
@@ -370,9 +362,10 @@ public class RawInlineUsersClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 ListUsersPaginationResponse parsedResponse =
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ListUsersPaginationResponse.class);
                 double newPageNumber =
                         request.getPage().map((Double page) -> page + 1.0).orElse(1.0);
                 ListUsersDoubleOffsetPaginationRequest nextRequest = ListUsersDoubleOffsetPaginationRequest.builder()
@@ -386,12 +379,9 @@ public class RawInlineUsersClient {
                                 .body()),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPaginationApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPaginationException("Network error executing HTTP request", e);
         }
@@ -433,9 +423,10 @@ public class RawInlineUsersClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 ListUsersPaginationResponse parsedResponse =
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ListUsersPaginationResponse.class);
                 int newPageNumber = request.getPagination()
                         .flatMap(WithPage::getPage)
                         .map((Integer page) -> page + 1)
@@ -455,12 +446,9 @@ public class RawInlineUsersClient {
                                 .body()),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPaginationApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPaginationException("Network error executing HTTP request", e);
         }
@@ -505,9 +493,10 @@ public class RawInlineUsersClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 ListUsersPaginationResponse parsedResponse =
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ListUsersPaginationResponse.class);
                 int newPageNumber =
                         request.getPage().map((Integer page) -> page + 1).orElse(1);
                 ListUsersOffsetStepPaginationRequest nextRequest = ListUsersOffsetStepPaginationRequest.builder()
@@ -521,12 +510,9 @@ public class RawInlineUsersClient {
                                 .body()),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPaginationApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPaginationException("Network error executing HTTP request", e);
         }
@@ -571,9 +557,10 @@ public class RawInlineUsersClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 ListUsersPaginationResponse parsedResponse =
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ListUsersPaginationResponse.class);
                 int newPageNumber =
                         request.getPage().map((Integer page) -> page + 1).orElse(1);
                 ListWithOffsetPaginationHasNextPageRequest nextRequest =
@@ -589,12 +576,9 @@ public class RawInlineUsersClient {
                                         .body()),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPaginationApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPaginationException("Network error executing HTTP request", e);
         }
@@ -630,9 +614,10 @@ public class RawInlineUsersClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 ListUsersExtendedResponse parsedResponse =
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersExtendedResponse.class);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ListUsersExtendedResponse.class);
                 Optional<UUID> startingAfter = parsedResponse.getNext();
                 ListUsersExtendedRequest nextRequest = ListUsersExtendedRequest.builder()
                         .from(request)
@@ -646,12 +631,9 @@ public class RawInlineUsersClient {
                                         .body()),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPaginationApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPaginationException("Network error executing HTTP request", e);
         }
@@ -688,9 +670,10 @@ public class RawInlineUsersClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 ListUsersExtendedOptionalListResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), ListUsersExtendedOptionalListResponse.class);
+                        responseBodyString, ListUsersExtendedOptionalListResponse.class);
                 Optional<UUID> startingAfter = parsedResponse.getNext();
                 ListUsersExtendedRequestForOptionalData nextRequest = ListUsersExtendedRequestForOptionalData.builder()
                         .from(request)
@@ -706,12 +689,9 @@ public class RawInlineUsersClient {
                                         .body()),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPaginationApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPaginationException("Network error executing HTTP request", e);
         }
@@ -746,9 +726,10 @@ public class RawInlineUsersClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 UsernameCursor parsedResponse =
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UsernameCursor.class);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UsernameCursor.class);
                 Optional<String> startingAfter = parsedResponse.getCursor().getAfter();
                 ListUsernamesRequest nextRequest = ListUsernamesRequest.builder()
                         .from(request)
@@ -762,12 +743,9 @@ public class RawInlineUsersClient {
                                         .body()),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPaginationApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPaginationException("Network error executing HTTP request", e);
         }
@@ -803,9 +781,10 @@ public class RawInlineUsersClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 UsernameContainer parsedResponse =
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UsernameContainer.class);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UsernameContainer.class);
                 int newPageNumber =
                         request.getOffset().map((Integer page) -> page + 1).orElse(1);
                 ListWithGlobalConfigRequest nextRequest = ListWithGlobalConfigRequest.builder()
@@ -819,12 +798,9 @@ public class RawInlineUsersClient {
                                         .body()),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPaginationApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedPaginationException("Network error executing HTTP request", e);
         }

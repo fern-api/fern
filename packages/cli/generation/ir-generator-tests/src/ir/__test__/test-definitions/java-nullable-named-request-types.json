@@ -2659,6 +2659,7 @@
         "generatorConfig": null
     },
     "audiences": null,
+    "generationMetadata": null,
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {

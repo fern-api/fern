@@ -4,7 +4,7 @@ import Exhaustive
 
 @Suite("NoReqBodyClient Wire Tests") struct NoReqBodyClientWireTests {
     @Test func getWithNoRequestBody1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -45,8 +45,8 @@ import Exhaustive
             double: Optional(1.1),
             bool: Optional(true),
             datetime: Optional(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-            date: Optional(try! CalendarDate("2023-01-15")),
-            uuid: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")),
+            date: Optional(CalendarDate("2023-01-15")!),
+            uuid: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!),
             base64: Optional("SGVsbG8gd29ybGQh"),
             list: Optional([
                 "list",
@@ -58,12 +58,12 @@ import Exhaustive
             ]),
             bigint: Optional("1000000")
         )
-        let response = try await client.noReqBody.getWithNoRequestBody()
+        let response = try await client.noReqBody.getWithNoRequestBody(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
     @Test func postWithNoRequestBody1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -77,7 +77,7 @@ import Exhaustive
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.noReqBody.postWithNoRequestBody()
+        let response = try await client.noReqBody.postWithNoRequestBody(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

@@ -9647,14 +9647,13 @@
               "userId": "string",
               "userDetails": {
                 "name": {
-                  "firstName": "string",
-                  "middleName": "string",
-                  "lastName": "string"
+                  "firstName": "Baran",
+                  "middleName": "Realblood",
+                  "lastName": "Ozkan"
                 },
-                "dateOfBirth": "string",
-                "countryOfResidence": "AF",
-                "countryOfNationality": "AF",
-                "gender": "M"
+                "dateOfBirth": "1991-01-01",
+                "countryOfResidence": "US",
+                "countryOfNationality": "DE"
               },
               "createdTimestamp": 2700000000000,
               "userStateDetails": {
@@ -9680,9 +9679,9 @@
                     }
                   ],
                   "nameOnDocument": {
-                    "firstName": "string",
-                    "middleName": "string",
-                    "lastName": "string"
+                    "firstName": "Baran",
+                    "middleName": "Realblood",
+                    "lastName": "Ozkan"
                   }
                 }
               ],
@@ -9719,28 +9718,28 @@
               },
               "transactionLimits": {
                 "maximumDailyTransactionLimit": {
-                  "amountValue": 1.1,
-                  "amountCurrency": "1INCH"
+                  "amountValue": 800,
+                  "amountCurrency": "GBP"
                 },
                 "maximumWeeklyTransactionLimit": {
-                  "amountValue": 1.1,
-                  "amountCurrency": "1INCH"
+                  "amountValue": 800,
+                  "amountCurrency": "GBP"
                 },
                 "maximumMonthlyTransactionLimit": {
-                  "amountValue": 1.1,
-                  "amountCurrency": "1INCH"
+                  "amountValue": 800,
+                  "amountCurrency": "GBP"
                 },
                 "maximumQuarterlyTransactionLimit": {
-                  "amountValue": 1.1,
-                  "amountCurrency": "1INCH"
+                  "amountValue": 800,
+                  "amountCurrency": "GBP"
                 },
                 "maximumTransactionLimit": {
-                  "amountValue": 1.1,
-                  "amountCurrency": "1INCH"
+                  "amountValue": 800,
+                  "amountCurrency": "GBP"
                 },
                 "maximumYearlyTransactionLimit": {
-                  "amountValue": 1.1,
-                  "amountCurrency": "1INCH"
+                  "amountValue": 800,
+                  "amountCurrency": "GBP"
                 },
                 "paymentMethodLimits": {
                   "ACH": {
@@ -9752,38 +9751,38 @@
                     },
                     "transactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     },
                     "averageTransactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     }
                   },
@@ -9796,38 +9795,38 @@
                     },
                     "transactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     },
                     "averageTransactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     }
                   },
@@ -9840,38 +9839,38 @@
                     },
                     "transactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     },
                     "averageTransactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     }
                   },
@@ -9884,38 +9883,38 @@
                     },
                     "transactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     },
                     "averageTransactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     }
                   },
@@ -9928,38 +9927,38 @@
                     },
                     "transactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     },
                     "averageTransactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     }
                   },
@@ -9972,38 +9971,38 @@
                     },
                     "transactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     },
                     "averageTransactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     }
                   },
@@ -10016,38 +10015,38 @@
                     },
                     "transactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     },
                     "averageTransactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     }
                   },
@@ -10060,38 +10059,38 @@
                     },
                     "transactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     },
                     "averageTransactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     }
                   },
@@ -10104,38 +10103,38 @@
                     },
                     "transactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     },
                     "averageTransactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     }
                   }
@@ -10225,14 +10224,13 @@
                 "userId": "string",
                 "userDetails": {
                   "name": {
-                    "firstName": "string",
-                    "middleName": "string",
-                    "lastName": "string"
+                    "firstName": "Baran",
+                    "middleName": "Realblood",
+                    "lastName": "Ozkan"
                   },
-                  "dateOfBirth": "string",
-                  "countryOfResidence": "AF",
-                  "countryOfNationality": "AF",
-                  "gender": "M"
+                  "dateOfBirth": "1991-01-01",
+                  "countryOfResidence": "US",
+                  "countryOfNationality": "DE"
                 },
                 "createdTimestamp": 2700000000000,
                 "userStateDetails": {
@@ -10258,9 +10256,9 @@
                       }
                     ],
                     "nameOnDocument": {
-                      "firstName": "string",
-                      "middleName": "string",
-                      "lastName": "string"
+                      "firstName": "Baran",
+                      "middleName": "Realblood",
+                      "lastName": "Ozkan"
                     }
                   }
                 ],
@@ -10297,28 +10295,28 @@
                 },
                 "transactionLimits": {
                   "maximumDailyTransactionLimit": {
-                    "amountValue": 1.1,
-                    "amountCurrency": "1INCH"
+                    "amountValue": 800,
+                    "amountCurrency": "GBP"
                   },
                   "maximumWeeklyTransactionLimit": {
-                    "amountValue": 1.1,
-                    "amountCurrency": "1INCH"
+                    "amountValue": 800,
+                    "amountCurrency": "GBP"
                   },
                   "maximumMonthlyTransactionLimit": {
-                    "amountValue": 1.1,
-                    "amountCurrency": "1INCH"
+                    "amountValue": 800,
+                    "amountCurrency": "GBP"
                   },
                   "maximumQuarterlyTransactionLimit": {
-                    "amountValue": 1.1,
-                    "amountCurrency": "1INCH"
+                    "amountValue": 800,
+                    "amountCurrency": "GBP"
                   },
                   "maximumTransactionLimit": {
-                    "amountValue": 1.1,
-                    "amountCurrency": "1INCH"
+                    "amountValue": 800,
+                    "amountCurrency": "GBP"
                   },
                   "maximumYearlyTransactionLimit": {
-                    "amountValue": 1.1,
-                    "amountCurrency": "1INCH"
+                    "amountValue": 800,
+                    "amountCurrency": "GBP"
                   },
                   "paymentMethodLimits": {
                     "ACH": {
@@ -10330,38 +10328,38 @@
                       },
                       "transactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       },
                       "averageTransactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       }
                     },
@@ -10374,38 +10372,38 @@
                       },
                       "transactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       },
                       "averageTransactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       }
                     },
@@ -10418,38 +10416,38 @@
                       },
                       "transactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       },
                       "averageTransactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       }
                     },
@@ -10462,38 +10460,38 @@
                       },
                       "transactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       },
                       "averageTransactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       }
                     },
@@ -10506,38 +10504,38 @@
                       },
                       "transactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       },
                       "averageTransactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       }
                     },
@@ -10550,38 +10548,38 @@
                       },
                       "transactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       },
                       "averageTransactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       }
                     },
@@ -10594,38 +10592,38 @@
                       },
                       "transactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       },
                       "averageTransactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       }
                     },
@@ -10638,38 +10636,38 @@
                       },
                       "transactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       },
                       "averageTransactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       }
                     },
@@ -10682,38 +10680,38 @@
                       },
                       "transactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       },
                       "averageTransactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       }
                     }
@@ -10943,50 +10941,27 @@
               },
               "legalEntity": {
                 "companyGeneralDetails": {
-                  "legalName": "string",
+                  "legalName": "Ozkan Hazelnut Export JSC",
                   "businessIndustry": [
-                    "string"
+                    "Farming"
                   ],
                   "mainProductsServicesSold": [
-                    "string"
-                  ],
-                  "userSegment": "SOLE_PROPRIETORSHIP",
-                  "userRegistrationStatus": "REGISTERED",
-                  "tags": [
-                    {
-                      "key": "string",
-                      "value": "string"
-                    }
+                    "Hazelnut"
                   ]
                 },
                 "companyFinancialDetails": {
                   "expectedTransactionAmountPerMonth": {
-                    "amountValue": 1.1,
-                    "amountCurrency": "1INCH"
+                    "amountValue": 800,
+                    "amountCurrency": "GBP"
                   },
                   "expectedTurnoverPerMonth": {
-                    "amountValue": 1.1,
-                    "amountCurrency": "1INCH"
-                  },
-                  "tags": [
-                    {
-                      "key": "string",
-                      "value": "string"
-                    }
-                  ]
+                    "amountValue": 8000,
+                    "amountCurrency": "USD"
+                  }
                 },
                 "companyRegistrationDetails": {
-                  "registrationIdentifier": "string",
-                  "registrationCountry": "AF",
-                  "taxIdentifier": "string",
-                  "legalEntityType": "string",
-                  "dateOfRegistration": "string",
-                  "tags": [
-                    {
-                      "key": "string",
-                      "value": "string"
-                    }
-                  ]
+                  "registrationIdentifier": "PSJ554342",
+                  "registrationCountry": "DE"
                 },
                 "reasonForAccountOpening": [
                   "string"
@@ -11027,14 +11002,13 @@
                 {
                   "generalDetails": {
                     "name": {
-                      "firstName": "string",
-                      "middleName": "string",
-                      "lastName": "string"
+                      "firstName": "Baran",
+                      "middleName": "Realblood",
+                      "lastName": "Ozkan"
                     },
-                    "dateOfBirth": "string",
-                    "countryOfResidence": "AF",
-                    "countryOfNationality": "AF",
-                    "gender": "M"
+                    "dateOfBirth": "1991-01-01",
+                    "countryOfResidence": "US",
+                    "countryOfNationality": "DE"
                   },
                   "legalDocuments": [
                     {
@@ -11050,9 +11024,9 @@
                         }
                       ],
                       "nameOnDocument": {
-                        "firstName": "string",
-                        "middleName": "string",
-                        "lastName": "string"
+                        "firstName": "Baran",
+                        "middleName": "Realblood",
+                        "lastName": "Ozkan"
                       }
                     }
                   ],
@@ -11105,14 +11079,13 @@
                 {
                   "generalDetails": {
                     "name": {
-                      "firstName": "string",
-                      "middleName": "string",
-                      "lastName": "string"
+                      "firstName": "Baran",
+                      "middleName": "Realblood",
+                      "lastName": "Ozkan"
                     },
-                    "dateOfBirth": "string",
-                    "countryOfResidence": "AF",
-                    "countryOfNationality": "AF",
-                    "gender": "M"
+                    "dateOfBirth": "1991-01-01",
+                    "countryOfResidence": "US",
+                    "countryOfNationality": "DE"
                   },
                   "legalDocuments": [
                     {
@@ -11128,9 +11101,9 @@
                         }
                       ],
                       "nameOnDocument": {
-                        "firstName": "string",
-                        "middleName": "string",
-                        "lastName": "string"
+                        "firstName": "Baran",
+                        "middleName": "Realblood",
+                        "lastName": "Ozkan"
                       }
                     }
                   ],
@@ -11181,28 +11154,28 @@
               ],
               "transactionLimits": {
                 "maximumDailyTransactionLimit": {
-                  "amountValue": 1.1,
-                  "amountCurrency": "1INCH"
+                  "amountValue": 800,
+                  "amountCurrency": "GBP"
                 },
                 "maximumWeeklyTransactionLimit": {
-                  "amountValue": 1.1,
-                  "amountCurrency": "1INCH"
+                  "amountValue": 800,
+                  "amountCurrency": "GBP"
                 },
                 "maximumMonthlyTransactionLimit": {
-                  "amountValue": 1.1,
-                  "amountCurrency": "1INCH"
+                  "amountValue": 800,
+                  "amountCurrency": "GBP"
                 },
                 "maximumQuarterlyTransactionLimit": {
-                  "amountValue": 1.1,
-                  "amountCurrency": "1INCH"
+                  "amountValue": 800,
+                  "amountCurrency": "GBP"
                 },
                 "maximumTransactionLimit": {
-                  "amountValue": 1.1,
-                  "amountCurrency": "1INCH"
+                  "amountValue": 800,
+                  "amountCurrency": "GBP"
                 },
                 "maximumYearlyTransactionLimit": {
-                  "amountValue": 1.1,
-                  "amountCurrency": "1INCH"
+                  "amountValue": 800,
+                  "amountCurrency": "GBP"
                 },
                 "paymentMethodLimits": {
                   "ACH": {
@@ -11214,38 +11187,38 @@
                     },
                     "transactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     },
                     "averageTransactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     }
                   },
@@ -11258,38 +11231,38 @@
                     },
                     "transactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     },
                     "averageTransactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     }
                   },
@@ -11302,38 +11275,38 @@
                     },
                     "transactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     },
                     "averageTransactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     }
                   },
@@ -11346,38 +11319,38 @@
                     },
                     "transactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     },
                     "averageTransactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     }
                   },
@@ -11390,38 +11363,38 @@
                     },
                     "transactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     },
                     "averageTransactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     }
                   },
@@ -11434,38 +11407,38 @@
                     },
                     "transactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     },
                     "averageTransactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     }
                   },
@@ -11478,38 +11451,38 @@
                     },
                     "transactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     },
                     "averageTransactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     }
                   },
@@ -11522,38 +11495,38 @@
                     },
                     "transactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     },
                     "averageTransactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     }
                   },
@@ -11566,38 +11539,38 @@
                     },
                     "transactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     },
                     "averageTransactionAmountLimit": {
                       "day": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "week": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "month": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       },
                       "year": {
-                        "amountValue": 1.1,
-                        "amountCurrency": "1INCH"
+                        "amountValue": 800,
+                        "amountCurrency": "GBP"
                       }
                     }
                   }
@@ -11617,34 +11590,10 @@
               "savedPaymentDetails": [
                 {
                   "method": "CARD",
-                  "cardFingerprint": "string",
-                  "cardIssuedCountry": "AF",
-                  "transactionReferenceField": "string",
-                  "3dsDone": true,
-                  "nameOnCard": {
-                    "firstName": "string",
-                    "middleName": "string",
-                    "lastName": "string"
-                  },
-                  "cardExpiry": {
-                    "month": 1.1,
-                    "year": 1.1
-                  },
-                  "cardLast4Digits": "string",
-                  "cardBrand": "VISA",
-                  "cardFunding": "CREDIT",
-                  "cardAuthenticated": true,
-                  "paymentChannel": "string",
-                  "cardType": "VIRTUAL",
-                  "merchantDetails": {
-                    "id": "string",
-                    "category": "string",
-                    "MCC": "string",
-                    "city": "string",
-                    "country": "string",
-                    "state": "string",
-                    "postCode": "string"
-                  }
+                  "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                  "cardIssuedCountry": "TR",
+                  "transactionReferenceField": "Deposit",
+                  "3dsDone": true
                 }
               ],
               "mccDetails": {
@@ -11733,50 +11682,27 @@
                 },
                 "legalEntity": {
                   "companyGeneralDetails": {
-                    "legalName": "string",
+                    "legalName": "Ozkan Hazelnut Export JSC",
                     "businessIndustry": [
-                      "string"
+                      "Farming"
                     ],
                     "mainProductsServicesSold": [
-                      "string"
-                    ],
-                    "userSegment": "SOLE_PROPRIETORSHIP",
-                    "userRegistrationStatus": "REGISTERED",
-                    "tags": [
-                      {
-                        "key": "string",
-                        "value": "string"
-                      }
+                      "Hazelnut"
                     ]
                   },
                   "companyFinancialDetails": {
                     "expectedTransactionAmountPerMonth": {
-                      "amountValue": 1.1,
-                      "amountCurrency": "1INCH"
+                      "amountValue": 800,
+                      "amountCurrency": "GBP"
                     },
                     "expectedTurnoverPerMonth": {
-                      "amountValue": 1.1,
-                      "amountCurrency": "1INCH"
-                    },
-                    "tags": [
-                      {
-                        "key": "string",
-                        "value": "string"
-                      }
-                    ]
+                      "amountValue": 8000,
+                      "amountCurrency": "USD"
+                    }
                   },
                   "companyRegistrationDetails": {
-                    "registrationIdentifier": "string",
-                    "registrationCountry": "AF",
-                    "taxIdentifier": "string",
-                    "legalEntityType": "string",
-                    "dateOfRegistration": "string",
-                    "tags": [
-                      {
-                        "key": "string",
-                        "value": "string"
-                      }
-                    ]
+                    "registrationIdentifier": "PSJ554342",
+                    "registrationCountry": "DE"
                   },
                   "reasonForAccountOpening": [
                     "string"
@@ -11817,14 +11743,13 @@
                   {
                     "generalDetails": {
                       "name": {
-                        "firstName": "string",
-                        "middleName": "string",
-                        "lastName": "string"
+                        "firstName": "Baran",
+                        "middleName": "Realblood",
+                        "lastName": "Ozkan"
                       },
-                      "dateOfBirth": "string",
-                      "countryOfResidence": "AF",
-                      "countryOfNationality": "AF",
-                      "gender": "M"
+                      "dateOfBirth": "1991-01-01",
+                      "countryOfResidence": "US",
+                      "countryOfNationality": "DE"
                     },
                     "legalDocuments": [
                       {
@@ -11840,9 +11765,9 @@
                           }
                         ],
                         "nameOnDocument": {
-                          "firstName": "string",
-                          "middleName": "string",
-                          "lastName": "string"
+                          "firstName": "Baran",
+                          "middleName": "Realblood",
+                          "lastName": "Ozkan"
                         }
                       }
                     ],
@@ -11895,14 +11820,13 @@
                   {
                     "generalDetails": {
                       "name": {
-                        "firstName": "string",
-                        "middleName": "string",
-                        "lastName": "string"
+                        "firstName": "Baran",
+                        "middleName": "Realblood",
+                        "lastName": "Ozkan"
                       },
-                      "dateOfBirth": "string",
-                      "countryOfResidence": "AF",
-                      "countryOfNationality": "AF",
-                      "gender": "M"
+                      "dateOfBirth": "1991-01-01",
+                      "countryOfResidence": "US",
+                      "countryOfNationality": "DE"
                     },
                     "legalDocuments": [
                       {
@@ -11918,9 +11842,9 @@
                           }
                         ],
                         "nameOnDocument": {
-                          "firstName": "string",
-                          "middleName": "string",
-                          "lastName": "string"
+                          "firstName": "Baran",
+                          "middleName": "Realblood",
+                          "lastName": "Ozkan"
                         }
                       }
                     ],
@@ -11971,28 +11895,28 @@
                 ],
                 "transactionLimits": {
                   "maximumDailyTransactionLimit": {
-                    "amountValue": 1.1,
-                    "amountCurrency": "1INCH"
+                    "amountValue": 800,
+                    "amountCurrency": "GBP"
                   },
                   "maximumWeeklyTransactionLimit": {
-                    "amountValue": 1.1,
-                    "amountCurrency": "1INCH"
+                    "amountValue": 800,
+                    "amountCurrency": "GBP"
                   },
                   "maximumMonthlyTransactionLimit": {
-                    "amountValue": 1.1,
-                    "amountCurrency": "1INCH"
+                    "amountValue": 800,
+                    "amountCurrency": "GBP"
                   },
                   "maximumQuarterlyTransactionLimit": {
-                    "amountValue": 1.1,
-                    "amountCurrency": "1INCH"
+                    "amountValue": 800,
+                    "amountCurrency": "GBP"
                   },
                   "maximumTransactionLimit": {
-                    "amountValue": 1.1,
-                    "amountCurrency": "1INCH"
+                    "amountValue": 800,
+                    "amountCurrency": "GBP"
                   },
                   "maximumYearlyTransactionLimit": {
-                    "amountValue": 1.1,
-                    "amountCurrency": "1INCH"
+                    "amountValue": 800,
+                    "amountCurrency": "GBP"
                   },
                   "paymentMethodLimits": {
                     "ACH": {
@@ -12004,38 +11928,38 @@
                       },
                       "transactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       },
                       "averageTransactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       }
                     },
@@ -12048,38 +11972,38 @@
                       },
                       "transactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       },
                       "averageTransactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       }
                     },
@@ -12092,38 +12016,38 @@
                       },
                       "transactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       },
                       "averageTransactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       }
                     },
@@ -12136,38 +12060,38 @@
                       },
                       "transactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       },
                       "averageTransactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       }
                     },
@@ -12180,38 +12104,38 @@
                       },
                       "transactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       },
                       "averageTransactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       }
                     },
@@ -12224,38 +12148,38 @@
                       },
                       "transactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       },
                       "averageTransactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       }
                     },
@@ -12268,38 +12192,38 @@
                       },
                       "transactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       },
                       "averageTransactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       }
                     },
@@ -12312,38 +12236,38 @@
                       },
                       "transactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       },
                       "averageTransactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       }
                     },
@@ -12356,38 +12280,38 @@
                       },
                       "transactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       },
                       "averageTransactionAmountLimit": {
                         "day": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "week": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "month": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         },
                         "year": {
-                          "amountValue": 1.1,
-                          "amountCurrency": "1INCH"
+                          "amountValue": 800,
+                          "amountCurrency": "GBP"
                         }
                       }
                     }
@@ -12407,34 +12331,10 @@
                 "savedPaymentDetails": [
                   {
                     "method": "CARD",
-                    "cardFingerprint": "string",
-                    "cardIssuedCountry": "AF",
-                    "transactionReferenceField": "string",
-                    "3dsDone": true,
-                    "nameOnCard": {
-                      "firstName": "string",
-                      "middleName": "string",
-                      "lastName": "string"
-                    },
-                    "cardExpiry": {
-                      "month": 1.1,
-                      "year": 1.1
-                    },
-                    "cardLast4Digits": "string",
-                    "cardBrand": "VISA",
-                    "cardFunding": "CREDIT",
-                    "cardAuthenticated": true,
-                    "paymentChannel": "string",
-                    "cardType": "VIRTUAL",
-                    "merchantDetails": {
-                      "id": "string",
-                      "category": "string",
-                      "MCC": "string",
-                      "city": "string",
-                      "country": "string",
-                      "state": "string",
-                      "postCode": "string"
-                    }
+                    "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                    "cardIssuedCountry": "TR",
+                    "transactionReferenceField": "Deposit",
+                    "3dsDone": true
                   }
                 ],
                 "mccDetails": {

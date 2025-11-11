@@ -86,12 +86,18 @@ public interface ICustomConfig {
     @Value.Default
     @JsonProperty("enable-wire-tests")
     default Boolean enableWireTests() {
-        return true;
+        return false;
     }
 
     @Value.Default
     @JsonProperty("use-nullable-annotation")
     default Boolean useNullableAnnotation() {
+        return false;
+    }
+
+    @Value.Default
+    @JsonProperty("collapse-optional-nullable")
+    default Boolean collapseOptionalNullable() {
         return false;
     }
 

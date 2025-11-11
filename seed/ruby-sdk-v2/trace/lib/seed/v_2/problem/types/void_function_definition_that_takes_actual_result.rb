@@ -8,7 +8,7 @@ module Seed
         class VoidFunctionDefinitionThatTakesActualResult < Internal::Types::Model
           field :additional_parameters, lambda {
             Internal::Types::Array[Seed::V2::Problem::Types::Parameter]
-          }, optional: false, nullable: false
+          }, optional: false, nullable: false, api_name: "additionalParameters"
           field :code, lambda {
             Seed::V2::Problem::Types::FunctionImplementationForMultipleLanguages
           }, optional: false, nullable: false

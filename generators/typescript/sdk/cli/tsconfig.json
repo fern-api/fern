@@ -9,28 +9,31 @@
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
     {
-      "path": "../../../../packages/commons/fs-utils"
+      "path": "../../../../packages/cli/logger"
     },
     {
-      "path": "../../../base"
-    },
-    {
-      "path": "../../../typescript-v2/ast"
-    },
-    {
-      "path": "../../../typescript-v2/base"
-    },
-    {
-      "path": "../../utils/abstract-generator-cli"
-    },
-    {
-      "path": "../../utils/commons"
+      "path": "../generator"
     },
     {
       "path": "../../utils/contexts"
     },
     {
-      "path": "../generator"
+      "path": "../../utils/commons"
+    },
+    {
+      "path": "../../utils/abstract-generator-cli"
+    },
+    {
+      "path": "../../../typescript-v2/base"
+    },
+    {
+      "path": "../../../typescript-v2/ast"
+    },
+    {
+      "path": "../../../../packages/commons/fs-utils"
+    },
+    {
+      "path": "../../../base"
     }
   ]
 }

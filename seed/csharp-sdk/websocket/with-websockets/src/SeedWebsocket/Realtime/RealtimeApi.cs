@@ -1,7 +1,5 @@
-using System.IO;
 using System.Net.WebSockets;
 using System.Text.Json;
-using System.Threading.Tasks;
 using SeedWebsocket.Core;
 using SeedWebsocket.Core.Async;
 using SeedWebsocket.Core.Async.Events;
@@ -41,13 +39,13 @@ public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
     public RealtimeApi(RealtimeApi.Options options)
         : base(options) { }
 
-    public string Id
+    public string SessionId
     {
-        get => ApiOptions.Id;
+        get => ApiOptions.SessionId;
         set =>
             NotifyIfPropertyChanged(
-                EqualityComparer<string>.Default.Equals(ApiOptions.Id),
-                ApiOptions.Id = value
+                EqualityComparer<string>.Default.Equals(ApiOptions.SessionId),
+                ApiOptions.SessionId = value
             );
     }
 
@@ -80,7 +78,7 @@ public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
         {
             Query = new Query() { { "model", Model }, { "temperature", Temperature } },
         };
-        uri.Path = $"{uri.Path.TrimEnd('/')}/realtime/{Uri.EscapeDataString(Id)}";
+        uri.Path = $"{uri.Path.TrimEnd('/')}/realtime/{Uri.EscapeDataString(SessionId)}";
         return uri.Uri;
     }
 
@@ -187,6 +185,6 @@ public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
 
         public int? Temperature { get; set; }
 
-        public required string Id { get; set; }
+        public required string SessionId { get; set; }
     }
 }

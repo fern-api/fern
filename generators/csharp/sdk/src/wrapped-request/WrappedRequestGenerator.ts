@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { ast } from "@fern-api/csharp-codegen";
+import { ast, Writer } from "@fern-api/csharp-codegen";
 import { ExampleGenerator, generateField, generateFieldForFileProperty } from "@fern-api/fern-csharp-model";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
@@ -37,7 +37,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         super(context);
         this.wrapper = wrapper;
         this.serviceId = serviceId;
-        this.classReference = this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
+        this.classReference = this.context.common.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
 
         this.endpoint = endpoint;
         this.exampleGenerator = new ExampleGenerator(context);
@@ -45,62 +45,61 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
 
     protected doGenerate(): CSharpFile {
         const class_ = this.csharp.class_({
-            ...this.classReference,
+            reference: this.classReference,
             partial: false,
             access: ast.Access.Public,
             type: ast.Class.ClassType.Record,
-            annotations: [this.context.getSerializableAttribute()]
+            annotations: [this.extern.System.Serializable]
         });
 
-        const service = this.context.getHttpServiceOrThrow(this.serviceId);
+        const service = this.context.common.getHttpServiceOrThrow(this.serviceId);
         const isProtoRequest = this.context.endpointUsesGrpcTransport(service, this.endpoint);
         const protobufProperties: { propertyName: string; typeReference: TypeReference }[] = [];
 
         if (this.context.includePathParametersInWrappedRequest({ endpoint: this.endpoint, wrapper: this.wrapper })) {
             for (const pathParameter of this.endpoint.allPathParameters) {
-                class_.addField(
-                    this.csharp.field({
-                        name: pathParameter.name.pascalCase.safeName,
-                        type: this.context.csharpTypeMapper.convert({ reference: pathParameter.valueType }),
-                        access: ast.Access.Public,
-                        get: true,
-                        set: true,
-                        summary: pathParameter.docs,
-                        useRequired: true,
-                        initializer: this.context.getLiteralInitializerFromTypeReference({
-                            typeReference: pathParameter.valueType
-                        }),
-                        annotations: [this.context.getJsonIgnoreAnnotation()]
-                    })
-                );
+                class_.addField({
+                    origin: pathParameter,
+                    type: this.context.csharpTypeMapper.convert({ reference: pathParameter.valueType }),
+                    access: ast.Access.Public,
+                    get: true,
+                    set: true,
+                    summary: pathParameter.docs,
+                    useRequired: true,
+                    initializer: this.context.common.getLiteralInitializerFromTypeReference({
+                        typeReference: pathParameter.valueType
+                    }),
+                    annotations: [this.extern.System.Text.Json.Serialization.JsonIgnore]
+                });
             }
         }
 
         for (const query of this.endpoint.queryParameters) {
-            const propertyName = query.name.name.pascalCase.safeName;
             const type = query.allowMultiple
                 ? this.csharp.Type.list(
-                      this.context.csharpTypeMapper.convert({ reference: query.valueType, unboxOptionals: true })
+                      this.context.csharpTypeMapper.convert({
+                          reference: query.valueType,
+                          unboxOptionals: true
+                      })
                   )
                 : this.context.csharpTypeMapper.convert({ reference: query.valueType });
-            class_.addField(
-                this.csharp.field({
-                    name: propertyName,
-                    type,
-                    access: ast.Access.Public,
-                    get: true,
-                    set: true,
-                    summary: query.docs,
-                    useRequired: true,
-                    initializer: this.context.getLiteralInitializerFromTypeReference({
-                        typeReference: query.valueType
-                    }),
-                    annotations: [this.context.getJsonIgnoreAnnotation()]
-                })
-            );
+            const field = class_.addField({
+                origin: query,
+                type,
+                access: ast.Access.Public,
+                get: true,
+                set: true,
+                summary: query.docs,
+                useRequired: true,
+                initializer: this.context.common.getLiteralInitializerFromTypeReference({
+                    typeReference: query.valueType
+                }),
+                annotations: [this.extern.System.Text.Json.Serialization.JsonIgnore]
+            });
+
             if (isProtoRequest) {
                 protobufProperties.push({
-                    propertyName,
+                    propertyName: field.name,
                     typeReference: query.allowMultiple
                         ? TypeReference.container(ContainerType.list(query.valueType))
                         : query.valueType
@@ -108,48 +107,43 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             }
         }
         for (const header of [...service.headers, ...this.endpoint.headers]) {
-            class_.addField(
-                this.csharp.field({
-                    name: header.name.name.pascalCase.safeName,
-                    type: this.context.csharpTypeMapper.convert({ reference: header.valueType }),
-                    access: ast.Access.Public,
-                    get: true,
-                    set: true,
-                    summary: header.docs,
-                    useRequired: true,
-                    initializer: this.context.getLiteralInitializerFromTypeReference({
-                        typeReference: header.valueType
-                    }),
-                    annotations: [this.context.getJsonIgnoreAnnotation()]
-                })
-            );
+            class_.addField({
+                origin: header,
+                type: this.context.csharpTypeMapper.convert({ reference: header.valueType }),
+                access: ast.Access.Public,
+                get: true,
+                set: true,
+                summary: header.docs,
+                useRequired: true,
+                initializer: this.context.common.getLiteralInitializerFromTypeReference({
+                    typeReference: header.valueType
+                }),
+                annotations: [this.extern.System.Text.Json.Serialization.JsonIgnore]
+            });
         }
 
         this.endpoint.requestBody?._visit({
             reference: (reference) => {
                 const type = this.context.csharpTypeMapper.convert({ reference: reference.requestBodyType });
-                const useRequired = !type.isOptional();
-                class_.addField(
-                    this.csharp.field({
-                        name: this.wrapper.bodyKey.pascalCase.safeName,
-                        type,
-                        access: ast.Access.Public,
-                        get: true,
-                        set: true,
-                        summary: reference.docs,
-                        useRequired,
-                        annotations: [this.context.getJsonIgnoreAnnotation()]
-                    })
-                );
+                const useRequired = !type.isOptional;
+                class_.addField({
+                    origin: this.wrapper.bodyKey,
+                    type,
+                    access: ast.Access.Public,
+                    get: true,
+                    set: true,
+                    summary: reference.docs,
+                    useRequired,
+                    annotations: [this.extern.System.Text.Json.Serialization.JsonIgnore]
+                });
             },
             inlinedRequestBody: (request) => {
                 for (const property of [...request.properties, ...(request.extendedProperties ?? [])]) {
-                    const field = generateField({
+                    const field = generateField(class_, {
                         property,
                         className: this.classReference.name,
                         context: this.context
                     });
-                    class_.addField(field);
 
                     if (isProtoRequest) {
                         protobufProperties.push({
@@ -163,23 +157,21 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 for (const property of request.properties) {
                     switch (property.type) {
                         case "bodyProperty":
-                            class_.addField(
-                                generateField({
-                                    property,
-                                    className: this.classReference.name,
-                                    context: this.context,
-                                    jsonProperty: false
-                                })
-                            );
+                            generateField(class_, {
+                                property,
+                                className: this.classReference.name,
+                                context: this.context,
+                                jsonProperty: false
+                            });
+
                             break;
                         case "file":
-                            class_.addField(
-                                generateFieldForFileProperty({
-                                    property: property.value,
-                                    className: this.classReference.name,
-                                    context: this.context
-                                })
-                            );
+                            generateFieldForFileProperty(class_, {
+                                property: property.value,
+                                className: this.classReference.name,
+                                context: this.context
+                            });
+                            break;
                     }
                 }
             },
@@ -187,23 +179,23 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             _other: () => undefined
         });
 
-        class_.addMethod(this.context.getToStringMethod());
+        this.context.common.getToStringMethod(class_);
 
         if (isProtoRequest) {
-            const protobufService = this.context.protobufResolver.getProtobufServiceForServiceId(this.serviceId);
+            const protobufService = this.context.common.protobufResolver.getProtobufServiceForServiceId(this.serviceId);
             if (protobufService != null) {
                 const protobufClassReference = this.csharp.classReference({
                     name: this.classReference.name,
-                    namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufService.file),
+                    namespace: this.context.common.protobufResolver.getNamespaceFromProtobufFileOrThrow(
+                        protobufService.file
+                    ),
                     namespaceAlias: "Proto"
                 });
-                class_.addMethod(
-                    this.context.csharpProtobufTypeMapper.toProtoMethod({
-                        classReference: this.classReference,
-                        protobufClassReference,
-                        properties: protobufProperties
-                    })
-                );
+                this.context.common.csharpProtobufTypeMapper.toProtoMethod(class_, {
+                    classReference: this.classReference,
+                    protobufClassReference,
+                    properties: protobufProperties
+                });
             }
         }
 
@@ -212,8 +204,8 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             directory: this.getDirectory(),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.context.getNamespace(),
-            customConfig: this.context.customConfig
+            namespace: this.context.common.namespaces.root,
+            generation: this.context.common.generation
         });
     }
 
@@ -249,7 +241,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             });
             const value = isSingleQueryParameter
                 ? singleValueSnippet
-                : this.csharp.codeblock((writer) =>
+                : this.csharp.codeblock((writer: Writer) =>
                       writer.writeNode(
                           this.csharp.list({
                               entries: [singleValueSnippet]
@@ -303,16 +295,17 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         });
         const instantiateClass = this.csharp.instantiateClass({
             classReference: this.classReference,
-            arguments_: args
+            arguments_: args,
+            multiline: true
         });
-        return this.csharp.codeblock((writer) => writer.writeNode(instantiateClass));
+        return this.csharp.codeblock((writer: Writer) => writer.writeNode(instantiateClass));
     }
 
     protected getFilepath(): RelativeFilePath {
         return join(
-            this.context.project.filepaths.getSourceFileDirectory(),
+            this.constants.folders.sourceFiles,
             this.getDirectory(),
-            RelativeFilePath.of(this.classReference.name + ".cs")
+            RelativeFilePath.of(`${this.classReference.name}.cs`)
         );
     }
 

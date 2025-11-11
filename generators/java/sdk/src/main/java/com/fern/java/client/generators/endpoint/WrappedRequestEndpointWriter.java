@@ -138,6 +138,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             } else if (generatedWrappedRequest.requestBodyGetter().get() instanceof InlinedRequestBodyGetters) {
                 InlinedRequestBodyGetters inlinedRequestBodyGetter = ((InlinedRequestBodyGetters)
                         generatedWrappedRequest.requestBodyGetter().get());
+                // Build a properties map with only body parameters, preserving nullable semantics
                 initializeRequestBodyProperties(inlinedRequestBodyGetter, requestBodyCodeBlock);
                 initializeRequestBody(
                         generatedObjectMapper,
@@ -230,23 +231,11 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 variables.getRequestBodyPropertiesName(),
                 HashMap.class);
         for (EnrichedObjectProperty bodyProperty : inlinedRequestBody.properties()) {
-            if (typeNameIsOptional(bodyProperty.poetTypeName())) {
-                requestBodyCodeBlock
-                        .beginControlFlow(
-                                "if ($L.$N().isPresent())", requestParameterName, bodyProperty.getterProperty())
-                        .addStatement(
-                                "$L.put($S, $L)",
-                                variables.getRequestBodyPropertiesName(),
-                                bodyProperty.wireKey().get(),
-                                requestParameterName + "." + bodyProperty.getterProperty().name + "()")
-                        .endControlFlow();
-            } else {
-                requestBodyCodeBlock.addStatement(
-                        "$L.put($S, $L)",
-                        variables.getRequestBodyPropertiesName(),
-                        bodyProperty.wireKey().get(),
-                        requestParameterName + "." + bodyProperty.getterProperty().name + "()");
-            }
+            requestBodyCodeBlock.addStatement(
+                    "$L.put($S, $L)",
+                    variables.getRequestBodyPropertiesName(),
+                    bodyProperty.wireKey().get(),
+                    requestParameterName + "." + bodyProperty.getterProperty().name + "()");
         }
     }
 

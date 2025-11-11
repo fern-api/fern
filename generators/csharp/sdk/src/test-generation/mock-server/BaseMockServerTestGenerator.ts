@@ -2,15 +2,12 @@ import { NamedArgument } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-
 import { ExampleEndpointCall, Name, OAuthScheme } from "@fern-fern/ir-sdk/api";
 import { MultiUrlEnvironmentGenerator } from "../../environment/MultiUrlEnvironmentGenerator";
 import { RootClientGenerator } from "../../root-client/RootClientGenerator";
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
-import { MOCK_SERVER_TEST_FOLDER, SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { MockEndpointGenerator } from "./MockEndpointGenerator";
-
-const MOCK_OAUTH_METHOD_NAME = "MockOAuthEndpoint";
 
 export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private readonly rootClientGenerator: RootClientGenerator;
@@ -23,206 +20,158 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
 
     public doGenerate(): CSharpFile {
         const class_ = this.csharp.class_({
-            ...this.context.getBaseMockServerTestClassReference(),
+            reference: this.types.BaseMockServerTest,
             partial: false,
             access: ast.Access.Public,
-            annotations: [
-                this.csharp.annotation({
-                    reference: this.csharp.classReference({ name: "SetUpFixture", namespace: "NUnit.Framework" })
-                })
-            ]
+            annotations: [this.extern.NUnit.Framework.SetUpFixture]
         });
 
-        class_.addField(
-            this.csharp.field({
-                access: ast.Access.Protected,
-                name: "Server",
-                static_: true,
-                type: this.csharp.Type.reference(
-                    this.csharp.classReference({
-                        name: "WireMockServer",
-                        namespace: "WireMock.Server"
-                    })
-                ),
-                get: true,
-                initializer: this.csharp.codeblock("null!"),
-                set: true
-            })
-        );
+        class_.addField({
+            origin: class_.explicit("Server"),
+            access: ast.Access.Protected,
+            static_: true,
+            type: this.csharp.Type.reference(this.extern.WireMock.Server),
+            get: true,
+            initializer: this.csharp.codeblock("null!"),
+            set: true
+        });
 
-        class_.addField(
-            this.csharp.field({
-                access: ast.Access.Protected,
-                name: "Client",
-                static_: true,
-                type: this.csharp.Type.reference(
-                    this.csharp.classReference({
-                        name: this.context.getRootClientClassName(),
-                        namespace: this.context.getNamespace()
-                    })
-                ),
-                get: true,
-                initializer: this.csharp.codeblock("null!"),
-                set: true
-            })
-        );
+        class_.addField({
+            origin: class_.explicit("Client"),
+            access: ast.Access.Protected,
+            static_: true,
+            type: this.csharp.Type.reference(this.types.RootClient),
+            get: true,
+            initializer: this.csharp.codeblock("null!"),
+            set: true
+        });
 
-        class_.addField(
-            this.csharp.field({
-                access: ast.Access.Protected,
-                name: "RequestOptions",
-                static_: true,
-                type: this.csharp.Type.reference(this.context.getRequestOptionsClassReference()),
-                get: true,
-                initializer: this.csharp.codeblock("new()"),
-                set: true
-            })
-        );
+        class_.addField({
+            origin: class_.explicit("RequestOptions"),
+            access: ast.Access.Protected,
+            static_: true,
+            type: this.csharp.Type.reference(this.types.RequestOptions),
+            get: true,
+            initializer: this.csharp.codeblock("new()"),
+            set: true
+        });
 
-        if (this.context.hasIdempotencyHeaders()) {
-            const fields = this.context.getIdempotencyFields();
+        if (this.context.common.hasIdempotencyHeaders()) {
             // create an initializer for the fields
             const initializer = this.csharp.codeblock((writer) => {
                 writer.writeLine("new()");
                 writer.pushScope();
-                fields.forEach((field) => {
-                    if (field.isRequired) {
-                        writer.write(field.name, " = ", field.type.getDefaultValue(), ",");
-                        writer.writeLine();
-                    }
-                });
+                this.context.common.getIdempotencyInitializers(writer);
                 writer.popScope();
             });
 
-            class_.addField(
-                this.csharp.field({
-                    access: ast.Access.Protected,
-                    name: "IdempotentRequestOptions",
-                    static_: true,
-                    type: this.csharp.Type.reference(this.context.getIdempotentRequestOptionsClassReference()),
-                    get: true,
-                    initializer,
-                    set: true
-                })
-            );
+            class_.addField({
+                origin: class_.explicit("IdempotentRequestOptions"),
+                access: ast.Access.Protected,
+                static_: true,
+                type: this.csharp.Type.reference(this.types.IdempotentRequestOptions),
+                get: true,
+                initializer,
+                set: true
+            });
         }
 
         const oauth = this.context.getOauth();
 
-        class_.addMethod(
-            this.csharp.method({
-                name: "GlobalSetup",
-                access: ast.Access.Public,
-                body: this.csharp.codeblock((writer) => {
-                    writer.writeLine("// Start the WireMock server");
-                    writer.write("Server = WireMockServer.Start(new ");
-                    writer.writeNode(
-                        this.csharp.classReference({
-                            name: "WireMockServerSettings",
-                            namespace: "WireMock.Settings"
-                        })
-                    );
-                    writer.write(" { Logger = new ");
-                    writer.writeNode(
-                        this.csharp.classReference({
-                            name: "WireMockConsoleLogger",
-                            namespace: "WireMock.Logging"
-                        })
-                    );
-                    writer.writeTextStatement("() })");
-                    writer.newLine();
+        class_.addMethod({
+            name: "GlobalSetup",
+            access: ast.Access.Public,
+            body: this.csharp.codeblock((writer) => {
+                writer.writeLine("// Start the WireMock server");
+                writer.writeStatement(
+                    "Server = WireMockServer.Start(new ",
+                    this.extern.WireMock.WireMockServerSettings,
+                    " { Logger = new ",
+                    this.extern.WireMock.WireMockConsoleLogger,
+                    "() })"
+                );
+                writer.writeLine();
 
-                    writer.writeLine("// Initialize the Client");
-                    writer.writeLine("Client = ");
-                    writer.writeNodeStatement(
-                        this.rootClientGenerator.generateExampleClientInstantiationSnippet({
-                            includeEnvVarArguments: true,
-                            clientOptionsArgument: this.csharp.instantiateClass({
-                                classReference: this.context.getClientOptionsClassReference(),
-                                arguments_: [
-                                    this.context.ir.environments?.environments._visit<NamedArgument>({
-                                        singleBaseUrl: () => ({
-                                            name: "BaseUrl",
-                                            assignment: this.csharp.codeblock("Server.Urls[0]")
-                                        }),
-                                        multipleBaseUrls: (value) => {
-                                            const environments = new MultiUrlEnvironmentGenerator({
-                                                context: this.context,
-                                                multiUrlEnvironments: value
-                                            });
-                                            return {
-                                                name: "Environment",
-                                                assignment: environments.generateSnippet(
-                                                    this.csharp.codeblock("Server.Urls[0]")
-                                                )
-                                            };
-                                        },
-                                        _other: () => {
-                                            throw new Error("Internal error; Unexpected environment type");
-                                        }
-                                    }) ?? { name: "BaseUrl", assignment: this.csharp.codeblock("Server.Urls[0]") },
-                                    { name: "MaxRetries", assignment: this.csharp.codeblock("0") }
-                                ]
-                            })
+                writer.writeLine("// Initialize the Client");
+                writer.writeLine("Client = ");
+                writer.writeNodeStatement(
+                    this.rootClientGenerator.generateExampleClientInstantiationSnippet({
+                        includeEnvVarArguments: true,
+                        clientOptionsArgument: this.csharp.instantiateClass({
+                            classReference: this.types.ClientOptions,
+                            arguments_: [
+                                this.context.ir.environments?.environments._visit<NamedArgument>({
+                                    singleBaseUrl: () => ({
+                                        name: "BaseUrl",
+                                        assignment: this.csharp.codeblock("Server.Urls[0]")
+                                    }),
+                                    multipleBaseUrls: (value) => {
+                                        const environments = new MultiUrlEnvironmentGenerator({
+                                            context: this.context,
+                                            multiUrlEnvironments: value
+                                        });
+                                        return {
+                                            name: "Environment",
+                                            assignment: environments.generateSnippet(
+                                                this.csharp.codeblock("Server.Urls[0]")
+                                            )
+                                        };
+                                    },
+                                    _other: () => {
+                                        throw new Error("Internal error; Unexpected environment type");
+                                    }
+                                }) ?? { name: "BaseUrl", assignment: this.csharp.codeblock("Server.Urls[0]") },
+                                { name: "MaxRetries", assignment: this.csharp.codeblock("0") }
+                            ]
                         })
-                    );
-
-                    if (oauth) {
-                        writer.writeNodeStatement(
-                            this.csharp.invokeMethod({
-                                method: MOCK_OAUTH_METHOD_NAME,
-                                arguments_: []
-                            })
-                        );
-                    }
-                }),
-                isAsync: false,
-                parameters: [],
-                annotations: [
-                    this.csharp.annotation({
-                        reference: this.csharp.classReference({ name: "OneTimeSetUp", namespace: "NUnit.Framework" })
                     })
-                ]
-            })
-        );
+                );
+
+                if (oauth) {
+                    writer.writeNodeStatement(
+                        this.csharp.invokeMethod({
+                            method: this.names.methods.mockOauth,
+                            arguments_: []
+                        })
+                    );
+                }
+            }),
+            isAsync: false,
+            parameters: [],
+            annotations: [this.extern.NUnit.Framework.OneTimeSetUp]
+        });
 
         if (oauth) {
-            class_.addMethod(this.generateMockAuthMethod(oauth));
+            this.generateMockAuthMethod(oauth, class_);
         }
 
-        class_.addMethod(
-            this.csharp.method({
-                name: "GlobalTeardown",
-                access: ast.Access.Public,
-                body: this.csharp.codeblock((writer) => {
-                    writer.writeLine("Server.Stop();");
-                    writer.writeLine("Server.Dispose();");
-                }),
-                isAsync: false,
-                parameters: [],
-                annotations: [
-                    this.csharp.annotation({
-                        reference: this.csharp.classReference({ name: "OneTimeTearDown", namespace: "NUnit.Framework" })
-                    })
-                ]
-            })
-        );
+        class_.addMethod({
+            name: "GlobalTeardown",
+            access: ast.Access.Public,
+            body: this.csharp.codeblock((writer) => {
+                writer.writeLine("Server.Stop();");
+                writer.writeLine("Server.Dispose();");
+            }),
+            isAsync: false,
+            parameters: [],
+            annotations: [this.extern.NUnit.Framework.OneTimeTearDown]
+        });
 
         return new CSharpFile({
             clazz: class_,
-            directory: MOCK_SERVER_TEST_FOLDER,
+            directory: this.constants.folders.mockServerTests,
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.context.getNamespace(),
-            customConfig: this.context.customConfig
+            namespace: this.namespaces.root,
+            generation: this.generation
         });
     }
 
-    protected generateMockAuthMethod(scheme: OAuthScheme): ast.Method {
+    protected generateMockAuthMethod(scheme: OAuthScheme, cls: ast.Class) {
         const shouldScope = !!scheme.configuration.refreshEndpoint;
-        return this.csharp.method({
+        cls.addMethod({
             access: ast.Access.Private,
-            name: MOCK_OAUTH_METHOD_NAME,
+            name: this.names.methods.mockOauth,
             parameters: [],
             body: this.csharp.codeblock((writer) => {
                 if (shouldScope) {
@@ -230,7 +179,9 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                 }
                 // token endpoint
                 const tokenEndpointReference = scheme.configuration.tokenEndpoint.endpointReference;
-                const tokenEndpointHttpService = this.context.getHttpServiceOrThrow(tokenEndpointReference.serviceId);
+                const tokenEndpointHttpService = this.context.common.getHttpServiceOrThrow(
+                    tokenEndpointReference.serviceId
+                );
                 const tokenHttpEndpoint = this.context.resolveEndpointOrThrow(
                     tokenEndpointHttpService,
                     tokenEndpointReference.endpointId
@@ -279,7 +230,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                 }
                 if (scheme.configuration.refreshEndpoint) {
                     const refreshEndpointReference = scheme.configuration.refreshEndpoint.endpointReference;
-                    const refreshEndpointHttpService = this.context.getHttpServiceOrThrow(
+                    const refreshEndpointHttpService = this.context.common.getHttpServiceOrThrow(
                         refreshEndpointReference.serviceId
                     );
                     const refreshHttpEndpoint = this.context.resolveEndpointOrThrow(
@@ -310,9 +261,9 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
 
     protected getFilepath(): RelativeFilePath {
         return join(
-            this.context.project.filepaths.getTestFilesDirectory(),
-            MOCK_SERVER_TEST_FOLDER,
-            RelativeFilePath.of(`${this.context.getBaseMockServerTestClassReference().name}.cs`)
+            this.constants.folders.testFiles,
+            this.generation.constants.folders.mockServerTests,
+            RelativeFilePath.of(`${this.types.BaseMockServerTest.name}.cs`)
         );
     }
 }

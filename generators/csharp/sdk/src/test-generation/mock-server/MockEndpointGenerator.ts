@@ -1,4 +1,4 @@
-import { ast } from "@fern-api/csharp-codegen";
+import { ast, WithGeneration } from "@fern-api/csharp-codegen";
 
 import { ExampleEndpointCall, ExampleTypeReference, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody";
@@ -11,15 +11,13 @@ export declare namespace TestClass {
     }
 }
 
-export class MockEndpointGenerator {
-    constructor(private readonly context: SdkGeneratorContext) {}
+export class MockEndpointGenerator extends WithGeneration {
+    constructor(private readonly context: SdkGeneratorContext) {
+        super(context);
+    }
 
     public generateForExample(endpoint: HttpEndpoint, example: ExampleEndpointCall): ast.CodeBlock {
         return this.generateForExamples(endpoint, [example]);
-    }
-
-    private get csharp() {
-        return this.context.csharp;
     }
 
     public generateForExamples(endpoint: HttpEndpoint, examples: ExampleEndpointCall[]): ast.CodeBlock {
@@ -82,7 +80,7 @@ export class MockEndpointGenerator {
                 }
 
                 writer.write(
-                    `.Using${endpoint.method.charAt(0).toUpperCase() + endpoint.method.slice(1).toLowerCase()}()`
+                    `.Using${endpoint.method.charAt(0).toUpperCase()}${endpoint.method.slice(1).toLowerCase()}()`
                 );
                 if (example.request != null) {
                     if (typeof example.request.jsonExample !== "object") {

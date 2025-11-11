@@ -640,6 +640,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
   },
   "errors": {},
   "fdrApiDefinitionId": null,
+  "generationMetadata": undefined,
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],
@@ -712,6 +713,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
                 "name": null,
                 "queryParameters": [],
                 "request": {
+                  "extraProperties": undefined,
                   "jsonExample": {
                     "num_events": 1,
                     "stream": true,
@@ -805,6 +807,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
                         },
                         "shape": {
                           "shape": {
+                            "extraProperties": undefined,
                             "properties": [
                               {
                                 "name": {
@@ -1437,6 +1440,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
                 "name": null,
                 "queryParameters": [],
                 "request": {
+                  "extraProperties": undefined,
                   "jsonExample": {
                     "num_events": 1,
                     "stream": false,
@@ -1529,6 +1533,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
                       },
                       "shape": {
                         "shape": {
+                          "extraProperties": undefined,
                           "properties": [
                             {
                               "name": {
@@ -2168,6 +2173,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
                 },
                 "queryParameters": [],
                 "request": {
+                  "extraProperties": undefined,
                   "jsonExample": {
                     "num_events": 5,
                     "stream": false,
@@ -2260,6 +2266,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
                       },
                       "shape": {
                         "shape": {
+                          "extraProperties": undefined,
                           "properties": [
                             {
                               "name": {

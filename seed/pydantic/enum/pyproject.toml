@@ -30,7 +30,7 @@ packages = [
     { include = "seed/enum", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/enum/fern'
 
 [tool.poetry.dependencies]

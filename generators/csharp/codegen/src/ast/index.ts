@@ -1,32 +1,38 @@
-export { Access } from "./Access";
-export { And } from "./And";
-export { Annotation } from "./Annotation";
-export { AnonymousFunction } from "./AnonymousFunction";
-export { Class } from "./Class";
-export { ClassInstantiation } from "./ClassInstantiation";
-export { ClassReference } from "./ClassReference";
-export { CodeBlock } from "./CodeBlock";
-export { CoreClassReference } from "./CoreClassReference";
-export { AstNode } from "./core/AstNode";
+// Language constructs
+
+// Code constructs
+export { ClassInstantiation } from "./code/ClassInstantiation";
+export { Dictionary } from "./code/Dictionary";
+export { EnumInstantiation } from "./code/EnumInstantiation";
+export { PrimitiveInstantiation as InstantiatedPrimitive } from "./code/InstantiatedPrimitive";
+export { List } from "./code/List";
+export { MethodInvocation } from "./code/MethodInvocation";
+export { ReadOnlyMemory } from "./code/ReadOnlymemory";
+export { Set } from "./code/Set";
+export { String_ } from "./code/String_";
+export { type ConstructorField, type DictionaryEntry, TypeLiteral } from "./code/TypeLiteral";
+// Core utilities
+export { AstNode, MemberNode, Node } from "./core/AstNode";
 export { Writer } from "./core/Writer";
 export { XmlDocWriter } from "./core/XmlDocWriter";
-export { Dictionary } from "./Dictionary";
-export { Enum } from "./Enum";
-export { EnumInstantiation } from "./EnumInstantiation";
-export { Field } from "./Field";
-export { PrimitiveInstantiation as InstantiatedPrimitive } from "./InstantiatedPrimitive";
-export { Interface } from "./Interface";
-export { List } from "./List";
-export { Method, MethodType } from "./Method";
-export { MethodInvocation } from "./MethodInvocation";
-export { Or } from "./Or";
-export { Parameter } from "./Parameter";
-export { Set } from "./Set";
-export { String_ } from "./String_";
-export { Switch } from "./Switch";
-export { Ternary } from "./Ternary";
-export { TestClass } from "./TestClass";
-export { convertReadOnlyPrimitiveTypes, Type } from "./Type";
-export { type ConstructorField, TypeLiteral } from "./TypeLiteral";
-export { TypeParameter } from "./TypeParameter";
-export { XmlDocBlock } from "./XmlDocBlock";
+export { Access } from "./language/Access";
+export { And } from "./language/And";
+export { Annotation } from "./language/Annotation";
+export { AnonymousFunction } from "./language/AnonymousFunction";
+export { CodeBlock } from "./language/CodeBlock";
+export { Or } from "./language/Or";
+export { Parameter } from "./language/Parameter";
+export { Switch } from "./language/Switch";
+export { Ternary } from "./language/Ternary";
+export { XmlDocBlock } from "./language/XmlDocBlock";
+// Type definitions
+export { Class } from "./types/Class";
+export { ClassReference } from "./types/ClassReference";
+export { CoreClassReference } from "./types/CoreClassReference";
+export { Enum } from "./types/Enum";
+export { Field } from "./types/Field";
+export { Interface } from "./types/Interface";
+export { Method, MethodType } from "./types/Method";
+export { TestClass } from "./types/TestClass";
+export { convertReadOnlyPrimitiveTypes, Type } from "./types/Type";
+export { TypeParameter } from "./types/TypeParameter";

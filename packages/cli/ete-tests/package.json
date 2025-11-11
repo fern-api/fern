@@ -33,10 +33,10 @@
   },
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
+    "@fern-api/fdr-sdk": "0.140.0-a411fe32c",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.139.31-66c809cb8",
     "execa": "^5.1.1",
     "express": "^4.21.2",
     "js-yaml": "^4.1.0",
@@ -52,7 +52,7 @@
     "@types/node": "18.15.3",
     "@types/node-fetch": "2.6.9",
     "depcheck": "^1.4.7",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "vitest": "^2.1.9"
   }
 }

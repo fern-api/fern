@@ -1,0 +1,135 @@
+{
+  "info": {
+    "name": "URL Form Encoded API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "endpoint",
+      "name": "Submit form data",
+      "request": {
+        "description": null,
+        "url": {
+          "raw": "{{baseUrl}}/submit",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "submit"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "type": "text",
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"username\": \"johndoe\",\n    \"email\": \"john@example.com\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/submit",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "submit"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"johndoe\",\n    \"email\": \"john@example.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "description": "Successful operation",
+          "body": "{\n    \"status\": \"success\",\n    \"message\": \"Data received successfully.\"\n}",
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/submit",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "submit"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"username\",\n    \"email\": \"email\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "description": "Successful operation",
+          "body": "{\n    \"status\": \"status\",\n    \"message\": \"message\"\n}",
+          "_postman_previewlanguage": "json"
+        }
+      ]
+    }
+  ]
+}

@@ -4,7 +4,7 @@ import UnknownAsAny
 
 @Suite("UnknownClient Wire Tests") struct UnknownClientWireTests {
     @Test func post1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -35,14 +35,17 @@ import UnknownAsAny
                 ]
             )
         ]
-        let response = try await client.unknown.post(request: .object([
-            "key": .string("value")
-        ]))
+        let response = try await client.unknown.post(
+            request: .object([
+                "key": .string("value")
+            ]),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func postObject1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -73,11 +76,14 @@ import UnknownAsAny
                 ]
             )
         ]
-        let response = try await client.unknown.postObject(request: MyObject(
-            unknown: .object([
-                "key": .string("value")
-            ])
-        ))
+        let response = try await client.unknown.postObject(
+            request: MyObject(
+                unknown: .object([
+                    "key": .string("value")
+                ])
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

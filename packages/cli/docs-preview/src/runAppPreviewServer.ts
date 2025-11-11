@@ -1,12 +1,13 @@
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, doesPathExist, listFiles, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { runExeca } from "@fern-api/logging-execa";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import cors from "cors";
 import express from "express";
+import { readFile } from "fs/promises";
 import http from "http";
 import path from "path";
 import Watcher from "watcher";
@@ -28,6 +29,7 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         root: undefined,
         title: undefined,
         defaultLanguage: undefined,
+        languages: undefined,
         announcement: undefined,
         navbarLinks: undefined,
         footerLinks: undefined,
@@ -44,11 +46,184 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         integrations: undefined,
         css: undefined,
         js: undefined,
-        pageActions: undefined
+        pageActions: undefined,
+        theme: undefined
     },
     jsFiles: undefined,
     id: undefined
 };
+
+/**
+ * Dependency tracking system for markdown snippets
+ */
+class SnippetDependencyTracker {
+    // Map: snippet file path -> Set of page files that reference it
+    private snippetToPages = new Map<string, Set<string>>();
+    // Map: page file path -> Set of snippet files it references
+    private pageToSnippets = new Map<string, Set<string>>();
+
+    constructor(private context: TaskContext) {}
+
+    /**
+     * Extract referenced markdown and code files from a markdown file
+     */
+    private extractReferences(
+        markdown: string,
+        markdownFilePath: AbsoluteFilePath,
+        fernFolderPath: AbsoluteFilePath
+    ): Set<string> {
+        const references = new Set<string>();
+
+        // Extract markdown references: <Markdown src="path/to/file.md" />
+        const markdownRegex = /<Markdown\s+src={?['"]([^'"]+\.mdx?)['"](?! \+)}?\s*\/>/g;
+        let match;
+        while ((match = markdownRegex.exec(markdown)) !== null) {
+            const src = match[1];
+            if (src) {
+                const referencedFilePath = resolve(
+                    src.startsWith("/") ? fernFolderPath : dirname(markdownFilePath),
+                    RelativeFilePath.of(src.replace(/^\//, ""))
+                );
+                references.add(referencedFilePath);
+            }
+        }
+
+        // Extract code references: <Code src="path/to/file.js" />
+        const codeRegex = /<Code(?:\s+[^>]*?)?\s+src={?['"]([^'"]+)['"](?! \+)}?((?:\s+[^>]*)?)\/>/g;
+        while ((match = codeRegex.exec(markdown)) !== null) {
+            const src = match[1];
+            if (src) {
+                const referencedFilePath = resolve(
+                    src.startsWith("/") ? fernFolderPath : dirname(markdownFilePath),
+                    RelativeFilePath.of(src.replace(/^\//, ""))
+                );
+                references.add(referencedFilePath);
+            }
+        }
+
+        return references;
+    }
+
+    /**
+     * Scan all pages in the project and build dependency maps
+     */
+    async buildDependencyMap(project: Project): Promise<void> {
+        this.snippetToPages.clear();
+        this.pageToSnippets.clear();
+
+        const docsWorkspace = project.docsWorkspaces;
+        if (!docsWorkspace) {
+            return;
+        }
+
+        this.context.logger.debug("Building snippet dependency map...");
+
+        try {
+            // Find all markdown files in the docs workspace directory
+            const markdownFiles = await this.findMarkdownFiles(docsWorkspace.absoluteFilePath);
+
+            for (const markdownFile of markdownFiles) {
+                try {
+                    const content = await readFile(markdownFile, "utf-8");
+                    const referencedFiles = this.extractReferences(
+                        content,
+                        markdownFile,
+                        docsWorkspace.absoluteFilePath
+                    );
+
+                    // Update page -> snippets mapping
+                    this.pageToSnippets.set(markdownFile, referencedFiles);
+
+                    // Update snippet -> pages mapping
+                    for (const referencedFile of referencedFiles) {
+                        if (!this.snippetToPages.has(referencedFile)) {
+                            this.snippetToPages.set(referencedFile, new Set());
+                        }
+                        this.snippetToPages.get(referencedFile)?.add(markdownFile);
+                    }
+                } catch (error) {
+                    this.context.logger.debug(`Failed to read markdown file ${markdownFile}: ${error}`);
+                }
+            }
+
+            this.context.logger.debug(
+                `Built dependency map: ${this.snippetToPages.size} snippets, ${this.pageToSnippets.size} pages`
+            );
+        } catch (error) {
+            this.context.logger.debug(`Failed to build dependency map: ${error}`);
+        }
+    }
+
+    /**
+     * Find all markdown files in the docs workspace directory
+     */
+    private async findMarkdownFiles(fernFolderPath: AbsoluteFilePath): Promise<AbsoluteFilePath[]> {
+        try {
+            // Get .md files
+            const mdFiles = await listFiles(fernFolderPath, "md");
+            // Get .mdx files
+            const mdxFiles = await listFiles(fernFolderPath, "mdx");
+            // Combine both lists
+            return [...mdFiles, ...mdxFiles];
+        } catch (error) {
+            this.context.logger.debug(`Failed to list files in ${fernFolderPath}: ${error}`);
+            return [];
+        }
+    }
+
+    /**
+     * Given a list of changed files, return all files that need to be reloaded (including dependent pages)
+     */
+    getFilesToReload(changedFiles: AbsoluteFilePath[]): AbsoluteFilePath[] {
+        const filesToReload = new Set<string>();
+
+        // Add all originally changed files
+        for (const file of changedFiles) {
+            filesToReload.add(file);
+        }
+
+        // For each changed file, check if it's a snippet that other pages depend on
+        for (const changedFile of changedFiles) {
+            const dependentPages = this.snippetToPages.get(changedFile);
+            if (dependentPages) {
+                this.context.logger.debug(`Snippet ${changedFile} affects ${dependentPages.size} pages`);
+                for (const dependentPage of dependentPages) {
+                    filesToReload.add(dependentPage);
+                }
+            }
+        }
+
+        return Array.from(filesToReload).map(AbsoluteFilePath.of);
+    }
+
+    /**
+     * Check if any of the changed files are snippets that affect other pages
+     */
+    hasSnippetDependencies(changedFiles: AbsoluteFilePath[]): boolean {
+        for (const file of changedFiles) {
+            const pages = this.snippetToPages.get(file);
+            if (pages && pages.size > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Get debug info about current dependencies
+     */
+    getDebugInfo(): { snippetCount: number; pageCount: number; totalDependencies: number } {
+        let totalDependencies = 0;
+        for (const pages of this.snippetToPages.values()) {
+            totalDependencies += pages.size;
+        }
+        return {
+            snippetCount: this.snippetToPages.size,
+            pageCount: this.pageToSnippets.size,
+            totalDependencies
+        };
+    }
+}
 
 export async function runAppPreviewServer({
     initialProject,
@@ -130,7 +305,7 @@ export async function runAppPreviewServer({
         NEXT_DISABLE_CACHE: "1",
         NODE_ENV: "production",
         NODE_PATH: bundleRoot,
-        NODE_OPTIONS: "--max-old-space-size=2048 --enable-source-maps"
+        NODE_OPTIONS: "--max-old-space-size=8096 --enable-source-maps"
     };
 
     const serverProcess = runExeca(context.logger, "node", [serverPath], {
@@ -351,6 +526,10 @@ export async function runAppPreviewServer({
     let project = initialProject;
     let docsDefinition: DocsV1Read.DocsDefinition | undefined;
 
+    // Initialize the snippet dependency tracker
+    const snippetTracker = new SnippetDependencyTracker(context);
+    await snippetTracker.buildDependencyMap(project);
+
     let reloadTimer: NodeJS.Timeout | null = null;
     let isReloading = false;
     const RELOAD_DEBOUNCE_MS = 1000;
@@ -360,8 +539,23 @@ export async function runAppPreviewServer({
         const startTime = Date.now();
         try {
             project = await reloadProject();
-            context.logger.info("Validating docs...");
-            await validateProject(project);
+
+            // Rebuild dependency map after reloading project
+            await snippetTracker.buildDependencyMap(project);
+
+            // Start validation in background - don't block the reload
+            const validationStartTime = Date.now();
+            void validateProject(project).catch((err) => {
+                const validationTime = Date.now() - validationStartTime;
+                context.logger.error(
+                    `Validation failed (took ${validationTime}ms): ${err instanceof Error ? err.message : String(err)}`
+                );
+                // Still log validation errors to help developers
+                if (err instanceof Error && err.stack) {
+                    context.logger.debug(`Validation error stack: ${err.stack}`);
+                }
+            });
+
             const newDocsDefinition = await getPreviewDocsDefinition({
                 domain: `${instance.host}${instance.pathname}`,
                 project,
@@ -417,12 +611,23 @@ export async function runAppPreviewServer({
         reloadTimer = setTimeout(() => {
             void (async () => {
                 isReloading = true;
+
+                // Expand the list of files to include pages that depend on changed snippets
+                const filesToReload = snippetTracker.getFilesToReload(editedAbsoluteFilepaths);
+                const hasSnippetDependencies = snippetTracker.hasSnippetDependencies(editedAbsoluteFilepaths);
+
+                if (hasSnippetDependencies) {
+                    context.logger.info(
+                        `Snippet dependencies detected. Reloading ${filesToReload.length} files (${editedAbsoluteFilepaths.length} changed, ${filesToReload.length - editedAbsoluteFilepaths.length} dependent pages)`
+                    );
+                }
+
                 sendData({
                     version: 1,
                     type: "startReload"
                 });
 
-                const reloadedDocsDefinition = await reloadDocsDefinition(editedAbsoluteFilepaths);
+                const reloadedDocsDefinition = await reloadDocsDefinition(filesToReload);
                 if (reloadedDocsDefinition != null) {
                     docsDefinition = reloadedDocsDefinition;
                 }

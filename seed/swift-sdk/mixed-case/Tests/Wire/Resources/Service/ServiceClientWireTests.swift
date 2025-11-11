@@ -4,7 +4,7 @@ import MixedCase
 
 @Suite("ServiceClient Wire Tests") struct ServiceClientWireTests {
     @Test func getResource1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -41,12 +41,15 @@ import MixedCase
                 ]
             )
         )
-        let response = try await client.service.getResource(resourceId: "rsc-xyz")
+        let response = try await client.service.getResource(
+            resourceId: "rsc-xyz",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getResource2() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -81,12 +84,15 @@ import MixedCase
                 ]
             )
         )
-        let response = try await client.service.getResource(resourceId: "ResourceID")
+        let response = try await client.service.getResource(
+            resourceId: "ResourceID",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func listResources1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -129,13 +135,14 @@ import MixedCase
         ]
         let response = try await client.service.listResources(
             pageLimit: 10,
-            beforeDate: try! CalendarDate("2023-01-01")
+            beforeDate: CalendarDate("2023-01-01")!,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func listResources2() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -200,7 +207,8 @@ import MixedCase
         ]
         let response = try await client.service.listResources(
             pageLimit: 1,
-            beforeDate: try! CalendarDate("2023-01-15")
+            beforeDate: CalendarDate("2023-01-15")!,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

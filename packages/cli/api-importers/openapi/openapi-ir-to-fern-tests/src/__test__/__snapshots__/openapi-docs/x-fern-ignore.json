@@ -22,10 +22,11 @@
                       },
                       "users": [
                         {
-                          "age": 1,
-                          "email": "email",
-                          "id": "id",
-                          "name": "name",
+                          "age": 30,
+                          "email": "john@example.com",
+                          "id": "123e4567-e89b-12d3-a456-426614174000",
+                          "name": "John Doe",
+                          "not_ignored_field": "visible",
                         },
                       ],
                     },
@@ -83,6 +84,7 @@
                 },
               },
               "name": "optional<string>",
+              "not_ignored_field": "optional<string>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -127,10 +129,11 @@
               meta:
                 hasMore: true
               users:
-                - id: id
-                  name: name
-                  email: email
-                  age: 1
+                - id: 123e4567-e89b-12d3-a456-426614174000
+                  name: John Doe
+                  email: john@example.com
+                  age: 30
+                  not_ignored_field: visible
   source:
     openapi: ../openapi.yml
 types:
@@ -154,6 +157,7 @@ types:
       name: optional<string>
       email: optional<string>
       age: optional<integer>
+      not_ignored_field: optional<string>
     source:
       openapi: ../openapi.yml
 ",

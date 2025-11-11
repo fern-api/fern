@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ast, Writer } from "@fern-api/csharp-codegen";
+import { ast, is, Writer } from "@fern-api/csharp-codegen";
 
 import {
     HttpEndpoint,
@@ -32,9 +32,6 @@ export declare namespace WrappedEndpointRequest {
     }
 }
 
-const QUERY_PARAMETER_BAG_NAME = "_query";
-const HEADER_BAG_NAME = "_headers";
-
 export class WrappedEndpointRequest extends EndpointRequest {
     private serviceId: ServiceId;
     private wrapper: SdkRequestWrapper;
@@ -45,13 +42,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
         this.wrapper = wrapper;
     }
 
-    private get csharp() {
-        return this.context.csharp;
-    }
-
     public getParameterType(): ast.Type {
         return this.csharp.Type.reference(
-            this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName)
+            this.context.common.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName)
         );
     }
 
@@ -63,8 +56,8 @@ export class WrappedEndpointRequest extends EndpointRequest {
         const nullableQueryParameters: QueryParameter[] = [];
         for (const queryParameter of this.endpoint.queryParameters) {
             if (
-                (!queryParameter.allowMultiple && this.context.isOptional(queryParameter.valueType)) ||
-                this.context.isNullable(queryParameter.valueType)
+                (!queryParameter.allowMultiple && this.context.common.isOptional(queryParameter.valueType)) ||
+                this.context.common.isNullable(queryParameter.valueType)
             ) {
                 nullableQueryParameters.push(queryParameter);
             } else {
@@ -74,11 +67,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
         return {
             code: this.csharp.codeblock((writer) => {
-                writer.write(`var ${QUERY_PARAMETER_BAG_NAME} = `);
+                writer.write(`var ${this.names.variables.query} = `);
                 writer.writeNodeStatement(
                     this.csharp.dictionary({
-                        keyType: this.csharp.Type.string(),
-                        valueType: this.csharp.Type.object(),
+                        keyType: this.csharp.Type.string,
+                        valueType: this.csharp.Type.object,
                         values: undefined
                     })
                 );
@@ -92,12 +85,12 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     writer.endControlFlow();
                 }
             }),
-            queryParameterBagReference: QUERY_PARAMETER_BAG_NAME
+            queryParameterBagReference: this.names.variables.query
         };
     }
 
     private writeQueryParameter(writer: Writer, query: QueryParameter): void {
-        writer.write(`${QUERY_PARAMETER_BAG_NAME}["${query.name.wireValue}"] = `);
+        writer.write(`${this.names.variables.query}["${query.name.wireValue}"] = `);
         if (!query.allowMultiple) {
             writer.writeNodeStatement(this.stringify({ reference: query.valueType, name: query.name.name }));
             return;
@@ -120,7 +113,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     public getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined {
-        const service = this.context.getHttpServiceOrThrow(this.serviceId);
+        const service = this.context.common.getHttpServiceOrThrow(this.serviceId);
         const headers = [...service.headers, ...this.endpoint.headers];
         if (headers.length === 0) {
             return undefined;
@@ -128,7 +121,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         const requiredHeaders: HttpHeader[] = [];
         const optionalHeaders: HttpHeader[] = [];
         for (const header of headers) {
-            if (this.context.isOptional(header.valueType)) {
+            if (this.context.common.isOptional(header.valueType)) {
                 optionalHeaders.push(header);
             } else {
                 requiredHeaders.push(header);
@@ -137,14 +130,14 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
         return {
             code: this.csharp.codeblock((writer) => {
-                writer.write(`var ${HEADER_BAG_NAME} = `);
+                writer.write(`var ${this.names.variables.headers} = `);
                 writer.writeNodeStatement(
                     this.csharp.instantiateClass({
-                        classReference: this.context.getHeadersClassReference(),
+                        classReference: this.types.Headers,
                         arguments_: [
                             this.csharp.dictionary({
-                                keyType: this.csharp.Type.string(),
-                                valueType: this.csharp.Type.string(),
+                                keyType: this.csharp.Type.string,
+                                valueType: this.csharp.Type.string,
                                 values: {
                                     type: "entries",
                                     entries: requiredHeaders.map((header) => {
@@ -166,12 +159,12 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 for (const header of optionalHeaders) {
                     const headerReference = `${this.getParameterName()}.${header.name.name.pascalCase.safeName}`;
                     writer.controlFlow("if", this.csharp.codeblock(`${headerReference} != null`));
-                    writer.write(`${HEADER_BAG_NAME}["${header.name.wireValue}"] = `);
+                    writer.write(`${this.names.variables.headers}["${header.name.wireValue}"] = `);
                     writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name.name }));
                     writer.endControlFlow();
                 }
             }),
-            headerParameterBagReference: HEADER_BAG_NAME
+            headerParameterBagReference: this.names.variables.headers
         };
     }
 
@@ -222,26 +215,26 @@ export class WrappedEndpointRequest extends EndpointRequest {
         if (this.isDateOrDateTime({ type: "datetime", typeReference: reference })) {
             return this.csharp.codeblock((writer) => {
                 writer.write(`${parameter}${maybeDotValue}.ToString(`);
-                writer.writeNode(this.context.getConstantsClassReference());
+                writer.writeNode(this.types.Constants);
                 writer.write(".DateTimeFormat)");
             });
         } else if (this.isDateOrDateTime({ type: "date", typeReference: reference })) {
             return this.csharp.codeblock((writer) => {
                 writer.write(`${parameter}${maybeDotValue}.ToString(`);
-                writer.writeNode(this.context.getConstantsClassReference());
+                writer.writeNode(this.types.Constants);
                 writer.write(".DateFormat)");
             });
         } else if (this.isEnum({ typeReference: reference })) {
             return this.csharp.codeblock((writer) => {
                 // Stringify is an extension method that we wrote in the core namespace, so need to add here
-                writer.addNamespace(this.context.getCoreNamespace());
+                writer.addNamespace(this.namespaces.core);
                 writer.write(`${parameter}${maybeDotValue}.Stringify()`);
             });
         } else if (this.shouldJsonSerialize({ typeReference: reference })) {
             return this.csharp.codeblock((writer) => {
                 writer.writeNode(
                     this.csharp.invokeMethod({
-                        on: this.context.getJsonUtilsClassReference(),
+                        on: this.types.JsonUtils,
                         method: "Serialize",
                         arguments_: [this.csharp.codeblock(`${parameter}${maybeDotValue}`)]
                     })
@@ -288,7 +281,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 }
                 return false;
             case "named": {
-                const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
+                const declaration = this.model.dereferenceType(typeReference.typeId).typeDeclaration;
                 if (declaration.shape.type === "alias") {
                     return this.isString(declaration.shape.aliasOf);
                 }
@@ -296,7 +289,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             }
             case "primitive": {
                 const csharpType = this.context.csharpTypeMapper.convert({ reference: typeReference });
-                return this.csharp.is.Type.string(csharpType);
+                return is.Type.string(csharpType);
             }
             case "unknown": {
                 return false;
@@ -315,7 +308,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 }
                 return false;
             case "named": {
-                const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
+                const declaration = this.model.dereferenceType(typeReference.typeId).typeDeclaration;
                 if (declaration.shape.type === "alias") {
                     return this.isOptional({ typeReference: declaration.shape.aliasOf });
                 }
@@ -341,7 +334,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 }
                 return false;
             case "named": {
-                const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
+                const declaration = this.model.dereferenceType(typeReference.typeId).typeDeclaration;
                 if (declaration.shape.type === "alias") {
                     return this.isNullable({ typeReference: declaration.shape.aliasOf });
                 }
@@ -379,7 +372,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 });
             },
             named: (named) => {
-                const declaration = this.context.getTypeDeclarationOrThrow(named.typeId);
+                const declaration = this.model.dereferenceType(named.typeId).typeDeclaration;
                 return declaration.shape._visit<boolean>({
                     alias: (alias) => this.isStruct({ typeReference: alias.aliasOf }),
                     object: () => false,
@@ -450,7 +443,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 }
                 return false;
             case "named": {
-                const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
+                const declaration = this.model.dereferenceType(typeReference.typeId).typeDeclaration;
                 if (declaration.shape.type === "alias") {
                     return this.isDateOrDateTime({ type, typeReference: declaration.shape.aliasOf });
                 }
@@ -473,7 +466,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 }
                 return false;
             case "named": {
-                const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
+                const declaration = this.model.dereferenceType(typeReference.typeId).typeDeclaration;
                 if (declaration.shape.type === "enum") {
                     return true;
                 }
@@ -513,7 +506,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 });
             },
             named: (named) => {
-                const declaration = this.context.getTypeDeclarationOrThrow(named.typeId);
+                const declaration = this.model.dereferenceType(named.typeId).typeDeclaration;
                 return declaration.shape._visit({
                     alias: (alias) => this.shouldJsonSerialize({ typeReference: alias.aliasOf }),
                     object: () => true,

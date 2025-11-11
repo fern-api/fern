@@ -3713,6 +3713,7 @@ docs: Search
                         "columns": [
                           "id",
                         ],
+                        "lastInsertRowid": "lastInsertRowid",
                         "rows": [
                           [
                             1,
@@ -4222,6 +4223,7 @@ service:
                 rows:
                   - - 1
                 rowsAffected: 0
+                lastInsertRowid: lastInsertRowid
   source:
     openapi: ../openapi.yml
   display-name: sqlite
@@ -6266,9 +6268,9 @@ docs: |-
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BearerAuthScheme",
+      "auth": "bearerAuth",
       "auth-schemes": {
-        "BearerAuthScheme": {
+        "bearerAuth": {
           "scheme": "bearer",
         },
       },
@@ -6291,9 +6293,9 @@ environments:
   Production: https://api.val.town
 default-environment: Production
 auth-schemes:
-  BearerAuthScheme:
+  bearerAuth:
     scheme: bearer
-auth: BearerAuthScheme
+auth: bearerAuth
 ",
   },
 }

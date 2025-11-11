@@ -61,11 +61,12 @@ public class RawEnumClient {
     }
     try (Response response = client.newCall(okhttpRequest).execute()) {
       ResponseBody responseBody = response.body();
-      if (response.isSuccessful()) {
-        return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), WeatherReport.class), response);
-      }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response);
+      if (response.isSuccessful()) {
+        return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, WeatherReport.class), response);
+      }
+      Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
     }
     catch (IOException e) {
       throw new SeedExhaustiveException("Network error executing HTTP request", e);

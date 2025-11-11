@@ -20,20 +20,40 @@ export class Service {
     }
 
     /**
+     * @param {SeedAudiences.folderA.GetDirectThreadRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.folderA.service.getDirectThread()
+     *     await client.folderA.service.getDirectThread({
+     *         ids: "ids",
+     *         tags: "tags"
+     *     })
      */
     public getDirectThread(
+        request: SeedAudiences.folderA.GetDirectThreadRequest,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedAudiences.folderA.Response> {
-        return core.HttpResponsePromise.fromPromise(this.__getDirectThread(requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__getDirectThread(request, requestOptions));
     }
 
     private async __getDirectThread(
+        request: SeedAudiences.folderA.GetDirectThreadRequest,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedAudiences.folderA.Response>> {
+        const { ids, tags } = request;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        if (Array.isArray(ids)) {
+            _queryParams.ids = ids.map((item) => item);
+        } else {
+            _queryParams.ids = ids;
+        }
+
+        if (Array.isArray(tags)) {
+            _queryParams.tags = tags.map((item) => item);
+        } else {
+            _queryParams.tags = tags;
+        }
+
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
@@ -41,10 +61,12 @@ export class Service {
                 (await core.Supplier.get(this._options.environment)),
             method: "GET",
             headers: _headers,
-            queryParameters: requestOptions?.queryParams,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return { data: _response.body as SeedAudiences.folderA.Response, rawResponse: _response.rawResponse };

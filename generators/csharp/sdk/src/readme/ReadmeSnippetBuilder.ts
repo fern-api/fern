@@ -2,7 +2,15 @@ import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import {
+    EndpointId,
+    EnumValue,
+    FeatureId,
+    FernFilepath,
+    HttpEndpoint,
+    Type,
+    TypeDeclaration
+} from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -13,6 +21,7 @@ interface EndpointWithFilepath {
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
+    private static FORWARD_COMPATIBLE_ENUMS_FEATURE_ID: FernGeneratorCli.FeatureId = "FORWARD_COMPATIBLE_ENUMS";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
@@ -37,7 +46,49 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             this.context.ir.readmeConfig?.defaultEndpoint != null
                 ? this.context.ir.readmeConfig.defaultEndpoint
                 : this.getDefaultEndpointId();
-        this.requestOptionsName = this.context.getRequestOptionsClassReference().name;
+        this.requestOptionsName = this.types.RequestOptions.name;
+    }
+    protected get generation() {
+        return this.context.generation;
+    }
+    protected get namespaces() {
+        return this.generation.namespaces;
+    }
+    protected get registry() {
+        return this.generation.registry;
+    }
+    protected get extern() {
+        return this.generation.extern;
+    }
+    protected get settings() {
+        return this.generation.settings;
+    }
+    protected get constants() {
+        return this.generation.constants;
+    }
+    protected get names() {
+        return this.generation.names;
+    }
+    protected get types() {
+        return this.generation.types;
+    }
+    protected get model() {
+        return this.generation.model;
+    }
+    protected get csharp() {
+        return this.generation.csharp;
+    }
+    protected get System() {
+        return this.extern.System;
+    }
+    protected get NUnit() {
+        return this.extern.NUnit;
+    }
+    protected get OneOf() {
+        return this.extern.OneOf;
+    }
+    protected get Google() {
+        return this.extern.Google;
     }
 
     public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[]> {
@@ -48,6 +99,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
         if (this.isPaginationEnabled) {
             snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
+        }
+        if (this.context.settings.isForwardCompatibleEnumsEnabled) {
+            snippets[ReadmeSnippetBuilder.FORWARD_COMPATIBLE_ENUMS_FEATURE_ID] =
+                this.buildForwardCompatibleEnumSnippets();
         }
         return snippets;
     }
@@ -94,11 +149,11 @@ var response = await ${this.getMethodCall(timeoutEndpoint)}(
         );
         return exceptionHandlingEndpoints.map((exceptionHandlingEndpoint) =>
             this.writeCode(`
-using ${this.context.getNamespace()};
+using ${this.namespaces.root};
 
 try {
     var response = await ${this.getMethodCall(exceptionHandlingEndpoint)}(...);
-} catch (${this.context.getBaseApiExceptionClassReference().name} e) {
+} catch (${this.types.BaseApiException.name} e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -119,6 +174,58 @@ try {
             return snippet != null ? [snippet] : [];
         }
         return [];
+    }
+
+    private buildForwardCompatibleEnumSnippets(): string[] {
+        const enumsWithValues = Object.values(this.context.ir.types).filter((t) => {
+            if (t.shape.type !== "enum") {
+                return false;
+            }
+            if (t.shape.values == null || t.shape.values.length === 0) {
+                return false;
+            }
+            return true;
+        });
+        if (enumsWithValues.length === 0) {
+            return [];
+        }
+        const firstEnum = enumsWithValues[0] as TypeDeclaration & {
+            shape: Type.Enum;
+        };
+
+        const enumName = firstEnum.name.name.pascalCase.safeName;
+        const enumCamelCaseName = firstEnum.name.name.camelCase.safeName;
+        const enumNamespace = this.context.common.getNamespaceFromFernFilepath(firstEnum.name.fernFilepath);
+        const firstEnumValue = firstEnum.shape.values[0] as EnumValue;
+        const firstEnumValueName = firstEnumValue.name.name.pascalCase.safeName;
+        const firstEnumValueWire = firstEnumValue.name.wireValue;
+
+        return [
+            this.writeCode(`
+using ${enumNamespace};
+
+// Using a built-in value
+var ${enumCamelCaseName} = ${enumName}.${firstEnumValueName};
+
+// Using a custom value
+var custom${enumName} = ${enumName}.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (${enumCamelCaseName}.Value)
+{
+    case ${enumName}.Values.${firstEnumValueName}:
+        Console.WriteLine("${firstEnumValueName}");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {${enumCamelCaseName}.Value}");
+        break;
+}
+
+// Explicit casting
+string ${enumCamelCaseName}String = (string)${enumName}.${firstEnumValueName};
+${enumName} ${enumCamelCaseName}FromString = (${enumName})"${firstEnumValueWire}";
+`)
+        ];
     }
 
     private getEndpointWithPagination(): EndpointWithFilepath | undefined {
@@ -213,6 +320,6 @@ try {
     }
 
     private writeCode(s: string): string {
-        return s.trim() + "\n";
+        return `${s.trim()}\n`;
     }
 }

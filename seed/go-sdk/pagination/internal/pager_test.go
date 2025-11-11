@@ -9,6 +9,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/pagination/fern/core"
 )
 
 type TestPageResponse struct {
@@ -110,7 +112,7 @@ func TestPager(t *testing.T) {
 			)
 			pager := NewCursorPager(
 				caller,
-				func(request *PageRequest[*string]) *CallParams {
+				func(request *core.PageRequest[*string]) *CallParams {
 					url := server.URL
 					if request.Cursor != nil {
 						url += "?cursor=" + *request.Cursor
@@ -121,7 +123,7 @@ func TestPager(t *testing.T) {
 						Response: request.Response,
 					}
 				},
-				func(response *TestPageResponse) *PageResponse[*string, *TestPageItem] {
+				func(response *TestPageResponse) *core.PageResponse[*string, *TestPageItem] {
 					var items []*TestPageItem
 					for _, item := range response.Items {
 						itemCopy := item
@@ -131,7 +133,7 @@ func TestPager(t *testing.T) {
 					if response.Next != "" {
 						next = &response.Next
 					}
-					return &PageResponse[*string, *TestPageItem]{
+					return &core.PageResponse[*string, *TestPageItem]{
 						Results: items,
 						Next:    next,
 						Done:    response.Next == "",

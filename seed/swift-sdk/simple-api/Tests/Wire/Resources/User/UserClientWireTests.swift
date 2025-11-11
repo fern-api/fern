@@ -4,7 +4,7 @@ import SimpleApi
 
 @Suite("UserClient Wire Tests") struct UserClientWireTests {
     @Test func get1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -26,7 +26,10 @@ import SimpleApi
             name: "name",
             email: "email"
         )
-        let response = try await client.user.get(id: "id")
+        let response = try await client.user.get(
+            id: "id",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

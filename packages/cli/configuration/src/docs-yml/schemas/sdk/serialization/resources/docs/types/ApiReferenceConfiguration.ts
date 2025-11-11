@@ -5,7 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
-import { AudienceId } from "./AudienceId";
+import { Audience } from "./Audience";
 import { SnippetsConfiguration } from "./SnippetsConfiguration";
 import { Availability } from "./Availability";
 import { PlaygroundSettings } from "./PlaygroundSettings";
@@ -20,11 +20,13 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
         api: core.serialization.string(),
         apiName: core.serialization.property("api-name", core.serialization.string().optional()),
         openrpc: core.serialization.string().optional(),
-        audiences: core.serialization.list(AudienceId).optional(),
+        audiences: Audience.optional(),
         displayErrors: core.serialization.property("display-errors", core.serialization.boolean().optional()),
         snippets: SnippetsConfiguration.optional(),
+        postman: core.serialization.string().optional(),
         summary: core.serialization.string().optional(),
         layout: core.serialization.list(core.serialization.lazy(() => serializers.ApiReferenceLayoutItem)).optional(),
+        collapsed: core.serialization.boolean().optional(),
         icon: core.serialization.string().optional(),
         slug: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
@@ -43,11 +45,13 @@ export declare namespace ApiReferenceConfiguration {
         api: string;
         "api-name"?: string | null;
         openrpc?: string | null;
-        audiences?: AudienceId.Raw[] | null;
+        audiences?: Audience.Raw | null;
         "display-errors"?: boolean | null;
         snippets?: SnippetsConfiguration.Raw | null;
+        postman?: string | null;
         summary?: string | null;
         layout?: serializers.ApiReferenceLayoutItem.Raw[] | null;
+        collapsed?: boolean | null;
         icon?: string | null;
         slug?: string | null;
         hidden?: boolean | null;

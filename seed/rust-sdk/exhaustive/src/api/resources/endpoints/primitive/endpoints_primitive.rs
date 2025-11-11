@@ -3,11 +3,11 @@ use chrono::{DateTime, NaiveDate, Utc};
 use reqwest::Method;
 use uuid::Uuid;
 
-pub struct EndpointsPrimitiveClient {
+pub struct PrimitiveClient {
     pub http_client: HttpClient,
 }
 
-impl EndpointsPrimitiveClient {
+impl PrimitiveClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             http_client: HttpClient::new(config.clone())?,
@@ -144,9 +144,9 @@ impl EndpointsPrimitiveClient {
 
     pub async fn get_and_return_base_64(
         &self,
-        request: &String,
+        request: &Vec<u8>,
         options: Option<RequestOptions>,
-    ) -> Result<String, ApiError> {
+    ) -> Result<Vec<u8>, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

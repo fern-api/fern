@@ -1,4 +1,5 @@
 # Stage 1: Java V2
+# Updated: WebSocket feature support added
 FROM node:23.10-bookworm AS node
 COPY generators/java-v2/sdk/dist/cli.cjs /dist/cli.cjs
 COPY generators/java-v2/sdk/features.yml /assets/features.yml
@@ -29,6 +30,6 @@ RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github
 
 RUN test -f /bin/java-v2 || echo "java-v2 CLI not found or not executable"
 
-RUN npm install -f -g @fern-api/generator-cli
+RUN npm install -f -g @fern-api/generator-cli@0.2.0
 
 ENTRYPOINT ["sh", "/init.sh"]

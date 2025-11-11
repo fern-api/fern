@@ -4,12 +4,22 @@
 package com.seed.websocket;
 
 import com.seed.websocket.core.ClientOptions;
+import com.seed.websocket.core.Suppliers;
+import com.seed.websocket.resources.realtime.AsyncRealtimeClient;
+import java.util.function.Supplier;
 
 public class AsyncSeedWebsocketClient {
     protected final ClientOptions clientOptions;
 
+    protected final Supplier<AsyncRealtimeClient> realtimeClient;
+
     public AsyncSeedWebsocketClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.realtimeClient = Suppliers.memoize(() -> new AsyncRealtimeClient(clientOptions));
+    }
+
+    public AsyncRealtimeClient realtime() {
+        return this.realtimeClient.get();
     }
 
     public static AsyncSeedWebsocketClientBuilder builder() {

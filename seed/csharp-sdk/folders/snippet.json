@@ -70,7 +70,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Folder.Service.UnknownRequestAsync(\n    new Dictionary<object, object?>() { { \"key\", \"value\" } }\n);\n"
+                "client": "using SeedApi;\nusing System.Collections.Generic;\n\nvar client = new SeedApiClient();\nawait client.Folder.Service.UnknownRequestAsync(\n    new Dictionary<object, object?>() { { \"key\", \"value\" } }\n);\n"
             }
         }
     ]

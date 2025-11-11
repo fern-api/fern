@@ -164,9 +164,9 @@ service:
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "auth": "BasicAuthScheme",
+      "auth": "BasicAuth",
       "auth-schemes": {
-        "BasicAuthScheme": {
+        "BasicAuth": {
           "password": {
             "env": "MY_PaSSwoOD",
             "name": "password",
@@ -190,7 +190,7 @@ error-discrimination:
   strategy: status-code
 display-name: Test extension `x-fern-parameter-name` for parameters.
 auth-schemes:
-  BasicAuthScheme:
+  BasicAuth:
     scheme: basic
     username:
       name: username
@@ -198,7 +198,7 @@ auth-schemes:
     password:
       name: password
       env: MY_PaSSwoOD
-auth: BasicAuthScheme
+auth: BasicAuth
 ",
   },
 }

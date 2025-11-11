@@ -26,7 +26,7 @@ public interface IDownloadFilesCustomConfig {
     @Value.Default
     @JsonProperty("enable-wire-tests")
     default Boolean enableWireTests() {
-        return true;
+        return false;
     }
 
     @Value.Default

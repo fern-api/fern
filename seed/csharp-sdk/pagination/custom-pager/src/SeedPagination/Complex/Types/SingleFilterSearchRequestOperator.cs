@@ -7,7 +7,7 @@ namespace SeedPagination;
 [Serializable]
 public readonly record struct SingleFilterSearchRequestOperator : IStringEnum
 {
-    public static readonly SingleFilterSearchRequestOperator Equals = new(Values.Equals);
+    public static readonly SingleFilterSearchRequestOperator Equals_ = new(Values.Equals_);
 
     public static readonly SingleFilterSearchRequestOperator NotEquals = new(Values.NotEquals);
 
@@ -76,7 +76,7 @@ public readonly record struct SingleFilterSearchRequestOperator : IStringEnum
     [Serializable]
     public static class Values
     {
-        public const string Equals = "=";
+        public const string Equals_ = "=";
 
         public const string NotEquals = "!=";
 

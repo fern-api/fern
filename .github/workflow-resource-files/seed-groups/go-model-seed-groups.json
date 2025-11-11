@@ -1,120 +1,126 @@
 {
-  "totalTestTimeSeconds": 4101,
+  "totalTestTimeSeconds": 4235,
   "groups": [
     {
-      "fixtures": [
-        "version",
-        "nullable-optional",
-        "object",
-        "go-bytes-request",
-        "no-environment",
-        "pagination-custom",
-        "single-url-environment-no-default",
-        "multi-line-docs",
-        "streaming:.",
-        "websocket-inferred-auth",
-        "required-nullable",
-        "imdb",
-        "any-auth",
-        "custom-auth",
-        "multi-url-environment-no-default",
-        "trace"
-      ],
-      "groupTotalTimeSeconds": 409
-    },
-    {
-      "fixtures": ["accept-header", "file-download", "cross-package-type-names", "variables"],
-      "groupTotalTimeSeconds": 409
-    },
-    {
-      "fixtures": ["api-wide-base-path", "file-upload", "folders", "basic-auth", "public-object"],
-      "groupTotalTimeSeconds": 415
+      "fixtures": ["file-upload-openapi", "content-type", "simple-fhir", "go-content-type", "literal"],
+      "groupTotalTimeSeconds": 425
     },
     {
       "fixtures": [
         "query-parameters-openapi",
-        "client-side-params",
-        "server-sent-events",
-        "mixed-case",
-        "oauth-client-credentials",
-        "response-property",
-        "validation",
-        "plain-text",
-        "websocket",
-        "package-yml",
-        "circular-references",
-        "circular-references-advanced",
-        "oauth-client-credentials-default",
-        "extra-properties",
-        "oauth-client-credentials-with-variables",
-        "enum",
-        "exhaustive"
+        "extends",
+        "undiscriminated-union-with-response-property",
+        "property-access",
+        "enum"
       ],
-      "groupTotalTimeSeconds": 414
+      "groupTotalTimeSeconds": 423
     },
     {
       "fixtures": [
         "query-parameters-openapi-as-objects",
-        "unions",
-        "simple-fhir",
-        "multiple-request-bodies",
-        "optional",
-        "simple-api",
-        "literals-unions",
-        "oauth-client-credentials-custom",
-        "streaming-parameter",
-        "basic-auth-environment-variables",
-        "pagination",
-        "error-property",
-        "oauth-client-credentials-nested-root",
-        "multi-url-environment",
-        "go-content-type",
-        "examples",
-        "request-parameters"
+        "idempotency-headers:.",
+        "client-side-params",
+        "object",
+        "nullable",
+        "undiscriminated-unions",
+        "objects-with-imports",
+        "file-download",
+        "imdb",
+        "single-url-environment-default",
+        "server-sent-events",
+        "websocket",
+        "basic-auth",
+        "folders",
+        "multi-line-docs",
+        "oauth-client-credentials"
       ],
-      "groupTotalTimeSeconds": 414
+      "groupTotalTimeSeconds": 420
+    },
+    {
+      "fixtures": [
+        "url-form-encoded",
+        "license",
+        "literals-unions",
+        "path-parameters",
+        "extra-properties",
+        "streaming:.",
+        "inferred-auth-explicit",
+        "request-parameters",
+        "multi-url-environment",
+        "circular-references",
+        "http-head",
+        "simple-api",
+        "websocket-bearer-auth",
+        "mixed-file-directory",
+        "oauth-client-credentials-with-variables",
+        "oauth-client-credentials-custom"
+      ],
+      "groupTotalTimeSeconds": 420
+    },
+    {
+      "fixtures": [
+        "version",
+        "nullable-optional",
+        "mixed-case",
+        "validation",
+        "no-environment",
+        "streaming-parameter",
+        "multi-url-environment-no-default",
+        "unions",
+        "oauth-client-credentials-environment-variables",
+        "empty-clients",
+        "inferred-auth-implicit",
+        "single-url-environment-no-default",
+        "any-auth",
+        "basic-auth-environment-variables",
+        "cross-package-type-names",
+        "trace"
+      ],
+      "groupTotalTimeSeconds": 420
     },
     {
       "fixtures": [
         "version-no-default",
-        "empty-clients",
-        "server-sent-event-examples",
-        "license",
-        "nullable",
-        "property-access",
-        "unknown",
-        "path-parameters",
-        "undiscriminated-unions",
-        "objects-with-imports",
-        "query-parameters",
+        "package-yml",
+        "multiple-request-bodies",
         "errors",
-        "single-url-environment-default",
-        "oauth-client-credentials-environment-variables",
-        "mixed-file-directory",
-        "literal"
+        "circular-references-advanced",
+        "optional",
+        "websocket-inferred-auth",
+        "pagination-custom",
+        "file-upload",
+        "server-sent-event-examples",
+        "pagination",
+        "unknown",
+        "audiences",
+        "examples",
+        "go-bytes-request",
+        "exhaustive",
+        "oauth-client-credentials-default"
       ],
-      "groupTotalTimeSeconds": 408
-    },
-    {
-      "fixtures": ["alias", "bytes-download", "http-head", "inferred-auth-explicit"],
-      "groupTotalTimeSeconds": 408
-    },
-    {
-      "fixtures": ["alias-extends", "bytes-upload", "idempotency-headers:.", "inferred-auth-implicit"],
-      "groupTotalTimeSeconds": 408
+      "groupTotalTimeSeconds": 428
     },
     {
       "fixtures": [
+        "accept-header",
         "auth-environment-variables",
-        "content-type",
-        "websocket-bearer-auth",
-        "inferred-auth-implicit-no-expiry"
+        "variables",
+        "inferred-auth-implicit-no-expiry",
+        "public-object"
       ],
-      "groupTotalTimeSeconds": 408
+      "groupTotalTimeSeconds": 427
     },
     {
-      "fixtures": ["bearer-token-environment-variable", "extends", "audiences", "reserved-keywords"],
-      "groupTotalTimeSeconds": 408
+      "fixtures": ["alias", "bearer-token-environment-variable", "oauth-client-credentials-nested-root", "plain-text"],
+      "groupTotalTimeSeconds": 420
+    },
+    {
+      "fixtures": ["alias-extends", "bytes-download", "query-parameters", "custom-auth", "required-nullable"],
+      "groupTotalTimeSeconds": 427
+    },
+    {
+      "fixtures": ["api-wide-base-path", "bytes-upload", "response-property", "error-property", "reserved-keywords"],
+      "groupTotalTimeSeconds": 425
     }
   ]
 }

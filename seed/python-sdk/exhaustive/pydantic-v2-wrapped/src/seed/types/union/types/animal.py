@@ -15,7 +15,7 @@ class Animal_Dog(UniversalBaseModel):
     name: str
     likes_to_woof: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToWoof")]
 
-    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class Animal_Cat(UniversalBaseModel):
@@ -23,7 +23,7 @@ class Animal_Cat(UniversalBaseModel):
     name: str
     likes_to_meow: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToMeow")]
 
-    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
-Animal = typing.Union[Animal_Dog, Animal_Cat]
+Animal = typing_extensions.Annotated[typing.Union[Animal_Dog, Animal_Cat], pydantic.Field(discriminator="animal")]

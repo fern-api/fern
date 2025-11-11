@@ -11772,10 +11772,18 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "parent_part": [
+                  "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>"
+                ]
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "parent_part": [
+                    "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>"
+                  ]
+                }
               },
               "responseStatusCode": 201,
               "responseBody": {

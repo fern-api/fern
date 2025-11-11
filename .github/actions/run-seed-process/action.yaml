@@ -22,6 +22,10 @@ inputs:
     description: Whether to collect metrics
     required: false
     default: "false"
+  determinism-exclude-paths:
+    description: "JSON array of paths to exclude from determinism verification step, typically package manager/lock files"
+    required: false
+    default: '["seed/*/.mock/*"]'
 
 outputs:
   start_time:
@@ -74,6 +78,31 @@ runs:
         sdk-name: ${{ inputs.sdk-name }}
         generator-path: ${{ inputs.generator-path }}
 
+    - name: Summarize Test Results
+      if: always() && !cancelled()
+      shell: bash
+      run: |
+        # Verify file exists from previous step. For parsing, focus on end of file (grabbing a few hundred lines should be more than enough) and reverse search (bottom-up) for better perf
+        if [ -f "output.log" ]; then 
+          # Find string including new, unexpected failures
+          UNEXPECTED_FAILURES=$(tail -n 200 output.log | tac | grep -m 1 "unexpected failures, including:" | sed -n 's/.*unexpected failures, including: \(.*\)\./\1/p' || echo "")
+          if [ -n "$UNEXPECTED_FAILURES" ]; then
+            echo "**❌ ${{ inputs.sdk-name }} Unexpected Test Failures:** ${UNEXPECTED_FAILURES}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No unexpected errors parsed from output"
+          fi
+
+          # Find string including passing fixtures that are still in allowedFailures list
+          UNEXPECTEDLY_PASSING=$(tail -n 200 output.log | tac | grep -m 1 "Consider removing the following fixtures from allowedFailures:" | sed -n 's/.*Consider removing the following fixtures from allowedFailures: \(.*\)\./\1/p' || echo "")
+          if [ -n "$UNEXPECTEDLY_PASSING" ]; then
+            echo "**⚠️ ${{ inputs.sdk-name }} Passing Tests in Allowed Failures List:** ${UNEXPECTEDLY_PASSING}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No passing tests found in allowedFailures list from output"
+          fi 
+        else 
+          echo "No output available to parse for test group"
+        fi
+
     - name: Record end time
       id: end-seed-timer
       # Log end time even if the tests fail
@@ -82,13 +111,23 @@ runs:
       run: |
         echo "end_time=$EPOCHSECONDS" >> $GITHUB_OUTPUT
 
+    # Run after seed is built, do this separately so we can keep seed time collection limited to seed generation
+    # Note: tests failing can be a cause of this reporting as non-deterministic
+    - name: Verify Determinism
+      id: verify-determinism
+      if: ${{ always() && !cancelled() && inputs.collect-metrics == 'true' }}
+      uses: ./.github/actions/verify-determinism
+      with:
+        determinism-exclude-paths: ${{ inputs.determinism-exclude-paths }}
+
     # Collect the outputs from this matrix iteration
-    - name: Collect Metrics
+    - name: Collect All Metrics
       # Save metrics even if the tests fail
       if: ${{ always() && !cancelled() && inputs.collect-metrics == 'true' }}
-      uses: ./.github/actions/artifact-seed-test-times
+      uses: ./.github/actions/artifact-seed-metrics
       with:
         sdk-name: ${{ inputs.sdk-name }}
         job-index: ${{ inputs.job-index }}
         start-time: ${{ steps.start-seed-timer.outputs.start_time }}
         end-time: ${{ steps.end-seed-timer.outputs.end_time }}
+        deterministic: ${{ steps.verify-determinism.outputs.deterministic}}

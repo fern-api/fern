@@ -10,14 +10,17 @@ export interface ApiReferenceConfiguration extends FernDocsConfig.WithPermission
     apiName?: string;
     /** Path to an openrpc spec. */
     openrpc?: string;
-    audiences?: FernDocsConfig.AudienceId[];
+    audiences?: FernDocsConfig.Audience;
     /** Defaults to false */
     displayErrors?: boolean;
     snippets?: FernDocsConfig.SnippetsConfiguration;
+    /** URL to a Postman collection for this API reference */
+    postman?: string;
     /** Relative path to the markdown file */
     summary?: string;
     /** Advanced usage: when specified, this object will be used to customize the order that your API endpoints are displayed in the docs site, including subpackages, and additional markdown pages (to be rendered in between API endpoints). If not specified, the order will be inferred from the OpenAPI Spec or Fern Definition. */
     layout?: FernDocsConfig.ApiReferenceLayoutItem[];
+    collapsed?: boolean;
     icon?: string;
     slug?: string;
     hidden?: boolean;

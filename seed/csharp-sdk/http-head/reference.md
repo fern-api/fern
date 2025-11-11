@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.<a href="/src/SeedHttpHead/User/UserClient.cs">HeadAsync</a>() -> System.Net.Http.Headers.HttpResponseHeaders</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedHttpHead/User/UserClient.cs">HeadAsync</a>() -> HttpResponseHeaders</code></summary>
 <dl>
 <dd>
 

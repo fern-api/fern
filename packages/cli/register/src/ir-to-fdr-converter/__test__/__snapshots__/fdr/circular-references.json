@@ -273,6 +273,92 @@
           }
         ]
       }
+    },
+    "type_ast:JsonLikeWithNullAndUndefined": {
+      "name": "JsonLikeWithNullAndUndefined",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "list",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "nullable",
+                  "itemType": {
+                    "type": "id",
+                    "value": "type_ast:JsonLikeWithNullAndUndefined"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "nullable",
+                  "itemType": {
+                    "type": "id",
+                    "value": "type_ast:JsonLikeWithNullAndUndefined"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "optional",
+              "itemType": {
+                "type": "nullable",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "optional",
+              "itemType": {
+                "type": "nullable",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "optional",
+              "itemType": {
+                "type": "nullable",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "subpackages": {
@@ -301,7 +387,8 @@
         "type_ast:ContainerValue",
         "type_ast:PrimitiveValue",
         "type_ast:ObjectValue",
-        "type_ast:JsonLike"
+        "type_ast:JsonLike",
+        "type_ast:JsonLikeWithNullAndUndefined"
       ],
       "subpackages": []
     }

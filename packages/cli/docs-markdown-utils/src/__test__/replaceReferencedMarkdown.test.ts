@@ -8,6 +8,22 @@ const absolutePathToFernFolder = AbsoluteFilePath.of("/path/to/fern");
 const absolutePathToMarkdownFile = AbsoluteFilePath.of("/path/to/fern/pages/test.mdx");
 const context = createMockTaskContext();
 
+function makeContextWithWarnSpy() {
+    const warnSpy = vi.fn();
+    const logger = {
+        debug: vi.fn(),
+        info: vi.fn(),
+        warn: warnSpy,
+        error: vi.fn(),
+        trace: vi.fn(),
+        log: vi.fn(),
+        enable: vi.fn(),
+        disable: vi.fn()
+    };
+    const testContext = createMockTaskContext({ logger });
+    return { context: testContext, warnSpy };
+}
+
 describe("replaceReferencedMarkdown", () => {
     it("should replace the referenced markdown with the content of the markdown file", async () => {
         const markdown = `
@@ -78,5 +94,284 @@ describe("replaceReferencedMarkdown", () => {
         });
 
         expect(markdownLoader).toHaveBeenCalledTimes(4);
+    });
+
+    it("should substitute variables in the referenced markdown", async () => {
+        const markdown = `
+            <Markdown src="feature.mdx" plan="pro" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/feature.mdx")) {
+                    return "This feature is only available on the {{plan}} plan.";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            This feature is only available on the pro plan.
+        `);
+    });
+
+    it("should substitute multiple variables in the referenced markdown", async () => {
+        const markdown = `
+            <Markdown src="pricing.md" tier="enterprise" price="$999" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/pricing.md")) {
+                    return "The {{tier}} tier costs {{price}} per month.";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result.trim()).toMatchInlineSnapshot(`"The enterprise tier costs $999 per month."`);
+    });
+
+    it("should substitute the same variable multiple times", async () => {
+        const markdown = `
+            <Markdown src="feature.md" name="authentication" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/feature.md")) {
+                    return "The {{name}} feature is powerful. Learn more about {{name}} in our docs.";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            The authentication feature is powerful. Learn more about authentication in our docs.
+        `);
+    });
+
+    it("should handle markdown with variables and no variables mixed", async () => {
+        const markdown = `
+            <Markdown src="intro.md" />
+            <Markdown src="feature.md" plan="pro" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/intro.md")) {
+                    return "Welcome to our docs!";
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/feature.md")) {
+                    return "Available on {{plan}} plan.";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            Welcome to our docs!
+            Available on pro plan.
+        `);
+    });
+
+    it("should handle variables with different quote styles", async () => {
+        const markdown = `
+            <Markdown src="test.md" prop1="value1" prop2='value2' prop3={"value3"} />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/test.md")) {
+                    return "{{prop1}}, {{prop2}}, {{prop3}}";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            value1, value2, value3
+        `);
+    });
+
+    it("should leave unreplaced variables as-is when no matching prop exists", async () => {
+        const markdown = `
+            <Markdown src="test.md" plan="pro" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/test.md")) {
+                    return "Plan: {{plan}}, Tier: {{tier}}";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            Plan: pro, Tier: {{tier}}
+        `);
+    });
+
+    it("should handle multiline markdown with variables", async () => {
+        const markdown = `
+            <Markdown src="feature.md" name="API Keys" level="enterprise" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/feature.md")) {
+                    return "# {{name}}\n\nThis feature is available on the {{level}} plan.\n\nLearn more about {{name}} below.";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result.trim()).toMatchInlineSnapshot(`
+          "# API Keys
+                      
+                      This feature is available on the enterprise plan.
+                      
+                      Learn more about API Keys below."
+        `);
+    });
+
+    it("should warn when snippet references a missing variable", async () => {
+        const { context: testContext, warnSpy } = makeContextWithWarnSpy();
+
+        const markdown = `
+            <Markdown src="plan-tier.mdx" plan="pro" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context: testContext,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/plan-tier.mdx")) {
+                    return "Plan: {{plan}}, Tier: {{tier}}";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(warnSpy).toHaveBeenCalledWith(
+            expect.stringMatching(
+                /\[\/path\/to\/fern\/pages\/test\.mdx:\d+\] Markdown snippet missing property: `tier`/
+            )
+        );
+        expect(warnSpy).toHaveBeenCalledTimes(1);
+        expect(result.trim()).toBe("Plan: pro, Tier: {{tier}}");
+    });
+
+    it("should warn for multiple missing variables", async () => {
+        const { context: testContext, warnSpy } = makeContextWithWarnSpy();
+
+        const markdown = `
+            <Markdown src="details.md" name="API" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context: testContext,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/details.md")) {
+                    return "{{name}} - Plan: {{plan}}, Tier: {{tier}}";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(warnSpy).toHaveBeenCalledWith(
+            expect.stringMatching(
+                /\[\/path\/to\/fern\/pages\/test\.mdx:\d+\] Markdown snippet missing property: `plan`/
+            )
+        );
+        expect(warnSpy).toHaveBeenCalledWith(
+            expect.stringMatching(
+                /\[\/path\/to\/fern\/pages\/test\.mdx:\d+\] Markdown snippet missing property: `tier`/
+            )
+        );
+        expect(warnSpy).toHaveBeenCalledTimes(2);
+        expect(result.trim()).toBe("API - Plan: {{plan}}, Tier: {{tier}}");
+    });
+
+    it("should not warn when all variables are provided", async () => {
+        const { context: testContext, warnSpy } = makeContextWithWarnSpy();
+
+        const markdown = `
+            <Markdown src="plan-tier.mdx" plan="pro" tier="enterprise" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context: testContext,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/plan-tier.mdx")) {
+                    return "Plan: {{plan}}, Tier: {{tier}}";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(warnSpy).not.toHaveBeenCalled();
+        expect(result.trim()).toBe("Plan: pro, Tier: enterprise");
+    });
+
+    it("should not warn when snippet has no variables", async () => {
+        const { context: testContext, warnSpy } = makeContextWithWarnSpy();
+
+        const markdown = `
+            <Markdown src="static.md" plan="pro" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context: testContext,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/static.md")) {
+                    return "This is static content with no variables.";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(warnSpy).not.toHaveBeenCalled();
+        expect(result.trim()).toBe("This is static content with no variables.");
     });
 });

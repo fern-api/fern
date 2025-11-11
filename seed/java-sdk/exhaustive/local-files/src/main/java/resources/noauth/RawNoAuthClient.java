@@ -69,10 +69,10 @@ public class RawNoAuthClient {
     }
     try (Response response = client.newCall(okhttpRequest).execute()) {
       ResponseBody responseBody = response.body();
-      if (response.isSuccessful()) {
-        return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class), response);
-      }
       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+      if (response.isSuccessful()) {
+        return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, boolean.class), response);
+      }
       try {
         if (response.code() == 400) {
           throw new BadRequestBody(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BadObjectRequestInfo.class), response);
@@ -81,7 +81,8 @@ public class RawNoAuthClient {
       catch (JsonProcessingException ignored) {
         // unable to map error response, throwing generic error
       }
-      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response);
+      Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
     }
     catch (IOException e) {
       throw new SeedExhaustiveException("Network error executing HTTP request", e);

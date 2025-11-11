@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net462;net8.0;net7.0;net6.0;netstandard2.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>12</LangVersion>
+    <Nullable>enable</Nullable>
+    <Version>0.0.1</Version>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
+    <FileVersion>$(Version)</FileVersion>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/url-form-encoded/fern</PackageProjectUrl>
+    <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
+  </PropertyGroup>
+  <PropertyGroup>
+    <UsePortableDateOnly>false</UsePortableDateOnly>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
+    <DefineConstants>$(DefineConstants);USE_PORTABLE_DATE_ONLY</DefineConstants>
+    <UsePortableDateOnly>true</UsePortableDateOnly>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
+    <Using Include="System.Net.Http" />
+    <Using Include="System.Collections.Generic" />
+    <Using Include="System.Linq" />
+    <Using Include="System.Threading" />
+    <Using Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(UsePortableDateOnly)' == 'true'">
+    <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.2" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(UsePortableDateOnly)' == 'false'">
+    <Compile Remove="Core\DateOnlyConverter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="PolySharp" Version="1.15.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="OneOf" Version="3.0.271" />
+    <PackageReference Include="OneOf.Extended" Version="3.0.271" />
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+    <PackageReference Include="System.Net.Http" Version="[4.3.4,)" />
+    <PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>SeedApi.Test</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+  <Import Project="SeedApi.Custom.props" Condition="Exists('SeedApi.Custom.props')" />
+</Project>

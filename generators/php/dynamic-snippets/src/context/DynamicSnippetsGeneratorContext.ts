@@ -3,7 +3,7 @@ import {
     FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { BasePhpCustomConfigSchema, php } from "@fern-api/php-codegen";
+import { BasePhpCustomConfigSchema, getSafeClassName, php } from "@fern-api/php-codegen";
 import { camelCase, upperFirst } from "lodash-es";
 
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
@@ -63,7 +63,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getClassName(name: FernIr.Name): string {
-        return name.pascalCase.safeName;
+        return getSafeClassName(name.pascalCase.safeName);
     }
 
     public getRootClientClassName(): string {
@@ -83,15 +83,15 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         });
     }
 
-    public getRequestNamespace(fernFilepath: FernIr.FernFilepath): string {
+    public getRequestNamespace(fernFilepath: FernIr.dynamic.FernFilepath): string {
         return this.getNamespace(fernFilepath, REQUEST_NAMESPACE);
     }
 
-    public getTypesNamespace(fernFilepath: FernIr.FernFilepath): string {
+    public getTypesNamespace(fernFilepath: FernIr.dynamic.FernFilepath): string {
         return this.getNamespace(fernFilepath, TYPES_NAMESPACE);
     }
 
-    public getNamespace(fernFilepath: FernIr.FernFilepath, suffix?: string): string {
+    public getNamespace(fernFilepath: FernIr.dynamic.FernFilepath, suffix?: string): string {
         let parts = fernFilepath.allParts.map((path) => path.pascalCase.safeName);
         parts = suffix != null ? [...parts, suffix] : parts;
         return [this.rootNamespace, ...parts].join("\\");

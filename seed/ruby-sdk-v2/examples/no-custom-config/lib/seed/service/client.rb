@@ -55,7 +55,9 @@ module Seed
       def get_metadata(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
         _query_param_names = %i[shallow tag]
-        _query = params.slice(*_query_param_names)
+        _query = {}
+        _query["shallow"] = params[:shallow] if params.key?(:shallow)
+        _query["tag"] = params[:tag] if params.key?(:tag)
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(

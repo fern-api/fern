@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .primitive_value import PrimitiveValue
 
@@ -48,7 +49,10 @@ class FieldValue_ContainerValue(UniversalBaseModel):
             smart_union = True
 
 
-FieldValue = typing.Union[FieldValue_PrimitiveValue, FieldValue_ObjectValue, FieldValue_ContainerValue]
-from .container_value import ContainerValue  # noqa: E402, F401, I001
+FieldValue = typing_extensions.Annotated[
+    typing.Union[FieldValue_PrimitiveValue, FieldValue_ObjectValue, FieldValue_ContainerValue],
+    pydantic.Field(discriminator="type"),
+]
+from .container_value import ContainerValue  # noqa: E402, I001
 
 update_forward_refs(FieldValue_ContainerValue)

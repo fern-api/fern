@@ -48,7 +48,7 @@
                     }
                 },
                 "tokenEnvVar": null,
-                "key": "BearerAuthScheme",
+                "key": "bearerAuth",
                 "docs": null
             }
         ],
@@ -2886,6 +2886,7 @@
         "generatorConfig": null
     },
     "audiences": null,
+    "generationMetadata": null,
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {

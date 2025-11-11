@@ -14808,12 +14808,18 @@
                   "request_id": "a847f427-4ad5-4d67-9b95-db801e58251c",
                   "sha256": "154e291ecfa8be6ab8343560bcc109008fa7853eb5372533e8efdefc9b504c33",
                   "created": "2024-05-12T18:57:13.426Z",
-                  "duration": 25.9,
+                  "duration": 25.933313,
                   "channels": 1,
                   "models": [
                     "30089e05-99d1-4376-b32e-c263170674af"
                   ],
-                  "model_info": {},
+                  "model_info": {
+                    "30089e05-99d1-4376-b32e-c263170674af": {
+                      "name": "2-general-nova",
+                      "version": "2024-01-09.29447",
+                      "arch": "nova-2"
+                    }
+                  },
                   "summary_info": {
                     "model_uuid": "67875a7f-c9c4-48a0-aa55-5bdb8a91c34a",
                     "input_tokens": 95,
@@ -14943,7 +14949,7 @@
                             "topics": [
                               {
                                 "topic": "Spacewalk",
-                                "confidence_score": 0.916
+                                "confidence_score": 0.91581345
                               }
                             ]
                           }
@@ -14962,7 +14968,7 @@
                             "intents": [
                               {
                                 "intent": "Encourage podcasting",
-                                "confidence_score": 0.0039
+                                "confidence_score": 0.0038975573
                               }
                             ]
                           }
@@ -14977,12 +14983,12 @@
                         "start_word": 0,
                         "end_word": 69,
                         "sentiment": "positive",
-                        "sentiment_score": 0.581
+                        "sentiment_score": 0.5810546875
                       }
                     ],
                     "average": {
                       "sentiment": "positive",
-                      "sentiment_score": 0.581
+                      "sentiment_score": 0.5810185185185185
                     }
                   }
                 }
@@ -14995,12 +15001,18 @@
                     "request_id": "a847f427-4ad5-4d67-9b95-db801e58251c",
                     "sha256": "154e291ecfa8be6ab8343560bcc109008fa7853eb5372533e8efdefc9b504c33",
                     "created": "2024-05-12T18:57:13.426Z",
-                    "duration": 25.9,
+                    "duration": 25.933313,
                     "channels": 1,
                     "models": [
                       "30089e05-99d1-4376-b32e-c263170674af"
                     ],
-                    "model_info": {},
+                    "model_info": {
+                      "30089e05-99d1-4376-b32e-c263170674af": {
+                        "name": "2-general-nova",
+                        "version": "2024-01-09.29447",
+                        "arch": "nova-2"
+                      }
+                    },
                     "summary_info": {
                       "model_uuid": "67875a7f-c9c4-48a0-aa55-5bdb8a91c34a",
                       "input_tokens": 95,
@@ -15130,7 +15142,7 @@
                               "topics": [
                                 {
                                   "topic": "Spacewalk",
-                                  "confidence_score": 0.916
+                                  "confidence_score": 0.91581345
                                 }
                               ]
                             }
@@ -15149,7 +15161,7 @@
                               "intents": [
                                 {
                                   "intent": "Encourage podcasting",
-                                  "confidence_score": 0.0039
+                                  "confidence_score": 0.0038975573
                                 }
                               ]
                             }
@@ -15164,12 +15176,12 @@
                           "start_word": 0,
                           "end_word": 69,
                           "sentiment": "positive",
-                          "sentiment_score": 0.581
+                          "sentiment_score": 0.5810546875
                         }
                       ],
                       "average": {
                         "sentiment": "positive",
-                        "sentiment_score": 0.581
+                        "sentiment_score": 0.5810185185185185
                       }
                     }
                   }
@@ -16023,7 +16035,7 @@
                             "topics": [
                               {
                                 "topic": "Spacewalk",
-                                "confidence_score": 0.916
+                                "confidence_score": 0.91581345
                               }
                             ]
                           }
@@ -16042,7 +16054,7 @@
                             "intents": [
                               {
                                 "intent": "Encourage podcasting",
-                                "confidence_score": 0.0039
+                                "confidence_score": 0.0038975573
                               }
                             ]
                           }
@@ -16057,12 +16069,12 @@
                         "start_word": 0,
                         "end_word": 69,
                         "sentiment": "positive",
-                        "sentiment_score": 0.581
+                        "sentiment_score": 0.5810546875
                       }
                     ],
                     "average": {
                       "sentiment": "positive",
-                      "sentiment_score": 0.581
+                      "sentiment_score": 0.5810185185185185
                     }
                   }
                 }
@@ -16116,7 +16128,7 @@
                               "topics": [
                                 {
                                   "topic": "Spacewalk",
-                                  "confidence_score": 0.916
+                                  "confidence_score": 0.91581345
                                 }
                               ]
                             }
@@ -16135,7 +16147,7 @@
                               "intents": [
                                 {
                                   "intent": "Encourage podcasting",
-                                  "confidence_score": 0.0039
+                                  "confidence_score": 0.0038975573
                                 }
                               ]
                             }
@@ -16150,12 +16162,12 @@
                           "start_word": 0,
                           "end_word": 69,
                           "sentiment": "positive",
-                          "sentiment_score": 0.581
+                          "sentiment_score": 0.5810546875
                         }
                       ],
                       "average": {
                         "sentiment": "positive",
-                        "sentiment_score": 0.581
+                        "sentiment_score": 0.5810185185185185
                       }
                     }
                   }
@@ -20760,9 +20772,9 @@
                 },
                 "results": [
                   {
-                    "hours": 1620,
-                    "total_hours": 1620,
-                    "agent_hours": 41.3,
+                    "hours": 1619.7242069444444,
+                    "total_hours": 1621.7395791666668,
+                    "agent_hours": 41.33564388888889,
                     "tokens_in": 0,
                     "tokens_out": 0,
                     "tts_characters": 9158866,
@@ -20792,9 +20804,9 @@
                   },
                   "results": [
                     {
-                      "hours": 1620,
-                      "total_hours": 1620,
-                      "agent_hours": 41.3,
+                      "hours": 1619.7242069444444,
+                      "total_hours": 1621.7395791666668,
+                      "agent_hours": 41.33564388888889,
                       "tokens_in": 0,
                       "tokens_out": 0,
                       "tts_characters": 9158866,

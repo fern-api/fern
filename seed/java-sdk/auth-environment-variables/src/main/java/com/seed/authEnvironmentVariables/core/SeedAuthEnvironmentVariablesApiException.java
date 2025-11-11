@@ -65,9 +65,9 @@ public class SeedAuthEnvironmentVariablesApiException extends SeedAuthEnvironmen
         return this.headers;
     }
 
-    @java.lang.Override
+    @Override
     public String toString() {
         return "SeedAuthEnvironmentVariablesApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode
-                + ", body: " + body + "}";
+                + ", body: " + ObjectMappers.stringify(body) + "}";
     }
 }

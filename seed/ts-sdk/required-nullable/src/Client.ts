@@ -2,7 +2,7 @@
 
 import type * as SeedApi from "./api/index.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { mergeHeaders } from "./core/headers.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import * as errors from "./errors/index.js";
 
@@ -18,6 +18,7 @@ export class SeedApiClient {
     constructor(_options: SeedApiClient.Options) {
         this._options = {
             ..._options,
+            logging: core.logging.createLogger(_options?.logging),
             headers: mergeHeaders(
                 {
                     "X-Fern-Language": "JavaScript",
@@ -86,6 +87,8 @@ export class SeedApiClient {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return { data: _response.body as SeedApi.Foo, rawResponse: _response.rawResponse };
@@ -108,6 +111,85 @@ export class SeedApiClient {
                 });
             case "timeout":
                 throw new errors.SeedApiTimeoutError("Timeout exceeded when calling GET /foo.");
+            case "unknown":
+                throw new errors.SeedApiError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * @param {string} id
+     * @param {SeedApi.UpdateFooRequest} request
+     * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.updateFoo("id", {
+     *         "X-Idempotency-Key": "X-Idempotency-Key",
+     *         nullable_text: "nullable_text",
+     *         nullable_number: 1.1,
+     *         non_nullable_text: "non_nullable_text"
+     *     })
+     */
+    public updateFoo(
+        id: string,
+        request: SeedApi.UpdateFooRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.Foo> {
+        return core.HttpResponsePromise.fromPromise(this.__updateFoo(id, request, requestOptions));
+    }
+
+    private async __updateFoo(
+        id: string,
+        request: SeedApi.UpdateFooRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.Foo>> {
+        const { "X-Idempotency-Key": xIdempotencyKey, ..._body } = request;
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ "X-Idempotency-Key": xIdempotencyKey }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `foo/${core.url.encodePathParam(id)}`,
+            ),
+            method: "PATCH",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: _body,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.Foo, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedApiError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling PATCH /foo/{id}.");
             case "unknown":
                 throw new errors.SeedApiError({
                     message: _response.error.errorMessage,

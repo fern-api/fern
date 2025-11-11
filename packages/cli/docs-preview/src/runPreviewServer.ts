@@ -27,6 +27,7 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         root: undefined,
         title: undefined,
         defaultLanguage: undefined,
+        languages: undefined,
         announcement: undefined,
         navbarLinks: undefined,
         footerLinks: undefined,
@@ -43,7 +44,8 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         integrations: undefined,
         css: undefined,
         js: undefined,
-        pageActions: undefined
+        pageActions: undefined,
+        theme: undefined
     },
     jsFiles: undefined,
     id: undefined
@@ -234,7 +236,25 @@ export async function runPreviewServer({
     });
 
     app.get(/^\/_local\/(.*)/, (req, res) => {
-        return res.sendFile(`/${req.params[0]}`);
+        const requestedPath = `/${req.params[0]}`;
+
+        // Build a set of allowed file paths from the docs definition
+        const allowedPaths = new Set<string>();
+        if (docsDefinition?.filesV2) {
+            for (const file of Object.values(docsDefinition.filesV2)) {
+                if (file.type === "url") {
+                    const urlPath = file.url.replace(/^\/_local/, "");
+                    allowedPaths.add(urlPath);
+                }
+            }
+        }
+
+        if (!allowedPaths.has(requestedPath)) {
+            context.logger.warn(`Blocked unauthorized file access attempt: ${requestedPath}`);
+            return res.status(403).send("Access denied");
+        }
+
+        return res.sendFile(requestedPath);
     });
 
     app.get("/", (req, _res, next) => {

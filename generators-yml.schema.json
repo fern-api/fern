@@ -721,6 +721,13 @@
         "v2"
       ]
     },
+    "generators.RemoveDiscriminantsFromSchemas": {
+      "type": "string",
+      "enum": [
+        "always",
+        "never"
+      ]
+    },
     "generators.APIDefinitionSettingsSchema": {
       "type": "object",
       "properties": {
@@ -818,6 +825,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remove-discriminants-from-schemas": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.RemoveDiscriminantsFromSchemas"
             },
             {
               "type": "null"
@@ -1641,6 +1658,16 @@
             }
           ]
         },
+        "remove-discriminants-from-schemas": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.RemoveDiscriminantsFromSchemas"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "only-include-referenced-schemas": {
           "oneOf": [
             {
@@ -1933,6 +1960,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remove-discriminants-from-schemas": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.RemoveDiscriminantsFromSchemas"
             },
             {
               "type": "null"
@@ -3205,13 +3242,20 @@
           ]
         },
         "config": {
-          "type": [
-            "string",
-            "number",
-            "boolean",
-            "object",
-            "array",
-            "null"
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "metadata": {
@@ -3300,8 +3344,7 @@
       },
       "required": [
         "name",
-        "version",
-        "config"
+        "version"
       ],
       "additionalProperties": false
     },

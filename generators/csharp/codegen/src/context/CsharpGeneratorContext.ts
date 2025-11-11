@@ -1,4 +1,4 @@
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import { fail } from "node:assert";
 import { assertNever } from "@fern-api/core-utils";
 import {
     DeclaredErrorName,
@@ -23,126 +23,85 @@ import {
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
-import { camelCase, upperFirst } from "lodash-es";
-import { convertReadOnlyPrimitiveTypes } from "../ast";
+import { ast, Generation } from "..";
+import { convertReadOnlyPrimitiveTypes, Writer } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
-
-export const COLLECTION_ITEM_SERIALIZER_CLASS_NAME = "CollectionItemSerializer";
-export const CONSTANTS_CLASS_NAME = "Constants";
-export const DATETIME_SERIALIZER_CLASS_NAME = "DateTimeSerializer";
-export const ENUM_SERIALIZER_CLASS_NAME = "EnumSerializer";
-export const FILE_PARAMETER_CLASS_NAME = "FileParameter";
-export const FORM_URL_ENCODER_CLASS_NAME = "FormUrlEncoder";
-export const JSON_ACCESS_ATTRIBUTE_NAME = "JsonAccess";
-export const JSON_UTILS_CLASS_NAME = "JsonUtils";
-export const ONE_OF_SERIALIZER_CLASS_NAME = "OneOfSerializer";
-export const QUERY_STRING_CONVERTER_CLASS_NAME = "QueryStringConverter";
-export const STRING_ENUM_SERIALIZER_CLASS_NAME = "StringEnumSerializer";
-export const VALUE_CONVERT_CLASS_NAME = "ValueConvert";
-export const IDEMPOTENT_REQUEST_OPTIONS_CLASS_NAME = "IdempotentRequestOptions";
-export const IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME = "IIdempotentRequestOptions";
-export const CLIENT_OPTIONS_CLASS_NAME = "ClientOptions";
-export const GLOBAL_TEST_SETUP_NAME = "GlobalTestSetup";
-export const EXCEPTION_HANDLER_MEMBER_NAME = "ExceptionHandler";
-export const REQUEST_OPTIONS_CLASS_NAME = "RequestOptions";
-export const REQUEST_OPTIONS_INTERFACE_NAME = "IRequestOptions";
-
-import { fail } from "node:assert";
-import { ast, CSharp } from "..";
 import { CsharpProtobufTypeMapper } from "../proto/CsharpProtobufTypeMapper";
 import { ProtobufResolver } from "../proto/ProtobufResolver";
-import { createCore } from "./Core";
 import { CsharpTypeMapper } from "./CsharpTypeMapper";
+import { MinimalGeneratorConfig, Support } from "./common";
 export type Namespace = string;
 
-export class CsharpGeneratorContext<
-    CustomConfig extends BaseCsharpCustomConfigSchema
-> extends AbstractGeneratorContext {
-    protected namespace: string;
+export class CsharpGeneratorContext<CustomConfig extends BaseCsharpCustomConfigSchema> {
     public readonly csharpTypeMapper: CsharpTypeMapper;
     public readonly csharpProtobufTypeMapper: CsharpProtobufTypeMapper;
     public readonly protobufResolver: ProtobufResolver;
-    public publishConfig: FernGeneratorExec.NugetGithubPublishInfo | undefined;
     private allNamespaceSegments?: Set<string>;
     private allTypeClassReferences?: Map<string, Set<Namespace>>;
     private readOnlyMemoryTypes: Set<PrimitiveTypeV1>;
-    public readonly csharp = new CSharp();
+    public readonly generation: Generation;
 
+    public get namespaces() {
+        return this.generation.namespaces;
+    }
+    public get registry() {
+        return this.generation.registry;
+    }
+    public get extern() {
+        return this.generation.extern;
+    }
+    public get settings() {
+        return this.generation.settings;
+    }
+    public get constants() {
+        return this.generation.constants;
+    }
+    public get names() {
+        return this.generation.names;
+    }
+    public get types() {
+        return this.generation.types;
+    }
+    public get model() {
+        return this.generation.model;
+    }
+    public get csharp() {
+        return this.generation.csharp;
+    }
     public get System() {
-        return this.csharp.System;
+        return this.extern.System;
     }
     public get NUnit() {
-        return this.csharp.NUnit;
+        return this.extern.NUnit;
     }
     public get OneOf() {
-        return this.csharp.OneOf;
+        return this.extern.OneOf;
     }
     public get Google() {
-        return this.csharp.Google;
+        return this.extern.Google;
     }
-
-    // class references in the generated .Core namespace
-    public readonly Core: ReturnType<typeof createCore>;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
-        public readonly config: FernGeneratorExec.config.GeneratorConfig,
-        public readonly customConfig: CustomConfig,
-        public readonly generatorNotificationService: GeneratorNotificationService
+        public config: MinimalGeneratorConfig,
+        public customConfig: CustomConfig,
+        private support: Support
     ) {
-        super(config, generatorNotificationService);
-
-        this.namespace =
-            this.customConfig.namespace ??
-            upperFirst(camelCase(`${this.config.organization}_${this.ir.apiName.pascalCase.unsafeName}`));
-
-        this.Core = createCore(this.csharp, this.getCoreNamespace());
+        this.generation = new Generation(
+            ir,
+            this.ir.apiName.pascalCase.unsafeName,
+            customConfig,
+            this.config,
+            this.support
+        );
 
         this.csharpTypeMapper = new CsharpTypeMapper(this);
         this.csharpProtobufTypeMapper = new CsharpProtobufTypeMapper(this);
         this.protobufResolver = new ProtobufResolver(this, this.csharpTypeMapper);
         this.readOnlyMemoryTypes = new Set<PrimitiveTypeV1>(
-            convertReadOnlyPrimitiveTypes(this.customConfig["read-only-memory-types"] ?? [])
+            convertReadOnlyPrimitiveTypes(this.settings.readOnlyMemoryTypes)
         );
-        config.output.mode._visit<void>({
-            github: (github) => {
-                if (github.publishInfo?.type === "nuget") {
-                    this.publishConfig = github.publishInfo;
-                }
-            },
-            publish: () => undefined,
-            downloadFiles: () => undefined,
-            _other: () => undefined
-        });
-    }
-
-    public getNamespace(): string {
-        return this.namespace;
-    }
-
-    public getPackageId(): string {
-        return this.customConfig["package-id"] ?? this.getNamespace();
-    }
-
-    public getCoreNamespace(): string {
-        return `${this.namespace}.Core`;
-    }
-
-    public getPublicCoreNamespace(): string {
-        return this.getNamespace();
-    }
-
-    public getTestNamespace(): string {
-        return this.csharp.nameRegistry.canonicalizeNamespace(`${this.namespace}.Test`);
-    }
-
-    public getTestUtilsNamespace(): string {
-        return `${this.getTestNamespace()}.Utils`;
-    }
-
-    public getMockServerTestNamespace(): string {
-        return `${this.getTestNamespace()}.Unit.MockServer`;
     }
 
     public hasGrpcEndpoints(): boolean {
@@ -158,215 +117,36 @@ export class CsharpGeneratorContext<
         return this.ir.idempotencyHeaders;
     }
 
-    public getIdempotencyFields(useRequired: boolean = true) {
-        return this.getIdempotencyHeaders().map((header) => {
+    public getIdempotencyFields(clsOrInterface: ast.Class | ast.Interface, useRequired: boolean = true): void {
+        for (const header of this.getIdempotencyHeaders()) {
             const type = this.csharpTypeMapper.convert({ reference: header.valueType });
-
-            return this.csharp.field({
+            clsOrInterface.addField({
+                origin: header,
+                enclosingType: clsOrInterface,
                 access: ast.Access.Public,
-                name: header.name.name.pascalCase.safeName,
                 get: true,
                 init: true,
-                useRequired: useRequired && type.isReferenceType() && !type.isOptional(),
+                useRequired: useRequired && type.isReferenceType && !type.isOptional,
                 type,
                 summary: header.docs
             });
-        });
-    }
-
-    public shouldGenerateDiscriminatedUnions(): boolean {
-        return this.customConfig["use-discriminated-unions"] ?? true;
-    }
-
-    public getJsonElementClassReference(): ast.ClassReference {
-        return this.csharp.System.Text.Json.JsonElement;
-    }
-
-    public getJsonElementType(): ast.Type {
-        return this.csharp.Type.reference(this.csharp.System.Text.Json.JsonElement);
-    }
-
-    public getJsonExtensionDataAttribute(): ast.Annotation {
-        return this.csharp.annotation({
-            reference: this.csharp.System.Text.Json.Serialization.JsonExtensionData
-        });
-    }
-
-    public getAdditionalPropertiesType(genericType?: ast.Type): ast.Type {
-        return this.csharp.Type.reference(this.getAdditionalPropertiesClassReference(genericType));
-    }
-
-    public getReadOnlyAdditionalPropertiesType(genericType?: ast.Type): ast.Type {
-        return this.csharp.Type.reference(this.getReadOnlyAdditionalPropertiesClassReference(genericType));
-    }
-
-    public getSerializableAttribute(): ast.Annotation {
-        return this.csharp.annotation({
-            reference: this.csharp.System.Serializable
-        });
-    }
-
-    public getOauthTokenProviderClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            namespace: this.getCoreNamespace(),
-            name: "OAuthTokenProvider"
-        });
-    }
-
-    public getPagerClassReference({ itemType }: { itemType: ast.Type }): ast.ClassReference {
-        return this.csharp.classReference({
-            namespace: this.getCoreNamespace(),
-            name: "Pager",
-            generics: [itemType]
-        });
-    }
-
-    public getOffsetPagerClassReference({
-        requestType,
-        requestOptionsType,
-        responseType,
-        offsetType,
-        stepType,
-        itemType
-    }: {
-        requestType: ast.Type | ast.TypeParameter;
-        requestOptionsType: ast.Type | ast.TypeParameter;
-        responseType: ast.Type | ast.TypeParameter;
-        offsetType: ast.Type | ast.TypeParameter;
-        stepType: ast.Type | ast.TypeParameter;
-        itemType: ast.Type | ast.TypeParameter;
-    }): ast.ClassReference {
-        return this.csharp.classReference({
-            namespace: this.getCoreNamespace(),
-            name: "OffsetPager",
-            generics: [requestType, requestOptionsType, responseType, offsetType, stepType, itemType]
-        });
-    }
-
-    public getCursorPagerClassReference({
-        requestType,
-        requestOptionsType,
-        responseType,
-        cursorType,
-        itemType
-    }: {
-        requestType: ast.Type | ast.TypeParameter;
-        requestOptionsType: ast.Type | ast.TypeParameter;
-        responseType: ast.Type | ast.TypeParameter;
-        cursorType: ast.Type | ast.TypeParameter;
-        itemType: ast.Type | ast.TypeParameter;
-    }): ast.ClassReference {
-        return this.csharp.classReference({
-            namespace: this.getCoreNamespace(),
-            name: "CursorPager",
-            generics: [requestType, requestOptionsType, responseType, cursorType, itemType]
-        });
-    }
-
-    public getExceptionHandlerClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: "ExceptionHandler",
-            namespace: this.getCoreNamespace()
-        });
-    }
-
-    public getExceptionInterceptorClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: "IExceptionInterceptor",
-            namespace: this.getCoreNamespace()
-        });
-    }
-
-    public getValueConvertReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: VALUE_CONVERT_CLASS_NAME,
-            namespace: this.getCoreNamespace()
-        });
-    }
-
-    public getFileParamClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            namespace: this.getPublicCoreNamespace(),
-            name: "FileParameter"
-        });
-    }
-
-    public getBaseApiExceptionClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: this.customConfig["base-api-exception-class-name"] ?? `${this.getClientPrefix()}ApiException`,
-            namespace: this.getNamespaceForPublicCoreClasses()
-        });
-    }
-
-    public getHeadersClassName(): string {
-        return "Headers";
-    }
-
-    public getHeadersClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: this.getHeadersClassName(),
-            namespace: this.getCoreNamespace()
-        });
-    }
-
-    public getRootClientClassName(): string {
-        return this.customConfig["client-class-name"] ?? `${this.getComputedClientName()}Client`;
-    }
-
-    public getRootClientClassNameForSnippets(): string {
-        if (this.customConfig["exported-client-class-name"] != null) {
-            return this.customConfig["exported-client-class-name"];
         }
-        return this.getRootClientClassName();
     }
 
-    public getRootClientClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: this.getRootClientClassName(),
-            namespace: this.getNamespace()
-        });
-    }
+    public getIdempotencyInitializers(writer: Writer) {
+        for (const header of this.getIdempotencyHeaders()) {
+            const type = this.csharpTypeMapper.convert({ reference: header.valueType });
 
-    public getRootClientClassReferenceForSnippets(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: this.getRootClientClassNameForSnippets(),
-            namespace: this.getNamespace()
-        });
-    }
-
-    public getBaseExceptionClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: this.customConfig["base-exception-class-name"] ?? `${this.getClientPrefix()}Exception`,
-            namespace: this.getNamespaceForPublicCoreClasses()
-        });
-    }
-
-    public isForwardCompatibleEnumsEnabled(): boolean {
-        return (
-            this.customConfig["enable-forward-compatible-enums"] ??
-            this.customConfig["experimental-enable-forward-compatible-enums"] ??
-            true
-        );
-    }
-
-    public get useFullyQualifiedNamespaces(): boolean {
-        return this.customConfig["experimental-fully-qualified-namespaces"] ?? false;
-    }
-
-    public get useDotnetFormat(): boolean {
-        return this.customConfig["experimental-dotnet-format"] ?? false;
-    }
-
-    public get enableWebsockets(): boolean {
-        return this.customConfig["experimental-enable-websockets"] ?? false;
-    }
-
-    public get enableReadonlyConstants(): boolean {
-        return this.customConfig["experimental-readonly-constants"] ?? false;
+            if (type.isReferenceType && !type.isOptional) {
+                const name = header.name.name.pascalCase.safeName;
+                writer.write(name, " = ", type.defaultValue, ",");
+                writer.writeLine();
+            }
+        }
     }
 
     public get hasWebSocketEndpoints(): boolean {
-        return this.enableWebsockets && Object.entries(this.ir.websocketChannels ?? {}).length > 0;
+        return this.settings.enableWebsockets && Object.entries(this.ir.websocketChannels ?? {}).length > 0;
     }
 
     /**
@@ -439,37 +219,8 @@ export class CsharpGeneratorContext<
         );
     }
 
-    public get temporaryWebsocketEnvironments(): Record<
-        string,
-        { defaultEnvironment?: string; environments: Record<string, string> }
-    > {
-        return this.customConfig["temporary-websocket-environments"] ?? {};
-    }
-
     public getWebsocketChannel(name?: string) {
         return name ? this.ir.websocketChannels?.[name] : undefined;
-    }
-
-    public generateNewAdditionalProperties(): boolean {
-        return (
-            this.customConfig["additional-properties"] ??
-            this.customConfig["experimental-additional-properties"] ??
-            true
-        );
-    }
-
-    public getProtoAnyMapperClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            namespace: this.getCoreNamespace(),
-            name: "ProtoAnyMapper"
-        });
-    }
-
-    public getConstantsClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            namespace: this.getCoreNamespace(),
-            name: CONSTANTS_CLASS_NAME
-        });
     }
 
     public getAllNamespaceSegments(): Set<string> {
@@ -487,7 +238,7 @@ export class CsharpGeneratorContext<
         if (this.allTypeClassReferences == null) {
             const resultMap = new Map<string, Set<string>>();
             Object.values(this.ir.types).forEach((typeDeclaration) => {
-                const classReference = this.csharpTypeMapper.convertToClassReference(typeDeclaration.name);
+                const classReference = this.csharpTypeMapper.convertToClassReference(typeDeclaration);
                 const key = classReference.name;
                 const value = classReference.namespace;
 
@@ -506,57 +257,8 @@ export class CsharpGeneratorContext<
         return this.getFullNamespaceSegments(fernFilepath).join(".");
     }
 
-    getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
-        return [];
-    }
-
     public getFullNamespaceSegments(fernFilepath: FernFilepath): string[] {
-        return [this.getNamespace(), ...this.getChildNamespaceSegments(fernFilepath)];
-    }
-
-    public getStringEnumSerializerClassReference(enumClassReference: ast.ClassReference): ast.ClassReference {
-        return this.csharp.classReference({
-            namespace: this.getCoreNamespace(),
-            name: STRING_ENUM_SERIALIZER_CLASS_NAME,
-            generics: [this.csharp.Type.reference(enumClassReference)]
-        });
-    }
-
-    public getEnumSerializerClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            namespace: this.getCoreNamespace(),
-            name: ENUM_SERIALIZER_CLASS_NAME
-        });
-    }
-
-    public getDateTimeSerializerClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            namespace: this.getCoreNamespace(),
-            name: DATETIME_SERIALIZER_CLASS_NAME
-        });
-    }
-
-    public getJsonUtilsClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            namespace: this.getCoreNamespace(),
-            name: JSON_UTILS_CLASS_NAME
-        });
-    }
-
-    public getJsonNodeClassReference(): ast.ClassReference {
-        return this.csharp.System.Text.Json.Nodes.JsonNode;
-    }
-
-    public getJsonObjClassReference(): ast.ClassReference {
-        return this.csharp.System.Text.Json.Nodes.JsonObject;
-    }
-
-    public getJsonConverterAttributeReference(): ast.ClassReference {
-        return this.csharp.System.Text.Json.Serialization.JsonConverter();
-    }
-
-    public getJsonConverterClassReference(typeToConvert: ast.Type): ast.ClassReference {
-        return this.csharp.System.Text.Json.Serialization.JsonConverter(typeToConvert);
+        return [this.namespaces.root, ...this.support.getChildNamespaceSegments(fernFilepath)];
     }
 
     public createJsonAccessAttribute(propertyAccess: ObjectPropertyAccess): ast.Annotation {
@@ -573,8 +275,8 @@ export class CsharpGeneratorContext<
         }
         return this.csharp.annotation({
             reference: this.csharp.classReference({
-                namespace: this.getCoreNamespace(),
-                name: JSON_ACCESS_ATTRIBUTE_NAME
+                origin: this.model.staticExplicit("JsonAccess"),
+                namespace: this.namespaces.core
             }),
             argument
         });
@@ -582,121 +284,33 @@ export class CsharpGeneratorContext<
 
     public createJsonPropertyNameAttribute(name: string): ast.Annotation {
         return this.csharp.annotation({
-            reference: this.csharp.System.Text.Json.Serialization.JsonPropertyName,
+            reference: this.extern.System.Text.Json.Serialization.JsonPropertyName,
             argument: `"${name}"`
-        });
-    }
-
-    public getVersionClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: "Version",
-            namespace: this.getPublicCoreNamespace()
         });
     }
 
     public getCurrentVersionValueAccess(): ast.CodeBlock {
         return this.csharp.codeblock((writer) => {
-            writer.writeNode(this.getVersionClassReference());
+            writer.writeNode(this.types.Version);
             writer.write(".");
-            writer.write(this.getCurrentVersionPropertyName());
+            writer.write(this.model.getPropertyNameFor(this.types.Version.explicit("Current")));
         });
-    }
-
-    public getCurrentVersionPropertyName(): string {
-        return "Current";
-    }
-
-    public getCollectionItemSerializerReference(
-        itemType: ast.ClassReference,
-        serializer: ast.ClassReference
-    ): ast.ClassReference {
-        return this.csharp.classReference({
-            namespace: this.getCoreNamespace(),
-            name: COLLECTION_ITEM_SERIALIZER_CLASS_NAME,
-            generics: [this.csharp.Type.reference(itemType), this.csharp.Type.reference(serializer)]
-        });
-    }
-
-    public getOneOfSerializerClassReference(oneof: ast.ClassReference): ast.ClassReference {
-        return this.csharp.classReference({
-            namespace: this.getCoreNamespace(),
-            name: ONE_OF_SERIALIZER_CLASS_NAME,
-            generics: [this.csharp.Type.reference(oneof)]
-        });
-    }
-
-    public getOneOfClassReference(generics: ast.Type[]): ast.ClassReference {
-        return this.csharp.OneOf.OneOf(generics);
-    }
-
-    public getProtoConverterClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: "ProtoConverter",
-            namespace: this.getCoreNamespace()
-        });
-    }
-
-    public getStringEnumClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: "StringEnum",
-            namespace: this.getCoreNamespace()
-        });
-    }
-
-    public getJsonIgnoreAnnotation(): ast.Annotation {
-        return this.csharp.annotation({ reference: this.csharp.System.Text.Json.Serialization.JsonIgnore });
-    }
-
-    public getPascalCaseSafeName(name: Name): string {
-        return name.pascalCase.safeName;
-    }
-
-    public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
-        return this.ir.types[typeId] || fail(`Type declaration with id ${typeId} not found`);
     }
 
     public getEnumerableEmptyKeyValuePairsInitializer(): ast.MethodInvocation {
         return this.csharp.invokeMethod({
-            on: this.csharp.System.Linq.Enumerable,
+            on: this.extern.System.Linq.Enumerable,
             method: "Empty",
             generics: [
                 this.csharp.Type.reference(
-                    this.getKeyValuePairsClassReference({
-                        key: this.csharp.Type.string(),
-                        value: this.csharp.Type.string()
-                    })
+                    this.extern.System.Collections.Generic.KeyValuePair(
+                        this.csharp.Type.string,
+                        this.csharp.Type.string
+                    )
                 )
             ],
             arguments_: []
         });
-    }
-
-    public getKeyValuePairsClassReference({ key, value }: { key: ast.Type; value: ast.Type }): ast.ClassReference {
-        return this.csharp.System.Collections.Generic.KeyValuePair(key, value);
-    }
-
-    public getAdditionalPropertiesClassReference(genericType?: ast.Type): ast.ClassReference {
-        return this.csharp.classReference({
-            name: "AdditionalProperties",
-            namespace: this.getPublicCoreNamespace(),
-            generics: genericType ? [genericType] : undefined
-        });
-    }
-
-    public getReadOnlyAdditionalPropertiesClassReference(genericType?: ast.Type): ast.ClassReference {
-        return this.csharp.classReference({
-            name: "ReadOnlyAdditionalProperties",
-            namespace: this.getPublicCoreNamespace(),
-            generics: genericType ? [genericType] : undefined
-        });
-    }
-
-    public getIJsonOnDeserializedInterfaceReference(): ast.ClassReference {
-        return this.csharp.System.Text.Json.Serialization.IJsonOnDeserialized;
-    }
-
-    public getIJsonOnSerializingInterfaceReference(): ast.ClassReference {
-        return this.csharp.System.Text.Json.Serialization.IJsonOnSerializing;
     }
 
     public getAsUndiscriminatedUnionTypeDeclaration(
@@ -723,7 +337,7 @@ export class CsharpGeneratorContext<
             return undefined;
         }
 
-        const declaration = this.getTypeDeclarationOrThrow(reference.typeId);
+        const declaration = this.model.dereferenceType(reference.typeId).typeDeclaration;
         if (this.protobufResolver.isWellKnownProtobufType(declaration.name.typeId)) {
             return undefined;
         }
@@ -736,7 +350,7 @@ export class CsharpGeneratorContext<
         if (declaration.shape.type === "alias") {
             const resolvedType = declaration.shape.resolvedType;
             if (resolvedType.type === "named") {
-                const resolvedTypeDeclaration = this.getTypeDeclarationOrThrow(reference.typeId);
+                const resolvedTypeDeclaration = this.model.dereferenceType(reference.typeId).typeDeclaration;
                 if (resolvedTypeDeclaration.shape.type === "undiscriminatedUnion") {
                     return { declaration: resolvedTypeDeclaration.shape, isList: false };
                 }
@@ -754,14 +368,15 @@ export class CsharpGeneratorContext<
         return undefined;
     }
 
-    public getToStringMethod(): ast.Method {
-        return this.csharp.method({
+    public getToStringMethod(cls: ast.Class): ast.Method {
+        return cls.addMethod({
             name: "ToString",
             access: ast.Access.Public,
             isAsync: false,
+
             override: true,
             parameters: [],
-            return_: this.csharp.Type.string(),
+            return_: this.csharp.Type.string,
             doc: {
                 inheritdoc: true
             },
@@ -769,7 +384,7 @@ export class CsharpGeneratorContext<
                 writer.write("return ");
                 writer.writeNodeStatement(
                     this.csharp.invokeMethod({
-                        on: this.getJsonUtilsClassReference(),
+                        on: this.types.JsonUtils,
                         method: "Serialize",
                         arguments_: [this.csharp.codeblock("this")]
                     })
@@ -797,7 +412,7 @@ export class CsharpGeneratorContext<
                 }
                 return false;
             case "named": {
-                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                const typeDeclaration = this.model.dereferenceType(typeReference.typeId).typeDeclaration;
                 if (typeDeclaration.shape.type === "alias") {
                     return this.isOptional(typeDeclaration.shape.aliasOf);
                 }
@@ -821,7 +436,7 @@ export class CsharpGeneratorContext<
                 }
                 return false;
             case "named": {
-                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                const typeDeclaration = this.model.dereferenceType(typeReference.typeId).typeDeclaration;
                 if (typeDeclaration.shape.type === "alias") {
                     return this.isPrimitive(typeDeclaration.shape.aliasOf);
                 }
@@ -839,7 +454,7 @@ export class CsharpGeneratorContext<
             case "container":
                 return false;
             case "named": {
-                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                const typeDeclaration = this.model.dereferenceType(typeReference.typeId).typeDeclaration;
                 if (typeDeclaration.shape.type === "alias") {
                     return this.isReadOnlyMemoryType(typeDeclaration.shape.aliasOf);
                 }
@@ -876,11 +491,10 @@ export class CsharpGeneratorContext<
      */
     public printType(type: ast.Type | ast.TypeParameter): string {
         return type.toString({
-            namespace: this.getNamespace(),
+            namespace: this.namespaces.root,
             allNamespaceSegments: this.getAllNamespaceSegments(),
             allTypeClassReferences: this.getAllTypeClassReferences(),
-            rootNamespace: this.getNamespace(),
-            customConfig: this.customConfig,
+            generation: this.generation,
             skipImports: true
         });
     }
@@ -917,7 +531,7 @@ export class CsharpGeneratorContext<
             }
         }
         if (typeReference.type === "named") {
-            const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+            const typeDeclaration = this.model.dereferenceType(typeReference.typeId).typeDeclaration;
             if (
                 typeDeclaration.shape.type === "alias" &&
                 typeDeclaration.shape.resolvedType.type === "container" &&
@@ -937,28 +551,6 @@ export class CsharpGeneratorContext<
         return undefined;
     }
 
-    public getCustomPagerClassReference({ itemType }: { itemType: ast.Type }): ast.ClassReference {
-        return this.csharp.classReference({
-            name: this.getCustomPagerName(),
-            namespace: this.getCoreNamespace(),
-            generics: [itemType]
-        });
-    }
-
-    public getCustomPagerFactoryClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: `${this.getCustomPagerName()}Factory`,
-            namespace: this.getCoreNamespace()
-        });
-    }
-
-    public getCustomPagerContextClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: `${this.getCustomPagerName()}Context`,
-            namespace: this.getCoreNamespace()
-        });
-    }
-
     public invokeCustomPagerFactoryMethod({
         itemType,
         sendRequestMethod,
@@ -975,12 +567,12 @@ export class CsharpGeneratorContext<
         cancellationToken: ast.CodeBlock;
     }): ast.MethodInvocation {
         return this.csharp.invokeMethod({
-            on: this.getCustomPagerFactoryClassReference(),
+            on: this.types.CustomPagerFactory,
             method: "CreateAsync",
             async: true,
             arguments_: [
                 this.csharp.instantiateClass({
-                    classReference: this.getCustomPagerContextClassReference(),
+                    classReference: this.types.CustomPagerContext,
                     arguments_: [],
                     properties: [
                         {
@@ -1007,69 +599,35 @@ export class CsharpGeneratorContext<
         });
     }
 
-    public shouldCreateCustomPagination(): boolean {
-        return false;
-    }
-
-    public getCustomPagerName(): string {
-        return this.customConfig["custom-pager-name"] ?? `${stripNonAlphanumeric(this.getPackageId())}Pager`;
-    }
-
-    public getRawAsIsFiles(): string[] {
-        return [];
-    }
-
     public getCoreAsIsFiles(): string[] {
-        return [];
+        return this.support.getCoreAsIsFiles();
     }
 
     public getCoreTestAsIsFiles(): string[] {
-        return [];
+        return this.support.getCoreTestAsIsFiles();
     }
 
     public getPublicCoreAsIsFiles(): string[] {
-        return [];
+        return this.support.getPublicCoreAsIsFiles();
     }
 
     public getAsyncCoreAsIsFiles(): string[] {
-        return [];
-    }
-
-    public getPublicCoreTestAsIsFiles(): string[] {
-        return [];
-    }
-
-    public getAsIsTestUtils(): string[] {
-        return [];
+        return this.support.getAsyncCoreAsIsFiles();
     }
 
     public getDirectoryForTypeId(typeId: TypeId): string {
-        return "";
+        return this.support.getDirectoryForTypeId(typeId);
     }
 
     public getNamespaceForTypeId(typeId: TypeId): string {
-        return "";
-    }
-
-    public getExtraDependencies(): Record<string, string> {
-        return {};
+        return this.support.getNamespaceForTypeId(typeId);
     }
 
     public getSubpackageClassReference(subpackage: Subpackage): ast.ClassReference {
         return this.csharp.classReference({
             name: `${subpackage.name.pascalCase.unsafeName}Client`,
-            namespace: this.getNamespaceFromFernFilepath(subpackage.fernFilepath)
-        });
-    }
-
-    public getRawClientClassName(): string {
-        return "RawClient";
-    }
-
-    public getRawClientClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: this.getRawClientClassName(),
-            namespace: this.getCoreNamespace()
+            namespace: this.getNamespaceFromFernFilepath(subpackage.fernFilepath),
+            origin: subpackage
         });
     }
 
@@ -1082,101 +640,23 @@ export class CsharpGeneratorContext<
         return this.ir.services[serviceId] || fail(`Service with id ${serviceId} not found`);
     }
 
-    protected getComputedClientName(): string {
-        return `${upperFirst(camelCase(this.config.organization))}${this.ir.apiName.pascalCase.unsafeName}`;
-    }
-
-    protected getClientPrefix(): string {
-        return (
-            this.customConfig["exported-client-class-name"] ??
-            this.customConfig["client-class-name"] ??
-            this.getComputedClientName()
-        );
-    }
-
-    protected getEnvironmentClassName(): string {
-        return this.customConfig["environment-class-name"] ?? `${this.getClientPrefix()}Environment`;
-    }
-
-    public getEnvironmentsClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: this.getEnvironmentClassName(),
-            namespace: this.getNamespaceForPublicCoreClasses()
-        });
-    }
-
-    public getNamespaceForPublicCoreClasses(): string {
-        return (this.customConfig["root-namespace-for-core-classes"] ?? true)
-            ? this.getNamespace()
-            : this.getCoreNamespace();
-    }
-
-    public getBaseMockServerTestClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: "BaseMockServerTest",
-            namespace: this.getMockServerTestNamespace()
-        });
-    }
-
-    public getClientOptionsClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: CLIENT_OPTIONS_CLASS_NAME,
-            namespace: this.getNamespaceForPublicCoreClasses()
-        });
-    }
-
-    public getRequestOptionsClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: REQUEST_OPTIONS_CLASS_NAME,
-            namespace: this.getNamespaceForPublicCoreClasses()
-        });
-    }
-
-    public getRequestOptionsInterfaceReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: REQUEST_OPTIONS_INTERFACE_NAME,
-            namespace: this.getCoreNamespace()
-        });
-    }
-
-    public getIdempotentRequestOptionsClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: IDEMPOTENT_REQUEST_OPTIONS_CLASS_NAME,
-            namespace: this.getNamespaceForPublicCoreClasses()
-        });
-    }
-
-    public getIdempotentRequestOptionsInterfaceClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
-            namespace: this.getCoreNamespace()
-        });
-    }
-
-    public getJsonRequestClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: "JsonRequest",
-            namespace: this.getCoreNamespace()
-        });
-    }
-
-    public getHttpResponseHeadersReference(): ast.ClassReference {
-        return this.csharp.System.Net.Http.HttpResponseHeaders;
+    /**
+     * Returns the service with the given id
+     * @param serviceId
+     * @returns
+     */
+    public getHttpService(serviceId?: ServiceId): HttpService | undefined {
+        return serviceId != null ? this.ir.services[serviceId] : undefined;
     }
 
     public getSubpackageForServiceId(serviceId: ServiceId): Subpackage | undefined {
         return Object.values(this.ir.subpackages).find((subpackage) => subpackage.service === serviceId);
     }
 
-    public getSubpackageForServiceIdOrThrow(serviceId: ServiceId): Subpackage {
-        return (
-            this.getSubpackageForServiceId(serviceId) ||
-            fail(`No example found for subpackage with serviceId ${serviceId}`)
-        );
-    }
-
     public getSubpackageClassReferenceForServiceIdOrThrow(serviceId: ServiceId): ast.ClassReference {
-        return this.getSubpackageClassReference(this.getSubpackageForServiceIdOrThrow(serviceId));
+        return this.getSubpackageClassReference(
+            this.getSubpackageForServiceId(serviceId) ?? fail(`subpackage ${serviceId} not found`)
+        );
     }
 
     public getNamespaceForServiceId(serviceId: ServiceId): string {
@@ -1185,68 +665,16 @@ export class CsharpGeneratorContext<
 
     public getExceptionClassReference(declaredErrorName: DeclaredErrorName): ast.ClassReference {
         return this.csharp.classReference({
-            name: this.getPascalCaseSafeName(declaredErrorName.name),
+            origin: declaredErrorName,
             namespace: this.getNamespaceFromFernFilepath(declaredErrorName.fernFilepath)
         });
     }
 
-    public getRawGrpcClientClassName(): string {
-        return "RawGrpcClient";
-    }
-
-    public getRawGrpcClientClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: this.getRawGrpcClientClassName(),
-            namespace: this.getCoreNamespace()
-        });
-    }
-
-    public getExtensionsClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: "Extensions",
-            namespace: this.getCoreNamespace()
-        });
-    }
-
-    public getGrpcRequestOptionsName(): string {
-        return "GrpcRequestOptions";
-    }
-
-    public getGrpcCreateCallOptionsMethodName(): string {
-        return "CreateCallOptions";
-    }
-
-    public getGrpcRequestOptionsClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: this.getGrpcRequestOptionsName(),
-            namespace: this.getNamespace()
-        });
-    }
-
-    public getGrpcChannelOptionsFieldName(): string {
-        return "GrpcOptions";
-    }
-
-    public getGrpcChannelOptionsClassReference(): ast.ClassReference {
-        return this.csharp.classReference({
-            name: "GrpcChannelOptions",
-            namespace: "Grpc.Net.Client"
-        });
-    }
-
-    public getCancellationTokenClassReference(): ast.ClassReference {
-        return this.csharp.classReference(this.csharp.System.Threading.CancellationToken);
-    }
-
     public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): ast.ClassReference {
         return this.csharp.classReference({
-            name: requestName.pascalCase.safeName,
+            origin: requestName,
             namespace: this.getNamespaceForServiceId(serviceId)
         });
-    }
-
-    private getGrpcClientPrivatePropertyName(protobufService: ProtobufService): string {
-        return `_${protobufService.name.camelCase.safeName}`;
     }
 
     private getGrpcClientServiceName(protobufService: ProtobufService): string {
@@ -1260,8 +688,9 @@ export class CsharpGeneratorContext<
         }
         const serviceName = this.getGrpcClientServiceName(protobufService);
         return {
-            privatePropertyName: this.getGrpcClientPrivatePropertyName(protobufService),
+            privatePropertyName: `_${protobufService.name.camelCase.safeName}`,
             classReference: this.csharp.classReference({
+                origin: protobufService,
                 name: `${serviceName}.${serviceName}Client`,
                 namespace: this.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufService.file)
             }),
@@ -1270,27 +699,18 @@ export class CsharpGeneratorContext<
     }
 
     precalculate() {
-        this.csharp.nameRegistry.addImplicitNamespace(this.getNamespace());
-        this.csharp.System.Collections.Generic.KeyValuePair();
-        this.csharp.System.Collections.Generic.IEnumerable();
-        this.csharp.System.Collections.Generic.IAsyncEnumerable();
-        this.csharp.System.Collections.Generic.HashSet();
-        this.csharp.System.Collections.Generic.List();
-        this.csharp.System.Collections.Generic.Dictionary();
+        this.extern.System.Collections.Generic.KeyValuePair();
+        this.extern.System.Collections.Generic.IEnumerable();
+        this.extern.System.Collections.Generic.IAsyncEnumerable();
+        this.extern.System.Collections.Generic.HashSet();
+        this.extern.System.Collections.Generic.List();
+        this.extern.System.Collections.Generic.Dictionary();
 
         // types that can get used
-        this.getReadOnlyAdditionalPropertiesClassReference();
-        this.getJsonUtilsClassReference();
-
-        this.csharp.classReference({
-            name: "IStringEnum",
-            namespace: this.getCoreNamespace()
-        });
-
-        this.csharp.classReference({
-            namespace: this.getCoreNamespace(),
-            name: STRING_ENUM_SERIALIZER_CLASS_NAME
-        });
+        this.types.ReadOnlyAdditionalProperties();
+        this.types.JsonUtils;
+        this.types.StringEnumSerializer;
+        this.types.IStringEnum;
 
         // start with the models
         for (const [typeId, typeDeclaration] of Object.entries(this.ir.types)) {
@@ -1305,15 +725,14 @@ export class CsharpGeneratorContext<
                 _other: () => undefined,
 
                 enum: (etd: EnumTypeDeclaration) => {
-                    const enclosingType = this.csharpTypeMapper.convertToClassReference(typeDeclaration.name);
+                    const enclosingType = this.csharpTypeMapper.convertToClassReference(typeDeclaration);
 
-                    if (this.isForwardCompatibleEnumsEnabled()) {
+                    if (this.settings.isForwardCompatibleEnumsEnabled) {
                         // we're generating a string enum
                         // it's going to be a class called Values
 
                         this.csharp.classReference({
-                            name: "Values",
-                            namespace: this.getNamespace(),
+                            origin: this.model.explicit(typeDeclaration, "Values"),
                             enclosingType
                         });
                     }
@@ -1321,7 +740,7 @@ export class CsharpGeneratorContext<
                 object: (otd: ObjectTypeDeclaration) => {
                     // generate a class reference for the typedeclaration
 
-                    this.csharpTypeMapper.convertToClassReference(typeDeclaration.name);
+                    this.csharpTypeMapper.convertToClassReference(typeDeclaration);
 
                     for (const property of otd.properties) {
                         switch (property.valueType.type) {
@@ -1329,7 +748,9 @@ export class CsharpGeneratorContext<
                                 {
                                     this.csharpTypeMapper.convertToClassReference(property.valueType);
 
-                                    const typeDeclaration = this.getTypeDeclarationOrThrow(property.valueType.typeId);
+                                    const typeDeclaration = this.model.dereferenceType(
+                                        property.valueType.typeId
+                                    ).typeDeclaration;
                                     switch (typeDeclaration.shape.type) {
                                         case "alias":
                                             break;
@@ -1391,29 +812,26 @@ export class CsharpGeneratorContext<
                     }
                 },
                 union: (utd: UnionTypeDeclaration) => {
-                    if (this.shouldGenerateDiscriminatedUnions()) {
-                        const enclosingType = this.csharpTypeMapper.convertToClassReference(typeDeclaration.name);
+                    if (this.settings.shouldGeneratedDiscriminatedUnions) {
+                        const enclosingType = this.csharpTypeMapper.convertToClassReference(typeDeclaration);
 
                         utd.types.map((type) => {
                             type.discriminantValue.name.pascalCase.safeName;
 
                             this.csharp.classReference({
-                                namespace: enclosingType.namespace,
-                                name: type.discriminantValue.name.pascalCase.safeName,
+                                origin: type.discriminantValue,
                                 enclosingType
                             });
                         });
 
                         this.csharp.classReference({
-                            enclosingType,
-                            namespace: enclosingType.namespace,
-                            name: "JsonConverter"
+                            origin: this.model.explicit(typeDeclaration, "JsonConverter"),
+                            enclosingType
                         });
 
                         if (utd.baseProperties.length > 0) {
                             this.csharp.classReference({
                                 enclosingType,
-                                namespace: enclosingType.namespace,
                                 name: "BaseProperties"
                             });
                         }
@@ -1426,22 +844,25 @@ export class CsharpGeneratorContext<
         }
 
         Object.values(this.ir.types).forEach((typeDeclaration) => {
-            this.csharpTypeMapper.convertToClassReference(typeDeclaration.name);
+            this.csharpTypeMapper.convertToClassReference(typeDeclaration);
         });
 
-        this.getRawClientClassReference();
-        this.getRequestOptionsClassReference();
-        this.getJsonRequestClassReference();
-        this.getVersionClassReference();
-        this.getValueConvertReference();
-        this.getBaseExceptionClassReference();
-        this.getRootClientClassReference();
-        this.getRootClientClassReferenceForSnippets();
-        this.getBaseApiExceptionClassReference();
-        this.getHeadersClassReference();
-        this.getClientOptionsClassReference();
-        this.getRequestOptionsInterfaceReference();
-        this.getEnvironmentsClassReference();
+        const initialClassReferences = [
+            this.types.RawClient,
+            this.types.RequestOptions,
+            this.types.RequestOptionsInterface,
+            this.types.ClientOptions,
+            this.types.JsonRequest,
+            this.types.Version,
+            this.types.ValueConvert,
+            this.types.BaseException,
+            this.types.RootClient,
+            this.types.RootClientForSnippets,
+            this.types.BaseApiException,
+            this.types.Headers,
+            this.types.Environments,
+            this.types.TestClient
+        ];
 
         // subpackages
         Object.entries(this.ir.subpackages).forEach(([_, subpackage]) => {
@@ -1483,13 +904,13 @@ export class CsharpGeneratorContext<
                 }
 
                 const testType = this.csharp.classReference({
-                    //   name: typeDeclaration.name.name.originalName,
-                    name: `${this.csharpTypeMapper.convertToClassReference(typeDeclaration.name).name}Test`,
-                    namespace: this.getTestNamespace()
+                    origin: this.model.explicit(typeDeclaration, "Test"),
+                    name: `${this.csharpTypeMapper.convertToClassReference(typeDeclaration).name}Test`,
+                    namespace: this.namespaces.test
                 });
             }
 
-            if (this.shouldGenerateDiscriminatedUnions()) {
+            if (this.settings.shouldGeneratedDiscriminatedUnions) {
                 for (const typeDeclaration of types
                     .filter((type) => type.shape.type === "union")
                     .map((type) => type as TypeDeclaration & { shape: UnionTypeDeclaration })) {
@@ -1501,23 +922,17 @@ export class CsharpGeneratorContext<
                         continue;
                     }
                     const testType = this.csharp.classReference({
-                        //   name: typeDeclaration.name.name.originalName,
-                        name: `${this.csharpTypeMapper.convertToClassReference(typeDeclaration.name).name}Test`,
-                        namespace: this.getTestNamespace()
+                        name: `${this.csharpTypeMapper.convertToClassReference(typeDeclaration).name}Test`,
+                        namespace: this.namespaces.test
                     });
                 }
             }
 
-            if (this.customConfig["generate-error-types"] ?? true) {
+            if (this.settings.generateErrorTypes) {
                 for (const each of Object.values(this.ir.errors)) {
                     this.getExceptionClassReference(each.name);
                 }
             }
-
-            this.csharp.classReference({
-                name: "TestClient",
-                namespace: this.getTestNamespace()
-            });
         });
 
         for (const [serviceId, service] of Object.entries(this.ir.services)) {
@@ -1531,12 +946,15 @@ export class CsharpGeneratorContext<
                     return response?.type === "ok" && response.value.type === "body";
                 });
                 if (useableExamples.length === 0) {
+                    // this.support.getLogger().warn(`No useable examples found for endpoint ${endpoint.id}`);
                     continue;
                 }
 
                 this.csharp.classReference({
-                    name: endpoint.name.pascalCase.safeName + "Test",
-                    namespace: this.getTestNamespace()
+                    origin: this.model.explicit(endpoint, "Test"),
+                    name: `${endpoint.name.pascalCase.safeName}Test`,
+
+                    namespace: this.namespaces.test
                 });
             }
         }
@@ -1544,8 +962,4 @@ export class CsharpGeneratorContext<
         // after generating the names for everything, freeze the class references
         this.csharp.freezeClassReferences();
     }
-}
-
-function stripNonAlphanumeric(str: string): string {
-    return str.replace(/[^a-zA-Z0-9]/g, "");
 }

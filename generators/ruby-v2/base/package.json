@@ -24,26 +24,26 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "compile:debug": "tsc --build --sourceMap",
     "postcompile": "cp -r ./src/asIs ./lib/asIs",
-    "test": "vitest --passWithNoTests --run",
-    "test:update": "vitest --passWithNoTests --run -u",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
-    "lint:eslint:fix": "yarn lint:eslint --fix",
+    "compile:debug": "tsc --build --sourceMap",
+    "depcheck": "depcheck",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "depcheck": "depcheck",
-    "test:debug": "pnpm run test --inspect --no-file-parallelism"
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
+    "lint:eslint:fix": "yarn lint:eslint --fix",
+    "test": "vitest --passWithNoTests --run",
+    "test:debug": "pnpm run test --inspect --no-file-parallelism",
+    "test:update": "vitest --passWithNoTests --run -u"
   },
   "devDependencies": {
     "@fern-api/base-generator": "workspace:*",
+    "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
-    "@fern-api/browser-compatible-base-generator": "workspace:*",
-    "@fern-api/core-utils": "workspace:*",
     "@fern-api/ruby-ast": "workspace:*",
-    "@fern-fern/ir-sdk": "^59.7.0",
+    "@fern-fern/ir-sdk": "^61.7.0",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "18.15.3",
     "dedent": "^1.5.1",
@@ -51,7 +51,7 @@
     "eslint": "^8.56.0",
     "lodash-es": "^4.17.21",
     "prettier": "^3.4.2",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "vitest": "^2.1.9"
   }
 }

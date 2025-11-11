@@ -1,5 +1,98 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.35.3
+  changelogEntry:
+    - summary: Fix double Optional wrapping for unknown types in nullable fields by mapping unknown to Any instead of Optional[Any].
+      type: fix
+  createdAt: "2025-11-11"
+  irVersion: 61
+
+- version: 4.35.2
+  changelogEntry:
+    - summary: Add back F401-ignored imports for circular references.
+      type: fix
+  createdAt: "2025-11-10"
+  irVersion: 61
+
+- version: 4.35.1
+  changelogEntry:
+    - summary: Generated Python SDKs no longer show SyntaxWarnings when API docs or enum values include backslashes.
+      type: fix
+  createdAt: "2025-11-10"
+  irVersion: 61
+
+- version: 4.35.0
+  changelogEntry:
+    - summary: Add automatic discriminated union support using Pydantic's Field(discriminator=...) to improve serialization performance. Benchmarks show a 2x speedup by eliminating sequential variant attempts and enabling O(1) variant selection.
+      type: feat
+  createdAt: "2025-11-10"
+  irVersion: 61
+
+- version: 4.34.1
+  changelogEntry:
+    - summary: Fix websocket response type generation to use typing.Any when no server-to-client messages are defined, preventing mypy errors with empty Union types.
+      type: fix
+  createdAt: "2025-11-07"
+  irVersion: 61
+
+- version: 4.34.0
+  changelogEntry:
+    - summary: Add support for disabling retries on endpoints
+      type: feat
+  createdAt: "2025-11-05"
+  irVersion: 61
+
+- version: 4.33.0
+  changelogEntry:
+    - summary: Added Generation Metadata file to output
+      type: feat
+  createdAt: "2025-11-04"
+  irVersion: 61
+
+- version: 4.32.3-rc1
+  changelogEntry:
+    - summary: Added logging to debug 4.32.3-rc0
+      type: feat
+  createdAt: "2025-10-30"
+  irVersion: 60
+
+- version: 4.32.3-rc0
+  changelogEntry:
+    - summary: Add support for publishing to PyPI with attestations in auto-generated GHA ci.yml
+      type: feat
+  createdAt: "2025-10-30"
+  irVersion: 60
+
+- version: 4.32.2
+  changelogEntry:
+    - summary: Update pyproject.toml headers to propagate project urls to pypi metadata generation
+      type: chore
+  createdAt: "2025-10-29"
+  irVersion: 60
+
+- version: 4.32.1
+  changelogEntry:
+    - summary: Fix pydantic model alias generator to correctly serialize wrapped aliases in pydantic v2.
+      type: fix
+  createdAt: "2025-10-27"
+  irVersion: 60
+
+- version: 4.32.0
+  changelogEntry:
+    - summary: |
+        Add support for setting the recursion limit above the default of 1000.
+        Also removes unused imports that were previously F401-ignored.
+      type: feat
+  createdAt: "2025-10-24"
+  irVersion: 60
+
+- version: 4.31.2
+  changelogEntry:
+    - summary: Fix union type deserialization to properly match discriminated unions based on literal field values (e.g., type discriminators) when nested fields have validation errors.
+      type: fix
+  createdAt: "2025-10-23"
+  irVersion: 60
+
 - version: 4.31.1
   changelogEntry:
     - summary: Escape backslashes in docstrings to prevent SyntaxWarning for invalid escape sequences.

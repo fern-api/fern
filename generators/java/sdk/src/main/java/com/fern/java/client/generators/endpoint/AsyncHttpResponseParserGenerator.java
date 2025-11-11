@@ -193,13 +193,23 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
 
     @Override
     public void addTryWithResourcesVariant(CodeBlock.Builder httpResponseBuilder) {
-        httpResponseBuilder
-                .beginControlFlow(
-                        "try ($T $L = $N.body())",
-                        ResponseBody.class,
-                        variables.getResponseBodyName(),
-                        variables.getResponseName())
-                .beginControlFlow("if ($L.isSuccessful())", variables.getResponseName());
+        httpResponseBuilder.beginControlFlow(
+                "try ($T $L = $N.body())",
+                ResponseBody.class,
+                variables.getResponseBodyName(),
+                variables.getResponseName());
+
+        if (shouldPreReadResponseBodyString()) {
+            httpResponseBuilder.addStatement(
+                    "$T $L = $L != null ? $L.string() : $S",
+                    String.class,
+                    variables.getResponseBodyStringName(),
+                    variables.getResponseBodyName(),
+                    variables.getResponseBodyName(),
+                    "{}");
+        }
+
+        httpResponseBuilder.beginControlFlow("if ($L.isSuccessful())", variables.getResponseName());
     }
 
     @Override
@@ -210,8 +220,19 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
                         "$T $L = $N.body()",
                         ResponseBody.class,
                         variables.getResponseBodyName(),
-                        variables.getResponseName())
-                .beginControlFlow("if ($L.isSuccessful())", variables.getResponseName());
+                        variables.getResponseName());
+
+        if (shouldPreReadResponseBodyString()) {
+            httpResponseBuilder.addStatement(
+                    "$T $L = $L != null ? $L.string() : $S",
+                    String.class,
+                    variables.getResponseBodyStringName(),
+                    variables.getResponseBodyName(),
+                    variables.getResponseBodyName(),
+                    "{}");
+        }
+
+        httpResponseBuilder.beginControlFlow("if ($L.isSuccessful())", variables.getResponseName());
     }
 
     @Override

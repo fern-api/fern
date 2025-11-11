@@ -5,12 +5,13 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { NavbarGithubConfigWithOptions } from "./NavbarGithubConfigWithOptions";
 
 export const NavbarGithubConfig: core.serialization.Schema<
     serializers.NavbarGithubConfig.Raw,
     FernDocsConfig.NavbarGithubConfig
-> = core.serialization.string();
+> = core.serialization.undiscriminatedUnion([core.serialization.string(), NavbarGithubConfigWithOptions]);
 
 export declare namespace NavbarGithubConfig {
-    export type Raw = string;
+    export type Raw = string | NavbarGithubConfigWithOptions.Raw;
 }

@@ -1,7 +1,8 @@
 import { AbstractFormatter, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AsIsFiles, BaseCsharpGeneratorContext } from "@fern-api/csharp-base";
+import { CsharpGeneratorContext } from "@fern-api/csharp-codegen";
 import { CsharpFormatter } from "@fern-api/csharp-formatter";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernFilepath, IntermediateRepresentation, TypeId, WellKnownProtobufType } from "@fern-fern/ir-sdk/api";
 
@@ -15,8 +16,67 @@ export class ModelGeneratorContext extends BaseCsharpGeneratorContext<ModelCusto
         customConfig: ModelCustomConfigSchema,
         generatorNotificationService: GeneratorNotificationService
     ) {
-        super(ir, config, customConfig, generatorNotificationService);
+        super(
+            ir,
+            config,
+            customConfig,
+            generatorNotificationService,
+            new CsharpGeneratorContext(ir, config, customConfig, {
+                makeRelativeFilePath: (path: string) => RelativeFilePath.of(path),
+                makeAbsoluteFilePath: (path: string) => AbsoluteFilePath.of(path),
+                getNamespaceForTypeId: (typeId: TypeId) => this.getNamespaceForTypeId(typeId),
+                getDirectoryForTypeId: (typeId: TypeId) => this.getDirectoryForTypeId(typeId),
+                getCoreAsIsFiles: () => this.getCoreAsIsFiles(),
+                getCoreTestAsIsFiles: () => this.getCoreTestAsIsFiles(),
+                getPublicCoreAsIsFiles: () => this.getPublicCoreAsIsFiles(),
+                getAsyncCoreAsIsFiles: () => [],
+                getChildNamespaceSegments: (fernFilepath: FernFilepath) => this.getChildNamespaceSegments(fernFilepath)
+            })
+        );
         this.formatter = new CsharpFormatter();
+    }
+
+    public get generation() {
+        return this.common.generation;
+    }
+    public get namespaces() {
+        return this.generation.namespaces;
+    }
+    public get registry() {
+        return this.generation.registry;
+    }
+    public get extern() {
+        return this.generation.extern;
+    }
+    public get settings() {
+        return this.generation.settings;
+    }
+    public get constants() {
+        return this.generation.constants;
+    }
+    public get names() {
+        return this.generation.names;
+    }
+    public get types() {
+        return this.generation.types;
+    }
+    public get model() {
+        return this.generation.model;
+    }
+    public get csharp() {
+        return this.generation.csharp;
+    }
+    public get System() {
+        return this.extern.System;
+    }
+    public get NUnit() {
+        return this.extern.NUnit;
+    }
+    public get OneOf() {
+        return this.extern.OneOf;
+    }
+    public get Google() {
+        return this.extern.Google;
     }
 
     /**
@@ -27,22 +87,18 @@ export class ModelGeneratorContext extends BaseCsharpGeneratorContext<ModelCusto
      * @returns
      */
     public getDirectoryForTypeId(typeId: TypeId): RelativeFilePath {
-        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        const typeDeclaration = this.model.dereferenceType(typeId).typeDeclaration;
         return RelativeFilePath.of(
             [...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/")
         );
     }
 
     public getNamespaceForTypeId(typeId: TypeId): string {
-        const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
+        const typeDeclaration = this.model.dereferenceType(typeId).typeDeclaration;
         return [
-            this.getNamespace(),
+            this.namespaces.root,
             ...typeDeclaration.name.fernFilepath.packagePath.map((path) => path.pascalCase.safeName)
         ].join(".");
-    }
-
-    public getRawAsIsFiles(): string[] {
-        return [AsIsFiles.EditorConfig, AsIsFiles.GitIgnore];
     }
 
     public getCoreAsIsFiles(): string[] {
@@ -60,7 +116,7 @@ export class ModelGeneratorContext extends BaseCsharpGeneratorContext<ModelCusto
             ]
         );
 
-        if (this.isForwardCompatibleEnumsEnabled()) {
+        if (this.settings.isForwardCompatibleEnumsEnabled) {
             files.push(AsIsFiles.Json.StringEnumSerializer);
             files.push(AsIsFiles.StringEnum);
             files.push(AsIsFiles.StringEnumExtensions);
@@ -68,7 +124,9 @@ export class ModelGeneratorContext extends BaseCsharpGeneratorContext<ModelCusto
             files.push(AsIsFiles.Json.EnumSerializer);
         }
 
-        const resolvedProtoAnyType = this.protobufResolver.resolveWellKnownProtobufType(WellKnownProtobufType.any());
+        const resolvedProtoAnyType = this.common.protobufResolver.resolveWellKnownProtobufType(
+            WellKnownProtobufType.any()
+        );
         if (resolvedProtoAnyType != null) {
             files.push(AsIsFiles.ProtoAnyMapper);
         }
@@ -82,10 +140,10 @@ export class ModelGeneratorContext extends BaseCsharpGeneratorContext<ModelCusto
             AsIsFiles.Test.Json.JsonAccessAttributeTests,
             AsIsFiles.Test.Json.OneOfSerializerTests
         ];
-        if (this.generateNewAdditionalProperties()) {
+        if (this.settings.generateNewAdditionalProperties) {
             files.push(AsIsFiles.Test.Json.AdditionalPropertiesTests);
         }
-        if (this.isForwardCompatibleEnumsEnabled()) {
+        if (this.settings.isForwardCompatibleEnumsEnabled) {
             files.push(AsIsFiles.Test.Json.StringEnumSerializerTests);
         } else {
             files.push(AsIsFiles.Test.Json.EnumSerializerTests);
@@ -96,29 +154,17 @@ export class ModelGeneratorContext extends BaseCsharpGeneratorContext<ModelCusto
 
     public getPublicCoreAsIsFiles(): string[] {
         const files = [AsIsFiles.FileParameter];
-        if (this.generateNewAdditionalProperties()) {
+        if (this.settings.generateNewAdditionalProperties) {
             files.push(AsIsFiles.Json.AdditionalProperties);
         }
         return files;
     }
 
-    public getPublicCoreTestAsIsFiles(): string[] {
-        return [];
-    }
-
-    public getAsIsTestUtils(): string[] {
-        return Object.values(AsIsFiles.Test.Utils);
-    }
-
-    public getExtraDependencies(): Record<string, string> {
-        return {};
-    }
-
-    override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
+    getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
         return fernFilepath.packagePath.map((segmentName) => segmentName.pascalCase.safeName);
     }
 
-    public shouldCreateCustomPagination(): boolean {
+    public override shouldCreateCustomPagination(): boolean {
         return false;
     }
 }

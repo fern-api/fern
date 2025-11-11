@@ -190,3 +190,58 @@ func (f *Foo) String() string {
 	}
 	return fmt.Sprintf("%#v", f)
 }
+
+var (
+	updateFooRequestFieldXIdempotencyKey = big.NewInt(1 << 0)
+	updateFooRequestFieldNullableText    = big.NewInt(1 << 1)
+	updateFooRequestFieldNullableNumber  = big.NewInt(1 << 2)
+	updateFooRequestFieldNonNullableText = big.NewInt(1 << 3)
+)
+
+type UpdateFooRequest struct {
+	XIdempotencyKey string `json:"-" url:"-"`
+	// Can be explicitly set to null to clear the value
+	NullableText *string `json:"nullable_text,omitempty" url:"-"`
+	// Can be explicitly set to null to clear the value
+	NullableNumber *float64 `json:"nullable_number,omitempty" url:"-"`
+	// Regular non-nullable field
+	NonNullableText *string `json:"non_nullable_text,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (u *UpdateFooRequest) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetXIdempotencyKey sets the XIdempotencyKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFooRequest) SetXIdempotencyKey(xIdempotencyKey string) {
+	u.XIdempotencyKey = xIdempotencyKey
+	u.require(updateFooRequestFieldXIdempotencyKey)
+}
+
+// SetNullableText sets the NullableText field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFooRequest) SetNullableText(nullableText *string) {
+	u.NullableText = nullableText
+	u.require(updateFooRequestFieldNullableText)
+}
+
+// SetNullableNumber sets the NullableNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFooRequest) SetNullableNumber(nullableNumber *float64) {
+	u.NullableNumber = nullableNumber
+	u.require(updateFooRequestFieldNullableNumber)
+}
+
+// SetNonNullableText sets the NonNullableText field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFooRequest) SetNonNullableText(nonNullableText *string) {
+	u.NonNullableText = nonNullableText
+	u.require(updateFooRequestFieldNonNullableText)
+}

@@ -14,28 +14,21 @@ export async function parseOpenAPI({
     absolutePathToOpenAPIOverrides?: AbsoluteFilePath;
     parsed?: OpenAPI.Document;
 }): Promise<OpenAPI.Document> {
-    try {
-        const result =
-            parsed != null
-                ? await bundle({
-                      ...DEFAULT_OPENAPI_BUNDLE_OPTIONS,
-                      doc: {
-                          source: new Source(absolutePathToOpenAPI, "<openapi>"),
-                          parsed
-                      },
-                      externalRefResolver: new OpenAPIRefResolver(absolutePathToOpenAPIOverrides)
-                  })
-                : await bundle({
-                      ...DEFAULT_OPENAPI_BUNDLE_OPTIONS,
-                      ref: absolutePathToOpenAPI,
-                      externalRefResolver: new OpenAPIRefResolver(absolutePathToOpenAPIOverrides)
-                  });
+    const result =
+        parsed != null
+            ? await bundle({
+                  ...DEFAULT_OPENAPI_BUNDLE_OPTIONS,
+                  doc: {
+                      source: new Source(absolutePathToOpenAPI, "<openapi>"),
+                      parsed
+                  },
+                  externalRefResolver: new OpenAPIRefResolver(absolutePathToOpenAPIOverrides)
+              })
+            : await bundle({
+                  ...DEFAULT_OPENAPI_BUNDLE_OPTIONS,
+                  ref: absolutePathToOpenAPI,
+                  externalRefResolver: new OpenAPIRefResolver(absolutePathToOpenAPIOverrides)
+              });
 
-        return result.bundle.parsed;
-    } catch (error) {
-        if (error instanceof Error) {
-            throw new Error(`Failed to parse OpenAPI document at ${absolutePathToOpenAPI}: ${error.message}`);
-        }
-        throw new Error(`Failed to parse OpenAPI document at ${absolutePathToOpenAPI}: ${String(error)}`);
-    }
+    return result.bundle.parsed;
 }

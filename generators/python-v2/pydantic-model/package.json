@@ -45,11 +45,11 @@
     "@fern-api/python-ast": "workspace:*",
     "@fern-api/python-base": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.1167",
-    "@fern-fern/ir-sdk": "60.3.0",
+    "@fern-fern/ir-sdk": "^61.7.0",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "tsup": "^8.5.0",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "vitest": "^2.1.9",
     "zod": "^3.22.4"
   }

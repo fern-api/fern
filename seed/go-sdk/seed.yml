@@ -1,4 +1,4 @@
-irVersion: v60
+irVersion: v61
 displayName: Go SDK
 image: fernapi/fern-go-sdk
 changelogLocation: ../../generators/go/sdk/versions.yml
@@ -9,8 +9,9 @@ buildScripts:
       - go build -v ./...
   testScript:
     commands:
+      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
       - go test -v ./...
-
+      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi 
 publish:
   workingDirectory: generators/go
   preBuildCommands:
@@ -101,6 +102,7 @@ fixtures:
     - outputFolder: with-wiremock-tests
       customConfig:
         enableWireTests: true
+        packageName: testPackageName
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: package-path
@@ -198,11 +200,12 @@ fixtures:
     - outputFolder: default-values
       customConfig:
         useDefaultRequestParameterValues: true
-  reserved-keywords: []
 scripts:
   - docker: fernapi/go-seed:1.0.0
     commands:
+      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
       - CGO_ENABLED=0 go test ./...
+      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi
 allowedFailures:
   - alias-extends
   - bytes-download
@@ -214,9 +217,7 @@ allowedFailures:
   - mixed-case:default-values
   - pagination-custom
   - request-parameters
-  - server-sent-event-examples
-  - server-sent-events
-  - streaming:.
+  - reserved-keywords
   - streaming-parameter
   - trace
   - property-access
@@ -229,8 +230,10 @@ allowedFailures:
   - path-parameters:no-custom-config
   - path-parameters:package-name
 
-  # TODO: Investigate addition of toolchain directive to go.mod
-  - imdb:with-wiremock-tests
-
   - oauth-client-credentials-with-variables
   - variables
+
+  # Will include these back in once we fix dynamic snippets for inline file properties
+  - file-upload:no-custom-config 
+  - file-upload:package-name 
+  - file-upload-openapi

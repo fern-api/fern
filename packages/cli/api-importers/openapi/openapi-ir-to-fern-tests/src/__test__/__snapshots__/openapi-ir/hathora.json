@@ -11885,6 +11885,7 @@
               "value": {
                 "generatedName": "PickRoomExcludeKeyofRoomAllocationsCurrentAllocation",
                 "schema": "RoomAllocation",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"
@@ -11997,6 +11998,7 @@
               "value": {
                 "generatedName": "RoomCurrentAllocation",
                 "schema": "RoomAllocation",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.json",
                   "type": "openapi"

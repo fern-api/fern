@@ -3935,6 +3935,13 @@
                                   },
                                   "type": "primitive"
                                 },
+                                "remote_id": {
+                                  "value": {
+                                    "value": "52802",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
                                 "employee_payroll_run": {
                                   "value": {
                                     "value": "35347df1-95e7-46e2-93cc-66f1191edca5",
@@ -3959,6 +3966,65 @@
                                     "type": "datetime"
                                   },
                                   "type": "primitive"
+                                },
+                                "field_mappings": {
+                                  "value": [
+                                    {
+                                      "key": {
+                                        "value": "organization_defined_targets",
+                                        "type": "string"
+                                      },
+                                      "value": {
+                                        "value": {
+                                          "value": [
+                                            {
+                                              "key": {
+                                                "value": "custom_key",
+                                                "type": "string"
+                                              },
+                                              "value": {
+                                                "value": {
+                                                  "value": "custom_value",
+                                                  "type": "string"
+                                                },
+                                                "type": "primitive"
+                                              }
+                                            }
+                                          ],
+                                          "type": "map"
+                                        },
+                                        "type": "unknown"
+                                      }
+                                    },
+                                    {
+                                      "key": {
+                                        "value": "linked_account_defined_targets",
+                                        "type": "string"
+                                      },
+                                      "value": {
+                                        "value": {
+                                          "value": [
+                                            {
+                                              "key": {
+                                                "value": "custom_key",
+                                                "type": "string"
+                                              },
+                                              "value": {
+                                                "value": {
+                                                  "value": "custom_value",
+                                                  "type": "string"
+                                                },
+                                                "type": "primitive"
+                                              }
+                                            }
+                                          ],
+                                          "type": "map"
+                                        },
+                                        "type": "unknown"
+                                      }
+                                    }
+                                  ],
+                                  "type": "map"
                                 }
                               },
                               "type": "object"
@@ -3968,6 +4034,13 @@
                                 "id": {
                                   "value": {
                                     "value": "babbced6-3a81-4775-8da2-490dc6385259",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "remote_id": {
+                                  "value": {
+                                    "value": "52802",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -3996,6 +4069,65 @@
                                     "type": "datetime"
                                   },
                                   "type": "primitive"
+                                },
+                                "field_mappings": {
+                                  "value": [
+                                    {
+                                      "key": {
+                                        "value": "organization_defined_targets",
+                                        "type": "string"
+                                      },
+                                      "value": {
+                                        "value": {
+                                          "value": [
+                                            {
+                                              "key": {
+                                                "value": "custom_key",
+                                                "type": "string"
+                                              },
+                                              "value": {
+                                                "value": {
+                                                  "value": "custom_value",
+                                                  "type": "string"
+                                                },
+                                                "type": "primitive"
+                                              }
+                                            }
+                                          ],
+                                          "type": "map"
+                                        },
+                                        "type": "unknown"
+                                      }
+                                    },
+                                    {
+                                      "key": {
+                                        "value": "linked_account_defined_targets",
+                                        "type": "string"
+                                      },
+                                      "value": {
+                                        "value": {
+                                          "value": [
+                                            {
+                                              "key": {
+                                                "value": "custom_key",
+                                                "type": "string"
+                                              },
+                                              "value": {
+                                                "value": {
+                                                  "value": "custom_value",
+                                                  "type": "string"
+                                                },
+                                                "type": "primitive"
+                                              }
+                                            }
+                                          ],
+                                          "type": "map"
+                                        },
+                                        "type": "unknown"
+                                      }
+                                    }
+                                  ],
+                                  "type": "map"
                                 }
                               },
                               "type": "object"
@@ -4010,6 +4142,13 @@
                                 "id": {
                                   "value": {
                                     "value": "5fd439fc-1b64-4755-b275-64918936c365",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "remote_id": {
+                                  "value": {
+                                    "value": "93478612",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -4048,6 +4187,103 @@
                                     "type": "datetime"
                                   },
                                   "type": "primitive"
+                                },
+                                "field_mappings": {
+                                  "value": [
+                                    {
+                                      "key": {
+                                        "value": "organization_defined_targets",
+                                        "type": "string"
+                                      },
+                                      "value": {
+                                        "value": {
+                                          "value": [
+                                            {
+                                              "key": {
+                                                "value": "custom_key",
+                                                "type": "string"
+                                              },
+                                              "value": {
+                                                "value": {
+                                                  "value": "custom_value",
+                                                  "type": "string"
+                                                },
+                                                "type": "primitive"
+                                              }
+                                            }
+                                          ],
+                                          "type": "map"
+                                        },
+                                        "type": "unknown"
+                                      }
+                                    },
+                                    {
+                                      "key": {
+                                        "value": "linked_account_defined_targets",
+                                        "type": "string"
+                                      },
+                                      "value": {
+                                        "value": {
+                                          "value": [
+                                            {
+                                              "key": {
+                                                "value": "custom_key",
+                                                "type": "string"
+                                              },
+                                              "value": {
+                                                "value": {
+                                                  "value": "custom_value",
+                                                  "type": "string"
+                                                },
+                                                "type": "primitive"
+                                              }
+                                            }
+                                          ],
+                                          "type": "map"
+                                        },
+                                        "type": "unknown"
+                                      }
+                                    }
+                                  ],
+                                  "type": "map"
+                                },
+                                "remote_data": {
+                                  "value": [
+                                    {
+                                      "properties": {
+                                        "path": {
+                                          "value": {
+                                            "value": "/payroll-deduction",
+                                            "type": "string"
+                                          },
+                                          "type": "primitive"
+                                        },
+                                        "data": {
+                                          "value": [
+                                            {
+                                              "key": {
+                                                "value": "0",
+                                                "type": "string"
+                                              },
+                                              "value": {
+                                                "value": {
+                                                  "value": {
+                                                    "value": "Varies by platform",
+                                                    "type": "string"
+                                                  },
+                                                  "type": "primitive"
+                                                },
+                                                "type": "unknown"
+                                              }
+                                            }
+                                          ],
+                                          "type": "map"
+                                        }
+                                      },
+                                      "type": "object"
+                                    }
+                                  ],
+                                  "type": "array"
                                 }
                               },
                               "type": "object"
@@ -4062,6 +4298,13 @@
                                 "id": {
                                   "value": {
                                     "value": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "remote_id": {
+                                  "value": {
+                                    "value": "26806834",
                                     "type": "string"
                                   },
                                   "type": "primitive"
@@ -4100,6 +4343,65 @@
                                     "type": "datetime"
                                   },
                                   "type": "primitive"
+                                },
+                                "field_mappings": {
+                                  "value": [
+                                    {
+                                      "key": {
+                                        "value": "organization_defined_targets",
+                                        "type": "string"
+                                      },
+                                      "value": {
+                                        "value": {
+                                          "value": [
+                                            {
+                                              "key": {
+                                                "value": "custom_key",
+                                                "type": "string"
+                                              },
+                                              "value": {
+                                                "value": {
+                                                  "value": "custom_value",
+                                                  "type": "string"
+                                                },
+                                                "type": "primitive"
+                                              }
+                                            }
+                                          ],
+                                          "type": "map"
+                                        },
+                                        "type": "unknown"
+                                      }
+                                    },
+                                    {
+                                      "key": {
+                                        "value": "linked_account_defined_targets",
+                                        "type": "string"
+                                      },
+                                      "value": {
+                                        "value": {
+                                          "value": [
+                                            {
+                                              "key": {
+                                                "value": "custom_key",
+                                                "type": "string"
+                                              },
+                                              "value": {
+                                                "value": {
+                                                  "value": "custom_value",
+                                                  "type": "string"
+                                                },
+                                                "type": "primitive"
+                                              }
+                                            }
+                                          ],
+                                          "type": "map"
+                                        },
+                                        "type": "unknown"
+                                      }
+                                    }
+                                  ],
+                                  "type": "map"
                                 }
                               },
                               "type": "object"
@@ -15365,22 +15667,85 @@
                   "type": "primitive"
                 },
                 "response": {
-                  "value": [
-                    {
-                      "key": {
-                        "value": "key",
-                        "type": "string"
-                      },
-                      "value": {
-                        "value": {
-                          "value": "value",
+                  "value": {
+                    "value": [
+                      {
+                        "key": {
+                          "value": "scooters",
                           "type": "string"
                         },
-                        "type": "primitive"
+                        "value": {
+                          "value": [
+                            {
+                              "value": [
+                                {
+                                  "key": {
+                                    "value": "company",
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "value": {
+                                      "value": "Lime",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                {
+                                  "key": {
+                                    "value": "model",
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "value": {
+                                      "value": "Gen 2.5",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                }
+                              ],
+                              "type": "map"
+                            },
+                            {
+                              "value": [
+                                {
+                                  "key": {
+                                    "value": "company",
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "value": {
+                                      "value": "Bird",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                },
+                                {
+                                  "key": {
+                                    "value": "model",
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "value": {
+                                      "value": "Bird Zero",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                }
+                              ],
+                              "type": "map"
+                            }
+                          ],
+                          "type": "array"
+                        }
                       }
-                    }
-                  ],
-                  "type": "map"
+                    ],
+                    "type": "map"
+                  },
+                  "type": "unknown"
                 },
                 "response_headers": {
                   "value": [
@@ -22491,12 +22856,14 @@
                 "value": {
                   "generatedName": "AccountDetailsCategory",
                   "schema": "CategoryEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -22678,6 +23045,7 @@
               "value": {
                 "generatedName": "AccountDetailsAndActionsCategory",
                 "schema": "CategoryEnum",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -23552,15 +23920,19 @@
               "description": "The bank account type\n\n* `SAVINGS` - SAVINGS\n* `CHECKING` - CHECKING",
               "value": {
                 "generatedName": "BankInfoAccountType",
+                "description": "The bank account type\n\n* `SAVINGS` - SAVINGS\n* `CHECKING` - CHECKING",
                 "value": {
+                  "description": "The bank account type\n\n* `SAVINGS` - SAVINGS\n* `CHECKING` - CHECKING",
                   "generatedName": "BankInfoAccountType",
                   "schema": "AccountTypeEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -26138,12 +26510,14 @@
                 "value": {
                   "generatedName": "DataPassthroughRequestRequestFormat",
                   "schema": "RequestFormatEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -26703,15 +27077,19 @@
               "description": "The type of earning.\n\n* `SALARY` - SALARY\n* `REIMBURSEMENT` - REIMBURSEMENT\n* `OVERTIME` - OVERTIME\n* `BONUS` - BONUS",
               "value": {
                 "generatedName": "EarningType",
+                "description": "The type of earning.\n\n* `SALARY` - SALARY\n* `REIMBURSEMENT` - REIMBURSEMENT\n* `OVERTIME` - OVERTIME\n* `BONUS` - BONUS",
                 "value": {
+                  "description": "The type of earning.\n\n* `SALARY` - SALARY\n* `REIMBURSEMENT` - REIMBURSEMENT\n* `OVERTIME` - OVERTIME\n* `BONUS` - BONUS",
                   "generatedName": "EarningType",
                   "schema": "EarningTypeEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -27426,15 +27804,19 @@
               "description": "The employee's gender.\n\n* `MALE` - MALE\n* `FEMALE` - FEMALE\n* `NON-BINARY` - NON-BINARY\n* `OTHER` - OTHER\n* `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE",
               "value": {
                 "generatedName": "EmployeeGender",
+                "description": "The employee's gender.\n\n* `MALE` - MALE\n* `FEMALE` - FEMALE\n* `NON-BINARY` - NON-BINARY\n* `OTHER` - OTHER\n* `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE",
                 "value": {
+                  "description": "The employee's gender.\n\n* `MALE` - MALE\n* `FEMALE` - FEMALE\n* `NON-BINARY` - NON-BINARY\n* `OTHER` - OTHER\n* `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE",
                   "generatedName": "EmployeeGender",
                   "schema": "GenderEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -27451,15 +27833,19 @@
               "description": "The employee's ethnicity.\n\n* `AMERICAN_INDIAN_OR_ALASKA_NATIVE` - AMERICAN_INDIAN_OR_ALASKA_NATIVE\n* `ASIAN_OR_INDIAN_SUBCONTINENT` - ASIAN_OR_INDIAN_SUBCONTINENT\n* `BLACK_OR_AFRICAN_AMERICAN` - BLACK_OR_AFRICAN_AMERICAN\n* `HISPANIC_OR_LATINO` - HISPANIC_OR_LATINO\n* `NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER` - NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER\n* `TWO_OR_MORE_RACES` - TWO_OR_MORE_RACES\n* `WHITE` - WHITE\n* `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE",
               "value": {
                 "generatedName": "EmployeeEthnicity",
+                "description": "The employee's ethnicity.\n\n* `AMERICAN_INDIAN_OR_ALASKA_NATIVE` - AMERICAN_INDIAN_OR_ALASKA_NATIVE\n* `ASIAN_OR_INDIAN_SUBCONTINENT` - ASIAN_OR_INDIAN_SUBCONTINENT\n* `BLACK_OR_AFRICAN_AMERICAN` - BLACK_OR_AFRICAN_AMERICAN\n* `HISPANIC_OR_LATINO` - HISPANIC_OR_LATINO\n* `NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER` - NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER\n* `TWO_OR_MORE_RACES` - TWO_OR_MORE_RACES\n* `WHITE` - WHITE\n* `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE",
                 "value": {
+                  "description": "The employee's ethnicity.\n\n* `AMERICAN_INDIAN_OR_ALASKA_NATIVE` - AMERICAN_INDIAN_OR_ALASKA_NATIVE\n* `ASIAN_OR_INDIAN_SUBCONTINENT` - ASIAN_OR_INDIAN_SUBCONTINENT\n* `BLACK_OR_AFRICAN_AMERICAN` - BLACK_OR_AFRICAN_AMERICAN\n* `HISPANIC_OR_LATINO` - HISPANIC_OR_LATINO\n* `NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER` - NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER\n* `TWO_OR_MORE_RACES` - TWO_OR_MORE_RACES\n* `WHITE` - WHITE\n* `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE",
                   "generatedName": "EmployeeEthnicity",
                   "schema": "EthnicityEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -27476,15 +27862,19 @@
               "description": "The employee's filing status as related to marital status.\n\n* `SINGLE` - SINGLE\n* `MARRIED_FILING_JOINTLY` - MARRIED_FILING_JOINTLY\n* `MARRIED_FILING_SEPARATELY` - MARRIED_FILING_SEPARATELY\n* `HEAD_OF_HOUSEHOLD` - HEAD_OF_HOUSEHOLD\n* `QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD` - QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD",
               "value": {
                 "generatedName": "EmployeeMaritalStatus",
+                "description": "The employee's filing status as related to marital status.\n\n* `SINGLE` - SINGLE\n* `MARRIED_FILING_JOINTLY` - MARRIED_FILING_JOINTLY\n* `MARRIED_FILING_SEPARATELY` - MARRIED_FILING_SEPARATELY\n* `HEAD_OF_HOUSEHOLD` - HEAD_OF_HOUSEHOLD\n* `QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD` - QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD",
                 "value": {
+                  "description": "The employee's filing status as related to marital status.\n\n* `SINGLE` - SINGLE\n* `MARRIED_FILING_JOINTLY` - MARRIED_FILING_JOINTLY\n* `MARRIED_FILING_SEPARATELY` - MARRIED_FILING_SEPARATELY\n* `HEAD_OF_HOUSEHOLD` - HEAD_OF_HOUSEHOLD\n* `QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD` - QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD",
                   "generatedName": "EmployeeMaritalStatus",
                   "schema": "MaritalStatusEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -27613,15 +28003,19 @@
               "description": "The employment status of the employee.\n\n* `ACTIVE` - ACTIVE\n* `PENDING` - PENDING\n* `INACTIVE` - INACTIVE",
               "value": {
                 "generatedName": "EmployeeEmploymentStatus",
+                "description": "The employment status of the employee.\n\n* `ACTIVE` - ACTIVE\n* `PENDING` - PENDING\n* `INACTIVE` - INACTIVE",
                 "value": {
+                  "description": "The employment status of the employee.\n\n* `ACTIVE` - ACTIVE\n* `PENDING` - PENDING\n* `INACTIVE` - INACTIVE",
                   "generatedName": "EmployeeEmploymentStatus",
                   "schema": "EmploymentStatusEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -28824,15 +29218,19 @@
               "description": "The employee's gender.\n\n* `MALE` - MALE\n* `FEMALE` - FEMALE\n* `NON-BINARY` - NON-BINARY\n* `OTHER` - OTHER\n* `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE",
               "value": {
                 "generatedName": "EmployeeRequestGender",
+                "description": "The employee's gender.\n\n* `MALE` - MALE\n* `FEMALE` - FEMALE\n* `NON-BINARY` - NON-BINARY\n* `OTHER` - OTHER\n* `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE",
                 "value": {
+                  "description": "The employee's gender.\n\n* `MALE` - MALE\n* `FEMALE` - FEMALE\n* `NON-BINARY` - NON-BINARY\n* `OTHER` - OTHER\n* `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE",
                   "generatedName": "EmployeeRequestGender",
                   "schema": "GenderEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -28849,15 +29247,19 @@
               "description": "The employee's ethnicity.\n\n* `AMERICAN_INDIAN_OR_ALASKA_NATIVE` - AMERICAN_INDIAN_OR_ALASKA_NATIVE\n* `ASIAN_OR_INDIAN_SUBCONTINENT` - ASIAN_OR_INDIAN_SUBCONTINENT\n* `BLACK_OR_AFRICAN_AMERICAN` - BLACK_OR_AFRICAN_AMERICAN\n* `HISPANIC_OR_LATINO` - HISPANIC_OR_LATINO\n* `NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER` - NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER\n* `TWO_OR_MORE_RACES` - TWO_OR_MORE_RACES\n* `WHITE` - WHITE\n* `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE",
               "value": {
                 "generatedName": "EmployeeRequestEthnicity",
+                "description": "The employee's ethnicity.\n\n* `AMERICAN_INDIAN_OR_ALASKA_NATIVE` - AMERICAN_INDIAN_OR_ALASKA_NATIVE\n* `ASIAN_OR_INDIAN_SUBCONTINENT` - ASIAN_OR_INDIAN_SUBCONTINENT\n* `BLACK_OR_AFRICAN_AMERICAN` - BLACK_OR_AFRICAN_AMERICAN\n* `HISPANIC_OR_LATINO` - HISPANIC_OR_LATINO\n* `NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER` - NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER\n* `TWO_OR_MORE_RACES` - TWO_OR_MORE_RACES\n* `WHITE` - WHITE\n* `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE",
                 "value": {
+                  "description": "The employee's ethnicity.\n\n* `AMERICAN_INDIAN_OR_ALASKA_NATIVE` - AMERICAN_INDIAN_OR_ALASKA_NATIVE\n* `ASIAN_OR_INDIAN_SUBCONTINENT` - ASIAN_OR_INDIAN_SUBCONTINENT\n* `BLACK_OR_AFRICAN_AMERICAN` - BLACK_OR_AFRICAN_AMERICAN\n* `HISPANIC_OR_LATINO` - HISPANIC_OR_LATINO\n* `NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER` - NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER\n* `TWO_OR_MORE_RACES` - TWO_OR_MORE_RACES\n* `WHITE` - WHITE\n* `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE",
                   "generatedName": "EmployeeRequestEthnicity",
                   "schema": "EthnicityEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -28874,15 +29276,19 @@
               "description": "The employee's filing status as related to marital status.\n\n* `SINGLE` - SINGLE\n* `MARRIED_FILING_JOINTLY` - MARRIED_FILING_JOINTLY\n* `MARRIED_FILING_SEPARATELY` - MARRIED_FILING_SEPARATELY\n* `HEAD_OF_HOUSEHOLD` - HEAD_OF_HOUSEHOLD\n* `QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD` - QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD",
               "value": {
                 "generatedName": "EmployeeRequestMaritalStatus",
+                "description": "The employee's filing status as related to marital status.\n\n* `SINGLE` - SINGLE\n* `MARRIED_FILING_JOINTLY` - MARRIED_FILING_JOINTLY\n* `MARRIED_FILING_SEPARATELY` - MARRIED_FILING_SEPARATELY\n* `HEAD_OF_HOUSEHOLD` - HEAD_OF_HOUSEHOLD\n* `QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD` - QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD",
                 "value": {
+                  "description": "The employee's filing status as related to marital status.\n\n* `SINGLE` - SINGLE\n* `MARRIED_FILING_JOINTLY` - MARRIED_FILING_JOINTLY\n* `MARRIED_FILING_SEPARATELY` - MARRIED_FILING_SEPARATELY\n* `HEAD_OF_HOUSEHOLD` - HEAD_OF_HOUSEHOLD\n* `QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD` - QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD",
                   "generatedName": "EmployeeRequestMaritalStatus",
                   "schema": "MaritalStatusEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -28984,15 +29390,19 @@
               "description": "The employment status of the employee.\n\n* `ACTIVE` - ACTIVE\n* `PENDING` - PENDING\n* `INACTIVE` - INACTIVE",
               "value": {
                 "generatedName": "EmployeeRequestEmploymentStatus",
+                "description": "The employment status of the employee.\n\n* `ACTIVE` - ACTIVE\n* `PENDING` - PENDING\n* `INACTIVE` - INACTIVE",
                 "value": {
+                  "description": "The employment status of the employee.\n\n* `ACTIVE` - ACTIVE\n* `PENDING` - PENDING\n* `INACTIVE` - INACTIVE",
                   "generatedName": "EmployeeRequestEmploymentStatus",
                   "schema": "EmploymentStatusEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -29379,15 +29789,19 @@
               "description": "The time period this pay rate encompasses.\n\n* `HOUR` - HOUR\n* `DAY` - DAY\n* `WEEK` - WEEK\n* `EVERY_TWO_WEEKS` - EVERY_TWO_WEEKS\n* `SEMIMONTHLY` - SEMIMONTHLY\n* `MONTH` - MONTH\n* `QUARTER` - QUARTER\n* `EVERY_SIX_MONTHS` - EVERY_SIX_MONTHS\n* `YEAR` - YEAR",
               "value": {
                 "generatedName": "EmploymentPayPeriod",
+                "description": "The time period this pay rate encompasses.\n\n* `HOUR` - HOUR\n* `DAY` - DAY\n* `WEEK` - WEEK\n* `EVERY_TWO_WEEKS` - EVERY_TWO_WEEKS\n* `SEMIMONTHLY` - SEMIMONTHLY\n* `MONTH` - MONTH\n* `QUARTER` - QUARTER\n* `EVERY_SIX_MONTHS` - EVERY_SIX_MONTHS\n* `YEAR` - YEAR",
                 "value": {
+                  "description": "The time period this pay rate encompasses.\n\n* `HOUR` - HOUR\n* `DAY` - DAY\n* `WEEK` - WEEK\n* `EVERY_TWO_WEEKS` - EVERY_TWO_WEEKS\n* `SEMIMONTHLY` - SEMIMONTHLY\n* `MONTH` - MONTH\n* `QUARTER` - QUARTER\n* `EVERY_SIX_MONTHS` - EVERY_SIX_MONTHS\n* `YEAR` - YEAR",
                   "generatedName": "EmploymentPayPeriod",
                   "schema": "PayPeriodEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -29404,15 +29818,19 @@
               "description": "The position's pay frequency.\n\n* `WEEKLY` - WEEKLY\n* `BIWEEKLY` - BIWEEKLY\n* `MONTHLY` - MONTHLY\n* `QUARTERLY` - QUARTERLY\n* `SEMIANNUALLY` - SEMIANNUALLY\n* `ANNUALLY` - ANNUALLY\n* `THIRTEEN-MONTHLY` - THIRTEEN-MONTHLY\n* `PRO_RATA` - PRO_RATA\n* `SEMIMONTHLY` - SEMIMONTHLY",
               "value": {
                 "generatedName": "EmploymentPayFrequency",
+                "description": "The position's pay frequency.\n\n* `WEEKLY` - WEEKLY\n* `BIWEEKLY` - BIWEEKLY\n* `MONTHLY` - MONTHLY\n* `QUARTERLY` - QUARTERLY\n* `SEMIANNUALLY` - SEMIANNUALLY\n* `ANNUALLY` - ANNUALLY\n* `THIRTEEN-MONTHLY` - THIRTEEN-MONTHLY\n* `PRO_RATA` - PRO_RATA\n* `SEMIMONTHLY` - SEMIMONTHLY",
                 "value": {
+                  "description": "The position's pay frequency.\n\n* `WEEKLY` - WEEKLY\n* `BIWEEKLY` - BIWEEKLY\n* `MONTHLY` - MONTHLY\n* `QUARTERLY` - QUARTERLY\n* `SEMIANNUALLY` - SEMIANNUALLY\n* `ANNUALLY` - ANNUALLY\n* `THIRTEEN-MONTHLY` - THIRTEEN-MONTHLY\n* `PRO_RATA` - PRO_RATA\n* `SEMIMONTHLY` - SEMIMONTHLY",
                   "generatedName": "EmploymentPayFrequency",
                   "schema": "PayFrequencyEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -29429,15 +29847,19 @@
               "description": "The position's currency code.\n\n* `XUA` - ADB Unit of Account\n* `AFN` - Afghan Afghani\n* `AFA` - Afghan Afghani (1927–2002)\n* `ALL` - Albanian Lek\n* `ALK` - Albanian Lek (1946–1965)\n* `DZD` - Algerian Dinar\n* `ADP` - Andorran Peseta\n* `AOA` - Angolan Kwanza\n* `AOK` - Angolan Kwanza (1977–1991)\n* `AON` - Angolan New Kwanza (1990–2000)\n* `AOR` - Angolan Readjusted Kwanza (1995–1999)\n* `ARA` - Argentine Austral\n* `ARS` - Argentine Peso\n* `ARM` - Argentine Peso (1881–1970)\n* `ARP` - Argentine Peso (1983–1985)\n* `ARL` - Argentine Peso Ley (1970–1983)\n* `AMD` - Armenian Dram\n* `AWG` - Aruban Florin\n* `AUD` - Australian Dollar\n* `ATS` - Austrian Schilling\n* `AZN` - Azerbaijani Manat\n* `AZM` - Azerbaijani Manat (1993–2006)\n* `BSD` - Bahamian Dollar\n* `BHD` - Bahraini Dinar\n* `BDT` - Bangladeshi Taka\n* `BBD` - Barbadian Dollar\n* `BYN` - Belarusian Ruble\n* `BYB` - Belarusian Ruble (1994–1999)\n* `BYR` - Belarusian Ruble (2000–2016)\n* `BEF` - Belgian Franc\n* `BEC` - Belgian Franc (convertible)\n* `BEL` - Belgian Franc (financial)\n* `BZD` - Belize Dollar\n* `BMD` - Bermudan Dollar\n* `BTN` - Bhutanese Ngultrum\n* `BOB` - Bolivian Boliviano\n* `BOL` - Bolivian Boliviano (1863–1963)\n* `BOV` - Bolivian Mvdol\n* `BOP` - Bolivian Peso\n* `BAM` - Bosnia-Herzegovina Convertible Mark\n* `BAD` - Bosnia-Herzegovina Dinar (1992–1994)\n* `BAN` - Bosnia-Herzegovina New Dinar (1994–1997)\n* `BWP` - Botswanan Pula\n* `BRC` - Brazilian Cruzado (1986–1989)\n* `BRZ` - Brazilian Cruzeiro (1942–1967)\n* `BRE` - Brazilian Cruzeiro (1990–1993)\n* `BRR` - Brazilian Cruzeiro (1993–1994)\n* `BRN` - Brazilian New Cruzado (1989–1990)\n* `BRB` - Brazilian New Cruzeiro (1967–1986)\n* `BRL` - Brazilian Real\n* `GBP` - British Pound\n* `BND` - Brunei Dollar\n* `BGL` - Bulgarian Hard Lev\n* `BGN` - Bulgarian Lev\n* `BGO` - Bulgarian Lev (1879–1952)\n* `BGM` - Bulgarian Socialist Lev\n* `BUK` - Burmese Kyat\n* `BIF` - Burundian Franc\n* `XPF` - CFP Franc\n* `KHR` - Cambodian Riel\n* `CAD` - Canadian Dollar\n* `CVE` - Cape Verdean Escudo\n* `KYD` - Cayman Islands Dollar\n* `XAF` - Central African CFA Franc\n* `CLE` - Chilean Escudo\n* `CLP` - Chilean Peso\n* `CLF` - Chilean Unit of Account (UF)\n* `CNX` - Chinese People’s Bank Dollar\n* `CNY` - Chinese Yuan\n* `CNH` - Chinese Yuan (offshore)\n* `COP` - Colombian Peso\n* `COU` - Colombian Real Value Unit\n* `KMF` - Comorian Franc\n* `CDF` - Congolese Franc\n* `CRC` - Costa Rican Colón\n* `HRD` - Croatian Dinar\n* `HRK` - Croatian Kuna\n* `CUC` - Cuban Convertible Peso\n* `CUP` - Cuban Peso\n* `CYP` - Cypriot Pound\n* `CZK` - Czech Koruna\n* `CSK` - Czechoslovak Hard Koruna\n* `DKK` - Danish Krone\n* `DJF` - Djiboutian Franc\n* `DOP` - Dominican Peso\n* `NLG` - Dutch Guilder\n* `XCD` - East Caribbean Dollar\n* `DDM` - East German Mark\n* `ECS` - Ecuadorian Sucre\n* `ECV` - Ecuadorian Unit of Constant Value\n* `EGP` - Egyptian Pound\n* `GQE` - Equatorial Guinean Ekwele\n* `ERN` - Eritrean Nakfa\n* `EEK` - Estonian Kroon\n* `ETB` - Ethiopian Birr\n* `EUR` - Euro\n* `XBA` - European Composite Unit\n* `XEU` - European Currency Unit\n* `XBB` - European Monetary Unit\n* `XBC` - European Unit of Account (XBC)\n* `XBD` - European Unit of Account (XBD)\n* `FKP` - Falkland Islands Pound\n* `FJD` - Fijian Dollar\n* `FIM` - Finnish Markka\n* `FRF` - French Franc\n* `XFO` - French Gold Franc\n* `XFU` - French UIC-Franc\n* `GMD` - Gambian Dalasi\n* `GEK` - Georgian Kupon Larit\n* `GEL` - Georgian Lari\n* `DEM` - German Mark\n* `GHS` - Ghanaian Cedi\n* `GHC` - Ghanaian Cedi (1979–2007)\n* `GIP` - Gibraltar Pound\n* `XAU` - Gold\n* `GRD` - Greek Drachma\n* `GTQ` - Guatemalan Quetzal\n* `GWP` - Guinea-Bissau Peso\n* `GNF` - Guinean Franc\n* `GNS` - Guinean Syli\n* `GYD` - Guyanaese Dollar\n* `HTG` - Haitian Gourde\n* `HNL` - Honduran Lempira\n* `HKD` - Hong Kong Dollar\n* `HUF` - Hungarian Forint\n* `IMP` - IMP\n* `ISK` - Icelandic Króna\n* `ISJ` - Icelandic Króna (1918–1981)\n* `INR` - Indian Rupee\n* `IDR` - Indonesian Rupiah\n* `IRR` - Iranian Rial\n* `IQD` - Iraqi Dinar\n* `IEP` - Irish Pound\n* `ILS` - Israeli New Shekel\n* `ILP` - Israeli Pound\n* `ILR` - Israeli Shekel (1980–1985)\n* `ITL` - Italian Lira\n* `JMD` - Jamaican Dollar\n* `JPY` - Japanese Yen\n* `JOD` - Jordanian Dinar\n* `KZT` - Kazakhstani Tenge\n* `KES` - Kenyan Shilling\n* `KWD` - Kuwaiti Dinar\n* `KGS` - Kyrgystani Som\n* `LAK` - Laotian Kip\n* `LVL` - Latvian Lats\n* `LVR` - Latvian Ruble\n* `LBP` - Lebanese Pound\n* `LSL` - Lesotho Loti\n* `LRD` - Liberian Dollar\n* `LYD` - Libyan Dinar\n* `LTL` - Lithuanian Litas\n* `LTT` - Lithuanian Talonas\n* `LUL` - Luxembourg Financial Franc\n* `LUC` - Luxembourgian Convertible Franc\n* `LUF` - Luxembourgian Franc\n* `MOP` - Macanese Pataca\n* `MKD` - Macedonian Denar\n* `MKN` - Macedonian Denar (1992–1993)\n* `MGA` - Malagasy Ariary\n* `MGF` - Malagasy Franc\n* `MWK` - Malawian Kwacha\n* `MYR` - Malaysian Ringgit\n* `MVR` - Maldivian Rufiyaa\n* `MVP` - Maldivian Rupee (1947–1981)\n* `MLF` - Malian Franc\n* `MTL` - Maltese Lira\n* `MTP` - Maltese Pound\n* `MRU` - Mauritanian Ouguiya\n* `MRO` - Mauritanian Ouguiya (1973–2017)\n* `MUR` - Mauritian Rupee\n* `MXV` - Mexican Investment Unit\n* `MXN` - Mexican Peso\n* `MXP` - Mexican Silver Peso (1861–1992)\n* `MDC` - Moldovan Cupon\n* `MDL` - Moldovan Leu\n* `MCF` - Monegasque Franc\n* `MNT` - Mongolian Tugrik\n* `MAD` - Moroccan Dirham\n* `MAF` - Moroccan Franc\n* `MZE` - Mozambican Escudo\n* `MZN` - Mozambican Metical\n* `MZM` - Mozambican Metical (1980–2006)\n* `MMK` - Myanmar Kyat\n* `NAD` - Namibian Dollar\n* `NPR` - Nepalese Rupee\n* `ANG` - Netherlands Antillean Guilder\n* `TWD` - New Taiwan Dollar\n* `NZD` - New Zealand Dollar\n* `NIO` - Nicaraguan Córdoba\n* `NIC` - Nicaraguan Córdoba (1988–1991)\n* `NGN` - Nigerian Naira\n* `KPW` - North Korean Won\n* `NOK` - Norwegian Krone\n* `OMR` - Omani Rial\n* `PKR` - Pakistani Rupee\n* `XPD` - Palladium\n* `PAB` - Panamanian Balboa\n* `PGK` - Papua New Guinean Kina\n* `PYG` - Paraguayan Guarani\n* `PEI` - Peruvian Inti\n* `PEN` - Peruvian Sol\n* `PES` - Peruvian Sol (1863–1965)\n* `PHP` - Philippine Peso\n* `XPT` - Platinum\n* `PLN` - Polish Zloty\n* `PLZ` - Polish Zloty (1950–1995)\n* `PTE` - Portuguese Escudo\n* `GWE` - Portuguese Guinea Escudo\n* `QAR` - Qatari Rial\n* `XRE` - RINET Funds\n* `RHD` - Rhodesian Dollar\n* `RON` - Romanian Leu\n* `ROL` - Romanian Leu (1952–2006)\n* `RUB` - Russian Ruble\n* `RUR` - Russian Ruble (1991–1998)\n* `RWF` - Rwandan Franc\n* `SVC` - Salvadoran Colón\n* `WST` - Samoan Tala\n* `SAR` - Saudi Riyal\n* `RSD` - Serbian Dinar\n* `CSD` - Serbian Dinar (2002–2006)\n* `SCR` - Seychellois Rupee\n* `SLL` - Sierra Leonean Leone\n* `XAG` - Silver\n* `SGD` - Singapore Dollar\n* `SKK` - Slovak Koruna\n* `SIT` - Slovenian Tolar\n* `SBD` - Solomon Islands Dollar\n* `SOS` - Somali Shilling\n* `ZAR` - South African Rand\n* `ZAL` - South African Rand (financial)\n* `KRH` - South Korean Hwan (1953–1962)\n* `KRW` - South Korean Won\n* `KRO` - South Korean Won (1945–1953)\n* `SSP` - South Sudanese Pound\n* `SUR` - Soviet Rouble\n* `ESP` - Spanish Peseta\n* `ESA` - Spanish Peseta (A account)\n* `ESB` - Spanish Peseta (convertible account)\n* `XDR` - Special Drawing Rights\n* `LKR` - Sri Lankan Rupee\n* `SHP` - St. Helena Pound\n* `XSU` - Sucre\n* `SDD` - Sudanese Dinar (1992–2007)\n* `SDG` - Sudanese Pound\n* `SDP` - Sudanese Pound (1957–1998)\n* `SRD` - Surinamese Dollar\n* `SRG` - Surinamese Guilder\n* `SZL` - Swazi Lilangeni\n* `SEK` - Swedish Krona\n* `CHF` - Swiss Franc\n* `SYP` - Syrian Pound\n* `STN` - São Tomé & Príncipe Dobra\n* `STD` - São Tomé & Príncipe Dobra (1977–2017)\n* `TVD` - TVD\n* `TJR` - Tajikistani Ruble\n* `TJS` - Tajikistani Somoni\n* `TZS` - Tanzanian Shilling\n* `XTS` - Testing Currency Code\n* `THB` - Thai Baht\n* `XXX` - The codes assigned for transactions where no currency is involved\n* `TPE` - Timorese Escudo\n* `TOP` - Tongan Paʻanga\n* `TTD` - Trinidad & Tobago Dollar\n* `TND` - Tunisian Dinar\n* `TRY` - Turkish Lira\n* `TRL` - Turkish Lira (1922–2005)\n* `TMT` - Turkmenistani Manat\n* `TMM` - Turkmenistani Manat (1993–2009)\n* `USD` - US Dollar\n* `USN` - US Dollar (Next day)\n* `USS` - US Dollar (Same day)\n* `UGX` - Ugandan Shilling\n* `UGS` - Ugandan Shilling (1966–1987)\n* `UAH` - Ukrainian Hryvnia\n* `UAK` - Ukrainian Karbovanets\n* `AED` - United Arab Emirates Dirham\n* `UYW` - Uruguayan Nominal Wage Index Unit\n* `UYU` - Uruguayan Peso\n* `UYP` - Uruguayan Peso (1975–1993)\n* `UYI` - Uruguayan Peso (Indexed Units)\n* `UZS` - Uzbekistani Som\n* `VUV` - Vanuatu Vatu\n* `VES` - Venezuelan Bolívar\n* `VEB` - Venezuelan Bolívar (1871–2008)\n* `VEF` - Venezuelan Bolívar (2008–2018)\n* `VND` - Vietnamese Dong\n* `VNN` - Vietnamese Dong (1978–1985)\n* `CHE` - WIR Euro\n* `CHW` - WIR Franc\n* `XOF` - West African CFA Franc\n* `YDD` - Yemeni Dinar\n* `YER` - Yemeni Rial\n* `YUN` - Yugoslavian Convertible Dinar (1990–1992)\n* `YUD` - Yugoslavian Hard Dinar (1966–1990)\n* `YUM` - Yugoslavian New Dinar (1994–2002)\n* `YUR` - Yugoslavian Reformed Dinar (1992–1993)\n* `ZWN` - ZWN\n* `ZRN` - Zairean New Zaire (1993–1998)\n* `ZRZ` - Zairean Zaire (1971–1993)\n* `ZMW` - Zambian Kwacha\n* `ZMK` - Zambian Kwacha (1968–2012)\n* `ZWD` - Zimbabwean Dollar (1980–2008)\n* `ZWR` - Zimbabwean Dollar (2008)\n* `ZWL` - Zimbabwean Dollar (2009)",
               "value": {
                 "generatedName": "EmploymentPayCurrency",
+                "description": "The position's currency code.\n\n* `XUA` - ADB Unit of Account\n* `AFN` - Afghan Afghani\n* `AFA` - Afghan Afghani (1927–2002)\n* `ALL` - Albanian Lek\n* `ALK` - Albanian Lek (1946–1965)\n* `DZD` - Algerian Dinar\n* `ADP` - Andorran Peseta\n* `AOA` - Angolan Kwanza\n* `AOK` - Angolan Kwanza (1977–1991)\n* `AON` - Angolan New Kwanza (1990–2000)\n* `AOR` - Angolan Readjusted Kwanza (1995–1999)\n* `ARA` - Argentine Austral\n* `ARS` - Argentine Peso\n* `ARM` - Argentine Peso (1881–1970)\n* `ARP` - Argentine Peso (1983–1985)\n* `ARL` - Argentine Peso Ley (1970–1983)\n* `AMD` - Armenian Dram\n* `AWG` - Aruban Florin\n* `AUD` - Australian Dollar\n* `ATS` - Austrian Schilling\n* `AZN` - Azerbaijani Manat\n* `AZM` - Azerbaijani Manat (1993–2006)\n* `BSD` - Bahamian Dollar\n* `BHD` - Bahraini Dinar\n* `BDT` - Bangladeshi Taka\n* `BBD` - Barbadian Dollar\n* `BYN` - Belarusian Ruble\n* `BYB` - Belarusian Ruble (1994–1999)\n* `BYR` - Belarusian Ruble (2000–2016)\n* `BEF` - Belgian Franc\n* `BEC` - Belgian Franc (convertible)\n* `BEL` - Belgian Franc (financial)\n* `BZD` - Belize Dollar\n* `BMD` - Bermudan Dollar\n* `BTN` - Bhutanese Ngultrum\n* `BOB` - Bolivian Boliviano\n* `BOL` - Bolivian Boliviano (1863–1963)\n* `BOV` - Bolivian Mvdol\n* `BOP` - Bolivian Peso\n* `BAM` - Bosnia-Herzegovina Convertible Mark\n* `BAD` - Bosnia-Herzegovina Dinar (1992–1994)\n* `BAN` - Bosnia-Herzegovina New Dinar (1994–1997)\n* `BWP` - Botswanan Pula\n* `BRC` - Brazilian Cruzado (1986–1989)\n* `BRZ` - Brazilian Cruzeiro (1942–1967)\n* `BRE` - Brazilian Cruzeiro (1990–1993)\n* `BRR` - Brazilian Cruzeiro (1993–1994)\n* `BRN` - Brazilian New Cruzado (1989–1990)\n* `BRB` - Brazilian New Cruzeiro (1967–1986)\n* `BRL` - Brazilian Real\n* `GBP` - British Pound\n* `BND` - Brunei Dollar\n* `BGL` - Bulgarian Hard Lev\n* `BGN` - Bulgarian Lev\n* `BGO` - Bulgarian Lev (1879–1952)\n* `BGM` - Bulgarian Socialist Lev\n* `BUK` - Burmese Kyat\n* `BIF` - Burundian Franc\n* `XPF` - CFP Franc\n* `KHR` - Cambodian Riel\n* `CAD` - Canadian Dollar\n* `CVE` - Cape Verdean Escudo\n* `KYD` - Cayman Islands Dollar\n* `XAF` - Central African CFA Franc\n* `CLE` - Chilean Escudo\n* `CLP` - Chilean Peso\n* `CLF` - Chilean Unit of Account (UF)\n* `CNX` - Chinese People’s Bank Dollar\n* `CNY` - Chinese Yuan\n* `CNH` - Chinese Yuan (offshore)\n* `COP` - Colombian Peso\n* `COU` - Colombian Real Value Unit\n* `KMF` - Comorian Franc\n* `CDF` - Congolese Franc\n* `CRC` - Costa Rican Colón\n* `HRD` - Croatian Dinar\n* `HRK` - Croatian Kuna\n* `CUC` - Cuban Convertible Peso\n* `CUP` - Cuban Peso\n* `CYP` - Cypriot Pound\n* `CZK` - Czech Koruna\n* `CSK` - Czechoslovak Hard Koruna\n* `DKK` - Danish Krone\n* `DJF` - Djiboutian Franc\n* `DOP` - Dominican Peso\n* `NLG` - Dutch Guilder\n* `XCD` - East Caribbean Dollar\n* `DDM` - East German Mark\n* `ECS` - Ecuadorian Sucre\n* `ECV` - Ecuadorian Unit of Constant Value\n* `EGP` - Egyptian Pound\n* `GQE` - Equatorial Guinean Ekwele\n* `ERN` - Eritrean Nakfa\n* `EEK` - Estonian Kroon\n* `ETB` - Ethiopian Birr\n* `EUR` - Euro\n* `XBA` - European Composite Unit\n* `XEU` - European Currency Unit\n* `XBB` - European Monetary Unit\n* `XBC` - European Unit of Account (XBC)\n* `XBD` - European Unit of Account (XBD)\n* `FKP` - Falkland Islands Pound\n* `FJD` - Fijian Dollar\n* `FIM` - Finnish Markka\n* `FRF` - French Franc\n* `XFO` - French Gold Franc\n* `XFU` - French UIC-Franc\n* `GMD` - Gambian Dalasi\n* `GEK` - Georgian Kupon Larit\n* `GEL` - Georgian Lari\n* `DEM` - German Mark\n* `GHS` - Ghanaian Cedi\n* `GHC` - Ghanaian Cedi (1979–2007)\n* `GIP` - Gibraltar Pound\n* `XAU` - Gold\n* `GRD` - Greek Drachma\n* `GTQ` - Guatemalan Quetzal\n* `GWP` - Guinea-Bissau Peso\n* `GNF` - Guinean Franc\n* `GNS` - Guinean Syli\n* `GYD` - Guyanaese Dollar\n* `HTG` - Haitian Gourde\n* `HNL` - Honduran Lempira\n* `HKD` - Hong Kong Dollar\n* `HUF` - Hungarian Forint\n* `IMP` - IMP\n* `ISK` - Icelandic Króna\n* `ISJ` - Icelandic Króna (1918–1981)\n* `INR` - Indian Rupee\n* `IDR` - Indonesian Rupiah\n* `IRR` - Iranian Rial\n* `IQD` - Iraqi Dinar\n* `IEP` - Irish Pound\n* `ILS` - Israeli New Shekel\n* `ILP` - Israeli Pound\n* `ILR` - Israeli Shekel (1980–1985)\n* `ITL` - Italian Lira\n* `JMD` - Jamaican Dollar\n* `JPY` - Japanese Yen\n* `JOD` - Jordanian Dinar\n* `KZT` - Kazakhstani Tenge\n* `KES` - Kenyan Shilling\n* `KWD` - Kuwaiti Dinar\n* `KGS` - Kyrgystani Som\n* `LAK` - Laotian Kip\n* `LVL` - Latvian Lats\n* `LVR` - Latvian Ruble\n* `LBP` - Lebanese Pound\n* `LSL` - Lesotho Loti\n* `LRD` - Liberian Dollar\n* `LYD` - Libyan Dinar\n* `LTL` - Lithuanian Litas\n* `LTT` - Lithuanian Talonas\n* `LUL` - Luxembourg Financial Franc\n* `LUC` - Luxembourgian Convertible Franc\n* `LUF` - Luxembourgian Franc\n* `MOP` - Macanese Pataca\n* `MKD` - Macedonian Denar\n* `MKN` - Macedonian Denar (1992–1993)\n* `MGA` - Malagasy Ariary\n* `MGF` - Malagasy Franc\n* `MWK` - Malawian Kwacha\n* `MYR` - Malaysian Ringgit\n* `MVR` - Maldivian Rufiyaa\n* `MVP` - Maldivian Rupee (1947–1981)\n* `MLF` - Malian Franc\n* `MTL` - Maltese Lira\n* `MTP` - Maltese Pound\n* `MRU` - Mauritanian Ouguiya\n* `MRO` - Mauritanian Ouguiya (1973–2017)\n* `MUR` - Mauritian Rupee\n* `MXV` - Mexican Investment Unit\n* `MXN` - Mexican Peso\n* `MXP` - Mexican Silver Peso (1861–1992)\n* `MDC` - Moldovan Cupon\n* `MDL` - Moldovan Leu\n* `MCF` - Monegasque Franc\n* `MNT` - Mongolian Tugrik\n* `MAD` - Moroccan Dirham\n* `MAF` - Moroccan Franc\n* `MZE` - Mozambican Escudo\n* `MZN` - Mozambican Metical\n* `MZM` - Mozambican Metical (1980–2006)\n* `MMK` - Myanmar Kyat\n* `NAD` - Namibian Dollar\n* `NPR` - Nepalese Rupee\n* `ANG` - Netherlands Antillean Guilder\n* `TWD` - New Taiwan Dollar\n* `NZD` - New Zealand Dollar\n* `NIO` - Nicaraguan Córdoba\n* `NIC` - Nicaraguan Córdoba (1988–1991)\n* `NGN` - Nigerian Naira\n* `KPW` - North Korean Won\n* `NOK` - Norwegian Krone\n* `OMR` - Omani Rial\n* `PKR` - Pakistani Rupee\n* `XPD` - Palladium\n* `PAB` - Panamanian Balboa\n* `PGK` - Papua New Guinean Kina\n* `PYG` - Paraguayan Guarani\n* `PEI` - Peruvian Inti\n* `PEN` - Peruvian Sol\n* `PES` - Peruvian Sol (1863–1965)\n* `PHP` - Philippine Peso\n* `XPT` - Platinum\n* `PLN` - Polish Zloty\n* `PLZ` - Polish Zloty (1950–1995)\n* `PTE` - Portuguese Escudo\n* `GWE` - Portuguese Guinea Escudo\n* `QAR` - Qatari Rial\n* `XRE` - RINET Funds\n* `RHD` - Rhodesian Dollar\n* `RON` - Romanian Leu\n* `ROL` - Romanian Leu (1952–2006)\n* `RUB` - Russian Ruble\n* `RUR` - Russian Ruble (1991–1998)\n* `RWF` - Rwandan Franc\n* `SVC` - Salvadoran Colón\n* `WST` - Samoan Tala\n* `SAR` - Saudi Riyal\n* `RSD` - Serbian Dinar\n* `CSD` - Serbian Dinar (2002–2006)\n* `SCR` - Seychellois Rupee\n* `SLL` - Sierra Leonean Leone\n* `XAG` - Silver\n* `SGD` - Singapore Dollar\n* `SKK` - Slovak Koruna\n* `SIT` - Slovenian Tolar\n* `SBD` - Solomon Islands Dollar\n* `SOS` - Somali Shilling\n* `ZAR` - South African Rand\n* `ZAL` - South African Rand (financial)\n* `KRH` - South Korean Hwan (1953–1962)\n* `KRW` - South Korean Won\n* `KRO` - South Korean Won (1945–1953)\n* `SSP` - South Sudanese Pound\n* `SUR` - Soviet Rouble\n* `ESP` - Spanish Peseta\n* `ESA` - Spanish Peseta (A account)\n* `ESB` - Spanish Peseta (convertible account)\n* `XDR` - Special Drawing Rights\n* `LKR` - Sri Lankan Rupee\n* `SHP` - St. Helena Pound\n* `XSU` - Sucre\n* `SDD` - Sudanese Dinar (1992–2007)\n* `SDG` - Sudanese Pound\n* `SDP` - Sudanese Pound (1957–1998)\n* `SRD` - Surinamese Dollar\n* `SRG` - Surinamese Guilder\n* `SZL` - Swazi Lilangeni\n* `SEK` - Swedish Krona\n* `CHF` - Swiss Franc\n* `SYP` - Syrian Pound\n* `STN` - São Tomé & Príncipe Dobra\n* `STD` - São Tomé & Príncipe Dobra (1977–2017)\n* `TVD` - TVD\n* `TJR` - Tajikistani Ruble\n* `TJS` - Tajikistani Somoni\n* `TZS` - Tanzanian Shilling\n* `XTS` - Testing Currency Code\n* `THB` - Thai Baht\n* `XXX` - The codes assigned for transactions where no currency is involved\n* `TPE` - Timorese Escudo\n* `TOP` - Tongan Paʻanga\n* `TTD` - Trinidad & Tobago Dollar\n* `TND` - Tunisian Dinar\n* `TRY` - Turkish Lira\n* `TRL` - Turkish Lira (1922–2005)\n* `TMT` - Turkmenistani Manat\n* `TMM` - Turkmenistani Manat (1993–2009)\n* `USD` - US Dollar\n* `USN` - US Dollar (Next day)\n* `USS` - US Dollar (Same day)\n* `UGX` - Ugandan Shilling\n* `UGS` - Ugandan Shilling (1966–1987)\n* `UAH` - Ukrainian Hryvnia\n* `UAK` - Ukrainian Karbovanets\n* `AED` - United Arab Emirates Dirham\n* `UYW` - Uruguayan Nominal Wage Index Unit\n* `UYU` - Uruguayan Peso\n* `UYP` - Uruguayan Peso (1975–1993)\n* `UYI` - Uruguayan Peso (Indexed Units)\n* `UZS` - Uzbekistani Som\n* `VUV` - Vanuatu Vatu\n* `VES` - Venezuelan Bolívar\n* `VEB` - Venezuelan Bolívar (1871–2008)\n* `VEF` - Venezuelan Bolívar (2008–2018)\n* `VND` - Vietnamese Dong\n* `VNN` - Vietnamese Dong (1978–1985)\n* `CHE` - WIR Euro\n* `CHW` - WIR Franc\n* `XOF` - West African CFA Franc\n* `YDD` - Yemeni Dinar\n* `YER` - Yemeni Rial\n* `YUN` - Yugoslavian Convertible Dinar (1990–1992)\n* `YUD` - Yugoslavian Hard Dinar (1966–1990)\n* `YUM` - Yugoslavian New Dinar (1994–2002)\n* `YUR` - Yugoslavian Reformed Dinar (1992–1993)\n* `ZWN` - ZWN\n* `ZRN` - Zairean New Zaire (1993–1998)\n* `ZRZ` - Zairean Zaire (1971–1993)\n* `ZMW` - Zambian Kwacha\n* `ZMK` - Zambian Kwacha (1968–2012)\n* `ZWD` - Zimbabwean Dollar (1980–2008)\n* `ZWR` - Zimbabwean Dollar (2008)\n* `ZWL` - Zimbabwean Dollar (2009)",
                 "value": {
+                  "description": "The position's currency code.\n\n* `XUA` - ADB Unit of Account\n* `AFN` - Afghan Afghani\n* `AFA` - Afghan Afghani (1927–2002)\n* `ALL` - Albanian Lek\n* `ALK` - Albanian Lek (1946–1965)\n* `DZD` - Algerian Dinar\n* `ADP` - Andorran Peseta\n* `AOA` - Angolan Kwanza\n* `AOK` - Angolan Kwanza (1977–1991)\n* `AON` - Angolan New Kwanza (1990–2000)\n* `AOR` - Angolan Readjusted Kwanza (1995–1999)\n* `ARA` - Argentine Austral\n* `ARS` - Argentine Peso\n* `ARM` - Argentine Peso (1881–1970)\n* `ARP` - Argentine Peso (1983–1985)\n* `ARL` - Argentine Peso Ley (1970–1983)\n* `AMD` - Armenian Dram\n* `AWG` - Aruban Florin\n* `AUD` - Australian Dollar\n* `ATS` - Austrian Schilling\n* `AZN` - Azerbaijani Manat\n* `AZM` - Azerbaijani Manat (1993–2006)\n* `BSD` - Bahamian Dollar\n* `BHD` - Bahraini Dinar\n* `BDT` - Bangladeshi Taka\n* `BBD` - Barbadian Dollar\n* `BYN` - Belarusian Ruble\n* `BYB` - Belarusian Ruble (1994–1999)\n* `BYR` - Belarusian Ruble (2000–2016)\n* `BEF` - Belgian Franc\n* `BEC` - Belgian Franc (convertible)\n* `BEL` - Belgian Franc (financial)\n* `BZD` - Belize Dollar\n* `BMD` - Bermudan Dollar\n* `BTN` - Bhutanese Ngultrum\n* `BOB` - Bolivian Boliviano\n* `BOL` - Bolivian Boliviano (1863–1963)\n* `BOV` - Bolivian Mvdol\n* `BOP` - Bolivian Peso\n* `BAM` - Bosnia-Herzegovina Convertible Mark\n* `BAD` - Bosnia-Herzegovina Dinar (1992–1994)\n* `BAN` - Bosnia-Herzegovina New Dinar (1994–1997)\n* `BWP` - Botswanan Pula\n* `BRC` - Brazilian Cruzado (1986–1989)\n* `BRZ` - Brazilian Cruzeiro (1942–1967)\n* `BRE` - Brazilian Cruzeiro (1990–1993)\n* `BRR` - Brazilian Cruzeiro (1993–1994)\n* `BRN` - Brazilian New Cruzado (1989–1990)\n* `BRB` - Brazilian New Cruzeiro (1967–1986)\n* `BRL` - Brazilian Real\n* `GBP` - British Pound\n* `BND` - Brunei Dollar\n* `BGL` - Bulgarian Hard Lev\n* `BGN` - Bulgarian Lev\n* `BGO` - Bulgarian Lev (1879–1952)\n* `BGM` - Bulgarian Socialist Lev\n* `BUK` - Burmese Kyat\n* `BIF` - Burundian Franc\n* `XPF` - CFP Franc\n* `KHR` - Cambodian Riel\n* `CAD` - Canadian Dollar\n* `CVE` - Cape Verdean Escudo\n* `KYD` - Cayman Islands Dollar\n* `XAF` - Central African CFA Franc\n* `CLE` - Chilean Escudo\n* `CLP` - Chilean Peso\n* `CLF` - Chilean Unit of Account (UF)\n* `CNX` - Chinese People’s Bank Dollar\n* `CNY` - Chinese Yuan\n* `CNH` - Chinese Yuan (offshore)\n* `COP` - Colombian Peso\n* `COU` - Colombian Real Value Unit\n* `KMF` - Comorian Franc\n* `CDF` - Congolese Franc\n* `CRC` - Costa Rican Colón\n* `HRD` - Croatian Dinar\n* `HRK` - Croatian Kuna\n* `CUC` - Cuban Convertible Peso\n* `CUP` - Cuban Peso\n* `CYP` - Cypriot Pound\n* `CZK` - Czech Koruna\n* `CSK` - Czechoslovak Hard Koruna\n* `DKK` - Danish Krone\n* `DJF` - Djiboutian Franc\n* `DOP` - Dominican Peso\n* `NLG` - Dutch Guilder\n* `XCD` - East Caribbean Dollar\n* `DDM` - East German Mark\n* `ECS` - Ecuadorian Sucre\n* `ECV` - Ecuadorian Unit of Constant Value\n* `EGP` - Egyptian Pound\n* `GQE` - Equatorial Guinean Ekwele\n* `ERN` - Eritrean Nakfa\n* `EEK` - Estonian Kroon\n* `ETB` - Ethiopian Birr\n* `EUR` - Euro\n* `XBA` - European Composite Unit\n* `XEU` - European Currency Unit\n* `XBB` - European Monetary Unit\n* `XBC` - European Unit of Account (XBC)\n* `XBD` - European Unit of Account (XBD)\n* `FKP` - Falkland Islands Pound\n* `FJD` - Fijian Dollar\n* `FIM` - Finnish Markka\n* `FRF` - French Franc\n* `XFO` - French Gold Franc\n* `XFU` - French UIC-Franc\n* `GMD` - Gambian Dalasi\n* `GEK` - Georgian Kupon Larit\n* `GEL` - Georgian Lari\n* `DEM` - German Mark\n* `GHS` - Ghanaian Cedi\n* `GHC` - Ghanaian Cedi (1979–2007)\n* `GIP` - Gibraltar Pound\n* `XAU` - Gold\n* `GRD` - Greek Drachma\n* `GTQ` - Guatemalan Quetzal\n* `GWP` - Guinea-Bissau Peso\n* `GNF` - Guinean Franc\n* `GNS` - Guinean Syli\n* `GYD` - Guyanaese Dollar\n* `HTG` - Haitian Gourde\n* `HNL` - Honduran Lempira\n* `HKD` - Hong Kong Dollar\n* `HUF` - Hungarian Forint\n* `IMP` - IMP\n* `ISK` - Icelandic Króna\n* `ISJ` - Icelandic Króna (1918–1981)\n* `INR` - Indian Rupee\n* `IDR` - Indonesian Rupiah\n* `IRR` - Iranian Rial\n* `IQD` - Iraqi Dinar\n* `IEP` - Irish Pound\n* `ILS` - Israeli New Shekel\n* `ILP` - Israeli Pound\n* `ILR` - Israeli Shekel (1980–1985)\n* `ITL` - Italian Lira\n* `JMD` - Jamaican Dollar\n* `JPY` - Japanese Yen\n* `JOD` - Jordanian Dinar\n* `KZT` - Kazakhstani Tenge\n* `KES` - Kenyan Shilling\n* `KWD` - Kuwaiti Dinar\n* `KGS` - Kyrgystani Som\n* `LAK` - Laotian Kip\n* `LVL` - Latvian Lats\n* `LVR` - Latvian Ruble\n* `LBP` - Lebanese Pound\n* `LSL` - Lesotho Loti\n* `LRD` - Liberian Dollar\n* `LYD` - Libyan Dinar\n* `LTL` - Lithuanian Litas\n* `LTT` - Lithuanian Talonas\n* `LUL` - Luxembourg Financial Franc\n* `LUC` - Luxembourgian Convertible Franc\n* `LUF` - Luxembourgian Franc\n* `MOP` - Macanese Pataca\n* `MKD` - Macedonian Denar\n* `MKN` - Macedonian Denar (1992–1993)\n* `MGA` - Malagasy Ariary\n* `MGF` - Malagasy Franc\n* `MWK` - Malawian Kwacha\n* `MYR` - Malaysian Ringgit\n* `MVR` - Maldivian Rufiyaa\n* `MVP` - Maldivian Rupee (1947–1981)\n* `MLF` - Malian Franc\n* `MTL` - Maltese Lira\n* `MTP` - Maltese Pound\n* `MRU` - Mauritanian Ouguiya\n* `MRO` - Mauritanian Ouguiya (1973–2017)\n* `MUR` - Mauritian Rupee\n* `MXV` - Mexican Investment Unit\n* `MXN` - Mexican Peso\n* `MXP` - Mexican Silver Peso (1861–1992)\n* `MDC` - Moldovan Cupon\n* `MDL` - Moldovan Leu\n* `MCF` - Monegasque Franc\n* `MNT` - Mongolian Tugrik\n* `MAD` - Moroccan Dirham\n* `MAF` - Moroccan Franc\n* `MZE` - Mozambican Escudo\n* `MZN` - Mozambican Metical\n* `MZM` - Mozambican Metical (1980–2006)\n* `MMK` - Myanmar Kyat\n* `NAD` - Namibian Dollar\n* `NPR` - Nepalese Rupee\n* `ANG` - Netherlands Antillean Guilder\n* `TWD` - New Taiwan Dollar\n* `NZD` - New Zealand Dollar\n* `NIO` - Nicaraguan Córdoba\n* `NIC` - Nicaraguan Córdoba (1988–1991)\n* `NGN` - Nigerian Naira\n* `KPW` - North Korean Won\n* `NOK` - Norwegian Krone\n* `OMR` - Omani Rial\n* `PKR` - Pakistani Rupee\n* `XPD` - Palladium\n* `PAB` - Panamanian Balboa\n* `PGK` - Papua New Guinean Kina\n* `PYG` - Paraguayan Guarani\n* `PEI` - Peruvian Inti\n* `PEN` - Peruvian Sol\n* `PES` - Peruvian Sol (1863–1965)\n* `PHP` - Philippine Peso\n* `XPT` - Platinum\n* `PLN` - Polish Zloty\n* `PLZ` - Polish Zloty (1950–1995)\n* `PTE` - Portuguese Escudo\n* `GWE` - Portuguese Guinea Escudo\n* `QAR` - Qatari Rial\n* `XRE` - RINET Funds\n* `RHD` - Rhodesian Dollar\n* `RON` - Romanian Leu\n* `ROL` - Romanian Leu (1952–2006)\n* `RUB` - Russian Ruble\n* `RUR` - Russian Ruble (1991–1998)\n* `RWF` - Rwandan Franc\n* `SVC` - Salvadoran Colón\n* `WST` - Samoan Tala\n* `SAR` - Saudi Riyal\n* `RSD` - Serbian Dinar\n* `CSD` - Serbian Dinar (2002–2006)\n* `SCR` - Seychellois Rupee\n* `SLL` - Sierra Leonean Leone\n* `XAG` - Silver\n* `SGD` - Singapore Dollar\n* `SKK` - Slovak Koruna\n* `SIT` - Slovenian Tolar\n* `SBD` - Solomon Islands Dollar\n* `SOS` - Somali Shilling\n* `ZAR` - South African Rand\n* `ZAL` - South African Rand (financial)\n* `KRH` - South Korean Hwan (1953–1962)\n* `KRW` - South Korean Won\n* `KRO` - South Korean Won (1945–1953)\n* `SSP` - South Sudanese Pound\n* `SUR` - Soviet Rouble\n* `ESP` - Spanish Peseta\n* `ESA` - Spanish Peseta (A account)\n* `ESB` - Spanish Peseta (convertible account)\n* `XDR` - Special Drawing Rights\n* `LKR` - Sri Lankan Rupee\n* `SHP` - St. Helena Pound\n* `XSU` - Sucre\n* `SDD` - Sudanese Dinar (1992–2007)\n* `SDG` - Sudanese Pound\n* `SDP` - Sudanese Pound (1957–1998)\n* `SRD` - Surinamese Dollar\n* `SRG` - Surinamese Guilder\n* `SZL` - Swazi Lilangeni\n* `SEK` - Swedish Krona\n* `CHF` - Swiss Franc\n* `SYP` - Syrian Pound\n* `STN` - São Tomé & Príncipe Dobra\n* `STD` - São Tomé & Príncipe Dobra (1977–2017)\n* `TVD` - TVD\n* `TJR` - Tajikistani Ruble\n* `TJS` - Tajikistani Somoni\n* `TZS` - Tanzanian Shilling\n* `XTS` - Testing Currency Code\n* `THB` - Thai Baht\n* `XXX` - The codes assigned for transactions where no currency is involved\n* `TPE` - Timorese Escudo\n* `TOP` - Tongan Paʻanga\n* `TTD` - Trinidad & Tobago Dollar\n* `TND` - Tunisian Dinar\n* `TRY` - Turkish Lira\n* `TRL` - Turkish Lira (1922–2005)\n* `TMT` - Turkmenistani Manat\n* `TMM` - Turkmenistani Manat (1993–2009)\n* `USD` - US Dollar\n* `USN` - US Dollar (Next day)\n* `USS` - US Dollar (Same day)\n* `UGX` - Ugandan Shilling\n* `UGS` - Ugandan Shilling (1966–1987)\n* `UAH` - Ukrainian Hryvnia\n* `UAK` - Ukrainian Karbovanets\n* `AED` - United Arab Emirates Dirham\n* `UYW` - Uruguayan Nominal Wage Index Unit\n* `UYU` - Uruguayan Peso\n* `UYP` - Uruguayan Peso (1975–1993)\n* `UYI` - Uruguayan Peso (Indexed Units)\n* `UZS` - Uzbekistani Som\n* `VUV` - Vanuatu Vatu\n* `VES` - Venezuelan Bolívar\n* `VEB` - Venezuelan Bolívar (1871–2008)\n* `VEF` - Venezuelan Bolívar (2008–2018)\n* `VND` - Vietnamese Dong\n* `VNN` - Vietnamese Dong (1978–1985)\n* `CHE` - WIR Euro\n* `CHW` - WIR Franc\n* `XOF` - West African CFA Franc\n* `YDD` - Yemeni Dinar\n* `YER` - Yemeni Rial\n* `YUN` - Yugoslavian Convertible Dinar (1990–1992)\n* `YUD` - Yugoslavian Hard Dinar (1966–1990)\n* `YUM` - Yugoslavian New Dinar (1994–2002)\n* `YUR` - Yugoslavian Reformed Dinar (1992–1993)\n* `ZWN` - ZWN\n* `ZRN` - Zairean New Zaire (1993–1998)\n* `ZRZ` - Zairean Zaire (1971–1993)\n* `ZMW` - Zambian Kwacha\n* `ZMK` - Zambian Kwacha (1968–2012)\n* `ZWD` - Zimbabwean Dollar (1980–2008)\n* `ZWR` - Zimbabwean Dollar (2008)\n* `ZWL` - Zimbabwean Dollar (2009)",
                   "generatedName": "EmploymentPayCurrency",
                   "schema": "PayCurrencyEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -29483,15 +29905,19 @@
               "description": "The position's FLSA status.\n\n* `EXEMPT` - EXEMPT\n* `SALARIED_NONEXEMPT` - SALARIED_NONEXEMPT\n* `NONEXEMPT` - NONEXEMPT\n* `OWNER` - OWNER",
               "value": {
                 "generatedName": "EmploymentFlsaStatus",
+                "description": "The position's FLSA status.\n\n* `EXEMPT` - EXEMPT\n* `SALARIED_NONEXEMPT` - SALARIED_NONEXEMPT\n* `NONEXEMPT` - NONEXEMPT\n* `OWNER` - OWNER",
                 "value": {
+                  "description": "The position's FLSA status.\n\n* `EXEMPT` - EXEMPT\n* `SALARIED_NONEXEMPT` - SALARIED_NONEXEMPT\n* `NONEXEMPT` - NONEXEMPT\n* `OWNER` - OWNER",
                   "generatedName": "EmploymentFlsaStatus",
                   "schema": "FlsaStatusEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -29535,15 +29961,19 @@
               "description": "The position's type of employment.\n\n* `FULL_TIME` - FULL_TIME\n* `PART_TIME` - PART_TIME\n* `INTERN` - INTERN\n* `CONTRACTOR` - CONTRACTOR\n* `FREELANCE` - FREELANCE",
               "value": {
                 "generatedName": "EmploymentEmploymentType",
+                "description": "The position's type of employment.\n\n* `FULL_TIME` - FULL_TIME\n* `PART_TIME` - PART_TIME\n* `INTERN` - INTERN\n* `CONTRACTOR` - CONTRACTOR\n* `FREELANCE` - FREELANCE",
                 "value": {
+                  "description": "The position's type of employment.\n\n* `FULL_TIME` - FULL_TIME\n* `PART_TIME` - PART_TIME\n* `INTERN` - INTERN\n* `CONTRACTOR` - CONTRACTOR\n* `FREELANCE` - FREELANCE",
                   "generatedName": "EmploymentEmploymentType",
                   "schema": "EmploymentTypeEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -30335,15 +30765,19 @@
               "description": "The group type\n\n* `TEAM` - TEAM\n* `DEPARTMENT` - DEPARTMENT\n* `COST_CENTER` - COST_CENTER\n* `BUSINESS_UNIT` - BUSINESS_UNIT\n* `GROUP` - GROUP",
               "value": {
                 "generatedName": "GroupType",
+                "description": "The group type\n\n* `TEAM` - TEAM\n* `DEPARTMENT` - DEPARTMENT\n* `COST_CENTER` - COST_CENTER\n* `BUSINESS_UNIT` - BUSINESS_UNIT\n* `GROUP` - GROUP",
                 "value": {
+                  "description": "The group type\n\n* `TEAM` - TEAM\n* `DEPARTMENT` - DEPARTMENT\n* `COST_CENTER` - COST_CENTER\n* `BUSINESS_UNIT` - BUSINESS_UNIT\n* `GROUP` - GROUP",
                   "generatedName": "GroupType",
                   "schema": "GroupTypeEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -30594,8 +31028,10 @@
               "generatedName": "IssueStatus",
               "description": "Status of the issue. Options: ('ONGOING', 'RESOLVED')\n\n* `ONGOING` - ONGOING\n* `RESOLVED` - RESOLVED",
               "value": {
+                "description": "Status of the issue. Options: ('ONGOING', 'RESOLVED')\n\n* `ONGOING` - ONGOING\n* `RESOLVED` - RESOLVED",
                 "generatedName": "IssueStatus",
                 "schema": "IssueStatusEnum",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -31441,15 +31877,19 @@
               "description": "The location's country.\n\n* `AF` - Afghanistan\n* `AX` - Åland Islands\n* `AL` - Albania\n* `DZ` - Algeria\n* `AS` - American Samoa\n* `AD` - Andorra\n* `AO` - Angola\n* `AI` - Anguilla\n* `AQ` - Antarctica\n* `AG` - Antigua and Barbuda\n* `AR` - Argentina\n* `AM` - Armenia\n* `AW` - Aruba\n* `AU` - Australia\n* `AT` - Austria\n* `AZ` - Azerbaijan\n* `BS` - Bahamas\n* `BH` - Bahrain\n* `BD` - Bangladesh\n* `BB` - Barbados\n* `BY` - Belarus\n* `BE` - Belgium\n* `BZ` - Belize\n* `BJ` - Benin\n* `BM` - Bermuda\n* `BT` - Bhutan\n* `BO` - Bolivia\n* `BQ` - Bonaire, Sint Eustatius and Saba\n* `BA` - Bosnia and Herzegovina\n* `BW` - Botswana\n* `BV` - Bouvet Island\n* `BR` - Brazil\n* `IO` - British Indian Ocean Territory\n* `BN` - Brunei\n* `BG` - Bulgaria\n* `BF` - Burkina Faso\n* `BI` - Burundi\n* `CV` - Cabo Verde\n* `KH` - Cambodia\n* `CM` - Cameroon\n* `CA` - Canada\n* `KY` - Cayman Islands\n* `CF` - Central African Republic\n* `TD` - Chad\n* `CL` - Chile\n* `CN` - China\n* `CX` - Christmas Island\n* `CC` - Cocos (Keeling) Islands\n* `CO` - Colombia\n* `KM` - Comoros\n* `CG` - Congo\n* `CD` - Congo (the Democratic Republic of the)\n* `CK` - Cook Islands\n* `CR` - Costa Rica\n* `CI` - Côte d'Ivoire\n* `HR` - Croatia\n* `CU` - Cuba\n* `CW` - Curaçao\n* `CY` - Cyprus\n* `CZ` - Czechia\n* `DK` - Denmark\n* `DJ` - Djibouti\n* `DM` - Dominica\n* `DO` - Dominican Republic\n* `EC` - Ecuador\n* `EG` - Egypt\n* `SV` - El Salvador\n* `GQ` - Equatorial Guinea\n* `ER` - Eritrea\n* `EE` - Estonia\n* `SZ` - Eswatini\n* `ET` - Ethiopia\n* `FK` - Falkland Islands (Malvinas)\n* `FO` - Faroe Islands\n* `FJ` - Fiji\n* `FI` - Finland\n* `FR` - France\n* `GF` - French Guiana\n* `PF` - French Polynesia\n* `TF` - French Southern Territories\n* `GA` - Gabon\n* `GM` - Gambia\n* `GE` - Georgia\n* `DE` - Germany\n* `GH` - Ghana\n* `GI` - Gibraltar\n* `GR` - Greece\n* `GL` - Greenland\n* `GD` - Grenada\n* `GP` - Guadeloupe\n* `GU` - Guam\n* `GT` - Guatemala\n* `GG` - Guernsey\n* `GN` - Guinea\n* `GW` - Guinea-Bissau\n* `GY` - Guyana\n* `HT` - Haiti\n* `HM` - Heard Island and McDonald Islands\n* `VA` - Holy See\n* `HN` - Honduras\n* `HK` - Hong Kong\n* `HU` - Hungary\n* `IS` - Iceland\n* `IN` - India\n* `ID` - Indonesia\n* `IR` - Iran\n* `IQ` - Iraq\n* `IE` - Ireland\n* `IM` - Isle of Man\n* `IL` - Israel\n* `IT` - Italy\n* `JM` - Jamaica\n* `JP` - Japan\n* `JE` - Jersey\n* `JO` - Jordan\n* `KZ` - Kazakhstan\n* `KE` - Kenya\n* `KI` - Kiribati\n* `KW` - Kuwait\n* `KG` - Kyrgyzstan\n* `LA` - Laos\n* `LV` - Latvia\n* `LB` - Lebanon\n* `LS` - Lesotho\n* `LR` - Liberia\n* `LY` - Libya\n* `LI` - Liechtenstein\n* `LT` - Lithuania\n* `LU` - Luxembourg\n* `MO` - Macao\n* `MG` - Madagascar\n* `MW` - Malawi\n* `MY` - Malaysia\n* `MV` - Maldives\n* `ML` - Mali\n* `MT` - Malta\n* `MH` - Marshall Islands\n* `MQ` - Martinique\n* `MR` - Mauritania\n* `MU` - Mauritius\n* `YT` - Mayotte\n* `MX` - Mexico\n* `FM` - Micronesia (Federated States of)\n* `MD` - Moldova\n* `MC` - Monaco\n* `MN` - Mongolia\n* `ME` - Montenegro\n* `MS` - Montserrat\n* `MA` - Morocco\n* `MZ` - Mozambique\n* `MM` - Myanmar\n* `NA` - Namibia\n* `NR` - Nauru\n* `NP` - Nepal\n* `NL` - Netherlands\n* `NC` - New Caledonia\n* `NZ` - New Zealand\n* `NI` - Nicaragua\n* `NE` - Niger\n* `NG` - Nigeria\n* `NU` - Niue\n* `NF` - Norfolk Island\n* `KP` - North Korea\n* `MK` - North Macedonia\n* `MP` - Northern Mariana Islands\n* `NO` - Norway\n* `OM` - Oman\n* `PK` - Pakistan\n* `PW` - Palau\n* `PS` - Palestine, State of\n* `PA` - Panama\n* `PG` - Papua New Guinea\n* `PY` - Paraguay\n* `PE` - Peru\n* `PH` - Philippines\n* `PN` - Pitcairn\n* `PL` - Poland\n* `PT` - Portugal\n* `PR` - Puerto Rico\n* `QA` - Qatar\n* `RE` - Réunion\n* `RO` - Romania\n* `RU` - Russia\n* `RW` - Rwanda\n* `BL` - Saint Barthélemy\n* `SH` - Saint Helena, Ascension and Tristan da Cunha\n* `KN` - Saint Kitts and Nevis\n* `LC` - Saint Lucia\n* `MF` - Saint Martin (French part)\n* `PM` - Saint Pierre and Miquelon\n* `VC` - Saint Vincent and the Grenadines\n* `WS` - Samoa\n* `SM` - San Marino\n* `ST` - Sao Tome and Principe\n* `SA` - Saudi Arabia\n* `SN` - Senegal\n* `RS` - Serbia\n* `SC` - Seychelles\n* `SL` - Sierra Leone\n* `SG` - Singapore\n* `SX` - Sint Maarten (Dutch part)\n* `SK` - Slovakia\n* `SI` - Slovenia\n* `SB` - Solomon Islands\n* `SO` - Somalia\n* `ZA` - South Africa\n* `GS` - South Georgia and the South Sandwich Islands\n* `KR` - South Korea\n* `SS` - South Sudan\n* `ES` - Spain\n* `LK` - Sri Lanka\n* `SD` - Sudan\n* `SR` - Suriname\n* `SJ` - Svalbard and Jan Mayen\n* `SE` - Sweden\n* `CH` - Switzerland\n* `SY` - Syria\n* `TW` - Taiwan\n* `TJ` - Tajikistan\n* `TZ` - Tanzania\n* `TH` - Thailand\n* `TL` - Timor-Leste\n* `TG` - Togo\n* `TK` - Tokelau\n* `TO` - Tonga\n* `TT` - Trinidad and Tobago\n* `TN` - Tunisia\n* `TR` - Turkey\n* `TM` - Turkmenistan\n* `TC` - Turks and Caicos Islands\n* `TV` - Tuvalu\n* `UG` - Uganda\n* `UA` - Ukraine\n* `AE` - United Arab Emirates\n* `GB` - United Kingdom\n* `UM` - United States Minor Outlying Islands\n* `US` - United States of America\n* `UY` - Uruguay\n* `UZ` - Uzbekistan\n* `VU` - Vanuatu\n* `VE` - Venezuela\n* `VN` - Vietnam\n* `VG` - Virgin Islands (British)\n* `VI` - Virgin Islands (U.S.)\n* `WF` - Wallis and Futuna\n* `EH` - Western Sahara\n* `YE` - Yemen\n* `ZM` - Zambia\n* `ZW` - Zimbabwe",
               "value": {
                 "generatedName": "LocationCountry",
+                "description": "The location's country.\n\n* `AF` - Afghanistan\n* `AX` - Åland Islands\n* `AL` - Albania\n* `DZ` - Algeria\n* `AS` - American Samoa\n* `AD` - Andorra\n* `AO` - Angola\n* `AI` - Anguilla\n* `AQ` - Antarctica\n* `AG` - Antigua and Barbuda\n* `AR` - Argentina\n* `AM` - Armenia\n* `AW` - Aruba\n* `AU` - Australia\n* `AT` - Austria\n* `AZ` - Azerbaijan\n* `BS` - Bahamas\n* `BH` - Bahrain\n* `BD` - Bangladesh\n* `BB` - Barbados\n* `BY` - Belarus\n* `BE` - Belgium\n* `BZ` - Belize\n* `BJ` - Benin\n* `BM` - Bermuda\n* `BT` - Bhutan\n* `BO` - Bolivia\n* `BQ` - Bonaire, Sint Eustatius and Saba\n* `BA` - Bosnia and Herzegovina\n* `BW` - Botswana\n* `BV` - Bouvet Island\n* `BR` - Brazil\n* `IO` - British Indian Ocean Territory\n* `BN` - Brunei\n* `BG` - Bulgaria\n* `BF` - Burkina Faso\n* `BI` - Burundi\n* `CV` - Cabo Verde\n* `KH` - Cambodia\n* `CM` - Cameroon\n* `CA` - Canada\n* `KY` - Cayman Islands\n* `CF` - Central African Republic\n* `TD` - Chad\n* `CL` - Chile\n* `CN` - China\n* `CX` - Christmas Island\n* `CC` - Cocos (Keeling) Islands\n* `CO` - Colombia\n* `KM` - Comoros\n* `CG` - Congo\n* `CD` - Congo (the Democratic Republic of the)\n* `CK` - Cook Islands\n* `CR` - Costa Rica\n* `CI` - Côte d'Ivoire\n* `HR` - Croatia\n* `CU` - Cuba\n* `CW` - Curaçao\n* `CY` - Cyprus\n* `CZ` - Czechia\n* `DK` - Denmark\n* `DJ` - Djibouti\n* `DM` - Dominica\n* `DO` - Dominican Republic\n* `EC` - Ecuador\n* `EG` - Egypt\n* `SV` - El Salvador\n* `GQ` - Equatorial Guinea\n* `ER` - Eritrea\n* `EE` - Estonia\n* `SZ` - Eswatini\n* `ET` - Ethiopia\n* `FK` - Falkland Islands (Malvinas)\n* `FO` - Faroe Islands\n* `FJ` - Fiji\n* `FI` - Finland\n* `FR` - France\n* `GF` - French Guiana\n* `PF` - French Polynesia\n* `TF` - French Southern Territories\n* `GA` - Gabon\n* `GM` - Gambia\n* `GE` - Georgia\n* `DE` - Germany\n* `GH` - Ghana\n* `GI` - Gibraltar\n* `GR` - Greece\n* `GL` - Greenland\n* `GD` - Grenada\n* `GP` - Guadeloupe\n* `GU` - Guam\n* `GT` - Guatemala\n* `GG` - Guernsey\n* `GN` - Guinea\n* `GW` - Guinea-Bissau\n* `GY` - Guyana\n* `HT` - Haiti\n* `HM` - Heard Island and McDonald Islands\n* `VA` - Holy See\n* `HN` - Honduras\n* `HK` - Hong Kong\n* `HU` - Hungary\n* `IS` - Iceland\n* `IN` - India\n* `ID` - Indonesia\n* `IR` - Iran\n* `IQ` - Iraq\n* `IE` - Ireland\n* `IM` - Isle of Man\n* `IL` - Israel\n* `IT` - Italy\n* `JM` - Jamaica\n* `JP` - Japan\n* `JE` - Jersey\n* `JO` - Jordan\n* `KZ` - Kazakhstan\n* `KE` - Kenya\n* `KI` - Kiribati\n* `KW` - Kuwait\n* `KG` - Kyrgyzstan\n* `LA` - Laos\n* `LV` - Latvia\n* `LB` - Lebanon\n* `LS` - Lesotho\n* `LR` - Liberia\n* `LY` - Libya\n* `LI` - Liechtenstein\n* `LT` - Lithuania\n* `LU` - Luxembourg\n* `MO` - Macao\n* `MG` - Madagascar\n* `MW` - Malawi\n* `MY` - Malaysia\n* `MV` - Maldives\n* `ML` - Mali\n* `MT` - Malta\n* `MH` - Marshall Islands\n* `MQ` - Martinique\n* `MR` - Mauritania\n* `MU` - Mauritius\n* `YT` - Mayotte\n* `MX` - Mexico\n* `FM` - Micronesia (Federated States of)\n* `MD` - Moldova\n* `MC` - Monaco\n* `MN` - Mongolia\n* `ME` - Montenegro\n* `MS` - Montserrat\n* `MA` - Morocco\n* `MZ` - Mozambique\n* `MM` - Myanmar\n* `NA` - Namibia\n* `NR` - Nauru\n* `NP` - Nepal\n* `NL` - Netherlands\n* `NC` - New Caledonia\n* `NZ` - New Zealand\n* `NI` - Nicaragua\n* `NE` - Niger\n* `NG` - Nigeria\n* `NU` - Niue\n* `NF` - Norfolk Island\n* `KP` - North Korea\n* `MK` - North Macedonia\n* `MP` - Northern Mariana Islands\n* `NO` - Norway\n* `OM` - Oman\n* `PK` - Pakistan\n* `PW` - Palau\n* `PS` - Palestine, State of\n* `PA` - Panama\n* `PG` - Papua New Guinea\n* `PY` - Paraguay\n* `PE` - Peru\n* `PH` - Philippines\n* `PN` - Pitcairn\n* `PL` - Poland\n* `PT` - Portugal\n* `PR` - Puerto Rico\n* `QA` - Qatar\n* `RE` - Réunion\n* `RO` - Romania\n* `RU` - Russia\n* `RW` - Rwanda\n* `BL` - Saint Barthélemy\n* `SH` - Saint Helena, Ascension and Tristan da Cunha\n* `KN` - Saint Kitts and Nevis\n* `LC` - Saint Lucia\n* `MF` - Saint Martin (French part)\n* `PM` - Saint Pierre and Miquelon\n* `VC` - Saint Vincent and the Grenadines\n* `WS` - Samoa\n* `SM` - San Marino\n* `ST` - Sao Tome and Principe\n* `SA` - Saudi Arabia\n* `SN` - Senegal\n* `RS` - Serbia\n* `SC` - Seychelles\n* `SL` - Sierra Leone\n* `SG` - Singapore\n* `SX` - Sint Maarten (Dutch part)\n* `SK` - Slovakia\n* `SI` - Slovenia\n* `SB` - Solomon Islands\n* `SO` - Somalia\n* `ZA` - South Africa\n* `GS` - South Georgia and the South Sandwich Islands\n* `KR` - South Korea\n* `SS` - South Sudan\n* `ES` - Spain\n* `LK` - Sri Lanka\n* `SD` - Sudan\n* `SR` - Suriname\n* `SJ` - Svalbard and Jan Mayen\n* `SE` - Sweden\n* `CH` - Switzerland\n* `SY` - Syria\n* `TW` - Taiwan\n* `TJ` - Tajikistan\n* `TZ` - Tanzania\n* `TH` - Thailand\n* `TL` - Timor-Leste\n* `TG` - Togo\n* `TK` - Tokelau\n* `TO` - Tonga\n* `TT` - Trinidad and Tobago\n* `TN` - Tunisia\n* `TR` - Turkey\n* `TM` - Turkmenistan\n* `TC` - Turks and Caicos Islands\n* `TV` - Tuvalu\n* `UG` - Uganda\n* `UA` - Ukraine\n* `AE` - United Arab Emirates\n* `GB` - United Kingdom\n* `UM` - United States Minor Outlying Islands\n* `US` - United States of America\n* `UY` - Uruguay\n* `UZ` - Uzbekistan\n* `VU` - Vanuatu\n* `VE` - Venezuela\n* `VN` - Vietnam\n* `VG` - Virgin Islands (British)\n* `VI` - Virgin Islands (U.S.)\n* `WF` - Wallis and Futuna\n* `EH` - Western Sahara\n* `YE` - Yemen\n* `ZM` - Zambia\n* `ZW` - Zimbabwe",
                 "value": {
+                  "description": "The location's country.\n\n* `AF` - Afghanistan\n* `AX` - Åland Islands\n* `AL` - Albania\n* `DZ` - Algeria\n* `AS` - American Samoa\n* `AD` - Andorra\n* `AO` - Angola\n* `AI` - Anguilla\n* `AQ` - Antarctica\n* `AG` - Antigua and Barbuda\n* `AR` - Argentina\n* `AM` - Armenia\n* `AW` - Aruba\n* `AU` - Australia\n* `AT` - Austria\n* `AZ` - Azerbaijan\n* `BS` - Bahamas\n* `BH` - Bahrain\n* `BD` - Bangladesh\n* `BB` - Barbados\n* `BY` - Belarus\n* `BE` - Belgium\n* `BZ` - Belize\n* `BJ` - Benin\n* `BM` - Bermuda\n* `BT` - Bhutan\n* `BO` - Bolivia\n* `BQ` - Bonaire, Sint Eustatius and Saba\n* `BA` - Bosnia and Herzegovina\n* `BW` - Botswana\n* `BV` - Bouvet Island\n* `BR` - Brazil\n* `IO` - British Indian Ocean Territory\n* `BN` - Brunei\n* `BG` - Bulgaria\n* `BF` - Burkina Faso\n* `BI` - Burundi\n* `CV` - Cabo Verde\n* `KH` - Cambodia\n* `CM` - Cameroon\n* `CA` - Canada\n* `KY` - Cayman Islands\n* `CF` - Central African Republic\n* `TD` - Chad\n* `CL` - Chile\n* `CN` - China\n* `CX` - Christmas Island\n* `CC` - Cocos (Keeling) Islands\n* `CO` - Colombia\n* `KM` - Comoros\n* `CG` - Congo\n* `CD` - Congo (the Democratic Republic of the)\n* `CK` - Cook Islands\n* `CR` - Costa Rica\n* `CI` - Côte d'Ivoire\n* `HR` - Croatia\n* `CU` - Cuba\n* `CW` - Curaçao\n* `CY` - Cyprus\n* `CZ` - Czechia\n* `DK` - Denmark\n* `DJ` - Djibouti\n* `DM` - Dominica\n* `DO` - Dominican Republic\n* `EC` - Ecuador\n* `EG` - Egypt\n* `SV` - El Salvador\n* `GQ` - Equatorial Guinea\n* `ER` - Eritrea\n* `EE` - Estonia\n* `SZ` - Eswatini\n* `ET` - Ethiopia\n* `FK` - Falkland Islands (Malvinas)\n* `FO` - Faroe Islands\n* `FJ` - Fiji\n* `FI` - Finland\n* `FR` - France\n* `GF` - French Guiana\n* `PF` - French Polynesia\n* `TF` - French Southern Territories\n* `GA` - Gabon\n* `GM` - Gambia\n* `GE` - Georgia\n* `DE` - Germany\n* `GH` - Ghana\n* `GI` - Gibraltar\n* `GR` - Greece\n* `GL` - Greenland\n* `GD` - Grenada\n* `GP` - Guadeloupe\n* `GU` - Guam\n* `GT` - Guatemala\n* `GG` - Guernsey\n* `GN` - Guinea\n* `GW` - Guinea-Bissau\n* `GY` - Guyana\n* `HT` - Haiti\n* `HM` - Heard Island and McDonald Islands\n* `VA` - Holy See\n* `HN` - Honduras\n* `HK` - Hong Kong\n* `HU` - Hungary\n* `IS` - Iceland\n* `IN` - India\n* `ID` - Indonesia\n* `IR` - Iran\n* `IQ` - Iraq\n* `IE` - Ireland\n* `IM` - Isle of Man\n* `IL` - Israel\n* `IT` - Italy\n* `JM` - Jamaica\n* `JP` - Japan\n* `JE` - Jersey\n* `JO` - Jordan\n* `KZ` - Kazakhstan\n* `KE` - Kenya\n* `KI` - Kiribati\n* `KW` - Kuwait\n* `KG` - Kyrgyzstan\n* `LA` - Laos\n* `LV` - Latvia\n* `LB` - Lebanon\n* `LS` - Lesotho\n* `LR` - Liberia\n* `LY` - Libya\n* `LI` - Liechtenstein\n* `LT` - Lithuania\n* `LU` - Luxembourg\n* `MO` - Macao\n* `MG` - Madagascar\n* `MW` - Malawi\n* `MY` - Malaysia\n* `MV` - Maldives\n* `ML` - Mali\n* `MT` - Malta\n* `MH` - Marshall Islands\n* `MQ` - Martinique\n* `MR` - Mauritania\n* `MU` - Mauritius\n* `YT` - Mayotte\n* `MX` - Mexico\n* `FM` - Micronesia (Federated States of)\n* `MD` - Moldova\n* `MC` - Monaco\n* `MN` - Mongolia\n* `ME` - Montenegro\n* `MS` - Montserrat\n* `MA` - Morocco\n* `MZ` - Mozambique\n* `MM` - Myanmar\n* `NA` - Namibia\n* `NR` - Nauru\n* `NP` - Nepal\n* `NL` - Netherlands\n* `NC` - New Caledonia\n* `NZ` - New Zealand\n* `NI` - Nicaragua\n* `NE` - Niger\n* `NG` - Nigeria\n* `NU` - Niue\n* `NF` - Norfolk Island\n* `KP` - North Korea\n* `MK` - North Macedonia\n* `MP` - Northern Mariana Islands\n* `NO` - Norway\n* `OM` - Oman\n* `PK` - Pakistan\n* `PW` - Palau\n* `PS` - Palestine, State of\n* `PA` - Panama\n* `PG` - Papua New Guinea\n* `PY` - Paraguay\n* `PE` - Peru\n* `PH` - Philippines\n* `PN` - Pitcairn\n* `PL` - Poland\n* `PT` - Portugal\n* `PR` - Puerto Rico\n* `QA` - Qatar\n* `RE` - Réunion\n* `RO` - Romania\n* `RU` - Russia\n* `RW` - Rwanda\n* `BL` - Saint Barthélemy\n* `SH` - Saint Helena, Ascension and Tristan da Cunha\n* `KN` - Saint Kitts and Nevis\n* `LC` - Saint Lucia\n* `MF` - Saint Martin (French part)\n* `PM` - Saint Pierre and Miquelon\n* `VC` - Saint Vincent and the Grenadines\n* `WS` - Samoa\n* `SM` - San Marino\n* `ST` - Sao Tome and Principe\n* `SA` - Saudi Arabia\n* `SN` - Senegal\n* `RS` - Serbia\n* `SC` - Seychelles\n* `SL` - Sierra Leone\n* `SG` - Singapore\n* `SX` - Sint Maarten (Dutch part)\n* `SK` - Slovakia\n* `SI` - Slovenia\n* `SB` - Solomon Islands\n* `SO` - Somalia\n* `ZA` - South Africa\n* `GS` - South Georgia and the South Sandwich Islands\n* `KR` - South Korea\n* `SS` - South Sudan\n* `ES` - Spain\n* `LK` - Sri Lanka\n* `SD` - Sudan\n* `SR` - Suriname\n* `SJ` - Svalbard and Jan Mayen\n* `SE` - Sweden\n* `CH` - Switzerland\n* `SY` - Syria\n* `TW` - Taiwan\n* `TJ` - Tajikistan\n* `TZ` - Tanzania\n* `TH` - Thailand\n* `TL` - Timor-Leste\n* `TG` - Togo\n* `TK` - Tokelau\n* `TO` - Tonga\n* `TT` - Trinidad and Tobago\n* `TN` - Tunisia\n* `TR` - Turkey\n* `TM` - Turkmenistan\n* `TC` - Turks and Caicos Islands\n* `TV` - Tuvalu\n* `UG` - Uganda\n* `UA` - Ukraine\n* `AE` - United Arab Emirates\n* `GB` - United Kingdom\n* `UM` - United States Minor Outlying Islands\n* `US` - United States of America\n* `UY` - Uruguay\n* `UZ` - Uzbekistan\n* `VU` - Vanuatu\n* `VE` - Venezuela\n* `VN` - Vietnam\n* `VG` - Virgin Islands (British)\n* `VI` - Virgin Islands (U.S.)\n* `WF` - Wallis and Futuna\n* `EH` - Western Sahara\n* `YE` - Yemen\n* `ZM` - Zambia\n* `ZW` - Zimbabwe",
                   "generatedName": "LocationCountry",
                   "schema": "CountryEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -31466,15 +31906,19 @@
               "description": "The location's type. Can be either WORK or HOME\n\n* `HOME` - HOME\n* `WORK` - WORK",
               "value": {
                 "generatedName": "LocationLocationType",
+                "description": "The location's type. Can be either WORK or HOME\n\n* `HOME` - HOME\n* `WORK` - WORK",
                 "value": {
+                  "description": "The location's type. Can be either WORK or HOME\n\n* `HOME` - HOME\n* `WORK` - WORK",
                   "generatedName": "LocationLocationType",
                   "schema": "LocationTypeEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -31956,15 +32400,19 @@
               "description": "The encoding of the value of `data`. Defaults to `RAW` if not defined.\n\n* `RAW` - RAW\n* `BASE64` - BASE64\n* `GZIP_BASE64` - GZIP_BASE64",
               "value": {
                 "generatedName": "MultipartFormFieldRequestEncoding",
+                "description": "The encoding of the value of `data`. Defaults to `RAW` if not defined.\n\n* `RAW` - RAW\n* `BASE64` - BASE64\n* `GZIP_BASE64` - GZIP_BASE64",
                 "value": {
+                  "description": "The encoding of the value of `data`. Defaults to `RAW` if not defined.\n\n* `RAW` - RAW\n* `BASE64` - BASE64\n* `GZIP_BASE64` - GZIP_BASE64",
                   "generatedName": "MultipartFormFieldRequestEncoding",
                   "schema": "EncodingEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -35533,15 +35981,19 @@
               "description": "The state of the payroll run\n\n* `PAID` - PAID\n* `DRAFT` - DRAFT\n* `APPROVED` - APPROVED\n* `FAILED` - FAILED\n* `CLOSED` - CLOSED",
               "value": {
                 "generatedName": "PayrollRunRunState",
+                "description": "The state of the payroll run\n\n* `PAID` - PAID\n* `DRAFT` - DRAFT\n* `APPROVED` - APPROVED\n* `FAILED` - FAILED\n* `CLOSED` - CLOSED",
                 "value": {
+                  "description": "The state of the payroll run\n\n* `PAID` - PAID\n* `DRAFT` - DRAFT\n* `APPROVED` - APPROVED\n* `FAILED` - FAILED\n* `CLOSED` - CLOSED",
                   "generatedName": "PayrollRunRunState",
                   "schema": "RunStateEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -35558,15 +36010,19 @@
               "description": "The type of the payroll run\n\n* `REGULAR` - REGULAR\n* `OFF_CYCLE` - OFF_CYCLE\n* `CORRECTION` - CORRECTION\n* `TERMINATION` - TERMINATION\n* `SIGN_ON_BONUS` - SIGN_ON_BONUS",
               "value": {
                 "generatedName": "PayrollRunRunType",
+                "description": "The type of the payroll run\n\n* `REGULAR` - REGULAR\n* `OFF_CYCLE` - OFF_CYCLE\n* `CORRECTION` - CORRECTION\n* `TERMINATION` - TERMINATION\n* `SIGN_ON_BONUS` - SIGN_ON_BONUS",
                 "value": {
+                  "description": "The type of the payroll run\n\n* `REGULAR` - REGULAR\n* `OFF_CYCLE` - OFF_CYCLE\n* `CORRECTION` - CORRECTION\n* `TERMINATION` - TERMINATION\n* `SIGN_ON_BONUS` - SIGN_ON_BONUS",
                   "generatedName": "PayrollRunRunType",
                   "schema": "RunTypeEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -36072,6 +36528,7 @@
               "value": {
                 "generatedName": "RemoteResponseResponseType",
                 "schema": "ResponseTypeEnum",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -37120,15 +37577,19 @@
               "description": "The status of this time off request.\n\n* `REQUESTED` - REQUESTED\n* `APPROVED` - APPROVED\n* `DECLINED` - DECLINED\n* `CANCELLED` - CANCELLED\n* `DELETED` - DELETED",
               "value": {
                 "generatedName": "TimeOffStatus",
+                "description": "The status of this time off request.\n\n* `REQUESTED` - REQUESTED\n* `APPROVED` - APPROVED\n* `DECLINED` - DECLINED\n* `CANCELLED` - CANCELLED\n* `DELETED` - DELETED",
                 "value": {
+                  "description": "The status of this time off request.\n\n* `REQUESTED` - REQUESTED\n* `APPROVED` - APPROVED\n* `DECLINED` - DECLINED\n* `CANCELLED` - CANCELLED\n* `DELETED` - DELETED",
                   "generatedName": "TimeOffStatus",
                   "schema": "TimeOffStatusEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -37173,15 +37634,19 @@
               "description": "The measurement that the third-party integration uses to count time requested.\n\n* `HOURS` - HOURS\n* `DAYS` - DAYS",
               "value": {
                 "generatedName": "TimeOffUnits",
+                "description": "The measurement that the third-party integration uses to count time requested.\n\n* `HOURS` - HOURS\n* `DAYS` - DAYS",
                 "value": {
+                  "description": "The measurement that the third-party integration uses to count time requested.\n\n* `HOURS` - HOURS\n* `DAYS` - DAYS",
                   "generatedName": "TimeOffUnits",
                   "schema": "UnitsEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -37226,15 +37691,19 @@
               "description": "The type of time off request.\n\n* `VACATION` - VACATION\n* `SICK` - SICK\n* `PERSONAL` - PERSONAL\n* `JURY_DUTY` - JURY_DUTY\n* `VOLUNTEER` - VOLUNTEER\n* `BEREAVEMENT` - BEREAVEMENT",
               "value": {
                 "generatedName": "TimeOffRequestType",
+                "description": "The type of time off request.\n\n* `VACATION` - VACATION\n* `SICK` - SICK\n* `PERSONAL` - PERSONAL\n* `JURY_DUTY` - JURY_DUTY\n* `VOLUNTEER` - VOLUNTEER\n* `BEREAVEMENT` - BEREAVEMENT",
                 "value": {
+                  "description": "The type of time off request.\n\n* `VACATION` - VACATION\n* `SICK` - SICK\n* `PERSONAL` - PERSONAL\n* `JURY_DUTY` - JURY_DUTY\n* `VOLUNTEER` - VOLUNTEER\n* `BEREAVEMENT` - BEREAVEMENT",
                   "generatedName": "TimeOffRequestType",
                   "schema": "RequestTypeEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -37560,15 +38029,19 @@
               "description": "The policy type of this time off balance.\n\n* `VACATION` - VACATION\n* `SICK` - SICK\n* `PERSONAL` - PERSONAL\n* `JURY_DUTY` - JURY_DUTY\n* `VOLUNTEER` - VOLUNTEER\n* `BEREAVEMENT` - BEREAVEMENT",
               "value": {
                 "generatedName": "TimeOffBalancePolicyType",
+                "description": "The policy type of this time off balance.\n\n* `VACATION` - VACATION\n* `SICK` - SICK\n* `PERSONAL` - PERSONAL\n* `JURY_DUTY` - JURY_DUTY\n* `VOLUNTEER` - VOLUNTEER\n* `BEREAVEMENT` - BEREAVEMENT",
                 "value": {
+                  "description": "The policy type of this time off balance.\n\n* `VACATION` - VACATION\n* `SICK` - SICK\n* `PERSONAL` - PERSONAL\n* `JURY_DUTY` - JURY_DUTY\n* `VOLUNTEER` - VOLUNTEER\n* `BEREAVEMENT` - BEREAVEMENT",
                   "generatedName": "TimeOffBalancePolicyType",
                   "schema": "PolicyTypeEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -37798,15 +38271,19 @@
               "description": "The status of this time off request.\n\n* `REQUESTED` - REQUESTED\n* `APPROVED` - APPROVED\n* `DECLINED` - DECLINED\n* `CANCELLED` - CANCELLED\n* `DELETED` - DELETED",
               "value": {
                 "generatedName": "TimeOffRequestStatus",
+                "description": "The status of this time off request.\n\n* `REQUESTED` - REQUESTED\n* `APPROVED` - APPROVED\n* `DECLINED` - DECLINED\n* `CANCELLED` - CANCELLED\n* `DELETED` - DELETED",
                 "value": {
+                  "description": "The status of this time off request.\n\n* `REQUESTED` - REQUESTED\n* `APPROVED` - APPROVED\n* `DECLINED` - DECLINED\n* `CANCELLED` - CANCELLED\n* `DELETED` - DELETED",
                   "generatedName": "TimeOffRequestStatus",
                   "schema": "TimeOffStatusEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -37851,15 +38328,19 @@
               "description": "The measurement that the third-party integration uses to count time requested.\n\n* `HOURS` - HOURS\n* `DAYS` - DAYS",
               "value": {
                 "generatedName": "TimeOffRequestUnits",
+                "description": "The measurement that the third-party integration uses to count time requested.\n\n* `HOURS` - HOURS\n* `DAYS` - DAYS",
                 "value": {
+                  "description": "The measurement that the third-party integration uses to count time requested.\n\n* `HOURS` - HOURS\n* `DAYS` - DAYS",
                   "generatedName": "TimeOffRequestUnits",
                   "schema": "UnitsEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -37904,15 +38385,19 @@
               "description": "The type of time off request.\n\n* `VACATION` - VACATION\n* `SICK` - SICK\n* `PERSONAL` - PERSONAL\n* `JURY_DUTY` - JURY_DUTY\n* `VOLUNTEER` - VOLUNTEER\n* `BEREAVEMENT` - BEREAVEMENT",
               "value": {
                 "generatedName": "TimeOffRequestRequestType",
+                "description": "The type of time off request.\n\n* `VACATION` - VACATION\n* `SICK` - SICK\n* `PERSONAL` - PERSONAL\n* `JURY_DUTY` - JURY_DUTY\n* `VOLUNTEER` - VOLUNTEER\n* `BEREAVEMENT` - BEREAVEMENT",
                 "value": {
+                  "description": "The type of time off request.\n\n* `VACATION` - VACATION\n* `SICK` - SICK\n* `PERSONAL` - PERSONAL\n* `JURY_DUTY` - JURY_DUTY\n* `VOLUNTEER` - VOLUNTEER\n* `BEREAVEMENT` - BEREAVEMENT",
                   "generatedName": "TimeOffRequestRequestType",
                   "schema": "RequestTypeEnum",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],

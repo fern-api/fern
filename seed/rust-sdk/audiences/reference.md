@@ -21,9 +21,42 @@ async fn main() {
         ..Default::default()
     };
     let client = AudiencesClient::new(config).expect("Failed to build client");
-    client.folder_a.service.get_direct_thread(None).await;
+    client
+        .folder_a
+        .service
+        .get_direct_thread(
+            &GetDirectThreadQueryRequest {
+                ids: vec!["ids".to_string()],
+                tags: vec!["tags".to_string()],
+            },
+            None,
+        )
+        .await;
 }
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**ids:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `String` 
+    
 </dd>
 </dl>
 </dd>
@@ -84,7 +117,6 @@ async fn main() {
 
 ```rust
 use seed_audiences::prelude::*;
-use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {

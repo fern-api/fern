@@ -3,18 +3,13 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": "src",
+    "moduleResolution": "bundler"
   },
   "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../workspace/loader"
-    },
-    {
       "path": "../task-context"
-    },
-    {
-      "path": "../project-loader"
     },
     {
       "path": "../workspace/lazy-fern-workspace"

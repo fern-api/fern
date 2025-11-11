@@ -4,7 +4,7 @@ import Trace
 
 @Suite("PlaylistClient Wire Tests") struct PlaylistClientWireTests {
     @Test func createPlaylist1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -44,13 +44,14 @@ import Trace
                     "problems",
                     "problems"
                 ]
-            ))
+            )),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func getPlaylists1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -107,14 +108,13 @@ import Trace
             limit: 1,
             otherField: "otherField",
             multiLineDocs: "multiLineDocs",
-            optionalMultipleField: ,
-            multipleField: 
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func getPlaylist1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -146,13 +146,14 @@ import Trace
         )
         let response = try await client.playlist.getPlaylist(
             serviceParam: 1,
-            playlistId: "playlistId"
+            playlistId: "playlistId",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
     @Test func updatePlaylist1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -191,7 +192,8 @@ import Trace
                     "problems",
                     "problems"
                 ]
-            )
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

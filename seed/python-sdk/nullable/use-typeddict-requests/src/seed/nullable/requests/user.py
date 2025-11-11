@@ -18,4 +18,4 @@ class UserParams(typing_extensions.TypedDict):
     email: Email
     favorite_number: typing_extensions.Annotated[WeirdNumberParams, FieldMetadata(alias="favorite-number")]
     numbers: typing_extensions.NotRequired[typing.Optional[typing.Sequence[int]]]
-    strings: typing_extensions.NotRequired[typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]]
+    strings: typing_extensions.NotRequired[typing.Optional[typing.Dict[str, typing.Any]]]

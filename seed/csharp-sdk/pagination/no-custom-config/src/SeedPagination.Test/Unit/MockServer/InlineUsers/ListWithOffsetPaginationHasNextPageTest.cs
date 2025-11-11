@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedPagination.Test.Unit.MockServer;
 
@@ -60,7 +59,7 @@ public class ListWithOffsetPaginationHasNextPageTest : BaseMockServerTest
             {
                 Page = 1,
                 Limit = 1,
-                Order = InlineUsers.Order.Asc,
+                Order = SeedPagination.InlineUsers.Order.Asc,
             }
         );
         await foreach (var item in items)

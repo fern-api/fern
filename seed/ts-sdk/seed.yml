@@ -32,121 +32,54 @@ customFixtureConfig:
   customConfig: {}
 fixtures:
   imdb:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: omit-undefined
+      customConfig:
         omitUndefined: true
-      outputFolder: omit-undefined
-    - customConfig:
-        noScripts: true
-        extraDependencies:
-          lodash: 4.17.21
-      outputFolder: noScripts
-    - customConfig:
+    - outputFolder: branded-string-aliases
+      customConfig:
         useBrandedStringAliases: true
-      outputFolder: branded-string-aliases
   streaming:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig: null
-      outputFolder: no-serde-layer
-    - customConfig:
-        allowCustomFetcher: true
-        timeoutInSeconds: 2
-      outputFolder: allow-custom-fetcher
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: serde-layer
+      customConfig:
+        noSerdeLayer: false
     - outputFolder: wrapper
       customConfig:
         streamType: wrapper
         testFramework: jest
   audiences:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig: null
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: with-partner-audience
+      customConfig: null
       audiences:
         - partner
-      outputFolder: with-partner-audience
   exhaustive:
-    - customConfig:
-        packageManager: yarn
-      outputFolder: use-yarn
-    - customConfig:
+    - outputFolder: use-jest
+      customConfig:
         testFramework: jest
-      outputFolder: use-jest
-    - customConfig:
-        omitFernHeaders: true
-      outputFolder: omit-fern-headers
-    - customConfig:
+    - outputFolder: package-path
+      customConfig:
         packagePath: src/test-packagePath
-      outputFolder: package-path
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig: null
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: with-audiences
+      customConfig: null
       audiences:
         - audience1
         - audience2
-      outputFolder: with-audiences
-    - customConfig:
-        noSerdeLayer: false
-      outputFolder: serde-layer
-    - customConfig:
-        useBrandedStringAliases: true
-        neverThrowErrors: true
-        namespaceExport: 'Fiddle'
-        bundle: true
-        includeUtilsOnUnionMembers: true
-        includeOtherInUnionTypes: true
-        extraDependencies:
-          lodash-es: '^4.17.21'
-      outputFolder: bundle
-    - customConfig:
-        useBrandedStringAliases: true
-        neverThrowErrors: true
-        namespaceExport: 'Fiddle'
-        bundle: true
-        includeUtilsOnUnionMembers: true
-        includeOtherInUnionTypes: true
-        extraDependencies:
-          lodash-es: '^4.17.21'
-        packageJson:
-          version: '0.0.2'
-          dependencies:
-            stream: '^0.0.2'
-            qs: '^6.11.2'
-          files:
-            - exampleFile
-            - dist
-          browser:
-            command-exists: false
-            execa: false
-          engines:
-            node: '>=16.0.0'
-      outputFolder: custom-package-json
-    - customConfig:
-        retainOriginalCasing: true
-      outputFolder: retain-original-casing
-    - customConfig:
-        allowExtraFields: true
-      outputFolder: allow-extra-fields
-    - customConfig:
-        useBrandedStringAliases: true
-        neverThrowErrors: true
-        namespaceExport: 'Fiddle'
-        bundle: true
-        includeUtilsOnUnionMembers: true
-        includeOtherInUnionTypes: true
-        extraDependencies:
-          lodash-es: '^4.17.21'
-        extraDevDependencies:
-          jest: '^29.7.0'
-        extraPeerDependencies:
-          'openai': '^4.47.1'
-        extraPeerDependenciesMeta:
-          'openai':
-            optional: true
-      outputFolder: dev-dependencies
-    - outputFolder: jsr
+    - outputFolder: serde-layer
       customConfig:
-        publishToJsr: true
+        noSerdeLayer: false
+    - outputFolder: retain-original-casing
+      customConfig:
+        retainOriginalCasing: true
+    - outputFolder: allow-extra-fields
+      customConfig:
+        allowExtraFields: true
     - outputFolder: bigint
       customConfig:
         useBigInt: true
@@ -168,53 +101,49 @@ fixtures:
       outputMode: local_files
       customConfig:
         outputSourceFiles: false
-    - customConfig:
+    - outputFolder: never-throw-errors
+      customConfig:
         neverThrowErrors: true
-      outputFolder: never-throw-errors
-    - customConfig:
+    - outputFolder: export-all-requests-at-root
+      customConfig:
         exportAllRequestsAtRoot: true
-      outputFolder: export-all-requests-at-root
-    - customConfig:
+    - outputFolder: consolidate-type-files
+      customConfig:
         consolidateTypeFiles: true
-      outputFolder: consolidate-type-files
-    - customConfig:
-        useLegacyExports: true
-      outputFolder: legacy-exports
   error-property:
-    - customConfig:
-        private: true
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: union-utils
+      customConfig:
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
-      outputFolder: union-utils
   undiscriminated-unions:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        skipResponseValidation: true
-      outputFolder: skip-response-validation
-  file-download:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        includeContentHeadersOnFileDownloadResponse: true
-      outputFolder: file-download-response-headers
-    - outputFolder: wrapper
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: skip-response-validation
       customConfig:
+        skipResponseValidation: true
+  file-download:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: file-download-response-headers
+      customConfig:
+        includeContentHeadersOnFileDownloadResponse: true
+    - outputFolder: stream-wrapper
+      customConfig:
+        fileResponseType: 'stream'
         streamType: wrapper
         testFramework: jest
-    - customConfig:
-        fileResponseType: 'stream'
-      outputFolder: stream
   file-upload:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: inline
+      customConfig:
         inlineFileProperties: true
         inlinePathParameters: true
-      outputFolder: inline
-    - customConfig:
+    - outputFolder: serde
+      customConfig:
         noSerdeLayer: false
-      outputFolder: serde
     - outputFolder: wrapper
       customConfig:
         streamType: wrapper
@@ -226,57 +155,52 @@ fixtures:
       customConfig:
         testFramework: jest
   unknown:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: unknown-as-any
+      customConfig:
         treatUnknownAsAny: true
-      outputFolder: unknown-as-any
   query-parameters:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: serde
+      customConfig:
         noSerdeLayer: false
-      outputFolder: serde-layer-query
-  query-parameters-openapi:
-    - customConfig: null
-      outputFolder: no-custom-config
-  query-parameters-openapi-as-objects:
-    - customConfig: null
-      outputFolder: no-custom-config
   request-parameters:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: use-default-request-parameter-values
+      customConfig:
         useDefaultRequestParameterValues: true
-      outputFolder: use-default-request-parameter-values
-    - customConfig:
+    - outputFolder: use-big-int-and-default-request-parameter-values
+      customConfig:
         useDefaultRequestParameterValues: true
         useBigInt: true
         testFramework: jest
-      outputFolder: use-big-int-and-default-request-parameter-values
-    - customConfig:
+    - outputFolder: flatten-request-parameters
+      customConfig:
         flattenRequestParameters: true
-      outputFolder: flatten-request-parameters
   trace:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: serde
+      customConfig:
         noSerdeLayer: false
-      outputFolder: serde-trace
-    - customConfig:
+    - outputFolder: serde-no-throwing
+      customConfig:
         noSerdeLayer: false
         neverThrowErrors: true
-      outputFolder: serde-no-throwing
-    - customConfig:
+    - outputFolder: exhaustive
+      customConfig:
         useBrandedStringAliases: true
         neverThrowErrors: true
         includeCredentialsOnCrossOriginRequests: true
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
         timeoutInSeconds: 'infinity'
-      outputFolder: exhaustive
   examples:
-    - customConfig:
+    - outputFolder: examples-with-api-reference
+      customConfig:
         includeApiReference: true
         customReadmeSections:
           - title: "Override Section"
@@ -302,81 +226,166 @@ fixtures:
             - GET /movie/{movieId}
             - method: POST
               path: /movie
-      outputFolder: examples-with-api-reference
-    - customConfig:
+    - outputFolder: retain-original-casing
+      customConfig:
         retainOriginalCasing: true
-      outputFolder: retain-original-casing
   oauth-client-credentials:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: serde
+      customConfig:
         noSerdeLayer: false
-      outputFolder: serde
   oauth-client-credentials-nested-root:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: never-throw-errors
+      customConfig:
         neverThrowErrors: true
-      outputFolder: never-throw-errors
   mixed-case:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: retain-original-casing
+      customConfig:
         retainOriginalCasing: true
-      outputFolder: retain-original-casing
   ts-inline-types:
-    - customConfig:
+    - outputFolder: inline
+      customConfig:
         enableInlineTypes: true
-      outputFolder: inline
-    - customConfig:
+    - outputFolder: no-inline
+      customConfig:
         enableInlineTypes: false
-      outputFolder: no-inline
   path-parameters:
-    - outputFolder: default
-    - customConfig:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: retain-original-casing
+      customConfig:
         retainOriginalCasing: true
-      outputFolder: retain-original-casing
-    - customConfig:
+    - outputFolder: inline-path-parameters
+      customConfig:
         inlinePathParameters: true
-      outputFolder: inline-path-parameters
-    - customConfig:
+    - outputFolder: inline-path-parameters-serde
+      customConfig:
         inlinePathParameters: true
         noSerdeLayer: false
-      outputFolder: inline-path-parameters-serde
-    - customConfig:
+    - outputFolder: inline-path-parameters-retain-original-casing
+      customConfig:
         inlinePathParameters: true
         retainOriginalCasing: true
-      outputFolder: inline-path-parameters-retain-original-casing
   websocket:
     - outputFolder: no-websocket-clients
-    - customConfig:
+    - outputFolder: serde
+      customConfig:
         noSerdeLayer: false
         shouldGenerateWebsocketClients: true
-      outputFolder: serde
-    - customConfig:
+    - outputFolder: no-serde
+      customConfig:
         noSerdeLayer: true
         shouldGenerateWebsocketClients: true
-      outputFolder: no-serde
   property-access:
     - outputFolder: no-custom-config
       customConfig: null
-    - customConfig:
+    - outputFolder: generate-read-write-only-types
+      customConfig:
         experimentalGenerateReadWriteOnlyTypes: true
-      outputFolder: generate-read-write-only-types
   websocket-bearer-auth:
-    - customConfig:
+    - outputFolder: websockets
+      customConfig:
         shouldGenerateWebsocketClients: true
-      outputFolder: websockets
   websocket-inferred-auth:
-    - customConfig:
+    - outputFolder: websockets
+      customConfig:
         shouldGenerateWebsocketClients: true
-      outputFolder: websockets
   any-auth:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: generate-endpoint-metadata
+      customConfig:
         generateEndpointMetadata: true
-      outputFolder: generate-endpoint-metadata
+  simple-api:
+    - outputFolder: use-yarn
+      customConfig:
+        packageManager: yarn
+    - outputFolder: use-prettier
+      customConfig:
+        formatter: prettier
+    - outputFolder: use-oxfmt
+      customConfig:
+        formatter: oxfmt
+    - outputFolder: use-prettier-no-linter
+      customConfig:
+        formatter: prettier
+        linter: none
+    - outputFolder: use-oxlint
+      customConfig:
+        linter: oxlint
+    - outputFolder: no-linter
+      customConfig:
+        linter: none
+    - outputFolder: omit-fern-headers
+      customConfig:
+        omitFernHeaders: true
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: bundle
+      customConfig:
+        bundle: true
+        extraDependencies:
+          lodash-es: '^4.17.21'
+    - outputFolder: custom-package-json
+      customConfig:
+        private: true
+        extraDependencies:
+          lodash-es: '^4.17.21'
+        extraDevDependencies:
+          jest: '^29.7.0'
+        extraPeerDependencies:
+          'openai': '^4.47.1'
+        extraPeerDependenciesMeta:
+          'openai':
+            optional: true
+        packageJson:
+          version: '0.0.2'
+          dependencies:
+            stream: '^0.0.2'
+            qs: '^6.11.2'
+          files:
+            - exampleFile
+            - dist
+          browser:
+            command-exists: false
+            execa: false
+          engines:
+            node: '>=16.0.0'
+    - outputFolder: allow-extra-fields
+      customConfig:
+        allowExtraFields: true
+    - outputFolder: jsr
+      customConfig:
+        publishToJsr: true
+    - outputFolder: legacy-exports
+      customConfig:
+        useLegacyExports: true
+    - outputFolder: oidc-token
+      publishConfig:
+        type: npm     
+        registryUrl: https://registry.npmjs.org/
+        packageName: "@fern-api/dummy"
+        token: <USE_OIDC>
+    - outputFolder: no-scripts
+      customConfig:
+        noScripts: true
+    - outputFolder: allow-custom-fetcher
+      customConfig:
+        allowCustomFetcher: true
+  enum:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: forward-compatible-enums
+      customConfig:
+        enableForwardCompatibleEnums: true
+    - outputFolder: serde
+      customConfig:
+        noSerdeLayer: false
 scripts:
   - docker: fernapi/ts-seed
     commands:
@@ -387,49 +396,42 @@ scripts:
         fi
         if grep -q '"packageManager": "pnpm' package.json; then
           mkdir -p .pnpm-cache
-          echo "Enabling corepack and preparing pnpm..."
-          corepack enable
-          corepack prepare pnpm@10.14.0 --activate
+          echo "Preparing corepack and pnpm..."
+          corepack prepare pnpm --activate
           echo "Running pnpm install..."
           if [ -f "pnpm-lock.yaml" ]; then
-            pnpm install --prefer-offline --frozen-lockfile
+            corepack pnpm install --prefer-offline --frozen-lockfile
           else
-            pnpm install --prefer-offline
+            corepack pnpm install --prefer-offline
           fi
           echo "Running pnpm build..."
-          if grep -q '"build":' package.json; then pnpm build; fi
+          if grep -q '"build":' package.json; then corepack pnpm build; fi
           echo "Running pnpm test..."
-          if grep -q '"test":' package.json; then pnpm test; fi
+          if grep -q '"test":' package.json; then corepack pnpm test; fi
         fi
         if grep -q '"packageManager": "yarn' package.json; then
           mkdir -p .yarn-cache
-          echo "Enabling corepack and preparing yarn..."
-          corepack enable
-          corepack prepare yarn@1.22.22 --activate
+          echo "Preparing corepack and yarn..."
+          corepack prepare yarn --activate
           echo "Running yarn install..."
           if [ -f "yarn.lock" ]; then
-            yarn install --prefer-offline --frozen-lockfile
+            corepack yarn install --prefer-offline --frozen-lockfile
           else
-            yarn install --prefer-offline
+            corepack yarn install --prefer-offline
           fi
           echo "Running yarn build..."
-          if grep -q '"build":' package.json; then yarn build; fi
+          if grep -q '"build":' package.json; then corepack yarn build; fi
           echo "Running yarn test..."
-          if grep -q '"test":' package.json; then yarn test; fi
+          if grep -q '"test":' package.json; then corepack yarn test; fi
         fi
 allowedFailures:
-  - bytes-download
-  - circular-references
-  - enum
+  - enum:no-custom-config
+  - enum:forward-compatible-enums
+  - enum:serde
+  - error-property:no-custom-config
   - error-property:union-utils
   - errors
-  - examples:examples-with-api-reference
-  - examples:retain-original-casing
-  - exhaustive:bigint-serde-layer
-  - mixed-case:no-custom-config
-  - mixed-case:retain-original-casing
   - oauth-client-credentials-custom
   - package-yml
   - trace:no-custom-config
-  - trace:serde-trace
-  - unions
+  - trace:serde

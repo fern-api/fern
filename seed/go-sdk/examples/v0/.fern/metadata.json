@@ -1,0 +1,13 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-go-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "enableWireTests": false,
+    "alwaysSendRequiredProperties": false,
+    "inlineFileProperties": false,
+    "inlinePathParameters": false,
+    "useReaderForBytesRequest": false,
+    "union": "v0"
+  }
+}

@@ -4,7 +4,9 @@ module Seed
   module Complex
     module Types
       class CursorPages < Internal::Types::Model
-        field :next_, -> { Seed::Complex::Types::StartingAfterPaging }, optional: true, nullable: false
+        field :next_, lambda {
+          Seed::Complex::Types::StartingAfterPaging
+        }, optional: true, nullable: false, api_name: "next"
         field :page, -> { Integer }, optional: true, nullable: false
         field :per_page, -> { Integer }, optional: true, nullable: false
         field :total_pages, -> { Integer }, optional: true, nullable: false

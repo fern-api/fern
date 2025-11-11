@@ -67,6 +67,18 @@ match client.get_foo(None)?.await {
 }
 ```
 
+## Request Types
+
+The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
+
+```rust
+use seed_api::prelude::{*};
+
+let request = UpdateFooRequest {
+    ...
+};
+```
+
 ## Advanced
 
 ### Retries

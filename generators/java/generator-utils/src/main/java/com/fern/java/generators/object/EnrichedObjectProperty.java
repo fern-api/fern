@@ -62,12 +62,19 @@ public interface EnrichedObjectProperty {
         if (literal().isPresent()) {
             return Optional.empty();
         }
-        return Optional.of(FieldSpec.builder(
-                        poetTypeName(),
-                        KeyWordUtils.getKeyWordCompatibleName(camelCaseKey()),
-                        Modifier.PRIVATE,
-                        Modifier.FINAL)
-                .build());
+        FieldSpec.Builder fieldBuilder = FieldSpec.builder(
+                poetTypeName(),
+                KeyWordUtils.getKeyWordCompatibleName(camelCaseKey()),
+                Modifier.PRIVATE,
+                Modifier.FINAL);
+
+        boolean shouldUseNullableAnnotation =
+                useNullableAnnotation() && isNullable(objectProperty().getValueType());
+        if (shouldUseNullableAnnotation && !poetTypeName().isPrimitive()) {
+            fieldBuilder.addAnnotation(NullableAnnotationUtils.getNullableAnnotation());
+        }
+
+        return Optional.of(fieldBuilder.build());
     }
 
     @Value.Lazy
@@ -84,10 +91,22 @@ public interface EnrichedObjectProperty {
         }
 
         if (nullable() && !shouldUseNullableAnnotation) {
-            getterBuilder
-                    .beginControlFlow("if ($L == null)", fieldSpec().get().name)
-                    .addStatement("return $T.empty()", Optional.class)
-                    .endControlFlow();
+            if (isOptionalNullableField()) {
+                // For OptionalNullable fields, return OptionalNullable.absent() when null
+                com.squareup.javapoet.ParameterizedTypeName paramTypeName =
+                        (com.squareup.javapoet.ParameterizedTypeName) poetTypeName();
+                com.squareup.javapoet.ClassName optionalNullableClassName = paramTypeName.rawType;
+                getterBuilder
+                        .beginControlFlow("if ($L == null)", fieldSpec().get().name)
+                        .addStatement("return $T.absent()", optionalNullableClassName)
+                        .endControlFlow();
+            } else {
+                // For regular Optional fields, return Optional.empty() when null
+                getterBuilder
+                        .beginControlFlow("if ($L == null)", fieldSpec().get().name)
+                        .addStatement("return $T.empty()", Optional.class)
+                        .endControlFlow();
+            }
         } else if (aliasOfNullable() && wrappedAliases()) {
             getterBuilder
                     .beginControlFlow("if ($L == null)", fieldSpec().get().name)
@@ -204,6 +223,20 @@ public interface EnrichedObjectProperty {
 
     static boolean isNullable(TypeReference reference) {
         return reference.isContainer() && reference.getContainer().get().isNullable();
+    }
+
+    default boolean isOptionalNullableField() {
+        // Check if the field type is OptionalNullable<T>
+        TypeName typeName = poetTypeName();
+        if (typeName instanceof com.squareup.javapoet.ParameterizedTypeName) {
+            com.squareup.javapoet.ParameterizedTypeName paramTypeName =
+                    (com.squareup.javapoet.ParameterizedTypeName) typeName;
+            // OptionalNullable is in the same package as Nullable
+            com.squareup.javapoet.ClassName optionalNullableClassName =
+                    com.squareup.javapoet.ClassName.get(paramTypeName.rawType.packageName(), "OptionalNullable");
+            return paramTypeName.rawType.equals(optionalNullableClassName);
+        }
+        return false;
     }
 
     static ImmutableEnrichedObjectProperty.CamelCaseKeyBuildStage builder() {

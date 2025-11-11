@@ -1,7 +1,6 @@
-use crate::ast_tor_u::TorU;
-use serde::{Deserialize, Serialize};
+pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct T {
     pub child: TorU,
 }

@@ -1,5 +1,4 @@
 using SeedAnyAuth;
-using System.Threading.Tasks;
 
 namespace Usage;
 

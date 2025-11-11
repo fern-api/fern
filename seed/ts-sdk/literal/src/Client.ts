@@ -26,6 +26,7 @@ export class SeedLiteralClient {
     constructor(_options: SeedLiteralClient.Options) {
         this._options = {
             ..._options,
+            logging: core.logging.createLogger(_options?.logging),
             headers: mergeHeaders(
                 {
                     "X-API-Version": _options?.version ?? "02-02-2024",

@@ -31,7 +31,7 @@
                     "id": {
                       "docs": "An optional string value.
 ",
-                      "type": "nullable<string>",
+                      "type": "optional<nullable<string>>",
                     },
                   },
                 },
@@ -64,7 +64,7 @@
               "value": {
                 "docs": "An optional numerical value.
 ",
-                "type": "nullable<double>",
+                "type": "optional<nullable<double>>",
               },
             },
             "source": {
@@ -87,7 +87,7 @@
         body:
           properties:
             id:
-              type: nullable<string>
+              type: optional<nullable<string>>
               docs: |
                 An optional string value.
         content-type: application/json
@@ -108,7 +108,7 @@ types:
       A generic response type used throughout the API.
     properties:
       value:
-        type: nullable<double>
+        type: optional<nullable<double>>
         docs: |
           An optional numerical value.
     source:

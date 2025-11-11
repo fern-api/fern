@@ -5653,7 +5653,11 @@
                         "signatures": {
                           "properties": {
                             "client_signed_at": {
-                              "type": "null"
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
                             },
                             "worker_signature": {
                               "value": {
@@ -5663,7 +5667,11 @@
                               "type": "primitive"
                             },
                             "worker_signed_at": {
-                              "type": "null"
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
                             }
                           },
                           "type": "object"
@@ -13121,6 +13129,25 @@
                           },
                           "type": "object"
                         },
+                        "payment_cycle": {
+                          "properties": {
+                            "start_date": {
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
+                            },
+                            "end_date": {
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "reported_by": {
                           "properties": {
                             "id": {
@@ -18090,16 +18117,48 @@
                         },
                         "change_request": {
                           "properties": {
+                            "reason": {
+                              "value": {
+                                "value": "I have a doctors appointment",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
                             "type": {
                               "value": "VACATION",
                               "type": "enum"
                             },
                             "requested_at": {
-                              "type": "null"
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
+                            },
+                            "reviewed_at": {
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
+                            },
+                            "denial_reason": {
+                              "value": {
+                                "value": "No time off available",
+                                "type": "string"
+                              },
+                              "type": "primitive"
                             },
                             "status": {
                               "value": "REQUESTED",
                               "type": "enum"
+                            },
+                            "other_timeoff_name": {
+                              "value": {
+                                "value": "This is time off for a doctor's appointment",
+                                "type": "string"
+                              },
+                              "type": "primitive"
                             },
                             "days_used_start_year": {
                               "value": {
@@ -18121,6 +18180,13 @@
                                 "type": "string"
                               },
                               "type": "primitive"
+                            },
+                            "single_date": {
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
                             }
                           },
                           "type": "object"
@@ -18129,16 +18195,48 @@
                           "value": [
                             {
                               "properties": {
+                                "reason": {
+                                  "value": {
+                                    "value": "I have a doctors appointment",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
                                 "type": {
                                   "value": "VACATION",
                                   "type": "enum"
                                 },
                                 "requested_at": {
-                                  "type": "null"
+                                  "value": {
+                                    "value": "2022-05-24T09:38:46.235Z",
+                                    "type": "datetime"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "reviewed_at": {
+                                  "value": {
+                                    "value": "2022-05-24T09:38:46.235Z",
+                                    "type": "datetime"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "denial_reason": {
+                                  "value": {
+                                    "value": "No time off available",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
                                 "status": {
                                   "value": "REQUESTED",
                                   "type": "enum"
+                                },
+                                "other_timeoff_name": {
+                                  "value": {
+                                    "value": "This is time off for a doctor's appointment",
+                                    "type": "string"
+                                  },
+                                  "type": "primitive"
                                 },
                                 "days_used_start_year": {
                                   "value": {
@@ -18158,6 +18256,13 @@
                                   "value": {
                                     "value": "4.00",
                                     "type": "string"
+                                  },
+                                  "type": "primitive"
+                                },
+                                "single_date": {
+                                  "value": {
+                                    "value": "2022-05-24T09:38:46.235Z",
+                                    "type": "datetime"
                                   },
                                   "type": "primitive"
                                 }
@@ -18814,16 +18919,48 @@
                       "value": [
                         {
                           "properties": {
+                            "reason": {
+                              "value": {
+                                "value": "I have a doctors appointment",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
                             "type": {
                               "value": "VACATION",
                               "type": "enum"
                             },
                             "requested_at": {
-                              "type": "null"
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
+                            },
+                            "reviewed_at": {
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
+                            },
+                            "denial_reason": {
+                              "value": {
+                                "value": "No time off available",
+                                "type": "string"
+                              },
+                              "type": "primitive"
                             },
                             "status": {
                               "value": "REQUESTED",
                               "type": "enum"
+                            },
+                            "other_timeoff_name": {
+                              "value": {
+                                "value": "This is time off for a doctor's appointment",
+                                "type": "string"
+                              },
+                              "type": "primitive"
                             },
                             "days_used_start_year": {
                               "value": {
@@ -18843,6 +18980,13 @@
                               "value": {
                                 "value": "4.00",
                                 "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "single_date": {
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
                               },
                               "type": "primitive"
                             }
@@ -19523,16 +19667,48 @@
                       "value": [
                         {
                           "properties": {
+                            "reason": {
+                              "value": {
+                                "value": "I have a doctors appointment",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
                             "type": {
                               "value": "VACATION",
                               "type": "enum"
                             },
                             "requested_at": {
-                              "type": "null"
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
+                            },
+                            "reviewed_at": {
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
+                            },
+                            "denial_reason": {
+                              "value": {
+                                "value": "No time off available",
+                                "type": "string"
+                              },
+                              "type": "primitive"
                             },
                             "status": {
                               "value": "REQUESTED",
                               "type": "enum"
+                            },
+                            "other_timeoff_name": {
+                              "value": {
+                                "value": "This is time off for a doctor's appointment",
+                                "type": "string"
+                              },
+                              "type": "primitive"
                             },
                             "days_used_start_year": {
                               "value": {
@@ -19552,6 +19728,13 @@
                               "value": {
                                 "value": "4.00",
                                 "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "single_date": {
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
                               },
                               "type": "primitive"
                             }
@@ -20414,6 +20597,25 @@
                             "type": {
                               "value": "ongoing_time_based",
                               "type": "enum"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "payment_cycle": {
+                          "properties": {
+                            "start_date": {
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
+                            },
+                            "end_date": {
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
                             }
                           },
                           "type": "object"
@@ -23249,10 +23451,18 @@
                         "payment_cycle": {
                           "properties": {
                             "start_date": {
-                              "type": "null"
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
                             },
                             "end_date": {
-                              "type": "null"
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
                             }
                           },
                           "type": "object"
@@ -23969,10 +24179,18 @@
                         "payment_cycle": {
                           "properties": {
                             "start_date": {
-                              "type": "null"
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
                             },
                             "end_date": {
-                              "type": "null"
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
                             }
                           },
                           "type": "object"
@@ -29340,16 +29558,48 @@
                                       "value": [
                                         {
                                           "properties": {
+                                            "reason": {
+                                              "value": {
+                                                "value": "I have a doctors appointment",
+                                                "type": "string"
+                                              },
+                                              "type": "primitive"
+                                            },
                                             "type": {
                                               "value": "VACATION",
                                               "type": "enum"
                                             },
                                             "requested_at": {
-                                              "type": "null"
+                                              "value": {
+                                                "value": "2022-05-24T09:38:46.235Z",
+                                                "type": "datetime"
+                                              },
+                                              "type": "primitive"
+                                            },
+                                            "reviewed_at": {
+                                              "value": {
+                                                "value": "2022-05-24T09:38:46.235Z",
+                                                "type": "datetime"
+                                              },
+                                              "type": "primitive"
+                                            },
+                                            "denial_reason": {
+                                              "value": {
+                                                "value": "No time off available",
+                                                "type": "string"
+                                              },
+                                              "type": "primitive"
                                             },
                                             "status": {
                                               "value": "REQUESTED",
                                               "type": "enum"
+                                            },
+                                            "other_timeoff_name": {
+                                              "value": {
+                                                "value": "This is time off for a doctor's appointment",
+                                                "type": "string"
+                                              },
+                                              "type": "primitive"
                                             },
                                             "days_used_start_year": {
                                               "value": {
@@ -29372,6 +29622,13 @@
                                               },
                                               "type": "primitive"
                                             },
+                                            "single_date": {
+                                              "value": {
+                                                "value": "2022-05-24T09:38:46.235Z",
+                                                "type": "datetime"
+                                              },
+                                              "type": "primitive"
+                                            },
                                             "id": {
                                               "value": {
                                                 "value": 6938,
@@ -29387,10 +29644,32 @@
                                               "type": "primitive"
                                             },
                                             "created_at": {
-                                              "type": "null"
+                                              "value": {
+                                                "value": "2022-05-24T09:38:46.235Z",
+                                                "type": "datetime"
+                                              },
+                                              "type": "primitive"
+                                            },
+                                            "updated_at": {
+                                              "value": {
+                                                "value": "2022-05-24T09:38:46.235Z",
+                                                "type": "datetime"
+                                              },
+                                              "type": "primitive"
                                             },
                                             "start_date": {
-                                              "type": "null"
+                                              "value": {
+                                                "value": "2022-05-24T09:38:46.235Z",
+                                                "type": "datetime"
+                                              },
+                                              "type": "primitive"
+                                            },
+                                            "end_date": {
+                                              "value": {
+                                                "value": "2022-05-24T09:38:46.235Z",
+                                                "type": "datetime"
+                                              },
+                                              "type": "primitive"
                                             }
                                           },
                                           "type": "object"
@@ -29419,16 +29698,48 @@
                                       "value": [
                                         {
                                           "properties": {
+                                            "reason": {
+                                              "value": {
+                                                "value": "I have a doctors appointment",
+                                                "type": "string"
+                                              },
+                                              "type": "primitive"
+                                            },
                                             "type": {
                                               "value": "VACATION",
                                               "type": "enum"
                                             },
                                             "requested_at": {
-                                              "type": "null"
+                                              "value": {
+                                                "value": "2022-05-24T09:38:46.235Z",
+                                                "type": "datetime"
+                                              },
+                                              "type": "primitive"
+                                            },
+                                            "reviewed_at": {
+                                              "value": {
+                                                "value": "2022-05-24T09:38:46.235Z",
+                                                "type": "datetime"
+                                              },
+                                              "type": "primitive"
+                                            },
+                                            "denial_reason": {
+                                              "value": {
+                                                "value": "No time off available",
+                                                "type": "string"
+                                              },
+                                              "type": "primitive"
                                             },
                                             "status": {
                                               "value": "REQUESTED",
                                               "type": "enum"
+                                            },
+                                            "other_timeoff_name": {
+                                              "value": {
+                                                "value": "This is time off for a doctor's appointment",
+                                                "type": "string"
+                                              },
+                                              "type": "primitive"
                                             },
                                             "days_used_start_year": {
                                               "value": {
@@ -29451,6 +29762,13 @@
                                               },
                                               "type": "primitive"
                                             },
+                                            "single_date": {
+                                              "value": {
+                                                "value": "2022-05-24T09:38:46.235Z",
+                                                "type": "datetime"
+                                              },
+                                              "type": "primitive"
+                                            },
                                             "id": {
                                               "value": {
                                                 "value": 6938,
@@ -29466,10 +29784,32 @@
                                               "type": "primitive"
                                             },
                                             "created_at": {
-                                              "type": "null"
+                                              "value": {
+                                                "value": "2022-05-24T09:38:46.235Z",
+                                                "type": "datetime"
+                                              },
+                                              "type": "primitive"
+                                            },
+                                            "updated_at": {
+                                              "value": {
+                                                "value": "2022-05-24T09:38:46.235Z",
+                                                "type": "datetime"
+                                              },
+                                              "type": "primitive"
                                             },
                                             "start_date": {
-                                              "type": "null"
+                                              "value": {
+                                                "value": "2022-05-24T09:38:46.235Z",
+                                                "type": "datetime"
+                                              },
+                                              "type": "primitive"
+                                            },
+                                            "end_date": {
+                                              "value": {
+                                                "value": "2022-05-24T09:38:46.235Z",
+                                                "type": "datetime"
+                                              },
+                                              "type": "primitive"
                                             }
                                           },
                                           "type": "object"
@@ -29498,16 +29838,48 @@
                                       "value": [
                                         {
                                           "properties": {
+                                            "reason": {
+                                              "value": {
+                                                "value": "I have a doctors appointment",
+                                                "type": "string"
+                                              },
+                                              "type": "primitive"
+                                            },
                                             "type": {
                                               "value": "VACATION",
                                               "type": "enum"
                                             },
                                             "requested_at": {
-                                              "type": "null"
+                                              "value": {
+                                                "value": "2022-05-24T09:38:46.235Z",
+                                                "type": "datetime"
+                                              },
+                                              "type": "primitive"
+                                            },
+                                            "reviewed_at": {
+                                              "value": {
+                                                "value": "2022-05-24T09:38:46.235Z",
+                                                "type": "datetime"
+                                              },
+                                              "type": "primitive"
+                                            },
+                                            "denial_reason": {
+                                              "value": {
+                                                "value": "No time off available",
+                                                "type": "string"
+                                              },
+                                              "type": "primitive"
                                             },
                                             "status": {
                                               "value": "REQUESTED",
                                               "type": "enum"
+                                            },
+                                            "other_timeoff_name": {
+                                              "value": {
+                                                "value": "This is time off for a doctor's appointment",
+                                                "type": "string"
+                                              },
+                                              "type": "primitive"
                                             },
                                             "days_used_start_year": {
                                               "value": {
@@ -29530,6 +29902,13 @@
                                               },
                                               "type": "primitive"
                                             },
+                                            "single_date": {
+                                              "value": {
+                                                "value": "2022-05-24T09:38:46.235Z",
+                                                "type": "datetime"
+                                              },
+                                              "type": "primitive"
+                                            },
                                             "id": {
                                               "value": {
                                                 "value": 6938,
@@ -29545,10 +29924,32 @@
                                               "type": "primitive"
                                             },
                                             "created_at": {
-                                              "type": "null"
+                                              "value": {
+                                                "value": "2022-05-24T09:38:46.235Z",
+                                                "type": "datetime"
+                                              },
+                                              "type": "primitive"
+                                            },
+                                            "updated_at": {
+                                              "value": {
+                                                "value": "2022-05-24T09:38:46.235Z",
+                                                "type": "datetime"
+                                              },
+                                              "type": "primitive"
                                             },
                                             "start_date": {
-                                              "type": "null"
+                                              "value": {
+                                                "value": "2022-05-24T09:38:46.235Z",
+                                                "type": "datetime"
+                                              },
+                                              "type": "primitive"
+                                            },
+                                            "end_date": {
+                                              "value": {
+                                                "value": "2022-05-24T09:38:46.235Z",
+                                                "type": "datetime"
+                                              },
+                                              "type": "primitive"
                                             }
                                           },
                                           "type": "object"
@@ -30250,12 +30651,86 @@
                               "type": "object"
                             },
                             "created_at": {
-                              "type": "null"
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
                             },
                             "total": {
                               "value": {
                                 "value": 1000,
                                 "type": "double"
+                              },
+                              "type": "primitive"
+                            },
+                            "label": {
+                              "value": {
+                                "value": "INVOICE-2022-11",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "paid_at": {
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
+                            },
+                            "money_received_at": {
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
+                            },
+                            "payment_processed_at": {
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
+                            },
+                            "fee": {
+                              "value": {
+                                "value": 10,
+                                "type": "double"
+                              },
+                              "type": "primitive"
+                            },
+                            "amount": {
+                              "value": {
+                                "value": 1000,
+                                "type": "double"
+                              },
+                              "type": "primitive"
+                            },
+                            "vat_total": {
+                              "value": {
+                                "value": 210,
+                                "type": "double"
+                              },
+                              "type": "primitive"
+                            },
+                            "vat_percentage": {
+                              "value": {
+                                "value": 21,
+                                "type": "double"
+                              },
+                              "type": "primitive"
+                            },
+                            "is_overdue": {
+                              "value": {
+                                "value": true,
+                                "type": "boolean"
+                              },
+                              "type": "primitive"
+                            },
+                            "is_offcycle": {
+                              "value": {
+                                "value": true,
+                                "type": "boolean"
                               },
                               "type": "primitive"
                             }
@@ -31220,10 +31695,18 @@
                               "type": "primitive"
                             },
                             "paid_at": {
-                              "type": "null"
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
                             },
                             "created_at": {
-                              "type": "null"
+                              "value": {
+                                "value": "2022-05-24T09:38:46.235Z",
+                                "type": "datetime"
+                              },
+                              "type": "primitive"
                             },
                             "total": {
                               "value": {
@@ -31678,10 +32161,18 @@
                                   "type": "primitive"
                                 },
                                 "paid_at": {
-                                  "type": "null"
+                                  "value": {
+                                    "value": "2022-05-24T09:38:46.235Z",
+                                    "type": "datetime"
+                                  },
+                                  "type": "primitive"
                                 },
                                 "created_at": {
-                                  "type": "null"
+                                  "value": {
+                                    "value": "2022-05-24T09:38:46.235Z",
+                                    "type": "datetime"
+                                  },
+                                  "type": "primitive"
                                 },
                                 "total": {
                                   "value": {
@@ -50345,6 +50836,7 @@
               "value": {
                 "generatedName": "EorEntitlementListItemRolloverType",
                 "schema": "EorHolidaysRolloverType",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -50599,15 +51091,19 @@
               "description": "Date the contract is marked for completion",
               "value": {
                 "generatedName": "ContractTerminationResultCompletionDate",
+                "description": "Date the contract is marked for completion",
                 "value": {
+                  "description": "Date the contract is marked for completion",
                   "generatedName": "ContractTerminationResultCompletionDate",
                   "schema": "DateString",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -54327,6 +54823,7 @@
               "value": {
                 "generatedName": "EorTimeoffsItemCreatedAt",
                 "schema": "DateTimeString",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -54349,12 +54846,14 @@
                 "value": {
                   "generatedName": "EorTimeoffsItemUpdatedAt",
                   "schema": "DateTimeString",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -54371,6 +54870,7 @@
               "value": {
                 "generatedName": "EorTimeoffsItemStartDate",
                 "schema": "DateTimeString",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -54393,12 +54893,14 @@
                 "value": {
                   "generatedName": "EorTimeoffsItemEndDate",
                   "schema": "DateTimeString",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -54469,15 +54971,19 @@
               "description": "Only valid if the requester asks to change existing time off and it has been reviewed.",
               "value": {
                 "generatedName": "EorTimeoffsItemChangeRequest",
+                "description": "Only valid if the requester asks to change existing time off and it has been reviewed.",
                 "value": {
+                  "description": "Only valid if the requester asks to change existing time off and it has been reviewed.",
                   "generatedName": "EorTimeoffsItemChangeRequest",
                   "schema": "EorTimeoffsBaseItem",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -54579,8 +55085,10 @@
               "generatedName": "EorTimeoffsBaseItemRequestedAt",
               "description": "Timestamp when time off was requested.",
               "value": {
+                "description": "Timestamp when time off was requested.",
                 "generatedName": "EorTimeoffsBaseItemRequestedAt",
                 "schema": "DateTimeString",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -54601,15 +55109,19 @@
               "description": "Timestamp when time off was reviewed.",
               "value": {
                 "generatedName": "EorTimeoffsBaseItemReviewedAt",
+                "description": "Timestamp when time off was reviewed.",
                 "value": {
+                  "description": "Timestamp when time off was reviewed.",
                   "generatedName": "EorTimeoffsBaseItemReviewedAt",
                   "schema": "DateTimeString",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -54726,15 +55238,19 @@
               "description": "Employee who requested the time off.",
               "value": {
                 "generatedName": "EorTimeoffsBaseItemRequester",
+                "description": "Employee who requested the time off.",
                 "value": {
+                  "description": "Employee who requested the time off.",
                   "generatedName": "EorTimeoffsBaseItemRequester",
                   "schema": "TimeoffsProfile",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -54751,15 +55267,19 @@
               "description": "User who reviewed the time off.",
               "value": {
                 "generatedName": "EorTimeoffsBaseItemReviewer",
+                "description": "User who reviewed the time off.",
                 "value": {
+                  "description": "User who reviewed the time off.",
                   "generatedName": "EorTimeoffsBaseItemReviewer",
                   "schema": "TimeoffsProfile",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -54886,12 +55406,14 @@
                 "value": {
                   "generatedName": "EorTimeoffsBaseItemSingleDate",
                   "schema": "DateTimeString",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -54937,12 +55459,14 @@
                 "value": {
                   "generatedName": "EorTimeoffsBaseItemAttachments",
                   "schema": "TimeoffsAttachments",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -55288,15 +55812,19 @@
               "description": "Avatar or selfie.",
               "value": {
                 "generatedName": "TimeoffsProfilePicUrl",
+                "description": "Avatar or selfie.",
                 "value": {
+                  "description": "Avatar or selfie.",
                   "generatedName": "TimeoffsProfilePicUrl",
                   "schema": "UrlType",
+                  "groupName": [],
                   "source": {
                     "file": "../openapi.yml",
                     "type": "openapi"
                   },
                   "type": "reference"
                 },
+                "groupName": [],
                 "type": "nullable"
               },
               "groupName": [],
@@ -57288,8 +57816,10 @@
               "generatedName": "PaymentPaidAt",
               "description": "Timestamp when payment was paid.",
               "value": {
+                "description": "Timestamp when payment was paid.",
                 "generatedName": "PaymentPaidAt",
                 "schema": "DateTimeString",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -57309,8 +57839,10 @@
               "generatedName": "PaymentCreatedAt",
               "description": "Timestamp when the record was created.",
               "value": {
+                "description": "Timestamp when the record was created.",
                 "generatedName": "PaymentCreatedAt",
                 "schema": "DateTimeString",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -61246,6 +61778,7 @@
               "value": {
                 "generatedName": "PeopleMeProfileType",
                 "schema": "ProfileTypeEnum",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"

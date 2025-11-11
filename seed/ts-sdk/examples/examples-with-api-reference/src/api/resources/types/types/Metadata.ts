@@ -6,6 +6,11 @@ import type * as SeedExamples from "../../../index.js";
  * @example
  *     {
  *         type: "html",
+ *         extra: {
+ *             "version": "0.0.1",
+ *             "tenancy": "test"
+ *         },
+ *         tags: ["development", "public"],
  *         value: "<head>...</head>"
  *     }
  */

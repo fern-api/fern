@@ -130,6 +130,15 @@ class ServiceClient:
         Returns
         -------
         None
+
+        Examples
+        --------
+        from seed import SeedFileUpload
+
+        client = SeedFileUpload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.just_file()
         """
         _response = self._raw_client.just_file(file=file, request_options=request_options)
         return _response.data
@@ -344,6 +353,15 @@ class ServiceClient:
         Returns
         -------
         str
+
+        Examples
+        --------
+        from seed import SeedFileUpload
+
+        client = SeedFileUpload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.optional_args()
         """
         _response = self._raw_client.optional_args(
             image_file=image_file, request=request, request_options=request_options
@@ -507,6 +525,23 @@ class AsyncServiceClient:
         Returns
         -------
         None
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedFileUpload
+
+        client = AsyncSeedFileUpload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.service.just_file()
+
+
+        asyncio.run(main())
         """
         _response = await self._raw_client.just_file(file=file, request_options=request_options)
         return _response.data
@@ -723,6 +758,23 @@ class AsyncServiceClient:
         Returns
         -------
         str
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedFileUpload
+
+        client = AsyncSeedFileUpload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.service.optional_args()
+
+
+        asyncio.run(main())
         """
         _response = await self._raw_client.optional_args(
             image_file=image_file, request=request, request_options=request_options

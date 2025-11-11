@@ -21,12 +21,18 @@ public final class ClientOptions {
 
     private final int timeout;
 
+    private final int maxRetries;
+
+    private final String tenantId;
+
     private ClientOptions(
             Environment environment,
             Map<String, String> headers,
             Map<String, Supplier<String>> headerSuppliers,
             OkHttpClient httpClient,
-            int timeout) {
+            int timeout,
+            int maxRetries,
+            String tenantId) {
         this.environment = environment;
         this.headers = new HashMap<>();
         this.headers.putAll(headers);
@@ -39,6 +45,8 @@ public final class ClientOptions {
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
         this.timeout = timeout;
+        this.maxRetries = maxRetries;
+        this.tenantId = tenantId;
     }
 
     public Environment environment() {
@@ -80,6 +88,14 @@ public final class ClientOptions {
                 .build();
     }
 
+    public int maxRetries() {
+        return this.maxRetries;
+    }
+
+    public String tenantId() {
+        return this.tenantId;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -96,6 +112,8 @@ public final class ClientOptions {
         private Optional<Integer> timeout = Optional.empty();
 
         private OkHttpClient httpClient = null;
+
+        private String tenantId;
 
         public Builder environment(Environment environment) {
             this.environment = environment;
@@ -141,6 +159,11 @@ public final class ClientOptions {
             return this;
         }
 
+        public Builder tenantId(String tenantId) {
+            this.tenantId = tenantId;
+            return this;
+        }
+
         public ClientOptions build() {
             OkHttpClient.Builder httpClientBuilder =
                     this.httpClient != null ? this.httpClient.newBuilder() : new OkHttpClient.Builder();
@@ -163,7 +186,14 @@ public final class ClientOptions {
             this.httpClient = httpClientBuilder.build();
             this.timeout = Optional.of(httpClient.callTimeoutMillis() / 1000);
 
-            return new ClientOptions(environment, headers, headerSuppliers, httpClient, this.timeout.get());
+            return new ClientOptions(
+                    environment,
+                    headers,
+                    headerSuppliers,
+                    httpClient,
+                    this.timeout.get(),
+                    this.maxRetries,
+                    this.tenantId);
         }
 
         /**

@@ -1,5 +1,4 @@
 using SeedUnions;
-using System.Threading.Tasks;
 
 namespace Usage;
 
@@ -12,7 +11,7 @@ public class Example4
             }
         );
 
-        await client.Bigunion.UpdateAsync(
+        await client.Union.UpdateAsync(
             new Dictionary<string, object>()
             {
                 ["type"] = "circle",

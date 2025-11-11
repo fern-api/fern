@@ -2,10 +2,21 @@ export * as ast from "./ast";
 export { convertReadOnlyPrimitiveTypes } from "./ast";
 export { Writer } from "./ast/core/Writer";
 export { CsharpGeneratorContext } from "./context/CsharpGeneratorContext";
+export {
+    type MinimalGeneratorConfig,
+    type Support,
+    type TAbsoluteFilePath,
+    type TRelativeFilePath
+} from "./context/common";
+export { Generation } from "./context/generation-info";
+export { NameRegistry } from "./context/name-registry";
 export { CSharp } from "./csharp";
 export { BaseCsharpCustomConfigSchema } from "./custom-config";
 export { type GrpcClientInfo } from "./grpc/GrpcClientInfo";
 export { CsharpProtobufTypeMapper } from "./proto/CsharpProtobufTypeMapper";
 export { escapeForCSharpString } from "./utils/escapeForCSharpString";
-export { NameRegistry } from "./utils/nameRegistry";
-export { stack } from "./utils/stacktrace";
+export { lazy } from "./utils/lazy";
+export * as text from "./utils/text";
+export { type TypesOf } from "./utils/type-extractor";
+export { is } from "./utils/type-guards";
+export { WithGeneration } from "./with-generation";

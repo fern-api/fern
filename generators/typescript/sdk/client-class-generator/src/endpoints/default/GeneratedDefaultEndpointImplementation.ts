@@ -80,7 +80,10 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         const paginationInfo = this.response.getPaginationInfo(context);
         const mainReturnType =
             paginationInfo != null
-                ? context.coreUtilities.pagination.Page._getReferenceToType(paginationInfo.itemType)
+                ? context.coreUtilities.pagination.Page._getReferenceToType(
+                      paginationInfo.itemType,
+                      paginationInfo.responseType
+                  )
                 : this.response.getReturnType(context);
         return {
             parameters: [
@@ -204,16 +207,17 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             return undefined;
         }
 
-        const responseVariableName = "response";
+        const pageableResponseVariableName = "pageableResponse";
         const pageVariableName = "page";
         const itemVariableName = "item";
+        const responseVariableName = "response";
         return [
             ts.factory.createVariableStatement(
                 undefined,
                 ts.factory.createVariableDeclarationList(
                     [
                         ts.factory.createVariableDeclaration(
-                            ts.factory.createIdentifier(responseVariableName),
+                            ts.factory.createIdentifier(pageableResponseVariableName),
                             undefined,
                             undefined,
                             invocation
@@ -235,7 +239,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                     ],
                     ts.NodeFlags.Const
                 ),
-                ts.factory.createIdentifier(responseVariableName),
+                ts.factory.createIdentifier(pageableResponseVariableName),
                 ts.factory.createBlock(
                     [
                         ts.factory.createExpressionStatement(
@@ -295,6 +299,24 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                         )
                     ],
                     true
+                )
+            ),
+            ts.factory.createIdentifier("// You can also access the underlying response"),
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            ts.factory.createIdentifier(responseVariableName),
+                            undefined,
+                            undefined,
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier(pageVariableName),
+                                ts.factory.createIdentifier("response")
+                            )
+                        )
+                    ],
+                    ts.NodeFlags.Const
                 )
             )
         ];
@@ -387,9 +409,9 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             );
             statements.push(
                 ts.factory.createReturnStatement(
-                    context.coreUtilities.pagination.Pageable._construct({
-                        responseType: paginationInfo.responseType,
+                    context.coreUtilities.pagination.Page._construct({
                         itemType: paginationInfo.itemType,
+                        responseType: paginationInfo.responseType,
                         response: ts.factory.createPropertyAccessExpression(initialResponseVar, "data"),
                         rawResponse: ts.factory.createPropertyAccessExpression(initialResponseVar, "rawResponse"),
                         hasNextPage: this.createLambdaWithResponse({ body: paginationInfo.hasNextPage }),
@@ -481,7 +503,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                     this.generatedSdkClientClass
                 )
             }),
-
+            fetchFn: this.generatedSdkClientClass.getReferenceToFetch(),
+            logging: this.generatedSdkClientClass.getReferenceToLogger(context),
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             endpointMetadata: this.generateEndpointMetadata
                 ? this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
