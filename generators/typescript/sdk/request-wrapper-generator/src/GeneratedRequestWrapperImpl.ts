@@ -588,8 +588,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     public getInlinedRequestBodyPropertyKeyFromName(name: NameAndWireValue): RequestWrapperBodyProperty {
         return {
-            propertyName:
-                this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue,
+            propertyName: this.retainOriginalCasing ? name.wireValue : name.name.camelCase.unsafeName,
             safeName: name.name.camelCase.safeName
         };
     }
@@ -688,8 +687,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public getPropertyNameOfFileParameterFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
         return {
             safeName: name.name.camelCase.safeName,
-            propertyName:
-                this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue
+            propertyName: this.retainOriginalCasing ? name.wireValue : name.name.camelCase.unsafeName
         };
     }
 
@@ -700,8 +698,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public getPropertyNameOfQueryParameterFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
         return {
             safeName: name.name.camelCase.safeName,
-            propertyName:
-                this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue
+            propertyName: this.retainOriginalCasing ? name.wireValue : name.name.camelCase.unsafeName
         };
     }
 
@@ -727,18 +724,14 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public getPropertyNameOfNonLiteralHeaderFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
         return {
             safeName: name.name.camelCase.safeName,
-            propertyName:
-                this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue
+            propertyName: this.retainOriginalCasing ? name.wireValue : name.name.camelCase.unsafeName
         };
     }
 
     public getPropertyNameOfTypeDeclarationProperty(property: ObjectProperty): RequestWrapperNonBodyProperty {
         return {
             safeName: property.name.name.camelCase.safeName,
-            propertyName:
-                this.includeSerdeLayer && !this.retainOriginalCasing
-                    ? property.name.name.camelCase.unsafeName
-                    : property.name.wireValue
+            propertyName: this.retainOriginalCasing ? property.name.wireValue : property.name.name.camelCase.unsafeName
         };
     }
 
