@@ -59,12 +59,10 @@ export class OneOfSchemaConverter extends AbstractConverter<
             return this.convertAsUndiscriminatedUnion();
         }
 
-        if (
-            this.schema.discriminator != null &&
-            !this.unionVariantsContainLiteral({
-                discriminantProperty: this.schema.discriminator.propertyName
-            })
-        ) {
+        const hasDiscriminator = this.schema.discriminator != null;
+        const hasMapping = hasDiscriminator && Object.keys(this.schema.discriminator?.mapping ?? {}).length > 0;
+
+        if (hasMapping) {
             return this.convertAsDiscriminatedUnion();
         }
 
@@ -116,8 +114,14 @@ export class OneOfSchemaConverter extends AbstractConverter<
                     wireValue: discriminant
                 });
 
+                const resolved = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
+                    reference: { $ref: reference },
+                    breadcrumbs: [...this.breadcrumbs, "discriminator", "mapping", discriminant]
+                });
+                const variantDocs = resolved.resolved ? resolved.value.description : undefined;
+
                 unionTypes.push({
-                    docs: undefined,
+                    docs: variantDocs,
                     discriminantValue: nameAndWireValue,
                     availability: convertedSchema.availability,
                     displayName: discriminant,
@@ -180,12 +184,21 @@ export class OneOfSchemaConverter extends AbstractConverter<
             referencedTypes.add(typeId);
         }
 
+        const discriminantProperty = this.inferDiscriminantProperty();
+        if (discriminantProperty == null) {
+            return this.convertAsUndiscriminatedUnion();
+        }
+
+        if (unionTypes.length === 0) {
+            return this.convertAsUndiscriminatedUnion();
+        }
+
         return {
             type: Type.union({
                 baseProperties,
                 discriminant: this.context.casingsGenerator.generateNameAndWireValue({
-                    name: this.schema.discriminator.propertyName,
-                    wireValue: this.schema.discriminator.propertyName
+                    name: discriminantProperty,
+                    wireValue: discriminantProperty
                 }),
                 extends: extends_,
                 types: unionTypes
@@ -460,5 +473,90 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
     private getDiscriminatorKeyForRef(subSchema: OpenAPIV3_1.ReferenceObject): string | undefined {
         return Object.entries(this.schema.discriminator?.mapping ?? {}).find(([_, ref]) => ref === subSchema.$ref)?.[0];
+    }
+
+    private inferDiscriminantProperty(): string | undefined {
+        if (this.schema.discriminator?.propertyName != null) {
+            return this.schema.discriminator.propertyName;
+        }
+
+        const mapping = this.schema.discriminator?.mapping ?? {};
+        const mappingEntries = Object.entries(mapping);
+
+        if (mappingEntries.length === 0) {
+            return undefined;
+        }
+
+        // Collect all properties from all mapped schemas
+        const propertyNames = new Set<string>();
+        for (const [discriminantValue, reference] of mappingEntries) {
+            const resolved = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
+                reference: { $ref: reference },
+                breadcrumbs: [...this.breadcrumbs, "discriminator", "mapping", discriminantValue]
+            });
+
+            if (resolved.resolved && resolved.value.properties) {
+                for (const propName of Object.keys(resolved.value.properties)) {
+                    propertyNames.add(propName);
+                }
+            }
+        }
+
+        for (const propName of propertyNames) {
+            let isCommonDiscriminant = true;
+
+            for (const [discriminantValue, reference] of mappingEntries) {
+                const resolved = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
+                    reference: { $ref: reference },
+                    breadcrumbs: [...this.breadcrumbs, "discriminator", "mapping", discriminantValue]
+                });
+
+                if (!resolved.resolved) {
+                    isCommonDiscriminant = false;
+                    break;
+                }
+
+                const prop = resolved.value.properties?.[propName];
+                if (!prop) {
+                    isCommonDiscriminant = false;
+                    break;
+                }
+
+                let propToCheck = prop;
+                if (this.context.isReferenceObject(prop)) {
+                    const resolvedProp = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
+                        reference: prop,
+                        breadcrumbs: [
+                            ...this.breadcrumbs,
+                            "discriminator",
+                            "mapping",
+                            discriminantValue,
+                            "properties",
+                            propName
+                        ]
+                    });
+                    if (!resolvedProp.resolved) {
+                        isCommonDiscriminant = false;
+                        break;
+                    }
+                    propToCheck = resolvedProp.value;
+                }
+
+                const hasConstOrEnum =
+                    "const" in propToCheck ||
+                    ("enum" in propToCheck && Array.isArray(propToCheck.enum) && propToCheck.enum.length > 0);
+
+                if (!hasConstOrEnum) {
+                    isCommonDiscriminant = false;
+                    break;
+                }
+            }
+
+            if (isCommonDiscriminant) {
+                return propName;
+            }
+        }
+
+        return undefined;
     }
 }

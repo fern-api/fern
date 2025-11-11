@@ -259,6 +259,7 @@
         "extends": [],
         "types": [
           {
+            "docs": "A generic request type used throughout the API.\n",
             "discriminantValue": {
               "name": {
                 "originalName": "request",
@@ -312,6 +313,7 @@
             }
           },
           {
+            "docs": "A generic response type used throughout the API.\n",
             "discriminantValue": {
               "name": {
                 "originalName": "response",

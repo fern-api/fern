@@ -1429,6 +1429,7 @@
         "extends": [],
         "types": [
           {
+            "docs": "Object encapsulating the configuration parameters for a Google Apps\nauthentication connection.\n",
             "discriminantValue": {
               "name": {
                 "originalName": "google_apps",
@@ -1482,6 +1483,7 @@
             }
           },
           {
+            "docs": "Object encapsulating the configuration parameters for an OIDC\nauthentication connection.\n",
             "discriminantValue": {
               "name": {
                 "originalName": "oidc",
@@ -1535,6 +1537,7 @@
             }
           },
           {
+            "docs": "Object encapsulating the configuration parameters for a SAML\nauthentication connection.\n",
             "discriminantValue": {
               "name": {
                 "originalName": "samlp",
@@ -1641,6 +1644,7 @@
             }
           },
           {
+            "docs": "Object encapsulating the configuration parameters for an Azure AD\nauthentication connection.\n",
             "discriminantValue": {
               "name": {
                 "originalName": "waad",
@@ -6488,6 +6492,7 @@
         "extends": [],
         "types": [
           {
+            "docs": "Object encapsulating the configuration parameters for a Google Apps\nauthentication connection.\n",
             "discriminantValue": {
               "name": {
                 "originalName": "google_apps",
@@ -6541,6 +6546,7 @@
             }
           },
           {
+            "docs": "Object encapsulating the configuration parameters for an OIDC\nauthentication connection.\n",
             "discriminantValue": {
               "name": {
                 "originalName": "oidc",
@@ -6594,6 +6600,7 @@
             }
           },
           {
+            "docs": "Object encapsulating the configuration parameters for a SAML\nauthentication connection.\n",
             "discriminantValue": {
               "name": {
                 "originalName": "samlp",
@@ -6647,6 +6654,7 @@
             }
           },
           {
+            "docs": "Object encapsulating the configuration parameters for an Azure AD\nauthentication connection.\n",
             "discriminantValue": {
               "name": {
                 "originalName": "waad",
@@ -7623,6 +7631,7 @@
         "extends": [],
         "types": [
           {
+            "docs": "Object encapsulating the configuration parameters for a Google Apps\nauthentication connection.\n",
             "discriminantValue": {
               "name": {
                 "originalName": "google_apps",
@@ -7729,6 +7738,7 @@
             }
           },
           {
+            "docs": "Object encapsulating the configuration parameters for an OIDC\nauthentication connection.\n",
             "discriminantValue": {
               "name": {
                 "originalName": "oidc",
@@ -7782,6 +7792,7 @@
             }
           },
           {
+            "docs": "Object encapsulating the configuration parameters for a SAML\nauthentication connection.\n",
             "discriminantValue": {
               "name": {
                 "originalName": "samlp",
@@ -7835,6 +7846,7 @@
             }
           },
           {
+            "docs": "Object encapsulating the configuration parameters for an Azure AD\nauthentication connection.\n",
             "discriminantValue": {
               "name": {
                 "originalName": "waad",
