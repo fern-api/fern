@@ -247,6 +247,104 @@
       ],
       "additionalProperties": false
     },
+    "fernDefinition.auth.OAuthDeviceCodeEndpointSchema": {
+      "type": "object",
+      "properties": {
+        "endpoint": {
+          "type": "string"
+        },
+        "request-properties": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fernDefinition.auth.OAuthDeviceCodeRequestPropertiesSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "response-properties": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fernDefinition.auth.OAuthDeviceCodeResponsePropertiesSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "endpoint"
+      ],
+      "additionalProperties": false
+    },
+    "fernDefinition.auth.OAuthDeviceCodeRequestPropertiesSchema": {
+      "type": "object",
+      "properties": {
+        "client_id": {
+          "type": "string"
+        },
+        "scope": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "client_id"
+      ],
+      "additionalProperties": false
+    },
+    "fernDefinition.auth.OAuthDeviceCodeResponsePropertiesSchema": {
+      "type": "object",
+      "properties": {
+        "device_code": {
+          "type": "string"
+        },
+        "user_code": {
+          "type": "string"
+        },
+        "verification_uri": {
+          "type": "string"
+        },
+        "verification_uri_complete": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expires_in": {
+          "type": "integer"
+        },
+        "interval": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "device_code",
+        "user_code",
+        "verification_uri",
+        "expires_in"
+      ],
+      "additionalProperties": false
+    },
     "fernDefinition.auth.OAuthRefreshTokenRequestPropertiesSchema": {
       "type": "object",
       "properties": {
@@ -327,7 +425,7 @@
       ],
       "additionalProperties": false
     },
-    "fernDefinition.auth.OAuthSchemeSchema": {
+    "fernDefinition.auth.OAuthClientCredentialsSchemeSchema": {
       "type": "object",
       "properties": {
         "docs": {
@@ -419,6 +517,116 @@
         "get-token"
       ],
       "additionalProperties": false
+    },
+    "fernDefinition.auth.OAuthDeviceAuthGrantSchemeSchema": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scheme": {
+          "const": "oauth"
+        },
+        "type": {
+          "const": "device-auth-grant"
+        },
+        "scopes": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/fernDefinition.auth.AuthScope"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client-id-env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "device-code-endpoint": {
+          "$ref": "#/definitions/fernDefinition.auth.OAuthDeviceCodeEndpointSchema"
+        },
+        "poll-token-endpoint": {
+          "$ref": "#/definitions/fernDefinition.auth.OAuthGetTokenEndpointSchema"
+        },
+        "polling-interval": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "token-prefix": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "token-header": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "refresh-token": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fernDefinition.auth.OAuthRefreshTokenEndpointSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "get-token": {
+          "$ref": "#/definitions/fernDefinition.auth.OAuthGetTokenEndpointSchema"
+        }
+      },
+      "required": [
+        "scheme",
+        "type",
+        "get-token"
+      ],
+      "additionalProperties": false
+    },
+    "fernDefinition.auth.OAuthSchemeSchema": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/fernDefinition.auth.OAuthClientCredentialsSchemeSchema"
+        },
+        {
+          "$ref": "#/definitions/fernDefinition.auth.OAuthDeviceAuthGrantSchemeSchema"
+        }
+      ]
     },
     "fernDefinition.auth.HeaderAuthSchemeSchema": {
       "type": "object",
