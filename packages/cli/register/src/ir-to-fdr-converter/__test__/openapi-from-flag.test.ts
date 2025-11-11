@@ -368,10 +368,10 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
             const endpoint = serviceWithEndpoints.endpoints?.[0];
             expect(endpoint).toBeDefined();
 
-            // Verify path parameter has explode: false
+            // Verify path parameter has explode omitted (undefined) since explode: false matches the default for style=simple
             expect(endpoint?.pathParameters).toBeDefined();
             expect(endpoint?.pathParameters?.length).toBeGreaterThan(0);
-            expect(endpoint?.pathParameters?.[0]?.explode).toBe(false);
+            expect(endpoint?.pathParameters?.[0]?.explode).toBeUndefined();
 
             // Verify query parameters have explode: false
             expect(endpoint?.queryParameters).toBeDefined();

@@ -73,7 +73,7 @@
             {
               "availability": undefined,
               "description": undefined,
-              "explode": false,
+              "explode": undefined,
               "key": "category",
               "type": {
                 "type": "primitive",
