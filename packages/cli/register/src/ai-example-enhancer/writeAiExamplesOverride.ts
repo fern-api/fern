@@ -37,7 +37,9 @@ export async function writeAiExamplesOverride({
         examplesByPath.set(example.endpoint, existing);
     }
 
-    const overrideStructure: { paths: Record<string, unknown> } = {
+    const overrideStructure: {
+        paths: Record<string, Record<string, { "x-fern-examples": Record<string, unknown>[] }>>;
+    } = {
         paths: {}
     };
 
@@ -86,9 +88,12 @@ export async function writeAiExamplesOverride({
                 return fernExample;
             });
 
-            overrideStructure.paths[path][method] = {
-                "x-fern-examples": xFernExamples
-            };
+            const pathMethods = overrideStructure.paths[path];
+            if (pathMethods) {
+                pathMethods[method] = {
+                    "x-fern-examples": xFernExamples
+                };
+            }
         }
     }
 

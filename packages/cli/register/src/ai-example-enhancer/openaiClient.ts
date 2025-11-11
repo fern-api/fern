@@ -64,12 +64,14 @@ export class OpenAIExampleEnhancer {
                         ...baseParams,
                         response_format: { type: "json_object" }
                     });
-                } catch (jsonFormatError: any) {
-                    if (jsonFormatError?.message?.includes("response_format")) {
+                } catch (jsonFormatError: unknown) {
+                    const errorMessage =
+                        jsonFormatError instanceof Error ? jsonFormatError.message : String(jsonFormatError);
+
+                    if (errorMessage.includes("response_format")) {
                         this.context.logger.debug(
                             "Model doesn't support JSON response format, falling back to regular format"
                         );
-                        // Fall back to regular format without JSON response format
                         completion = await this.openai.chat.completions.create(baseParams);
                     } else {
                         throw jsonFormatError;
