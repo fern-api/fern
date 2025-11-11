@@ -645,15 +645,10 @@ async function updateAiChatFromDocsDefinition({
     domain: string;
     customDomains: string[];
 }): Promise<void> {
-    if (docsDefinition.config.aiChatConfig == null) {
+    if (docsDefinition.config.aiChatConfig == null || isPreview) {
         return;
     }
     context.logger.debug("Processing AI Chat configuration from docs.yml");
-
-    if (isPreview) {
-        context.logger.debug("Skipping AI Search enablement for preview URL");
-        return;
-    }
 
     if (docsDefinition.config.aiChatConfig.location != null) {
         const faiClient = getFaiClient({ token: token.value });
