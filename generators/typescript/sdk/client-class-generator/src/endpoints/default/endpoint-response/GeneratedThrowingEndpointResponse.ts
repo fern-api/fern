@@ -887,7 +887,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         context: SdkContext;
         generateCaseBody: (responseError: ResponseError) => ts.Statement[];
         defaultBody: ts.Statement[];
-    }) {
+    }): ts.Statement {
         const globalErrorNames = context.baseClient.getGlobalErrorNames();
         const globalErrorNamesStrings = new Set(
             Array.from(globalErrorNames).map((errorName) => JSON.stringify(errorName))
@@ -905,6 +905,10 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             seenStatusCodes.add(errorDeclaration.statusCode);
             return true;
         });
+
+        if (endpointSpecificErrors.length === 0) {
+            return defaultBody[0] ?? ts.factory.createEmptyStatement();
+        }
 
         return ts.factory.createSwitchStatement(
             ts.factory.createPropertyAccessExpression(
