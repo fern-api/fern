@@ -27,7 +27,7 @@ export const Error = {
     _visit: <_Result>(value: SeedTrace.v2.test.Error, visitor: SeedTrace.v2.test.Error._Visitor<_Result>): _Result => {
         switch (value.errorName) {
             default:
-                return visitor._other(value as any);
+                return visitor._other(value.content);
         }
     },
 } as const;

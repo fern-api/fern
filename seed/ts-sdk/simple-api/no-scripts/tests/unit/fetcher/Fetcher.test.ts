@@ -34,7 +34,7 @@ describe("Test fetcherImpl", () => {
             "https://httpbin.org/post",
             expect.objectContaining({
                 method: "POST",
-                headers: expect.objectContaining({ "X-Test": "x-test-header" }),
+                headers: expect.toContainHeaders({ "X-Test": "x-test-header" }),
                 body: JSON.stringify({ data: "test" }),
             }),
         );
@@ -66,7 +66,7 @@ describe("Test fetcherImpl", () => {
             url,
             expect.objectContaining({
                 method: "POST",
-                headers: expect.objectContaining({ "X-Test": "x-test-header" }),
+                headers: expect.toContainHeaders({ "X-Test": "x-test-header" }),
                 body: expect.any(fs.ReadStream),
             }),
         );
@@ -104,7 +104,7 @@ describe("Test fetcherImpl", () => {
             url,
             expect.objectContaining({
                 method: "GET",
-                headers: expect.objectContaining({ "X-Test": "x-test-header" }),
+                headers: expect.toContainHeaders({ "X-Test": "x-test-header" }),
             }),
         );
         expect(result.ok).toBe(true);
@@ -150,7 +150,7 @@ describe("Test fetcherImpl", () => {
             url,
             expect.objectContaining({
                 method: "GET",
-                headers: expect.objectContaining({ "X-Test": "x-test-header" }),
+                headers: expect.toContainHeaders({ "X-Test": "x-test-header" }),
             }),
         );
         expect(result.ok).toBe(true);
@@ -196,7 +196,7 @@ describe("Test fetcherImpl", () => {
             url,
             expect.objectContaining({
                 method: "GET",
-                headers: expect.objectContaining({ "X-Test": "x-test-header" }),
+                headers: expect.toContainHeaders({ "X-Test": "x-test-header" }),
             }),
         );
         expect(result.ok).toBe(true);
@@ -240,7 +240,7 @@ describe("Test fetcherImpl", () => {
             url,
             expect.objectContaining({
                 method: "GET",
-                headers: expect.objectContaining({ "X-Test": "x-test-header" }),
+                headers: expect.toContainHeaders({ "X-Test": "x-test-header" }),
             }),
         );
         expect(result.ok).toBe(true);

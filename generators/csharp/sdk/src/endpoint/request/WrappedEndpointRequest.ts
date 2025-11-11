@@ -44,7 +44,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     public getParameterType(): ast.Type {
         return this.csharp.Type.reference(
-            this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName)
+            this.context.common.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName)
         );
     }
 
@@ -56,8 +56,8 @@ export class WrappedEndpointRequest extends EndpointRequest {
         const nullableQueryParameters: QueryParameter[] = [];
         for (const queryParameter of this.endpoint.queryParameters) {
             if (
-                (!queryParameter.allowMultiple && this.context.isOptional(queryParameter.valueType)) ||
-                this.context.isNullable(queryParameter.valueType)
+                (!queryParameter.allowMultiple && this.context.common.isOptional(queryParameter.valueType)) ||
+                this.context.common.isNullable(queryParameter.valueType)
             ) {
                 nullableQueryParameters.push(queryParameter);
             } else {
@@ -113,7 +113,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     public getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined {
-        const service = this.context.getHttpServiceOrThrow(this.serviceId);
+        const service = this.context.common.getHttpServiceOrThrow(this.serviceId);
         const headers = [...service.headers, ...this.endpoint.headers];
         if (headers.length === 0) {
             return undefined;
@@ -121,7 +121,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         const requiredHeaders: HttpHeader[] = [];
         const optionalHeaders: HttpHeader[] = [];
         for (const header of headers) {
-            if (this.context.isOptional(header.valueType)) {
+            if (this.context.common.isOptional(header.valueType)) {
                 optionalHeaders.push(header);
             } else {
                 requiredHeaders.push(header);

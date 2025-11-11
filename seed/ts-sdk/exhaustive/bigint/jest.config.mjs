@@ -12,7 +12,7 @@ export default {
             },
             roots: ["<rootDir>/tests"],
             testPathIgnorePatterns: ["/tests/wire/"],
-            setupFilesAfterEnv: ["<rootDir>/tests/bigint.setup.ts"],
+            setupFilesAfterEnv: ["<rootDir>/tests/setup.ts", "<rootDir>/tests/bigint.setup.ts"],
         },
         {
             displayName: "wire",
@@ -22,7 +22,11 @@ export default {
                 "^(\.{1,2}/.*)\.js$": "$1",
             },
             roots: ["<rootDir>/tests/wire"],
-            setupFilesAfterEnv: ["<rootDir>/tests/bigint.setup.ts", "<rootDir>/tests/mock-server/setup.ts"],
+            setupFilesAfterEnv: [
+                "<rootDir>/tests/setup.ts",
+                "<rootDir>/tests/bigint.setup.ts",
+                "<rootDir>/tests/mock-server/setup.ts",
+            ],
         },
     ],
     workerThreads: true,

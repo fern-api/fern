@@ -1,5 +1,26 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.35.3
+  changelogEntry:
+    - summary: Fix double Optional wrapping for unknown types in nullable fields by mapping unknown to Any instead of Optional[Any].
+      type: fix
+  createdAt: "2025-11-11"
+  irVersion: 61
+
+- version: 4.35.2
+  changelogEntry:
+    - summary: Add back F401-ignored imports for circular references.
+      type: fix
+  createdAt: "2025-11-10"
+  irVersion: 61
+
+- version: 4.35.1
+  changelogEntry:
+    - summary: Generated Python SDKs no longer show SyntaxWarnings when API docs or enum values include backslashes.
+      type: fix
+  createdAt: "2025-11-10"
+  irVersion: 61
+
 - version: 4.35.0
   changelogEntry:
     - summary: Add automatic discriminated union support using Pydantic's Field(discriminator=...) to improve serialization performance. Benchmarks show a 2x speedup by eliminating sequential variant attempts and enabling O(1) variant selection.

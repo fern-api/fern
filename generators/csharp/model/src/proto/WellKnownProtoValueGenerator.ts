@@ -67,7 +67,7 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
             class_.addOperator(operator);
         }
 
-        this.context.getToStringMethod(class_);
+        this.context.common.getToStringMethod(class_);
         this.getToProtoMethod(class_);
         this.getFromProtoMethod(class_);
 

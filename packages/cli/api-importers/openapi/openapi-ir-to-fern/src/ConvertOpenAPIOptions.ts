@@ -1,3 +1,4 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 
 export interface ConvertOpenAPIOptions {
@@ -77,6 +78,14 @@ export interface ConvertOpenAPIOptions {
      * Defaults to false to preserve existing behavior.
      */
     groupEnvironmentsByHost: boolean;
+
+    /**
+     * If `always`, remove discriminant properties from schemas in the IR, unless the schema is also used outside of a discriminated union.
+     * If `never`, discriminant properties are preserved in the schemas.
+     *
+     * Defaults to `always`.
+     */
+    removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas;
 }
 
 export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
@@ -91,7 +100,8 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     respectForwardCompatibleEnums: false,
     wrapReferencesToNullableInOptional: true,
     coerceOptionalSchemasToNullable: true,
-    groupEnvironmentsByHost: false
+    groupEnvironmentsByHost: false,
+    removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always
 };
 
 export function getConvertOptions({
@@ -149,6 +159,10 @@ export function getConvertOptions({
         groupEnvironmentsByHost:
             overrides?.groupEnvironmentsByHost ??
             options?.groupEnvironmentsByHost ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.groupEnvironmentsByHost
+            DEFAULT_CONVERT_OPENAPI_OPTIONS.groupEnvironmentsByHost,
+        removeDiscriminantsFromSchemas:
+            overrides?.removeDiscriminantsFromSchemas ??
+            options?.removeDiscriminantsFromSchemas ??
+            DEFAULT_CONVERT_OPENAPI_OPTIONS.removeDiscriminantsFromSchemas
     };
 }

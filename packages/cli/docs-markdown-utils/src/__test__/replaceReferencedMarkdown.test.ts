@@ -108,7 +108,7 @@ describe("replaceReferencedMarkdown", () => {
             context,
             markdownLoader: async (filepath) => {
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/feature.mdx")) {
-                    return "This feature is only available on the {plan} plan.";
+                    return "This feature is only available on the {{plan}} plan.";
                 }
                 throw new Error(`Unexpected filepath: ${filepath}`);
             }
@@ -131,7 +131,7 @@ describe("replaceReferencedMarkdown", () => {
             context,
             markdownLoader: async (filepath) => {
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/pricing.md")) {
-                    return "The {tier} tier costs {price} per month.";
+                    return "The {{tier}} tier costs {{price}} per month.";
                 }
                 throw new Error(`Unexpected filepath: ${filepath}`);
             }
@@ -152,7 +152,7 @@ describe("replaceReferencedMarkdown", () => {
             context,
             markdownLoader: async (filepath) => {
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/feature.md")) {
-                    return "The {name} feature is powerful. Learn more about {name} in our docs.";
+                    return "The {{name}} feature is powerful. Learn more about {{name}} in our docs.";
                 }
                 throw new Error(`Unexpected filepath: ${filepath}`);
             }
@@ -179,7 +179,7 @@ describe("replaceReferencedMarkdown", () => {
                     return "Welcome to our docs!";
                 }
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/feature.md")) {
-                    return "Available on {plan} plan.";
+                    return "Available on {{plan}} plan.";
                 }
                 throw new Error(`Unexpected filepath: ${filepath}`);
             }
@@ -203,7 +203,7 @@ describe("replaceReferencedMarkdown", () => {
             context,
             markdownLoader: async (filepath) => {
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/test.md")) {
-                    return "{prop1}, {prop2}, {prop3}";
+                    return "{{prop1}}, {{prop2}}, {{prop3}}";
                 }
                 throw new Error(`Unexpected filepath: ${filepath}`);
             }
@@ -226,14 +226,14 @@ describe("replaceReferencedMarkdown", () => {
             context,
             markdownLoader: async (filepath) => {
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/test.md")) {
-                    return "Plan: {plan}, Tier: {tier}";
+                    return "Plan: {{plan}}, Tier: {{tier}}";
                 }
                 throw new Error(`Unexpected filepath: ${filepath}`);
             }
         });
 
         expect(result).toBe(`
-            Plan: pro, Tier: {tier}
+            Plan: pro, Tier: {{tier}}
         `);
     });
 
@@ -249,7 +249,7 @@ describe("replaceReferencedMarkdown", () => {
             context,
             markdownLoader: async (filepath) => {
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/feature.md")) {
-                    return "# {name}\n\nThis feature is available on the {level} plan.\n\nLearn more about {name} below.";
+                    return "# {{name}}\n\nThis feature is available on the {{level}} plan.\n\nLearn more about {{name}} below.";
                 }
                 throw new Error(`Unexpected filepath: ${filepath}`);
             }
@@ -278,7 +278,7 @@ describe("replaceReferencedMarkdown", () => {
             context: testContext,
             markdownLoader: async (filepath) => {
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/plan-tier.mdx")) {
-                    return "Plan: {plan}, Tier: {tier}";
+                    return "Plan: {{plan}}, Tier: {{tier}}";
                 }
                 throw new Error(`Unexpected filepath: ${filepath}`);
             }
@@ -290,7 +290,7 @@ describe("replaceReferencedMarkdown", () => {
             )
         );
         expect(warnSpy).toHaveBeenCalledTimes(1);
-        expect(result.trim()).toBe("Plan: pro, Tier: {tier}");
+        expect(result.trim()).toBe("Plan: pro, Tier: {{tier}}");
     });
 
     it("should warn for multiple missing variables", async () => {
@@ -307,7 +307,7 @@ describe("replaceReferencedMarkdown", () => {
             context: testContext,
             markdownLoader: async (filepath) => {
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/details.md")) {
-                    return "{name} - Plan: {plan}, Tier: {tier}";
+                    return "{{name}} - Plan: {{plan}}, Tier: {{tier}}";
                 }
                 throw new Error(`Unexpected filepath: ${filepath}`);
             }
@@ -324,7 +324,7 @@ describe("replaceReferencedMarkdown", () => {
             )
         );
         expect(warnSpy).toHaveBeenCalledTimes(2);
-        expect(result.trim()).toBe("API - Plan: {plan}, Tier: {tier}");
+        expect(result.trim()).toBe("API - Plan: {{plan}}, Tier: {{tier}}");
     });
 
     it("should not warn when all variables are provided", async () => {
@@ -341,7 +341,7 @@ describe("replaceReferencedMarkdown", () => {
             context: testContext,
             markdownLoader: async (filepath) => {
                 if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/plan-tier.mdx")) {
-                    return "Plan: {plan}, Tier: {tier}";
+                    return "Plan: {{plan}}, Tier: {{tier}}";
                 }
                 throw new Error(`Unexpected filepath: ${filepath}`);
             }

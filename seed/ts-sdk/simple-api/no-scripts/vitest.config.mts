@@ -11,7 +11,8 @@
                                 environment: "node",
                                 root: "./tests",
                                 include: ["**/*.test.{js,ts,jsx,tsx}"],
-                                exclude: ["wire/**"]
+                                exclude: ["wire/**"],
+                                setupFiles: ["./setup.ts"]
                             }
                         },
                         {
@@ -20,7 +21,7 @@
                                         name: "wire",
                                         environment: "node",
                                         root: "./tests/wire",
-                                        setupFiles: ["../mock-server/setup.ts"]
+                                        setupFiles: ["../setup.ts", "../mock-server/setup.ts"]
                                     }
                                 },
                     ],

@@ -14,6 +14,7 @@ import path from "path";
 import { convertIrToFdrApi } from "../convertIrToFdrApi";
 
 // Temporarily disabled to avoid cyclic dependency with @fern-api/project-loader
+// biome-ignore lint/suspicious/noSkippedTests: Intentionally disabled due to cyclic dependency
 describe.skip("fdr", async () => {
     const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../../test-definitions");
     const FIXTURES_DIR = path.join(__dirname, "./fixtures");

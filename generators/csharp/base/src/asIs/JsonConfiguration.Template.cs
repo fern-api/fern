@@ -178,7 +178,7 @@ internal static class JsonUtils
 
     internal static T Deserialize<T>(string json) =>
         JsonSerializer.Deserialize<T>(json, JsonOptions.JsonSerializerOptions)!;
-<% if (context.hasWebSocketEndpoints || context.hasSseEndpoints || context.hasJsonStreamingEndpoints ) { %>
+<% if (context.common.hasWebSocketEndpoints || context.common.hasSseEndpoints || context.common.hasJsonStreamingEndpoints ) { %>
     internal static bool TryDeserialize<T>(string json, out T? result) where T : class
     {
         try

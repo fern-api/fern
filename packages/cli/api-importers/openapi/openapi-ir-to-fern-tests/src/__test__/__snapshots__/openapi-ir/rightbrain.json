@@ -991,6 +991,13 @@
                     },
                     "type": "primitive"
                   },
+                  "reason": {
+                    "value": {
+                      "value": "INVALID_MEMBER",
+                      "type": "string"
+                    },
+                    "type": "literal"
+                  },
                   "invalidMemberError": {
                     "properties": {},
                     "type": "object"
@@ -1387,6 +1394,13 @@
                       "type": "string"
                     },
                     "type": "primitive"
+                  },
+                  "reason": {
+                    "value": {
+                      "value": "INVALID_MEMBER",
+                      "type": "string"
+                    },
+                    "type": "literal"
                   },
                   "invalidMemberError": {
                     "properties": {},
@@ -8134,6 +8148,13 @@
                     },
                     "type": "primitive"
                   },
+                  "reason": {
+                    "value": {
+                      "value": "INVALID_MEMBER",
+                      "type": "string"
+                    },
+                    "type": "literal"
+                  },
                   "invalidMemberError": {
                     "properties": {},
                     "type": "object"
@@ -8556,6 +8577,13 @@
                       "type": "string"
                     },
                     "type": "primitive"
+                  },
+                  "reason": {
+                    "value": {
+                      "value": "INVALID_MEMBER",
+                      "type": "string"
+                    },
+                    "type": "literal"
                   },
                   "invalidMemberError": {
                     "properties": {},
@@ -13438,6 +13466,13 @@
                     },
                     "type": "primitive"
                   },
+                  "reason": {
+                    "value": {
+                      "value": "INVALID_MEMBER",
+                      "type": "string"
+                    },
+                    "type": "literal"
+                  },
                   "invalidMemberError": {
                     "properties": {},
                     "type": "object"
@@ -13886,6 +13921,13 @@
                       "type": "string"
                     },
                     "type": "primitive"
+                  },
+                  "reason": {
+                    "value": {
+                      "value": "INVALID_MEMBER",
+                      "type": "string"
+                    },
+                    "type": "literal"
                   },
                   "invalidMemberError": {
                     "properties": {},
@@ -18816,6 +18858,13 @@
                     },
                     "type": "primitive"
                   },
+                  "reason": {
+                    "value": {
+                      "value": "INVALID_MEMBER",
+                      "type": "string"
+                    },
+                    "type": "literal"
+                  },
                   "invalidMemberError": {
                     "properties": {},
                     "type": "object"
@@ -19264,6 +19313,13 @@
                       "type": "string"
                     },
                     "type": "primitive"
+                  },
+                  "reason": {
+                    "value": {
+                      "value": "INVALID_MEMBER",
+                      "type": "string"
+                    },
+                    "type": "literal"
                   },
                   "invalidMemberError": {
                     "properties": {},
@@ -22245,6 +22301,13 @@
                     },
                     "type": "primitive"
                   },
+                  "reason": {
+                    "value": {
+                      "value": "INVALID_MEMBER",
+                      "type": "string"
+                    },
+                    "type": "literal"
+                  },
                   "invalidMemberError": {
                     "properties": {},
                     "type": "object"
@@ -22641,6 +22704,13 @@
                       "type": "string"
                     },
                     "type": "primitive"
+                  },
+                  "reason": {
+                    "value": {
+                      "value": "INVALID_MEMBER",
+                      "type": "string"
+                    },
+                    "type": "literal"
                   },
                   "invalidMemberError": {
                     "properties": {},
@@ -51359,6 +51429,13 @@
                     },
                     "type": "primitive"
                   },
+                  "reason": {
+                    "value": {
+                      "value": "INVALID_MEMBER",
+                      "type": "string"
+                    },
+                    "type": "literal"
+                  },
                   "invalidMemberError": {
                     "properties": {},
                     "type": "object"
@@ -51807,6 +51884,13 @@
                       "type": "string"
                     },
                     "type": "primitive"
+                  },
+                  "reason": {
+                    "value": {
+                      "value": "INVALID_MEMBER",
+                      "type": "string"
+                    },
+                    "type": "literal"
                   },
                   "invalidMemberError": {
                     "properties": {},
@@ -60367,6 +60451,24 @@
           },
           {
             "conflict": {},
+            "generatedName": "invalidMemberErrorResponseReason",
+            "key": "reason",
+            "schema": {
+              "description": "The machine-readable error reason.",
+              "value": {
+                "value": "INVALID_MEMBER",
+                "type": "string"
+              },
+              "generatedName": "InvalidMemberErrorResponseReason",
+              "nameOverride": "Reason",
+              "title": "Reason",
+              "groupName": [],
+              "type": "literal"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
             "generatedName": "invalidMemberErrorResponseInvalidMemberError",
             "key": "invalidMemberError",
             "schema": {
@@ -61354,6 +61456,24 @@
               "title": "Message",
               "groupName": [],
               "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "malformedResourceIdentifierErrorResponseReason",
+            "key": "reason",
+            "schema": {
+              "description": "The machine-readable error reason.",
+              "value": {
+                "value": "MALFORMED_RESOURCE_IDENTIFIER",
+                "type": "string"
+              },
+              "generatedName": "MalformedResourceIdentifierErrorResponseReason",
+              "nameOverride": "Reason",
+              "title": "Reason",
+              "groupName": [],
+              "type": "literal"
             },
             "audiences": []
           },

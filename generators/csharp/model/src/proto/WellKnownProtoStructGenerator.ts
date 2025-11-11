@@ -54,7 +54,7 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
         class_.addConstructor(this.getDefaultConstructor());
         class_.addConstructor(this.getKeyValuePairConstructor());
 
-        this.context.getToStringMethod(class_);
+        this.context.common.getToStringMethod(class_);
         this.getToProtoMethod(class_);
         this.getFromProtoMethod(class_);
 
