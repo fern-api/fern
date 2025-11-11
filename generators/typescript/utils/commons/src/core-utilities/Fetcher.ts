@@ -202,7 +202,7 @@ export const MANIFEST: CoreUtility.Manifest = {
             ignore.push("tests/unit/fetcher/getFetchFn.test.ts");
         }
         return {
-            patterns: ["src/core/fetcher/**", "tests/unit/fetcher/**"],
+            patterns: ["src/core/fetcher/**", "tests/unit/fetcher/**", "tests/setup.template.ts"],
             ignore
         };
     }
