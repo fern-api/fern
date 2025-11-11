@@ -72,7 +72,7 @@ export abstract class AbstractParameterConverter<
             this.parameter.style ??
             (this.parameter.in === "query" || this.parameter.in === "cookie" ? "form" : "simple");
         const defaultExplode = style === "form" || style === "deepObject";
-        
+
         const explodeValue =
             this.parameter.explode !== undefined && this.parameter.explode !== defaultExplode
                 ? this.parameter.explode
