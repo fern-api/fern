@@ -7,13 +7,7 @@
     "useIgnoreFile": false
   },
   "files": {
-    "includes": [
-      "**",
-      "!!**/lib",
-      "!!**/dist",
-      "!!seed",
-      "!!generators/typescript/asIs/biome.json"
-    ],
+    "includes": ["**", "!!**/lib", "!!**/dist", "!!seed", "!!generators/typescript/asIs/biome.json"],
     "ignoreUnknown": false,
     "maxSize": 80000000
   },
@@ -174,14 +168,7 @@
     ]
   },
   "javascript": {
-    "globals": [
-      "expect",
-      "describe",
-      "it",
-      "beforeEach",
-      "test",
-      "beforeAll"
-    ],
+    "globals": ["expect", "describe", "it", "beforeEach", "test", "beforeAll"],
     "formatter": {
       "jsxQuoteStyle": "double",
       "quoteProperties": "asNeeded",
@@ -266,12 +253,7 @@
       }
     },
     {
-      "includes": [
-        "*.ts",
-        "*.tsx",
-        "*.mts",
-        "*.cts"
-      ],
+      "includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
       "linter": {
         "rules": {
           "complexity": {
@@ -305,12 +287,7 @@
       }
     },
     {
-      "includes": [
-        "*.ts",
-        "*.tsx",
-        "*.mts",
-        "*.cts"
-      ],
+      "includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
       "linter": {
         "rules": {
           "complexity": {
@@ -344,12 +321,7 @@
       }
     },
     {
-      "includes": [
-        "*.ts",
-        "*.tsx",
-        "*.mts",
-        "*.cts"
-      ],
+      "includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
       "linter": {
         "rules": {
           "complexity": {
@@ -383,12 +355,7 @@
       }
     },
     {
-      "includes": [
-        "**/*.json",
-        "**/*.md",
-        "**/*.css",
-        "**/*.mdx"
-      ],
+      "includes": ["**/*.json", "**/*.md", "**/*.css", "**/*.mdx"],
       "formatter": {
         "indentStyle": "space",
         "indentWidth": 2
