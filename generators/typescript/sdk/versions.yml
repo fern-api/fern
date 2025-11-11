@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.28.11
+  changelogEntry:
+    - summary: |
+        Do not generate a _snippet-templates.json_ file in the generated TypeScript SDK.
+      type: fix
+  createdAt: "2025-11-11"
+  irVersion: 61
+
 - version: 3.28.10
   changelogEntry:
     - summary: |

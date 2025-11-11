@@ -39,7 +39,6 @@
     "@fern-fern/generator-cli-sdk": "^0.1.5",
     "@fern-fern/generator-exec-sdk": "^0.0.1167",
     "@fern-fern/ir-sdk": "^61.7.0",
-    "@fern-fern/snippet-sdk": "^0.0.6434",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/endpoint-error-union-generator": "workspace:*",
@@ -57,11 +56,9 @@
     "@fern-typescript/type-reference-example-generator": "workspace:*",
     "@fern-typescript/type-schema-generator": "workspace:*",
     "@fern-typescript/websocket-type-schema-generator": "workspace:*",
-    "@types/uuid": "^9.0.8",
     "lodash-es": "^4.17.21",
     "ts-morph": "^15.1.0",
-    "ts-poet": "^6.7.0",
-    "uuid": "^9.0.1"
+    "ts-poet": "^6.7.0"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
