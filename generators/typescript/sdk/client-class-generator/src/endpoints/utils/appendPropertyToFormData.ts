@@ -13,7 +13,8 @@ export function appendPropertyToFormData({
     requestParameter,
     includeSerdeLayer,
     allowExtraFields,
-    omitUndefined
+    omitUndefined,
+    resolvedPropertyName
 }: {
     property: FileUploadRequestProperty;
     context: SdkContext;
@@ -23,6 +24,7 @@ export function appendPropertyToFormData({
     includeSerdeLayer: boolean;
     allowExtraFields: boolean;
     omitUndefined: boolean;
+    resolvedPropertyName?: string;
 }): ts.Statement {
     return FileUploadRequestProperty._visit(property, {
         file: (property) => {
@@ -37,7 +39,8 @@ export function appendPropertyToFormData({
                         wrapperName,
                         includeSerdeLayer: context.includeSerdeLayer,
                         retainOriginalCasing: context.retainOriginalCasing,
-                        inlineFileProperties: context.inlineFileProperties
+                        inlineFileProperties: context.inlineFileProperties,
+                        resolvedPropertyName
                     })
                 )
             });
@@ -62,7 +65,8 @@ export function appendPropertyToFormData({
                             wrapperName,
                             includeSerdeLayer: context.includeSerdeLayer,
                             retainOriginalCasing: context.retainOriginalCasing,
-                            inlineFileProperties: context.inlineFileProperties
+                            inlineFileProperties: context.inlineFileProperties,
+                            resolvedPropertyName
                         })
                     ),
                     ts.factory.createBlock(
@@ -87,7 +91,8 @@ export function appendPropertyToFormData({
                                 wrapperName,
                                 includeSerdeLayer: context.includeSerdeLayer,
                                 retainOriginalCasing: context.retainOriginalCasing,
-                                inlineFileProperties: context.inlineFileProperties
+                                inlineFileProperties: context.inlineFileProperties,
+                                resolvedPropertyName
                             })
                         ),
                         ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),

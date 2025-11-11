@@ -5,18 +5,21 @@ export function getParameterNameForFile({
     wrapperName,
     includeSerdeLayer,
     retainOriginalCasing,
-    inlineFileProperties
+    inlineFileProperties,
+    resolvedPropertyName
 }: {
     property: FileProperty;
     wrapperName: string;
     retainOriginalCasing: boolean;
     includeSerdeLayer: boolean;
     inlineFileProperties: boolean;
+    resolvedPropertyName?: string;
 }): string {
     const parameterName =
-        includeSerdeLayer && !retainOriginalCasing
+        resolvedPropertyName ??
+        (includeSerdeLayer && !retainOriginalCasing
             ? property.key.name.camelCase.unsafeName
-            : property.key.name.originalName;
+            : property.key.name.originalName);
     if (inlineFileProperties) {
         return `${wrapperName}.${parameterName}`;
     }

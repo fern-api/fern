@@ -1,0 +1,11 @@
+node_modules
+src
+tests
+.gitignore
+.github
+.fernignore
+.prettierrc.yml
+biome.json
+tsconfig.json
+yarn.lock
+pnpm-lock.yaml
