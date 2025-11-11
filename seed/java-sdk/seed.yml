@@ -327,3 +327,7 @@ allowedFailures:
   - file-upload:wrapped-aliases
   - file-upload:inline-file-properties
   - file-upload-openapi
+
+  # Optional wire tests have snippet generation bug with optional(nullable(T))
+  # Snippet generator doesn't wrap value in Optional.of() for optional request bodies
+  - optional:wire-tests
