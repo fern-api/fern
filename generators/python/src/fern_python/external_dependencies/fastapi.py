@@ -108,36 +108,6 @@ class FastAPI:
             )
         )
 
-    @staticmethod
-    def Form(
-        *,
-        variable_name: Optional[str] = None,
-        wire_value: Optional[str] = None,
-        is_optional: bool = False,
-    ) -> AST.Expression:
-        form_function_definition = _export(
-            "Form",
-        )
-
-        kwargs: List[Tuple[str, AST.Expression]] = []
-        if is_optional:
-            kwargs.append(("default", AST.Expression(AST.TypeHint.none())))
-        if variable_name is not None and wire_value is not None and variable_name != wire_value:
-            kwargs.append(("alias", AST.Expression(AST.CodeWriter(f'"{wire_value}"'))))
-
-        if len(kwargs) > 0:
-            return AST.Expression(
-                AST.FunctionInvocation(
-                    function_definition=form_function_definition,
-                    kwargs=kwargs,
-                )
-            )
-        return AST.Expression(
-            AST.FunctionInvocation(
-                function_definition=form_function_definition,
-                args=[AST.Expression(AST.CodeWriter("..."))],
-            )
-        )
 
     @staticmethod
     def Depends(dependency: AST.Expression) -> AST.Expression:
