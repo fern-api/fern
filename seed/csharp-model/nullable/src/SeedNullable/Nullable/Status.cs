@@ -233,10 +233,10 @@ public record Status
             JsonSerializerOptions options
         )
         {
-            JsonNode json =
+            JsonObject json =
                 value.Type switch
                 {
-                    "active" => null,
+                    "active" => new JsonObject(),
                     "archived" => new JsonObject
                     {
                         ["value"] = JsonSerializer.SerializeToNode(value.Value, options),
@@ -245,7 +245,7 @@ public record Status
                     {
                         ["value"] = JsonSerializer.SerializeToNode(value.Value, options),
                     },
-                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                    _ => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);

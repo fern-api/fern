@@ -205,12 +205,13 @@ public record Resource
             JsonSerializerOptions options
         )
         {
-            JsonNode json =
+            JsonObject json =
                 value.ResourceType switch
                 {
-                    "user" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "Organization" => JsonSerializer.SerializeToNode(value.Value, options),
-                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                    "user" => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
+                    "Organization" => JsonSerializer.SerializeToNode(value.Value, options)
+                        as JsonObject,
+                    _ => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
                 } ?? new JsonObject();
             json["resource_type"] = value.ResourceType;
             var basePropertiesJson =

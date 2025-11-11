@@ -664,7 +664,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
             ],
             body: this.csharp.codeblock((writer) => {
                 const jsonObjReference = this.extern.System.Text.Json.Nodes.JsonObject;
-                writer.writeNode(this.extern.System.Text.Json.Nodes.JsonNode);
+                writer.writeNode(jsonObjReference);
                 writer.writeLine(` json = value.${discriminant.name} switch`);
                 writer.pushScope();
                 this.unionDeclaration.types.forEach((type) => {
@@ -672,7 +672,9 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                     writer.write(" => ");
                     switch (type.shape.propertiesType) {
                         case "samePropertiesAsObject":
-                            writer.write("JsonSerializer.SerializeToNode(value.Value, options),");
+                            writer.write("JsonSerializer.SerializeToNode(value.Value, options) as ");
+                            writer.writeNode(jsonObjReference);
+                            writer.writeLine(",");
                             break;
                         case "singleProperty":
                             writer.write("new ");
@@ -686,11 +688,14 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                             writer.writeLine("},");
                             break;
                         case "noProperties":
-                            writer.writeLine("null,");
+                            writer.write("new ");
+                            writer.writeNode(jsonObjReference);
+                            writer.writeLine("(),");
                             break;
                     }
                 });
-                writer.write("_ => JsonSerializer.SerializeToNode(value.Value, options)");
+                writer.write("_ => JsonSerializer.SerializeToNode(value.Value, options) as ");
+                writer.writeNode(jsonObjReference);
                 writer.popScope();
                 writer.write(" ?? new ");
                 writer.writeNode(jsonObjReference);

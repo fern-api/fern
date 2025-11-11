@@ -250,13 +250,13 @@ public record NotificationMethod
             JsonSerializerOptions options
         )
         {
-            JsonNode json =
+            JsonObject json =
                 value.Type switch
                 {
-                    "email" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "sms" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "push" => JsonSerializer.SerializeToNode(value.Value, options),
-                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                    "email" => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
+                    "sms" => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
+                    "push" => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
+                    _ => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);

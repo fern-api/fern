@@ -205,12 +205,12 @@ public record Shape
             JsonSerializerOptions options
         )
         {
-            JsonNode json =
+            JsonObject json =
                 value.Type switch
                 {
-                    "circle" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "square" => JsonSerializer.SerializeToNode(value.Value, options),
-                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                    "circle" => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
+                    "square" => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
+                    _ => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
                 } ?? new JsonObject();
             json["type"] = value.Type;
             var basePropertiesJson =

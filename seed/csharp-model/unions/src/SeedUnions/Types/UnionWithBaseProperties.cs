@@ -251,7 +251,7 @@ public record UnionWithBaseProperties
             JsonSerializerOptions options
         )
         {
-            JsonNode json =
+            JsonObject json =
                 value.Type switch
                 {
                     "integer" => new JsonObject
@@ -262,8 +262,8 @@ public record UnionWithBaseProperties
                     {
                         ["value"] = JsonSerializer.SerializeToNode(value.Value, options),
                     },
-                    "foo" => JsonSerializer.SerializeToNode(value.Value, options),
-                    _ => JsonSerializer.SerializeToNode(value.Value, options),
+                    "foo" => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
+                    _ => JsonSerializer.SerializeToNode(value.Value, options) as JsonObject,
                 } ?? new JsonObject();
             json["type"] = value.Type;
             var basePropertiesJson =
