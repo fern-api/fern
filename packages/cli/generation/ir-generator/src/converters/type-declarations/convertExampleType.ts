@@ -202,7 +202,6 @@ export function convertTypeExample({
                     typeResolver,
                     exampleResolver,
                     example,
-                    discriminant,
                     discriminantValueForExample,
                     workspace,
                     recursionContext
@@ -815,7 +814,6 @@ function convertSingleUnionType({
     typeResolver,
     exampleResolver,
     example,
-    discriminant,
     discriminantValueForExample,
     workspace,
     recursionContext
@@ -827,7 +825,6 @@ function convertSingleUnionType({
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     example: RawSchemas.ExampleTypeValueSchema;
-    discriminant: string;
     discriminantValueForExample: string;
     workspace: FernWorkspace;
     recursionContext?: RecursionContext;
@@ -876,7 +873,6 @@ function convertSingleUnionType({
             if (!isPlainObject(example)) {
                 throw new Error("Example is not an object");
             }
-            const { [discriminant]: _discriminantValue, ...nonDiscriminantPropertiesFromExample } = example;
             let rawDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
                 referenceToNamedType: rawValueType,
                 file: fileContainingType
@@ -905,7 +901,7 @@ function convertSingleUnionType({
                     typeId: IdGenerator.generateTypeId(typeName),
                     object: convertObject({
                         rawObject: rawDeclaration.declaration,
-                        example: nonDiscriminantPropertiesFromExample,
+                        example,
                         fileContainingType: rawDeclaration.file,
                         fileContainingExample,
                         typeResolver,

@@ -17,7 +17,7 @@ import { FernOpenAPIExtension } from "../../openapi/v3/extensions/fernExtensions
 import { ParseOpenAPIOptions } from "../../options";
 import { convertAvailability } from "../../schema/convertAvailability";
 import { convertReferenceObject, convertSchema } from "../../schema/convertSchemas";
-import { convertUndiscriminatedOneOf, UndiscriminatedOneOfPrefix } from "../../schema/convertUndiscriminatedOneOf";
+import { convertUndiscriminatedOneOf, UndiscriminatedOneOfSuffix } from "../../schema/convertUndiscriminatedOneOf";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
 import { getSchemas } from "../../utils/getSchemas";
@@ -389,10 +389,10 @@ function convertOneOfToSchema({
 }): SchemaWithExample | undefined {
     if ("oneOf" in event.message && event.message.oneOf != null) {
         const subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[] = [];
-        const prefixes: UndiscriminatedOneOfPrefix[] = [];
+        const prefixes: UndiscriminatedOneOfSuffix[] = [];
         for (const schema of event.message.oneOf) {
             let resolvedSchema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject;
-            let namePrefix: UndiscriminatedOneOfPrefix = { type: "notFound" };
+            let namePrefix: UndiscriminatedOneOfSuffix = { type: "notFound" };
             if (isReferenceObject(schema)) {
                 const resolvedMessage = context.resolveMessageReference(schema);
                 if (!isReferenceObject(resolvedMessage.payload) && asyncApiOptions.naming === "v2") {
@@ -426,7 +426,7 @@ function convertOneOfToSchema({
             encoding: undefined,
             source,
             namespace: context.namespace,
-            subtypePrefixOverrides: asyncApiOptions.naming === "v2" ? prefixes : []
+            subtypeSuffixOverrides: asyncApiOptions.naming === "v2" ? prefixes : []
         });
     }
     return undefined;

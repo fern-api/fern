@@ -61,7 +61,7 @@ class ContainerValue(UniversalRootModel):
             return optional(unioned_value.value)
 
 
-from .field_value import FieldValue  # noqa: E402, I001
+from .field_value import FieldValue  # noqa: E402, F401, I001
 
 
 class _ContainerValue:

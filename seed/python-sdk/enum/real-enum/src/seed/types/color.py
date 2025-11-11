@@ -4,21 +4,22 @@ import enum
 import typing
 
 T_Result = typing.TypeVar("T_Result")
+
+
 class Color(str, enum.Enum):
     """
     Examples
     --------
     from seed import Color
-    
+
     Color.RED
     """
+
     RED = "red"
     BLUE = "blue"
-    
+
     def visit(self, red: typing.Callable[[], T_Result], blue: typing.Callable[[], T_Result]) -> T_Result:
         if self is Color.RED:
-            return red(
-            )
+            return red()
         if self is Color.BLUE:
-            return blue(
-            )
+            return blue()
