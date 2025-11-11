@@ -659,6 +659,7 @@
                 "value": {
                   "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -722,6 +723,7 @@
                 "value": {
                   "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -1156,6 +1158,7 @@
                 "value": {
                   "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -1219,6 +1222,7 @@
                 "value": {
                   "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -1950,6 +1954,7 @@
                 "value": {
                   "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -2013,6 +2018,7 @@
                 "value": {
                   "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -3901,6 +3907,7 @@
                 "value": {
                   "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -3964,6 +3971,7 @@
                 "value": {
                   "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -4089,6 +4097,7 @@
                 "value": {
                   "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -4152,6 +4161,7 @@
                 "value": {
                   "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -4772,6 +4782,7 @@
                 "value": {
                   "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -4835,6 +4846,7 @@
                 "value": {
                   "invalidMemberError": {},
                   "message": "message",
+                  "reason": "INVALID_MEMBER",
                 },
               },
             ],
@@ -7682,6 +7694,10 @@ Some entities, such as Organizations, may contain members that exist without any
                 "docs": "Human readable representation of the error",
                 "type": "string",
               },
+              "reason": {
+                "docs": "The machine-readable error reason.",
+                "type": "literal<"INVALID_MEMBER">",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -8163,6 +8179,10 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               "message": {
                 "docs": "Human readable representation of the error",
                 "type": "string",
+              },
+              "reason": {
+                "docs": "The machine-readable error reason.",
+                "type": "literal<"MALFORMED_RESOURCE_IDENTIFIER">",
               },
             },
             "source": {
@@ -10399,6 +10419,7 @@ errors:
     examples:
       - value:
           message: message
+          reason: INVALID_MEMBER
           invalidMemberError: {}
   OrganizationIamUpdateMemberRolesRequestUnprocessableEntityError:
     status-code: 422
@@ -10431,6 +10452,7 @@ errors:
     examples:
       - value:
           message: message
+          reason: INVALID_MEMBER
           invalidMemberError: {}
   OrganizationIamTestPermissionsRequestUnprocessableEntityError:
     status-code: 422
@@ -10852,6 +10874,7 @@ errors:
     examples:
       - value:
           message: message
+          reason: INVALID_MEMBER
           invalidMemberError: {}
   ProjectIamUpdateMemberRolesRequestUnprocessableEntityError:
     status-code: 422
@@ -10884,6 +10907,7 @@ errors:
     examples:
       - value:
           message: message
+          reason: INVALID_MEMBER
           invalidMemberError: {}
   ProjectIamTestPermissionsRequestUnprocessableEntityError:
     status-code: 422
@@ -11156,6 +11180,7 @@ errors:
     examples:
       - value:
           message: message
+          reason: INVALID_MEMBER
           invalidMemberError: {}
   CollectionIamUpdateMemberRolesRequestUnprocessableEntityError:
     status-code: 422
@@ -11188,6 +11213,7 @@ errors:
     examples:
       - value:
           message: message
+          reason: INVALID_MEMBER
           invalidMemberError: {}
   CollectionIamTestPermissionsRequestUnprocessableEntityError:
     status-code: 422
@@ -11445,6 +11471,7 @@ errors:
     examples:
       - value:
           message: message
+          reason: INVALID_MEMBER
           invalidMemberError: {}
   DocumentIamUpdateMemberRolesRequestUnprocessableEntityError:
     status-code: 422
@@ -11477,6 +11504,7 @@ errors:
     examples:
       - value:
           message: message
+          reason: INVALID_MEMBER
           invalidMemberError: {}
   DocumentIamTestPermissionsRequestUnprocessableEntityError:
     status-code: 422
@@ -11669,6 +11697,7 @@ errors:
     examples:
       - value:
           message: message
+          reason: INVALID_MEMBER
           invalidMemberError: {}
   ChatIamUpdateMemberRolesRequestUnprocessableEntityError:
     status-code: 422
@@ -11701,6 +11730,7 @@ errors:
     examples:
       - value:
           message: message
+          reason: INVALID_MEMBER
           invalidMemberError: {}
   ChatIamTestPermissionsRequestUnprocessableEntityError:
     status-code: 422
@@ -13153,6 +13183,7 @@ errors:
     examples:
       - value:
           message: message
+          reason: INVALID_MEMBER
           invalidMemberError: {}
   TaskIamUpdateMemberRolesRequestUnprocessableEntityError:
     status-code: 422
@@ -13185,6 +13216,7 @@ errors:
     examples:
       - value:
           message: message
+          reason: INVALID_MEMBER
           invalidMemberError: {}
   TaskIamTestPermissionsRequestUnprocessableEntityError:
     status-code: 422
@@ -15406,6 +15438,9 @@ types:
       message:
         type: string
         docs: Human readable representation of the error
+      reason:
+        type: literal<"INVALID_MEMBER">
+        docs: The machine-readable error reason.
       invalidMemberError:
         type: InvalidMemberErrorDetails
         docs: Metadata detailing more information about the error.
@@ -15544,6 +15579,9 @@ types:
       message:
         type: string
         docs: Human readable representation of the error
+      reason:
+        type: literal<"MALFORMED_RESOURCE_IDENTIFIER">
+        docs: The machine-readable error reason.
       malformedResourceIdentifierError:
         type: MalformedResourceIdentifierErrorDetails
         docs: Metadata detailing more information about the error.

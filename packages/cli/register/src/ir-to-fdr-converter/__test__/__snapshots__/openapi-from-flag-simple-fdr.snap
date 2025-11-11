@@ -66,6 +66,7 @@
         "id": "getHealth",
         "includeInApiExplorer": undefined,
         "method": "GET",
+        "multiAuth": undefined,
         "name": "Health check endpoint",
         "originalEndpointId": "endpoint_.getHealth",
         "path": {
@@ -188,6 +189,7 @@
         "id": "getUser",
         "includeInApiExplorer": undefined,
         "method": "GET",
+        "multiAuth": undefined,
         "name": "Get user by ID",
         "originalEndpointId": "endpoint_.getUser",
         "path": {
@@ -213,6 +215,7 @@
             {
               "availability": undefined,
               "description": "The unique identifier of the user",
+              "explode": undefined,
               "key": "userId",
               "type": {
                 "type": "primitive",
@@ -235,6 +238,7 @@
           {
             "availability": undefined,
             "description": "Whether to include user metadata",
+            "explode": undefined,
             "key": "includeMetadata",
             "type": {
               "defaultValue": undefined,
@@ -357,6 +361,7 @@
         "id": "createUser",
         "includeInApiExplorer": undefined,
         "method": "POST",
+        "multiAuth": undefined,
         "name": "Create a new user",
         "originalEndpointId": "endpoint_.createUser",
         "path": {

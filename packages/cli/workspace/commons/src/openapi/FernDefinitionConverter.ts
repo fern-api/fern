@@ -43,7 +43,9 @@ export class FernDefinitionConverter {
                         settings?.useBytesForBinaryResponse ?? this.args.useBytesForBinaryResponse,
                     respectForwardCompatibleEnums:
                         settings?.respectForwardCompatibleEnums ?? this.args.respectForwardCompatibleEnums,
-                    groupEnvironmentsByHost: settings?.groupEnvironmentsByHost ?? this.args.groupEnvironmentsByHost
+                    groupEnvironmentsByHost: settings?.groupEnvironmentsByHost ?? this.args.groupEnvironmentsByHost,
+                    removeDiscriminantsFromSchemas:
+                        settings?.removeDiscriminantsFromSchemas ?? this.args.removeDiscriminantsFromSchemas
                 }
             }),
             authOverrides:

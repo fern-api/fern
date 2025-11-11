@@ -87,6 +87,7 @@
         "id": "createEvent",
         "includeInApiExplorer": undefined,
         "method": "POST",
+        "multiAuth": undefined,
         "name": "Create an event",
         "originalEndpointId": "endpoint_.createEvent",
         "path": {

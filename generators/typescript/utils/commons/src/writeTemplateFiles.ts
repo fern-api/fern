@@ -3,6 +3,7 @@ import { template } from "lodash-es";
 import * as path from "path";
 
 export async function writeTemplateFiles(directory: string, templateVariables: Record<string, unknown>): Promise<void> {
+    console.log("variables", templateVariables);
     const templateFiles = await findTemplateFiles(directory);
 
     for (const templateFile of templateFiles) {

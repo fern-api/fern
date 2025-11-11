@@ -195,7 +195,7 @@ try {
 
         const enumName = firstEnum.name.name.pascalCase.safeName;
         const enumCamelCaseName = firstEnum.name.name.camelCase.safeName;
-        const enumNamespace = this.context.getNamespaceFromFernFilepath(firstEnum.name.fernFilepath);
+        const enumNamespace = this.context.common.getNamespaceFromFernFilepath(firstEnum.name.fernFilepath);
         const firstEnumValue = firstEnum.shape.values[0] as EnumValue;
         const firstEnumValueName = firstEnumValue.name.name.pascalCase.safeName;
         const firstEnumValueWire = firstEnumValue.name.wireValue;

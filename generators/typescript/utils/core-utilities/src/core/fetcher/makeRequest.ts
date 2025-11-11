@@ -4,7 +4,7 @@ export const makeRequest = async (
     fetchFn: (url: string, init: RequestInit) => Promise<Response>,
     url: string,
     method: string,
-    headers: Record<string, string>,
+    headers: Headers | Record<string, string>,
     requestBody: BodyInit | undefined,
     timeoutMs?: number,
     abortSignal?: AbortSignal,

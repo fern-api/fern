@@ -33,7 +33,7 @@ export const MANIFEST: CoreUtility.Manifest = {
     pathInCoreUtilities: { nameOnDisk: "logging", exportDeclaration: { namespaceExport: "logging" } },
     dependsOn: [],
     getFilesPatterns: () => {
-        return { patterns: ["src/core/logging/**", "tests/unit/logging/**"] };
+        return { patterns: ["src/core/logging/**", "tests/unit/logging/**", "tests/setup.template.ts"] };
     }
 };
 

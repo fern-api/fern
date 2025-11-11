@@ -75,6 +75,7 @@ it.skip("finds endpoint by id and by path/method", () => {
                 displayName: "Get User",
                 operationId: "getUser",
                 auth: [],
+                multiAuth: undefined,
                 environments: [],
                 defaultEnvironment: FdrAPI.EnvironmentId("defaultEnvironment"),
                 description: "description",

@@ -10,6 +10,7 @@ buildScripts:
   compileScript:
     commands:
       - poetry run mypy .
+      - PYTHONWARNINGS=error::SyntaxWarning python -m compileall -q -f .
 
 publish:
   workingDirectory: generators/python
