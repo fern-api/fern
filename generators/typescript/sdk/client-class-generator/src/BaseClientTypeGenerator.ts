@@ -40,8 +40,8 @@ export class BaseClientTypeGenerator {
             return new Set();
         }
 
-        const errorNamesByEndpoint = allEndpoints.map((endpoint) =>
-            new Set(endpoint.errors.map((e) => JSON.stringify(e.error)))
+        const errorNamesByEndpoint = allEndpoints.map(
+            (endpoint) => new Set(endpoint.errors.map((e) => JSON.stringify(e.error)))
         );
 
         if (errorNamesByEndpoint.length === 0) {
@@ -111,17 +111,15 @@ export class BaseClientTypeGenerator {
                 continue;
             }
 
-            const referenceToBody = generatedSdkErrorSchema != null
-                ? generatedSdkErrorSchema.deserializeBody(context, {
-                    referenceToBody: ts.factory.createPropertyAccessExpression(
-                        ts.factory.createIdentifier("error"),
-                        "body"
-                    )
-                })
-                : ts.factory.createPropertyAccessExpression(
-                    ts.factory.createIdentifier("error"),
-                    "body"
-                );
+            const referenceToBody =
+                generatedSdkErrorSchema != null
+                    ? generatedSdkErrorSchema.deserializeBody(context, {
+                          referenceToBody: ts.factory.createPropertyAccessExpression(
+                              ts.factory.createIdentifier("error"),
+                              "body"
+                          )
+                      })
+                    : ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier("error"), "body");
 
             switchCases.push(
                 ts.factory.createCaseClause(ts.factory.createNumericLiteral(errorDeclaration.statusCode), [
@@ -142,25 +140,29 @@ export class BaseClientTypeGenerator {
                     ts.factory.createIdentifier("error"),
                     "statusCode"
                 ),
-                responseBody: ts.factory.createPropertyAccessExpression(
-                    ts.factory.createIdentifier("error"),
-                    "body"
-                ),
+                responseBody: ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier("error"), "body"),
                 rawResponse: ts.factory.createIdentifier("rawResponse")
             })
         );
 
-        const functionBody = switchCases.length === 0
-            ? ts.factory.createBlock([defaultThrowStatement], true)
-            : ts.factory.createBlock([
-                ts.factory.createSwitchStatement(
-                    ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier("error"), "statusCode"),
-                    ts.factory.createCaseBlock([
-                        ...switchCases,
-                        ts.factory.createDefaultClause([defaultThrowStatement])
-                    ])
-                )
-            ], true);
+        const functionBody =
+            switchCases.length === 0
+                ? ts.factory.createBlock([defaultThrowStatement], true)
+                : ts.factory.createBlock(
+                      [
+                          ts.factory.createSwitchStatement(
+                              ts.factory.createPropertyAccessExpression(
+                                  ts.factory.createIdentifier("error"),
+                                  "statusCode"
+                              ),
+                              ts.factory.createCaseBlock([
+                                  ...switchCases,
+                                  ts.factory.createDefaultClause([defaultThrowStatement])
+                              ])
+                          )
+                      ],
+                      true
+                  );
 
         return ts.factory.createFunctionDeclaration(
             undefined,

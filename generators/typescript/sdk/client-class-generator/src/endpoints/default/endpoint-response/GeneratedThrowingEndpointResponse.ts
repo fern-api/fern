@@ -892,7 +892,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         const globalErrorNamesStrings = new Set(
             Array.from(globalErrorNames).map((errorName) => JSON.stringify(errorName))
         );
-        
+
         const seenStatusCodes = new Set<number>();
         const endpointSpecificErrors = this.endpoint.errors.filter((error) => {
             if (globalErrorNamesStrings.has(JSON.stringify(error.error))) {
