@@ -110,16 +110,11 @@ function mergeOptions<T extends object>(params: {
     overrides?: Partial<T>;
     overrideOnly?: Set<keyof T>;
     undefinedIfAbsent?: Set<keyof T>;
-    keys?: (keyof T)[];
 }): T {
-    const { defaults, options, overrides, overrideOnly = new Set(), undefinedIfAbsent = new Set(), keys } = params;
+    const { defaults, options, overrides, overrideOnly = new Set(), undefinedIfAbsent = new Set() } = params;
     const result = {} as T;
 
-    const keysToIterate = keys ?? (Object.keys(defaults) as (keyof T)[]);
-    const seen = new Set<keyof T>();
-
-    for (const key of keysToIterate) {
-        seen.add(key);
+    for (const key of Object.keys(defaults) as (keyof T)[]) {
         if (overrideOnly.has(key)) {
             result[key] = (overrides?.[key] !== undefined ? overrides[key] : defaults[key]) as T[typeof key];
         } else if (undefinedIfAbsent.has(key)) {
@@ -135,12 +130,6 @@ function mergeOptions<T extends object>(params: {
         }
     }
 
-    for (const key of Object.keys(defaults) as (keyof T)[]) {
-        if (!seen.has(key)) {
-            result[key] = (overrides?.[key] ?? options?.[key] ?? defaults[key]) as T[typeof key];
-        }
-    }
-
     return result;
 }
 
@@ -151,26 +140,9 @@ export function getConvertOptions({
     options?: Partial<ConvertOpenAPIOptions>;
     overrides?: Partial<ConvertOpenAPIOptions>;
 }): ConvertOpenAPIOptions {
-    const orderedKeys: (keyof ConvertOpenAPIOptions)[] = [
-        "enableUniqueErrorsPerEndpoint",
-        "detectGlobalHeaders",
-        "objectQueryParameters",
-        "respectReadonlySchemas",
-        "respectNullableSchemas",
-        "onlyIncludeReferencedSchemas",
-        "inlinePathParameters",
-        "useBytesForBinaryResponse",
-        "respectForwardCompatibleEnums",
-        "wrapReferencesToNullableInOptional",
-        "coerceOptionalSchemasToNullable",
-        "groupEnvironmentsByHost",
-        "removeDiscriminantsFromSchemas"
-    ];
-
     return mergeOptions<ConvertOpenAPIOptions>({
         defaults: DEFAULT_CONVERT_OPENAPI_OPTIONS,
         options,
-        overrides,
-        keys: orderedKeys
+        overrides
     });
 }

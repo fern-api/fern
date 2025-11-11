@@ -20,6 +20,39 @@ export function getAPIDefinitionSettingsDefaults(): APIDefinitionSettings {
 }
 
 /**
+ * Mapping table from generators.yml field names to internal OpenAPISettings field names.
+ * This eliminates the need for manual field-by-field mapping.
+ */
+const FIELD_MAPPINGS: Record<keyof generatorsYml.APIDefinitionSettings, keyof OpenAPISettings | "SPECIAL"> = {
+    shouldUseTitleAsName: "useTitlesAsName",
+    shouldUseUndiscriminatedUnionsWithLiterals: "SPECIAL", // Maps to both shouldUseUndiscriminatedUnionsWithLiterals and discriminatedUnionV2
+    shouldUseIdiomaticRequestNames: "shouldUseIdiomaticRequestNames",
+    asyncApiMessageNaming: "asyncApiNaming",
+    shouldUseOptionalAdditionalProperties: "optionalAdditionalProperties",
+    coerceEnumsToLiterals: "coerceEnumsToLiterals",
+    objectQueryParameters: "objectQueryParameters",
+    respectReadonlySchemas: "respectReadonlySchemas",
+    respectNullableSchemas: "respectNullableSchemas",
+    onlyIncludeReferencedSchemas: "onlyIncludeReferencedSchemas",
+    inlinePathParameters: "inlinePathParameters",
+    useBytesForBinaryResponse: "useBytesForBinaryResponse",
+    respectForwardCompatibleEnums: "respectForwardCompatibleEnums",
+    filter: "filter",
+    defaultFormParameterEncoding: "defaultFormParameterEncoding",
+    exampleGeneration: "exampleGeneration",
+    additionalPropertiesDefaultsTo: "additionalPropertiesDefaultsTo",
+    typeDatesAsStrings: "typeDatesAsStrings",
+    preserveSingleSchemaOneOf: "preserveSingleSchemaOneOf",
+    inlineAllOfSchemas: "inlineAllOfSchemas",
+    resolveAliases: "resolveAliases",
+    groupMultiApiEnvironments: "groupMultiApiEnvironments",
+    groupEnvironmentsByHost: "groupEnvironmentsByHost",
+    wrapReferencesToNullableInOptional: "wrapReferencesToNullableInOptional",
+    coerceOptionalSchemasToNullable: "coerceOptionalSchemasToNullable",
+    removeDiscriminantsFromSchemas: "removeDiscriminantsFromSchemas"
+};
+
+/**
  * Convert settings from generators.yml format to internal APIDefinitionSettings format.
  * This applies all defaults for any settings not explicitly specified.
  *
@@ -27,34 +60,25 @@ export function getAPIDefinitionSettingsDefaults(): APIDefinitionSettings {
  * @returns Complete APIDefinitionSettings with all defaults applied
  */
 export function getAPIDefinitionSettings(settings?: generatorsYml.APIDefinitionSettings): APIDefinitionSettings {
-    const mappedSettings: Partial<OpenAPISettings> = {
-        useTitlesAsName: settings?.shouldUseTitleAsName,
-        shouldUseUndiscriminatedUnionsWithLiterals: settings?.shouldUseUndiscriminatedUnionsWithLiterals,
-        discriminatedUnionV2: settings?.shouldUseUndiscriminatedUnionsWithLiterals,
-        shouldUseIdiomaticRequestNames: settings?.shouldUseIdiomaticRequestNames,
-        optionalAdditionalProperties: settings?.shouldUseOptionalAdditionalProperties,
-        coerceEnumsToLiterals: settings?.coerceEnumsToLiterals,
-        objectQueryParameters: settings?.objectQueryParameters,
-        respectReadonlySchemas: settings?.respectReadonlySchemas,
-        respectNullableSchemas: settings?.respectNullableSchemas,
-        onlyIncludeReferencedSchemas: settings?.onlyIncludeReferencedSchemas,
-        inlinePathParameters: settings?.inlinePathParameters,
-        asyncApiNaming: settings?.asyncApiMessageNaming,
-        filter: settings?.filter,
-        exampleGeneration: settings?.exampleGeneration,
-        defaultFormParameterEncoding: settings?.defaultFormParameterEncoding,
-        useBytesForBinaryResponse: settings?.useBytesForBinaryResponse,
-        respectForwardCompatibleEnums: settings?.respectForwardCompatibleEnums,
-        additionalPropertiesDefaultsTo: settings?.additionalPropertiesDefaultsTo,
-        typeDatesAsStrings: settings?.typeDatesAsStrings,
-        preserveSingleSchemaOneOf: settings?.preserveSingleSchemaOneOf,
-        inlineAllOfSchemas: settings?.inlineAllOfSchemas,
-        resolveAliases: settings?.resolveAliases,
-        groupMultiApiEnvironments: settings?.groupMultiApiEnvironments,
-        wrapReferencesToNullableInOptional: settings?.wrapReferencesToNullableInOptional,
-        coerceOptionalSchemasToNullable: settings?.coerceOptionalSchemasToNullable,
-        groupEnvironmentsByHost: settings?.groupEnvironmentsByHost
-    };
+    const mappedSettings: Partial<OpenAPISettings> = {};
+
+    if (settings != null) {
+        for (const [yamlKey, internalKey] of Object.entries(FIELD_MAPPINGS) as Array<
+            [keyof generatorsYml.APIDefinitionSettings, keyof OpenAPISettings | "SPECIAL"]
+        >) {
+            const value = settings[yamlKey];
+            if (value !== undefined) {
+                if (internalKey === "SPECIAL") {
+                    if (yamlKey === "shouldUseUndiscriminatedUnionsWithLiterals") {
+                        mappedSettings.shouldUseUndiscriminatedUnionsWithLiterals = value as boolean;
+                        mappedSettings.discriminatedUnionV2 = value as boolean;
+                    }
+                } else {
+                    mappedSettings[internalKey] = value as OpenAPISettings[typeof internalKey];
+                }
+            }
+        }
+    }
 
     return getOpenAPISettings({ options: mappedSettings });
 }

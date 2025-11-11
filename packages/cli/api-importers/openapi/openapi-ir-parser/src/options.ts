@@ -132,16 +132,11 @@ function mergeOptions<T extends object>(params: {
     overrides?: Partial<T>;
     overrideOnly?: Set<keyof T>;
     undefinedIfAbsent?: Set<keyof T>;
-    keys?: (keyof T)[];
 }): T {
-    const { defaults, options, overrides, overrideOnly = new Set(), undefinedIfAbsent = new Set(), keys } = params;
+    const { defaults, options, overrides, overrideOnly = new Set(), undefinedIfAbsent = new Set() } = params;
     const result = {} as T;
 
-    const keysToIterate = keys ?? (Object.keys(defaults) as (keyof T)[]);
-    const seen = new Set<keyof T>();
-
-    for (const key of keysToIterate) {
-        seen.add(key);
+    for (const key of Object.keys(defaults) as (keyof T)[]) {
         if (overrideOnly.has(key)) {
             result[key] = (overrides?.[key] !== undefined ? overrides[key] : defaults[key]) as T[typeof key];
         } else if (undefinedIfAbsent.has(key)) {
@@ -153,12 +148,6 @@ function mergeOptions<T extends object>(params: {
                       : undefined
             ) as T[typeof key];
         } else {
-            result[key] = (overrides?.[key] ?? options?.[key] ?? defaults[key]) as T[typeof key];
-        }
-    }
-
-    for (const key of Object.keys(defaults) as (keyof T)[]) {
-        if (!seen.has(key)) {
             result[key] = (overrides?.[key] ?? options?.[key] ?? defaults[key]) as T[typeof key];
         }
     }
@@ -176,45 +165,11 @@ export function getParseOptions({
     const overrideOnly = new Set<keyof ParseOpenAPIOptions>(["disableExamples", "preserveSchemaIds"]);
     const undefinedIfAbsent = new Set<keyof ParseOpenAPIOptions>(["exampleGeneration", "defaultFormParameterEncoding"]);
 
-    const orderedKeys: (keyof ParseOpenAPIOptions)[] = [
-        "disableExamples",
-        "discriminatedUnionV2",
-        "useTitlesAsName",
-        "audiences",
-        "optionalAdditionalProperties",
-        "coerceEnumsToLiterals",
-        "respectReadonlySchemas",
-        "respectNullableSchemas",
-        "onlyIncludeReferencedSchemas",
-        "inlinePathParameters",
-        "preserveSchemaIds",
-        "shouldUseUndiscriminatedUnionsWithLiterals",
-        "shouldUseIdiomaticRequestNames",
-        "objectQueryParameters",
-        "filter",
-        "asyncApiNaming",
-        "useBytesForBinaryResponse",
-        "exampleGeneration",
-        "defaultFormParameterEncoding",
-        "respectForwardCompatibleEnums",
-        "additionalPropertiesDefaultsTo",
-        "typeDatesAsStrings",
-        "preserveSingleSchemaOneOf",
-        "inlineAllOfSchemas",
-        "resolveAliases",
-        "groupMultiApiEnvironments",
-        "groupEnvironmentsByHost",
-        "wrapReferencesToNullableInOptional",
-        "coerceOptionalSchemasToNullable",
-        "removeDiscriminantsFromSchemas"
-    ];
-
     return mergeOptions<ParseOpenAPIOptions>({
         defaults: DEFAULT_PARSE_OPENAPI_SETTINGS,
         options,
         overrides,
         overrideOnly,
-        undefinedIfAbsent,
-        keys: orderedKeys
+        undefinedIfAbsent
     });
 }

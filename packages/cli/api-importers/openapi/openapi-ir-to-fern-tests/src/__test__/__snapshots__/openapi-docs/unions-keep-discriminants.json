@@ -25,6 +25,7 @@
             "inline": undefined,
             "properties": {
               "sideLength": "double",
+              "type": "literal<"square">",
             },
             "source": {
               "openapi": "../openapi.json",
@@ -36,6 +37,7 @@
             "properties": {
               "base": "double",
               "height": "double",
+              "type": "literal<"triangle">",
             },
             "source": {
               "openapi": "../openapi.json",
@@ -54,12 +56,14 @@
       openapi: ../openapi.json
   Triangle:
     properties:
+      type: literal<"triangle">
       base: double
       height: double
     source:
       openapi: ../openapi.json
   Square:
     properties:
+      type: literal<"square">
       sideLength: double
     source:
       openapi: ../openapi.json

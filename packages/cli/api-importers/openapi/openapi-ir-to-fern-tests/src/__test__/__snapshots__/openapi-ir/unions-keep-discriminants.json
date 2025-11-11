@@ -50,6 +50,21 @@
         "properties": [
           {
             "conflict": {},
+            "generatedName": "triangleType",
+            "key": "type",
+            "schema": {
+              "value": {
+                "value": "triangle",
+                "type": "string"
+              },
+              "generatedName": "TriangleType",
+              "groupName": [],
+              "type": "literal"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
             "generatedName": "triangleBase",
             "key": "base",
             "schema": {
@@ -90,6 +105,21 @@
       "Square": {
         "allOf": [],
         "properties": [
+          {
+            "conflict": {},
+            "generatedName": "squareType",
+            "key": "type",
+            "schema": {
+              "value": {
+                "value": "square",
+                "type": "string"
+              },
+              "generatedName": "SquareType",
+              "groupName": [],
+              "type": "literal"
+            },
+            "audiences": []
+          },
           {
             "conflict": {},
             "generatedName": "squareSideLength",
