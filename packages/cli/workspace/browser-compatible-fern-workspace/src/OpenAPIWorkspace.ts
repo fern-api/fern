@@ -1,7 +1,7 @@
 import { BaseOpenAPIWorkspace, BaseOpenAPIWorkspaceSync } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
-import { parse, ParseOpenAPIOptions, getParseOptions } from "@fern-api/openapi-ir-parser";
+import { parse, ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPI } from "openapi-types";
@@ -64,6 +64,9 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             respectReadonlySchemas: this.respectReadonlySchemas,
             inlinePathParameters: this.inlinePathParameters,
             objectQueryParameters: this.objectQueryParameters,
+            useBytesForBinaryResponse: this.useBytesForBinaryResponse,
+            respectForwardCompatibleEnums: this.respectForwardCompatibleEnums,
+            resolveAliases: this.resolveAliases,
             groupEnvironmentsByHost: this.groupEnvironmentsByHost
         };
     }
@@ -80,7 +83,10 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
         return parse({
             context,
             documents: [document],
-            options: getParseOptions({ options: this.parseOptions, overrides: options })
+            options: {
+                ...this.parseOptions,
+                ...options
+            }
         });
     }
 

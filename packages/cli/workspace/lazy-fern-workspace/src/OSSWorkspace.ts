@@ -15,7 +15,7 @@ import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } fr
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
-import { parse, ParseOpenAPIOptions, getParseOptions } from "@fern-api/openapi-ir-parser";
+import { parse, ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
 import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-to-ir";
 import { OpenRPCConverter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir";
 import { TaskContext } from "@fern-api/task-context";
@@ -111,17 +111,19 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         this.loader = new OpenAPILoader(this.absoluteFilePath);
         this.groupMultiApiEnvironments = this.specs.some((spec) => spec.settings?.groupMultiApiEnvironments);
         this.parseOptions = {
+            onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas,
             respectReadonlySchemas: this.respectReadonlySchemas,
             respectNullableSchemas: this.respectNullableSchemas,
             wrapReferencesToNullableInOptional: this.wrapReferencesToNullableInOptional,
-            removeDiscriminantsFromSchemas: this.removeDiscriminantsFromSchemas,
-            onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas,
+            coerceOptionalSchemasToNullable: this.coerceOptionalSchemasToNullable,
             inlinePathParameters: this.inlinePathParameters,
             objectQueryParameters: this.objectQueryParameters,
             exampleGeneration: this.exampleGeneration,
             useBytesForBinaryResponse: this.useBytesForBinaryResponse,
+            respectForwardCompatibleEnums: this.respectForwardCompatibleEnums,
             inlineAllOfSchemas: this.inlineAllOfSchemas,
             resolveAliases: this.resolveAliases,
+            removeDiscriminantsFromSchemas: this.removeDiscriminantsFromSchemas,
             groupMultiApiEnvironments: this.groupMultiApiEnvironments,
             groupEnvironmentsByHost: this.groupEnvironmentsByHost
         };
@@ -144,7 +146,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 context,
                 specs: openApiSpecs
             }),
-            options: getParseOptions({ options: this.parseOptions, overrides: settings })
+            options: {
+                ...this.parseOptions,
+                ...settings
+            }
         });
     }
 
