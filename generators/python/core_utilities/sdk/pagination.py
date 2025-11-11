@@ -1,16 +1,12 @@
 from __future__ import annotations
 
-import sys
 from dataclasses import dataclass
-from typing import Any, AsyncIterator, Awaitable, Callable, Generic, Iterator, List, Optional, TypeVar
+from typing import AsyncIterator, Awaitable, Callable, Generic, Iterator, List, Optional, TypeVar
 
 # Generic to represent the underlying type of the results within a page
 T = TypeVar("T")
 # Generic to represent the type of the API response
-if sys.version_info >= (3, 12):
-    R = TypeVar("R", default=Any)  # type: ignore[call-arg]
-else:
-    R = TypeVar("R")
+R = TypeVar("R")
 
 
 # SDKs implement a Page ABC per-pagination request, the endpoint then returns a pager that wraps this type
