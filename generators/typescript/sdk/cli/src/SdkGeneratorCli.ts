@@ -208,6 +208,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 includeContentHeadersOnFileDownloadResponse: customConfig.includeContentHeadersOnFileDownloadResponse,
                 includeSerdeLayer: !customConfig.noSerdeLayer,
                 retainOriginalCasing: customConfig.retainOriginalCasing ?? false,
+                parameterNaming: customConfig.parameterNaming,
                 noOptionalProperties: customConfig.noOptionalProperties,
                 tolerateRepublish: customConfig.tolerateRepublish,
                 allowExtraFields: customConfig.allowExtraFields ?? false,

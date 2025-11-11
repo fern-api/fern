@@ -130,6 +130,7 @@ export declare namespace SdkGenerator {
         noOptionalProperties: boolean;
         tolerateRepublish: boolean;
         retainOriginalCasing: boolean;
+        parameterNaming?: "originalName" | "wireValue" | "camelCase" | "snakeCase";
         allowExtraFields: boolean;
         writeUnitTests: boolean;
         inlineFileProperties: boolean;
