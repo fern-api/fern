@@ -2,7 +2,13 @@ export * as ast from "./ast";
 export { convertReadOnlyPrimitiveTypes } from "./ast";
 export { Writer } from "./ast/core/Writer";
 export { CsharpGeneratorContext } from "./context/CsharpGeneratorContext";
-export { Generation, type TAbsoluteFilePath, type TRelativeFilePath } from "./context/generation-info";
+export {
+    type MinimalGeneratorConfig,
+    type Support,
+    type TAbsoluteFilePath,
+    type TRelativeFilePath
+} from "./context/common";
+export { Generation } from "./context/generation-info";
 export { NameRegistry } from "./context/name-registry";
 export { CSharp } from "./csharp";
 export { BaseCsharpCustomConfigSchema } from "./custom-config";
