@@ -471,7 +471,6 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 generatedFile -> generatedFile.write(outputDirectory, true, customConfig.packagePrefix()));
         if (publishResult.generateFullProject()) {
             copyGradleWrapperFromResources(outputDirectory);
-            runCommandBlocking(new String[] {"./gradlew", ":spotlessApply"}, outputDirectory, Collections.emptyMap());
         }
     }
 
@@ -513,7 +512,6 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         // write files to disk
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
         copyGradleWrapperFromResources(outputDirectory);
-        runCommandBlocking(new String[] {"./gradlew", ":spotlessApply"}, outputDirectory, Collections.emptyMap());
     }
 
     public boolean customConfigPublishToCentral(GeneratorConfig _generatorConfig) {
@@ -556,7 +554,6 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
         copyGradleWrapperFromResources(outputDirectory);
-        runCommandBlocking(new String[] {"./gradlew", ":spotlessApply"}, outputDirectory, Collections.emptyMap());
 
         // run publish
         if (!generatorConfig.getDryRun()) {
