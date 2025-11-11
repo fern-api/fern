@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Improve error message for unknown API definitions in docs.yml.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.115.3
+
+- changelogEntry:
+    - summary: |
         Fix gRPC source resolution to log warnings instead of throwing errors when protobuf sources cannot be resolved, matching OpenAPI behavior.
       type: fix
   irVersion: 61
