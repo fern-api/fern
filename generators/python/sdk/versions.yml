@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.36.0
+- version: 4.35.4
   changelogEntry:
     - summary: Add custom license file copying and GitHub installation token population for local generation workflows
       type: feat
