@@ -261,12 +261,10 @@ navigation:
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             expect(
-                ((parsed.navigation as Array<Record<string, unknown>>)[0]?.layout as Array<Record<string, unknown>>)[0]!
-                    .slug
+                ((parsed.navigation as Array<Record<string, unknown>>)[0]?.layout as Array<Record<string, unknown>>)[0]?.slug
             ).toBe("getting-started");
             expect(
-                ((parsed.navigation as Array<Record<string, unknown>>)[0]?.layout as Array<Record<string, unknown>>)[1]!
-                    .slug
+                ((parsed.navigation as Array<Record<string, unknown>>)[0]?.layout as Array<Record<string, unknown>>)[1]?.slug
             ).toBe("api-guide");
             expect(
                 (
@@ -366,7 +364,7 @@ tabs:
 
             type TabsRecord = Record<string, { "display-name": string; icon: string; slug?: string }>;
             const tabs = parsed.tabs as TabsRecord;
-            expect(tabs["getting-started"]!["display-name"]).toBe("[TRANSLATED] Getting Started");
+            expect(tabs["getting-started"]?.["display-name"]).toBe("[TRANSLATED] Getting Started");
             expect(tabs["getting-started"]?.slug).toBe("getting-started");
         });
 
@@ -436,7 +434,7 @@ products:
             type ProductItem = { "display-name": string; icon: string; path: string; slug?: string };
             type ProductsDoc = { products: ProductItem[] };
             const doc = parsed as ProductsDoc;
-            expect(doc.products[0]!["display-name"]).toBe("[TRANSLATED] Core Platform");
+            expect(doc.products[0]?.["display-name"]).toBe("[TRANSLATED] Core Platform");
             expect(doc.products[0]?.slug).toBe("core-platform");
         });
 
