@@ -13,7 +13,7 @@ type DocsDefinition = DocsV1Write.DocsDefinition;
 
 import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { convertIrToFdrApi } from "@fern-api/register";
+import { AIExampleEnhancerConfig, convertIrToFdrApi, enhanceExamplesWithAI } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import axios from "axios";
@@ -231,7 +231,13 @@ export async function publishDocs({
             }
         },
         registerApi: async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
-            const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
+            let apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
+
+            // Enhance examples with AI if configuration is provided
+            const aiEnhancerConfig = getAIEnhancerConfig();
+            if (aiEnhancerConfig) {
+                apiDefinition = await enhanceExamplesWithAI(apiDefinition, aiEnhancerConfig, context);
+            }
 
             // create dynamic IR + metadata for each generator language
             let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
@@ -694,4 +700,21 @@ async function updateAiChatFromDocsDefinition({
             );
         }
     }
+}
+
+function getAIEnhancerConfig(): AIExampleEnhancerConfig | undefined {
+    const openaiApiKey = process.env.OPENAI_API_KEY;
+
+    // Only enable if the API key is present
+    if (!openaiApiKey) {
+        return undefined;
+    }
+
+    return {
+        enabled: true,
+        openaiApiKey,
+        model: process.env.FERN_AI_MODEL || "gpt-4o-mini",
+        maxRetries: parseInt(process.env.FERN_AI_MAX_RETRIES || "3"),
+        requestTimeoutMs: parseInt(process.env.FERN_AI_TIMEOUT_MS || "30000")
+    };
 }

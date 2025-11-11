@@ -21,7 +21,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -46,7 +48,8 @@
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "lodash-es": "^4.17.21"
+    "lodash-es": "^4.17.21",
+    "openai": "^6.8.1"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
