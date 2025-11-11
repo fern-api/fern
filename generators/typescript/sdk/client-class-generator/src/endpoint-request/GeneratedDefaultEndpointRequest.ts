@@ -24,6 +24,7 @@ import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
 import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
+import { PathOnlyRequestParameter } from "../request-parameter/PathOnlyRequestParameter";
 import { RequestBodyParameter } from "../request-parameter/RequestBodyParameter";
 import { RequestParameter } from "../request-parameter/RequestParameter";
 import { RequestWrapperParameter } from "../request-parameter/RequestWrapperParameter";
@@ -103,6 +104,23 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         this.exportsManager = exportsManager;
     }
 
+    /**
+     * Ensures that a request parameter exists when inlinePathParameters is "always"
+     * but sdkRequest is null. Creates a synthetic PathOnlyRequestParameter in this case.
+     */
+    private ensureRequestParameter(context: SdkContext): void {
+        if (
+            this.requestParameter == null &&
+            context.requestWrapper.shouldInlinePathParameters(this.endpoint.sdkRequest)
+        ) {
+            this.requestParameter = new PathOnlyRequestParameter({
+                packageId: this.packageId,
+                service: this.service,
+                endpoint: this.endpoint
+            });
+        }
+    }
+
     public getRequestParameter(context: SdkContext): ts.TypeNode | undefined {
         return this.requestParameter?.getType(context);
     }
@@ -110,6 +128,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     public getEndpointParameters(
         context: SdkContext
     ): OptionalKind<ParameterDeclarationStructure & { docs?: string }>[] {
+        this.ensureRequestParameter(context);
         const parameters: OptionalKind<ParameterDeclarationStructure & { docs?: string }>[] = [];
         for (const pathParameter of getPathParametersForEndpointSignature({
             service: this.service,
@@ -144,6 +163,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         example: ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Expression[] | undefined {
+        this.ensureRequestParameter(context);
         const exampleParameters = [...example.servicePathParameters, ...example.endpointPathParameters];
         const result: ts.Expression[] = [];
         for (const pathParameter of getPathParametersForEndpointSignature({
@@ -179,6 +199,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     }
 
     public getBuildRequestStatements(context: SdkContext): ts.Statement[] {
+        this.ensureRequestParameter(context);
         const statements: ts.Statement[] = [];
 
         if (this.requestParameter != null) {
@@ -388,6 +409,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     }
 
     public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
+        this.ensureRequestParameter(context);
         if (this.requestParameter == null) {
             throw new Error("Cannot get reference to path parameter because request parameter is not defined.");
         }
@@ -395,6 +417,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     }
 
     public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
+        this.ensureRequestParameter(context);
         if (this.requestParameter == null) {
             throw new Error("Cannot get reference to query parameter because request parameter is not defined.");
         }

@@ -20,6 +20,8 @@ import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHe
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter";
+import { PathOnlyRequestParameter } from "../request-parameter/PathOnlyRequestParameter";
+import { RequestParameter } from "../request-parameter/RequestParameter";
 import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest";
 
 export declare namespace GeneratedBytesEndpointRequest {
@@ -40,7 +42,8 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     private static readonly UPLOADABLE_PARAMETER_NAME = "uploadable";
 
     private ir: IntermediateRepresentation;
-    private requestParameter: FileUploadRequestParameter | undefined;
+    private packageId: PackageId;
+    private requestParameter: RequestParameter | undefined;
     private queryParams: GeneratedQueryParams | undefined;
     private service: HttpService;
     private endpoint: HttpEndpoint;
@@ -58,6 +61,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         retainOriginalCasing
     }: GeneratedBytesEndpointRequest.Init) {
         this.ir = ir;
+        this.packageId = packageId;
         this.service = service;
         this.endpoint = endpoint;
         this.requestBody = requestBody;
@@ -75,6 +79,23 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
                 service,
                 endpoint,
                 sdkRequest: this.endpoint.sdkRequest
+            });
+        }
+    }
+
+    /**
+     * Ensures that a request parameter exists when inlinePathParameters is "always"
+     * but sdkRequest is null. Creates a synthetic PathOnlyRequestParameter in this case.
+     */
+    private ensureRequestParameter(context: SdkContext): void {
+        if (
+            this.requestParameter == null &&
+            context.requestWrapper.shouldInlinePathParameters(this.endpoint.sdkRequest)
+        ) {
+            this.requestParameter = new PathOnlyRequestParameter({
+                packageId: this.packageId,
+                service: this.service,
+                endpoint: this.endpoint
             });
         }
     }
@@ -114,6 +135,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         example: ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Expression[] | undefined {
+        this.ensureRequestParameter(context);
         const exampleParameters = [...example.servicePathParameters, ...example.endpointPathParameters];
         const result: ts.Expression[] = [
             ts.factory.createCallExpression(ts.factory.createIdentifier("createReadStream"), undefined, [
@@ -154,6 +176,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     }
 
     public getEndpointParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure>[] {
+        this.ensureRequestParameter(context);
         const parameters: OptionalKind<ParameterDeclarationStructure>[] = [
             {
                 name: GeneratedBytesEndpointRequest.UPLOADABLE_PARAMETER_NAME,
@@ -193,6 +216,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     }
 
     public getBuildRequestStatements(context: SdkContext): ts.Statement[] {
+        this.ensureRequestParameter(context);
         const statements: ts.Statement[] = [];
 
         if (this.requestParameter != null) {
@@ -267,6 +291,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     }
 
     public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
+        this.ensureRequestParameter(context);
         if (this.requestParameter == null) {
             throw new Error("Cannot get reference to path parameter because request parameter is not defined.");
         }
@@ -274,6 +299,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     }
 
     public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
+        this.ensureRequestParameter(context);
         if (this.requestParameter == null) {
             throw new Error("Cannot get reference to query parameter because request parameter is not defined.");
         }

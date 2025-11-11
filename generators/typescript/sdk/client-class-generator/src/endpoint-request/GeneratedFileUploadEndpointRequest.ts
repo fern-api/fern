@@ -23,6 +23,8 @@ import { getParameterNameForFile } from "../endpoints/utils/getParameterNameForF
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter";
+import { PathOnlyRequestParameter } from "../request-parameter/PathOnlyRequestParameter";
+import { RequestParameter } from "../request-parameter/RequestParameter";
 import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest";
 
 export declare namespace GeneratedFileUploadEndpointRequest {
@@ -49,7 +51,8 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
 
     private importsManager: ImportsManager;
     private ir: IntermediateRepresentation;
-    private requestParameter: FileUploadRequestParameter | undefined;
+    private packageId: PackageId;
+    private requestParameter: RequestParameter | undefined;
     private queryParams: GeneratedQueryParams | undefined;
     private service: HttpService;
     private endpoint: HttpEndpoint;
@@ -78,6 +81,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         formDataSupport
     }: GeneratedFileUploadEndpointRequest.Init) {
         this.ir = ir;
+        this.packageId = packageId;
         this.service = service;
         this.endpoint = endpoint;
         this.requestBody = requestBody;
@@ -105,6 +109,23 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                 service,
                 endpoint,
                 sdkRequest: this.endpoint.sdkRequest
+            });
+        }
+    }
+
+    /**
+     * Ensures that a request parameter exists when inlinePathParameters is "always"
+     * but sdkRequest is null. Creates a synthetic PathOnlyRequestParameter in this case.
+     */
+    private ensureRequestParameter(context: SdkContext): void {
+        if (
+            this.requestParameter == null &&
+            context.requestWrapper.shouldInlinePathParameters(this.endpoint.sdkRequest)
+        ) {
+            this.requestParameter = new PathOnlyRequestParameter({
+                packageId: this.packageId,
+                service: this.service,
+                endpoint: this.endpoint
             });
         }
     }
@@ -144,6 +165,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         example: ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Expression[] | undefined {
+        this.ensureRequestParameter(context);
         const exampleParameters = [...example.servicePathParameters, ...example.endpointPathParameters];
         const result: ts.Expression[] = [];
         if (!context.inlineFileProperties) {
@@ -195,6 +217,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     }
 
     public getEndpointParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure>[] {
+        this.ensureRequestParameter(context);
         const parameters: OptionalKind<ParameterDeclarationStructure>[] = [];
         if (!context.inlineFileProperties) {
             for (const property of this.requestBody.properties) {
@@ -276,6 +299,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     }
 
     public getBuildRequestStatements(context: SdkContext): ts.Statement[] {
+        this.ensureRequestParameter(context);
         const statements: ts.Statement[] = [];
 
         if (this.requestParameter != null) {
@@ -393,6 +417,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     }
 
     public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
+        this.ensureRequestParameter(context);
         if (this.requestParameter == null) {
             throw new Error("Cannot get reference to path parameter because request parameter is not defined.");
         }
@@ -400,6 +425,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     }
 
     public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
+        this.ensureRequestParameter(context);
         if (this.requestParameter == null) {
             throw new Error("Cannot get reference to query parameter because request parameter is not defined.");
         }
