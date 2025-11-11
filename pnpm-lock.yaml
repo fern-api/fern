@@ -6225,9 +6225,6 @@ importers:
       '@fern-api/rust-dynamic-snippets':
         specifier: workspace:*
         version: link:../../../../../generators/rust/dynamic-snippets
-      '@fern-api/sdk':
-        specifier: 0.12.3
-        version: 0.12.3
       '@fern-api/swift-dynamic-snippets':
         specifier: workspace:*
         version: link:../../../../../generators/swift/dynamic-snippets
@@ -6255,9 +6252,6 @@ importers:
       decompress:
         specifier: ^4.2.1
         version: 4.2.1
-      prettier2:
-        specifier: npm:prettier@^2.7.1
-        version: prettier@2.8.8
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
@@ -6271,9 +6265,6 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
-      '@types/prettier2':
-        specifier: npm:@types/prettier@^2.7.3
-        version: '@types/prettier@2.7.3'
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -9800,12 +9791,6 @@ packages:
 
   '@fern-api/logger@0.4.24-rc1':
     resolution: {integrity: sha512-yh0E2F3K3IPnJZcE4dv+u8I51iKgTgv/reinKo4K5YmYEG1iLtw5vBEYMOPkQmsYFPAKIh++OMB/6TrsahMWew==}
-
-  '@fern-api/sdk@0.12.3':
-    resolution: {integrity: sha512-sexxpQEHBmsAXW3UHo5x7NW8Z9TrHWYLGo/J7eFqHYSH8Sq9LA3vRlR0ni9h4FNlKnPDu9Y55L0BhsQVXYqPKA==}
-
-  '@fern-api/template-resolver@0.7.5':
-    resolution: {integrity: sha512-hmvSxuhyWMjn1DxJJS/R+CIaZcF5c+UBEyFqFOw+laoBtdDvNgEyCu7XP5cILVMABPHmt7kkIO5KbrsCS5S2kw==}
 
   '@fern-api/ui-core-utils@0.0.0':
     resolution: {integrity: sha512-8T3YLd+n8z5Vs+WNRIwH6PUW31ZC4/lkRD5G2+qyBcdePfOVYV3CHp3eiUrSSArOr0SJmzN/mQwPm3iAaey7nw==}
@@ -17772,22 +17757,6 @@ snapshots:
     dependencies:
       '@fern-api/core-utils': 0.4.24-rc1
       chalk: 5.6.2
-
-  '@fern-api/sdk@0.12.3':
-    dependencies:
-      '@fern-api/template-resolver': 0.7.5
-      form-data: 4.0.4
-      formdata-node: 6.0.3
-      js-base64: 3.7.2
-      node-fetch: 2.7.0
-      qs: 6.13.0
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - encoding
-
-  '@fern-api/template-resolver@0.7.5':
-    dependencies:
-      prettier: 3.6.2
 
   '@fern-api/ui-core-utils@0.0.0':
     dependencies:
