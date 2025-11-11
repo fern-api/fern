@@ -375,7 +375,8 @@ export class SdkGenerator {
             generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
             requireDefaultEnvironment: config.requireDefaultEnvironment,
             retainOriginalCasing: config.retainOriginalCasing,
-            baseClientTypeDeclarationReferencer: this.baseClientTypeDeclarationReferencer
+            baseClientTypeDeclarationReferencer: this.baseClientTypeDeclarationReferencer,
+            errorResolver: this.errorResolver
         });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
             containingDirectory: [],
@@ -590,12 +591,10 @@ export class SdkGenerator {
         if (this.config.neverThrowErrors) {
             this.generateEndpointErrorUnion();
         }
-        if (!this.config.neverThrowErrors || this.generateOAuthClients) {
-            this.generateGenericAPISdkError();
-            this.generateTimeoutSdkError();
-            if (this.config.includeSerdeLayer) {
-                this.generateSdkErrorSchemas();
-            }
+        this.generateGenericAPISdkError();
+        this.generateTimeoutSdkError();
+        if (this.config.includeSerdeLayer && (!this.config.neverThrowErrors || this.generateOAuthClients)) {
+            this.generateSdkErrorSchemas();
         }
 
         let exportSerde: boolean = false;

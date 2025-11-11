@@ -2,6 +2,7 @@
 
 import type * as core from "./core/index.js";
 import type * as environments from "./environments.js";
+import * as errors from "./errors/index.js";
 
 export interface BaseClientOptions {
     environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
@@ -35,4 +36,41 @@ export interface BaseRequestOptions {
     queryParams?: Record<string, unknown>;
     /** Additional headers to include in the request. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
+}
+export function handleGlobalStatusCodeError(
+    error: core.Fetcher.FailedStatusCodeError,
+    rawResponse: core.RawResponse,
+): never {
+    throw new errors.SeedTraceError({
+        statusCode: error.statusCode,
+        body: error.body,
+        rawResponse: rawResponse,
+    });
+}
+export function handleNonStatusCodeError(
+    error: core.Fetcher.Error,
+    rawResponse: core.RawResponse,
+    method: string,
+    path: string,
+): never {
+    switch (error.reason) {
+        case "non-json":
+            throw new errors.SeedTraceError({
+                statusCode: error.statusCode,
+                body: error.rawBody,
+                rawResponse: rawResponse,
+            });
+        case "timeout":
+            throw new errors.SeedTraceTimeoutError(`Timeout exceeded when calling ${method} ${path}.`);
+        case "unknown":
+            throw new errors.SeedTraceError({
+                message: error.errorMessage,
+                rawResponse: rawResponse,
+            });
+        default:
+            throw new errors.SeedTraceError({
+                message: "Unknown error",
+                rawResponse: rawResponse,
+            });
+    }
 }

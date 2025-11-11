@@ -10,6 +10,7 @@ import {
     Reference
 } from "@fern-typescript/commons";
 import { BaseClientContext, SdkContext } from "@fern-typescript/contexts";
+import { ErrorResolver } from "@fern-typescript/resolvers";
 import { endpointUtils } from "@fern-typescript/sdk-client-class-generator";
 import {
     InterfaceDeclarationStructure,
@@ -29,6 +30,7 @@ export declare namespace BaseClientContextImpl {
         retainOriginalCasing: boolean;
         generateIdempotentRequestOptions: boolean;
         baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
+        errorResolver: ErrorResolver;
     }
 }
 const OPTIONS_INTERFACE_NAME = "BaseClientOptions";
@@ -48,6 +50,7 @@ export class BaseClientContextImpl implements BaseClientContext {
     private readonly retainOriginalCasing: boolean;
     private readonly generateIdempotentRequestOptions: boolean;
     private readonly baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
+    private readonly errorResolver: ErrorResolver;
     private readonly globalErrorNames: Set<DeclaredErrorName>;
 
     public static readonly OPTIONS_INTERFACE_NAME = OPTIONS_INTERFACE_NAME;
@@ -71,7 +74,8 @@ export class BaseClientContextImpl implements BaseClientContext {
         requireDefaultEnvironment,
         retainOriginalCasing,
         generateIdempotentRequestOptions,
-        baseClientTypeDeclarationReferencer
+        baseClientTypeDeclarationReferencer,
+        errorResolver
     }: BaseClientContextImpl.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.allowCustomFetcher = allowCustomFetcher;
@@ -79,6 +83,7 @@ export class BaseClientContextImpl implements BaseClientContext {
         this.retainOriginalCasing = retainOriginalCasing;
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
         this.baseClientTypeDeclarationReferencer = baseClientTypeDeclarationReferencer;
+        this.errorResolver = errorResolver;
         this.globalErrorNames = this.computeGlobalErrorNames();
 
         this.authHeaders = [];
