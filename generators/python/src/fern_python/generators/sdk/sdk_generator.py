@@ -1,8 +1,6 @@
 import json
 import os
-import uuid
 from typing import Literal, Optional, Sequence, Tuple, Union, cast
-from uuid import uuid4
 
 from .client_generator.client_generator import ClientGenerator
 from .client_generator.generated_root_client import GeneratedRootClient
@@ -42,7 +40,6 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
-from fern_python.snippet.snippet_template_factory import SnippetTemplateFactory
 from fern_python.snippet.snippet_test_factory import SnippetTestFactory
 from fern_python.utils import build_snippet_writer
 
@@ -600,83 +597,6 @@ __version__ = metadata.version("{project._project_config.package_name}")
                 filepath_in_project=filepath,
                 exports={"__version__"},
             )
-
-    def _maybe_write_snippet_templates(
-        self,
-        context: SdkGeneratorContext,
-        snippet_template_factory: SnippetTemplateFactory,
-        project: Project,
-        generator_config: GeneratorConfig,
-        ir: ir_types.IntermediateRepresentation,
-        generator_exec_wrapper: GeneratorExecWrapper,
-    ) -> None:
-        if context.generator_config.output.snippet_template_filepath is not None:
-            org_id = generator_config.organization
-            api_name = ir.api_name.original_name
-            generator_exec_wrapper.send_update(
-                GeneratorUpdate.factory.log(
-                    LogUpdate(
-                        level=LogLevel.DEBUG,
-                        message=f"Generating snippet templates for Org: {org_id}, API: {api_name} for package {project._project_config.package_name if project._project_config is not None else 'package_unknown'} at version: {project._project_config.package_version if project._project_config is not None else '0.0.0'}.",
-                    )
-                )
-            )
-
-            snippets = snippet_template_factory.generate_templates()
-            if snippets is None:
-                return
-
-            # Send snippets to FDR
-            fdr_client = generator_exec_wrapper.fdr_client
-            if fdr_client is not None:
-                # API Definition ID doesn't matter right now
-                try:
-                    api_definition_id = uuid4()
-                    if ir.fdr_api_definition_id is not None:
-                        try:
-                            api_definition_id = uuid.UUID(ir.fdr_api_definition_id)
-                        except Exception as e:
-                            generator_exec_wrapper.send_update(
-                                GeneratorUpdate.factory.log(
-                                    LogUpdate(
-                                        level=LogLevel.DEBUG,
-                                        message=f"Failed to convert FDR API Definition ID to UUID: {str(e)}, generating a new one.",
-                                    )
-                                )
-                            )
-
-                    fdr_client.templates.register_batch(
-                        org_id=org_id,
-                        api_id=api_name,
-                        api_definition_id=api_definition_id,
-                        snippets=snippets,
-                    )
-                    generator_exec_wrapper.send_update(
-                        GeneratorUpdate.factory.log(
-                            LogUpdate(level=LogLevel.DEBUG, message="Uploaded snippet templates to FDR.")
-                        )
-                    )
-                except Exception as e:
-                    # Don't fail hard here, but issue a warning to the user.
-                    generator_exec_wrapper.send_update(
-                        GeneratorUpdate.factory.log(
-                            LogUpdate(
-                                level=LogLevel.WARN,
-                                message=f"Failed to upload snippet templates to FDR, this is ok: {str(e)}",
-                            )
-                        )
-                    )
-            else:
-                # Otherwise write them for local
-                project.add_file(
-                    context.generator_config.output.snippet_template_filepath,
-                    json.dumps(list(map(lambda template: template.dict(by_alias=True), snippets)), indent=4),
-                )
-                generator_exec_wrapper.send_update(
-                    GeneratorUpdate.factory.log(
-                        LogUpdate(level=LogLevel.DEBUG, message="Wrote snippet templates to disk.")
-                    )
-                )
 
     def _maybe_write_snippets(
         self,
