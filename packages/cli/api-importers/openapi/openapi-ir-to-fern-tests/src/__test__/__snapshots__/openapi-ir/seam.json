@@ -6961,7 +6961,7 @@
                               "maxLength": 500,
                               "type": "string"
                             },
-                            "generatedName": "ConnectWebviewsCreateRequestCustomMetadataValue",
+                            "generatedName": "ConnectWebviewsCreateRequestCustomMetadataValueZero",
                             "groupName": [],
                             "type": "primitive"
                           },
@@ -6969,18 +6969,18 @@
                             "schema": {
                               "type": "boolean"
                             },
-                            "generatedName": "ConnectWebviewsCreateRequestCustomMetadataValue",
+                            "generatedName": "ConnectWebviewsCreateRequestCustomMetadataValueOne",
                             "groupName": [],
                             "type": "primitive"
                           },
                           {
-                            "generatedName": "ConnectWebviewsCreateRequestCustomMetadataValue",
+                            "generatedName": "ConnectWebviewsCreateRequestCustomMetadataValueTwo",
                             "value": {
                               "schema": {
                                 "format": "null",
                                 "type": "string"
                               },
-                              "generatedName": "ConnectWebviewsCreateRequestCustomMetadataValue",
+                              "generatedName": "ConnectWebviewsCreateRequestCustomMetadataValueTwo",
                               "groupName": [],
                               "type": "primitive"
                             },
@@ -7948,7 +7948,7 @@
                           "schema": {
                             "type": "string"
                           },
-                          "generatedName": "ConnectWebviewsListRequestCustomMetadataHasValue",
+                          "generatedName": "ConnectWebviewsListRequestCustomMetadataHasValueZero",
                           "groupName": [],
                           "type": "primitive"
                         },
@@ -7956,7 +7956,7 @@
                           "schema": {
                             "type": "boolean"
                           },
-                          "generatedName": "ConnectWebviewsListRequestCustomMetadataHasValue",
+                          "generatedName": "ConnectWebviewsListRequestCustomMetadataHasValueOne",
                           "groupName": [],
                           "type": "primitive"
                         }
@@ -8935,7 +8935,7 @@
                           "schema": {
                             "type": "string"
                           },
-                          "generatedName": "ConnectedAccountsListRequestCustomMetadataHasValue",
+                          "generatedName": "ConnectedAccountsListRequestCustomMetadataHasValueZero",
                           "groupName": [],
                           "type": "primitive"
                         },
@@ -8943,7 +8943,7 @@
                           "schema": {
                             "type": "boolean"
                           },
-                          "generatedName": "ConnectedAccountsListRequestCustomMetadataHasValue",
+                          "generatedName": "ConnectedAccountsListRequestCustomMetadataHasValueOne",
                           "groupName": [],
                           "type": "primitive"
                         }
@@ -9300,7 +9300,7 @@
                               "maxLength": 500,
                               "type": "string"
                             },
-                            "generatedName": "ConnectedAccountsUpdateRequestCustomMetadataValue",
+                            "generatedName": "ConnectedAccountsUpdateRequestCustomMetadataValueZero",
                             "groupName": [],
                             "type": "primitive"
                           },
@@ -9308,18 +9308,18 @@
                             "schema": {
                               "type": "boolean"
                             },
-                            "generatedName": "ConnectedAccountsUpdateRequestCustomMetadataValue",
+                            "generatedName": "ConnectedAccountsUpdateRequestCustomMetadataValueOne",
                             "groupName": [],
                             "type": "primitive"
                           },
                           {
-                            "generatedName": "ConnectedAccountsUpdateRequestCustomMetadataValue",
+                            "generatedName": "ConnectedAccountsUpdateRequestCustomMetadataValueTwo",
                             "value": {
                               "schema": {
                                 "format": "null",
                                 "type": "string"
                               },
-                              "generatedName": "ConnectedAccountsUpdateRequestCustomMetadataValue",
+                              "generatedName": "ConnectedAccountsUpdateRequestCustomMetadataValueTwo",
                               "groupName": [],
                               "type": "primitive"
                             },
@@ -12088,7 +12088,7 @@
                           "schema": {
                             "type": "string"
                           },
-                          "generatedName": "DevicesListRequestCustomMetadataHasValue",
+                          "generatedName": "DevicesListRequestCustomMetadataHasValueZero",
                           "groupName": [],
                           "type": "primitive"
                         },
@@ -12096,7 +12096,7 @@
                           "schema": {
                             "type": "boolean"
                           },
-                          "generatedName": "DevicesListRequestCustomMetadataHasValue",
+                          "generatedName": "DevicesListRequestCustomMetadataHasValueOne",
                           "groupName": [],
                           "type": "primitive"
                         }
@@ -13057,7 +13057,7 @@
                               "maxLength": 500,
                               "type": "string"
                             },
-                            "generatedName": "DevicesUpdateRequestCustomMetadataValue",
+                            "generatedName": "DevicesUpdateRequestCustomMetadataValueZero",
                             "groupName": [],
                             "type": "primitive"
                           },
@@ -13065,18 +13065,18 @@
                             "schema": {
                               "type": "boolean"
                             },
-                            "generatedName": "DevicesUpdateRequestCustomMetadataValue",
+                            "generatedName": "DevicesUpdateRequestCustomMetadataValueOne",
                             "groupName": [],
                             "type": "primitive"
                           },
                           {
-                            "generatedName": "DevicesUpdateRequestCustomMetadataValue",
+                            "generatedName": "DevicesUpdateRequestCustomMetadataValueTwo",
                             "value": {
                               "schema": {
                                 "format": "null",
                                 "type": "string"
                               },
-                              "generatedName": "DevicesUpdateRequestCustomMetadataValue",
+                              "generatedName": "DevicesUpdateRequestCustomMetadataValueTwo",
                               "groupName": [],
                               "type": "primitive"
                             },
@@ -13654,7 +13654,7 @@
                           "schema": {
                             "type": "string"
                           },
-                          "generatedName": "EventsListRequestBetweenItem",
+                          "generatedName": "EventsListRequestBetweenItemZero",
                           "groupName": [],
                           "type": "primitive"
                         },
@@ -13662,7 +13662,7 @@
                           "schema": {
                             "type": "datetime"
                           },
-                          "generatedName": "EventsListRequestBetweenItem",
+                          "generatedName": "EventsListRequestBetweenItemOne",
                           "groupName": [],
                           "type": "primitive"
                         }
@@ -18268,7 +18268,7 @@
                           "schema": {
                             "type": "string"
                           },
-                          "generatedName": "LocksListRequestCustomMetadataHasValue",
+                          "generatedName": "LocksListRequestCustomMetadataHasValueZero",
                           "groupName": [],
                           "type": "primitive"
                         },
@@ -18276,7 +18276,7 @@
                           "schema": {
                             "type": "boolean"
                           },
-                          "generatedName": "LocksListRequestCustomMetadataHasValue",
+                          "generatedName": "LocksListRequestCustomMetadataHasValueOne",
                           "groupName": [],
                           "type": "primitive"
                         }
@@ -23787,7 +23787,7 @@
                           "schema": {
                             "type": "string"
                           },
-                          "generatedName": "ThermostatsListRequestCustomMetadataHasValue",
+                          "generatedName": "ThermostatsListRequestCustomMetadataHasValueZero",
                           "groupName": [],
                           "type": "primitive"
                         },
@@ -23795,7 +23795,7 @@
                           "schema": {
                             "type": "boolean"
                           },
-                          "generatedName": "ThermostatsListRequestCustomMetadataHasValue",
+                          "generatedName": "ThermostatsListRequestCustomMetadataHasValueOne",
                           "groupName": [],
                           "type": "primitive"
                         }
@@ -44881,7 +44881,7 @@
                           "schema": {
                             "type": "string"
                           },
-                          "generatedName": "UnmanagedListRequestCustomMetadataHasValue",
+                          "generatedName": "UnmanagedListRequestCustomMetadataHasValueZero",
                           "groupName": [],
                           "type": "primitive"
                         },
@@ -44889,7 +44889,7 @@
                           "schema": {
                             "type": "boolean"
                           },
-                          "generatedName": "UnmanagedListRequestCustomMetadataHasValue",
+                          "generatedName": "UnmanagedListRequestCustomMetadataHasValueOne",
                           "groupName": [],
                           "type": "primitive"
                         }
@@ -57615,7 +57615,7 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "ConnectWebviewCustomMetadataValue",
+                      "generatedName": "ConnectWebviewCustomMetadataValueZero",
                       "groupName": [],
                       "type": "primitive"
                     },
@@ -57623,7 +57623,7 @@
                       "schema": {
                         "type": "boolean"
                       },
-                      "generatedName": "ConnectWebviewCustomMetadataValue",
+                      "generatedName": "ConnectWebviewCustomMetadataValueOne",
                       "groupName": [],
                       "type": "primitive"
                     }
@@ -57977,7 +57977,7 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "ConnectedAccountCustomMetadataValue",
+                      "generatedName": "ConnectedAccountCustomMetadataValueZero",
                       "groupName": [],
                       "type": "primitive"
                     },
@@ -57985,7 +57985,7 @@
                       "schema": {
                         "type": "boolean"
                       },
-                      "generatedName": "ConnectedAccountCustomMetadataValue",
+                      "generatedName": "ConnectedAccountCustomMetadataValueOne",
                       "groupName": [],
                       "type": "primitive"
                     }
@@ -62371,7 +62371,7 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "DeviceCustomMetadataValue",
+                      "generatedName": "DeviceCustomMetadataValueZero",
                       "groupName": [],
                       "type": "primitive"
                     },
@@ -62379,7 +62379,7 @@
                       "schema": {
                         "type": "boolean"
                       },
-                      "generatedName": "DeviceCustomMetadataValue",
+                      "generatedName": "DeviceCustomMetadataValueOne",
                       "groupName": [],
                       "type": "primitive"
                     }
@@ -67356,7 +67356,7 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "PhoneCustomMetadataValue",
+                      "generatedName": "PhoneCustomMetadataValueZero",
                       "groupName": [],
                       "type": "primitive"
                     },
@@ -67364,7 +67364,7 @@
                       "schema": {
                         "type": "boolean"
                       },
-                      "generatedName": "PhoneCustomMetadataValue",
+                      "generatedName": "PhoneCustomMetadataValueOne",
                       "groupName": [],
                       "type": "primitive"
                     }

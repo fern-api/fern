@@ -15779,7 +15779,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "generatedName": "CustomAttributesValue",
+                "generatedName": "CustomAttributesValueZero",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -20488,7 +20488,7 @@
                     {
                       "description": "Add mutiple filters.",
                       "value": {
-                        "generatedName": "MultipleFilterSearchRequestValueItem",
+                        "generatedName": "MultipleFilterSearchRequestValueZeroItem",
                         "schema": "multiple_filter_search_request",
                         "source": {
                           "file": "../openapi.yml",
@@ -20496,7 +20496,7 @@
                         },
                         "type": "reference"
                       },
-                      "generatedName": "MultipleFilterSearchRequestValue",
+                      "generatedName": "MultipleFilterSearchRequestValueZero",
                       "title": "multiple filter search request",
                       "groupName": [],
                       "type": "array"
@@ -20504,7 +20504,7 @@
                     {
                       "description": "Add a single filter field.",
                       "value": {
-                        "generatedName": "MultipleFilterSearchRequestValueItem",
+                        "generatedName": "MultipleFilterSearchRequestValueOneItem",
                         "schema": "single_filter_search_request",
                         "source": {
                           "file": "../openapi.yml",
@@ -20512,7 +20512,7 @@
                         },
                         "type": "reference"
                       },
-                      "generatedName": "MultipleFilterSearchRequestValue",
+                      "generatedName": "MultipleFilterSearchRequestValueOne",
                       "title": "single filter search request",
                       "groupName": [],
                       "type": "array"
@@ -24774,12 +24774,12 @@
             "generatedName": "TicketCustomAttributesValue",
             "schemas": [
               {
-                "generatedName": "TicketCustomAttributesValue",
+                "generatedName": "TicketCustomAttributesValueZero",
                 "value": {
                   "schema": {
                     "type": "string"
                   },
-                  "generatedName": "TicketCustomAttributesValue",
+                  "generatedName": "TicketCustomAttributesValueZero",
                   "groupName": [],
                   "type": "primitive"
                 },
@@ -24790,7 +24790,7 @@
                 "schema": {
                   "type": "double"
                 },
-                "generatedName": "TicketCustomAttributesValue",
+                "generatedName": "TicketCustomAttributesValueOne",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -24798,16 +24798,16 @@
                 "schema": {
                   "type": "boolean"
                 },
-                "generatedName": "TicketCustomAttributesValue",
+                "generatedName": "TicketCustomAttributesValueTwo",
                 "groupName": [],
                 "type": "primitive"
               },
               {
                 "value": {
-                  "generatedName": "TicketCustomAttributesValue",
+                  "generatedName": "TicketCustomAttributesValueThree",
                   "type": "unknown"
                 },
-                "generatedName": "TicketCustomAttributesValue",
+                "generatedName": "TicketCustomAttributesValueThree",
                 "groupName": [],
                 "type": "array"
               },
@@ -25798,12 +25798,12 @@
             "generatedName": "TicketRequestCustomAttributesValue",
             "schemas": [
               {
-                "generatedName": "TicketRequestCustomAttributesValue",
+                "generatedName": "TicketRequestCustomAttributesValueZero",
                 "value": {
                   "schema": {
                     "type": "string"
                   },
-                  "generatedName": "TicketRequestCustomAttributesValue",
+                  "generatedName": "TicketRequestCustomAttributesValueZero",
                   "groupName": [],
                   "type": "primitive"
                 },
@@ -25814,7 +25814,7 @@
                 "schema": {
                   "type": "double"
                 },
-                "generatedName": "TicketRequestCustomAttributesValue",
+                "generatedName": "TicketRequestCustomAttributesValueOne",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -25822,16 +25822,16 @@
                 "schema": {
                   "type": "boolean"
                 },
-                "generatedName": "TicketRequestCustomAttributesValue",
+                "generatedName": "TicketRequestCustomAttributesValueTwo",
                 "groupName": [],
                 "type": "primitive"
               },
               {
                 "value": {
-                  "generatedName": "TicketRequestCustomAttributesValue",
+                  "generatedName": "TicketRequestCustomAttributesValueThree",
                   "type": "unknown"
                 },
-                "generatedName": "TicketRequestCustomAttributesValue",
+                "generatedName": "TicketRequestCustomAttributesValueThree",
                 "groupName": [],
                 "type": "array"
               }
