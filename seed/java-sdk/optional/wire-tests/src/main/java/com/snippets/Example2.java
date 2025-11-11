@@ -2,7 +2,6 @@ package com.snippets;
 
 import com.seed.objectsWithImports.SeedObjectsWithImportsClient;
 import com.seed.objectsWithImports.resources.optional.types.DeployParams;
-import java.util.Optional;
 
 public class Example2 {
     public static void main(String[] args) {
@@ -14,6 +13,6 @@ public class Example2 {
                 .sendOptionalNullableWithAllOptionalProperties(
                         "actionId",
                         "id",
-                        Optional.of(DeployParams.builder().updateDraft(true).build()));
+                        DeployParams.builder().updateDraft(true).build());
     }
 }

@@ -112,7 +112,9 @@ public final class TraceResponsesPage {
     )
     public Builder traceResponses(List<TraceResponse> traceResponses) {
       this.traceResponses.clear();
-      this.traceResponses.addAll(traceResponses);
+      if (traceResponses != null) {
+        this.traceResponses.addAll(traceResponses);
+      }
       return this;
     }
 
@@ -122,7 +124,9 @@ public final class TraceResponsesPage {
     }
 
     public Builder addAllTraceResponses(List<TraceResponse> traceResponses) {
-      this.traceResponses.addAll(traceResponses);
+      if (traceResponses != null) {
+        this.traceResponses.addAll(traceResponses);
+      }
       return this;
     }
 
