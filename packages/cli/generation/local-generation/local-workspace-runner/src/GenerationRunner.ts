@@ -77,34 +77,6 @@ export class GenerationRunner {
                                 absolutePathToFernConfig,
                                 inspect
                             });
-                            const absolutePathToLocalSnippetTemplateJSON = generatorInvocation.absolutePathToLocalOutput
-                                ? AbsoluteFilePath.of(
-                                      join(
-                                          generatorInvocation.absolutePathToLocalOutput,
-                                          RelativeFilePath.of(SNIPPET_TEMPLATES_JSON_FILENAME)
-                                      )
-                                  )
-                                : undefined;
-                            const absolutePathToResolvedSnippetTemplates = generatorInvocation.absolutePathToLocalOutput
-                                ? AbsoluteFilePath.of(
-                                      join(
-                                          generatorInvocation.absolutePathToLocalOutput,
-                                          RelativeFilePath.of(RESOLVED_SNIPPET_TEMPLATES_MD)
-                                      )
-                                  )
-                                : undefined;
-
-                            if (
-                                absolutePathToLocalSnippetTemplateJSON != null &&
-                                absolutePathToResolvedSnippetTemplates != null
-                            ) {
-                                await this.writeResolvedSnippetsJson({
-                                    absolutePathToLocalSnippetTemplateJSON,
-                                    absolutePathToResolvedSnippetTemplates,
-                                    ir,
-                                    generatorInvocation
-                                });
-                            }
 
                             interactiveTaskContext.logger.info(
                                 chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
