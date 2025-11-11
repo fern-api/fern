@@ -226,6 +226,7 @@ class Project:
 
                 try:
                     import shutil
+
                     shutil.copyfile(docker_license_path, destination_path)
                 except FileNotFoundError:
                     # File not found - this is expected for remote generation where Fiddle handles it
