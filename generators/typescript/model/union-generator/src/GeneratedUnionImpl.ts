@@ -794,23 +794,14 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                                     ),
                                     ts.factory.createDefaultClause([
                                         ts.factory.createReturnStatement(
-                                            ts.factory.createCallExpression(
-                                                ts.factory.createPropertyAccessExpression(
-                                                    ts.factory.createIdentifier(
-                                                        GeneratedUnionImpl.VISITOR_PARAMETER_NAME
-                                                    ),
-                                                    ts.factory.createIdentifier(GeneratedUnionImpl.UNKNOWN_VISITOR_KEY)
+                                            this.unknownSingleUnionType.invokeVisitMethod({
+                                                localReferenceToUnionValue: ts.factory.createIdentifier(
+                                                    GeneratedUnionImpl.VISITEE_PARAMETER_NAME
                                                 ),
-                                                undefined,
-                                                [
-                                                    ts.factory.createAsExpression(
-                                                        ts.factory.createIdentifier(
-                                                            GeneratedUnionImpl.VISITEE_PARAMETER_NAME
-                                                        ),
-                                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
-                                                    )
-                                                ]
-                                            )
+                                                localReferenceToVisitor: ts.factory.createIdentifier(
+                                                    GeneratedUnionImpl.VISITOR_PARAMETER_NAME
+                                                )
+                                            })
                                         )
                                     ])
                                 ])

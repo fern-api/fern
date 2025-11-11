@@ -53,7 +53,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         const additionalProperties = this.addAdditionalPropertiesProperty(class_);
         this.addOnDeserialized(class_, additionalProperties);
         this.addOnSerializing(class_, additionalProperties);
-        this.context.getToStringMethod(class_);
+        this.context.common.getToStringMethod(class_);
 
         if (this.shouldAddProtobufMappers(this.typeDeclaration)) {
             this.addProtobufMappers({

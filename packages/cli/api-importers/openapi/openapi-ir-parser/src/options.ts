@@ -83,23 +83,31 @@ export interface ParseOpenAPIOptions {
 
     wrapReferencesToNullableInOptional: boolean;
     coerceOptionalSchemasToNullable: boolean;
+
+    /**
+     * If `always`, remove discriminant properties from schemas in the IR, unless the schema is also used outside of a discriminated union.
+     * If `never`, discriminant properties are preserved in the schemas.
+     *
+     * Defaults to `always`.
+     */
+    removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     disableExamples: false,
     discriminatedUnionV2: false,
-    useTitlesAsName: true,
+    useTitlesAsName: false,
     audiences: undefined,
     optionalAdditionalProperties: true,
     coerceEnumsToLiterals: true,
     respectReadonlySchemas: false,
-    respectNullableSchemas: false,
+    respectNullableSchemas: true,
     onlyIncludeReferencedSchemas: false,
-    inlinePathParameters: false,
+    inlinePathParameters: true,
     preserveSchemaIds: false,
-    objectQueryParameters: false,
+    objectQueryParameters: true,
     shouldUseUndiscriminatedUnionsWithLiterals: false,
-    shouldUseIdiomaticRequestNames: false,
+    shouldUseIdiomaticRequestNames: true,
     filter: undefined,
     asyncApiNaming: "v1",
     exampleGeneration: undefined,
@@ -107,14 +115,15 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     useBytesForBinaryResponse: false,
     respectForwardCompatibleEnums: false,
     additionalPropertiesDefaultsTo: false,
-    typeDatesAsStrings: true,
+    typeDatesAsStrings: false,
     preserveSingleSchemaOneOf: false,
     inlineAllOfSchemas: false,
     resolveAliases: false,
     groupMultiApiEnvironments: false,
     groupEnvironmentsByHost: false,
-    wrapReferencesToNullableInOptional: true,
-    coerceOptionalSchemasToNullable: true
+    wrapReferencesToNullableInOptional: false,
+    coerceOptionalSchemasToNullable: false,
+    removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always
 };
 
 export function getParseOptions({
@@ -217,6 +226,10 @@ export function getParseOptions({
         coerceOptionalSchemasToNullable:
             overrides?.coerceOptionalSchemasToNullable ??
             options?.coerceOptionalSchemasToNullable ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.coerceOptionalSchemasToNullable
+            DEFAULT_PARSE_OPENAPI_SETTINGS.coerceOptionalSchemasToNullable,
+        removeDiscriminantsFromSchemas:
+            overrides?.removeDiscriminantsFromSchemas ??
+            options?.removeDiscriminantsFromSchemas ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.removeDiscriminantsFromSchemas
     };
 }

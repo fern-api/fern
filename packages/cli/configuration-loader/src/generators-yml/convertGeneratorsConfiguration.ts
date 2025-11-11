@@ -34,7 +34,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     groupMultiApiEnvironments: undefined,
     groupEnvironmentsByHost: undefined,
     wrapReferencesToNullableInOptional: undefined,
-    coerceOptionalSchemasToNullable: undefined
+    coerceOptionalSchemasToNullable: undefined,
+    removeDiscriminantsFromSchemas: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -85,15 +86,18 @@ function parseDeprecatedApiDefinitionSettingsSchema(
 ): generatorsYml.APIDefinitionSettings {
     return {
         ...UNDEFINED_API_DEFINITION_SETTINGS,
-        shouldUseTitleAsName: settings?.["use-title"],
+        shouldUseTitleAsName: settings?.["use-title"] ?? false,
         shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
         asyncApiMessageNaming: settings?.["message-naming"],
-        respectNullableSchemas: settings?.["respect-nullable-schemas"],
-        wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"],
-        coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"],
+        respectNullableSchemas: settings?.["respect-nullable-schemas"] ?? true,
+        wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"] ?? false,
+        coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"] ?? false,
         onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
-        inlinePathParameters: settings?.["inline-path-parameters"],
-        shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"]
+        inlinePathParameters: settings?.["inline-path-parameters"] ?? true,
+        shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"] ?? true,
+        removeDiscriminantsFromSchemas: parseRemoveDiscriminantsFromSchemas(
+            settings?.["remove-discriminants-from-schemas"]
+        )
     };
 }
 
@@ -104,16 +108,16 @@ function parseOpenApiDefinitionSettingsSchema(
         ...parseBaseApiDefinitionSettingsSchema(settings),
         shouldUseUndiscriminatedUnionsWithLiterals: settings?.["prefer-undiscriminated-unions-with-literals"],
         onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
-        objectQueryParameters: settings?.["object-query-parameters"],
+        objectQueryParameters: settings?.["object-query-parameters"] ?? true,
         respectReadonlySchemas: settings?.["respect-readonly-schemas"],
-        inlinePathParameters: settings?.["inline-path-parameters"],
+        inlinePathParameters: settings?.["inline-path-parameters"] ?? true,
         filter: settings?.filter,
         exampleGeneration: settings?.["example-generation"],
         defaultFormParameterEncoding: settings?.["default-form-parameter-encoding"],
         useBytesForBinaryResponse: settings?.["use-bytes-for-binary-response"],
         respectForwardCompatibleEnums: settings?.["respect-forward-compatible-enums"],
         additionalPropertiesDefaultsTo: settings?.["additional-properties-defaults-to"],
-        typeDatesAsStrings: settings?.["type-dates-as-strings"],
+        typeDatesAsStrings: settings?.["type-dates-as-strings"] ?? false,
         preserveSingleSchemaOneOf: settings?.["preserve-single-schema-oneof"],
         inlineAllOfSchemas: settings?.["inline-all-of-schemas"],
         resolveAliases: settings?.["resolve-aliases"],
@@ -136,15 +140,29 @@ function parseBaseApiDefinitionSettingsSchema(
 ): generatorsYml.APIDefinitionSettings {
     return {
         ...UNDEFINED_API_DEFINITION_SETTINGS,
-        shouldUseTitleAsName: settings?.["title-as-schema-name"],
-        shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"],
+        shouldUseTitleAsName: settings?.["title-as-schema-name"] ?? false,
+        shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"] ?? true,
         shouldUseOptionalAdditionalProperties: settings?.["optional-additional-properties"] ?? true,
         coerceEnumsToLiterals: settings?.["coerce-enums-to-literals"],
-        respectNullableSchemas: settings?.["respect-nullable-schemas"],
-        wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"],
-        coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"],
-        groupEnvironmentsByHost: settings?.["group-environments-by-host"]
+        respectNullableSchemas: settings?.["respect-nullable-schemas"] ?? true,
+        wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"] ?? false,
+        coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"] ?? false,
+        groupEnvironmentsByHost: settings?.["group-environments-by-host"],
+        removeDiscriminantsFromSchemas: parseRemoveDiscriminantsFromSchemas(
+            settings?.["remove-discriminants-from-schemas"]
+        )
     };
+}
+
+function parseRemoveDiscriminantsFromSchemas(
+    option: string | undefined
+): generatorsYml.RemoveDiscriminantsFromSchemas | undefined {
+    if (option == null || option === "always") {
+        return generatorsYml.RemoveDiscriminantsFromSchemas.Always;
+    } else if (option === "never") {
+        return generatorsYml.RemoveDiscriminantsFromSchemas.Never;
+    }
+    throw new Error(`Unknown value for generators.yml API setting: remove-discriminants-from-schemas: ${option}`);
 }
 
 async function parseAPIConfigurationToApiLocations(
