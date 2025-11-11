@@ -4581,7 +4581,7 @@
               },
               {
                 "value": {
-                  "generatedName": "ListResourcesResponseItem",
+                  "generatedName": "ListResourcesResponseOneItem",
                   "schema": "ResourceRead",
                   "source": {
                     "file": "../openapi.json",
@@ -4589,7 +4589,7 @@
                   },
                   "type": "reference"
                 },
-                "generatedName": "ListResourcesResponse",
+                "generatedName": "ListResourcesResponseOne",
                 "groupName": [],
                 "type": "array"
               }
@@ -16611,7 +16611,7 @@
               },
               {
                 "value": {
-                  "generatedName": "ListRolesResponseItem",
+                  "generatedName": "ListRolesResponseOneItem",
                   "schema": "RoleRead",
                   "source": {
                     "file": "../openapi.json",
@@ -16619,7 +16619,7 @@
                   },
                   "type": "reference"
                 },
-                "generatedName": "ListRolesResponse",
+                "generatedName": "ListRolesResponseOne",
                 "groupName": [],
                 "type": "array"
               }
@@ -19399,7 +19399,7 @@
               },
               {
                 "value": {
-                  "generatedName": "ListConditionSetsResponseItem",
+                  "generatedName": "ListConditionSetsResponseOneItem",
                   "schema": "ConditionSetRead",
                   "source": {
                     "file": "../openapi.json",
@@ -19407,7 +19407,7 @@
                   },
                   "type": "reference"
                 },
-                "generatedName": "ListConditionSetsResponse",
+                "generatedName": "ListConditionSetsResponseOne",
                 "groupName": [],
                 "type": "array"
               }
@@ -26951,7 +26951,7 @@
               },
               {
                 "value": {
-                  "generatedName": "ListTenantsResponseItem",
+                  "generatedName": "ListTenantsResponseOneItem",
                   "schema": "TenantRead",
                   "source": {
                     "file": "../openapi.json",
@@ -26959,7 +26959,7 @@
                   },
                   "type": "reference"
                 },
-                "generatedName": "ListTenantsResponse",
+                "generatedName": "ListTenantsResponseOne",
                 "groupName": [],
                 "type": "array"
               }
@@ -33864,7 +33864,7 @@
                   "format": "uuid",
                   "type": "string"
                 },
-                "generatedName": "ConditionSetCreateResourceId",
+                "generatedName": "ConditionSetCreateResourceIdOne",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -33962,7 +33962,7 @@
                   "format": "uuid",
                   "type": "string"
                 },
-                "generatedName": "ConditionSetCreateParentId",
+                "generatedName": "ConditionSetCreateParentIdOne",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -34066,7 +34066,7 @@
                   "format": "uuid",
                   "type": "string"
                 },
-                "generatedName": "ConditionSetReadResourceId",
+                "generatedName": "ConditionSetReadResourceIdOne",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -34286,7 +34286,7 @@
                   "format": "uuid",
                   "type": "string"
                 },
-                "generatedName": "ConditionSetReadParentId",
+                "generatedName": "ConditionSetReadParentIdOne",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -34841,7 +34841,7 @@
                   "format": "uuid",
                   "type": "string"
                 },
-                "generatedName": "ConditionSetUpdateParentId",
+                "generatedName": "ConditionSetUpdateParentIdOne",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -41442,7 +41442,7 @@
                 "schemas": [
                   {
                     "value": {
-                      "generatedName": "ResourceRoleListRolesItem",
+                      "generatedName": "ResourceRoleListRolesZeroItem",
                       "schema": "ResourceRoleRead",
                       "source": {
                         "file": "../openapi.json",
@@ -41450,7 +41450,7 @@
                       },
                       "type": "reference"
                     },
-                    "generatedName": "ResourceRoleListRoles",
+                    "generatedName": "ResourceRoleListRolesZero",
                     "groupName": [],
                     "type": "array"
                   },
@@ -42697,7 +42697,7 @@
                 "schemas": [
                   {
                     "value": {
-                      "generatedName": "RoleListRolesItem",
+                      "generatedName": "RoleListRolesZeroItem",
                       "schema": "RoleRead",
                       "source": {
                         "file": "../openapi.json",
@@ -42705,7 +42705,7 @@
                       },
                       "type": "reference"
                     },
-                    "generatedName": "RoleListRoles",
+                    "generatedName": "RoleListRolesZero",
                     "groupName": [],
                     "type": "array"
                   },
@@ -44821,7 +44821,7 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "ValidationErrorLocItem",
+                      "generatedName": "ValidationErrorLocItemZero",
                       "groupName": [],
                       "type": "primitive"
                     },
@@ -44829,7 +44829,7 @@
                       "schema": {
                         "type": "int"
                       },
-                      "generatedName": "ValidationErrorLocItem",
+                      "generatedName": "ValidationErrorLocItemOne",
                       "groupName": [],
                       "type": "primitive"
                     }
