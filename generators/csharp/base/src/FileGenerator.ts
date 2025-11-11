@@ -12,7 +12,7 @@ export abstract class FileGenerator<
     constructor(protected readonly context: Context) {}
 
     protected get generation() {
-        return this.context.generation;
+        return this.context.common.generation;
     }
     protected get namespaces() {
         return this.generation.namespaces;

@@ -1,9 +1,9 @@
 import { requestWithRetries } from "../../../src/core/fetcher/requestWithRetries";
 
 describe("requestWithRetries", () => {
-    let mockFetch: import("jest").Mock;
+    let mockFetch: jest.Mock;
     let originalMathRandom: typeof Math.random;
-    let setTimeoutSpy: import("jest").MockInstance;
+    let setTimeoutSpy: jest.SpyInstance;
 
     beforeEach(() => {
         mockFetch = jest.fn();

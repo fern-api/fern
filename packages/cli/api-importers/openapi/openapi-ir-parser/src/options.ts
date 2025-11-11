@@ -83,6 +83,14 @@ export interface ParseOpenAPIOptions {
 
     wrapReferencesToNullableInOptional: boolean;
     coerceOptionalSchemasToNullable: boolean;
+
+    /**
+     * If `always`, remove discriminant properties from schemas in the IR, unless the schema is also used outside of a discriminated union.
+     * If `never`, discriminant properties are preserved in the schemas.
+     *
+     * Defaults to `always`.
+     */
+    removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -114,7 +122,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     groupMultiApiEnvironments: false,
     groupEnvironmentsByHost: false,
     wrapReferencesToNullableInOptional: true,
-    coerceOptionalSchemasToNullable: true
+    coerceOptionalSchemasToNullable: true,
+    removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always
 };
 
 export function getParseOptions({
@@ -217,6 +226,10 @@ export function getParseOptions({
         coerceOptionalSchemasToNullable:
             overrides?.coerceOptionalSchemasToNullable ??
             options?.coerceOptionalSchemasToNullable ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.coerceOptionalSchemasToNullable
+            DEFAULT_PARSE_OPENAPI_SETTINGS.coerceOptionalSchemasToNullable,
+        removeDiscriminantsFromSchemas:
+            overrides?.removeDiscriminantsFromSchemas ??
+            options?.removeDiscriminantsFromSchemas ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.removeDiscriminantsFromSchemas
     };
 }

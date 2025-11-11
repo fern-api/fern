@@ -1,0 +1,89 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "Shape": {
+            "availability": undefined,
+            "base-properties": {},
+            "discriminant": "type",
+            "docs": undefined,
+            "encoding": undefined,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+            "union": {
+              "square": "Square",
+              "triangle": "Triangle",
+            },
+          },
+          "Square": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "sideLength": "double",
+              "type": "literal<"square">",
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "Triangle": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "base": "double",
+              "height": "double",
+              "type": "literal<"triangle">",
+            },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  Shape:
+    discriminant: type
+    base-properties: {}
+    union:
+      triangle: Triangle
+      square: Square
+    source:
+      openapi: ../openapi.json
+  Triangle:
+    properties:
+      type: literal<"triangle">
+      base: double
+      height: double
+    source:
+      openapi: ../openapi.json
+  Square:
+    properties:
+      type: literal<"square">
+      sideLength: double
+    source:
+      openapi: ../openapi.json
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Test setting to disable usage of title param",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Test setting to disable usage of title param
+",
+  },
+}

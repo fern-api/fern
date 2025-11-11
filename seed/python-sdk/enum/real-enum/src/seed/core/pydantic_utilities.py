@@ -61,7 +61,7 @@ class UniversalBaseModel(pydantic.BaseModel):
 
         @pydantic.model_serializer(mode="plain", when_used="json")  # type: ignore[attr-defined]
         def serialize_model(self) -> Any:  # type: ignore[name-defined]
-            serialized = self.model_dump()
+            serialized = self.dict()  # type: ignore[attr-defined]
             data = {k: serialize_datetime(v) if isinstance(v, dt.datetime) else v for k, v in serialized.items()}
             return data
 
@@ -147,7 +147,10 @@ class UniversalBaseModel(pydantic.BaseModel):
 
             dict_dump = super().dict(**kwargs_with_defaults_exclude_unset_include_fields)
 
-        return convert_and_respect_annotation_metadata(object_=dict_dump, annotation=self.__class__, direction="write")
+        return cast(
+            Dict[str, Any],
+            convert_and_respect_annotation_metadata(object_=dict_dump, annotation=self.__class__, direction="write"),
+        )
 
 
 def _union_list_of_pydantic_dicts(source: List[Any], destination: List[Any]) -> List[Any]:
@@ -217,7 +220,9 @@ def universal_root_validator(
 ) -> Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
         if IS_PYDANTIC_V2:
-            return cast(AnyCallable, pydantic.model_validator(mode="before" if pre else "after")(func))  # type: ignore[attr-defined]
+            # In Pydantic v2, for RootModel we always use "before" mode
+            # The custom validators transform the input value before the model is created
+            return cast(AnyCallable, pydantic.model_validator(mode="before")(func))  # type: ignore[attr-defined]
         return cast(AnyCallable, pydantic.root_validator(pre=pre)(func))  # type: ignore[call-overload]
 
     return decorator
