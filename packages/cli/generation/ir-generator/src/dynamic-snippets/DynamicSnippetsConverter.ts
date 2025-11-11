@@ -485,10 +485,41 @@ export class DynamicSnippetsConverter {
         declaration: DynamicSnippets.Declaration;
         object: ObjectTypeDeclaration;
     }): DynamicSnippets.NamedType {
-        const properties = [...(object.extendedProperties ?? []), ...object.properties];
-        return this.convertObjectProperties({
+        // For languages like Rust that use flattened inheritance with #[serde(flatten)],
+        // we need to synthesize properties for inherited types (e.g., movie_fields: Movie)
+        const allProperties: DynamicSnippets.NamedParameter[] = [];
+
+        if (object.extends.length > 0) {
+            // Add synthetic _fields properties for each extended type
+            for (const extendedType of object.extends) {
+                // Use snake_case for the wire value (e.g., "movie_fields")
+                const wireValue = `${extendedType.name.snakeCase.safeName}_fields`;
+                const fieldName = this.casingsGenerator.generateName(wireValue);
+
+                // Create a NameAndWireValue for the synthetic field
+                const nameAndWireValue: NameAndWireValue = {
+                    name: fieldName,
+                    wireValue
+                };
+
+                // Create TypeReference for the extended type (use DynamicSnippets.TypeReference directly)
+                const typeReference = DynamicSnippets.TypeReference.named(extendedType.typeId);
+
+                allProperties.push({
+                    name: nameAndWireValue,
+                    typeReference,
+                    propertyAccess: undefined,
+                    variable: undefined
+                });
+            }
+        }
+
+        // Add the object's own properties (not inherited ones)
+        allProperties.push(...this.convertBodyPropertiesToParameters({ properties: object.properties }));
+
+        return DynamicSnippets.NamedType.object({
             declaration,
-            properties,
+            properties: allProperties,
             additionalProperties: object.extraProperties
         });
     }
