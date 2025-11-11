@@ -15,6 +15,7 @@ import { getErrorResponseBody } from "./getErrorResponseBody.mjs";
 import { getFetchFn } from "./getFetchFn.mjs";
 import { getRequestBody } from "./getRequestBody.mjs";
 import { getResponseBody } from "./getResponseBody.mjs";
+import { Headers } from "./Headers.mjs";
 import { makeRequest } from "./makeRequest.mjs";
 import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.mjs";
 import { requestWithRetries } from "./requestWithRetries.mjs";
@@ -38,7 +39,7 @@ const SENSITIVE_HEADERS = new Set([
 ]);
 function redactHeaders(headers) {
     const filtered = {};
-    for (const [key, value] of Object.entries(headers)) {
+    for (const [key, value] of headers instanceof Headers ? headers.entries() : Object.entries(headers)) {
         if (SENSITIVE_HEADERS.has(key.toLowerCase())) {
             filtered[key] = "[REDACTED]";
         }
@@ -150,9 +151,10 @@ function redactUrl(url) {
 function getHeaders(args) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
-        const newHeaders = {};
+        const newHeaders = new Headers();
+        newHeaders.set("Accept", args.responseType === "json" ? "application/json" : args.responseType === "text" ? "text/plain" : "*/*");
         if (args.body !== undefined && args.contentType != null) {
-            newHeaders["Content-Type"] = args.contentType;
+            newHeaders.set("Content-Type", args.contentType);
         }
         if (args.headers == null) {
             return newHeaders;
@@ -160,13 +162,13 @@ function getHeaders(args) {
         for (const [key, value] of Object.entries(args.headers)) {
             const result = yield EndpointSupplier.get(value, { endpointMetadata: (_a = args.endpointMetadata) !== null && _a !== void 0 ? _a : {} });
             if (typeof result === "string") {
-                newHeaders[key] = result;
+                newHeaders.set(key, result);
                 continue;
             }
             if (result == null) {
                 continue;
             }
-            newHeaders[key] = `${result}`;
+            newHeaders.set(key, `${result}`);
         }
         return newHeaders;
     });
@@ -202,7 +204,7 @@ export function fetcherImpl(args) {
                         method: args.method,
                         url: redactUrl(url),
                         statusCode: response.status,
-                        responseHeaders: redactHeaders(Object.fromEntries(response.headers.entries())),
+                        responseHeaders: redactHeaders(response.headers),
                     };
                     logger.debug("HTTP request succeeded", metadata);
                 }

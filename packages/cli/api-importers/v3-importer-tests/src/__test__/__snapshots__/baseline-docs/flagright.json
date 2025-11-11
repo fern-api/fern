@@ -45263,6 +45263,7 @@
         "extends": [],
         "properties": [
           {
+            "docs": "PublishedAt is the time at which the Thing was published.",
             "name": {
               "name": {
                 "originalName": "publishedAt",

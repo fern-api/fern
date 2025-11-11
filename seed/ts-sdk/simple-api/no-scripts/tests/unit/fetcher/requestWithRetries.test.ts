@@ -1,9 +1,10 @@
 import { requestWithRetries } from "../../../src/core/fetcher/requestWithRetries";
+import { Mock, MockInstance } from "vitest";
 
 describe("requestWithRetries", () => {
-    let mockFetch: import("vi").Mock;
+    let mockFetch: Mock;
     let originalMathRandom: typeof Math.random;
-    let setTimeoutSpy: import("vi").MockInstance;
+    let setTimeoutSpy: MockInstance;
 
     beforeEach(() => {
         mockFetch = vi.fn();
@@ -11,7 +12,7 @@ describe("requestWithRetries", () => {
 
         Math.random = vi.fn(() => 0.5);
 
-        vi.useFakeTimers({ 
+        vi.useFakeTimers({
         	toFake: [
         		"setTimeout",
         		"clearTimeout",

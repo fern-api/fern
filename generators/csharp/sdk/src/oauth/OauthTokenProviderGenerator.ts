@@ -77,7 +77,9 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
         this.scheme = scheme;
         this.classReference = this.types.OAuthTokenProvider;
         this.tokenEndpointReference = this.scheme.configuration.tokenEndpoint.endpointReference;
-        this.tokenEndpointHttpService = this.context.getHttpServiceOrThrow(this.tokenEndpointReference.serviceId);
+        this.tokenEndpointHttpService = this.context.common.getHttpServiceOrThrow(
+            this.tokenEndpointReference.serviceId
+        );
         const httpEndpoint = this.context.resolveEndpointOrThrow(
             this.tokenEndpointHttpService,
             this.tokenEndpointReference.endpointId
@@ -96,7 +98,9 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
             origin: class_.explicit("_client"),
             access: ast.Access.Private,
             type: this.csharp.Type.reference(
-                this.context.getSubpackageClassReferenceForServiceIdOrThrow(this.tokenEndpointReference.serviceId)
+                this.context.common.getSubpackageClassReferenceForServiceIdOrThrow(
+                    this.tokenEndpointReference.serviceId
+                )
             )
         });
 
@@ -221,7 +225,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
                     let requestType: ast.Type | undefined = this.tokenEndpoint.sdkRequest?.shape._visit({
                         wrapper: (value) => {
                             return this.csharp.Type.reference(
-                                this.context.getRequestWrapperReference(
+                                this.context.common.getRequestWrapperReference(
                                     this.tokenEndpointReference.serviceId,
                                     value.wrapperName
                                 )
@@ -252,7 +256,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkCu
                         },
                         inlinedRequestBody: (value) => {
                             return this.csharp.Type.reference(
-                                this.context.getRequestWrapperReference(
+                                this.context.common.getRequestWrapperReference(
                                     this.tokenEndpointReference.serviceId,
                                     value.name
                                 )

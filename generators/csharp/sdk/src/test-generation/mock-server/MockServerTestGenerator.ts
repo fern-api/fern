@@ -54,7 +54,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
     }
 
     private getTestNamespace(): string {
-        const subpackage = this.context.getSubpackageForServiceId(this.serviceId);
+        const subpackage = this.context.common.getSubpackageForServiceId(this.serviceId);
         if (!subpackage) {
             return this.namespaces.mockServerTest;
         }
@@ -216,7 +216,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
     }
 
     private getDirectory(): RelativeFilePath {
-        const subpackage = this.context.getSubpackageForServiceId(this.serviceId);
+        const subpackage = this.context.common.getSubpackageForServiceId(this.serviceId);
         if (!subpackage) {
             return this.constants.folders.mockServerTests;
         }

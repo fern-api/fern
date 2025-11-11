@@ -28,7 +28,7 @@ function extractAttributes(markdownTag: string): Record<string, string> {
 
 function extractVariablesFromContent(content: string): Set<string> {
     const vars = new Set<string>();
-    const VAR_REGEX = /{([A-Za-z_][A-Za-z0-9_]*)}/g;
+    const VAR_REGEX = /{{([A-Za-z_][A-Za-z0-9_]*)}}/g;
 
     let match: RegExpExecArray | null;
     while ((match = VAR_REGEX.exec(content)) != null) {
@@ -48,7 +48,7 @@ function substituteVariables(content: string, variables: Record<string, string>)
     let result = content;
 
     for (const [key, value] of Object.entries(variables)) {
-        const variablePattern = new RegExp(`\\{${key}\\}`, "g");
+        const variablePattern = new RegExp(`\\{{${key}\\}}`, "g");
         result = result.replace(variablePattern, value);
     }
 

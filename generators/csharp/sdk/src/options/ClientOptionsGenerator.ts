@@ -48,7 +48,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         this.baseOptionsGenerator.getMaxRetriesField(class_, optionArgs);
         this.baseOptionsGenerator.getTimeoutField(class_, optionArgs);
         this.baseOptionsGenerator.getLiteralHeaderOptions(class_, optionArgs);
-        if (this.context.hasGrpcEndpoints()) {
+        if (this.context.common.hasGrpcEndpoints()) {
             this.getGrpcOptionsField(class_);
         }
 

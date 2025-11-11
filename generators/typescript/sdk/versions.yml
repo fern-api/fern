@@ -1,4 +1,28 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.28.10
+  changelogEntry:
+    - summary: |
+        Set `Accept` header for JSON (`application/json`), text (`text/plain`), and other (`*/*`) response types.
+        This ensures that the `Accept` header is set consistently across runtimes. 
+        Unlike all other runtimes, Cloudflare Workers and Vercel Edge Runtime do not set a default `Accept` header in their `fetch` implementations.
+      type: fix
+  createdAt: "2025-11-10"
+  irVersion: 61
+
+- version: 3.28.9
+  changelogEntry:
+    - summary: Fix `Error._visit` to pass the correct type (`core.Fetcher.Error`) to the `_other` callback.
+      type: fix
+  createdAt: "2025-11-10"
+  irVersion: 61
+
+- version: 3.28.8
+  changelogEntry:
+    - summary: Clean up imports for requestWithRetries.test.ts.
+      type: fix
+  createdAt: "2025-11-10"
+  irVersion: 61
+
 - version: 3.28.7
   changelogEntry:
     - summary: |

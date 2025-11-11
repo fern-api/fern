@@ -1,4 +1,50 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Fix name deconfliction for subtypes of an undiscriminated union (especially when one is an enum).
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.115.3
+
+- changelogEntry:
+    - summary: |
+        Fix gRPC source resolution to log warnings instead of throwing errors when protobuf sources cannot be resolved, matching OpenAPI behavior.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.115.2
+
+- changelogEntry:
+    - summary: |
+        Update markdown variable replacement to use double curly braces for variable interpolation.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-10"
+  version: 0.115.1
+
+- changelogEntry:
+    - summary: |
+        Add support for multiAuth field in FDR endpoint definitions to represent OpenAPI security with OR-of-AND semantics.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.115.0
+
+- changelogEntry:
+    - summary: |
+        Add new `remove-discriminants-from-schemas` setting for OpenAPI/AsyncAPI imports in generators.yml.
+
+        If `"always"`, discriminant properties are removed from schemas when generating types, unless the schema is also used outside of a discriminated union.
+        If `"never"`, schemas are left untouched.
+        Defaults to `"always"`.
+      type: feat
+    - summary: |
+        Do not remove discriminant properties from schemas when generating types if the schema is also used outside of a discriminated union.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-10"
+  version: 0.114.0
 
 - changelogEntry:
     - summary: |
