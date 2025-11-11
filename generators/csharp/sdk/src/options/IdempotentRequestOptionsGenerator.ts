@@ -28,7 +28,7 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<
             annotations: [this.extern.System.Serializable]
         });
         this.baseOptionsGenerator.getRequestOptionFields(class_);
-        this.context.getIdempotencyFields(class_);
+        this.context.common.getIdempotencyFields(class_);
         class_.addMethod({
             name: "GetIdempotencyHeaders",
             parameters: [],
@@ -45,7 +45,7 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<
                 );
                 writer.writeLine();
                 writer.pushScope();
-                for (const header of this.context.getIdempotencyHeaders()) {
+                for (const header of this.context.common.getIdempotencyHeaders()) {
                     const type = this.context.csharpTypeMapper.convert({ reference: header.valueType });
                     const isString = is.Type.string(type.unwrapIfOptional());
                     const toString = isString ? "" : ".ToString()";

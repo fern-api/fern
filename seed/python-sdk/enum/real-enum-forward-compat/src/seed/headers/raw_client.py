@@ -14,31 +14,45 @@ from ..types.operand import Operand
 class RawHeadersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-    
-    def send(self, *, operand: Operand, operand_or_color: ColorOrOperand, maybe_operand: typing.Optional[Operand] = None, maybe_operand_or_color: typing.Optional[ColorOrOperand] = None, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
+
+    def send(
+        self,
+        *,
+        operand: Operand,
+        operand_or_color: ColorOrOperand,
+        maybe_operand: typing.Optional[Operand] = None,
+        maybe_operand_or_color: typing.Optional[ColorOrOperand] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[None]:
         """
         Parameters
         ----------
         operand : Operand
-        
+
         operand_or_color : ColorOrOperand
-        
+
         maybe_operand : typing.Optional[Operand]
-        
+
         maybe_operand_or_color : typing.Optional[ColorOrOperand]
-        
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-        
+
         Returns
         -------
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "headers",method="POST",
-            headers={"operand": str(operand) if operand is not None else None, "maybeOperand": str(maybe_operand) if maybe_operand is not None else None, "operandOrColor": str(operand_or_color) if operand_or_color is not None else None, "maybeOperandOrColor": str(maybe_operand_or_color) if maybe_operand_or_color is not None else None, }
-            ,
-            request_options=request_options,)
+            "headers",
+            method="POST",
+            headers={
+                "operand": str(operand) if operand is not None else None,
+                "maybeOperand": str(maybe_operand) if maybe_operand is not None else None,
+                "operandOrColor": str(operand_or_color) if operand_or_color is not None else None,
+                "maybeOperandOrColor": str(maybe_operand_or_color) if maybe_operand_or_color is not None else None,
+            },
+            request_options=request_options,
+        )
         try:
             if 200 <= _response.status_code < 300:
                 return HttpResponse(response=_response, data=None)
@@ -46,34 +60,50 @@ class RawHeadersClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+
 class AsyncRawHeadersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-    
-    async def send(self, *, operand: Operand, operand_or_color: ColorOrOperand, maybe_operand: typing.Optional[Operand] = None, maybe_operand_or_color: typing.Optional[ColorOrOperand] = None, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[None]:
+
+    async def send(
+        self,
+        *,
+        operand: Operand,
+        operand_or_color: ColorOrOperand,
+        maybe_operand: typing.Optional[Operand] = None,
+        maybe_operand_or_color: typing.Optional[ColorOrOperand] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[None]:
         """
         Parameters
         ----------
         operand : Operand
-        
+
         operand_or_color : ColorOrOperand
-        
+
         maybe_operand : typing.Optional[Operand]
-        
+
         maybe_operand_or_color : typing.Optional[ColorOrOperand]
-        
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-        
+
         Returns
         -------
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "headers",method="POST",
-            headers={"operand": str(operand) if operand is not None else None, "maybeOperand": str(maybe_operand) if maybe_operand is not None else None, "operandOrColor": str(operand_or_color) if operand_or_color is not None else None, "maybeOperandOrColor": str(maybe_operand_or_color) if maybe_operand_or_color is not None else None, }
-            ,
-            request_options=request_options,)
+            "headers",
+            method="POST",
+            headers={
+                "operand": str(operand) if operand is not None else None,
+                "maybeOperand": str(maybe_operand) if maybe_operand is not None else None,
+                "operandOrColor": str(operand_or_color) if operand_or_color is not None else None,
+                "maybeOperandOrColor": str(maybe_operand_or_color) if maybe_operand_or_color is not None else None,
+            },
+            request_options=request_options,
+        )
         try:
             if 200 <= _response.status_code < 300:
                 return AsyncHttpResponse(response=_response, data=None)

@@ -2,6 +2,21 @@
 
 - changelogEntry:
     - summary: |
+        Add new `remove-discriminants-from-schemas` setting for OpenAPI/AsyncAPI imports in generators.yml.
+
+        If `"always"`, discriminant properties are removed from schemas when generating types, unless the schema is also used outside of a discriminated union.
+        If `"never"`, schemas are left untouched.
+        Defaults to `"always"`.
+      type: feat
+    - summary: |
+        Do not remove discriminant properties from schemas when generating types if the schema is also used outside of a discriminated union.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-10"
+  version: 0.114.0
+
+- changelogEntry:
+    - summary: |
         Make individual theme options optional in docs.yml.
       type: fix
   irVersion: 61

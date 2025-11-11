@@ -24,7 +24,7 @@ export class IdempotentRequestOptionsInterfaceGenerator extends FileGenerator<
             access: ast.Access.Internal,
             interfaceReferences: [this.types.RequestOptionsInterface]
         });
-        this.context.getIdempotencyFields(interface_, false);
+        this.context.common.getIdempotencyFields(interface_, false);
 
         interface_.addMethod({
             name: "GetIdempotencyHeaders",

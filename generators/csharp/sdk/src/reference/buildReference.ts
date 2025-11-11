@@ -104,7 +104,7 @@ function getEndpointReference({
             returnValue:
                 endpointSignatureInfo.returnType != null
                     ? {
-                          text: context.printType(endpointSignatureInfo.returnType)
+                          text: context.common.printType(endpointSignatureInfo.returnType)
                       }
                     : undefined
         },
@@ -114,7 +114,7 @@ function getEndpointReference({
             const required = parameter.type instanceof ast.Type ? !parameter.type.isOptional : true;
             return {
                 name: parameter.name,
-                type: context.printType(parameter.type),
+                type: context.common.printType(parameter.type),
                 description: parameter.docs,
                 required
             };
@@ -140,7 +140,7 @@ function getReferenceEndpointInvocationParameters({
         if (result.length > 0) {
             result = `${result}, `;
         }
-        result = `${result}${context.printType(endpointSignatureInfo.requestParameter.type)} { ... }`;
+        result = `${result}${context.common.printType(endpointSignatureInfo.requestParameter.type)} { ... }`;
     }
     return `(${result})`;
 }
@@ -154,9 +154,9 @@ function getServiceFilepath({
     serviceId: ServiceId;
     service: HttpService;
 }): string {
-    const subpackage = context.getSubpackageForServiceId(serviceId);
+    const subpackage = context.common.getSubpackageForServiceId(serviceId);
     const clientClassReference = subpackage
-        ? context.getSubpackageClassReference(subpackage)
+        ? context.common.getSubpackageClassReference(subpackage)
         : context.types.RootClientForSnippets;
 
     return `/${path.join(

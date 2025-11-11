@@ -9,7 +9,7 @@ import {
     Spec
 } from "@fern-api/api-workspace-commons";
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
-import { Audiences } from "@fern-api/configuration";
+import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
@@ -23,7 +23,6 @@ import { ErrorCollector } from "@fern-api/v3-importer-commons";
 import { readFile } from "fs/promises";
 import { OpenAPIV3_1 } from "openapi-types";
 import { v4 as uuidv4 } from "uuid";
-
 import { constructCasingsGenerator } from "../../../../commons/casings-generator/src/CasingsGenerator";
 import { loadOpenRpc } from "./loaders";
 import { OpenAPILoader } from "./loaders/OpenAPILoader";
@@ -38,6 +37,22 @@ export declare namespace OSSWorkspace {
     }
 
     export type Settings = BaseOpenAPIWorkspace.Settings;
+}
+
+function convertRemoveDiscriminantsFromSchemas(
+    specs: (OpenAPISpec | ProtobufSpec)[]
+): generatorsYml.RemoveDiscriminantsFromSchemas {
+    // If any spec has removeDiscriminantsFromSchemas set to Never, return Never
+    if (
+        specs.every(
+            (spec) =>
+                spec.settings?.removeDiscriminantsFromSchemas === generatorsYml.RemoveDiscriminantsFromSchemas.Never
+        )
+    ) {
+        return generatorsYml.RemoveDiscriminantsFromSchemas.Never;
+    }
+    // Otherwise, return Always
+    return generatorsYml.RemoveDiscriminantsFromSchemas.Always;
 }
 
 export class OSSWorkspace extends BaseOpenAPIWorkspace {
@@ -56,6 +71,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             wrapReferencesToNullableInOptional: specs.every(
                 (spec) => spec.settings?.wrapReferencesToNullableInOptional
             ),
+            removeDiscriminantsFromSchemas: convertRemoveDiscriminantsFromSchemas(specs),
             coerceOptionalSchemasToNullable: specs.every((spec) => spec.settings?.coerceOptionalSchemasToNullable),
             onlyIncludeReferencedSchemas: specs.every((spec) => spec.settings?.onlyIncludeReferencedSchemas),
             inlinePathParameters: specs.every((spec) => spec.settings?.inlinePathParameters),
@@ -116,6 +132,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 respectNullableSchemas: settings?.respectNullableSchemas ?? this.respectNullableSchemas,
                 wrapReferencesToNullableInOptional:
                     settings?.wrapReferencesToNullableInOptional ?? this.wrapReferencesToNullableInOptional,
+                removeDiscriminantsFromSchemas:
+                    settings?.removeDiscriminantsFromSchemas ?? this.removeDiscriminantsFromSchemas,
                 onlyIncludeReferencedSchemas:
                     settings?.onlyIncludeReferencedSchemas ?? this.onlyIncludeReferencedSchemas,
                 inlinePathParameters: settings?.inlinePathParameters ?? this.inlinePathParameters,

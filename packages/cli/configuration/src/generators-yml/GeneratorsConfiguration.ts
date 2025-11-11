@@ -11,7 +11,8 @@ import {
     GeneratorInvocationSchema,
     GeneratorsConfigurationSchema,
     OpenApiFilterSchema,
-    ReadmeSchema
+    ReadmeSchema,
+    RemoveDiscriminantsFromSchemas
 } from "./schemas";
 
 export interface GeneratorsConfiguration {
@@ -78,6 +79,7 @@ export interface APIDefinitionSettings {
     groupEnvironmentsByHost: boolean | undefined;
     wrapReferencesToNullableInOptional: boolean | undefined;
     coerceOptionalSchemasToNullable: boolean | undefined;
+    removeDiscriminantsFromSchemas: RemoveDiscriminantsFromSchemas | undefined;
 }
 
 export interface APIDefinitionLocation {

@@ -41,10 +41,8 @@ class EnumGenerator(AbstractTypeGenerator):
             # Create a list of string literals for enum values
             enum_literals = []
             for v in self._enum.values:
-                if '"' not in v.name.wire_value:
-                    enum_literals.append(f'"{v.name.wire_value}"')
-                else:
-                    enum_literals.append(f"'{v.name.wire_value}'")
+                escaped_value = v.name.wire_value.replace("\\", "\\\\").replace('"', '\\"')
+                enum_literals.append(f'"{escaped_value}"')
 
             # Join the literals with commas
             literals_expression = AST.Expression(", ".join(enum_literals))
@@ -81,10 +79,11 @@ class EnumGenerator(AbstractTypeGenerator):
             self._source_file.add_class_declaration(enum_class)
 
             for value in self._enum.values:
+                escaped_value = value.name.wire_value.replace("\\", "\\\\").replace('"', '\\"')
                 enum_class.add_class_var(
                     AST.VariableDeclaration(
                         name=_get_class_var_name(value.name.name),
-                        initializer=AST.Expression(f'"{value.name.wire_value}"'),
+                        initializer=AST.Expression(f'"{escaped_value}"'),
                         docstring=AST.Docstring(value.docs) if value.docs is not None else None,
                     )
                 )
@@ -174,7 +173,8 @@ class EnumSnippetGenerator(AbstractTypeSnippetGenerator):
 
         def write_enum(writer: AST.NodeWriter) -> None:
             if self._use_str_enums:
-                writer.write(f'"{self.example.wire_value}"')
+                escaped_value = self.example.wire_value.replace("\\", "\\\\").replace('"', '\\"')
+                writer.write(f'"{escaped_value}"')
             else:
                 enum_wire_value = self.example.name
                 writer.write_node(AST.Expression(class_reference))
