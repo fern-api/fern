@@ -64,4 +64,51 @@ public partial class OptionalClient
             );
         }
     }
+
+    /// <example><code>
+    /// await client.Optional.SendOptionalTypedBodyAsync(
+    ///     new SendOptionalBodyRequest { Message = "message" }
+    /// );
+    /// </code></example>
+    public async Task<string> SendOptionalTypedBodyAsync(
+        SendOptionalBodyRequest? request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "send-optional-typed-body",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedObjectsWithImportsException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedObjectsWithImportsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
 }

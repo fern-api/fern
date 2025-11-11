@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { ast } from "@fern-api/csharp-codegen";
+import { ast, Writer } from "@fern-api/csharp-codegen";
 import { ExampleGenerator, generateField, generateFieldForFileProperty } from "@fern-api/fern-csharp-model";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
@@ -37,7 +37,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         super(context);
         this.wrapper = wrapper;
         this.serviceId = serviceId;
-        this.classReference = this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
+        this.classReference = this.context.common.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
 
         this.endpoint = endpoint;
         this.exampleGenerator = new ExampleGenerator(context);
@@ -52,7 +52,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             annotations: [this.extern.System.Serializable]
         });
 
-        const service = this.context.getHttpServiceOrThrow(this.serviceId);
+        const service = this.context.common.getHttpServiceOrThrow(this.serviceId);
         const isProtoRequest = this.context.endpointUsesGrpcTransport(service, this.endpoint);
         const protobufProperties: { propertyName: string; typeReference: TypeReference }[] = [];
 
@@ -66,7 +66,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     set: true,
                     summary: pathParameter.docs,
                     useRequired: true,
-                    initializer: this.context.getLiteralInitializerFromTypeReference({
+                    initializer: this.context.common.getLiteralInitializerFromTypeReference({
                         typeReference: pathParameter.valueType
                     }),
                     annotations: [this.extern.System.Text.Json.Serialization.JsonIgnore]
@@ -77,7 +77,10 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         for (const query of this.endpoint.queryParameters) {
             const type = query.allowMultiple
                 ? this.csharp.Type.list(
-                      this.context.csharpTypeMapper.convert({ reference: query.valueType, unboxOptionals: true })
+                      this.context.csharpTypeMapper.convert({
+                          reference: query.valueType,
+                          unboxOptionals: true
+                      })
                   )
                 : this.context.csharpTypeMapper.convert({ reference: query.valueType });
             const field = class_.addField({
@@ -88,7 +91,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 set: true,
                 summary: query.docs,
                 useRequired: true,
-                initializer: this.context.getLiteralInitializerFromTypeReference({
+                initializer: this.context.common.getLiteralInitializerFromTypeReference({
                     typeReference: query.valueType
                 }),
                 annotations: [this.extern.System.Text.Json.Serialization.JsonIgnore]
@@ -112,7 +115,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 set: true,
                 summary: header.docs,
                 useRequired: true,
-                initializer: this.context.getLiteralInitializerFromTypeReference({
+                initializer: this.context.common.getLiteralInitializerFromTypeReference({
                     typeReference: header.valueType
                 }),
                 annotations: [this.extern.System.Text.Json.Serialization.JsonIgnore]
@@ -176,17 +179,19 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             _other: () => undefined
         });
 
-        this.context.getToStringMethod(class_);
+        this.context.common.getToStringMethod(class_);
 
         if (isProtoRequest) {
-            const protobufService = this.context.protobufResolver.getProtobufServiceForServiceId(this.serviceId);
+            const protobufService = this.context.common.protobufResolver.getProtobufServiceForServiceId(this.serviceId);
             if (protobufService != null) {
                 const protobufClassReference = this.csharp.classReference({
                     name: this.classReference.name,
-                    namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufService.file),
+                    namespace: this.context.common.protobufResolver.getNamespaceFromProtobufFileOrThrow(
+                        protobufService.file
+                    ),
                     namespaceAlias: "Proto"
                 });
-                this.context.csharpProtobufTypeMapper.toProtoMethod(class_, {
+                this.context.common.csharpProtobufTypeMapper.toProtoMethod(class_, {
                     classReference: this.classReference,
                     protobufClassReference,
                     properties: protobufProperties
@@ -199,8 +204,8 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             directory: this.getDirectory(),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.namespaces.root,
-            generation: this.generation
+            namespace: this.context.common.namespaces.root,
+            generation: this.context.common.generation
         });
     }
 
@@ -236,7 +241,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             });
             const value = isSingleQueryParameter
                 ? singleValueSnippet
-                : this.csharp.codeblock((writer) =>
+                : this.csharp.codeblock((writer: Writer) =>
                       writer.writeNode(
                           this.csharp.list({
                               entries: [singleValueSnippet]
@@ -293,7 +298,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             arguments_: args,
             multiline: true
         });
-        return this.csharp.codeblock((writer) => writer.writeNode(instantiateClass));
+        return this.csharp.codeblock((writer: Writer) => writer.writeNode(instantiateClass));
     }
 
     protected getFilepath(): RelativeFilePath {

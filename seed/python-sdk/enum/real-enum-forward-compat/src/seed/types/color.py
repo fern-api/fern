@@ -4,34 +4,38 @@ import enum
 import typing
 
 T_Result = typing.TypeVar("T_Result")
+
+
 class Color(str, enum.Enum):
     """
     Examples
     --------
     from seed import Color
-    
+
     Color.RED
     """
+
     RED = "red"
     BLUE = "blue"
     _UNKNOWN = "__COLOR_UNKNOWN__"
     """
     This member is used for forward compatibility. If the value is not recognized by the enum, it will be stored here, and the raw value is accessible through `.value`.
     """
-    
-    
+
     @classmethod
     def _missing_(cls, value: typing.Any) -> "Color":
         unknown = cls._UNKNOWN
         unknown._value_ = value
         return unknown
-    
-    def visit(self, red: typing.Callable[[], T_Result], blue: typing.Callable[[], T_Result], _unknown_member: typing.Callable[[str], T_Result]) -> T_Result:
+
+    def visit(
+        self,
+        red: typing.Callable[[], T_Result],
+        blue: typing.Callable[[], T_Result],
+        _unknown_member: typing.Callable[[str], T_Result],
+    ) -> T_Result:
         if self is Color.RED:
-            return red(
-            )
+            return red()
         if self is Color.BLUE:
-            return blue(
-            )
-        return _unknown_member(
-        self._value_)
+            return blue()
+        return _unknown_member(self._value_)

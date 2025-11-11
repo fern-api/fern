@@ -129,7 +129,7 @@ export class ApiReferenceNodeConverter {
             pointsTo,
             noindex: undefined,
             playground: this.#convertPlaygroundSettings(this.apiSection.playground),
-            // postmanCollectionUrl: this.apiSection.postman, // TODO: Uncomment when fdr-sdk is updated with this field
+            postmanCollectionUrl: this.apiSection.postman,
             authed: undefined,
             viewers: this.apiSection.viewers,
             orphaned: this.apiSection.orphaned,

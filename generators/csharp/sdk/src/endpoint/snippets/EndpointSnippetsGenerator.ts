@@ -159,7 +159,7 @@ export class EndpointSnippetsGenerator extends WithGeneration {
         serviceId: string;
         format?: boolean;
     }): Promise<SingleEndpointSnippet | undefined> {
-        const isGrpc = this.context.getGrpcClientInfoForServiceId(serviceId);
+        const isGrpc = this.context.common.getGrpcClientInfoForServiceId(serviceId);
         const snippet = isGrpc
             ? this.grpcEndpointGenerator.generateGrpcEndpointSnippet({
                   example,

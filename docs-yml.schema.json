@@ -4561,24 +4561,46 @@
       "type": "object",
       "properties": {
         "sidebar": {
-          "$ref": "#/definitions/docs.SidebarThemeConfig"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SidebarThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "body": {
-          "$ref": "#/definitions/docs.BodyThemeConfig"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.BodyThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "tabs": {
-          "$ref": "#/definitions/docs.TabsThemeConfig"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.TabsThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "page-actions": {
-          "$ref": "#/definitions/docs.PageActionsThemeConfig"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.PageActionsThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
-      "required": [
-        "sidebar",
-        "body",
-        "tabs",
-        "page-actions"
-      ],
       "additionalProperties": false
     },
     "docs.IntegrationsConfig": {

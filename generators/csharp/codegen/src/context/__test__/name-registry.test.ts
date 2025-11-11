@@ -1,7 +1,7 @@
-import { FernGeneratorExec } from "@fern-api/base-generator";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ClassReference } from "../../ast";
 import { BaseCsharpCustomConfigSchema } from "../../custom-config";
+import { MinimalGeneratorConfig } from "../common";
 import { Generation } from "../generation-info";
 import { NameRegistry } from "../name-registry";
 
@@ -9,7 +9,7 @@ const generation = new Generation(
     {} as unknown as IntermediateRepresentation,
     "",
     {} as BaseCsharpCustomConfigSchema,
-    {} as FernGeneratorExec.config.GeneratorConfig
+    {} as MinimalGeneratorConfig
 );
 
 describe("NameRegistry", () => {

@@ -1,7 +1,7 @@
 import { fail } from "node:assert";
 import { AbstractFormatter, GeneratorNotificationService, NopFormatter } from "@fern-api/base-generator";
 import { AsIsFiles, BaseCsharpGeneratorContext } from "@fern-api/csharp-base";
-import { ast, TAbsoluteFilePath, TRelativeFilePath } from "@fern-api/csharp-codegen";
+import { ast, CsharpGeneratorContext } from "@fern-api/csharp-codegen";
 
 import { CsharpFormatter } from "@fern-api/csharp-formatter";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
@@ -14,6 +14,7 @@ import {
     HttpEndpoint,
     HttpService,
     IntermediateRepresentation,
+    Name,
     NameAndWireValue,
     OAuthScheme,
     SdkRequestWrapper,
@@ -41,7 +42,23 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
         customConfig: SdkCustomConfigSchema,
         generatorNotificationService: GeneratorNotificationService
     ) {
-        super(ir, config, customConfig, generatorNotificationService);
+        super(
+            ir,
+            config,
+            customConfig,
+            generatorNotificationService,
+            new CsharpGeneratorContext(ir, config, customConfig, {
+                makeRelativeFilePath: (path: string) => RelativeFilePath.of(path),
+                makeAbsoluteFilePath: (path: string) => AbsoluteFilePath.of(path),
+                getNamespaceForTypeId: (typeId: TypeId) => this.getNamespaceForTypeId(typeId),
+                getDirectoryForTypeId: (typeId: TypeId) => this.getDirectoryForTypeId(typeId),
+                getCoreAsIsFiles: () => this.getCoreAsIsFiles(),
+                getCoreTestAsIsFiles: () => this.getCoreTestAsIsFiles(),
+                getPublicCoreAsIsFiles: () => this.getPublicCoreAsIsFiles(),
+                getAsyncCoreAsIsFiles: () => this.getAsyncCoreAsIsFiles(),
+                getChildNamespaceSegments: (fernFilepath: FernFilepath) => this.getChildNamespaceSegments(fernFilepath)
+            })
+        );
         this.formatter = new CsharpFormatter();
         this.nopFormatter = new NopFormatter();
         this.endpointGenerator = new EndpointGenerator({ context: this });
@@ -54,20 +71,55 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
         this.snippetGenerator = new EndpointSnippetsGenerator({ context: this });
     }
 
+    public get generation() {
+        return this.common.generation;
+    }
+    public get namespaces() {
+        return this.generation.namespaces;
+    }
+    public get registry() {
+        return this.generation.registry;
+    }
+    public get extern() {
+        return this.generation.extern;
+    }
+    public get settings() {
+        return this.generation.settings;
+    }
+    public get constants() {
+        return this.generation.constants;
+    }
+    public get names() {
+        return this.generation.names;
+    }
+    public get types() {
+        return this.generation.types;
+    }
+    public get model() {
+        return this.generation.model;
+    }
+    public get csharp() {
+        return this.generation.csharp;
+    }
+    public get System() {
+        return this.extern.System;
+    }
+    public get NUnit() {
+        return this.extern.NUnit;
+    }
+    public get OneOf() {
+        return this.extern.OneOf;
+    }
+    public get Google() {
+        return this.extern.Google;
+    }
+
     public getAdditionalQueryParametersType(): ast.Type {
         return this.csharp.Type.list(
             this.csharp.Type.reference(
                 this.extern.System.Collections.Generic.KeyValuePair(this.csharp.Type.string, this.csharp.Type.string)
             )
         );
-    }
-
-    public override makeRelativeFilePath(path: string): TRelativeFilePath {
-        return RelativeFilePath.of(path);
-    }
-
-    public override makeAbsoluteFilePath(path: string): TAbsoluteFilePath {
-        return AbsoluteFilePath.of(path);
     }
 
     public getAdditionalBodyPropertiesType(): ast.Type {
@@ -90,11 +142,11 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
      * @param typeId The type id of the type declaration
      * @returns
      */
-    public override getDirectoryForTypeId(typeId: TypeId): RelativeFilePath {
+    public getDirectoryForTypeId(typeId: TypeId): RelativeFilePath {
         const typeDeclaration = this.model.dereferenceType(typeId).typeDeclaration;
         return RelativeFilePath.of(
             [
-                ...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName),
+                ...typeDeclaration.name.fernFilepath.allParts.map((path: Name) => path.pascalCase.safeName),
                 this.constants.folders.types
             ].join("/")
         );
@@ -109,9 +161,9 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
         );
     }
 
-    public override getNamespaceForTypeId(typeId: TypeId): string {
+    public getNamespaceForTypeId(typeId: TypeId): string {
         const typeDeclaration = this.model.dereferenceType(typeId).typeDeclaration;
-        return this.getNamespaceFromFernFilepath(typeDeclaration.name.fernFilepath);
+        return this.common.getNamespaceFromFernFilepath(typeDeclaration.name.fernFilepath);
     }
 
     public getAccessFromRootClient(fernFilepath: FernFilepath): string {
@@ -141,7 +193,7 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
         );
     }
 
-    public override getCoreAsIsFiles(): string[] {
+    public getCoreAsIsFiles(): string[] {
         const files = [AsIsFiles.Constants, AsIsFiles.Extensions, AsIsFiles.ValueConvert];
         // JSON stuff
         files.push(
@@ -183,7 +235,7 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
         if (this.settings.includeExceptionHandler) {
             files.push(AsIsFiles.ExceptionHandler);
         }
-        if (this.hasGrpcEndpoints()) {
+        if (this.common.hasGrpcEndpoints()) {
             files.push(AsIsFiles.RawGrpcClient);
         }
         if (this.hasPagination()) {
@@ -197,7 +249,9 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
         } else {
             files.push(AsIsFiles.Json.EnumSerializer);
         }
-        const resolvedProtoAnyType = this.protobufResolver.resolveWellKnownProtobufType(WellKnownProtobufType.any());
+        const resolvedProtoAnyType = this.common.protobufResolver.resolveWellKnownProtobufType(
+            WellKnownProtobufType.any()
+        );
         if (resolvedProtoAnyType != null) {
             files.push(AsIsFiles.ProtoAnyMapper);
         }
@@ -208,7 +262,7 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
         return this.config.generatePaginatedClients === true && this.ir.sdkConfig.hasPaginatedEndpoints;
     }
 
-    public override getCoreTestAsIsFiles(): string[] {
+    public getCoreTestAsIsFiles(): string[] {
         const files = [
             AsIsFiles.Test.Json.DateOnlyJsonTests,
             AsIsFiles.Test.Json.DateTimeJsonTests,
@@ -221,7 +275,7 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
             AsIsFiles.Test.RawClientTests.RetriesTests,
             AsIsFiles.Test.RawClientTests.QueryParameterTests
         ];
-        if (this.hasIdempotencyHeaders()) {
+        if (this.common.hasIdempotencyHeaders()) {
             files.push(AsIsFiles.Test.RawClientTests.IdempotentHeadersTests);
         }
         if (this.settings.generateNewAdditionalProperties) {
@@ -239,8 +293,8 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
         return files;
     }
 
-    public override getAsyncCoreAsIsFiles(): string[] {
-        if (this.hasWebSocketEndpoints) {
+    public getAsyncCoreAsIsFiles(): string[] {
+        if (this.common.hasWebSocketEndpoints) {
             // recurse thru all the entries in AsIsFiles.WebSocketAsync and create the files from the templates
             const files: string[] = [];
 
@@ -261,12 +315,12 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
         return [];
     }
 
-    public override getPublicCoreAsIsFiles(): string[] {
+    public getPublicCoreAsIsFiles(): string[] {
         const files = [AsIsFiles.FileParameter];
         if (this.settings.generateNewAdditionalProperties) {
             files.push(AsIsFiles.Json.AdditionalProperties);
         }
-        if (this.hasGrpcEndpoints()) {
+        if (this.common.hasGrpcEndpoints()) {
             files.push(AsIsFiles.GrpcRequestOptions);
         }
         return files;
@@ -294,7 +348,7 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
     }
 
     public getDirectoryForServiceId(serviceId: ServiceId): string {
-        const service = this.getHttpServiceOrThrow(serviceId);
+        const service = this.common.getHttpServiceOrThrow(serviceId);
         return this.getDirectoryForFernFilepath(service.name.fernFilepath);
     }
 
@@ -364,12 +418,12 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
         if (subpackage == null) {
             return false;
         }
-        const service = this.getHttpService(subpackage.service);
+        const service = this.common.getHttpService(subpackage.service);
         if (service == null) {
             return false;
         }
 
-        return !!this.getHttpService(subpackage?.service)?.endpoints?.length;
+        return !!this.common.getHttpService(subpackage?.service)?.endpoints?.length;
     }
 
     /**
@@ -445,7 +499,7 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
         return this.#doesIrHaveCustomPagination;
     }
 
-    override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
+    getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
         const segmentNames = this.settings.explicitNamespaces ? fernFilepath.allParts : fernFilepath.packagePath;
         return segmentNames.map((segmentName) => segmentName.pascalCase.safeName);
     }
