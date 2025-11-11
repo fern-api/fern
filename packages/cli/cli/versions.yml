@@ -5,6 +5,14 @@
       type: fix
   irVersion: 61
   createdAt: "2025-11-11"
+  version: 0.115.4
+
+- changelogEntry:
+    - summary: |
+        Fix name deconfliction for subtypes of an undiscriminated union (especially when one is an enum).
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-11"
   version: 0.115.3
 
 - changelogEntry:
