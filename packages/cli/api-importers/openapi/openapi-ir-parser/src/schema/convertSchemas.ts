@@ -807,7 +807,8 @@ export function convertSchemaObject(
                 schema.discriminator.mapping != null &&
                 Object.keys(schema.discriminator.mapping).length > 0
             ) {
-                if (context.options.discriminatedUnionV2 || isUndiscriminated) {
+                // If the schema has an explicit x-fern-isUndiscriminated extension, respect it
+                if (isUndiscriminated) {
                     return convertUndiscriminatedOneOfWithDiscriminant({
                         nameOverride,
                         generatedName,
@@ -823,26 +824,26 @@ export function convertSchemaObject(
                         encoding,
                         source
                     });
-                } else {
-                    return convertDiscriminatedOneOf({
-                        nameOverride,
-                        generatedName,
-                        title,
-                        breadcrumbs,
-                        description,
-                        availability,
-                        discriminator: schema.discriminator,
-                        properties: schema.properties ?? {},
-                        required: schema.required,
-                        wrapAsOptional,
-                        wrapAsNullable,
-                        context,
-                        namespace,
-                        groupName,
-                        encoding,
-                        source
-                    });
                 }
+                // Otherwise, honor the explicit discriminator and create a discriminated union
+                return convertDiscriminatedOneOf({
+                    nameOverride,
+                    generatedName,
+                    title,
+                    breadcrumbs,
+                    description,
+                    availability,
+                    discriminator: schema.discriminator,
+                    properties: schema.properties ?? {},
+                    required: schema.required,
+                    wrapAsOptional,
+                    wrapAsNullable,
+                    context,
+                    namespace,
+                    groupName,
+                    encoding,
+                    source
+                });
             } else if (schema.oneOf.length === 1 && schema.oneOf[0] != null) {
                 if (context.options.preserveSingleSchemaOneOf) {
                     return convertUndiscriminatedOneOf({
@@ -958,6 +959,49 @@ export function convertSchemaObject(
 
         // treat anyOf as undiscriminated unions
         if (schema.anyOf != null && schema.anyOf.length > 0) {
+            const isUndiscriminated = getExtension(schema, FernOpenAPIExtension.IS_UNDISCRIMINATED);
+            if (
+                schema.discriminator != null &&
+                schema.discriminator.mapping != null &&
+                Object.keys(schema.discriminator.mapping).length > 0
+            ) {
+                if (isUndiscriminated) {
+                    return convertUndiscriminatedOneOfWithDiscriminant({
+                        nameOverride,
+                        generatedName,
+                        title,
+                        description,
+                        availability,
+                        wrapAsOptional,
+                        wrapAsNullable,
+                        context,
+                        namespace,
+                        groupName,
+                        discriminator: schema.discriminator,
+                        encoding,
+                        source
+                    });
+                }
+                return convertDiscriminatedOneOf({
+                    nameOverride,
+                    generatedName,
+                    title,
+                    breadcrumbs,
+                    description,
+                    availability,
+                    discriminator: schema.discriminator,
+                    properties: schema.properties ?? {},
+                    required: schema.required,
+                    wrapAsOptional,
+                    wrapAsNullable,
+                    context,
+                    namespace,
+                    groupName,
+                    encoding,
+                    source
+                });
+            }
+
             if (schema.anyOf.length === 1 && schema.anyOf[0] != null) {
                 const convertedSchema = convertSchema(
                     schema.anyOf[0],
