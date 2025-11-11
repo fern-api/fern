@@ -116,8 +116,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         }
 
         const sdkRequest = this.endpoint.sdkRequest;
-        if (!sdkRequest || sdkRequest.shape.type !== "wrapper") {
+        if (!sdkRequest) {
             return [...this.service.pathParameters, ...this.endpoint.pathParameters];
+        }
+
+        if (sdkRequest.shape.type !== "wrapper") {
+            return [];
         }
 
         return [...this.service.pathParameters, ...this.endpoint.pathParameters];
