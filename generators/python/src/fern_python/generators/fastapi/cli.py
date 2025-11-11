@@ -1,5 +1,6 @@
 import typer
 from .fastapi_generator import FastApiGenerator
+
 from fern_python.cli.generator_cli import GeneratorCli
 
 

@@ -2,21 +2,21 @@ import typing
 from abc import ABC, abstractmethod
 from typing import Dict, Optional
 
+import fern.ir.resources as ir_types
 from ...context.pydantic_generator_context_impl import PydanticGeneratorContextImpl
 from ..core_utilities.core_utilities import CoreUtilities
 from ..custom_config import SDKCustomConfig
 from ..declaration_referencers.type_declaration_referencer import (
     TypeDeclarationReferencer,
 )
+from fern.generator_exec import GeneratorConfig
+
 from fern_python.codegen import AST
 from fern_python.codegen.filepath import Filepath
 from fern_python.generators.sdk.declaration_referencers.root_client_declaration_referencer import (
     RootClientDeclarationReferencer,
 )
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
-
-import fern.ir.resources as ir_types
-from fern.generator_exec import GeneratorConfig
 
 
 class SdkGeneratorContext(ABC):

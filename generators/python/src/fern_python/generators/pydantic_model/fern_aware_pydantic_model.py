@@ -3,6 +3,7 @@ from __future__ import annotations
 from types import TracebackType
 from typing import List, Optional, Sequence, Tuple, Type
 
+import fern.ir.resources as ir_types
 from ..context.pydantic_generator_context import PydanticGeneratorContext
 from .custom_config import PydanticModelCustomConfig
 from .validators import (
@@ -10,11 +11,10 @@ from .validators import (
     PydanticValidatorsGenerator,
     ValidatorsGenerator,
 )
+
 from fern_python.codegen import AST, LocalClassReference, SourceFile
 from fern_python.external_dependencies.pydantic import PydanticVersionCompatibility
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
-
-import fern.ir.resources as ir_types
 
 
 class FernAwarePydanticModel:

@@ -1,12 +1,12 @@
+import fern.ir.resources as ir_types
 from ...pydantic_model.custom_config import PydanticModelCustomConfig
 from ...pydantic_model.type_declaration_handler.object_generator import ObjectProperty
 from ...pydantic_model.type_declaration_handler.pydantic_models.pydantic_model_object_generator import (
     PydanticModelObjectGenerator,
 )
 from ..context import FastApiGeneratorContext
-from fern_python.codegen import SourceFile
 
-import fern.ir.resources as ir_types
+from fern_python.codegen import SourceFile
 
 
 class InlinedRequestGenerator:

@@ -1,6 +1,8 @@
 from typing import Any, Callable, Optional
 
+import fern.ir.resources as ir_types
 from ..context.sdk_generator_context import SdkGeneratorContext
+
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
 from fern_python.generators.sdk.client_generator.constants import CHUNK_VARIABLE, RESPONSE_VARIABLE
@@ -16,8 +18,6 @@ from fern_python.generators.sdk.client_generator.pagination.offset import (
 from fern_python.generators.sdk.client_generator.streaming.utilities import (
     StreamingParameterType,
 )
-
-import fern.ir.resources as ir_types
 
 
 class EndpointResponseCodeWriter:

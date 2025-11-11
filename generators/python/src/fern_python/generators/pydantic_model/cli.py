@@ -1,5 +1,6 @@
 import typer
 from .pydantic_model_generator import PydanticModelGenerator
+
 from fern_python.cli.generator_cli import GeneratorCli
 
 

@@ -1,7 +1,7 @@
-from ..context import FastApiGeneratorContext
-from fern_python.codegen import AST, SourceFile
-
 import fern.ir.resources as ir_types
+from ..context import FastApiGeneratorContext
+
+from fern_python.codegen import AST, SourceFile
 
 
 class ErrorGenerator:

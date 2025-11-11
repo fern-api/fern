@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 from typing import Callable, Generic, Optional, Tuple, TypeVar
 
-from fern_python.codegen import AST, ExportStrategy, Filepath
-
 import fern.ir.resources as ir_types
+
+from fern_python.codegen import AST, ExportStrategy, Filepath
 
 T = TypeVar("T")
 

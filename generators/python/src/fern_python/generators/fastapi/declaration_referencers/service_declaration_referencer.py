@@ -1,9 +1,9 @@
 from typing import Optional, Tuple
 
-from .fastapi_declaration_referencer import FastApiDeclarationReferencer
-from fern_python.codegen import ExportStrategy, Filepath
-
 import fern.ir.resources as ir_types
+from .fastapi_declaration_referencer import FastApiDeclarationReferencer
+
+from fern_python.codegen import ExportStrategy, Filepath
 
 
 class ServiceDeclarationReferencer(FastApiDeclarationReferencer[ir_types.http.DeclaredServiceName]):

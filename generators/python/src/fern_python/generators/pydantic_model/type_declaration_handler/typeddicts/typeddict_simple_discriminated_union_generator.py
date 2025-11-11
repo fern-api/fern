@@ -1,5 +1,6 @@
 from typing import List, Optional, Union
 
+import fern.ir.resources as ir_types
 from ....context.pydantic_generator_context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig, UnionNamingVersions
 from ..discriminated_union.simple_discriminated_union_generator import (
@@ -7,6 +8,7 @@ from ..discriminated_union.simple_discriminated_union_generator import (
     AbstractSimpleDiscriminatedUnionGenerator,
     get_single_union_type_class_name,
 )
+
 from fern_python.codegen import AST, LocalClassReference, SourceFile
 from fern_python.generators.pydantic_model.typeddict import (
     FernTypedDict,
@@ -15,8 +17,6 @@ from fern_python.generators.pydantic_model.typeddict import (
 from fern_python.pydantic_codegen import PydanticField
 from fern_python.pydantic_codegen.pydantic_field import FernAwarePydanticField
 from fern_python.snippet import SnippetWriter
-
-import fern.ir.resources as ir_types
 
 
 class TypeddictSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminatedUnionGenerator):

@@ -1,16 +1,16 @@
 from typing import Optional, Union
 
+import fern.ir.resources as ir_types
 from ...context.pydantic_generator_context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig
 from .abc.abstract_type_generator import AbstractTypeGenerator
 from .get_visit_method import VisitableItem, VisitorArgument, get_visit_method
+
 from fern_python.codegen import AST, SourceFile
 from fern_python.generators.pydantic_model.type_declaration_handler.abc.abstract_type_snippet_generator import (
     AbstractTypeSnippetGenerator,
 )
 from fern_python.snippet import SnippetWriter
-
-import fern.ir.resources as ir_types
 
 
 # Note enums are the same for both pydantic models and typeddicts os the generator is not multiplexed

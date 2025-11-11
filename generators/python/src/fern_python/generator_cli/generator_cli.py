@@ -4,8 +4,11 @@ import subprocess
 import tempfile
 from typing import Dict, List, Optional, Union
 
+import fern.generator_exec as generator_exec
+import fern.ir.resources as ir_types
 import generatorcli
 import yaml  # type: ignore
+
 from fern_python.codegen import ProjectConfig
 from fern_python.codegen.project import Project
 from fern_python.generator_cli.readme_snippet_builder import ReadmeSnippetBuilder
@@ -19,9 +22,6 @@ from fern_python.generators.sdk.client_generator.generated_root_client import (
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.generators.sdk.custom_config import SDKCustomConfig
-
-import fern.generator_exec as generator_exec
-import fern.ir.resources as ir_types
 
 README_FILENAME = "README.md"
 REFERENCE_FILENAME = "reference.md"
