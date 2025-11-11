@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import UniversalBaseModel
 from .bar import Bar
 from .foo import Foo
@@ -20,4 +21,6 @@ class UnionWithDiscriminant_Bar(UniversalBaseModel):
     type: typing.Literal["bar"] = pydantic.Field(alias="_type", default="bar")
 
 
-UnionWithDiscriminant = typing.Union[UnionWithDiscriminant_Foo, UnionWithDiscriminant_Bar]
+UnionWithDiscriminant = typing_extensions.Annotated[
+    typing.Union[UnionWithDiscriminant_Foo, UnionWithDiscriminant_Bar], pydantic.Field(discriminator="_type")
+]
