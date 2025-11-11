@@ -45,13 +45,15 @@ export class BaseClientTypeGenerator {
     }
 
     private generateHandleGlobalStatusCodeError(context: SdkContext): ts.FunctionDeclaration {
+        const errorType = context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError._getReferenceToType();
+
         const errorParameter = ts.factory.createParameterDeclaration(
             undefined,
             undefined,
             undefined,
             "error",
             undefined,
-            undefined,
+            errorType,
             undefined
         );
 
@@ -61,14 +63,19 @@ export class BaseClientTypeGenerator {
             undefined,
             "rawResponse",
             undefined,
-            undefined,
+            context.coreUtilities.fetcher.RawResponse.RawResponse._getReferenceToType(),
             undefined
         );
 
         const switchCases: ts.CaseOrDefaultClause[] = [];
-        const allErrors = Object.values(this.intermediateRepresentation.errors);
+        const globalErrorIds = this.intermediateRepresentation.rootPackage.errors;
 
-        for (const error of allErrors) {
+        for (const errorId of globalErrorIds) {
+            const error = this.intermediateRepresentation.errors[errorId];
+            if (error == null) {
+                continue;
+            }
+
             const errorDeclaration = this.errorResolver.getErrorDeclarationFromName(error.name);
             const generatedSdkError = context.sdkError.getGeneratedSdkError(error.name);
 
@@ -128,13 +135,15 @@ export class BaseClientTypeGenerator {
     }
 
     private generateHandleNonStatusCodeError(context: SdkContext): ts.FunctionDeclaration {
+        const errorType = context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType();
+
         const errorParameter = ts.factory.createParameterDeclaration(
             undefined,
             undefined,
             undefined,
             "error",
             undefined,
-            undefined,
+            errorType,
             undefined
         );
 
@@ -144,7 +153,7 @@ export class BaseClientTypeGenerator {
             undefined,
             "rawResponse",
             undefined,
-            undefined,
+            context.coreUtilities.fetcher.RawResponse.RawResponse._getReferenceToType(),
             undefined
         );
 
@@ -240,7 +249,17 @@ export class BaseClientTypeGenerator {
                             })
                         )
                     ]
-                )
+                ),
+                ts.factory.createDefaultClause([
+                    ts.factory.createThrowStatement(
+                        context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
+                            message: ts.factory.createStringLiteral("Unknown error"),
+                            statusCode: undefined,
+                            responseBody: undefined,
+                            rawResponse: ts.factory.createIdentifier("rawResponse")
+                        })
+                    )
+                ])
             ])
         );
 
