@@ -370,4 +370,79 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         const rootApi = definition.rootApiFile?.contents;
         expect(rootApi).toBeDefined();
     });
+
+    it("should handle OpenAPI with request and response examples", async () => {
+        // Test OpenAPI spec with endpoints that have request and response examples
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/openapi-with-examples")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "openapi-with-examples"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate IR structure
+        expect(intermediateRepresentation).toBeDefined();
+        expect(intermediateRepresentation.services).toBeDefined();
+        expect(Object.keys(intermediateRepresentation.services)).toHaveLength(1);
+
+        const service = Object.values(intermediateRepresentation.services)[0];
+        expect(service).toBeDefined();
+
+        // Validate service endpoints (should have 2 endpoints: POST /products, GET /products/{productId})
+        if (service && typeof service === "object" && "endpoints" in service) {
+            const serviceWithEndpoints = service as { endpoints?: unknown[] };
+            expect(serviceWithEndpoints.endpoints).toBeDefined();
+            expect(serviceWithEndpoints.endpoints?.length).toBe(2);
+        }
+
+        // Validate FDR structure
+        expect(fdrApiDefinition).toBeDefined();
+        expect(fdrApiDefinition.types).toBeDefined();
+        expect(fdrApiDefinition.subpackages).toBeDefined();
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/openapi-with-examples-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/openapi-with-examples-ir.snap");
+    });
 });
