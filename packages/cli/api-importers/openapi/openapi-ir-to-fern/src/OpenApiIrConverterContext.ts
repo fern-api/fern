@@ -34,19 +34,19 @@ export class OpenApiIrConverterContext {
     public environmentOverrides: RawSchemas.WithEnvironmentsSchema | undefined;
     public authOverrides: RawSchemas.WithAuthSchema | undefined;
     public globalHeaderOverrides: RawSchemas.WithHeadersSchema | undefined;
-    public detectGlobalHeaders: boolean;
-    public objectQueryParameters: boolean;
-    public respectReadonlySchemas: boolean;
-    public respectNullableSchemas: boolean;
-    public onlyIncludeReferencedSchemas: boolean;
-    public inlinePathParameters: boolean;
-    public useBytesForBinaryResponse: boolean;
-    public respectForwardCompatibleEnums: boolean;
-    public wrapReferencesToNullableInOptional: boolean;
-    public coerceOptionalSchemasToNullable: boolean;
-    public groupEnvironmentsByHost: boolean;
+    public detectGlobalHeaders!: boolean;
+    public objectQueryParameters!: boolean;
+    public respectReadonlySchemas!: boolean;
+    public respectNullableSchemas!: boolean;
+    public onlyIncludeReferencedSchemas!: boolean;
+    public inlinePathParameters!: boolean;
+    public useBytesForBinaryResponse!: boolean;
+    public respectForwardCompatibleEnums!: boolean;
+    public wrapReferencesToNullableInOptional!: boolean;
+    public coerceOptionalSchemasToNullable!: boolean;
+    public groupEnvironmentsByHost!: boolean;
 
-    private enableUniqueErrorsPerEndpoint: boolean;
+    private enableUniqueErrorsPerEndpoint!: boolean;
     private defaultServerName: string | undefined = undefined;
     private unknownSchema: Set<number> = new Set();
 
@@ -94,19 +94,8 @@ export class OpenApiIrConverterContext {
         this.globalHeaderOverrides = globalHeaderOverrides;
 
         const resolvedOptions = getConvertOptions({ options });
-        this.detectGlobalHeaders = resolvedOptions.detectGlobalHeaders;
-        this.objectQueryParameters = resolvedOptions.objectQueryParameters;
-        this.respectReadonlySchemas = resolvedOptions.respectReadonlySchemas;
-        this.respectNullableSchemas = resolvedOptions.respectNullableSchemas;
-        this.onlyIncludeReferencedSchemas = resolvedOptions.onlyIncludeReferencedSchemas;
-        this.inlinePathParameters = resolvedOptions.inlinePathParameters;
-        this.useBytesForBinaryResponse = resolvedOptions.useBytesForBinaryResponse;
-        this.respectForwardCompatibleEnums = resolvedOptions.respectForwardCompatibleEnums;
+        Object.assign(this, resolvedOptions);
         this.referencedSchemaIds = resolvedOptions.onlyIncludeReferencedSchemas ? new Set() : undefined;
-        this.enableUniqueErrorsPerEndpoint = resolvedOptions.enableUniqueErrorsPerEndpoint;
-        this.wrapReferencesToNullableInOptional = resolvedOptions.wrapReferencesToNullableInOptional;
-        this.coerceOptionalSchemasToNullable = resolvedOptions.coerceOptionalSchemasToNullable;
-        this.groupEnvironmentsByHost = resolvedOptions.groupEnvironmentsByHost;
         this.builder = new FernDefinitionBuilderImpl(this.enableUniqueErrorsPerEndpoint);
         if (ir.title != null) {
             this.builder.setDisplayName({ displayName: ir.title });
