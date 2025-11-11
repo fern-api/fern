@@ -161,8 +161,15 @@ export function convertParameters({
             }
         }
 
-        // Preserve explicit false values, omit true and undefined
-        const explodeValue = resolvedParameter.explode === false ? false : undefined;
+        const style =
+            resolvedParameter.style ??
+            (resolvedParameter.in === "query" || resolvedParameter.in === "cookie" ? "form" : "simple");
+        const defaultExplode = style === "form" || style === "deepObject";
+        
+        const explodeValue =
+            resolvedParameter.explode !== undefined && resolvedParameter.explode !== defaultExplode
+                ? resolvedParameter.explode
+                : undefined;
 
         const convertedParameter = {
             name: resolvedParameter.name,

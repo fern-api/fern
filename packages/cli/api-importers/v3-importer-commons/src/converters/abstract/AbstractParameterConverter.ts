@@ -68,6 +68,16 @@ export abstract class AbstractParameterConverter<
             schema: resolvedParameterSchema
         });
 
+        const style =
+            this.parameter.style ??
+            (this.parameter.in === "query" || this.parameter.in === "cookie" ? "form" : "simple");
+        const defaultExplode = style === "form" || style === "deepObject";
+        
+        const explodeValue =
+            this.parameter.explode !== undefined && this.parameter.explode !== defaultExplode
+                ? this.parameter.explode
+                : undefined;
+
         switch (this.parameter.in) {
             case "query":
                 return {
@@ -84,7 +94,7 @@ export abstract class AbstractParameterConverter<
                             schema: parameterSchemaWithExampleOverride ?? schema
                         }),
                         availability,
-                        explode: this.parameter.explode
+                        explode: explodeValue
                     },
                     inlinedTypes
                 };
@@ -118,7 +128,7 @@ export abstract class AbstractParameterConverter<
                         v2Examples: this.convertParameterExamples({
                             schema: parameterSchemaWithExampleOverride ?? schema
                         }),
-                        explode: this.parameter.explode
+                        explode: explodeValue
                     },
                     inlinedTypes
                 };
