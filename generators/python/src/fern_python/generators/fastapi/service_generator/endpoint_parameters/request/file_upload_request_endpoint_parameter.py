@@ -78,7 +78,7 @@ class FileUploadRequestBodyParameter(EndpointParameter):
             self._request_property.value_type, in_endpoint=True
         )
         is_optional = type_hint.is_optional
-        return FastAPI.Body(
+        return FastAPI.Form(
             variable_name=self._parameter_name(),
             wire_value=self._request_property.name.wire_value,
             is_optional=is_optional,
