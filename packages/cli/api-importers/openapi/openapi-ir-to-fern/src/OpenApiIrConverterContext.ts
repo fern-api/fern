@@ -205,7 +205,9 @@ export class OpenApiIrConverterContext {
     }
 
     public shouldMarkSchemaAsReferenced(): boolean {
-        return this.options.onlyIncludeReferencedSchemas && this.isInAnyState(State.Channel, State.Endpoint, State.Webhook);
+        return (
+            this.options.onlyIncludeReferencedSchemas && this.isInAnyState(State.Channel, State.Endpoint, State.Webhook)
+        );
     }
 
     /**

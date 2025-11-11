@@ -1,7 +1,7 @@
 import { BaseOpenAPIWorkspace, BaseOpenAPIWorkspaceSync } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
-import { parse, ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
+import { ParseOpenAPIOptions, parse } from "@fern-api/openapi-ir-parser";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPI } from "openapi-types";

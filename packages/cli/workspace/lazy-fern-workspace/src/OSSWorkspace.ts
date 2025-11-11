@@ -15,7 +15,7 @@ import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } fr
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
-import { parse, ParseOpenAPIOptions } from "@fern-api/openapi-ir-parser";
+import { ParseOpenAPIOptions, parse } from "@fern-api/openapi-ir-parser";
 import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-to-ir";
 import { OpenRPCConverter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir";
 import { TaskContext } from "@fern-api/task-context";

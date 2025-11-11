@@ -153,7 +153,9 @@ export function buildEndpoint({
             generatedRequestName: endpoint.generatedRequestName,
             requestNameOverride: endpoint.requestNameOverride ?? undefined,
             pathParameters:
-                context.options.inlinePathParameters && Object.keys(pathParameters).length > 0 ? pathParameters : undefined,
+                context.options.inlinePathParameters && Object.keys(pathParameters).length > 0
+                    ? pathParameters
+                    : undefined,
             queryParameters: Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
             nonRequestReferencedSchemas: Array.from(nonRequestReferencedSchemas),
             headers: Object.keys(headers).length > 0 ? headers : undefined,

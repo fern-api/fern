@@ -301,7 +301,10 @@ export function buildObjectTypeDeclaration({
 
     const name = schema.nameOverride ?? schema.generatedName;
     return {
-        name: readOnlyPropertyPresent && context.options.respectReadonlySchemas && !shouldSkipReadonly ? `${name}Read` : name,
+        name:
+            readOnlyPropertyPresent && context.options.respectReadonlySchemas && !shouldSkipReadonly
+                ? `${name}Read`
+                : name,
         schema: objectTypeDeclaration
     };
 }
