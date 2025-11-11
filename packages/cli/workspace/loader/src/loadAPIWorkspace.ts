@@ -14,7 +14,6 @@ import {
     WorkspaceLoaderFailureType
 } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
-
 import { loadAPIChangelog } from "./loadAPIChangelog";
 
 export async function loadSingleNamespaceAPIWorkspace({
@@ -105,7 +104,10 @@ export async function loadSingleNamespaceAPIWorkspace({
                     groupMultiApiEnvironments: definition.settings?.groupMultiApiEnvironments ?? false,
                     wrapReferencesToNullableInOptional: definition.settings?.wrapReferencesToNullableInOptional ?? true,
                     coerceOptionalSchemasToNullable: definition.settings?.coerceOptionalSchemasToNullable ?? true,
-                    groupEnvironmentsByHost: definition.settings?.groupEnvironmentsByHost ?? false
+                    groupEnvironmentsByHost: definition.settings?.groupEnvironmentsByHost ?? false,
+                    removeDiscriminantsFromSchemas:
+                        definition.settings?.removeDiscriminantsFromSchemas ??
+                        generatorsYml.RemoveDiscriminantsFromSchemas.Always
                 }
             });
             continue;
@@ -182,7 +184,10 @@ export async function loadSingleNamespaceAPIWorkspace({
                 groupMultiApiEnvironments: definition.settings?.groupMultiApiEnvironments ?? false,
                 wrapReferencesToNullableInOptional: definition.settings?.wrapReferencesToNullableInOptional ?? true,
                 coerceOptionalSchemasToNullable: definition.settings?.coerceOptionalSchemasToNullable ?? true,
-                groupEnvironmentsByHost: definition.settings?.groupEnvironmentsByHost ?? false
+                groupEnvironmentsByHost: definition.settings?.groupEnvironmentsByHost ?? false,
+                removeDiscriminantsFromSchemas:
+                    definition.settings?.removeDiscriminantsFromSchemas ??
+                    generatorsYml.RemoveDiscriminantsFromSchemas.Always
             },
             source: {
                 type: "openapi",

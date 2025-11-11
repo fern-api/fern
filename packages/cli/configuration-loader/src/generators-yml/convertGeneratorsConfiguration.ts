@@ -34,7 +34,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     groupMultiApiEnvironments: undefined,
     groupEnvironmentsByHost: undefined,
     wrapReferencesToNullableInOptional: undefined,
-    coerceOptionalSchemasToNullable: undefined
+    coerceOptionalSchemasToNullable: undefined,
+    removeDiscriminantsFromSchemas: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -93,7 +94,10 @@ function parseDeprecatedApiDefinitionSettingsSchema(
         coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"],
         onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
         inlinePathParameters: settings?.["inline-path-parameters"],
-        shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"]
+        shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"],
+        removeDiscriminantsFromSchemas: parseRemoveDiscriminantsFromSchemas(
+            settings?.["remove-discriminants-from-schemas"]
+        )
     };
 }
 
@@ -143,8 +147,22 @@ function parseBaseApiDefinitionSettingsSchema(
         respectNullableSchemas: settings?.["respect-nullable-schemas"],
         wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"],
         coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"],
-        groupEnvironmentsByHost: settings?.["group-environments-by-host"]
+        groupEnvironmentsByHost: settings?.["group-environments-by-host"],
+        removeDiscriminantsFromSchemas: parseRemoveDiscriminantsFromSchemas(
+            settings?.["remove-discriminants-from-schemas"]
+        )
     };
+}
+
+function parseRemoveDiscriminantsFromSchemas(
+    option: string | undefined
+): generatorsYml.RemoveDiscriminantsFromSchemas | undefined {
+    if (option == null || option === "always") {
+        return generatorsYml.RemoveDiscriminantsFromSchemas.Always;
+    } else if (option === "never") {
+        return generatorsYml.RemoveDiscriminantsFromSchemas.Never;
+    }
+    throw new Error(`Unknown value for generators.yml API setting: remove-discriminants-from-schemas: ${option}`);
 }
 
 async function parseAPIConfigurationToApiLocations(

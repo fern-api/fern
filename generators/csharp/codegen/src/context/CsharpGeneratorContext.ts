@@ -1,5 +1,4 @@
 import { fail } from "node:assert";
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import {
     DeclaredErrorName,
@@ -31,16 +30,13 @@ import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
 import { CsharpProtobufTypeMapper } from "../proto/CsharpProtobufTypeMapper";
 import { ProtobufResolver } from "../proto/ProtobufResolver";
 import { CsharpTypeMapper } from "./CsharpTypeMapper";
-import { TAbsoluteFilePath, TRelativeFilePath } from "./generation-info";
+import { MinimalGeneratorConfig, Support } from "./common";
 export type Namespace = string;
 
-export abstract class CsharpGeneratorContext<
-    CustomConfig extends BaseCsharpCustomConfigSchema
-> extends AbstractGeneratorContext {
+export class CsharpGeneratorContext<CustomConfig extends BaseCsharpCustomConfigSchema> {
     public readonly csharpTypeMapper: CsharpTypeMapper;
     public readonly csharpProtobufTypeMapper: CsharpProtobufTypeMapper;
     public readonly protobufResolver: ProtobufResolver;
-    public publishConfig: FernGeneratorExec.NugetGithubPublishInfo | undefined;
     private allNamespaceSegments?: Set<string>;
     private allTypeClassReferences?: Map<string, Set<Namespace>>;
     private readOnlyMemoryTypes: Set<PrimitiveTypeV1>;
@@ -88,20 +84,16 @@ export abstract class CsharpGeneratorContext<
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
-        config: FernGeneratorExec.config.GeneratorConfig,
-        customConfig: CustomConfig,
-        generatorNotificationService: GeneratorNotificationService
+        public config: MinimalGeneratorConfig,
+        public customConfig: CustomConfig,
+        private support: Support
     ) {
-        super(config, generatorNotificationService);
-
         this.generation = new Generation(
             ir,
             this.ir.apiName.pascalCase.unsafeName,
             customConfig,
             this.config,
-            this.makeRelativeFilePath,
-            this.makeAbsoluteFilePath,
-            this.logger
+            this.support
         );
 
         this.csharpTypeMapper = new CsharpTypeMapper(this);
@@ -110,20 +102,7 @@ export abstract class CsharpGeneratorContext<
         this.readOnlyMemoryTypes = new Set<PrimitiveTypeV1>(
             convertReadOnlyPrimitiveTypes(this.settings.readOnlyMemoryTypes)
         );
-        config.output.mode._visit<void>({
-            github: (github) => {
-                if (github.publishInfo?.type === "nuget") {
-                    this.publishConfig = github.publishInfo;
-                }
-            },
-            publish: () => undefined,
-            downloadFiles: () => undefined,
-            _other: () => undefined
-        });
     }
-
-    public abstract makeRelativeFilePath(path: string): TRelativeFilePath;
-    public abstract makeAbsoluteFilePath(path: string): TAbsoluteFilePath;
 
     public hasGrpcEndpoints(): boolean {
         // TODO: Replace this with the this.ir.sdkConfig.hasGrpcEndpoints property (when available).
@@ -278,12 +257,8 @@ export abstract class CsharpGeneratorContext<
         return this.getFullNamespaceSegments(fernFilepath).join(".");
     }
 
-    getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
-        return [];
-    }
-
     public getFullNamespaceSegments(fernFilepath: FernFilepath): string[] {
-        return [this.namespaces.root, ...this.getChildNamespaceSegments(fernFilepath)];
+        return [this.namespaces.root, ...this.support.getChildNamespaceSegments(fernFilepath)];
     }
 
     public createJsonAccessAttribute(propertyAccess: ObjectPropertyAccess): ast.Annotation {
@@ -624,32 +599,28 @@ export abstract class CsharpGeneratorContext<
         });
     }
 
-    public shouldCreateCustomPagination(): boolean {
-        return false;
-    }
-
     public getCoreAsIsFiles(): string[] {
-        return [];
+        return this.support.getCoreAsIsFiles();
     }
 
     public getCoreTestAsIsFiles(): string[] {
-        return [];
+        return this.support.getCoreTestAsIsFiles();
     }
 
     public getPublicCoreAsIsFiles(): string[] {
-        return [];
+        return this.support.getPublicCoreAsIsFiles();
     }
 
     public getAsyncCoreAsIsFiles(): string[] {
-        return [];
+        return this.support.getAsyncCoreAsIsFiles();
     }
 
     public getDirectoryForTypeId(typeId: TypeId): string {
-        return "";
+        return this.support.getDirectoryForTypeId(typeId);
     }
 
     public getNamespaceForTypeId(typeId: TypeId): string {
-        return "";
+        return this.support.getNamespaceForTypeId(typeId);
     }
 
     public getSubpackageClassReference(subpackage: Subpackage): ast.ClassReference {
@@ -975,7 +946,7 @@ export abstract class CsharpGeneratorContext<
                     return response?.type === "ok" && response.value.type === "body";
                 });
                 if (useableExamples.length === 0) {
-                    this.generation.logger.warn(`No useable examples found for endpoint ${endpoint.id}`);
+                    // this.support.getLogger().warn(`No useable examples found for endpoint ${endpoint.id}`);
                     continue;
                 }
 

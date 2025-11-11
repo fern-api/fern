@@ -233,7 +233,7 @@ export class BaseOptionsGenerator extends WithGeneration {
             skipDefaultInitializer: true,
             initializer: includeInitializer
                 ? this.csharp.codeblock((writer) => {
-                      writer.writeNode(this.context.getEnumerableEmptyKeyValuePairsInitializer());
+                      writer.writeNode(this.context.common.getEnumerableEmptyKeyValuePairsInitializer());
                   })
                 : undefined
         });

@@ -150,7 +150,7 @@ export class WebSocketClientGenerator extends WithGeneration {
         this.classReference = this.csharp.classReference({
             origin: websocketChannel,
             name: WebSocketClientGenerator.createWebsocketClientClassName(websocketChannel),
-            namespace: this.context.getSubpackageClassReference(subpackage).namespace
+            namespace: this.context.common.getSubpackageClassReference(subpackage).namespace
         });
         this.optionsClassReference = this.csharp.classReference({
             origin: this.classReference.explicit("Options"),
