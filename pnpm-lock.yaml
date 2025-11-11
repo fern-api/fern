@@ -3401,9 +3401,6 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: ^61.7.0
         version: 61.7.0
-      '@fern-fern/snippet-sdk':
-        specifier: ^0.0.6434
-        version: 0.0.6434
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -10023,9 +10020,6 @@ packages:
 
   '@fern-fern/postman-sdk@0.1.1':
     resolution: {integrity: sha512-wjeVDbw6xvsBe6I/uwZ1P0ZhzjpEAyzY9M0iQXEuZoYo5wsea3SeTCrqOub3jV0WDia0PFFacfpoV0U/sD7yIQ==}
-
-  '@fern-fern/snippet-sdk@0.0.6434':
-    resolution: {integrity: sha512-xqt1EHBHOVAAqpo4u/YFetvjRnhabLvxrcnL26DJrbqXj9UY0DWqlzRAOX6QBgisncZKnQKU1+10r7pKdf5g3Q==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -18027,16 +18021,6 @@ snapshots:
     dependencies:
       form-data: 4.0.4
       formdata-node: 6.0.3
-      node-fetch: 2.7.0
-      qs: 6.13.0
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - encoding
-
-  '@fern-fern/snippet-sdk@0.0.6434':
-    dependencies:
-      form-data: 4.0.4
-      js-base64: 3.7.2
       node-fetch: 2.7.0
       qs: 6.13.0
       url-join: 4.0.1
