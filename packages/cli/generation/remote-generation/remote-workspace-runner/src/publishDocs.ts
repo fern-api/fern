@@ -650,6 +650,11 @@ async function updateAiChatFromDocsDefinition({
     }
     context.logger.debug("Processing AI Chat configuration from docs.yml");
 
+    if (isPreview) {
+        context.logger.debug("Skipping AI Search enablement for preview URL");
+        return;
+    }
+
     if (docsDefinition.config.aiChatConfig.location != null) {
         const faiClient = getFaiClient({ token: token.value });
 
