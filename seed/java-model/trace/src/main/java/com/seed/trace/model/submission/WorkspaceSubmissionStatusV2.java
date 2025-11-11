@@ -77,7 +77,9 @@ public final class WorkspaceSubmissionStatusV2 {
     )
     public Builder updates(List<WorkspaceSubmissionUpdate> updates) {
       this.updates.clear();
-      this.updates.addAll(updates);
+      if (updates != null) {
+        this.updates.addAll(updates);
+      }
       return this;
     }
 
@@ -87,7 +89,9 @@ public final class WorkspaceSubmissionStatusV2 {
     }
 
     public Builder addAllUpdates(List<WorkspaceSubmissionUpdate> updates) {
-      this.updates.addAll(updates);
+      if (updates != null) {
+        this.updates.addAll(updates);
+      }
       return this;
     }
 

@@ -1,3 +1,11 @@
+- version: 3.14.6
+  changelogEntry:
+    - summary: |
+        Upgrade Gradle wrapper from 7.4.2 to 8.14.3. This update brings Java 24 support, GraalVM Native Image toolchain selection, enhanced test reporting, and build authoring improvements. The bundled Gradle wrapper files now use the latest stable Gradle 8.x release.
+      type: chore
+  createdAt: "2025-11-11"
+  irVersion: 61
+
 - version: 3.14.5
   changelogEntry:
     - summary: |
