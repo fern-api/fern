@@ -72,7 +72,7 @@ function shouldSkipMockServerTestsForService({
     context: SdkGeneratorContext;
 }): boolean {
     // skip grpc clients for now
-    if (context.getGrpcClientInfoForServiceId(serviceId) != null) {
+    if (context.common.getGrpcClientInfoForServiceId(serviceId) != null) {
         return true;
     }
     // don't support base properties on unions

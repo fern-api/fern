@@ -1,3 +1,4 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { assertNever, isNonNullish } from "@fern-api/core-utils";
 import {
     Endpoint,
@@ -21,7 +22,6 @@ import {
 import { TaskContext } from "@fern-api/task-context";
 import { mapValues } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
-
 import { getExtension } from "../../getExtension";
 import { ParseOpenAPIOptions } from "../../options";
 import { convertSchema } from "../../schema/convertSchemas";
@@ -412,6 +412,9 @@ function maybeRemoveDiscriminantsFromSchemas(
     context: AbstractOpenAPIV3ParserContext,
     source: Source
 ): Record<string, SchemaWithExample> {
+    if (context.options.removeDiscriminantsFromSchemas === generatorsYml.RemoveDiscriminantsFromSchemas.Never) {
+        return schemas;
+    }
     const result: Record<string, SchemaWithExample> = {};
     for (const [schemaId, schema] of Object.entries(schemas)) {
         if (schema.type !== "object") {
@@ -423,6 +426,14 @@ function maybeRemoveDiscriminantsFromSchemas(
         };
         const discriminatedUnionReference = context.getReferencesFromDiscriminatedUnion(referenceToSchema);
         if (discriminatedUnionReference == null) {
+            result[schemaId] = schema;
+            continue;
+        }
+
+        // Check if the schema is also referenced outside of discriminated unions,
+        // if so, we cannot remove the discriminants
+        const isReferencedElsewhere = context.getReferencedSchemas().has(schemaId);
+        if (isReferencedElsewhere) {
             result[schemaId] = schema;
             continue;
         }

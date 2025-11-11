@@ -102,7 +102,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         // generate names for everything up front.
-        context.precalculate();
+        context.common.precalculate();
 
         // before generating anything, generate the models first so that we
         // can identify collisions or ambiguities in the generated code.
@@ -129,7 +129,8 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
 
         const subpackages = context.getSubpackages(Object.keys(context.ir.subpackages));
         for (const subpackage of subpackages) {
-            const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
+            const service =
+                subpackage.service != null ? context.common.getHttpServiceOrThrow(subpackage.service) : undefined;
             // skip subpackages that have no endpoints (recursively)
             if (context.subPackageHasEndpointsRecursively(subpackage)) {
                 const subClient = new SubPackageClientGenerator({
@@ -146,7 +147,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
             }
 
             if (context.subPackageHasWebsocketEndpointsRecursively(subpackage)) {
-                const websocketChannel = context.getWebsocketChannel(subpackage.websocket);
+                const websocketChannel = context.common.getWebsocketChannel(subpackage.websocket);
                 if (websocketChannel) {
                     const websocketApi = new WebSocketClientGenerator({
                         context,
@@ -169,7 +170,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         const requestOptions = new RequestOptionsGenerator(context, baseOptionsGenerator);
         context.project.addSourceFiles(requestOptions.generate());
 
-        if (context.hasIdempotencyHeaders()) {
+        if (context.common.hasIdempotencyHeaders()) {
             const idempotentRequestOptionsInterface = new IdempotentRequestOptionsInterfaceGenerator(
                 context,
                 baseOptionsGenerator
@@ -207,7 +208,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
 
         const rootServiceId = context.ir.rootPackage.service;
         if (rootServiceId != null) {
-            const service = context.getHttpServiceOrThrow(rootServiceId);
+            const service = context.common.getHttpServiceOrThrow(rootServiceId);
             this.generateRequests(context, service, rootServiceId);
         }
 

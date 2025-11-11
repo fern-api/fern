@@ -1,0 +1,127 @@
+{
+  "title": "Test setting to disable usage of title param",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Shape": {
+        "value": {
+          "commonProperties": [],
+          "discriminantProperty": "type",
+          "generatedName": "Shape",
+          "schemas": {
+            "triangle": {
+              "generatedName": "ComponentsSchemasTriangle",
+              "schema": "Triangle",
+              "source": {
+                "file": "../openapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "square": {
+              "generatedName": "ComponentsSchemasSquare",
+              "schema": "Square",
+              "source": {
+                "file": "../openapi.json",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          },
+          "groupName": [],
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          },
+          "type": "discriminated"
+        },
+        "type": "oneOf"
+      },
+      "Triangle": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "triangleBase",
+            "key": "base",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "TriangleBase",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "triangleHeight",
+            "key": "height",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "TriangleHeight",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Triangle",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Square": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "squareSideLength",
+            "key": "sideLength",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "SquareSideLength",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Square",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

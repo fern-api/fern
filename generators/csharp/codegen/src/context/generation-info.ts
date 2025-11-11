@@ -1,22 +1,16 @@
-import { type FernGeneratorExec } from "@fern-api/base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernFilepath, IntermediateRepresentation, TypeId } from "@fern-fern/ir-sdk/api";
 import { join } from "path";
 import * as ast from "../ast";
 import { CSharp } from "../csharp";
 import { type BaseCsharpCustomConfigSchema } from "../custom-config";
 import { lazy } from "../utils/lazy";
 import { camelCase, upperFirst } from "../utils/text";
+import { MinimalGeneratorConfig, Support, TAbsoluteFilePath, TRelativeFilePath } from "./common";
 import { Extern } from "./extern";
 import { ModelNavigator } from "./model-navigator";
 import { NameRegistry } from "./name-registry";
 
-export type TRelativeFilePath = string & {
-    __RelativeFilePath: void;
-};
-export type TAbsoluteFilePath = string & {
-    __AbsoluteFilePath: void;
-};
 /**
  * Central configuration and code generation context for C# SDK generation.
  *
@@ -56,7 +50,6 @@ export class Generation {
      * @param apiName - The name of the API being generated (used for namespace/class naming)
      * @param customConfig - User-provided custom configuration overrides for the generator
      * @param generatorConfig - Core generator configuration including organization and workspace info
-     * @param logger - expose logging functions to generation classes
      */
     constructor(
         private readonly intermediateRepresentation:
@@ -64,41 +57,17 @@ export class Generation {
             | FernIr.dynamic.DynamicIntermediateRepresentation,
         private readonly apiName: string,
         private readonly customConfig: BaseCsharpCustomConfigSchema,
-        private readonly generatorConfig: FernGeneratorExec.config.GeneratorConfig,
-        private readonly makeRelativeFilePath: (path: string) => TRelativeFilePath = (path) =>
-            path as TRelativeFilePath,
-        private readonly makeAbsoluteFilePath: (path: string) => TAbsoluteFilePath = (path) =>
-            path as TAbsoluteFilePath,
-        public readonly logger: {
-            disable: () => void;
-            enable: () => void;
-            trace: (...args: string[]) => void;
-            debug: (...args: string[]) => void;
-            info: (...args: string[]) => void;
-            warn: (...args: string[]) => void;
-            error: (...args: string[]) => void;
-        } = {
-            disable: () => {
-                /* ignore */
-            },
-            enable: () => {
-                /* ignore */
-            },
-            trace: () => {
-                /* ignore */
-            },
-            debug: () => {
-                /* ignore */
-            },
-            info: () => {
-                /* ignore */
-            },
-            warn: () => {
-                /* ignore */
-            },
-            error: () => {
-                /* ignore */
-            }
+        private readonly generatorConfig: MinimalGeneratorConfig,
+        private readonly support: Support = {
+            makeRelativeFilePath: (path) => path as TRelativeFilePath,
+            makeAbsoluteFilePath: (path: string) => path as TAbsoluteFilePath,
+            getNamespaceForTypeId: (typeId: TypeId) => "",
+            getDirectoryForTypeId: (typeId: TypeId) => "",
+            getCoreAsIsFiles: () => [],
+            getCoreTestAsIsFiles: () => [],
+            getPublicCoreAsIsFiles: () => [],
+            getAsyncCoreAsIsFiles: () => [],
+            getChildNamespaceSegments: (fernFilepath: FernFilepath) => []
         }
     ) {
         // Initialize the model navigator to traverse and query the IR
@@ -213,32 +182,41 @@ export class Generation {
 
     public readonly constants = {
         folders: lazy({
-            mockServerTests: () => this.makeRelativeFilePath("Unit/MockServer"),
+            mockServerTests: () => this.support.makeRelativeFilePath("Unit/MockServer"),
             types: () => "Types",
             exceptions: () => "Exceptions",
             src: () => "src",
             protobuf: () => "proto",
-            serializationTests: () => this.makeRelativeFilePath("Unit/Serialization"),
+            serializationTests: () => this.support.makeRelativeFilePath("Unit/Serialization"),
             project: () =>
-                this.makeRelativeFilePath(
-                    join(this.constants.folders.sourceFiles, this.makeRelativeFilePath(this.names.files.project))
+                this.support.makeRelativeFilePath(
+                    join(
+                        this.constants.folders.sourceFiles,
+                        this.support.makeRelativeFilePath(this.names.files.project)
+                    )
                 ),
-            sourceFiles: () => this.makeRelativeFilePath(this.constants.folders.src),
+            sourceFiles: () => this.support.makeRelativeFilePath(this.constants.folders.src),
             coreFiles: () =>
-                this.makeRelativeFilePath(
-                    join(this.constants.folders.project, this.makeRelativeFilePath(this.constants.defaults.core))
-                ),
-            publicCoreFiles: () =>
-                this.makeRelativeFilePath(
+                this.support.makeRelativeFilePath(
                     join(
                         this.constants.folders.project,
-                        this.makeRelativeFilePath(this.constants.defaults.core),
-                        this.makeRelativeFilePath(this.constants.defaults.publicCore)
+                        this.support.makeRelativeFilePath(this.constants.defaults.core)
+                    )
+                ),
+            publicCoreFiles: () =>
+                this.support.makeRelativeFilePath(
+                    join(
+                        this.constants.folders.project,
+                        this.support.makeRelativeFilePath(this.constants.defaults.core),
+                        this.support.makeRelativeFilePath(this.constants.defaults.publicCore)
                     )
                 ),
             testFiles: () =>
-                this.makeRelativeFilePath(
-                    join(this.constants.folders.sourceFiles, this.makeRelativeFilePath(this.names.files.testProject))
+                this.support.makeRelativeFilePath(
+                    join(
+                        this.constants.folders.sourceFiles,
+                        this.support.makeRelativeFilePath(this.names.files.testProject)
+                    )
                 )
         }),
 

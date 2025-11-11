@@ -252,7 +252,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer.writeLine(`case ${fullError.statusCode}:`);
         writer.indent();
         writer.write("throw new ");
-        writer.writeNode(this.context.getExceptionClassReference(fullError.name));
+        writer.writeNode(this.context.common.getExceptionClassReference(fullError.name));
         writer.write("(");
         writer.writeNode(this.types.JsonUtils);
         writer.write(".Deserialize<");
@@ -444,7 +444,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.popScope();
                 },
                 json: (reference) => {
-                    const astType = this.context.csharpTypeMapper.convert({ reference: reference.responseBodyType });
+                    const astType = this.context.csharpTypeMapper.convert({
+                        reference: reference.responseBodyType
+                    });
                     writer.writeLine(`if (${this.names.variables.response}.StatusCode is >= 200 and < 400)`);
                     writer.pushScope();
 
@@ -932,7 +934,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
         writer.write("return ");
         writer.writeNodeStatement(
-            this.context.invokeCustomPagerFactoryMethod({
+            this.context.common.invokeCustomPagerFactoryMethod({
                 itemType,
                 sendRequestMethod: this.csharp.codeblock(this.names.variables.sendRequest),
                 initialRequest: this.csharp.codeblock(this.names.variables.httpRequest),
@@ -1131,7 +1133,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         additionalEndParameters?: ast.CodeBlock[];
         getResult?: boolean;
     }): ast.MethodInvocation | undefined {
-        const service = this.context.getHttpServiceOrThrow(serviceId);
+        const service = this.context.common.getHttpServiceOrThrow(serviceId);
         const serviceFilePath = service.name.fernFilepath;
         const args = this.getNonEndpointArguments({ endpoint, example, parseDatetimes });
         const endpointRequestSnippet = this.getEndpointRequestSnippet(example, endpoint, serviceId, parseDatetimes);

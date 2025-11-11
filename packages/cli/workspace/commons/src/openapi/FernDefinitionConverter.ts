@@ -33,7 +33,8 @@ export class FernDefinitionConverter {
             objectQueryParameters: this.args.objectQueryParameters,
             useBytesForBinaryResponse: this.args.useBytesForBinaryResponse,
             respectForwardCompatibleEnums: this.args.respectForwardCompatibleEnums,
-            groupEnvironmentsByHost: this.args.groupEnvironmentsByHost
+            groupEnvironmentsByHost: this.args.groupEnvironmentsByHost,
+            removeDiscriminantsFromSchemas: this.args.removeDiscriminantsFromSchemas
         };
 
         const definition = convert({
