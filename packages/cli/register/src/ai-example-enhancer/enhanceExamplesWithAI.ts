@@ -91,7 +91,8 @@ async function enhancePackageExamples(
             stats,
             enhancedExampleRecords
         );
-        enhancedSubpackages[packageId] = enhancedPackage as unknown as FdrCjsSdk.api.v1.register.ApiDefinitionSubpackage;
+        enhancedSubpackages[packageId] =
+            enhancedPackage as unknown as FdrCjsSdk.api.v1.register.ApiDefinitionSubpackage;
     }
 
     const enhancedRootPackage = await enhancePackageEndpoints(

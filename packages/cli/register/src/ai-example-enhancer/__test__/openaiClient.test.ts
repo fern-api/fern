@@ -5,12 +5,20 @@ import { ExampleEnhancementRequest } from "../types";
 // Mock TaskContext for testing
 const mockTaskContext: TaskContext = {
     logger: {
-        debug: () => {},
-        info: () => {},
-        warn: () => {},
-        error: () => {}
-    } as any
-} as any;
+        debug: () => {
+            /* noop */
+        },
+        info: () => {
+            /* noop */
+        },
+        warn: () => {
+            /* noop */
+        },
+        error: () => {
+            /* noop */
+        }
+    }
+} as unknown as TaskContext;
 
 describe("OpenAIExampleEnhancer", () => {
     describe("initialization", () => {
