@@ -611,7 +611,8 @@ export class DynamicTypeLiteralMapper {
             return rust.Expression.raw(`todo!("Unknown enum variant: ${value}")`);
         }
 
-        const variantName = enumVariant.name.pascalCase.safeName;
+        const rawVariantName = enumVariant.name.pascalCase.unsafeName;
+        const variantName = this.context.escapeRustReservedType(rawVariantName);
         return rust.Expression.reference(`${enumName}::${variantName}`);
     }
 
@@ -634,7 +635,8 @@ export class DynamicTypeLiteralMapper {
 
         const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
         const unionName = this.context.getStructNameByDeclaration(unionType.declaration);
-        const variantName = unionVariant.discriminantValue.name.pascalCase.safeName;
+        const rawVariantName = unionVariant.discriminantValue.name.pascalCase.unsafeName;
+        const variantName = this.context.escapeRustReservedType(rawVariantName);
 
         // Handle different union variant types with correct Rust syntax
         switch (unionVariant.type) {

@@ -8,6 +8,7 @@ import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import {
     convertToPascalCase,
     escapeRustKeyword,
+    escapeRustReservedType,
     generateDefaultCrateName,
     getName,
     RustFilenameRegistry,
@@ -130,6 +131,13 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getMethodName(name: FernIr.Name): string {
         return getName(name.snakeCase.safeName);
+    }
+
+    /**
+     * Escapes Rust reserved types by prefixing them with 'r#'
+     */
+    public escapeRustReservedType(name: string): string {
+        return escapeRustReservedType(name);
     }
 
     /**
