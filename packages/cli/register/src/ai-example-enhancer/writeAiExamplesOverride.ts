@@ -1,6 +1,6 @@
 import { AbsoluteFilePath, dirname } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { writeFile } from "fs/promises";
+import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
 export interface EnhancedExampleRecord {
@@ -11,6 +11,40 @@ export interface EnhancedExampleRecord {
     headers?: Record<string, unknown>;
     requestBody?: unknown;
     responseBody?: unknown;
+}
+
+/**
+ * Reads the existing ai_examples_override.yml and returns a set of covered endpoints
+ */
+export async function loadExistingOverrideCoverage(
+    sourceFilePath: AbsoluteFilePath,
+    context: TaskContext
+): Promise<Set<string>> {
+    const overrideFilePath = AbsoluteFilePath.of(`${dirname(sourceFilePath)}/ai_examples_override.yml`);
+    const coveredEndpoints = new Set<string>();
+
+    try {
+        const existingContent = await readFile(overrideFilePath, "utf-8");
+        const parsed = yaml.load(existingContent);
+
+        if (parsed && typeof parsed === "object" && "paths" in parsed) {
+            const paths = parsed.paths as Record<string, Record<string, unknown>>;
+            for (const [path, methods] of Object.entries(paths)) {
+                if (methods && typeof methods === "object") {
+                    for (const method of Object.keys(methods)) {
+                        const key = `${method.toLowerCase()}:${path}`;
+                        coveredEndpoints.add(key);
+                    }
+                }
+            }
+        }
+
+        context.logger.debug(`Loaded ${coveredEndpoints.size} covered endpoints from ai_examples_override.yml`);
+    } catch (error) {
+        context.logger.debug(`No existing ai_examples_override.yml found or error reading it`);
+    }
+
+    return coveredEndpoints;
 }
 
 /**
@@ -100,9 +134,61 @@ export async function writeAiExamplesOverride({
     const overrideFilePath = AbsoluteFilePath.of(`${dirname(sourceFilePath)}/ai_examples_override.yml`);
 
     try {
-        const yamlContent = yaml.dump(overrideStructure, {
+        let existingOverride: {
+            paths?: Record<string, Record<string, { "x-fern-examples"?: unknown[] }>>;
+        } = {};
+
+        try {
+            const existingContent = await readFile(overrideFilePath, "utf-8");
+            const parsed = yaml.load(existingContent);
+            if (parsed && typeof parsed === "object") {
+                existingOverride = parsed as typeof existingOverride;
+            }
+        } catch (readError) {
+            context.logger.debug(`No existing ai_examples_override.yml found, creating new file`);
+        }
+
+        const mergedStructure: {
+            paths: Record<string, Record<string, { "x-fern-examples": Record<string, unknown>[] }>>;
+        } = {
+            paths: {}
+        };
+
+        if (existingOverride.paths) {
+            for (const [path, methods] of Object.entries(existingOverride.paths)) {
+                if (methods && typeof methods === "object") {
+                    mergedStructure.paths[path] = {};
+                    for (const [method, methodData] of Object.entries(methods)) {
+                        if (methodData && typeof methodData === "object" && "x-fern-examples" in methodData) {
+                            mergedStructure.paths[path][method] = {
+                                "x-fern-examples": (methodData["x-fern-examples"] as unknown[]) || []
+                            } as { "x-fern-examples": Record<string, unknown>[] };
+                        }
+                    }
+                }
+            }
+        }
+
+        for (const [path, methods] of Object.entries(overrideStructure.paths)) {
+            if (!mergedStructure.paths[path]) {
+                mergedStructure.paths[path] = {};
+            }
+
+            for (const [method, methodData] of Object.entries(methods)) {
+                if (!mergedStructure.paths[path][method]) {
+                    mergedStructure.paths[path][method] = methodData;
+                    context.logger.debug(`Adding new examples for ${method.toUpperCase()} ${path}`);
+                } else {
+                    context.logger.debug(
+                        `Skipping ${method.toUpperCase()} ${path} - examples already exist in override file`
+                    );
+                }
+            }
+        }
+
+        const yamlContent = yaml.dump(mergedStructure, {
             indent: 2,
-            lineWidth: -1, // Don't wrap lines
+            lineWidth: -1,
             noRefs: true
         });
 
