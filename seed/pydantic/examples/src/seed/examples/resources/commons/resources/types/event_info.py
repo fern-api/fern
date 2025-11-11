@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .tag import Tag
 
@@ -49,4 +50,6 @@ EventInfo_Metadata(
     json_string='{"one": "two"}',
 )
 """
-EventInfo = typing.Union[EventInfo_Metadata, EventInfo_Tag]
+EventInfo = typing_extensions.Annotated[
+    typing.Union[EventInfo_Metadata, EventInfo_Tag], pydantic.Field(discriminator="type")
+]

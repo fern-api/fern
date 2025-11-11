@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..commons.variable_value import VariableValue
 from .exception_v_2 import ExceptionV2
@@ -34,4 +35,7 @@ class ActualResult_ExceptionV2(UniversalBaseModel):
     type: typing.Literal["exceptionV2"] = "exceptionV2"
 
 
-ActualResult = typing.Union[ActualResult_Value, ActualResult_Exception, ActualResult_ExceptionV2]
+ActualResult = typing_extensions.Annotated[
+    typing.Union[ActualResult_Value, ActualResult_Exception, ActualResult_ExceptionV2],
+    pydantic.Field(discriminator="type"),
+]

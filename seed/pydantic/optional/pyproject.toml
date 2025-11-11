@@ -7,7 +7,10 @@ version = "0.0.1"
 description = ""
 readme = "README.md"
 authors = []
-keywords = []
+keywords = [
+    "fern",
+    "test"
+]
 
 classifiers = [
     "Intended Audience :: Developers",
@@ -31,10 +34,13 @@ packages = [
 ]
 
 [tool.poetry.urls]
+Documentation = 'https://buildwithfern.com/learn'
+Homepage = 'https://buildwithfern.com/'
 Repository = 'https://github.com/optional/fern'
 
 [tool.poetry.dependencies]
 python = "^3.8"
+pydantic = ">= 1.9.2"
 pydantic-core = ">=2.18.2"
 
 [tool.poetry.group.dev.dependencies]

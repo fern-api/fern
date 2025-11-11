@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import typing
 
+import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import UniversalBaseModel
 
 
@@ -27,9 +29,12 @@ class DiscriminatedLiteral_LiteralGeorge(UniversalBaseModel):
     type: typing.Literal["literalGeorge"] = "literalGeorge"
 
 
-DiscriminatedLiteral = typing.Union[
-    DiscriminatedLiteral_CustomName,
-    DiscriminatedLiteral_DefaultName,
-    DiscriminatedLiteral_George,
-    DiscriminatedLiteral_LiteralGeorge,
+DiscriminatedLiteral = typing_extensions.Annotated[
+    typing.Union[
+        DiscriminatedLiteral_CustomName,
+        DiscriminatedLiteral_DefaultName,
+        DiscriminatedLiteral_George,
+        DiscriminatedLiteral_LiteralGeorge,
+    ],
+    pydantic.Field(discriminator="type"),
 ]

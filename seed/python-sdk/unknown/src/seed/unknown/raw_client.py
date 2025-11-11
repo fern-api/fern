@@ -18,19 +18,19 @@ class RawUnknownClient:
         self._client_wrapper = client_wrapper
 
     def post(
-        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[typing.List[typing.Optional[typing.Any]]]:
+        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[typing.List[typing.Any]]:
         """
         Parameters
         ----------
-        request : typing.Optional[typing.Any]
+        request : typing.Any
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[typing.List[typing.Optional[typing.Any]]]
+        HttpResponse[typing.List[typing.Any]]
         """
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
@@ -41,9 +41,9 @@ class RawUnknownClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[typing.Optional[typing.Any]],
+                    typing.List[typing.Any],
                     parse_obj_as(
-                        type_=typing.List[typing.Optional[typing.Any]],  # type: ignore
+                        type_=typing.List[typing.Any],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -54,19 +54,19 @@ class RawUnknownClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def post_object(
-        self, *, unknown: typing.Optional[typing.Any] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[typing.List[typing.Optional[typing.Any]]]:
+        self, *, unknown: typing.Any, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[typing.List[typing.Any]]:
         """
         Parameters
         ----------
-        unknown : typing.Optional[typing.Any]
+        unknown : typing.Any
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[typing.List[typing.Optional[typing.Any]]]
+        HttpResponse[typing.List[typing.Any]]
         """
         _response = self._client_wrapper.httpx_client.request(
             "with-object",
@@ -80,9 +80,9 @@ class RawUnknownClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[typing.Optional[typing.Any]],
+                    typing.List[typing.Any],
                     parse_obj_as(
-                        type_=typing.List[typing.Optional[typing.Any]],  # type: ignore
+                        type_=typing.List[typing.Any],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -98,19 +98,19 @@ class AsyncRawUnknownClient:
         self._client_wrapper = client_wrapper
 
     async def post(
-        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[typing.List[typing.Optional[typing.Any]]]:
+        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[typing.List[typing.Any]]:
         """
         Parameters
         ----------
-        request : typing.Optional[typing.Any]
+        request : typing.Any
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[typing.List[typing.Optional[typing.Any]]]
+        AsyncHttpResponse[typing.List[typing.Any]]
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
@@ -121,9 +121,9 @@ class AsyncRawUnknownClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[typing.Optional[typing.Any]],
+                    typing.List[typing.Any],
                     parse_obj_as(
-                        type_=typing.List[typing.Optional[typing.Any]],  # type: ignore
+                        type_=typing.List[typing.Any],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -134,19 +134,19 @@ class AsyncRawUnknownClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def post_object(
-        self, *, unknown: typing.Optional[typing.Any] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[typing.List[typing.Optional[typing.Any]]]:
+        self, *, unknown: typing.Any, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[typing.List[typing.Any]]:
         """
         Parameters
         ----------
-        unknown : typing.Optional[typing.Any]
+        unknown : typing.Any
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[typing.List[typing.Optional[typing.Any]]]
+        AsyncHttpResponse[typing.List[typing.Any]]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "with-object",
@@ -160,9 +160,9 @@ class AsyncRawUnknownClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[typing.Optional[typing.Any]],
+                    typing.List[typing.Any],
                     parse_obj_as(
-                        type_=typing.List[typing.Optional[typing.Any]],  # type: ignore
+                        type_=typing.List[typing.Any],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

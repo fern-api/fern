@@ -8,10 +8,12 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from . import optional
     from .client import AsyncSeedObjectsWithImports, SeedObjectsWithImports
-    from .optional import SendOptionalBodyRequest
+    from .optional import DeployParams, DeployResponse, SendOptionalBodyRequest
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedObjectsWithImports": ".client",
+    "DeployParams": ".optional",
+    "DeployResponse": ".optional",
     "SeedObjectsWithImports": ".client",
     "SendOptionalBodyRequest": ".optional",
     "__version__": ".version",
@@ -42,6 +44,8 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedObjectsWithImports",
+    "DeployParams",
+    "DeployResponse",
     "SeedObjectsWithImports",
     "SendOptionalBodyRequest",
     "__version__",
