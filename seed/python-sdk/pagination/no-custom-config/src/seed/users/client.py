@@ -6,9 +6,15 @@ import uuid
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
+from ..types.username_cursor import UsernameCursor
 from .raw_client import AsyncRawUsersClient, RawUsersClient
+from .types.list_users_extended_optional_list_response import ListUsersExtendedOptionalListResponse
+from .types.list_users_extended_response import ListUsersExtendedResponse
+from .types.list_users_mixed_type_pagination_response import ListUsersMixedTypePaginationResponse
+from .types.list_users_pagination_response import ListUsersPaginationResponse
 from .types.order import Order
 from .types.user import User
+from .types.username_container import UsernameContainer
 from .types.with_cursor import WithCursor
 from .types.with_page import WithPage
 
@@ -39,7 +45,7 @@ class UsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -60,7 +66,7 @@ class UsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersPaginationResponse]
 
         Examples
         --------
@@ -88,7 +94,7 @@ class UsersClient:
 
     def list_with_mixed_type_cursor_pagination(
         self, *, cursor: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersMixedTypePaginationResponse]:
         """
         Parameters
         ----------
@@ -99,7 +105,7 @@ class UsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersMixedTypePaginationResponse]
 
         Examples
         --------
@@ -122,7 +128,7 @@ class UsersClient:
 
     def list_with_body_cursor_pagination(
         self, *, pagination: typing.Optional[WithCursor] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -135,7 +141,7 @@ class UsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersPaginationResponse]
 
         Examples
         --------
@@ -167,7 +173,7 @@ class UsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -188,7 +194,7 @@ class UsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersPaginationResponse]
 
         Examples
         --------
@@ -222,7 +228,7 @@ class UsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -243,7 +249,7 @@ class UsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersPaginationResponse]
 
         Examples
         --------
@@ -271,7 +277,7 @@ class UsersClient:
 
     def list_with_body_offset_pagination(
         self, *, pagination: typing.Optional[WithPage] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -284,7 +290,7 @@ class UsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersPaginationResponse]
 
         Examples
         --------
@@ -315,7 +321,7 @@ class UsersClient:
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -334,7 +340,7 @@ class UsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersPaginationResponse]
 
         Examples
         --------
@@ -366,7 +372,7 @@ class UsersClient:
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -385,7 +391,7 @@ class UsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersPaginationResponse]
 
         Examples
         --------
@@ -412,7 +418,7 @@ class UsersClient:
 
     def list_with_extended_results(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersExtendedResponse]:
         """
         Parameters
         ----------
@@ -423,7 +429,7 @@ class UsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersExtendedResponse]
 
         Examples
         --------
@@ -450,7 +456,7 @@ class UsersClient:
 
     def list_with_extended_results_and_optional_data(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[User]:
+    ) -> SyncPager[User, ListUsersExtendedOptionalListResponse]:
         """
         Parameters
         ----------
@@ -461,7 +467,7 @@ class UsersClient:
 
         Returns
         -------
-        SyncPager[User]
+        SyncPager[User, ListUsersExtendedOptionalListResponse]
 
         Examples
         --------
@@ -490,7 +496,7 @@ class UsersClient:
 
     def list_usernames(
         self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[str]:
+    ) -> SyncPager[str, UsernameCursor]:
         """
         Parameters
         ----------
@@ -503,7 +509,7 @@ class UsersClient:
 
         Returns
         -------
-        SyncPager[str]
+        SyncPager[str, UsernameCursor]
 
         Examples
         --------
@@ -526,7 +532,7 @@ class UsersClient:
 
     def list_with_global_config(
         self, *, offset: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPager[str]:
+    ) -> SyncPager[str, UsernameContainer]:
         """
         Parameters
         ----------
@@ -537,7 +543,7 @@ class UsersClient:
 
         Returns
         -------
-        SyncPager[str]
+        SyncPager[str, UsernameContainer]
 
         Examples
         --------
@@ -582,7 +588,7 @@ class AsyncUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -603,7 +609,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersPaginationResponse]
 
         Examples
         --------
@@ -640,7 +646,7 @@ class AsyncUsersClient:
 
     async def list_with_mixed_type_cursor_pagination(
         self, *, cursor: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersMixedTypePaginationResponse]:
         """
         Parameters
         ----------
@@ -651,7 +657,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersMixedTypePaginationResponse]
 
         Examples
         --------
@@ -685,7 +691,7 @@ class AsyncUsersClient:
 
     async def list_with_body_cursor_pagination(
         self, *, pagination: typing.Optional[WithCursor] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -698,7 +704,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersPaginationResponse]
 
         Examples
         --------
@@ -741,7 +747,7 @@ class AsyncUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -762,7 +768,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersPaginationResponse]
 
         Examples
         --------
@@ -805,7 +811,7 @@ class AsyncUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -826,7 +832,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersPaginationResponse]
 
         Examples
         --------
@@ -863,7 +869,7 @@ class AsyncUsersClient:
 
     async def list_with_body_offset_pagination(
         self, *, pagination: typing.Optional[WithPage] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -876,7 +882,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersPaginationResponse]
 
         Examples
         --------
@@ -918,7 +924,7 @@ class AsyncUsersClient:
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -937,7 +943,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersPaginationResponse]
 
         Examples
         --------
@@ -978,7 +984,7 @@ class AsyncUsersClient:
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersPaginationResponse]:
         """
         Parameters
         ----------
@@ -997,7 +1003,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersPaginationResponse]
 
         Examples
         --------
@@ -1033,7 +1039,7 @@ class AsyncUsersClient:
 
     async def list_with_extended_results(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersExtendedResponse]:
         """
         Parameters
         ----------
@@ -1044,7 +1050,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersExtendedResponse]
 
         Examples
         --------
@@ -1079,7 +1085,7 @@ class AsyncUsersClient:
 
     async def list_with_extended_results_and_optional_data(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[User]:
+    ) -> AsyncPager[User, ListUsersExtendedOptionalListResponse]:
         """
         Parameters
         ----------
@@ -1090,7 +1096,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        AsyncPager[User]
+        AsyncPager[User, ListUsersExtendedOptionalListResponse]
 
         Examples
         --------
@@ -1127,7 +1133,7 @@ class AsyncUsersClient:
 
     async def list_usernames(
         self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[str]:
+    ) -> AsyncPager[str, UsernameCursor]:
         """
         Parameters
         ----------
@@ -1140,7 +1146,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        AsyncPager[str]
+        AsyncPager[str, UsernameCursor]
 
         Examples
         --------
@@ -1172,7 +1178,7 @@ class AsyncUsersClient:
 
     async def list_with_global_config(
         self, *, offset: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPager[str]:
+    ) -> AsyncPager[str, UsernameContainer]:
         """
         Parameters
         ----------
@@ -1183,7 +1189,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        AsyncPager[str]
+        AsyncPager[str, UsernameContainer]
 
         Examples
         --------

@@ -7,6 +7,7 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from .raw_client import AsyncRawComplexClient, RawComplexClient
 from .types.conversation import Conversation
+from .types.paginated_conversation_response import PaginatedConversationResponse
 from .types.search_request_query import SearchRequestQuery
 from .types.starting_after_paging import StartingAfterPaging
 
@@ -36,7 +37,7 @@ class ComplexClient:
         query: SearchRequestQuery,
         pagination: typing.Optional[StartingAfterPaging] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Conversation]:
+    ) -> SyncPager[Conversation, PaginatedConversationResponse]:
         """
         Parameters
         ----------
@@ -51,7 +52,7 @@ class ComplexClient:
 
         Returns
         -------
-        SyncPager[Conversation]
+        SyncPager[Conversation, PaginatedConversationResponse]
 
         Examples
         --------
@@ -105,7 +106,7 @@ class AsyncComplexClient:
         query: SearchRequestQuery,
         pagination: typing.Optional[StartingAfterPaging] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Conversation]:
+    ) -> AsyncPager[Conversation, PaginatedConversationResponse]:
         """
         Parameters
         ----------
@@ -120,7 +121,7 @@ class AsyncComplexClient:
 
         Returns
         -------
-        AsyncPager[Conversation]
+        AsyncPager[Conversation, PaginatedConversationResponse]
 
         Examples
         --------
