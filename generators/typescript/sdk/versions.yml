@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.28.9
+  changelogEntry:
+    - summary: Fix `Error._visit` to pass the correct type (`core.Fetcher.Error`) to the `_other` callback.
+      type: fix
+  createdAt: "2025-11-10"
+  irVersion: 61
+
 - version: 3.28.8
   changelogEntry:
     - summary: Clean up imports for requestWithRetries.test.ts.
