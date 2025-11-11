@@ -25,7 +25,7 @@ export function getAPIDefinitionSettingsDefaults(): APIDefinitionSettings {
  */
 const FIELD_MAPPINGS: Record<keyof generatorsYml.APIDefinitionSettings, keyof OpenAPISettings | "SPECIAL"> = {
     shouldUseTitleAsName: "useTitlesAsName",
-    shouldUseUndiscriminatedUnionsWithLiterals: "SPECIAL", // Maps to both shouldUseUndiscriminatedUnionsWithLiterals and discriminatedUnionV2
+    shouldUseUndiscriminatedUnionsWithLiterals: "SPECIAL",
     shouldUseIdiomaticRequestNames: "shouldUseIdiomaticRequestNames",
     asyncApiMessageNaming: "asyncApiNaming",
     shouldUseOptionalAdditionalProperties: "optionalAdditionalProperties",
@@ -52,6 +52,16 @@ const FIELD_MAPPINGS: Record<keyof generatorsYml.APIDefinitionSettings, keyof Op
     removeDiscriminantsFromSchemas: "removeDiscriminantsFromSchemas"
 };
 
+function setIfDefined<K extends keyof OpenAPISettings>(
+    target: Partial<OpenAPISettings>,
+    key: K,
+    value: OpenAPISettings[K] | undefined
+): void {
+    if (value !== undefined) {
+        target[key] = value;
+    }
+}
+
 /**
  * Convert settings from generators.yml format to internal APIDefinitionSettings format.
  * This applies all defaults for any settings not explicitly specified.
@@ -67,15 +77,14 @@ export function getAPIDefinitionSettings(settings?: generatorsYml.APIDefinitionS
             [keyof generatorsYml.APIDefinitionSettings, keyof OpenAPISettings | "SPECIAL"]
         >) {
             const value = settings[yamlKey];
-            if (value !== undefined) {
-                if (internalKey === "SPECIAL") {
-                    if (yamlKey === "shouldUseUndiscriminatedUnionsWithLiterals") {
-                        mappedSettings.shouldUseUndiscriminatedUnionsWithLiterals = value as boolean;
-                        mappedSettings.discriminatedUnionV2 = value as boolean;
-                    }
-                } else {
-                    mappedSettings[internalKey] = value as OpenAPISettings[typeof internalKey];
+            if (internalKey === "SPECIAL") {
+                if (yamlKey === "shouldUseUndiscriminatedUnionsWithLiterals" && value !== undefined) {
+                    const v = value as boolean;
+                    setIfDefined(mappedSettings, "shouldUseUndiscriminatedUnionsWithLiterals", v);
+                    setIfDefined(mappedSettings, "discriminatedUnionV2", v);
                 }
+            } else {
+                setIfDefined(mappedSettings, internalKey, value as unknown as OpenAPISettings[typeof internalKey]);
             }
         }
     }
