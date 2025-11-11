@@ -214,8 +214,9 @@
       {
         "auth": true,
         "authV2": [
-          "userId",
+          "wallet",
           "blockchain",
+          "userId",
         ],
         "availability": undefined,
         "defaultEnvironment": "https://api.example.com/v1",
@@ -269,12 +270,18 @@
         "multiAuth": [
           {
             "schemes": [
+              "wallet",
+              "blockchain",
+            ],
+          },
+          {
+            "schemes": [
               "userId",
               "blockchain",
             ],
           },
         ],
-        "name": "Create a user transaction with user ID auth",
+        "name": "Create a user transaction with multiple auth options",
         "originalEndpointId": "endpoint_.createUserTransaction",
         "path": {
           "parts": [

@@ -38,8 +38,10 @@ paths:
   /user-transaction:
     post:
       operationId: createUserTransaction
-      summary: Create a user transaction with user ID auth
+      summary: Create a user transaction with multiple auth options
       security:
+        - wallet: []
+          blockchain: []
         - userId: []
           blockchain: []
       requestBody:

@@ -842,7 +842,7 @@
           "availability": undefined,
           "basePath": undefined,
           "baseUrl": "https://api.example.com/v1",
-          "displayName": "Create a user transaction with user ID auth",
+          "displayName": "Create a user transaction with multiple auth options",
           "docs": undefined,
           "errors": [],
           "fullPath": {
@@ -982,6 +982,10 @@
           "retries": undefined,
           "sdkRequest": undefined,
           "security": [
+            {
+              "blockchain": [],
+              "wallet": [],
+            },
             {
               "blockchain": [],
               "userId": [],
