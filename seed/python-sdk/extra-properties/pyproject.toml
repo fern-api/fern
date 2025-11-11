@@ -7,7 +7,10 @@ version = "0.0.1"
 description = ""
 readme = "README.md"
 authors = []
-keywords = []
+keywords = [
+    "fern",
+    "test"
+]
 
 classifiers = [
     "Intended Audience :: Developers",
@@ -31,6 +34,8 @@ packages = [
 ]
 
 [tool.poetry.urls]
+Documentation = 'https://buildwithfern.com/learn'
+Homepage = 'https://buildwithfern.com/'
 Repository = 'https://github.com/extra-properties/fern'
 
 [tool.poetry.dependencies]

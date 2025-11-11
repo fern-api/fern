@@ -2,4 +2,4 @@
 
 import typing
 
-OptionalMetadata = typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+OptionalMetadata = typing.Optional[typing.Dict[str, typing.Any]]

@@ -10,6 +10,9 @@ import fastapi
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
+from ..types.deploy_params import DeployParams
+from ..types.deploy_response import DeployResponse
+from ..types.send_optional_body_request import SendOptionalBodyRequest
 
 
 class AbstractOptionalService(AbstractFernService):
@@ -22,9 +25,20 @@ class AbstractOptionalService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def send_optional_body(
-        self, *, body: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
-    ) -> str: ...
+    def send_optional_body(self, *, body: typing.Optional[typing.Dict[str, typing.Any]] = None) -> str: ...
+
+    @abc.abstractmethod
+    def send_optional_typed_body(self, *, body: typing.Optional[SendOptionalBodyRequest] = None) -> str: ...
+
+    @abc.abstractmethod
+    def send_optional_nullable_with_all_optional_properties(
+        self, *, body: typing.Optional[DeployParams] = None, action_id: str, id: str
+    ) -> DeployResponse:
+        """
+        Tests optional(nullable(T)) where T has only optional properties.
+        This should not generate wire tests expecting {} when Optional.empty() is passed.
+        """
+        ...
 
     """
     Below are internal methods used by Fern to register your implementation.
@@ -34,6 +48,8 @@ class AbstractOptionalService(AbstractFernService):
     @classmethod
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_send_optional_body(router=router)
+        cls.__init_send_optional_typed_body(router=router)
+        cls.__init_send_optional_nullable_with_all_optional_properties(router=router)
 
     @classmethod
     def __init_send_optional_body(cls, router: fastapi.APIRouter) -> None:
@@ -69,4 +85,84 @@ class AbstractOptionalService(AbstractFernService):
             response_model=str,
             description=AbstractOptionalService.send_optional_body.__doc__,
             **get_route_args(cls.send_optional_body, default_tag="optional"),
+        )(wrapper)
+
+    @classmethod
+    def __init_send_optional_typed_body(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.send_optional_typed_body)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.send_optional_typed_body, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.send_optional_typed_body)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:
+            try:
+                return cls.send_optional_typed_body(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'send_optional_typed_body' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.send_optional_typed_body.__globals__)
+
+        router.post(
+            path="/send-optional-typed-body",
+            response_model=str,
+            description=AbstractOptionalService.send_optional_typed_body.__doc__,
+            **get_route_args(cls.send_optional_typed_body, default_tag="optional"),
+        )(wrapper)
+
+    @classmethod
+    def __init_send_optional_nullable_with_all_optional_properties(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.send_optional_nullable_with_all_optional_properties)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "action_id":
+                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "id":
+                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            else:
+                new_parameters.append(parameter)
+        setattr(
+            cls.send_optional_nullable_with_all_optional_properties,
+            "__signature__",
+            endpoint_function.replace(parameters=new_parameters),
+        )
+
+        @functools.wraps(cls.send_optional_nullable_with_all_optional_properties)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> DeployResponse:
+            try:
+                return cls.send_optional_nullable_with_all_optional_properties(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'send_optional_nullable_with_all_optional_properties' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.send_optional_nullable_with_all_optional_properties.__globals__)
+
+        router.post(
+            path="/deploy/{action_id}/versions/{id}",
+            response_model=DeployResponse,
+            description=AbstractOptionalService.send_optional_nullable_with_all_optional_properties.__doc__,
+            **get_route_args(cls.send_optional_nullable_with_all_optional_properties, default_tag="optional"),
         )(wrapper)

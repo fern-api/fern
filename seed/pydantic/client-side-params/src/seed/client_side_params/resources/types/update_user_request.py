@@ -12,8 +12,8 @@ class UpdateUserRequest(UniversalBaseModel):
     username: typing.Optional[str] = None
     phone_number: typing.Optional[str] = None
     phone_verified: typing.Optional[bool] = None
-    user_metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
-    app_metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    user_metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
+    app_metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
     password: typing.Optional[str] = None
     blocked: typing.Optional[bool] = None
 

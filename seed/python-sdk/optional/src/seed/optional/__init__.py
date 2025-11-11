@@ -6,8 +6,12 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import SendOptionalBodyRequest
-_dynamic_imports: typing.Dict[str, str] = {"SendOptionalBodyRequest": ".types"}
+    from .types import DeployParams, DeployResponse, SendOptionalBodyRequest
+_dynamic_imports: typing.Dict[str, str] = {
+    "DeployParams": ".types",
+    "DeployResponse": ".types",
+    "SendOptionalBodyRequest": ".types",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +35,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["SendOptionalBodyRequest"]
+__all__ = ["DeployParams", "DeployResponse", "SendOptionalBodyRequest"]

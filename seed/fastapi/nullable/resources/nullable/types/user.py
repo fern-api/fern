@@ -18,7 +18,7 @@ class User(UniversalBaseModel):
     email: Email
     favorite_number: WeirdNumber = pydantic.Field(alias="favorite-number")
     numbers: typing.Optional[typing.List[int]] = None
-    strings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    strings: typing.Optional[typing.Dict[str, typing.Any]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

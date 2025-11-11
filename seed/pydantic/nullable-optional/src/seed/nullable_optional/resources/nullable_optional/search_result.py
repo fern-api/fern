@@ -6,6 +6,7 @@ import datetime as dt
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .address import Address
 
@@ -71,4 +72,7 @@ class SearchResult_Document(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-SearchResult = typing.Union[SearchResult_User, SearchResult_Organization, SearchResult_Document]
+SearchResult = typing_extensions.Annotated[
+    typing.Union[SearchResult_User, SearchResult_Organization, SearchResult_Document],
+    pydantic.Field(discriminator="type"),
+]

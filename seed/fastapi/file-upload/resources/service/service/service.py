@@ -42,7 +42,7 @@ class AbstractServiceService(AbstractFernService):
         maybe_integer: typing.Optional[int] = None,
         optional_list_of_strings: typing.Optional[typing.List[str]] = None,
         list_of_objects: typing.List[MyObject],
-        optional_metadata: typing.Optional[typing.Optional[typing.Any]] = None,
+        optional_metadata: typing.Optional[typing.Any] = None,
         optional_object_type: typing.Optional[ObjectType] = None,
         optional_id: typing.Optional[Id] = None,
         alias_object: MyAliasObject,
@@ -86,7 +86,7 @@ class AbstractServiceService(AbstractFernService):
         maybe_integer: typing.Optional[int] = None,
         optional_list_of_strings: typing.Optional[typing.List[str]] = None,
         list_of_objects: typing.List[MyObject],
-        optional_metadata: typing.Optional[typing.Optional[typing.Any]] = None,
+        optional_metadata: typing.Optional[typing.Any] = None,
         optional_object_type: typing.Optional[ObjectType] = None,
         optional_id: typing.Optional[Id] = None,
         list_of_objects_with_optionals: typing.List[MyObjectWithOptional],
@@ -97,10 +97,7 @@ class AbstractServiceService(AbstractFernService):
 
     @abc.abstractmethod
     def optional_args(
-        self,
-        *,
-        image_file: typing.Union[fastapi.UploadFile, None],
-        request: typing.Optional[typing.Optional[typing.Any]] = None,
+        self, *, image_file: typing.Union[fastapi.UploadFile, None], request: typing.Optional[typing.Any] = None
     ) -> str: ...
 
     @abc.abstractmethod
