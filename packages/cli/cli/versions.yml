@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix gRPC source resolution to log warnings instead of throwing errors when protobuf sources cannot be resolved, matching OpenAPI behavior.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.115.2
+
+- changelogEntry:
+    - summary: |
         Update markdown variable replacement to use double curly braces for variable interpolation.
       type: fix
   irVersion: 61
