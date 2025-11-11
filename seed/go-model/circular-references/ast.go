@@ -199,3 +199,11 @@ type JsonLike struct {
 	Integer           int
 	Boolean           bool
 }
+
+type JsonLikeWithNullAndUndefined struct {
+	JsonLikeWithNullAndUndefinedOptionalOptionalList      []*JsonLikeWithNullAndUndefined
+	StringJsonLikeWithNullAndUndefinedOptionalOptionalMap map[string]*JsonLikeWithNullAndUndefined
+	StringOptionalOptional                                *string
+	IntegerOptionalOptional                               *int
+	BooleanOptionalOptional                               *bool
+}
