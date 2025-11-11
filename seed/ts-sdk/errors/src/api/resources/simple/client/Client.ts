@@ -71,10 +71,7 @@ export class Simple {
         }
 
         if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                default:
-                    return handleGlobalStatusCodeError(_response.error, _response.rawResponse);
-            }
+            return handleGlobalStatusCodeError(_response.error, _response.rawResponse);
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/foo1");
