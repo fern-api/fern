@@ -206,6 +206,29 @@ class Project:
                 with open(os.path.join(self._root_filepath, "README.md"), "w") as f:
                     f.write("")
 
+            # copy LICENSE file if custom license is specified
+            self._copy_license_file()
+
+    def _copy_license_file(self) -> None:
+        """Copy LICENSE file from /tmp/LICENSE to project root for local generation."""
+        if self.license_ is not None:
+            license_union = self.license_.get_as_union()
+            if license_union.type == "custom":
+                # In Docker execution environment (local generation), the license file is mounted at /tmp/LICENSE
+                # For remote generation, Fiddle handles writing the LICENSE file after generation
+                docker_license_path = "/tmp/LICENSE"
+                destination_path = os.path.join(self._root_filepath, license_union.filename)
+
+                try:
+                    import shutil
+                    shutil.copyfile(docker_license_path, destination_path)
+                except FileNotFoundError:
+                    # File not found - this is expected for remote generation where Fiddle handles it
+                    pass
+                except Exception:
+                    # Silently fail for any other errors to maintain backwards compatibility
+                    pass
+
     def __enter__(self) -> Project:
         return self
 
