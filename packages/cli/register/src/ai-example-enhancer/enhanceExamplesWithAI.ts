@@ -1,7 +1,8 @@
+import { FernToken } from "@fern-api/auth";
 import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { OpenAIExampleEnhancer } from "./openaiClient";
+import { LambdaExampleEnhancer } from "./lambdaClient";
 import { AIExampleEnhancerConfig, ExampleEnhancementRequest } from "./types";
 import {
     EnhancedExampleRecord,
@@ -38,6 +39,7 @@ export async function enhanceExamplesWithAI(
     apiDefinition: FdrCjsSdk.api.v1.register.ApiDefinition,
     config: AIExampleEnhancerConfig,
     context: TaskContext,
+    token: FernToken,
     sourceFilePath?: AbsoluteFilePath
 ): Promise<FdrCjsSdk.api.v1.register.ApiDefinition> {
     if (!config.enabled) {
@@ -46,7 +48,7 @@ export async function enhanceExamplesWithAI(
     }
 
     context.logger.info("Starting AI-powered example enhancement...");
-    const enhancer = new OpenAIExampleEnhancer(config, context);
+    const enhancer = new LambdaExampleEnhancer(config, context, token);
 
     const coveredEndpoints =
         sourceFilePath != null ? await loadExistingOverrideCoverage(sourceFilePath, context) : new Set<string>();
@@ -84,7 +86,7 @@ export async function enhanceExamplesWithAI(
 
 async function enhancePackageExamples(
     apiDefinition: FdrCjsSdk.api.v1.register.ApiDefinition,
-    enhancer: OpenAIExampleEnhancer,
+    enhancer: LambdaExampleEnhancer,
     context: TaskContext,
     stats: { count: number; total: number },
     enhancedExampleRecords: EnhancedExampleRecord[],
@@ -123,7 +125,7 @@ async function enhancePackageExamples(
 
 async function enhancePackageEndpoints(
     pkg: FdrCjsSdk.api.v1.register.ApiDefinitionPackage,
-    enhancer: OpenAIExampleEnhancer,
+    enhancer: LambdaExampleEnhancer,
     context: TaskContext,
     stats: { count: number; total: number },
     enhancedExampleRecords: EnhancedExampleRecord[],
@@ -150,7 +152,7 @@ async function enhancePackageEndpoints(
 
 async function enhanceEndpointExamples(
     endpoint: EndpointV3,
-    enhancer: OpenAIExampleEnhancer,
+    enhancer: LambdaExampleEnhancer,
     context: TaskContext,
     stats: { count: number; total: number },
     enhancedExampleRecords: EnhancedExampleRecord[],
@@ -179,7 +181,7 @@ async function enhanceEndpointExamples(
 async function enhanceSingleExample(
     example: ExampleV3,
     endpoint: EndpointV3,
-    enhancer: OpenAIExampleEnhancer,
+    enhancer: LambdaExampleEnhancer,
     context: TaskContext,
     stats: { count: number; total: number },
     enhancedExampleRecords: EnhancedExampleRecord[],
