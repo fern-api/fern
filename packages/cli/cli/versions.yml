@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Update markdown variable replacement to use double curly braces for variable interpolation.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-10"
+  version: 0.115.1
 
 - changelogEntry:
     - summary: |
