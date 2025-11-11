@@ -81,7 +81,11 @@ export function getAPIDefinitionSettings(settings?: generatorsYml.APIDefinitionS
             const value = settings[yamlKey];
             const targets = Array.isArray(internalKey) ? internalKey : [internalKey];
             for (const target of targets) {
-                setIfDefined(mappedSettings, target as keyof OpenAPISettings, value as unknown as OpenAPISettings[keyof OpenAPISettings]);
+                setIfDefined(
+                    mappedSettings,
+                    target as keyof OpenAPISettings,
+                    value as unknown as OpenAPISettings[keyof OpenAPISettings]
+                );
             }
         }
     }
