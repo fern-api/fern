@@ -81,10 +81,10 @@ export function getParameterNameForPropertyPathParameterName({
     retainOriginalCasing: boolean;
     includeSerdeLayer: boolean;
 }): string {
-    return getParameterNameForPathParameterInternalName({
-        pathParameterName,
-        retainOriginalCasing: retainOriginalCasing || !includeSerdeLayer
-    });
+    if (retainOriginalCasing) {
+        return pathParameterName.originalName;
+    }
+    return pathParameterName.camelCase.unsafeName;
 }
 
 function getParameterNameForPathParameterInternalName({

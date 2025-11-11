@@ -18,7 +18,7 @@ describe("User", () => {
             .build();
 
         const response = await client.user.getUser({
-            user_id: "user_id",
+            userId: "user_id",
         });
         expect(response).toEqual({
             name: "name",
@@ -65,7 +65,7 @@ describe("User", () => {
             .build();
 
         const response = await client.user.updateUser({
-            user_id: "user_id",
+            userId: "user_id",
             body: {
                 name: "name",
                 tags: ["tags", "tags"],
@@ -94,7 +94,7 @@ describe("User", () => {
             .build();
 
         const response = await client.user.searchUsers({
-            user_id: "user_id",
+            userId: "user_id",
             limit: 1,
         });
         expect(response).toEqual([
@@ -123,7 +123,7 @@ describe("User", () => {
             .build();
 
         const response = await client.user.getUserMetadata({
-            user_id: "user_id",
+            userId: "user_id",
             version: 1,
         });
         expect(response).toEqual({

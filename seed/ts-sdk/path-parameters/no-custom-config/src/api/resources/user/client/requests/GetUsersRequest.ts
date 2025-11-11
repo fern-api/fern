@@ -3,9 +3,9 @@
 /**
  * @example
  *     {
- *         user_id: "user_id"
+ *         userId: "user_id"
  *     }
  */
 export interface GetUsersRequest {
-    user_id: string;
+    userId: string;
 }

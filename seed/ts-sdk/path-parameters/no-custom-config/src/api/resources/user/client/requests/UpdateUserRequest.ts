@@ -5,7 +5,7 @@ import type * as SeedPathParameters from "../../../../index.js";
 /**
  * @example
  *     {
- *         user_id: "user_id",
+ *         userId: "user_id",
  *         body: {
  *             name: "name",
  *             tags: ["tags", "tags"]
@@ -13,6 +13,6 @@ import type * as SeedPathParameters from "../../../../index.js";
  *     }
  */
 export interface UpdateUserRequest {
-    user_id: string;
+    userId: string;
     body: SeedPathParameters.User;
 }

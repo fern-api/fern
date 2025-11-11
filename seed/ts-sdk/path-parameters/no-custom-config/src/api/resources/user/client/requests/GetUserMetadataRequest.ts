@@ -3,11 +3,11 @@
 /**
  * @example
  *     {
- *         user_id: "user_id",
+ *         userId: "user_id",
  *         version: 1
  *     }
  */
 export interface GetUserMetadataRequest {
-    user_id: string;
+    userId: string;
     version: number;
 }

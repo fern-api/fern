@@ -3,11 +3,11 @@
 /**
  * @example
  *     {
- *         user_id: "user_id",
+ *         userId: "user_id",
  *         limit: 1
  *     }
  */
 export interface SearchUsersRequest {
-    user_id: string;
+    userId: string;
     limit?: number;
 }

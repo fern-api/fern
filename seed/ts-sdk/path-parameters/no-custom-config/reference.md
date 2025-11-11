@@ -63,8 +63,8 @@ await client.organizations.getOrganization("organization_id");
 
 ```typescript
 await client.organizations.getOrganizationUser({
-    organization_id: "organization_id",
-    user_id: "user_id"
+    organizationId: "organization_id",
+    userId: "user_id"
 });
 
 ```
@@ -175,7 +175,7 @@ await client.organizations.searchOrganizations("organization_id", {
 
 ```typescript
 await client.user.getUser({
-    user_id: "user_id"
+    userId: "user_id"
 });
 
 ```
@@ -278,7 +278,7 @@ await client.user.createUser({
 
 ```typescript
 await client.user.updateUser({
-    user_id: "user_id",
+    userId: "user_id",
     body: {
         name: "name",
         tags: ["tags", "tags"]
@@ -333,7 +333,7 @@ await client.user.updateUser({
 
 ```typescript
 await client.user.searchUsers({
-    user_id: "user_id",
+    userId: "user_id",
     limit: 1
 });
 
@@ -399,7 +399,7 @@ Test endpoint with path parameter that has a text prefix (v{version})
 
 ```typescript
 await client.user.getUserMetadata({
-    user_id: "user_id",
+    userId: "user_id",
     version: 1
 });
 

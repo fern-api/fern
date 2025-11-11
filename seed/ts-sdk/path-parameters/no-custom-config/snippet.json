@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.organizations.getOrganizationUser({\n    organization_id: \"organization_id\",\n    user_id: \"user_id\"\n});\n"
+                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.organizations.getOrganizationUser({\n    organizationId: \"organization_id\",\n    userId: \"user_id\"\n});\n"
             }
         },
         {
@@ -41,7 +41,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUser({\n    user_id: \"user_id\"\n});\n"
+                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUser({\n    userId: \"user_id\"\n});\n"
             }
         },
         {
@@ -63,7 +63,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.updateUser({\n    user_id: \"user_id\",\n    body: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    }\n});\n"
+                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.updateUser({\n    userId: \"user_id\",\n    body: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    }\n});\n"
             }
         },
         {
@@ -74,7 +74,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.searchUsers({\n    user_id: \"user_id\",\n    limit: 1\n});\n"
+                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.searchUsers({\n    userId: \"user_id\",\n    limit: 1\n});\n"
             }
         },
         {
@@ -85,7 +85,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUserMetadata({\n    user_id: \"user_id\",\n    version: 1\n});\n"
+                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUserMetadata({\n    userId: \"user_id\",\n    version: 1\n});\n"
             }
         }
     ],

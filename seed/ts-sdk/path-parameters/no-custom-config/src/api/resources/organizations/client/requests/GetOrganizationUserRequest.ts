@@ -3,11 +3,11 @@
 /**
  * @example
  *     {
- *         organization_id: "organization_id",
- *         user_id: "user_id"
+ *         organizationId: "organization_id",
+ *         userId: "user_id"
  *     }
  */
 export interface GetOrganizationUserRequest {
-    organization_id: string;
-    user_id: string;
+    organizationId: string;
+    userId: string;
 }
