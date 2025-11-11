@@ -3452,9 +3452,6 @@ importers:
       '@fern-typescript/websocket-type-schema-generator':
         specifier: workspace:*
         version: link:../websocket-type-schema-generator
-      '@types/uuid':
-        specifier: ^9.0.8
-        version: 9.0.8
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -3464,9 +3461,6 @@ importers:
       ts-poet:
         specifier: ^6.7.0
         version: 6.12.0
-      uuid:
-        specifier: ^9.0.1
-        version: 9.0.1
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
