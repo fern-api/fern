@@ -233,10 +233,13 @@ export async function publishDocs({
         registerApi: async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
             let apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
 
-            // Enhance examples with AI if configuration is provided
             const aiEnhancerConfig = getAIEnhancerConfig();
-            if (aiEnhancerConfig) {
-                apiDefinition = await enhanceExamplesWithAI(apiDefinition, aiEnhancerConfig, context);
+            if (aiEnhancerConfig && workspace) {
+                const sources = workspace.getSources();
+                const openApiSource = sources.find((source) => source.type === "openapi");
+                const sourceFilePath = openApiSource?.absoluteFilePath;
+
+                apiDefinition = await enhanceExamplesWithAI(apiDefinition, aiEnhancerConfig, context, sourceFilePath);
             }
 
             // create dynamic IR + metadata for each generator language

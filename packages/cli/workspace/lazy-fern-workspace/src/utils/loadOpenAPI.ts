@@ -45,20 +45,40 @@ export async function loadOpenAPI({
         );
     }
 
+    let result = parsed;
+
     if (overridesFilepath != null) {
-        const merged = await mergeWithOverrides<OpenAPI.Document>({
+        result = await mergeWithOverrides<OpenAPI.Document>({
             absoluteFilePathToOverrides: overridesFilepath,
             context,
-            data: parsed,
+            data: result,
             allowNullKeys: OPENAPI_EXAMPLES_KEYS
         });
-        // Run the merged document through the parser again to ensure that any override
-        // references are resolved.
+    }
+
+    const aiExamplesOverrideFilepath = join(
+        dirname(absolutePathToOpenAPI),
+        RelativeFilePath.of("ai_examples_override.yml")
+    );
+
+    try {
+        result = await mergeWithOverrides<OpenAPI.Document>({
+            absoluteFilePathToOverrides: aiExamplesOverrideFilepath,
+            context,
+            data: result,
+            allowNullKeys: OPENAPI_EXAMPLES_KEYS
+        });
+        context.logger.debug(`Merged AI examples from ${aiExamplesOverrideFilepath}`);
+    } catch (error) {
+        context.logger.debug(`No AI examples override file found at ${aiExamplesOverrideFilepath}`);
+    }
+
+    if (overridesFilepath != null || result !== parsed) {
         return await parseOpenAPI({
             absolutePathToOpenAPI,
             absolutePathToOpenAPIOverrides,
-            parsed: merged
+            parsed: result
         });
     }
-    return parsed;
+    return result;
 }
