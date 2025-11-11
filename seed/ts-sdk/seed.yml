@@ -271,6 +271,9 @@ fixtures:
       customConfig:
         inlinePathParameters: true
         retainOriginalCasing: true
+    - outputFolder: inline-path-parameters-always
+      customConfig:
+        inlinePathParameters: "always"
   websocket:
     - outputFolder: no-websocket-clients
     - outputFolder: serde
