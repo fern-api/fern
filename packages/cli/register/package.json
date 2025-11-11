@@ -21,9 +21,7 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -48,6 +46,8 @@
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
+    "@types/js-yaml": "^4.0.8",
+    "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",
     "openai": "^6.8.1"
   },

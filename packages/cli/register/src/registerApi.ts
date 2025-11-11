@@ -51,9 +51,12 @@ export async function registerApi({
 
     let apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
 
-    // Enhance examples with AI if configuration is provided
     if (aiEnhancerConfig) {
-        apiDefinition = await enhanceExamplesWithAI(apiDefinition, aiEnhancerConfig, context);
+        const sources = workspace.getSources();
+        const openApiSource = sources.find((source) => source.type === "openapi");
+        const sourceFilePath = openApiSource?.absoluteFilePath;
+
+        apiDefinition = await enhanceExamplesWithAI(apiDefinition, aiEnhancerConfig, context, sourceFilePath);
     }
 
     const response = await fdrService.api.v1.register.registerApiDefinition({
