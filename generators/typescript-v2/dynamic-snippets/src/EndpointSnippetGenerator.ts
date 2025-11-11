@@ -471,7 +471,10 @@ export class EndpointSnippetGenerator {
         const args: ts.TypeLiteral[] = [];
 
         const { inlinePathParameters, inlineFileProperties } = {
-            inlinePathParameters: this.context.customConfig?.inlinePathParameters === "always" ? true : (this.context.customConfig?.inlinePathParameters ?? false),
+            inlinePathParameters:
+                this.context.customConfig?.inlinePathParameters === "always"
+                    ? true
+                    : (this.context.customConfig?.inlinePathParameters ?? false),
             inlineFileProperties: this.context.customConfig?.inlineFileProperties ?? false
         };
 
