@@ -69,18 +69,15 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
         options?: OpenAPIWorkspace.Settings
     ): OpenApiIntermediateRepresentation {
         const document = this.loader.loadDocument(this.spec);
-        const baseOptions = {
-            onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas,
-            respectReadonlySchemas: this.respectReadonlySchemas,
-            inlinePathParameters: this.inlinePathParameters,
-            objectQueryParameters: this.objectQueryParameters,
-            groupEnvironmentsByHost: this.groupEnvironmentsByHost
-        };
         return parse({
             context,
             documents: [document],
             options: {
-                ...baseOptions,
+                onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas,
+                respectReadonlySchemas: this.respectReadonlySchemas,
+                inlinePathParameters: this.inlinePathParameters,
+                objectQueryParameters: this.objectQueryParameters,
+                groupEnvironmentsByHost: this.groupEnvironmentsByHost,
                 ...options
             }
         });
