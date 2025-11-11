@@ -17,16 +17,16 @@ import { SchemaParserContext } from "./SchemaParserContext";
 import { getGeneratedTypeName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
 
-export interface UndiscriminatedOneOfPrefixNotFound {
+export interface UndiscriminatedOneOfSuffixNotFound {
     type: "notFound";
 }
 
-export interface UndiscriminatedOneOfPrefixName {
+export interface UndiscriminatedOneOfSuffixName {
     type: "name";
     name: string;
 }
 
-export type UndiscriminatedOneOfPrefix = UndiscriminatedOneOfPrefixName | UndiscriminatedOneOfPrefixNotFound;
+export type UndiscriminatedOneOfSuffix = UndiscriminatedOneOfSuffixName | UndiscriminatedOneOfSuffixNotFound;
 
 export function constructUndiscriminatedOneOf({
     nameOverride,
@@ -57,7 +57,7 @@ export function constructUndiscriminatedOneOf({
     groupName: SdkGroupName | undefined;
     encoding: Encoding | undefined;
     source: Source;
-    subtypePrefixOverrides?: UndiscriminatedOneOfPrefix[];
+    subtypeSuffixOverrides?: UndiscriminatedOneOfSuffix[];
 }): SchemaWithExample {
     const uniqueSubtypes = deduplicateSubtypes(subtypes);
     return processSubtypes({
@@ -92,7 +92,7 @@ export function convertUndiscriminatedOneOf({
     groupName,
     encoding,
     source,
-    subtypePrefixOverrides
+    subtypeSuffixOverrides
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -108,9 +108,9 @@ export function convertUndiscriminatedOneOf({
     groupName: SdkGroupName | undefined;
     encoding: Encoding | undefined;
     source: Source;
-    subtypePrefixOverrides?: UndiscriminatedOneOfPrefix[];
+    subtypeSuffixOverrides?: UndiscriminatedOneOfSuffix[];
 }): SchemaWithExample {
-    const derivedSubtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
+    const derivedSubtypeSuffixes = getUniqueSubTypeNames({ schemas: subtypes });
 
     const convertedSubtypes = subtypes.flatMap((schema, index) => {
         if (
@@ -132,11 +132,11 @@ export function convertUndiscriminatedOneOf({
                 });
             });
         }
-        let subtypePrefix = derivedSubtypePrefixes[index];
-        if (subtypePrefixOverrides != null) {
-            const override = subtypePrefixOverrides[index];
+        let subtypeSuffix = derivedSubtypeSuffixes[index];
+        if (subtypeSuffixOverrides != null) {
+            const override = subtypeSuffixOverrides[index];
             if (override != null && "name" in override) {
-                subtypePrefix = override.name;
+                subtypeSuffix = override.name;
             }
         }
         return [
@@ -145,7 +145,7 @@ export function convertUndiscriminatedOneOf({
                 false,
                 false,
                 context,
-                [...breadcrumbs, subtypePrefix ?? `${index}`],
+                [...breadcrumbs, subtypeSuffix ?? `${index}`],
                 source,
                 namespace
             )
@@ -470,34 +470,16 @@ function getUniqueSubTypeNames({
     }
 
     // generates prefix for subtype
-    const prefixes = [];
-    let i = 0;
-    for (const schema of schemas) {
+    const prefixes = schemas.map((_, i) => {
         const propertySet = uniquePropertySets[i];
         if (propertySet != null && propertySet.length > 0) {
             const sortedProperties = propertySet.sort();
             if (sortedProperties[0] != null) {
-                prefixes.push(sortedProperties[0]);
-                ++i;
-                continue;
+                return sortedProperties[0];
             }
         }
-
-        if (isReferenceObject(schema)) {
-            prefixes.push(convertNumberToSnakeCase(i) ?? `${i}`);
-        } else if (
-            schema.type === "array" ||
-            schema.type === "boolean" ||
-            schema.type === "integer" ||
-            schema.type === "number" ||
-            schema.type === "string"
-        ) {
-            prefixes.push("");
-        } else {
-            prefixes.push(convertNumberToSnakeCase(i) ?? `${i}`);
-        }
-        ++i;
-    }
+        return convertNumberToSnakeCase(i) ?? `${i}`;
+    });
 
     return prefixes;
 }
