@@ -23,25 +23,11 @@ export class FernDefinitionConverter {
         settings?: BaseOpenAPIWorkspace.Settings;
         absoluteFilePath?: AbsoluteFilePath;
     }): FernDefinition {
-        const baseOptions = {
-            respectReadonlySchemas: this.args.respectReadonlySchemas,
-            respectNullableSchemas: this.args.respectNullableSchemas,
-            wrapReferencesToNullableInOptional: this.args.wrapReferencesToNullableInOptional,
-            coerceOptionalSchemasToNullable: this.args.coerceOptionalSchemasToNullable,
-            onlyIncludeReferencedSchemas: this.args.onlyIncludeReferencedSchemas,
-            inlinePathParameters: this.args.inlinePathParameters,
-            objectQueryParameters: this.args.objectQueryParameters,
-            useBytesForBinaryResponse: this.args.useBytesForBinaryResponse,
-            respectForwardCompatibleEnums: this.args.respectForwardCompatibleEnums,
-            groupEnvironmentsByHost: this.args.groupEnvironmentsByHost,
-            removeDiscriminantsFromSchemas: this.args.removeDiscriminantsFromSchemas
-        };
-
         const definition = convert({
             taskContext: context,
             ir,
             options: getConvertOptions({
-                options: baseOptions,
+                options: this.args,
                 overrides: settings
             }),
             authOverrides:
