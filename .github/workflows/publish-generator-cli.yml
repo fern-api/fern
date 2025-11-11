@@ -89,11 +89,11 @@ jobs:
         with:
           node-version: 22
           registry-url: https://registry.npmjs.org
-          scope: '@fern-api'
+          scope: "@fern-api"
 
       - name: Publish generator-cli
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
           NEW_VERSION: ${{ needs.check-version.outputs.version }}
         run: |
           cd packages/generator-cli
