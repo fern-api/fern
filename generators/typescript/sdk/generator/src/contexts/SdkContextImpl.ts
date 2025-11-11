@@ -130,7 +130,7 @@ export declare namespace SdkContextImpl {
         retainOriginalCasing: boolean;
         generateOAuthClients: boolean;
         inlineFileProperties: boolean;
-        inlinePathParameters: boolean;
+        inlinePathParameters: boolean | "always";
         enableInlineTypes: boolean;
         omitUndefined: boolean;
         allowExtraFields: boolean;
@@ -180,7 +180,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly includeSerdeLayer: boolean;
     public readonly retainOriginalCasing: boolean;
     public readonly inlineFileProperties: boolean;
-    public readonly inlinePathParameters: boolean;
+    public readonly inlinePathParameters: boolean | "always";
     public readonly formDataSupport: "Node16" | "Node18";
     public readonly generateOAuthClients: boolean;
     public readonly omitUndefined: boolean;

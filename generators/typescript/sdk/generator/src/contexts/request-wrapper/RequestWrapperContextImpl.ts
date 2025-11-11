@@ -19,7 +19,7 @@ export declare namespace RequestWrapperContextImpl {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
-        inlinePathParameters: boolean;
+        inlinePathParameters: boolean | "always";
         enableInlineTypes: boolean;
         formDataSupport: "Node16" | "Node18";
         flattenRequestParameters: boolean;
@@ -36,7 +36,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
     private inlineFileProperties: boolean;
-    private inlinePathParameters: boolean;
+    private inlinePathParameters: boolean | "always";
     private enableInlineTypes: boolean;
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly flattenRequestParameters: boolean;
@@ -72,6 +72,9 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
     }
 
     public shouldInlinePathParameters(sdkRequest: SdkRequest | undefined | null): boolean {
+        if (this.inlinePathParameters === "always") {
+            return true;
+        }
         if (!this.inlinePathParameters) {
             return false;
         }

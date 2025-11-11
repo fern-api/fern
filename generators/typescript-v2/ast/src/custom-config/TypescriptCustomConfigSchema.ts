@@ -46,7 +46,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     allowExtraFields: z.optional(z.boolean()),
     enableInlineTypes: z.optional(z.boolean()),
     inlineFileProperties: z.optional(z.boolean()),
-    inlinePathParameters: z.optional(z.boolean()),
+    inlinePathParameters: z.optional(z.union([z.boolean(), z.literal("always")])),
     namespaceExport: z.optional(z.string()),
     noSerdeLayer: z.optional(z.boolean()),
     private: z.optional(z.boolean()),
