@@ -14,6 +14,7 @@ export declare namespace RequestWrapperDeclarationReferencer {
 
     export interface Init extends AbstractSdkClientClassDeclarationReferencer.Init {
         exportAllRequestsAtRoot: boolean;
+        inlinePathParameters: boolean | "always";
     }
 }
 
@@ -21,10 +22,16 @@ const REQUESTS_DIRECTORY_NAME = "requests";
 
 export class RequestWrapperDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<RequestWrapperDeclarationReferencer.Name> {
     private exportAllRequestsAtRoot: boolean;
+    private inlinePathParameters: boolean | "always";
 
-    constructor({ exportAllRequestsAtRoot, ...superInit }: RequestWrapperDeclarationReferencer.Init) {
+    constructor({
+        exportAllRequestsAtRoot,
+        inlinePathParameters,
+        ...superInit
+    }: RequestWrapperDeclarationReferencer.Init) {
         super(superInit);
         this.exportAllRequestsAtRoot = exportAllRequestsAtRoot;
+        this.inlinePathParameters = inlinePathParameters;
     }
 
     public getExportedFilepath(name: RequestWrapperDeclarationReferencer.Name): ExportedFilePath {
@@ -59,6 +66,9 @@ export class RequestWrapperDeclarationReferencer extends AbstractSdkClientClassD
 
     public getExportedName(name: RequestWrapperDeclarationReferencer.Name): string {
         if (name.endpoint.sdkRequest == null || name.endpoint.sdkRequest.shape.type !== "wrapper") {
+            if (this.inlinePathParameters === "always") {
+                return `${name.endpoint.name.pascalCase.unsafeName}Request`;
+            }
             throw new Error("Cannot get exported name for request wrapper, because endpoint request is not wrapped");
         }
         return name.endpoint.sdkRequest.shape.wrapperName.pascalCase.unsafeName;

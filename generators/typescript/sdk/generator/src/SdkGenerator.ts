@@ -342,7 +342,8 @@ export class SdkGenerator {
             containingDirectory: apiDirectory,
             namespaceExport,
             packageResolver: this.packageResolver,
-            exportAllRequestsAtRoot: config.exportAllRequestsAtRoot
+            exportAllRequestsAtRoot: config.exportAllRequestsAtRoot,
+            inlinePathParameters: config.inlinePathParameters
         });
         this.sdkInlinedRequestBodySchemaDeclarationReferencer = new SdkInlinedRequestBodyDeclarationReferencer({
             containingDirectory: schemaDirectory,
