@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Add support for multiAuth field in FDR endpoint definitions to represent OpenAPI security with OR-of-AND semantics. The multiAuth field is an array of MultipleAuthType objects, where each object contains a schemes array representing authentication requirements that must ALL be satisfied (AND). The array of objects represents alternatives (OR). For example, an endpoint accepting either (wallet AND blockchain) OR (userId AND blockchain) is represented as multiAuth: [{schemes: ["wallet", "blockchain"]}, {schemes: ["userId", "blockchain"]}]. The auth and authV2 fields remain populated for backwards compatibility.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.114.1
+
+- changelogEntry:
+    - summary: |
         Add new `remove-discriminants-from-schemas` setting for OpenAPI/AsyncAPI imports in generators.yml.
 
         If `"always"`, discriminant properties are removed from schemas when generating types, unless the schema is also used outside of a discriminated union.
