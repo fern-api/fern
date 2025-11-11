@@ -91,15 +91,15 @@ export interface ConvertOpenAPIOptions {
 export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     enableUniqueErrorsPerEndpoint: false,
     detectGlobalHeaders: true,
-    objectQueryParameters: false,
+    objectQueryParameters: true,
     respectReadonlySchemas: false,
-    respectNullableSchemas: false,
+    respectNullableSchemas: true,
     onlyIncludeReferencedSchemas: false,
-    inlinePathParameters: false,
+    inlinePathParameters: true,
     useBytesForBinaryResponse: false,
     respectForwardCompatibleEnums: false,
-    wrapReferencesToNullableInOptional: true,
-    coerceOptionalSchemasToNullable: true,
+    wrapReferencesToNullableInOptional: false,
+    coerceOptionalSchemasToNullable: false,
     groupEnvironmentsByHost: false,
     removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always
 };
