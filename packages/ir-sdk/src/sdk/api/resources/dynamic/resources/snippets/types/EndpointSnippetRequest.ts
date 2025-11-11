@@ -16,4 +16,5 @@ export interface EndpointSnippetRequest {
     queryParameters: FernIr.dynamic.Values | undefined;
     headers: FernIr.dynamic.Values | undefined;
     requestBody: unknown | undefined;
+    postmanCollectionLink: string | undefined;
 }
