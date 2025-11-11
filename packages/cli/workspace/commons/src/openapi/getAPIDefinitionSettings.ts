@@ -22,10 +22,12 @@ export function getAPIDefinitionSettingsDefaults(): APIDefinitionSettings {
 /**
  * Mapping table from generators.yml field names to internal OpenAPISettings field names.
  * This eliminates the need for manual field-by-field mapping.
+ * Some fields map to multiple internal fields (e.g., shouldUseUndiscriminatedUnionsWithLiterals).
  */
-const FIELD_MAPPINGS: Record<keyof generatorsYml.APIDefinitionSettings, keyof OpenAPISettings | "SPECIAL"> = {
+type MappingValue = keyof OpenAPISettings | readonly (keyof OpenAPISettings)[];
+const FIELD_MAPPINGS: Record<keyof generatorsYml.APIDefinitionSettings, MappingValue> = {
     shouldUseTitleAsName: "useTitlesAsName",
-    shouldUseUndiscriminatedUnionsWithLiterals: "SPECIAL",
+    shouldUseUndiscriminatedUnionsWithLiterals: ["shouldUseUndiscriminatedUnionsWithLiterals", "discriminatedUnionV2"],
     shouldUseIdiomaticRequestNames: "shouldUseIdiomaticRequestNames",
     asyncApiMessageNaming: "asyncApiNaming",
     shouldUseOptionalAdditionalProperties: "optionalAdditionalProperties",
@@ -74,17 +76,12 @@ export function getAPIDefinitionSettings(settings?: generatorsYml.APIDefinitionS
 
     if (settings != null) {
         for (const [yamlKey, internalKey] of Object.entries(FIELD_MAPPINGS) as Array<
-            [keyof generatorsYml.APIDefinitionSettings, keyof OpenAPISettings | "SPECIAL"]
+            [keyof generatorsYml.APIDefinitionSettings, MappingValue]
         >) {
             const value = settings[yamlKey];
-            if (internalKey === "SPECIAL") {
-                if (yamlKey === "shouldUseUndiscriminatedUnionsWithLiterals" && value !== undefined) {
-                    const v = value as boolean;
-                    setIfDefined(mappedSettings, "shouldUseUndiscriminatedUnionsWithLiterals", v);
-                    setIfDefined(mappedSettings, "discriminatedUnionV2", v);
-                }
-            } else {
-                setIfDefined(mappedSettings, internalKey, value as unknown as OpenAPISettings[typeof internalKey]);
+            const targets = Array.isArray(internalKey) ? internalKey : [internalKey];
+            for (const target of targets) {
+                setIfDefined(mappedSettings, target as keyof OpenAPISettings, value as unknown as OpenAPISettings[keyof OpenAPISettings]);
             }
         }
     }
