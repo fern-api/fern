@@ -1,6 +1,8 @@
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernOpenAPIExtension, OpenAPIExtension } from "@fern-api/openapi-ir-parser";
 import { TaskContext } from "@fern-api/task-context";
+import { readFile } from "fs/promises";
+import yaml from "js-yaml";
 import { OpenAPI } from "openapi-types";
 
 import { mergeWithOverrides } from "../loaders/mergeWithOverrides";
@@ -62,13 +64,35 @@ export async function loadOpenAPI({
     );
 
     try {
-        result = await mergeWithOverrides<OpenAPI.Document>({
-            absoluteFilePathToOverrides: aiExamplesOverrideFilepath,
-            context,
-            data: result,
-            allowNullKeys: OPENAPI_EXAMPLES_KEYS
-        });
-        context.logger.debug(`Merged AI examples from ${aiExamplesOverrideFilepath}`);
+        const overrideContent = await readFile(aiExamplesOverrideFilepath, "utf-8");
+        const overrideData = yaml.load(overrideContent) as {
+            paths?: Record<string, Record<string, { "x-fern-examples"?: unknown[] }>>;
+        };
+
+        if (overrideData?.paths && result.paths) {
+            for (const [path, methods] of Object.entries(overrideData.paths)) {
+                if (methods && typeof methods === "object") {
+                    for (const [method, methodData] of Object.entries(methods)) {
+                        const lowerMethod = method.toLowerCase();
+                        const pathItem = result.paths[path];
+                        if (pathItem && typeof pathItem === "object") {
+                            const pathItemObj = pathItem as Record<string, unknown>;
+                            const operation = pathItemObj[lowerMethod];
+                            if (operation && typeof operation === "object") {
+                                const operationObj = operation as Record<string, unknown>;
+                                if (!operationObj["x-fern-examples"] && methodData["x-fern-examples"]) {
+                                    operationObj["x-fern-examples"] = methodData["x-fern-examples"];
+                                    context.logger.debug(
+                                        `Added AI examples for ${method.toUpperCase()} ${path} from override file`
+                                    );
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        context.logger.debug(`Processed AI examples from ${aiExamplesOverrideFilepath}`);
     } catch (error) {
         context.logger.debug(`No AI examples override file found at ${aiExamplesOverrideFilepath}`);
     }
