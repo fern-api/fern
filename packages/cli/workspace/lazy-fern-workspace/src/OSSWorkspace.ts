@@ -120,21 +120,6 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         settings?: OSSWorkspace.Settings
     ): Promise<OpenApiIntermediateRepresentation> {
         const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs, relativePathToDependency });
-        const baseOptions = {
-            respectReadonlySchemas: this.respectReadonlySchemas,
-            respectNullableSchemas: this.respectNullableSchemas,
-            wrapReferencesToNullableInOptional: this.wrapReferencesToNullableInOptional,
-            removeDiscriminantsFromSchemas: this.removeDiscriminantsFromSchemas,
-            onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas,
-            inlinePathParameters: this.inlinePathParameters,
-            objectQueryParameters: this.objectQueryParameters,
-            exampleGeneration: this.exampleGeneration,
-            useBytesForBinaryResponse: this.useBytesForBinaryResponse,
-            inlineAllOfSchemas: this.inlineAllOfSchemas,
-            resolveAliases: this.resolveAliases,
-            groupMultiApiEnvironments: this.specs.some((spec) => spec.settings?.groupMultiApiEnvironments),
-            groupEnvironmentsByHost: this.groupEnvironmentsByHost
-        };
         return parse({
             context,
             documents: await this.loader.loadDocuments({
@@ -142,7 +127,19 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 specs: openApiSpecs
             }),
             options: {
-                ...baseOptions,
+                respectReadonlySchemas: this.respectReadonlySchemas,
+                respectNullableSchemas: this.respectNullableSchemas,
+                wrapReferencesToNullableInOptional: this.wrapReferencesToNullableInOptional,
+                removeDiscriminantsFromSchemas: this.removeDiscriminantsFromSchemas,
+                onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas,
+                inlinePathParameters: this.inlinePathParameters,
+                objectQueryParameters: this.objectQueryParameters,
+                exampleGeneration: this.exampleGeneration,
+                useBytesForBinaryResponse: this.useBytesForBinaryResponse,
+                inlineAllOfSchemas: this.inlineAllOfSchemas,
+                resolveAliases: this.resolveAliases,
+                groupMultiApiEnvironments: this.specs.some((spec) => spec.settings?.groupMultiApiEnvironments),
+                groupEnvironmentsByHost: this.groupEnvironmentsByHost,
                 ...settings
             }
         });
