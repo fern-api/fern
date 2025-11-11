@@ -239,7 +239,13 @@ export async function publishDocs({
                 const openApiSource = sources.find((source) => source.type === "openapi");
                 const sourceFilePath = openApiSource?.absoluteFilePath;
 
-                apiDefinition = await enhanceExamplesWithAI(apiDefinition, aiEnhancerConfig, context, sourceFilePath);
+                apiDefinition = await enhanceExamplesWithAI(
+                    apiDefinition,
+                    aiEnhancerConfig,
+                    context,
+                    token,
+                    sourceFilePath
+                );
             }
 
             // create dynamic IR + metadata for each generator language

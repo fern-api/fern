@@ -58,9 +58,7 @@ export class LambdaExampleEnhancer {
 
                 if (!response.ok) {
                     const errorText = await response.text();
-                    throw new Error(
-                        `Lambda returned ${response.status}: ${errorText || response.statusText}`
-                    );
+                    throw new Error(`Lambda returned ${response.status}: ${errorText || response.statusText}`);
                 }
 
                 const result = await response.json();
