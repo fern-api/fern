@@ -22,7 +22,7 @@ async fn main() {
                         filename: "filename".to_string(),
                         directory: "directory".to_string(),
                     },
-                    return_value: Some(DebugVariableValue::IntegerValue { value: None }),
+                    return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
                     expression_location: Some(ExpressionLocation {
                         start: 1,
                         offset: 1,
@@ -36,13 +36,13 @@ async fn main() {
                                 Scope {
                                     variables: HashMap::from([(
                                         "variables".to_string(),
-                                        DebugVariableValue::IntegerValue { value: None },
+                                        DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
                                 },
                                 Scope {
                                     variables: HashMap::from([(
                                         "variables".to_string(),
-                                        DebugVariableValue::IntegerValue { value: None },
+                                        DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
                                 },
                             ],
@@ -59,7 +59,7 @@ async fn main() {
                         filename: "filename".to_string(),
                         directory: "directory".to_string(),
                     },
-                    return_value: Some(DebugVariableValue::IntegerValue { value: None }),
+                    return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
                     expression_location: Some(ExpressionLocation {
                         start: 1,
                         offset: 1,
@@ -73,13 +73,13 @@ async fn main() {
                                 Scope {
                                     variables: HashMap::from([(
                                         "variables".to_string(),
-                                        DebugVariableValue::IntegerValue { value: None },
+                                        DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
                                 },
                                 Scope {
                                     variables: HashMap::from([(
                                         "variables".to_string(),
-                                        DebugVariableValue::IntegerValue { value: None },
+                                        DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
                                 },
                             ],

@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-rust-sdk",
   "generatorVersion": "latest",
   "generatorConfig": {
+    "enableWireTests": true,
     "customReadmeSections": [
       {
         "title": "Override Section",

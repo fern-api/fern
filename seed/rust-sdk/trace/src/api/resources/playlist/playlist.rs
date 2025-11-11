@@ -69,11 +69,11 @@ impl PlaylistClient {
                     .int("limit", request.limit.clone())
                     .string("otherField", request.other_field.clone())
                     .string("multiLineDocs", request.multi_line_docs.clone())
-                    .string(
+                    .string_array(
                         "optionalMultipleField",
                         request.optional_multiple_field.clone(),
                     )
-                    .string("multipleField", request.multiple_field.clone())
+                    .string_array("multipleField", request.multiple_field.clone())
                     .build(),
                 options,
             )

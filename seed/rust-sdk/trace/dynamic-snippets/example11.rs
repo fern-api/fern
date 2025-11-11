@@ -8,5 +8,11 @@ async fn main() {
         ..Default::default()
     };
     let client = TraceClient::new(config).expect("Failed to build client");
-    client.migration.get_attempted_migrations(None).await;
+    client
+        .migration
+        .get_attempted_migrations(Some(
+            RequestOptions::new()
+                .additional_header("admin-key-header", "admin-key-header".to_string()),
+        ))
+        .await;
 }
