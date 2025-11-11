@@ -115,6 +115,7 @@ class AbstractGenerator(ABC):
             exclude_types_from_init_exports=exclude_types_from_init_exports,
             lazy_imports=self.should_use_lazy_imports(generator_config=generator_config),
             recursion_limit=recursion_limit,
+            generator_exec_wrapper=generator_exec_wrapper,
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper,
