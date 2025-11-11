@@ -203,14 +203,7 @@ export class GenerationRunner {
                       join(generatorInvocation.absolutePathToLocalOutput, RelativeFilePath.of(SNIPPET_JSON_FILENAME))
                   )
                 : undefined,
-            absolutePathToLocalSnippetTemplateJSON: generatorInvocation.absolutePathToLocalOutput
-                ? AbsoluteFilePath.of(
-                      join(
-                          generatorInvocation.absolutePathToLocalOutput,
-                          RelativeFilePath.of(SNIPPET_TEMPLATES_JSON_FILENAME)
-                      )
-                  )
-                : undefined,
+            absolutePathToLocalSnippetTemplateJSON: undefined,
             audiences: generatorGroup.audiences,
             workspaceTempDir,
             version: outputVersionOverride,
