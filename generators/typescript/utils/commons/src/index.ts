@@ -9,9 +9,9 @@ export {
     getParameterNameForRootExamplePathParameter,
     getParameterNameForRootPathParameter
 } from "./codegen-utils/getParameterNameForPathParameter";
-export { getSdkParameterPropertyName } from "./codegen-utils/getSdkParameterPropertyName";
 export { getPropertyKey } from "./codegen-utils/getPropertyKey";
 export { getSchemaOptions } from "./codegen-utils/getSchemaOptions";
+export { getSdkParameterPropertyName } from "./codegen-utils/getSdkParameterPropertyName";
 export { getTextOfTsKeyword } from "./codegen-utils/getTextOfTsKeyword";
 export { getTextOfTsNode } from "./codegen-utils/getTextOfTsNode";
 export { InlineConsts } from "./codegen-utils/inlineConsts";

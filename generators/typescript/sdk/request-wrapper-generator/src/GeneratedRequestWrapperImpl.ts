@@ -23,7 +23,6 @@ import {
 import {
     generateInlinePropertiesModule,
     getExampleEndpointCalls,
-    getParameterNameForPropertyPathParameterName,
     getPropertyKey,
     getSdkParameterPropertyName,
     getTextOfTsNode,
