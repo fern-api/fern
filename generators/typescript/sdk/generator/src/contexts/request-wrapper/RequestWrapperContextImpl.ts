@@ -72,13 +72,13 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
     }
 
     public shouldInlinePathParameters(sdkRequest: SdkRequest | undefined | null): boolean {
+        if (sdkRequest == null) {
+            return false;
+        }
         if (this.inlinePathParameters === "always") {
             return true;
         }
         if (!this.inlinePathParameters) {
-            return false;
-        }
-        if (sdkRequest == null) {
             return false;
         }
         switch (sdkRequest.shape.type) {
