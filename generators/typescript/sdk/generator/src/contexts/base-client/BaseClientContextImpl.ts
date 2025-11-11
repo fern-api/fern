@@ -118,8 +118,8 @@ export class BaseClientContextImpl implements BaseClientContext {
             return new Set();
         }
 
-        const errorNamesByEndpoint = allEndpoints.map((endpoint) =>
-            new Set(endpoint.errors.map((e) => JSON.stringify(e.error)))
+        const errorNamesByEndpoint = allEndpoints.map(
+            (endpoint) => new Set(endpoint.errors.map((e) => JSON.stringify(e.error)))
         );
 
         if (errorNamesByEndpoint.length === 0) {
