@@ -437,6 +437,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         }
         generatedFiles.forEach(
                 generatedFile -> generatedFile.write(outputDirectory, true, customConfig.packagePrefix()));
+        copyLicenseFile(generatorConfig);
         if (publishResult.generateFullProject()) {
             runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
             Path gradlewPath = outputDirectory.resolve("gradlew");
@@ -484,6 +485,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 mavenGithubPublishInfo.flatMap(MavenGithubPublishInfo::getSignature)));
         // write files to disk
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
+        copyLicenseFile(generatorConfig);
         runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
         Path gradlewPath = outputDirectory.resolve("gradlew");
         if (Files.exists(gradlewPath)) {
@@ -530,6 +532,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 generatorConfig);
 
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
+        copyLicenseFile(generatorConfig);
         runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
         Path gradlewPath = outputDirectory.resolve("gradlew");
         if (Files.exists(gradlewPath)) {
@@ -669,5 +672,52 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 .contents(settingsGradleContents)
                 .build());
         addGeneratedFile(GitIgnoreGenerator.getGitignore());
+    }
+
+    /**
+     * Copy LICENSE file from Docker mount location to project root. For local generation, the CLI mounts the license
+     * file at /tmp/LICENSE. For remote generation (Fiddle), the license file is handled separately.
+     */
+    private void copyLicenseFile(GeneratorConfig generatorConfig) {
+        if (!generatorConfig.getLicense().isPresent()) {
+            return;
+        }
+
+        generatorConfig
+                .getLicense()
+                .get()
+                .visit(new com.fern.generator.exec.model.config.LicenseConfig.Visitor<Void>() {
+                    @Override
+                    public Void visitBasic(com.fern.generator.exec.model.config.BasicLicense basicLicense) {
+                        // Basic licenses don't need file copying
+                        return null;
+                    }
+
+                    @Override
+                    public Void visitCustom(com.fern.generator.exec.model.config.CustomLicense customLicense) {
+                        Path dockerLicensePath = Paths.get("/tmp/LICENSE");
+                        Path destinationPath = outputDirectory.resolve(customLicense.getFilename());
+
+                        try {
+                            if (Files.exists(dockerLicensePath)) {
+                                Files.copy(dockerLicensePath, destinationPath);
+                                log.debug("Successfully copied LICENSE file to {}", destinationPath);
+                            }
+                        } catch (IOException e) {
+                            // File not found or copy failed - this is expected for remote generation where Fiddle
+                            // handles it
+                            // Silently fail to maintain backwards compatibility
+                            log.debug(
+                                    "Could not copy license file (expected for remote generation): {}", e.getMessage());
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    public Void visitUnknown(String unknownType) {
+                        log.warn("Unknown license type: {}", unknownType);
+                        return null;
+                    }
+                });
     }
 }
