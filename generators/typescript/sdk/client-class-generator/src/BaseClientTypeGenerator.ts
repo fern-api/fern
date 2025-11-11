@@ -1,4 +1,4 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { DeclaredErrorName, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
@@ -16,6 +16,7 @@ export class BaseClientTypeGenerator {
     private readonly generateIdempotentRequestOptions: boolean;
     private readonly errorResolver: ErrorResolver;
     private readonly intermediateRepresentation: IntermediateRepresentation;
+    private readonly globalErrorNames: Set<DeclaredErrorName>;
 
     constructor({
         generateIdempotentRequestOptions,
@@ -25,6 +26,38 @@ export class BaseClientTypeGenerator {
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
         this.errorResolver = errorResolver;
         this.intermediateRepresentation = intermediateRepresentation;
+        this.globalErrorNames = this.computeGlobalErrorNames();
+    }
+
+    private computeGlobalErrorNames(): Set<DeclaredErrorName> {
+        const allServices = Object.values(this.intermediateRepresentation.services);
+        if (allServices.length === 0) {
+            return new Set();
+        }
+
+        const allEndpoints = allServices.flatMap((service) => service.endpoints);
+        if (allEndpoints.length === 0) {
+            return new Set();
+        }
+
+        const errorNamesByEndpoint = allEndpoints.map((endpoint) =>
+            new Set(endpoint.errors.map((e) => JSON.stringify(e.error)))
+        );
+
+        if (errorNamesByEndpoint.length === 0) {
+            return new Set();
+        }
+
+        const intersectionStrings = new Set(errorNamesByEndpoint[0]);
+        for (let i = 1; i < errorNamesByEndpoint.length; i++) {
+            for (const errorNameString of intersectionStrings) {
+                if (!errorNamesByEndpoint[i]?.has(errorNameString)) {
+                    intersectionStrings.delete(errorNameString);
+                }
+            }
+        }
+
+        return new Set(Array.from(intersectionStrings).map((s) => JSON.parse(s) as DeclaredErrorName));
     }
 
     public writeToFile(context: SdkContext): void {
@@ -68,29 +101,33 @@ export class BaseClientTypeGenerator {
         );
 
         const switchCases: ts.CaseOrDefaultClause[] = [];
-        const globalErrorIds = this.intermediateRepresentation.rootPackage.errors;
 
-        for (const errorId of globalErrorIds) {
-            const error = this.intermediateRepresentation.errors[errorId];
-            if (error == null) {
-                continue;
-            }
-
-            const errorDeclaration = this.errorResolver.getErrorDeclarationFromName(error.name);
-            const generatedSdkError = context.sdkError.getGeneratedSdkError(error.name);
+        for (const errorName of this.globalErrorNames) {
+            const errorDeclaration = this.errorResolver.getErrorDeclarationFromName(errorName);
+            const generatedSdkError = context.sdkError.getGeneratedSdkError(errorName);
+            const generatedSdkErrorSchema = context.sdkErrorSchema.getGeneratedSdkErrorSchema(errorName);
 
             if (generatedSdkError?.type !== "class") {
                 continue;
             }
 
+            const referenceToBody = generatedSdkErrorSchema != null
+                ? generatedSdkErrorSchema.deserializeBody(context, {
+                    referenceToBody: ts.factory.createPropertyAccessExpression(
+                        ts.factory.createIdentifier("error"),
+                        "body"
+                    )
+                })
+                : ts.factory.createPropertyAccessExpression(
+                    ts.factory.createIdentifier("error"),
+                    "body"
+                );
+
             switchCases.push(
                 ts.factory.createCaseClause(ts.factory.createNumericLiteral(errorDeclaration.statusCode), [
                     ts.factory.createThrowStatement(
                         generatedSdkError.build(context, {
-                            referenceToBody: ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier("error"),
-                                "body"
-                            ),
+                            referenceToBody,
                             referenceToRawResponse: ts.factory.createIdentifier("rawResponse")
                         })
                     )
@@ -98,29 +135,32 @@ export class BaseClientTypeGenerator {
             );
         }
 
-        switchCases.push(
-            ts.factory.createDefaultClause([
-                ts.factory.createThrowStatement(
-                    context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
-                        message: undefined,
-                        statusCode: ts.factory.createPropertyAccessExpression(
-                            ts.factory.createIdentifier("error"),
-                            "statusCode"
-                        ),
-                        responseBody: ts.factory.createPropertyAccessExpression(
-                            ts.factory.createIdentifier("error"),
-                            "body"
-                        ),
-                        rawResponse: ts.factory.createIdentifier("rawResponse")
-                    })
-                )
-            ])
+        const defaultThrowStatement = ts.factory.createThrowStatement(
+            context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
+                message: undefined,
+                statusCode: ts.factory.createPropertyAccessExpression(
+                    ts.factory.createIdentifier("error"),
+                    "statusCode"
+                ),
+                responseBody: ts.factory.createPropertyAccessExpression(
+                    ts.factory.createIdentifier("error"),
+                    "body"
+                ),
+                rawResponse: ts.factory.createIdentifier("rawResponse")
+            })
         );
 
-        const switchStatement = ts.factory.createSwitchStatement(
-            ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier("error"), "statusCode"),
-            ts.factory.createCaseBlock(switchCases)
-        );
+        const functionBody = switchCases.length === 0
+            ? ts.factory.createBlock([defaultThrowStatement], true)
+            : ts.factory.createBlock([
+                ts.factory.createSwitchStatement(
+                    ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier("error"), "statusCode"),
+                    ts.factory.createCaseBlock([
+                        ...switchCases,
+                        ts.factory.createDefaultClause([defaultThrowStatement])
+                    ])
+                )
+            ], true);
 
         return ts.factory.createFunctionDeclaration(
             undefined,
@@ -130,7 +170,7 @@ export class BaseClientTypeGenerator {
             undefined,
             [errorParameter, rawResponseParameter],
             ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
-            ts.factory.createBlock([switchStatement], true)
+            functionBody
         );
     }
 

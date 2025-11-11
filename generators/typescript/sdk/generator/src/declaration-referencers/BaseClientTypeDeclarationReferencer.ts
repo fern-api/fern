@@ -34,9 +34,7 @@ export class BaseClientTypeDeclarationReferencer extends AbstractDeclarationRefe
     public getExportedFilepath(): ExportedFilePath {
         const namedExports: NamedExport[] = [
             this.getExportedNameOfBaseClientOptions(),
-            this.getExportedNameOfBaseRequestOptions(),
-            this.getExportedNameOfHandleGlobalStatusCodeError(),
-            this.getExportedNameOfHandleNonStatusCodeError()
+            this.getExportedNameOfBaseRequestOptions()
         ];
         if (this.generateIdempotentRequestOptions) {
             namedExports.push(this.getExportedNameOfBaseIdempotentRequestOptions());

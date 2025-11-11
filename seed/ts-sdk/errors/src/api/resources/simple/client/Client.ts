@@ -72,21 +72,6 @@ export class Simple {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
-                case 404:
-                    throw new SeedErrors.NotFoundError(
-                        _response.error.body as SeedErrors.ErrorBody,
-                        _response.rawResponse,
-                    );
-                case 400:
-                    throw new SeedErrors.BadRequestError(
-                        _response.error.body as SeedErrors.ErrorBody,
-                        _response.rawResponse,
-                    );
-                case 500:
-                    throw new SeedErrors.InternalServerError(
-                        _response.error.body as SeedErrors.ErrorBody,
-                        _response.rawResponse,
-                    );
                 default:
                     return handleGlobalStatusCodeError(_response.error, _response.rawResponse);
             }
@@ -156,16 +141,6 @@ export class Simple {
                         _response.error.body as SeedErrors.ErrorBody,
                         _response.rawResponse,
                     );
-                case 404:
-                    throw new SeedErrors.NotFoundError(
-                        _response.error.body as SeedErrors.ErrorBody,
-                        _response.rawResponse,
-                    );
-                case 400:
-                    throw new SeedErrors.BadRequestError(
-                        _response.error.body as SeedErrors.ErrorBody,
-                        _response.rawResponse,
-                    );
                 default:
                     return handleGlobalStatusCodeError(_response.error, _response.rawResponse);
             }
@@ -232,16 +207,6 @@ export class Simple {
                     );
                 case 500:
                     throw new SeedErrors.FooTooLittle(
-                        _response.error.body as SeedErrors.ErrorBody,
-                        _response.rawResponse,
-                    );
-                case 404:
-                    throw new SeedErrors.NotFoundError(
-                        _response.error.body as SeedErrors.ErrorBody,
-                        _response.rawResponse,
-                    );
-                case 400:
-                    throw new SeedErrors.BadRequestError(
                         _response.error.body as SeedErrors.ErrorBody,
                         _response.rawResponse,
                     );

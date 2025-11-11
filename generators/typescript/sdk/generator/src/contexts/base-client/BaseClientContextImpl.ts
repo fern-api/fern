@@ -1,6 +1,6 @@
 import { SetRequired } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { DeclaredErrorName, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import {
     ExportsManager,
     getParameterNameForRootPathParameter,
@@ -48,6 +48,7 @@ export class BaseClientContextImpl implements BaseClientContext {
     private readonly retainOriginalCasing: boolean;
     private readonly generateIdempotentRequestOptions: boolean;
     private readonly baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
+    private readonly globalErrorNames: Set<DeclaredErrorName>;
 
     public static readonly OPTIONS_INTERFACE_NAME = OPTIONS_INTERFACE_NAME;
 
@@ -78,6 +79,7 @@ export class BaseClientContextImpl implements BaseClientContext {
         this.retainOriginalCasing = retainOriginalCasing;
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
         this.baseClientTypeDeclarationReferencer = baseClientTypeDeclarationReferencer;
+        this.globalErrorNames = this.computeGlobalErrorNames();
 
         this.authHeaders = [];
         for (const authScheme of intermediateRepresentation.auth.schemes) {
@@ -98,6 +100,41 @@ export class BaseClientContextImpl implements BaseClientContext {
                 }
             });
         }
+    }
+
+    private computeGlobalErrorNames(): Set<DeclaredErrorName> {
+        const allServices = Object.values(this.intermediateRepresentation.services);
+        if (allServices.length === 0) {
+            return new Set();
+        }
+
+        const allEndpoints = allServices.flatMap((service) => service.endpoints);
+        if (allEndpoints.length === 0) {
+            return new Set();
+        }
+
+        const errorNamesByEndpoint = allEndpoints.map((endpoint) =>
+            new Set(endpoint.errors.map((e) => JSON.stringify(e.error)))
+        );
+
+        if (errorNamesByEndpoint.length === 0) {
+            return new Set();
+        }
+
+        const intersectionStrings = new Set(errorNamesByEndpoint[0]);
+        for (let i = 1; i < errorNamesByEndpoint.length; i++) {
+            for (const errorNameString of intersectionStrings) {
+                if (!errorNamesByEndpoint[i]?.has(errorNameString)) {
+                    intersectionStrings.delete(errorNameString);
+                }
+            }
+        }
+
+        return new Set(Array.from(intersectionStrings).map((s) => JSON.parse(s) as DeclaredErrorName));
+    }
+
+    public getGlobalErrorNames(): Set<DeclaredErrorName> {
+        return this.globalErrorNames;
     }
 
     public anyRequiredBaseClientOptions(context: SdkContext): boolean {

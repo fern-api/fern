@@ -1,4 +1,5 @@
 import { SetRequired } from "@fern-api/core-utils";
+import { DeclaredErrorName } from "@fern-fern/ir-sdk/api";
 import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons";
 import { InterfaceDeclarationStructure, SourceFile } from "ts-morph";
 import { SdkContext } from "../SdkContext";
@@ -21,4 +22,5 @@ export interface BaseClientContext {
         exportsManager: ExportsManager;
         sourceFile: SourceFile;
     }): Reference;
+    getGlobalErrorNames(): Set<DeclaredErrorName>;
 }

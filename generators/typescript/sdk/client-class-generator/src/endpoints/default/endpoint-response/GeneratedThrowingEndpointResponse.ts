@@ -888,8 +888,16 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         generateCaseBody: (responseError: ResponseError) => ts.Statement[];
         defaultBody: ts.Statement[];
     }) {
+        const globalErrorNames = context.baseClient.getGlobalErrorNames();
+        const globalErrorNamesStrings = new Set(
+            Array.from(globalErrorNames).map((errorName) => JSON.stringify(errorName))
+        );
+        
         const seenStatusCodes = new Set<number>();
-        const uniqueErrors = this.endpoint.errors.filter((error) => {
+        const endpointSpecificErrors = this.endpoint.errors.filter((error) => {
+            if (globalErrorNamesStrings.has(JSON.stringify(error.error))) {
+                return false;
+            }
             const errorDeclaration = this.errorResolver.getErrorDeclarationFromName(error.error);
             if (seenStatusCodes.has(errorDeclaration.statusCode)) {
                 return false;
@@ -904,7 +912,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.statusCode
             ),
             ts.factory.createCaseBlock([
-                ...uniqueErrors.map((error) => {
+                ...endpointSpecificErrors.map((error) => {
                     const errorDeclaration = this.errorResolver.getErrorDeclarationFromName(error.error);
                     return ts.factory.createCaseClause(
                         ts.factory.createNumericLiteral(errorDeclaration.statusCode),
