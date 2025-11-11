@@ -30827,7 +30827,8 @@ service:
                 total_pages: 1
               total_count: 1
               data:
-                - id: '141'
+                - type: news-item
+                  id: '141'
                   workspace_id: t74hdn32
                   title: 'New feature: News Items'
                   body: >-
@@ -30848,7 +30849,6 @@ service:
                   deliver_silently: true
                   created_at: 1610589632
                   updated_at: 1610589632
-                  type: news-item
     createConversation:
       path: /conversations
       method: POST
@@ -41663,6 +41663,7 @@ types:
                       "sender_id": 991267734,
                       "state": "live",
                       "title": "Halloween is here!",
+                      "type": "news-item",
                       "updated_at": 1719492978,
                       "workspace_id": "this_is_an_id498_that_should_be_at_least_",
                     },
@@ -42006,6 +42007,7 @@ types:
                       "sender_id": 991267737,
                       "state": "live",
                       "title": "We have news",
+                      "type": "news-item",
                       "updated_at": 1719492979,
                       "workspace_id": "this_is_an_id502_that_should_be_at_least_",
                     },
@@ -42051,6 +42053,7 @@ types:
                       "created_at": 1719492988,
                       "id": "72",
                       "name": "Visitor Feed",
+                      "type": "newsfeed",
                       "updated_at": 1719492988,
                     },
                   },
@@ -42123,6 +42126,7 @@ types:
                       "sender_id": 991267745,
                       "state": "live",
                       "title": "Christmas is here!",
+                      "type": "news-item",
                       "updated_at": 1719492982,
                       "workspace_id": "this_is_an_id508_that_should_be_at_least_",
                     },
@@ -42168,6 +42172,7 @@ types:
                       "sender_id": 991267745,
                       "state": "live",
                       "title": "Christmas is here!",
+                      "type": "news-item",
                       "updated_at": 1719492982,
                       "workspace_id": "this_is_an_id508_that_should_be_at_least_",
                     },
@@ -42258,6 +42263,10 @@ types:
                 "docs": "The title of the news item.",
                 "type": "optional<string>",
               },
+              "type": {
+                "docs": "The type of object.",
+                "type": "optional<literal<"news-item">>",
+              },
               "updated_at": {
                 "docs": "Timestamp for when the news item was last updated.",
                 "type": "optional<integer>",
@@ -42300,6 +42309,10 @@ Newsfeeds currently cannot be edited through the API, please refer to [this arti
               "name": {
                 "docs": "The name of the newsfeed. This name will never be visible to your users.",
                 "type": "optional<string>",
+              },
+              "type": {
+                "docs": "The type of object.",
+                "type": "optional<literal<"newsfeed">>",
               },
               "updated_at": {
                 "docs": "Timestamp for when the newsfeed was last updated.",
@@ -42365,7 +42378,8 @@ service:
                 total_pages: 1
               total_count: 2
               data:
-                - id: '141'
+                - type: news-item
+                  id: '141'
                   workspace_id: t74hdn32
                   title: 'New feature: News Items'
                   body: >-
@@ -42386,8 +42400,8 @@ service:
                   deliver_silently: true
                   created_at: 1610589632
                   updated_at: 1610589632
-                  type: news-item
-                - id: '141'
+                - type: news-item
+                  id: '141'
                   workspace_id: t74hdn32
                   title: 'New feature: News Items'
                   body: >-
@@ -42408,7 +42422,6 @@ service:
                   deliver_silently: true
                   created_at: 1610589632
                   updated_at: 1610589632
-                  type: news-item
     createNewsItem:
       path: /news/news_items
       method: POST
@@ -42448,6 +42461,7 @@ service:
                 published_at: 1664638214
           response:
             body:
+              type: news-item
               id: '33'
               workspace_id: this_is_an_id498_that_should_be_at_least_
               title: Halloween is here!
@@ -42494,6 +42508,7 @@ service:
             Intercom-Version: '1.0'
           response:
             body:
+              type: news-item
               id: '34'
               workspace_id: this_is_an_id502_that_should_be_at_least_
               title: We have news
@@ -42550,6 +42565,7 @@ service:
               - 😂
           response:
             body:
+              type: news-item
               id: '37'
               workspace_id: this_is_an_id508_that_should_be_at_least_
               title: Christmas is here!
@@ -42582,6 +42598,7 @@ service:
               - 😂
           response:
             body:
+              type: news-item
               id: '37'
               workspace_id: this_is_an_id508_that_should_be_at_least_
               title: Christmas is here!
@@ -42667,7 +42684,8 @@ service:
                 total_pages: 0
               total_count: 0
               data:
-                - id: '141'
+                - type: news-item
+                  id: '141'
                   workspace_id: t74hdn32
                   title: 'New feature: News Items'
                   body: >-
@@ -42688,7 +42706,6 @@ service:
                   deliver_silently: true
                   created_at: 1610589632
                   updated_at: 1610589632
-                  type: news-item
     listNewsfeeds:
       path: /news/newsfeeds
       method: GET
@@ -42720,15 +42737,15 @@ service:
               total_count: 2
               data:
                 - id: '12312'
+                  type: newsfeed
                   name: My Newsfeed
                   created_at: 1674917488
                   updated_at: 1674917488
-                  type: newsfeed
                 - id: '12312'
+                  type: newsfeed
                   name: My Newsfeed
                   created_at: 1674917488
                   updated_at: 1674917488
-                  type: newsfeed
     retrieveNewsfeed:
       path: /news/newsfeeds/{id}
       method: GET
@@ -42757,6 +42774,7 @@ service:
           response:
             body:
               id: '72'
+              type: newsfeed
               name: Visitor Feed
               created_at: 1719492988
               updated_at: 1719492988
@@ -42780,6 +42798,9 @@ types:
       A News Item is a content type in Intercom enabling you to announce product
       updates, company news, promotions, events and more with your customers.
     properties:
+      type:
+        type: optional<literal<"news-item">>
+        docs: The type of object.
       id:
         type: optional<string>
         docs: The unique identifier for the news item which is given by Intercom.
@@ -42844,6 +42865,9 @@ types:
       id:
         type: optional<string>
         docs: The unique identifier for the newsfeed which is given by Intercom.
+      type:
+        type: optional<literal<"newsfeed">>
+        docs: The type of object.
       name:
         type: optional<string>
         docs: >-

@@ -6,21 +6,13 @@ from typing import Callable, List, Literal, Optional, Sequence, Tuple, Type, Uni
 
 from .pydantic_field import PydanticField
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
+from fern_python.codegen.ast.nodes.docstring import escape_docstring
 from fern_python.external_dependencies import Pydantic, PydanticVersionCompatibility
 from fern_python.generators.pydantic_model.field_metadata import FieldMetadata
 from pydantic import BaseModel
 
 # these are the properties that BaseModel already has
 BASE_MODEL_PROPERTIES = set(dir(BaseModel))
-
-
-def escape_docstring(text: str) -> str:
-    """
-    Escape backslashes in docstrings to avoid SyntaxWarning for invalid escape sequences.
-    This is needed when docstrings contain raw text from OpenAPI specs that may have
-    backslashes (e.g., OTHER\_GIFT\_CARD).
-    """
-    return text.replace("\\", "\\\\")
 
 
 class PydanticModel:
@@ -59,7 +51,7 @@ class PydanticModel:
         self._class_declaration = AST.ClassDeclaration(
             name=name,
             extends=base_models or [pydantic_base_model],
-            docstring=AST.Docstring(escape_docstring(docstring)) if docstring is not None else None,
+            docstring=AST.Docstring(docstring) if docstring is not None else None,
             snippet=snippet,
         )
 

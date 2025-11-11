@@ -208,6 +208,9 @@ fixtures:
         experimental-readonly-constants: true
         experimental-enable-websockets: true
       outputFolder: with-websockets
+  csharp-xml-entities:
+    - customConfig: null
+      outputFolder: no-custom-config
 allowedFailures:
   - oauth-client-credentials-custom
  

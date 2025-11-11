@@ -23,6 +23,7 @@ it.skip("generates slug for endpoint", () => {
         defaultEnvironment: undefined,
         environments: [],
         auth: [],
+        multiAuth: undefined,
         responseHeaders: [],
         requests: [],
         errors: [],

@@ -3,7 +3,7 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FPython)
 [![pypi](https://img.shields.io/pypi/v/fern_enum)](https://pypi.python.org/pypi/fern_enum)
 
-The Seed Python library provides convenient access to the Seed API from Python.
+The Seed Python library provides convenient access to the Seed APIs from Python.
 
 ## Installation
 
@@ -34,7 +34,7 @@ client.headers.send(
 
 ## Async Client
 
-The SDK also exports an `async` client so that you can make non-blocking calls to our API.
+The SDK also exports an `async` client so that you can make non-blocking calls to our API. Note that if you are constructing an Async httpx client class to pass into this client, use `httpx.AsyncClient()` instead of `httpx.Client()` (e.g. for the `httpx_client` parameter of this client).
 
 ```python
 import asyncio
@@ -142,7 +142,7 @@ from seed import SeedEnum
 client = SeedEnum(
     ...,
     httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
+        proxy="http://my.test.proxy.example.com",
         transport=httpx.HTTPTransport(local_address="0.0.0.0"),
     ),
 )

@@ -14,6 +14,7 @@ export * from "./GeneratorsOpenApiSchema";
 export * from "./GeneratorsOpenApiObjectSchema";
 export * from "./ApiDefinitionPathSchema";
 export * from "./ApiDefinitionSettingsSchema";
+export * from "./RemoveDiscriminantsFromSchemas";
 export * from "./UnionSettingsSchema";
 export * from "./MessageNamingSettingsSchema";
 export * from "./ApiDefinitionWithOverridesSchema";
