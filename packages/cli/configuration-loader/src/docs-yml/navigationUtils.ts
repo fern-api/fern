@@ -102,16 +102,36 @@ export async function buildNavigationForDirectory({
                 readFileFn
             });
 
+            const folderSlug = nameToSlug({ name: dir.name });
+            const matchingPageIndex = subContents.findIndex((item) => {
+                if (item.type === "page") {
+                    const pageSlug = nameToSlug({ name: item.absolutePath.split("/").pop() || "" });
+                    return pageSlug === folderSlug;
+                }
+                return false;
+            });
+
+            let overviewAbsolutePath: AbsoluteFilePath | undefined = undefined;
+            let filteredContents = subContents;
+
+            if (matchingPageIndex !== -1) {
+                const matchingPage = subContents[matchingPageIndex];
+                if (matchingPage.type === "page") {
+                    overviewAbsolutePath = matchingPage.absolutePath;
+                    filteredContents = subContents.filter((_, index) => index !== matchingPageIndex);
+                }
+            }
+
             return {
                 type: "section" as const,
                 title: nameToTitle({ name: dir.name }),
                 slug: nameToSlug({ name: dir.name }),
                 icon: undefined,
-                contents: subContents,
+                contents: filteredContents,
                 collapsed: undefined,
                 hidden: undefined,
                 skipUrlSlug: false,
-                overviewAbsolutePath: undefined,
+                overviewAbsolutePath,
                 viewers: undefined,
                 orphaned: undefined,
                 featureFlags: undefined,
