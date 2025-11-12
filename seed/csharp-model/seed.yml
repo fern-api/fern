@@ -6,7 +6,7 @@ changelogLocation: ../../generators/csharp/model/versions.yml
 buildScripts:
   compileScript:
     commands:
-      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true .
+      - dotnet build src -c Release .
 
 publish:
   preBuildCommands:
@@ -48,4 +48,4 @@ scripts:
   - docker: fernapi/csharp-seed
     commands:
       - dotnet restore src
-      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true --no-restore
+      - dotnet build src -c Release --no-restore

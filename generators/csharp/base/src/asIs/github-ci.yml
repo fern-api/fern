@@ -3,7 +3,6 @@ name: ci
 on: [push]
 
 env:
-  CI: true
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   DOTNET_NOLOGO: true
 
@@ -29,10 +28,10 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src
+        run: dotnet restore src/<%= projectName%>
 
       - name: Build Release
-        run: dotnet build src -c Release /p:ContinuousIntegrationBuild=true --no-restore
+        run: dotnet build src/<%= projectName%> -c Release --no-restore
 
   unit-tests:
     runs-on: ubuntu-latest
@@ -40,8 +39,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v5
-
-      - uses: actions/checkout@master
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
@@ -59,10 +56,10 @@ jobs:
         run: dotnet restore src
 
       - name: Build Release
-        run: dotnet build src -c Release /p:ContinuousIntegrationBuild=true --no-restore
+        run: dotnet build src -c Release --no-restore
 
       - name: Run Tests
-        run: dotnet test src -c Release /p:ContinuousIntegrationBuild=true --no-build --no-restore
+        run: dotnet test src -c Release --no-build --no-restore
 
 <% if (shouldWritePublishBlock) { %>
   publish:
@@ -86,15 +83,15 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src
+        run: dotnet restore src/<%= projectName%>
 
       - name: Build Release
-        run: dotnet build src -c Release /p:ContinuousIntegrationBuild=true --no-restore
+        run: dotnet build src/<%= projectName%> -c Release --no-restore
 
       - name: Publish
         env:
           NUGET_API_KEY: $\{{ secrets.<%= nugetTokenEnvvar%> }}
         run: |
-          dotnet pack src/<%= projectName%> -c Release /p:ContinuousIntegrationBuild=true --no-build --no-restore
+          dotnet pack src/<%= projectName%> -c Release --no-build --no-restore
           dotnet nuget push src/<%= projectName%>/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
 <% } %>
