@@ -744,6 +744,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": "Retrieve a user.\nThis endpoint is used to retrieve a user."
                 },
@@ -1585,6 +1586,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": "Create a new user.\nThis endpoint is used to create a new user."
                 }

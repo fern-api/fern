@@ -2129,6 +2129,7 @@
                         "external"
                     ],
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": "Add a movie to the database"
                 },
@@ -4963,6 +4964,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": "Retrieve a movie from the database based on the ID"
                 }

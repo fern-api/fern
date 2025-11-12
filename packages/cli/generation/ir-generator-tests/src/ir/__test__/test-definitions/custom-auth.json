@@ -1005,6 +1005,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": "GET request with custom auth scheme"
                 },
@@ -1724,6 +1725,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": "POST request with custom auth scheme"
                 }
