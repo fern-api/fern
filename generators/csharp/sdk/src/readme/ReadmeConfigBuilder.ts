@@ -1,7 +1,7 @@
+import { CsharpConfigSchema } from "@fern-api/csharp-codegen";
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
 
@@ -85,9 +85,9 @@ function getCustomSections(context: SdkGeneratorContext): FernGeneratorCli.Custo
     return sections.length > 0 ? sections : undefined;
 }
 
-function parseCustomConfigOrUndefined(logger: Logger, customConfig: unknown): SdkCustomConfigSchema | undefined {
+function parseCustomConfigOrUndefined(logger: Logger, customConfig: unknown): CsharpConfigSchema | undefined {
     try {
-        return SdkCustomConfigSchema.parse(customConfig);
+        return CsharpConfigSchema.parse(customConfig);
     } catch (error) {
         logger.error(`Error parsing custom config during readme generation: ${error}`);
         return undefined;

@@ -1,3 +1,5 @@
+import { fail } from "node:assert";
+import { ast, text, WithGeneration } from "@fern-api/csharp-codegen";
 import {
     ProtobufFile,
     ProtobufService,
@@ -6,29 +8,25 @@ import {
     TypeId,
     WellKnownProtobufType
 } from "@fern-fern/ir-sdk/api";
-import { ast } from "../";
-import { CsharpGeneratorContext } from "../context/CsharpGeneratorContext";
+import { GeneratorContext } from "../cli";
 import { CsharpTypeMapper } from "../context/CsharpTypeMapper";
-import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
-import { camelCase } from "../utils/text";
-import { WithGeneration } from "../with-generation";
 import { ResolvedWellKnownProtobufType } from "./ResolvedWellKnownProtobufType";
 
 export class ProtobufResolver extends WithGeneration {
     private csharpTypeMapper: CsharpTypeMapper;
 
     public constructor(
-        private readonly context: CsharpGeneratorContext<BaseCsharpCustomConfigSchema>,
+        private readonly context: GeneratorContext,
         csharpTypeMapper: CsharpTypeMapper
     ) {
-        super(context);
+        super(context.generation);
         this.csharpTypeMapper = csharpTypeMapper;
     }
 
     public resolveWellKnownProtobufType(
         wellKnownProtobufType: WellKnownProtobufType
     ): ResolvedWellKnownProtobufType | undefined {
-        for (const [typeId, typeDeclaration] of Object.entries(this.context.ir.types)) {
+        for (const [typeId, typeDeclaration] of Object.entries(this.generation.ir.types)) {
             if (this._isWellKnownProtobufType({ typeId, wellKnownProtobufTypes: [wellKnownProtobufType] })) {
                 return {
                     typeDeclaration,
@@ -39,8 +37,9 @@ export class ProtobufResolver extends WithGeneration {
         return undefined;
     }
 
-    public getProtobufClassReferenceOrThrow(typeId: TypeId): ast.ClassReference {
-        const protobufType = this.getProtobufTypeForTypeIdOrThrow(typeId);
+    public getProtobufClassReference(typeId: TypeId): ast.ClassReference {
+        const protobufType =
+            this.getProtobufTypeForTypeId(typeId) ?? fail(`The type identified by ${typeId} is not a Protobuf type`);
         switch (protobufType.type) {
             case "wellKnown": {
                 return this.csharpTypeMapper.convertToClassReference(
@@ -48,10 +47,8 @@ export class ProtobufResolver extends WithGeneration {
                 );
             }
             case "userDefined": {
-                const protoNamespace = this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(
-                    protobufType.file
-                );
-                const aliasSuffix = camelCase(
+                const protoNamespace = this.context.protobufResolver.getNamespaceFromProtobufFile(protobufType.file);
+                const aliasSuffix = text.camelCase(
                     protoNamespace
                         .split(".")
                         .filter((segment) => !this.namespaces.root.split(".").includes(segment))
@@ -59,7 +56,7 @@ export class ProtobufResolver extends WithGeneration {
                 );
                 return this.csharp.classReference({
                     name: protobufType.name.originalName,
-                    namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufType.file),
+                    namespace: this.context.protobufResolver.getNamespaceFromProtobufFile(protobufType.file),
                     namespaceAlias: `Proto${aliasSuffix.charAt(0).toUpperCase()}${aliasSuffix.slice(1)}`
                 });
             }
@@ -67,7 +64,7 @@ export class ProtobufResolver extends WithGeneration {
     }
 
     public getProtobufServiceForServiceId(serviceId: ServiceId): ProtobufService | undefined {
-        const transport = this.context.ir.services[serviceId]?.transport;
+        const transport = this.generation.ir.services[serviceId]?.transport;
         if (transport == null) {
             return undefined;
         }
@@ -79,7 +76,7 @@ export class ProtobufResolver extends WithGeneration {
         }
     }
 
-    public getNamespaceFromProtobufFileOrThrow(protobufFile: ProtobufFile): string {
+    public getNamespaceFromProtobufFile(protobufFile: ProtobufFile): string {
         const namespace = protobufFile.options?.csharp?.namespace;
         if (namespace == null) {
             throw new Error(
@@ -123,16 +120,8 @@ export class ProtobufResolver extends WithGeneration {
         );
     }
 
-    private getProtobufTypeForTypeIdOrThrow(typeId: TypeId): ProtobufType {
-        const protobufType = this.getProtobufTypeForTypeId(typeId);
-        if (protobufType == null) {
-            throw new Error(`The type identified by ${typeId} is not a Protobuf type`);
-        }
-        return protobufType;
-    }
-
     private getProtobufTypeForTypeId(typeId: TypeId): ProtobufType | undefined {
-        const typeDeclaration = this.context.ir.types[typeId];
+        const typeDeclaration = this.generation.ir.types[typeId];
         if (typeDeclaration?.source == null) {
             return undefined;
         }

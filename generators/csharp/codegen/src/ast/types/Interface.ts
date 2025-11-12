@@ -1,12 +1,12 @@
 import { type Generation } from "../../context/generation-info";
 import { Writer } from "../core/Writer";
-import { BaseType } from "./BaseType";
+import { DefinedType } from "./DefinedType";
 
 export declare namespace Interface {
-    interface Args extends BaseType.Args {}
+    interface Args extends DefinedType.Args {}
 }
 
-export class Interface extends BaseType {
+export class Interface extends DefinedType {
     constructor(
         { name, namespace, access, partial, interfaceReferences, enclosingType, origin }: Interface.Args,
         generation: Generation

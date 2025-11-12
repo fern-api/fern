@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`TypeLiteral support > class literals > class with multiple fields 1`] = `
+exports[`Literal support > class literals > class with multiple fields 1`] = `
 "using MyApp.Models;
 
 new Person {
@@ -10,7 +10,7 @@ new Person {
 }"
 `;
 
-exports[`TypeLiteral support > class literals > class with nested collection field 1`] = `
+exports[`Literal support > class literals > class with nested collection field 1`] = `
 "using MyApp.Models;
 using System.Collections.Generic;
 
@@ -25,7 +25,7 @@ new Team {
 }"
 `;
 
-exports[`TypeLiteral support > class literals > class with nop fields (filtered) 1`] = `
+exports[`Literal support > class literals > class with nop fields (filtered) 1`] = `
 "using MyApp.Models;
 
 new Person {
@@ -34,7 +34,7 @@ new Person {
 }"
 `;
 
-exports[`TypeLiteral support > class literals > class with single field 1`] = `
+exports[`Literal support > class literals > class with single field 1`] = `
 "using MyApp.Models;
 
 new Person {
@@ -42,13 +42,13 @@ new Person {
 }"
 `;
 
-exports[`TypeLiteral support > class literals > empty class instantiation 1`] = `
+exports[`Literal support > class literals > empty class instantiation 1`] = `
 "using MyApp.Models;
 
 new Person()"
 `;
 
-exports[`TypeLiteral support > complex combinations > class with various typed fields 1`] = `
+exports[`Literal support > complex combinations > class with various typed fields 1`] = `
 "using MyApp.Models;
 using System;
 using System.Collections.Generic;
@@ -71,7 +71,7 @@ new ComplexModel {
 }"
 `;
 
-exports[`TypeLiteral support > complex combinations > dictionary with list values 1`] = `
+exports[`Literal support > complex combinations > dictionary with list values 1`] = `
 "using System.Collections.Generic;
 
 new Dictionary<string, IEnumerable<int>>(){
@@ -91,7 +91,7 @@ new Dictionary<string, IEnumerable<int>>(){
 "
 `;
 
-exports[`TypeLiteral support > complex combinations > list of dictionaries 1`] = `
+exports[`Literal support > complex combinations > list of dictionaries 1`] = `
 "using System.Collections.Generic;
 
 new List<IDictionary<string, string>>(){
@@ -107,7 +107,7 @@ new List<IDictionary<string, string>>(){
 "
 `;
 
-exports[`TypeLiteral support > complex combinations > set of sets 1`] = `
+exports[`Literal support > complex combinations > set of sets 1`] = `
 "using System.Collections.Generic;
 
 new HashSet<HashSet<int>>(){
@@ -125,20 +125,20 @@ new HashSet<HashSet<int>>(){
 "
 `;
 
-exports[`TypeLiteral support > date and time literals > date 1`] = `
+exports[`Literal support > date and time literals > date 1`] = `
 "using System;
 
 DateOnly.Parse("2023-12-25")"
 `;
 
-exports[`TypeLiteral support > date and time literals > datetime 1`] = `
+exports[`Literal support > date and time literals > datetime 1`] = `
 "using System;
 using System.Globalization;
 
 DateTime.Parse("2023-12-25T10:30:00Z", null, DateTimeStyles.AdjustToUniversal)"
 `;
 
-exports[`TypeLiteral support > dictionary literals > dictionary with integer keys and string values 1`] = `
+exports[`Literal support > dictionary literals > dictionary with integer keys and string values 1`] = `
 "using System.Collections.Generic;
 
 new Dictionary<int, string>(){
@@ -148,7 +148,7 @@ new Dictionary<int, string>(){
 "
 `;
 
-exports[`TypeLiteral support > dictionary literals > dictionary with nop entries (filtered) 1`] = `
+exports[`Literal support > dictionary literals > dictionary with nop entries (filtered) 1`] = `
 "using System.Collections.Generic;
 
 new Dictionary<string, string>(){
@@ -157,7 +157,7 @@ new Dictionary<string, string>(){
 "
 `;
 
-exports[`TypeLiteral support > dictionary literals > dictionary with string keys and integer values 1`] = `
+exports[`Literal support > dictionary literals > dictionary with string keys and integer values 1`] = `
 "using System.Collections.Generic;
 
 new Dictionary<string, int>(){
@@ -168,13 +168,13 @@ new Dictionary<string, int>(){
 "
 `;
 
-exports[`TypeLiteral support > dictionary literals > empty dictionary 1`] = `
+exports[`Literal support > dictionary literals > empty dictionary 1`] = `
 "using System.Collections.Generic;
 
 new Dictionary<string, int>()"
 `;
 
-exports[`TypeLiteral support > dictionary literals > nested dictionary 1`] = `
+exports[`Literal support > dictionary literals > nested dictionary 1`] = `
 "using System.Collections.Generic;
 
 new Dictionary<string, IDictionary<string, int>>(){
@@ -186,13 +186,13 @@ new Dictionary<string, IDictionary<string, int>>(){
 "
 `;
 
-exports[`TypeLiteral support > list literals > empty list 1`] = `
+exports[`Literal support > list literals > empty list 1`] = `
 "using System.Collections.Generic;
 
 new List<string>()"
 `;
 
-exports[`TypeLiteral support > list literals > list with integers 1`] = `
+exports[`Literal support > list literals > list with integers 1`] = `
 "using System.Collections.Generic;
 
 new List<int>(){
@@ -203,7 +203,7 @@ new List<int>(){
 "
 `;
 
-exports[`TypeLiteral support > list literals > list with nop values (filtered) 1`] = `
+exports[`Literal support > list literals > list with nop values (filtered) 1`] = `
 "using System.Collections.Generic;
 
 new List<int>(){
@@ -213,7 +213,7 @@ new List<int>(){
 "
 `;
 
-exports[`TypeLiteral support > list literals > list with strings 1`] = `
+exports[`Literal support > list literals > list with strings 1`] = `
 "using System.Collections.Generic;
 
 new List<string>(){
@@ -224,7 +224,7 @@ new List<string>(){
 "
 `;
 
-exports[`TypeLiteral support > list literals > nested list 1`] = `
+exports[`Literal support > list literals > nested list 1`] = `
 "using System.Collections.Generic;
 
 new List<IEnumerable<int>>(){
@@ -242,47 +242,47 @@ new List<IEnumerable<int>>(){
 "
 `;
 
-exports[`TypeLiteral support > primitive literals > boolean - false 1`] = `"false"`;
+exports[`Literal support > primitive literals > boolean - false 1`] = `"false"`;
 
-exports[`TypeLiteral support > primitive literals > boolean - true 1`] = `"true"`;
+exports[`Literal support > primitive literals > boolean - true 1`] = `"true"`;
 
-exports[`TypeLiteral support > primitive literals > decimal 1`] = `"99.99m"`;
+exports[`Literal support > primitive literals > decimal 1`] = `"99.99m"`;
 
-exports[`TypeLiteral support > primitive literals > double 1`] = `"2.718281828"`;
+exports[`Literal support > primitive literals > double 1`] = `"2.718281828"`;
 
-exports[`TypeLiteral support > primitive literals > float 1`] = `"3.14f"`;
+exports[`Literal support > primitive literals > float 1`] = `"3.14f"`;
 
-exports[`TypeLiteral support > primitive literals > integer 1`] = `"42"`;
+exports[`Literal support > primitive literals > integer 1`] = `"42"`;
 
-exports[`TypeLiteral support > primitive literals > long 1`] = `"9007199254740991L"`;
+exports[`Literal support > primitive literals > long 1`] = `"9007199254740991L"`;
 
-exports[`TypeLiteral support > primitive literals > nop 1`] = `""`;
+exports[`Literal support > primitive literals > nop 1`] = `""`;
 
-exports[`TypeLiteral support > primitive literals > null 1`] = `"null"`;
+exports[`Literal support > primitive literals > null 1`] = `"null"`;
 
-exports[`TypeLiteral support > primitive literals > string 1`] = `""hello world""`;
+exports[`Literal support > primitive literals > string 1`] = `""hello world""`;
 
-exports[`TypeLiteral support > primitive literals > string with special characters 1`] = `""hello\\nworld\\t\\"quotes\\"""`;
+exports[`Literal support > primitive literals > string with special characters 1`] = `""hello\\nworld\\t\\"quotes\\"""`;
 
-exports[`TypeLiteral support > primitive literals > uint 1`] = `"42u"`;
+exports[`Literal support > primitive literals > uint 1`] = `"42u"`;
 
-exports[`TypeLiteral support > primitive literals > ulong 1`] = `"9007199254740991ul"`;
+exports[`Literal support > primitive literals > ulong 1`] = `"9007199254740991ul"`;
 
-exports[`TypeLiteral support > reference literals > reference to method invocation 1`] = `
+exports[`Literal support > reference literals > reference to method invocation 1`] = `
 "using MyApp;
 
 MyClass.GetValue()"
 `;
 
-exports[`TypeLiteral support > reference literals > reference to variable 1`] = `"myVariable"`;
+exports[`Literal support > reference literals > reference to variable 1`] = `"myVariable"`;
 
-exports[`TypeLiteral support > set literals > empty set 1`] = `
+exports[`Literal support > set literals > empty set 1`] = `
 "using System.Collections.Generic;
 
 new HashSet<string>()"
 `;
 
-exports[`TypeLiteral support > set literals > set with integers 1`] = `
+exports[`Literal support > set literals > set with integers 1`] = `
 "using System.Collections.Generic;
 
 new HashSet<int>(){
@@ -293,7 +293,7 @@ new HashSet<int>(){
 "
 `;
 
-exports[`TypeLiteral support > set literals > set with nop values (filtered) 1`] = `
+exports[`Literal support > set literals > set with nop values (filtered) 1`] = `
 "using System.Collections.Generic;
 
 new HashSet<string>(){
@@ -303,7 +303,7 @@ new HashSet<string>(){
 "
 `;
 
-exports[`TypeLiteral support > set literals > set with strings 1`] = `
+exports[`Literal support > set literals > set with strings 1`] = `
 "using System.Collections.Generic;
 
 new HashSet<string>(){
@@ -314,7 +314,7 @@ new HashSet<string>(){
 "
 `;
 
-exports[`TypeLiteral support > unknown literals > unknown - array with mixed types 1`] = `
+exports[`Literal support > unknown literals > unknown - array with mixed types 1`] = `
 "using System.Collections.Generic;
 
 new List<object>()
@@ -327,21 +327,21 @@ new List<object>()
 "
 `;
 
-exports[`TypeLiteral support > unknown literals > unknown - boolean 1`] = `"true"`;
+exports[`Literal support > unknown literals > unknown - boolean 1`] = `"true"`;
 
-exports[`TypeLiteral support > unknown literals > unknown - empty array 1`] = `
+exports[`Literal support > unknown literals > unknown - empty array 1`] = `
 "using System.Collections.Generic;
 
 new List<object>()"
 `;
 
-exports[`TypeLiteral support > unknown literals > unknown - empty object 1`] = `
+exports[`Literal support > unknown literals > unknown - empty object 1`] = `
 "using System.Collections.Generic;
 
 new Dictionary<string, object>()"
 `;
 
-exports[`TypeLiteral support > unknown literals > unknown - nested array 1`] = `
+exports[`Literal support > unknown literals > unknown - nested array 1`] = `
 "using System.Collections.Generic;
 
 new List<object>()
@@ -362,7 +362,7 @@ new List<object>()
 "
 `;
 
-exports[`TypeLiteral support > unknown literals > unknown - nested object 1`] = `
+exports[`Literal support > unknown literals > unknown - nested object 1`] = `
 "using System.Collections.Generic;
 
 new Dictionary<string, object>()
@@ -381,11 +381,11 @@ new Dictionary<string, object>()
 "
 `;
 
-exports[`TypeLiteral support > unknown literals > unknown - null 1`] = `"null"`;
+exports[`Literal support > unknown literals > unknown - null 1`] = `"null"`;
 
-exports[`TypeLiteral support > unknown literals > unknown - number 1`] = `"42"`;
+exports[`Literal support > unknown literals > unknown - number 1`] = `"42"`;
 
-exports[`TypeLiteral support > unknown literals > unknown - object with array property 1`] = `
+exports[`Literal support > unknown literals > unknown - object with array property 1`] = `
 "using System.Collections.Generic;
 
 new Dictionary<string, object>()
@@ -402,7 +402,7 @@ new Dictionary<string, object>()
 "
 `;
 
-exports[`TypeLiteral support > unknown literals > unknown - object with primitive properties 1`] = `
+exports[`Literal support > unknown literals > unknown - object with primitive properties 1`] = `
 "using System.Collections.Generic;
 
 new Dictionary<string, object>()
@@ -414,4 +414,4 @@ new Dictionary<string, object>()
 "
 `;
 
-exports[`TypeLiteral support > unknown literals > unknown - string 1`] = `""test string""`;
+exports[`Literal support > unknown literals > unknown - string 1`] = `""test string""`;

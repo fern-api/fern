@@ -1,4 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
+import { ast, CSharp, Generation, WithGeneration } from "@fern-api/csharp-codegen";
 import {
     ContainerType,
     EnumTypeDeclaration,
@@ -9,10 +10,7 @@ import {
     PrimitiveType,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { ast, CSharp } from "../";
-import { CsharpGeneratorContext } from "../context/CsharpGeneratorContext";
-import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
-import { WithGeneration } from "../with-generation";
+import { GeneratorContext } from "../cli";
 
 type WrapperType = "optional" | "list" | "map";
 
@@ -36,8 +34,8 @@ export declare namespace CsharpProtobufTypeMapper {
 }
 
 export class CsharpProtobufTypeMapper extends WithGeneration {
-    constructor(private readonly context: CsharpGeneratorContext<BaseCsharpCustomConfigSchema>) {
-        super(context);
+    public constructor(protected readonly context: GeneratorContext) {
+        super(context.generation);
     }
 
     public toProtoMethod(
@@ -51,7 +49,7 @@ export class CsharpProtobufTypeMapper extends WithGeneration {
             isAsync: false,
             summary: `Maps the ${classReference.name} type into its Protobuf-equivalent representation.`,
             parameters: [],
-            return_: this.csharp.Type.reference(protobufClassReference),
+            return_: protobufClassReference,
             body: this.csharp.codeblock((writer) => {
                 if (properties.length === 0) {
                     writer.write("return ");
@@ -103,10 +101,10 @@ export class CsharpProtobufTypeMapper extends WithGeneration {
             parameters: [
                 this.csharp.parameter({
                     name: "value",
-                    type: this.csharp.Type.reference(protobufClassReference)
+                    type: protobufClassReference
                 })
             ],
-            return_: this.csharp.Type.reference(classReference),
+            return_: classReference,
             body: this.csharp.codeblock((writer) => {
                 if (properties.length === 0) {
                     writer.write("return ");
@@ -139,8 +137,8 @@ export class CsharpProtobufTypeMapper extends WithGeneration {
 }
 
 class ToProtoPropertyMapper extends WithGeneration {
-    constructor(private readonly context: CsharpGeneratorContext<BaseCsharpCustomConfigSchema>) {
-        super(context);
+    public constructor(protected readonly context: GeneratorContext) {
+        super(context.generation);
     }
 
     public getCondition({
@@ -310,13 +308,11 @@ class ToProtoPropertyMapper extends WithGeneration {
                 return this.getValueForEnumList({
                     enum_: resolvedType.shape,
                     classReference: enumClassReference,
-                    protobufClassReference: this.context.protobufResolver.getProtobufClassReferenceOrThrow(
-                        named.typeId
-                    ),
+                    protobufClassReference: this.context.protobufResolver.getProtobufClassReference(named.typeId),
                     propertyName
                 });
             }
-            const protobufClassReference = this.context.protobufResolver.getProtobufClassReferenceOrThrow(named.typeId);
+            const protobufClassReference = this.context.protobufResolver.getProtobufClassReference(named.typeId);
             return this.getValueForEnum({
                 enum_: resolvedType.shape,
                 classReference: enumClassReference,
@@ -342,7 +338,7 @@ class ToProtoPropertyMapper extends WithGeneration {
         return this.csharp.codeblock((writer) => {
             writer.writeNode(
                 this.csharp.invokeMethod({
-                    on: this.context.generation.types.ProtoAnyMapper,
+                    on: this.generation.Types.ProtoAnyMapper,
                     method: "ToProto",
                     arguments_: [this.csharp.codeblock(propertyName)]
                 })
@@ -371,7 +367,7 @@ class ToProtoPropertyMapper extends WithGeneration {
                 writer.write(" => ");
                 writer.writeNode(protobufClassReference);
                 writer.write(".");
-                writer.write(getProtobufEnumValueName({ context: this.context, classReference, enumValue }));
+                writer.write(getProtobufEnumValueName({ generation: this.generation, classReference, enumValue }));
                 writer.writeLine(",");
             }
             writer.writeLine(' _ => throw new ArgumentException($"Unknown enum value: {type}")');
@@ -400,7 +396,7 @@ class ToProtoPropertyMapper extends WithGeneration {
                 writer.write(" => ");
                 writer.writeNode(protobufClassReference);
                 writer.write(".");
-                writer.write(getProtobufEnumValueName({ context: this.context, classReference, enumValue }));
+                writer.write(getProtobufEnumValueName({ generation: this.generation, classReference, enumValue }));
                 writer.writeLine(",");
             }
             writer.writeLine(` _ => throw new ArgumentException($"Unknown enum value: {${propertyName}.Value}")`);
@@ -539,7 +535,7 @@ class ToProtoPropertyMapper extends WithGeneration {
                 return this.csharp.codeblock((writer) =>
                     writer.writeNode(
                         this.csharp.invokeMethod({
-                            on: this.extern.Google.Protobuf.WellKnownTypes.Timestamp,
+                            on: this.Google.Protobuf.WellKnownTypes.Timestamp,
                             method: "FromDateTime",
                             arguments_: [
                                 this.csharp.codeblock((writer) => {
@@ -616,8 +612,8 @@ class ToProtoPropertyMapper extends WithGeneration {
 }
 
 class FromProtoPropertyMapper extends WithGeneration {
-    constructor(private readonly context: CsharpGeneratorContext<BaseCsharpCustomConfigSchema>) {
-        super(context);
+    public constructor(protected readonly context: GeneratorContext) {
+        super(context.generation);
     }
 
     public getValue({
@@ -663,16 +659,14 @@ class FromProtoPropertyMapper extends WithGeneration {
                 return this.getValueForEnumList({
                     enum_: resolvedType.shape,
                     classReference: enumClassReference,
-                    protobufClassReference: this.context.protobufResolver.getProtobufClassReferenceOrThrow(
-                        named.typeId
-                    ),
+                    protobufClassReference: this.context.protobufResolver.getProtobufClassReference(named.typeId),
                     propertyName
                 });
             }
             return this.getValueForEnum({
                 enum_: resolvedType.shape,
                 classReference: enumClassReference,
-                protobufClassReference: this.context.protobufResolver.getProtobufClassReferenceOrThrow(named.typeId),
+                protobufClassReference: this.context.protobufResolver.getProtobufClassReference(named.typeId),
                 propertyName
             });
         }
@@ -730,7 +724,7 @@ class FromProtoPropertyMapper extends WithGeneration {
             for (const enumValue of enum_.values) {
                 writer.writeNode(protobufClassReference);
                 writer.write(".");
-                writer.write(getProtobufEnumValueName({ context: this.context, classReference, enumValue }));
+                writer.write(getProtobufEnumValueName({ generation: this.generation, classReference, enumValue }));
                 writer.write(" => ");
                 writer.writeNode(classReference);
                 writer.write(".");
@@ -759,7 +753,7 @@ class FromProtoPropertyMapper extends WithGeneration {
             for (const enumValue of enum_.values) {
                 writer.writeNode(protobufClassReference);
                 writer.write(".");
-                writer.write(getProtobufEnumValueName({ context: this.context, classReference, enumValue }));
+                writer.write(getProtobufEnumValueName({ generation: this.generation, classReference, enumValue }));
                 writer.write(" => ");
                 writer.writeNode(classReference);
                 writer.write(".");
@@ -837,7 +831,7 @@ class FromProtoPropertyMapper extends WithGeneration {
                     if (this.context.isReadOnlyMemoryType(listType)) {
                         writer.write(" ?? new ");
                         writer.writeNode(
-                            this.csharp.Type.listType(this.context.csharpTypeMapper.convert({ reference: listType }))
+                            this.Collection.listType(this.context.csharpTypeMapper.convert({ reference: listType }))
                         );
                         writer.write("()");
                         return;
@@ -845,7 +839,7 @@ class FromProtoPropertyMapper extends WithGeneration {
                     writer.write(" ?? ");
                     writer.writeNode(
                         this.csharp.invokeMethod({
-                            on: this.extern.System.Linq.Enumerable,
+                            on: this.System.Linq.Enumerable,
                             method: "Empty",
                             generics: [this.context.csharpTypeMapper.convert({ reference: listType })],
                             arguments_: []
@@ -860,9 +854,7 @@ class FromProtoPropertyMapper extends WithGeneration {
                 const enumClassReference = this.context.csharpTypeMapper.convertToClassReference(listType, {
                     fullyQualified: true
                 });
-                const protobufClassReference = this.context.protobufResolver.getProtobufClassReferenceOrThrow(
-                    listType.typeId
-                );
+                const protobufClassReference = this.context.protobufResolver.getProtobufClassReference(listType.typeId);
                 return this.getValueForEnumList({
                     enum_: resolvedType.shape,
                     classReference: enumClassReference,
@@ -974,11 +966,11 @@ function getValueForLiteral({ literal }: { literal: Literal }, csharp: CSharp): 
  * For example, the enum value `Status.StatusActive` becomes `Status.Active`.
  */
 function getProtobufEnumValueName({
-    context,
+    generation,
     classReference,
     enumValue
 }: {
-    context: CsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+    generation: Generation;
     classReference: ast.ClassReference;
     enumValue: EnumValue;
 }): string {

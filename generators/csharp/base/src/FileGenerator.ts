@@ -1,27 +1,18 @@
 import { File } from "@fern-api/base-generator";
-import { BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { GeneratorContext } from "./cli";
 
-import { BaseCsharpGeneratorContext } from "./context/BaseCsharpGeneratorContext";
-
-export abstract class FileGenerator<
-    GeneratedFile extends File,
-    CustomConfig extends BaseCsharpCustomConfigSchema,
-    Context extends BaseCsharpGeneratorContext<CustomConfig>
-> {
+export abstract class FileGenerator<GeneratedFile extends File, Context extends GeneratorContext = GeneratorContext> {
     constructor(protected readonly context: Context) {}
 
     protected get generation() {
-        return this.context.common.generation;
+        return this.context.generation;
     }
     protected get namespaces() {
         return this.generation.namespaces;
     }
     protected get registry() {
         return this.generation.registry;
-    }
-    protected get extern() {
-        return this.generation.extern;
     }
     protected get settings() {
         return this.generation.settings;
@@ -32,26 +23,44 @@ export abstract class FileGenerator<
     protected get names() {
         return this.generation.names;
     }
-    protected get types() {
-        return this.generation.types;
-    }
     protected get model() {
         return this.generation.model;
+    }
+    protected get format() {
+        return this.generation.format;
     }
     protected get csharp() {
         return this.generation.csharp;
     }
+    protected get Types() {
+        return this.generation.Types;
+    }
     protected get System() {
-        return this.extern.System;
+        return this.generation.extern.System;
     }
     protected get NUnit() {
-        return this.extern.NUnit;
+        return this.generation.extern.NUnit;
     }
     protected get OneOf() {
-        return this.extern.OneOf;
+        return this.generation.extern.OneOf;
     }
     protected get Google() {
-        return this.extern.Google;
+        return this.generation.extern.Google;
+    }
+    protected get WireMock() {
+        return this.generation.extern.WireMock;
+    }
+    protected get Primitive() {
+        return this.generation.Primitive;
+    }
+    protected get Value() {
+        return this.generation.Value;
+    }
+    protected get Collection() {
+        return this.generation.Collection;
+    }
+    protected get Special() {
+        return this.generation.Special;
     }
 
     public generate(): GeneratedFile {

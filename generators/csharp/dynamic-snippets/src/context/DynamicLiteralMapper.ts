@@ -4,7 +4,7 @@ import { ast, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 
-export declare namespace DynamicTypeLiteralMapper {
+export declare namespace DynamicLiteralMapper {
     interface Args {
         typeReference: FernIr.dynamic.TypeReference;
         value: unknown;
@@ -17,28 +17,28 @@ export declare namespace DynamicTypeLiteralMapper {
     type ConvertedAs = "key";
 }
 
-export class DynamicTypeLiteralMapper extends WithGeneration {
+export class DynamicLiteralMapper extends WithGeneration {
     private context: DynamicSnippetsGeneratorContext;
 
     constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
-        super(context);
+        super(context.generation);
         this.context = context;
     }
 
-    public convert(args: DynamicTypeLiteralMapper.Args): ast.TypeLiteral {
+    public convert(args: DynamicLiteralMapper.Args): ast.Literal {
         // eslint-disable-next-line eqeqeq
         if (args.value === null) {
             if (this.context.isNullable(args.typeReference)) {
-                return this.csharp.TypeLiteral.null();
+                return this.csharp.Literal.null();
             }
             this.context.errors.add({
                 severity: Severity.Critical,
                 message: "Expected non-null value, but got null"
             });
-            return this.csharp.TypeLiteral.nop();
+            return this.csharp.Literal.nop();
         }
         if (args.value === undefined && !args.fallbackToDefault) {
-            return this.csharp.TypeLiteral.nop();
+            return this.csharp.Literal.nop();
         }
         switch (args.typeReference.type) {
             case "list":
@@ -61,7 +61,7 @@ export class DynamicTypeLiteralMapper extends WithGeneration {
             case "named": {
                 const named = this.context.resolveNamedType({ typeId: args.typeReference.value });
                 if (named == null) {
-                    return this.csharp.TypeLiteral.nop();
+                    return this.csharp.Literal.nop();
                 }
                 return this.convertNamed({
                     named,
@@ -110,15 +110,15 @@ export class DynamicTypeLiteralMapper extends WithGeneration {
         list: FernIr.dynamic.TypeReference;
         value: unknown;
         fallbackToDefault?: string;
-    }): ast.TypeLiteral {
+    }): ast.Literal {
         if (!Array.isArray(value)) {
             this.context.errors.add({
                 severity: Severity.Critical,
                 message: `Expected array but got: ${typeof value}`
             });
-            return this.csharp.TypeLiteral.nop();
+            return this.csharp.Literal.nop();
         }
-        return this.csharp.TypeLiteral.list({
+        return this.csharp.Literal.list({
             valueType: this.context.dynamicTypeMapper.convert({ typeReference: list, unboxOptionals: true }),
             values: value.map((v, index) => {
                 this.context.errors.scope({ index });
@@ -139,23 +139,23 @@ export class DynamicTypeLiteralMapper extends WithGeneration {
         literal: FernIr.dynamic.LiteralType;
         value: unknown;
         fallbackToDefault?: string;
-    }): ast.TypeLiteral {
+    }): ast.Literal {
         switch (literal.type) {
             case "boolean": {
                 const bool = this.context.getValueAsBoolean({ value });
                 if (bool == null) {
-                    return this.csharp.TypeLiteral.nop();
+                    return this.csharp.Literal.nop();
                 }
-                return this.csharp.TypeLiteral.boolean(bool);
+                return this.csharp.Literal.boolean(bool);
             }
             case "string": {
                 const str = this.context.getValueAsString({ value });
                 if (str == null) {
                     return fallbackToDefault
-                        ? this.csharp.Type.string.getDeterminsticDefault(fallbackToDefault)
-                        : this.csharp.TypeLiteral.nop();
+                        ? this.Primitive.string.getDeterminsticDefault(fallbackToDefault)
+                        : this.csharp.Literal.nop();
                 }
-                return this.csharp.TypeLiteral.string(str);
+                return this.csharp.Literal.string(str);
             }
             default:
                 assertNever(literal);
@@ -170,15 +170,15 @@ export class DynamicTypeLiteralMapper extends WithGeneration {
         set: FernIr.dynamic.TypeReference;
         value: unknown;
         fallbackToDefault?: string;
-    }): ast.TypeLiteral {
+    }): ast.Literal {
         if (!Array.isArray(value)) {
             this.context.errors.add({
                 severity: Severity.Critical,
                 message: `Expected array but got: ${typeof value}`
             });
-            return this.csharp.TypeLiteral.nop();
+            return this.csharp.Literal.nop();
         }
-        return this.csharp.TypeLiteral.set({
+        return this.csharp.Literal.set({
             valueType: this.context.dynamicTypeMapper.convert({ typeReference: set, unboxOptionals: true }),
             values: value.map((v, index) => {
                 this.context.errors.scope({ index });
@@ -199,15 +199,15 @@ export class DynamicTypeLiteralMapper extends WithGeneration {
         map: FernIr.dynamic.MapType;
         value: unknown;
         fallbackToDefault?: string;
-    }): ast.TypeLiteral {
+    }): ast.Literal {
         if (typeof value !== "object" || value == null) {
             this.context.errors.add({
                 severity: Severity.Critical,
                 message: `Expected object but got: ${value == null ? "null" : typeof value}`
             });
-            return this.csharp.TypeLiteral.nop();
+            return this.csharp.Literal.nop();
         }
-        return this.csharp.TypeLiteral.dictionary({
+        return this.csharp.Literal.dictionary({
             keyType: this.context.dynamicTypeMapper.convert({ typeReference: map.key }),
             valueType:
                 map.value.type === "unknown"
@@ -235,9 +235,9 @@ export class DynamicTypeLiteralMapper extends WithGeneration {
     }: {
         named: FernIr.dynamic.NamedType;
         value: unknown;
-        as?: DynamicTypeLiteralMapper.ConvertedAs;
+        as?: DynamicLiteralMapper.ConvertedAs;
         fallbackToDefault?: string;
-    }): ast.TypeLiteral {
+    }): ast.Literal {
         switch (named.type) {
             case "alias":
                 return this.convert({ typeReference: named.typeReference, value, as, fallbackToDefault });
@@ -265,7 +265,7 @@ export class DynamicTypeLiteralMapper extends WithGeneration {
         discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType;
         value: unknown;
         fallbackToDefault?: string;
-    }): ast.TypeLiteral {
+    }): ast.Literal {
         const classReference = this.csharp.classReference({
             origin: discriminatedUnion.declaration,
             namespace: this.context.getNamespace(discriminatedUnion.declaration.fernFilepath)
@@ -275,7 +275,7 @@ export class DynamicTypeLiteralMapper extends WithGeneration {
             value
         });
         if (discriminatedUnionTypeInstance == null) {
-            return this.csharp.TypeLiteral.nop();
+            return this.csharp.Literal.nop();
         }
         const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
         const baseProperties = this.getBaseProperties({
@@ -288,7 +288,7 @@ export class DynamicTypeLiteralMapper extends WithGeneration {
                     typeId: unionVariant.typeId
                 });
                 if (named == null) {
-                    return this.csharp.TypeLiteral.nop();
+                    return this.csharp.Literal.nop();
                 }
                 return this.instantiateUnionWithBaseProperties({
                     classReference,
@@ -299,7 +299,7 @@ export class DynamicTypeLiteralMapper extends WithGeneration {
             case "singleProperty": {
                 const record = this.context.getRecord(discriminatedUnionTypeInstance.value);
                 if (record == null) {
-                    return this.csharp.TypeLiteral.nop();
+                    return this.csharp.Literal.nop();
                 }
                 try {
                     const innerClassName = ["Value", "Type"].includes(
@@ -388,16 +388,16 @@ export class DynamicTypeLiteralMapper extends WithGeneration {
         classReference: ast.ClassReference;
         arguments_: ast.AstNode[];
         baseProperties: NamedArgument[];
-    }): ast.TypeLiteral {
+    }): ast.Literal {
         const instantiation = this.csharp.instantiateClass({
             classReference,
             arguments_,
             multiline: true
         });
         if (baseProperties.length === 0) {
-            return this.csharp.TypeLiteral.reference(instantiation);
+            return this.csharp.Literal.reference(instantiation);
         }
-        return this.csharp.TypeLiteral.reference(
+        return this.csharp.Literal.reference(
             this.csharp.codeblock((writer) => {
                 writer.write(instantiation, " ");
                 writer.pushScope();
@@ -409,13 +409,13 @@ export class DynamicTypeLiteralMapper extends WithGeneration {
         );
     }
 
-    private getEnumValue(enum_: FernIr.dynamic.EnumType, wireValue: unknown): ast.TypeLiteral {
+    private getEnumValue(enum_: FernIr.dynamic.EnumType, wireValue: unknown): ast.Literal {
         if (typeof wireValue !== "string") {
             this.context.errors.add({
                 severity: Severity.Critical,
                 message: `Expected enum value string, got: ${typeof wireValue}`
             });
-            return this.csharp.TypeLiteral.nop();
+            return this.csharp.Literal.nop();
         }
         const enumValue = enum_.values.find((v) => v.wireValue === wireValue);
         if (enumValue == null) {
@@ -423,7 +423,7 @@ export class DynamicTypeLiteralMapper extends WithGeneration {
                 severity: Severity.Critical,
                 message: `An enum value named "${wireValue}" does not exist in this context`
             });
-            return this.csharp.TypeLiteral.nop();
+            return this.csharp.Literal.nop();
         }
         const reference = this.csharp.classReference({
             origin: enum_.declaration,
@@ -432,7 +432,7 @@ export class DynamicTypeLiteralMapper extends WithGeneration {
 
         const valueName = reference.registerField(this.model.getPropertyNameFor(enumValue), enumValue);
 
-        return this.csharp.TypeLiteral.reference(
+        return this.csharp.Literal.reference(
             this.csharp.enumInstantiation({
                 reference,
                 value: valueName
@@ -448,13 +448,13 @@ export class DynamicTypeLiteralMapper extends WithGeneration {
         object_: FernIr.dynamic.ObjectType;
         value: unknown;
         fallbackToDefault?: string;
-    }): ast.TypeLiteral {
+    }): ast.Literal {
         const properties = this.context.associateByWireValue({
             parameters: object_.properties,
             values: this.context.getRecord(value) ?? {}
         });
 
-        return this.csharp.TypeLiteral.class_({
+        return this.csharp.Literal.class_({
             reference: this.csharp.classReference({
                 origin: object_.declaration,
                 namespace: this.context.getNamespace(object_.declaration.fernFilepath)
@@ -481,13 +481,13 @@ export class DynamicTypeLiteralMapper extends WithGeneration {
         undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
         fallbackToDefault?: string;
-    }): ast.TypeLiteral {
+    }): ast.Literal {
         const result = this.findMatchingUndiscriminatedUnionType({
             undiscriminatedUnion,
             value
         });
         if (result == null) {
-            return this.csharp.TypeLiteral.nop();
+            return this.csharp.Literal.nop();
         }
         return result.typeLiteral;
     }
@@ -498,7 +498,7 @@ export class DynamicTypeLiteralMapper extends WithGeneration {
     }: {
         undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
-    }): { valueTypeReference: FernIr.dynamic.TypeReference; typeLiteral: ast.TypeLiteral } | undefined {
+    }): { valueTypeReference: FernIr.dynamic.TypeReference; typeLiteral: ast.Literal } | undefined {
         for (const typeReference of undiscriminatedUnion.types) {
             try {
                 const typeLiteral = this.convert({ typeReference, value });
@@ -514,14 +514,8 @@ export class DynamicTypeLiteralMapper extends WithGeneration {
         return undefined;
     }
 
-    private convertUnknown({
-        value,
-        fallbackToDefault
-    }: {
-        value: unknown;
-        fallbackToDefault?: string;
-    }): ast.TypeLiteral {
-        return this.csharp.TypeLiteral.unknown(value);
+    private convertUnknown({ value, fallbackToDefault }: { value: unknown; fallbackToDefault?: string }): ast.Literal {
+        return this.csharp.Literal.unknown(value);
     }
 
     private convertPrimitive({
@@ -532,126 +526,126 @@ export class DynamicTypeLiteralMapper extends WithGeneration {
     }: {
         primitive: FernIr.dynamic.PrimitiveTypeV1;
         value: unknown;
-        as?: DynamicTypeLiteralMapper.ConvertedAs;
+        as?: DynamicLiteralMapper.ConvertedAs;
         fallbackToDefault?: string;
-    }): ast.TypeLiteral {
+    }): ast.Literal {
         switch (primitive) {
             case "INTEGER": {
                 const num = this.getValueAsNumber({ value, as });
                 if (num == null) {
                     return fallbackToDefault
-                        ? this.csharp.Type.integer.getDeterminsticDefault(fallbackToDefault)
-                        : this.csharp.TypeLiteral.nop();
+                        ? this.Primitive.integer.getDeterminsticDefault(fallbackToDefault)
+                        : this.csharp.Literal.nop();
                 }
-                return this.csharp.TypeLiteral.integer(num);
+                return this.csharp.Literal.integer(num);
             }
             case "LONG": {
                 const num = this.getValueAsNumber({ value, as });
                 if (num == null) {
                     return fallbackToDefault
-                        ? this.csharp.Type.long.getDeterminsticDefault(fallbackToDefault)
-                        : this.csharp.TypeLiteral.nop();
+                        ? this.Primitive.long.getDeterminsticDefault(fallbackToDefault)
+                        : this.csharp.Literal.nop();
                 }
-                return this.csharp.TypeLiteral.long(num);
+                return this.csharp.Literal.long(num);
             }
             case "UINT": {
                 const num = this.getValueAsNumber({ value, as });
                 if (num == null) {
                     return fallbackToDefault
-                        ? this.csharp.Type.uint.getDeterminsticDefault(fallbackToDefault)
-                        : this.csharp.TypeLiteral.nop();
+                        ? this.Primitive.uint.getDeterminsticDefault(fallbackToDefault)
+                        : this.csharp.Literal.nop();
                 }
-                return this.csharp.TypeLiteral.uint(num);
+                return this.csharp.Literal.uint(num);
             }
             case "UINT_64": {
                 const num = this.getValueAsNumber({ value, as });
                 if (num == null) {
                     return fallbackToDefault
-                        ? this.csharp.Type.ulong.getDeterminsticDefault(fallbackToDefault)
-                        : this.csharp.TypeLiteral.nop();
+                        ? this.Primitive.ulong.getDeterminsticDefault(fallbackToDefault)
+                        : this.csharp.Literal.nop();
                 }
-                return this.csharp.TypeLiteral.ulong(num);
+                return this.csharp.Literal.ulong(num);
             }
             case "FLOAT": {
                 const num = this.getValueAsNumber({ value, as });
                 if (num == null) {
                     return fallbackToDefault
-                        ? this.csharp.Type.float.getDeterminsticDefault(fallbackToDefault)
-                        : this.csharp.TypeLiteral.nop();
+                        ? this.Primitive.float.getDeterminsticDefault(fallbackToDefault)
+                        : this.csharp.Literal.nop();
                 }
-                return this.csharp.TypeLiteral.float(num);
+                return this.csharp.Literal.float(num);
             }
             case "DOUBLE": {
                 const num = this.getValueAsNumber({ value, as });
                 if (num == null) {
                     return fallbackToDefault
-                        ? this.csharp.Type.double.getDeterminsticDefault(fallbackToDefault)
-                        : this.csharp.TypeLiteral.nop();
+                        ? this.Primitive.double.getDeterminsticDefault(fallbackToDefault)
+                        : this.csharp.Literal.nop();
                 }
-                return this.csharp.TypeLiteral.double(num);
+                return this.csharp.Literal.double(num);
             }
             case "BOOLEAN": {
                 const bool = this.getValueAsBoolean({ value, as });
                 if (bool == null) {
                     return fallbackToDefault
-                        ? this.csharp.Type.boolean.getDeterminsticDefault(fallbackToDefault)
-                        : this.csharp.TypeLiteral.nop();
+                        ? this.Primitive.boolean.getDeterminsticDefault(fallbackToDefault)
+                        : this.csharp.Literal.nop();
                 }
-                return this.csharp.TypeLiteral.boolean(bool);
+                return this.csharp.Literal.boolean(bool);
             }
             case "STRING": {
                 const str = this.context.getValueAsString({ value });
                 if (str == null) {
                     return fallbackToDefault
-                        ? this.csharp.Type.string.getDeterminsticDefault(fallbackToDefault)
-                        : this.csharp.TypeLiteral.nop();
+                        ? this.Primitive.string.getDeterminsticDefault(fallbackToDefault)
+                        : this.csharp.Literal.nop();
                 }
-                return this.csharp.TypeLiteral.string(str);
+                return this.csharp.Literal.string(str);
             }
             case "DATE": {
                 const date = this.context.getValueAsString({ value });
                 if (date == null) {
                     return fallbackToDefault
-                        ? this.csharp.Type.dateOnly.getDeterminsticDefault(fallbackToDefault)
-                        : this.csharp.TypeLiteral.nop();
+                        ? this.Value.dateOnly.getDeterminsticDefault(fallbackToDefault)
+                        : this.csharp.Literal.nop();
                 }
-                return this.csharp.TypeLiteral.date(date);
+                return this.csharp.Literal.date(date);
             }
             case "DATE_TIME": {
                 const dateTime = this.context.getValueAsString({ value });
                 if (dateTime == null) {
                     return fallbackToDefault
-                        ? this.csharp.Type.dateTime.getDeterminsticDefault(fallbackToDefault)
-                        : this.csharp.TypeLiteral.nop();
+                        ? this.Value.dateTime.getDeterminsticDefault(fallbackToDefault)
+                        : this.csharp.Literal.nop();
                 }
-                return this.csharp.TypeLiteral.datetime(dateTime);
+                return this.csharp.Literal.datetime(dateTime);
             }
             case "UUID": {
                 const uuid = this.context.getValueAsString({ value });
                 if (uuid == null) {
                     return fallbackToDefault
-                        ? this.csharp.Type.string.getDeterminsticDefault(fallbackToDefault)
-                        : this.csharp.TypeLiteral.nop();
+                        ? this.Primitive.string.getDeterminsticDefault(fallbackToDefault)
+                        : this.csharp.Literal.nop();
                 }
-                return this.csharp.TypeLiteral.string(uuid);
+                return this.csharp.Literal.string(uuid);
             }
             case "BASE_64": {
                 const base64 = this.context.getValueAsString({ value });
                 if (base64 == null) {
                     return fallbackToDefault
-                        ? this.csharp.Type.string.getDeterminsticDefault(fallbackToDefault)
-                        : this.csharp.TypeLiteral.nop();
+                        ? this.Primitive.string.getDeterminsticDefault(fallbackToDefault)
+                        : this.csharp.Literal.nop();
                 }
-                return this.csharp.TypeLiteral.string(base64);
+                return this.csharp.Literal.string(base64);
             }
             case "BIG_INTEGER": {
                 const bigInt = this.context.getValueAsString({ value });
                 if (bigInt == null) {
                     return fallbackToDefault
-                        ? this.csharp.Type.string.getDeterminsticDefault(fallbackToDefault)
-                        : this.csharp.TypeLiteral.nop();
+                        ? this.Primitive.string.getDeterminsticDefault(fallbackToDefault)
+                        : this.csharp.Literal.nop();
                 }
-                return this.csharp.TypeLiteral.string(bigInt);
+                return this.csharp.Literal.string(bigInt);
             }
             default:
                 assertNever(primitive);
@@ -663,7 +657,7 @@ export class DynamicTypeLiteralMapper extends WithGeneration {
         as
     }: {
         value: unknown;
-        as?: DynamicTypeLiteralMapper.ConvertedAs;
+        as?: DynamicLiteralMapper.ConvertedAs;
     }): number | undefined {
         const num = as === "key" ? (typeof value === "string" ? Number(value) : value) : value;
         return this.context.getValueAsNumber({ value: num });
@@ -674,7 +668,7 @@ export class DynamicTypeLiteralMapper extends WithGeneration {
         as
     }: {
         value: unknown;
-        as?: DynamicTypeLiteralMapper.ConvertedAs;
+        as?: DynamicLiteralMapper.ConvertedAs;
     }): boolean | undefined {
         const bool =
             as === "key" ? (typeof value === "string" ? value === "true" : value === "false" ? false : value) : value;
