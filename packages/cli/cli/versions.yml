@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add x-fern-playground extension to OpenAPI importer to control API playground visibility. Defaults to true.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-12"
+  version: 0.117.1
+
+- changelogEntry:
+    - summary: |
         Add support for hidden versions.
       type: feat
   irVersion: 61
