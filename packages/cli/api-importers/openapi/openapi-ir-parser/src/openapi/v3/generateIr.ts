@@ -289,7 +289,8 @@ export function generateIr({
                     schema: convertSchemaWithExampleToSchema(queryParameter.schema),
                     parameterNameOverride: queryParameter.parameterNameOverride,
                     availability: queryParameter.availability,
-                    source: queryParameter.source
+                    source: queryParameter.source,
+                    explode: queryParameter.explode
                 };
             }),
             pathParameters: endpointWithExample.pathParameters.map((pathParameter) => {
@@ -300,7 +301,8 @@ export function generateIr({
                     parameterNameOverride: pathParameter.parameterNameOverride,
                     variableReference: pathParameter.variableReference,
                     availability: pathParameter.availability,
-                    source: pathParameter.source
+                    source: pathParameter.source,
+                    explode: pathParameter.explode
                 };
             }),
             headers: endpointWithExample.headers.map((header) => {

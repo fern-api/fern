@@ -161,13 +161,24 @@ export function convertParameters({
             }
         }
 
+        const style =
+            resolvedParameter.style ??
+            (resolvedParameter.in === "query" || resolvedParameter.in === "cookie" ? "form" : "simple");
+        const defaultExplode = style === "form";
+
+        const explodeValue =
+            resolvedParameter.explode !== undefined && resolvedParameter.explode !== defaultExplode
+                ? resolvedParameter.explode
+                : undefined;
+
         const convertedParameter = {
             name: resolvedParameter.name,
             schema,
             description: resolvedParameter.description,
             parameterNameOverride: getParameterName(resolvedParameter),
             availability,
-            source
+            source,
+            explode: explodeValue
         };
         if (resolvedParameter.in === "query") {
             convertedParameters.queryParameters.push(convertedParameter);

@@ -12,4 +12,6 @@ export interface QueryParameterWithExample
     schema: FernOpenapiIr.SchemaWithExample;
     /** Populated by `x-fern-parameter-name` on a parameter object. */
     parameterNameOverride: string | undefined;
+    /** Populated from the OpenAPI `explode` parameter. Defaults to false if not specified. */
+    explode: boolean | undefined;
 }

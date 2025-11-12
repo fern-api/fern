@@ -195,7 +195,7 @@ function convertService(
                                   key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
                                   type: convertTypeReference(pathParameter.valueType),
                                   availability: undefined,
-                                  explode: undefined
+                                  explode: pathParameter.explode
                               })
                           ),
                           parts: [...convertHttpPath(irEndpoint.basePath), ...convertHttpPath(irEndpoint.path)]
@@ -211,7 +211,7 @@ function convertService(
                                   key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
                                   type: convertTypeReference(pathParameter.valueType),
                                   availability: undefined,
-                                  explode: undefined
+                                  explode: pathParameter.explode
                               })
                           ),
                           parts: [
@@ -226,7 +226,7 @@ function convertService(
                     key: queryParameter.name.wireValue,
                     type: convertTypeReference(queryParameter.valueType),
                     availability: convertIrAvailability(queryParameter.availability),
-                    explode: undefined
+                    explode: queryParameter.explode
                 })
             ),
             headers: [...irService.headers, ...irEndpoint.headers].map(
@@ -351,7 +351,7 @@ function convertWebSocketChannel(
                     key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
                     type: convertTypeReference(pathParameter.valueType),
                     availability: undefined,
-                    explode: undefined
+                    explode: pathParameter.explode
                 })
             ),
             parts: convertHttpPath(channel.path)
@@ -370,7 +370,7 @@ function convertWebSocketChannel(
                 key: queryParameter.name.wireValue,
                 type: convertTypeReference(queryParameter.valueType),
                 availability: convertIrAvailability(queryParameter.availability),
-                explode: undefined
+                explode: queryParameter.explode
             })
         ),
         messages: channel.messages.map(

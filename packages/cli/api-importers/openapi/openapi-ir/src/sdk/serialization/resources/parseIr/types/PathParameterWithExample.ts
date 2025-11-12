@@ -18,6 +18,7 @@ export const PathParameterWithExample: core.serialization.ObjectSchema<
         schema: core.serialization.lazy(() => serializers.SchemaWithExample),
         variableReference: core.serialization.string().optional(),
         parameterNameOverride: core.serialization.string().optional(),
+        explode: core.serialization.boolean().optional(),
     })
     .extend(WithDescription)
     .extend(WithAvailability)
@@ -29,5 +30,6 @@ export declare namespace PathParameterWithExample {
         schema: serializers.SchemaWithExample.Raw;
         variableReference?: string | null;
         parameterNameOverride?: string | null;
+        explode?: boolean | null;
     }
 }

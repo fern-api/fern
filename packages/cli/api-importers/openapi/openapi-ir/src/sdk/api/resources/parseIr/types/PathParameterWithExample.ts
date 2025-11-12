@@ -13,4 +13,6 @@ export interface PathParameterWithExample
     variableReference: string | undefined;
     /** Populated by `x-fern-parameter-name` on a parameter object. */
     parameterNameOverride: string | undefined;
+    /** Populated from the OpenAPI `explode` parameter. Defaults to false if not specified. */
+    explode: boolean | undefined;
 }

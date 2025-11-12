@@ -155,7 +155,8 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          }
+          },
+          "explode": false
         },
         {
           "description": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
@@ -1780,7 +1781,8 @@
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
-          }
+          },
+          "explode": false
         },
         {
           "description": "When retrying the operation, pass the `retryCount` from the `incompleteAccountBalances` response.",
