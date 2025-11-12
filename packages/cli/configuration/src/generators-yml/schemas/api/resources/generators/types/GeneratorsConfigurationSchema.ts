@@ -10,12 +10,6 @@ export interface GeneratorsConfigurationSchema {
     whitelabel?: FernDefinition.WhitelabelConfigurationSchema;
     metadata?: FernDefinition.OutputMetadataSchema;
     readme?: FernDefinition.ReadmeSchema;
-    /**
-     * Global default API import settings that apply to all specs across all APIs.
-     * Individual spec settings in api.specs[].settings will override these defaults.
-     * Generator settings in groups.generators[].api.settings will override both.
-     * Settings hierarchy (highest to lowest priority): generator > spec > root.
-     */
     settings?: FernDefinition.BaseApiSettingsSchema;
     "default-group"?: string;
     groups?: Record<string, FernDefinition.GeneratorGroupSchema>;
