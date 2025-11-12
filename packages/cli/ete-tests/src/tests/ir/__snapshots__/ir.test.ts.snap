@@ -129,6 +129,7 @@ exports[`ir > {"name":"auth-header-prefix"} 1`] = `
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {
@@ -1531,6 +1532,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_app": {
             "name": {
@@ -2440,6 +2442,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_file-upload": {
             "name": {
@@ -9922,6 +9925,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_endpoint-urls": {
             "name": {
@@ -10194,6 +10198,7 @@ exports[`ir > {"name":"navigation-points-to"} 1`] = `
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_subpackage": {
             "name": {
@@ -12901,6 +12906,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_nested": {
             "name": {
@@ -14249,6 +14255,7 @@ exports[`ir > {"name":"packages"} 1`] = `
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_package": {
             "name": {
@@ -17416,6 +17423,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_service": {
             "name": {
@@ -19456,6 +19464,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
         "test"
     ],
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_commons": {
             "name": {
@@ -23548,6 +23557,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
         "test"
     ],
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_commons": {
             "name": {
@@ -40413,6 +40423,7 @@ exports[`ir > {"name":"simple"} 1`] = `
         "test"
     ],
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_commons": {
             "name": {
@@ -41524,6 +41535,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_streaming": {
             "name": {
@@ -42947,6 +42959,7 @@ exports[`ir > {"name":"variables"} 1`] = `
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_commons": {
             "name": {
@@ -43351,6 +43364,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_webhooks": {
             "name": {
