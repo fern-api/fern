@@ -105,6 +105,23 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
 
         content = content.replace(/\{\{PUBLISH_WORKFLOW\}\}/g, this.generatePublishWorkflow());
 
+        // Conditionally include chrono exports in prelude
+        if (this.context.usesDateTime()) {
+            content = content.replace(
+                /\{\{CHRONO_EXPORTS\}\}/g,
+                "\npub use chrono::{DateTime, NaiveDate, NaiveDateTime, Utc};"
+            );
+        } else {
+            content = content.replace(/\{\{CHRONO_EXPORTS\}\}/g, "");
+        }
+
+        // Conditionally include uuid exports in prelude
+        if (this.context.usesUuid()) {
+            content = content.replace(/\{\{UUID_EXPORTS\}\}/g, "\npub use uuid::Uuid;");
+        } else {
+            content = content.replace(/\{\{UUID_EXPORTS\}\}/g, "");
+        }
+
         return content;
     }
 

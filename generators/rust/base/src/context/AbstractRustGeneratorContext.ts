@@ -63,17 +63,19 @@ export abstract class AbstractRustGeneratorContext<
         this.dependencyManager.add("serde_json", "1.0");
         this.dependencyManager.add("reqwest", {
             version: "0.12",
-            features: ["json"],
+            features: ["json", "stream"], // stream is needed for ByteStream (file downloads)
             defaultFeatures: false
         });
-        this.dependencyManager.add("reqwest-sse", "0.1");
         this.dependencyManager.add("tokio", { version: "1.0", features: ["full"] });
         this.dependencyManager.add("futures", "0.3");
         this.dependencyManager.add("bytes", "1.0");
         this.dependencyManager.add("thiserror", "1.0");
         this.dependencyManager.add("percent-encoding", "2.3");
         this.dependencyManager.add("ordered-float", { version: "4.5", features: ["serde"] });
-        this.dependencyManager.add("pin-project", "1.1");
+
+        // Always include chrono and uuid for QueryBuilder support
+        this.dependencyManager.add("chrono", { version: "0.4", features: ["serde"] });
+        this.dependencyManager.add("uuid", { version: "1.0", features: ["serde"] });
 
         this.dependencyManager.add("tokio-test", "0.4", RustDependencyType.DEV);
 
@@ -96,17 +98,7 @@ export abstract class AbstractRustGeneratorContext<
      * Detect features from IR and add conditional dependencies
      */
     private detectAndAddFeatureDependencies(): void {
-        const usesDateTime = this.irUsesType("datetime");
-        const usesUuid = this.irUsesType("uuid");
-        const usesBigInt = this.irUsesType("bigInteger");
-
-        if (usesDateTime) {
-            this.dependencyManager.add("chrono", { version: "0.4", features: ["serde"] });
-        }
-
-        if (usesUuid) {
-            this.dependencyManager.add("uuid", { version: "1.0", features: ["serde"] });
-        }
+        const usesBigInt = this.usesBigInteger();
 
         if (usesBigInt) {
             this.dependencyManager.add("num-bigint", { version: "0.4", features: ["serde"] });
@@ -115,33 +107,35 @@ export abstract class AbstractRustGeneratorContext<
         const hasFileUpload = this.hasFileUploadEndpoints();
         const hasStreaming = this.hasStreamingEndpoints();
 
+        // Always declare multipart feature (empty if not used, to avoid cfg warnings)
         if (hasFileUpload) {
-            const reqwest = this.dependencyManager.get("reqwest");
-            if (reqwest) {
-                const features = reqwest.features || [];
-                if (!features.includes("multipart")) {
-                    features.push("multipart");
-                }
-                this.dependencyManager.add("reqwest", { ...reqwest, features });
-            }
+            // Add multipart feature that enables reqwest/multipart
+            this.dependencyManager.addFeature("multipart", ["reqwest/multipart"]);
+            this.dependencyManager.enableDefaultFeature("multipart");
+        } else {
+            // Add empty multipart feature to satisfy cfg checks
+            this.dependencyManager.addFeature("multipart", []);
         }
 
+        // Always declare sse feature (empty if not used, to avoid cfg warnings)
         if (hasStreaming) {
-            const reqwest = this.dependencyManager.get("reqwest");
-            if (reqwest) {
-                const features = reqwest.features || [];
-                if (!features.includes("stream")) {
-                    features.push("stream");
-                }
-                this.dependencyManager.add("reqwest", { ...reqwest, features });
-            }
+            // Add SSE-specific dependencies as optional
+            this.dependencyManager.add("reqwest-sse", { version: "0.1", optional: true });
+            this.dependencyManager.add("pin-project", { version: "1.1", optional: true });
+
+            // Add sse feature that enables SSE dependencies
+            this.dependencyManager.addFeature("sse", ["reqwest-sse", "pin-project"]);
+            this.dependencyManager.enableDefaultFeature("sse");
+        } else {
+            // Add empty sse feature to satisfy cfg checks
+            this.dependencyManager.addFeature("sse", []);
         }
     }
 
     /**
      * Check if IR uses a specific primitive type
      */
-    private irUsesType(typeName: "datetime" | "uuid" | "bigInteger"): boolean {
+    private irUsesType(typeName: "DATE_TIME" | "UUID" | "BIG_INTEGER"): boolean {
         for (const typeDecl of Object.values(this.ir.types)) {
             if (this.typeShapeUsesBuiltin(typeDecl.shape, typeName)) {
                 return true;
@@ -292,9 +286,30 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
+     * Check if IR uses datetime types
+     */
+    public usesDateTime(): boolean {
+        return this.irUsesType("DATE_TIME");
+    }
+
+    /**
+     * Check if IR uses uuid types
+     */
+    public usesUuid(): boolean {
+        return this.irUsesType("UUID");
+    }
+
+    /**
+     * Check if IR uses big integer types
+     */
+    public usesBigInteger(): boolean {
+        return this.irUsesType("BIG_INTEGER");
+    }
+
+    /**
      * Check if IR has any file upload endpoints
      */
-    private hasFileUploadEndpoints(): boolean {
+    public hasFileUploadEndpoints(): boolean {
         return Object.values(this.ir.services).some((service) =>
             service.endpoints.some((endpoint) => endpoint.requestBody?.type === "fileUpload")
         );
@@ -303,7 +318,7 @@ export abstract class AbstractRustGeneratorContext<
     /**
      * Check if IR has any streaming endpoints
      */
-    private hasStreamingEndpoints(): boolean {
+    public hasStreamingEndpoints(): boolean {
         return Object.values(this.ir.services).some((service) =>
             service.endpoints.some((endpoint) => {
                 if (!endpoint.response?.body) {
