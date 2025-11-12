@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add support for hidden versions.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-12"
+  version: 0.117.0
+
+- changelogEntry:
+    - summary: |
         Retrieve package name from module.path configuration for Go SDK generator to support local generation workflows
       type: fix
   irVersion: 61
