@@ -346,7 +346,7 @@ describe("convertGeneratorsConfiguration", () => {
         expect(mockLogger.warn).toHaveBeenCalledWith(expect.stringContaining("Warnings for generators.yml:"));
         expect(mockLogger.warn).toHaveBeenCalledWith(
             expect.stringContaining(
-                '"api-settings" is deprecated. Please use root-level "settings" for global defaults or "api.specs[].settings" for spec-specific settings instead.'
+                '"api-settings" is deprecated. Please use "api.settings" for global defaults or "api.specs[].settings" for spec-specific settings instead.'
             )
         );
         expect(mockLogger.warn).toHaveBeenCalledWith(
@@ -479,17 +479,17 @@ describe("convertGeneratorsConfiguration", () => {
         );
     });
 
-    describe("settings hierarchy (generator > spec > root)", () => {
-        it("root settings are applied to all API specs", async () => {
+    describe("settings hierarchy (api.specs[].settings > api.settings)", () => {
+        it("api-level settings are applied to all API specs", async () => {
             const context = createMockTaskContext();
             const converted = await convertGeneratorsConfiguration({
                 absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
                 rawGeneratorsConfiguration: {
-                    settings: {
-                        "title-as-schema-name": true,
-                        "idiomatic-request-names": false
-                    },
                     api: {
+                        settings: {
+                            "title-as-schema-name": true,
+                            "idiomatic-request-names": false
+                        },
                         specs: [
                             {
                                 openapi: "path/to/spec1.yml"
@@ -503,7 +503,7 @@ describe("convertGeneratorsConfiguration", () => {
                 context
             });
 
-            // Verify both specs inherit root settings
+            // Verify both specs inherit api-level settings
             expect(converted.api?.type).toBe("singleNamespace");
             if (converted.api?.type === "singleNamespace") {
                 expect(converted.api.definitions).toHaveLength(2);
@@ -514,16 +514,16 @@ describe("convertGeneratorsConfiguration", () => {
             }
         });
 
-        it("spec settings override root settings", async () => {
+        it("spec settings override api-level settings", async () => {
             const context = createMockTaskContext();
             const converted = await convertGeneratorsConfiguration({
                 absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
                 rawGeneratorsConfiguration: {
-                    settings: {
-                        "title-as-schema-name": true,
-                        "idiomatic-request-names": false
-                    },
                     api: {
+                        settings: {
+                            "title-as-schema-name": true,
+                            "idiomatic-request-names": false
+                        },
                         specs: [
                             {
                                 openapi: "path/to/spec.yml",
@@ -537,7 +537,7 @@ describe("convertGeneratorsConfiguration", () => {
                 context
             });
 
-            // Verify spec setting overrides root, but other root settings are preserved
+            // Verify spec setting overrides api-level, but other api-level settings are preserved
             expect(converted.api?.type).toBe("singleNamespace");
             if (converted.api?.type === "singleNamespace") {
                 expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(false);
@@ -545,17 +545,17 @@ describe("convertGeneratorsConfiguration", () => {
             }
         });
 
-        it("partial overrides preserve other root settings", async () => {
+        it("partial overrides preserve other api-level settings", async () => {
             const context = createMockTaskContext();
             const converted = await convertGeneratorsConfiguration({
                 absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
                 rawGeneratorsConfiguration: {
-                    settings: {
-                        "title-as-schema-name": true,
-                        "idiomatic-request-names": false,
-                        "coerce-enums-to-literals": true
-                    },
                     api: {
+                        settings: {
+                            "title-as-schema-name": true,
+                            "idiomatic-request-names": false,
+                            "coerce-enums-to-literals": true
+                        },
                         specs: [
                             {
                                 openapi: "path/to/spec.yml",
@@ -570,7 +570,7 @@ describe("convertGeneratorsConfiguration", () => {
                 context
             });
 
-            // Verify only specified setting is overridden, others preserved from root
+            // Verify only specified setting is overridden, others preserved from api-level
             expect(converted.api?.type).toBe("singleNamespace");
             if (converted.api?.type === "singleNamespace") {
                 expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(false);
@@ -579,15 +579,15 @@ describe("convertGeneratorsConfiguration", () => {
             }
         });
 
-        it("empty spec settings preserve root settings", async () => {
+        it("empty spec settings preserve api-level settings", async () => {
             const context = createMockTaskContext();
             const converted = await convertGeneratorsConfiguration({
                 absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
                 rawGeneratorsConfiguration: {
-                    settings: {
-                        "title-as-schema-name": true
-                    },
                     api: {
+                        settings: {
+                            "title-as-schema-name": true
+                        },
                         specs: [
                             {
                                 openapi: "path/to/spec.yml",
@@ -599,7 +599,7 @@ describe("convertGeneratorsConfiguration", () => {
                 context
             });
 
-            // Verify empty spec settings don't erase root settings
+            // Verify empty spec settings don't erase api-level settings
             expect(converted.api?.type).toBe("singleNamespace");
             if (converted.api?.type === "singleNamespace") {
                 expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(true);
@@ -611,11 +611,11 @@ describe("convertGeneratorsConfiguration", () => {
             const converted = await convertGeneratorsConfiguration({
                 absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
                 rawGeneratorsConfiguration: {
-                    settings: {
-                        "title-as-schema-name": true,
-                        "idiomatic-request-names": false
-                    },
                     api: {
+                        settings: {
+                            "title-as-schema-name": true,
+                            "idiomatic-request-names": false
+                        },
                         specs: [
                             {
                                 openapi: "path/to/spec1.yml",
@@ -648,7 +648,7 @@ describe("convertGeneratorsConfiguration", () => {
                 expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(false);
                 expect(converted.api.definitions[0]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
 
-                // Spec 2: inherits all root settings
+                // Spec 2: inherits all api-level settings
                 expect(converted.api.definitions[1]?.settings?.shouldUseTitleAsName).toBe(true);
                 expect(converted.api.definitions[1]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
 
@@ -663,10 +663,10 @@ describe("convertGeneratorsConfiguration", () => {
             const converted = await convertGeneratorsConfiguration({
                 absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
                 rawGeneratorsConfiguration: {
-                    settings: {
-                        "title-as-schema-name": true
-                    },
                     api: {
+                        settings: {
+                            "title-as-schema-name": true
+                        },
                         specs: [
                             {
                                 openapi: "path/to/openapi.yml",
@@ -695,10 +695,10 @@ describe("convertGeneratorsConfiguration", () => {
             const converted = await convertGeneratorsConfiguration({
                 absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
                 rawGeneratorsConfiguration: {
-                    settings: {
-                        "title-as-schema-name": true
-                    },
                     api: {
+                        settings: {
+                            "title-as-schema-name": true
+                        },
                         specs: [
                             {
                                 asyncapi: "path/to/asyncapi.yml",

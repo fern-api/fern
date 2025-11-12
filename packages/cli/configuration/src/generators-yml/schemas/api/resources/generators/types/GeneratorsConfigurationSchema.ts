@@ -10,7 +10,6 @@ export interface GeneratorsConfigurationSchema {
     whitelabel?: FernDefinition.WhitelabelConfigurationSchema;
     metadata?: FernDefinition.OutputMetadataSchema;
     readme?: FernDefinition.ReadmeSchema;
-    settings?: FernDefinition.BaseApiSettingsSchema;
     "default-group"?: string;
     groups?: Record<string, FernDefinition.GeneratorGroupSchema>;
     reviewers?: FernDefinition.ReviewersSchema;

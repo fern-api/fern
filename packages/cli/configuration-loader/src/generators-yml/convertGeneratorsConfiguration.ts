@@ -51,10 +51,7 @@ export async function convertGeneratorsConfiguration({
     const readme = rawGeneratorsConfiguration.readme;
     warnForDeprecatedConfiguration(context, rawGeneratorsConfiguration);
 
-    // Parse root-level settings (global defaults)
-    const rootSettings = parseBaseApiDefinitionSettingsSchema(rawGeneratorsConfiguration.settings);
-
-    const parsedApiConfiguration = await parseAPIConfiguration(rawGeneratorsConfiguration, rootSettings);
+    const parsedApiConfiguration = await parseAPIConfiguration(rawGeneratorsConfiguration);
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         api: parsedApiConfiguration,
@@ -336,11 +333,11 @@ async function parseAPIConfigurationToApiLocations(
 async function parseApiConfigurationV2Schema({
     apiConfiguration,
     rawConfiguration,
-    rootSettings
+    apiSettings
 }: {
     apiConfiguration: generatorsYml.ApiConfigurationV2Schema;
     rawConfiguration: generatorsYml.GeneratorsConfigurationSchema;
-    rootSettings: generatorsYml.APIDefinitionSettings;
+    apiSettings: generatorsYml.APIDefinitionSettings;
 }): Promise<generatorsYml.APIDefinition> {
     const partialConfig = {
         "auth-schemes":
@@ -386,7 +383,7 @@ async function parseApiConfigurationV2Schema({
                 origin: spec.origin,
                 overrides: spec.overrides,
                 audiences: [],
-                settings: mergeSettings(rootSettings, parseOpenApiDefinitionSettingsSchema(spec.settings))
+                settings: mergeSettings(apiSettings, parseOpenApiDefinitionSettingsSchema(spec.settings))
             };
         } else if (generatorsYml.isAsyncApiSpecSchema(spec)) {
             definitionLocation = {
@@ -397,7 +394,7 @@ async function parseApiConfigurationV2Schema({
                 origin: spec.origin,
                 overrides: spec.overrides,
                 audiences: [],
-                settings: mergeSettings(rootSettings, parseAsyncApiDefinitionSettingsSchema(spec.settings))
+                settings: mergeSettings(apiSettings, parseAsyncApiDefinitionSettingsSchema(spec.settings))
             };
         } else if (generatorsYml.isProtoSpecSchema(spec)) {
             definitionLocation = {
@@ -412,7 +409,7 @@ async function parseApiConfigurationV2Schema({
                 origin: undefined,
                 overrides: spec.proto.overrides,
                 audiences: [],
-                settings: rootSettings
+                settings: apiSettings
             };
         } else if (generatorsYml.isOpenRpcSpecSchema(spec)) {
             definitionLocation = {
@@ -423,7 +420,7 @@ async function parseApiConfigurationV2Schema({
                 origin: undefined,
                 overrides: spec.overrides,
                 audiences: [],
-                settings: rootSettings
+                settings: apiSettings
             };
         } else {
             continue;
@@ -455,27 +452,30 @@ async function parseApiConfigurationV2Schema({
 }
 
 async function parseAPIConfiguration(
-    rawGeneratorsConfiguration: generatorsYml.GeneratorsConfigurationSchema,
-    rootSettings: generatorsYml.APIDefinitionSettings
+    rawGeneratorsConfiguration: generatorsYml.GeneratorsConfigurationSchema
 ): Promise<generatorsYml.APIDefinition> {
     const apiConfiguration = rawGeneratorsConfiguration.api;
 
     if (apiConfiguration != null) {
         if (generatorsYml.isApiConfigurationV2Schema(apiConfiguration)) {
+            // Parse api-level settings (global defaults for this API)
+            const apiSettings = parseBaseApiDefinitionSettingsSchema(apiConfiguration.settings);
             return parseApiConfigurationV2Schema({
                 apiConfiguration,
                 rawConfiguration: rawGeneratorsConfiguration,
-                rootSettings
+                apiSettings
             });
         }
 
         if (generatorsYml.isNamespacedApiConfiguration(apiConfiguration)) {
             const namespacedDefinitions: Record<string, generatorsYml.APIDefinitionLocation[]> = {};
+            // No api-level settings for namespaced config, pass empty settings
+            const emptySettings = {} as generatorsYml.APIDefinitionSettings;
             for (const [namespace, configuration] of Object.entries(apiConfiguration.namespaces)) {
                 namespacedDefinitions[namespace] = await parseAPIConfigurationToApiLocations(
                     configuration,
                     rawGeneratorsConfiguration,
-                    rootSettings
+                    emptySettings
                 );
             }
             return {
@@ -486,12 +486,14 @@ async function parseAPIConfiguration(
         }
     }
 
+    // Legacy configuration without api v2 schema - no api-level settings
+    const emptySettings = {} as generatorsYml.APIDefinitionSettings;
     return {
         type: "singleNamespace",
         definitions: await parseAPIConfigurationToApiLocations(
             apiConfiguration,
             rawGeneratorsConfiguration,
-            rootSettings
+            emptySettings
         )
     };
 }
@@ -1019,7 +1021,7 @@ function warnForDeprecatedConfiguration(context: TaskContext, config: generators
     const warnings = [];
     if (config["api-settings"] != null) {
         warnings.push(
-            '"api-settings" is deprecated. Please use root-level "settings" for global defaults or "api.specs[].settings" for spec-specific settings instead.'
+            '"api-settings" is deprecated. Please use "api.settings" for global defaults or "api.specs[].settings" for spec-specific settings instead.'
         );
     }
     if (config["async-api"] != null) {
