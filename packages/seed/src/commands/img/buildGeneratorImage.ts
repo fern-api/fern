@@ -99,13 +99,21 @@ async function buildFromTestConfigFallback(
     context.logger.info("No publish.docker config found. Using test.docker fallback...");
 
     const commands = Array.isArray(testDocker.command) ? testDocker.command : [testDocker.command];
+    const baseImageNoTag = testDocker.image.replace(/:latest$/, "").replace(/:.*$/, "");
+    const topLevelAliases = generator.workspaceConfig.imageAliases ?? [];
+    const destTags = [`${baseImageNoTag}:${version}`, ...topLevelAliases.map((a) => `${a}:${version}`)];
 
-    context.logger.info(`Building docker image for ${generator.workspaceName}...`);
+    context.logger.info(`Building docker image(s): ${destTags.join(", ")}`);
+
     for (const cmd of commands) {
         if (!cmd) {
             continue;
         }
-        const parts = cmd.split(" ").filter(Boolean);
+
+        // Modify docker build commands to use versioned tags instead of :latest
+        const modifiedCmd = modifyDockerBuildCommand(cmd, baseImageNoTag, topLevelAliases, version, context);
+
+        const parts = modifiedCmd.split(" ").filter(Boolean);
         const bin = parts[0];
         const args = parts.slice(1);
         if (!bin) {
@@ -116,30 +124,52 @@ async function buildFromTestConfigFallback(
             cwd: repoRoot
         });
         if (exitCode !== 0) {
-            throw new Error(`Failed to run ${cmd}`);
+            throw new Error(`Failed to run ${modifiedCmd}`);
         }
     }
 
-    const baseImageNoTag = testDocker.image.replace(/:latest$/, "").replace(/:.*$/, "");
-    const topLevelAliases = generator.workspaceConfig.imageAliases ?? [];
-    const latestTags = [`${baseImageNoTag}:latest`, ...topLevelAliases.map((a) => `${a}:latest`)];
-
-    context.logger.debug("Removing :latest tags...");
-    for (const latestTag of latestTags) {
-        try {
-            await loggingExeca(context.logger, "docker", ["rmi", latestTag], { doNotPipeOutput: true });
-        } catch {}
-    }
-
-    const destTags = [`${baseImageNoTag}:${version}`, ...topLevelAliases.map((a) => `${a}:${version}`)];
-    context.logger.info(`Tagging image with version ${version}...`);
-    for (const dest of destTags) {
-        await loggingExeca(context.logger, "docker", ["tag", `${baseImageNoTag}:latest`, dest], {
-            doNotPipeOutput: true
-        });
-    }
-
     context.logger.info(`Successfully built and tagged docker image(s): ${destTags.join(", ")}`);
+}
+
+function modifyDockerBuildCommand(
+    command: string,
+    baseImage: string,
+    aliases: string[],
+    version: string,
+    context: TaskContext
+): string {
+    // Check if this is a docker build command
+    if (!command.includes("docker build")) {
+        context.logger.debug(`Command doesn't contain 'docker build', running as-is: ${command}`);
+        return command;
+    }
+
+    // Replace any :latest tags with the specified version
+    let modified = command.replace(new RegExp(`${baseImage}:latest`, "g"), `${baseImage}:${version}`);
+
+    // Also replace any alias :latest tags
+    for (const alias of aliases) {
+        modified = modified.replace(new RegExp(`${alias}:latest`, "g"), `${alias}:${version}`);
+    }
+
+    // If the command had -t <image>:latest, also add tags for all aliases
+    if (modified !== command && aliases.length > 0) {
+        // Find where to insert additional -t flags (right before the context path at the end)
+        const parts = modified.split(" ");
+        const contextIndex = parts.findIndex((p, i) => i > 0 && !p.startsWith("-") && parts[i - 1] !== "-t" && parts[i - 1] !== "-f");
+
+        if (contextIndex > 0) {
+            const additionalTags = aliases.map((a) => `-t ${a}:${version}`).join(" ");
+            parts.splice(contextIndex, 0, ...additionalTags.split(" "));
+            modified = parts.join(" ");
+        }
+    }
+
+    if (modified !== command) {
+        context.logger.debug(`Modified command: ${command} → ${modified}`);
+    }
+
+    return modified;
 }
 
 export function shouldPipeOutput(logLevel: LogLevel): boolean {
