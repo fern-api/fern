@@ -176,19 +176,19 @@ jobs:
         run: |
           version="${{ steps.get_version.outputs.CLI_VERSION }}"
           echo "Triggering bulk update for CLI version: ${version}"
-          
+
           response=$(curl -s -w "\n%{http_code}" -X POST \
             "https://autopilot.buildwithfern.com/api/bulk-update-cli" \
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer ${FERN_TOKEN}" \
             -d "{\"newVersion\": \"${version}\"}")
-          
+
           http_code=$(echo "$response" | tail -n 1)
           body=$(echo "$response" | sed '$d')
-          
+
           echo "Response status: ${http_code}"
           echo "Response body: ${body}"
-          
+
           if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
             echo "✓ Bulk update triggered successfully"
             exit 0
