@@ -433,8 +433,10 @@ class PydanticModel:
     def update_forward_refs_with_ghost_references(self, ghost_references: List[AST.ClassReference]) -> None:
         # Filter out self-references
         filtered_ghost_refs = [
-            ref for ref in ghost_references
-            if ref.import_ is None or ref.import_ != self._local_class_reference.import_
+            ref
+            for ref in ghost_references
+            if ref.import_ is None
+            or ref.import_ != self._local_class_reference.import_
             or ref.qualified_name_excluding_import != self._local_class_reference.qualified_name_excluding_import
         ]
 
@@ -446,6 +448,7 @@ class PydanticModel:
         kwarg_refs = []
         for ghost_ref in filtered_ghost_refs:
             import dataclasses
+
             kwarg_ref = dataclasses.replace(
                 ghost_ref,
                 must_import_after_current_declaration=False,

@@ -234,9 +234,7 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
                 self._context.get_class_reference_for_type_id(type_id, as_request=False)
                 for type_id in ghost_reference_type_ids
             ]
-            internal_pydantic_model_for_single_union_type.update_forward_refs_with_ghost_references(
-                ghost_references
-            )
+            internal_pydantic_model_for_single_union_type.update_forward_refs_with_ghost_references(ghost_references)
         elif any(
             self._context.does_type_reference_other_type(type_id=ref_id, other_type_id=self._name.type_id)
             for ref_id in referenced_type_ids
