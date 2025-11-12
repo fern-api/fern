@@ -39,7 +39,7 @@ scripts:
   - docker: fernapi/csharp-seed
     commands:
       # add the dynamic snippets project to the solution
-      - dotnet sln src/*.sln add src/*DynamicSnippets/*.csproj 
+      - dotnet sln src add src/*DynamicSnippets/*.csproj 
       
       # build it all
       - dotnet build src -c Release /p:ContinuousIntegrationBuild=true

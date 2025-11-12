@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SeedCsharpNamespaceConflict.Test/SeedCsharpNamespaceConflict.Test.csproj" />
+  <Project Path="SeedCsharpNamespaceConflict/SeedCsharpNamespaceConflict.csproj" />
+</Solution>

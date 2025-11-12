@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SeedCustomAuth.Test/SeedCustomAuth.Test.csproj" />
+  <Project Path="SeedCustomAuth/SeedCustomAuth.csproj" />
+</Solution>
