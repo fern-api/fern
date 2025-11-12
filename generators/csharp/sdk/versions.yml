@@ -10,11 +10,19 @@
   createdAt: "2025-11-10"
   irVersion: 61
 
+- version: 2.7.4
+  changelogEntry:
+    - type: chore
+      summary: |
+        Upgrade C# formatter csharpier to 1.2.1.
+  createdAt: "2025-11-11"
+  irVersion: 61
+
 - version: 2.7.3
   changelogEntry:
     - type: fix
       summary: |
-        Refactor package dependencies in c# generation so Dynamic Snippets in the browser can work.
+        Refactor package dependencies in C# generation so Dynamic Snippets in the browser can work.
   createdAt: "2025-11-10"
   irVersion: 61
 
