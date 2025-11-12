@@ -183,10 +183,6 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                     config.output.snippetFilepath != null
                         ? AbsoluteFilePath.of(config.output.snippetFilepath)
                         : undefined,
-                snippetTemplateFilepath:
-                    config.output.snippetTemplateFilepath != null
-                        ? AbsoluteFilePath.of(config.output.snippetTemplateFilepath)
-                        : undefined,
                 shouldUseBrandedStringAliases: customConfig.useBrandedStringAliases,
                 isPackagePrivate: customConfig.isPackagePrivate,
                 neverThrowErrors: customConfig.neverThrowErrors,

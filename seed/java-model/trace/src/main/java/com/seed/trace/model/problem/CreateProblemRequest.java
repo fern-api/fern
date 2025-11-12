@@ -215,7 +215,9 @@ public final class CreateProblemRequest {
 
     @java.lang.Override
     public _FinalStage addAllTestcases(List<TestCaseWithExpectedResult> testcases) {
-      this.testcases.addAll(testcases);
+      if (testcases != null) {
+        this.testcases.addAll(testcases);
+      }
       return this;
     }
 
@@ -232,13 +234,17 @@ public final class CreateProblemRequest {
     )
     public _FinalStage testcases(List<TestCaseWithExpectedResult> testcases) {
       this.testcases.clear();
-      this.testcases.addAll(testcases);
+      if (testcases != null) {
+        this.testcases.addAll(testcases);
+      }
       return this;
     }
 
     @java.lang.Override
     public _FinalStage addAllInputParams(List<VariableTypeAndName> inputParams) {
-      this.inputParams.addAll(inputParams);
+      if (inputParams != null) {
+        this.inputParams.addAll(inputParams);
+      }
       return this;
     }
 
@@ -255,7 +261,9 @@ public final class CreateProblemRequest {
     )
     public _FinalStage inputParams(List<VariableTypeAndName> inputParams) {
       this.inputParams.clear();
-      this.inputParams.addAll(inputParams);
+      if (inputParams != null) {
+        this.inputParams.addAll(inputParams);
+      }
       return this;
     }
 
@@ -267,7 +275,9 @@ public final class CreateProblemRequest {
 
     @java.lang.Override
     public _FinalStage putAllFiles(Map<Language, ProblemFiles> files) {
-      this.files.putAll(files);
+      if (files != null) {
+        this.files.putAll(files);
+      }
       return this;
     }
 
@@ -278,7 +288,9 @@ public final class CreateProblemRequest {
     )
     public _FinalStage files(Map<Language, ProblemFiles> files) {
       this.files.clear();
-      this.files.putAll(files);
+      if (files != null) {
+        this.files.putAll(files);
+      }
       return this;
     }
 

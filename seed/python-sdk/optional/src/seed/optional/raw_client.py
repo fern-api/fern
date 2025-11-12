@@ -6,9 +6,12 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
+from .types.deploy_params import DeployParams
+from .types.deploy_response import DeployResponse
 from .types.send_optional_body_request import SendOptionalBodyRequest
 
 # this is used as the default value for optional parameters
@@ -22,13 +25,13 @@ class RawOptionalClient:
     def send_optional_body(
         self,
         *,
-        request: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        request: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[str]:
         """
         Parameters
         ----------
-        request : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        request : typing.Optional[typing.Dict[str, typing.Any]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -103,6 +106,57 @@ class RawOptionalClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def send_optional_nullable_with_all_optional_properties(
+        self,
+        action_id: str,
+        id: str,
+        *,
+        request: typing.Optional[DeployParams] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[DeployResponse]:
+        """
+        Tests optional(nullable(T)) where T has only optional properties.
+        This should not generate wire tests expecting {} when Optional.empty() is passed.
+
+        Parameters
+        ----------
+        action_id : str
+
+        id : str
+
+        request : typing.Optional[DeployParams]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[DeployResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"deploy/{jsonable_encoder(action_id)}/versions/{jsonable_encoder(id)}",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Optional[DeployParams], direction="write"
+            ),
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DeployResponse,
+                    parse_obj_as(
+                        type_=DeployResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawOptionalClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -111,13 +165,13 @@ class AsyncRawOptionalClient:
     async def send_optional_body(
         self,
         *,
-        request: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        request: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[str]:
         """
         Parameters
         ----------
-        request : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        request : typing.Optional[typing.Dict[str, typing.Any]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -183,6 +237,57 @@ class AsyncRawOptionalClient:
                     str,
                     parse_obj_as(
                         type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def send_optional_nullable_with_all_optional_properties(
+        self,
+        action_id: str,
+        id: str,
+        *,
+        request: typing.Optional[DeployParams] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[DeployResponse]:
+        """
+        Tests optional(nullable(T)) where T has only optional properties.
+        This should not generate wire tests expecting {} when Optional.empty() is passed.
+
+        Parameters
+        ----------
+        action_id : str
+
+        id : str
+
+        request : typing.Optional[DeployParams]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[DeployResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"deploy/{jsonable_encoder(action_id)}/versions/{jsonable_encoder(id)}",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Optional[DeployParams], direction="write"
+            ),
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DeployResponse,
+                    parse_obj_as(
+                        type_=DeployResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
