@@ -2,6 +2,7 @@ import { docsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
+import path from "path";
 
 export function nameToSlug({ name }: { name: string }): string {
     return name
@@ -105,7 +106,7 @@ export async function buildNavigationForDirectory({
             const folderSlug = nameToSlug({ name: dir.name });
             const matchingPageIndex = subContents.findIndex((item) => {
                 if (item.type === "page") {
-                    const pageSlug = nameToSlug({ name: item.absolutePath.split("/").pop() || "" });
+                    const pageSlug = nameToSlug({ name: path.basename(item.absolutePath) });
                     return pageSlug === folderSlug;
                 }
                 return false;
