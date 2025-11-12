@@ -3,7 +3,6 @@ import { AstNode } from "../core";
 import { Writer } from "../core/Writer";
 import { ClassReference } from "../types/ClassReference";
 import { Type } from "../types/Type";
-import { TypeParameter } from "../types/TypeParameter";
 
 export declare namespace Parameter {
     interface Args {
@@ -24,14 +23,14 @@ export class Parameter extends AstNode {
     public readonly name: string;
     public readonly docs: string | undefined;
     public readonly initializer: string | undefined;
-    public readonly type: Type | TypeParameter;
+    public readonly type: Type;
     private readonly ref: boolean;
     private readonly out: boolean;
 
     constructor({ name, type, docs, initializer, ref, out }: Parameter.Args, generation: Generation) {
         super(generation);
         this.name = name;
-        this.type = type instanceof ClassReference ? this.csharp.Type.reference(type) : type;
+        this.type = type;
         this.docs = docs;
         this.initializer = initializer;
         this.ref = ref ?? false;

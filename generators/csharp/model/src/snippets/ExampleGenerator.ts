@@ -15,7 +15,7 @@ import { UnionGenerator } from "../union/UnionGenerator";
 
 export class ExampleGenerator extends WithGeneration {
     constructor(private readonly context: ModelGeneratorContext) {
-        super(context);
+        super(context.generation);
     }
 
     public getSnippetForTypeReference({
@@ -50,7 +50,7 @@ export class ExampleGenerator extends WithGeneration {
                     const values = unknownExample.map((value) => this.getSnippetForUnknown(value));
                     return this.csharp.list({
                         entries: values,
-                        itemType: this.csharp.Type.optional(this.csharp.Type.object)
+                        itemType: this.Primitive.object.toOptionalIfNotAlready()
                     });
                 } else if (unknownExample != null && unknownExample instanceof Object) {
                     const keys = Object.keys(unknownExample).sort();
@@ -59,8 +59,8 @@ export class ExampleGenerator extends WithGeneration {
                         value: this.getSnippetForUnknown((unknownExample as Record<string, unknown>)[key])
                     }));
                     return this.csharp.dictionary({
-                        keyType: this.csharp.Type.object,
-                        valueType: this.csharp.Type.optional(this.csharp.Type.object),
+                        keyType: this.Primitive.object,
+                        valueType: this.Primitive.object.toOptionalIfNotAlready(),
                         values: {
                             type: "entries",
                             entries
@@ -161,7 +161,7 @@ export class ExampleGenerator extends WithGeneration {
                 const entries = p.list.map((exampleTypeReference) =>
                     this.getSnippetForTypeReference({ exampleTypeReference, parseDatetimes })
                 );
-                if (this.context.common.isReadOnlyMemoryType(p.itemType)) {
+                if (this.context.isReadOnlyMemoryType(p.itemType)) {
                     return this.csharp.readOnlyMemory({
                         itemType: this.context.csharpTypeMapper.convert({
                             reference: p.itemType,

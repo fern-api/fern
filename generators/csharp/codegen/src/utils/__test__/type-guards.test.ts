@@ -220,26 +220,26 @@ describe("type-guards", () => {
         it("should have Type guard functions available", () => {
             // Type guards check instanceof, so they need actual Type instances
             // We're just verifying the functions exist
-            expect(typeof is.Type.string).toBe("function");
-            expect(typeof is.Type.boolean).toBe("function");
-            expect(typeof is.Type.int).toBe("function");
-            expect(typeof is.Type.long).toBe("function");
-            expect(typeof is.Type.uint).toBe("function");
-            expect(typeof is.Type.ulong).toBe("function");
-            expect(typeof is.Type.float).toBe("function");
-            expect(typeof is.Type.double).toBe("function");
-            expect(typeof is.Type.dateTime).toBe("function");
-            expect(typeof is.Type.uuid).toBe("function");
-            expect(typeof is.Type.object).toBe("function");
-            expect(typeof is.Type.array).toBe("function");
-            expect(typeof is.Type.byte).toBe("function");
+            expect(typeof is.Primitive.string).toBe("function");
+            expect(typeof is.Primitive.boolean).toBe("function");
+            expect(typeof is.Primitive.int).toBe("function");
+            expect(typeof is.Primitive.long).toBe("function");
+            expect(typeof is.Primitive.uint).toBe("function");
+            expect(typeof is.Primitive.ulong).toBe("function");
+            expect(typeof is.Primitive.float).toBe("function");
+            expect(typeof is.Primitive.double).toBe("function");
+            expect(typeof is.Value.dateTime).toBe("function");
+            expect(typeof is.Value.uuid).toBe("function");
+            expect(typeof is.Primitive.object).toBe("function");
+            expect(typeof is.Collection.array).toBe("function");
+            expect(typeof is.Value.byte).toBe("function");
         });
 
         it("should return false for undefined", () => {
-            expect(is.Type.string(undefined)).toBe(false);
-            expect(is.Type.boolean(undefined)).toBe(false);
-            expect(is.Type.int(undefined)).toBe(false);
-            expect(is.Type.object(undefined)).toBe(false);
+            expect(is.Primitive.string(undefined)).toBe(false);
+            expect(is.Primitive.boolean(undefined)).toBe(false);
+            expect(is.Primitive.int(undefined)).toBe(false);
+            expect(is.Primitive.object(undefined)).toBe(false);
         });
     });
 

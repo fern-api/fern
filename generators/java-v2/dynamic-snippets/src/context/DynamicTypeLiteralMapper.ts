@@ -435,8 +435,12 @@ export class DynamicTypeLiteralMapper {
         undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
     }): { valueTypeReference: FernIr.dynamic.TypeReference; typeInstantiation: java.TypeLiteral } | undefined {
+        const attemptedVariants: string[] = [];
+        const variantErrors: string[] = [];
+
         for (const typeReference of undiscriminatedUnion.types) {
             try {
+                attemptedVariants.push(JSON.stringify(typeReference));
                 const typeInstantiation = this.convert({
                     typeReference,
                     value,
@@ -445,14 +449,28 @@ export class DynamicTypeLiteralMapper {
 
                 return { valueTypeReference: typeReference, typeInstantiation };
             } catch (e) {
+                variantErrors.push(
+                    `Type ${JSON.stringify(typeReference)}: ${e instanceof Error ? e.message : String(e)}`
+                );
                 continue;
             }
         }
+
         this.context.errors.add({
             severity: Severity.Critical,
-            message: `None of the types in the undiscriminated union matched the given "${typeof value}" value`
+            message: `None of the types in the undiscriminated union matched the given "${typeof value}" value. Tried ${attemptedVariants.length} variants. Errors: ${variantErrors.join("; ")}`
         });
-        return undefined;
+
+        // Instead of returning undefined (which causes invalid code generation),
+        // throw an error to fail fast with a clear message
+        const unionName = undiscriminatedUnion.declaration.name ?? "UnknownUnion";
+        const detailedErrors = variantErrors.map((error, index) => `  ${index + 1}. ${error}`).join("\n");
+        throw new Error(
+            `Failed to match undiscriminated union "${unionName}" for ${typeof value} value.\n` +
+                `Value: ${JSON.stringify(value)}\n` +
+                `Attempted ${attemptedVariants.length} variants:\n${detailedErrors}\n\n` +
+                `This prevents invalid snippet code generation that would cause formatter errors.`
+        );
     }
 
     private getUndiscriminatedUnionFieldName({

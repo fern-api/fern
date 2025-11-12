@@ -1,9 +1,8 @@
-import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { ast, GrpcClientInfo, lazy } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator, GrpcClientInfo } from "@fern-api/csharp-base";
+import { ast, lazy } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
 import { RawClient } from "../endpoint/http/RawClient";
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator";
 
@@ -16,7 +15,7 @@ export declare namespace SubClientGenerator {
     }
 }
 
-export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
     private classReference: ast.ClassReference;
     private subpackage: Subpackage;
     private serviceId?: ServiceId;
@@ -26,13 +25,13 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
 
     constructor({ subpackage, context, serviceId, service }: SubClientGenerator.Args) {
         super(context);
-        this.classReference = this.context.common.getSubpackageClassReference(subpackage);
+        this.classReference = this.context.getSubpackageClassReference(subpackage);
         this.subpackage = subpackage;
         this.rawClient = new RawClient(context);
         this.service = service;
         this.serviceId = serviceId;
         this.grpcClientInfo =
-            this.serviceId != null ? this.context.common.getGrpcClientInfoForServiceId(this.serviceId) : undefined;
+            this.serviceId != null ? this.context.getGrpcClientInfoForServiceId(this.serviceId) : undefined;
     }
     private members = lazy({
         client: () => this.classReference.explicit("_client"),
@@ -53,7 +52,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         if (this.settings.enableWebsockets) {
             for (const subpackage of this.getSubpackages()) {
                 if (subpackage.websocket != null) {
-                    const websocketChannel = this.context.common.getWebsocketChannel(subpackage.websocket);
+                    const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
                     if (websocketChannel != null) {
                         WebSocketClientGenerator.createWebSocketApiFactories(
                             cls,
@@ -78,20 +77,20 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         class_.addField({
             origin: this.members.client,
             access: ast.Access.Private,
-            type: this.csharp.Type.reference(this.types.RawClient)
+            type: this.Types.RawClient
         });
 
         if (this.grpcClientInfo != null) {
             class_.addField({
                 origin: this.members.grpcClient,
                 access: ast.Access.Private,
-                type: this.csharp.Type.reference(this.types.RawGrpcClient)
+                type: this.Types.RawGrpcClient
             });
 
             class_.addField({
                 origin: class_.explicit(this.members.grpcClientName),
                 access: ast.Access.Private,
-                type: this.csharp.Type.reference(this.grpcClientInfo.classReference)
+                type: this.grpcClientInfo.classReference
             });
         }
 
@@ -102,7 +101,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
                     origin: subpackage,
                     access: ast.Access.Public,
                     get: true,
-                    type: this.csharp.Type.reference(this.context.common.getSubpackageClassReference(subpackage))
+                    type: this.context.getSubpackageClassReference(subpackage)
                 });
             }
         }
@@ -146,11 +145,11 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         });
     }
 
-    private getConstructorMethod(): ast.Class.Constructor {
+    private getConstructorMethod() {
         const parameters: ast.Parameter[] = [
             this.csharp.parameter({
                 name: "client",
-                type: this.csharp.Type.reference(this.types.RawClient)
+                type: this.Types.RawClient
             })
         ];
         return {
@@ -178,7 +177,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
                         writer.writeLine(`${subpackage.name.pascalCase.safeName} = `);
                         writer.writeNodeStatement(
                             this.csharp.instantiateClass({
-                                classReference: this.context.common.getSubpackageClassReference(subpackage),
+                                classReference: this.context.getSubpackageClassReference(subpackage),
                                 arguments_
                             })
                         );
