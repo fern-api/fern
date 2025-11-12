@@ -21,22 +21,54 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      packages: ${{ steps.filter.outputs.changes }}
+      packages: ${{ steps.derive.outputs.packages_json }}
+      packages_space: ${{ steps.derive.outputs.packages_space }}
     steps:
       - uses: actions/checkout@v4
-
-      - uses: dorny/paths-filter@v3
-        id: filter
         with:
-          filters: |
-            ts:
-              - 'docker/seed/Dockerfile.ts'
-            java:
-              - 'docker/seed/Dockerfile.java'
-            python:
-              - 'docker/seed/Dockerfile.python'
-            csharp:
-              - 'docker/seed/Dockerfile.csharp'
+          fetch-depth: 200
+
+      - uses: ./.github/actions/check-for-changed-files
+        id: changes
+        with:
+          files: |
+            .github/workflows/seed-dockers.yml
+            docker/seed/Dockerfile.ts
+            docker/seed/Dockerfile.java
+            docker/seed/Dockerfile.python
+            docker/seed/Dockerfile.csharp
+
+      - id: derive
+        shell: bash
+        run: |
+          files="${{ steps.changes.outputs.all_changed_files }}"
+          declare -A pkgs=()
+          for f in $files; do
+            case "$f" in
+              docker/seed/Dockerfile.ts) pkgs[ts]=1;;
+              docker/seed/Dockerfile.java) pkgs[java]=1;;
+              docker/seed/Dockerfile.python) pkgs[python]=1;;
+              docker/seed/Dockerfile.csharp) pkgs[csharp]=1;;
+              .github/workflows/seed-dockers.yml)
+                # Workflow changes trigger rebuilds for all images
+                pkgs[ts]=1; pkgs[java]=1; pkgs[python]=1; pkgs[csharp]=1;;
+            esac
+          done
+
+          # Build JSON array and space-delimited list
+          json="["
+          space=""
+          first=1
+          for k in "${!pkgs[@]}"; do
+            space+="$k "
+            if [ $first -eq 0 ]; then json+=", "; fi
+            json+="\"$k\""
+            first=0
+          done
+          json+="]"
+
+          echo "packages_json=$json" >> "$GITHUB_OUTPUT"
+          echo "packages_space=${space% }" >> "$GITHUB_OUTPUT"
 
   generate-sha:
     runs-on: ubuntu-latest
@@ -48,7 +80,7 @@ jobs:
         run: echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
   build-container:
-    if: ${{ needs.changes.outputs.packages != '[]' }}
+    if: ${{ needs.changes.outputs.packages_space != '' }}
     strategy:
       matrix:
         # Parse JSON array containing names of all filters matching any of changed files
@@ -104,7 +136,7 @@ jobs:
       image_sha: ${{ steps.meta.outputs.version }} # This gets the SHA tag
 
   merge-manifests:
-    if: ${{ needs.changes.outputs.packages != '[]' }}
+    if: ${{ needs.changes.outputs.packages_space != '' }}
     needs: [changes, build-container, generate-sha]
     runs-on: ubuntu-latest
     steps:
@@ -119,9 +151,9 @@ jobs:
 
       - name: Create and push manifest
         run: |
-          packages='${{ needs.changes.outputs.packages }}'
+          packages='${{ needs.changes.outputs.packages_space }}'
           sha='${{ needs.generate-sha.outputs.sha }}'
-          for package in $(echo "$packages" | jq -r '.[]'); do
+          for package in $packages; do
             docker buildx imagetools create -t fernapi/${package}-seed:latest \
               fernapi/${package}-seed:latest-amd64 \
               fernapi/${package}-seed:latest-arm64
