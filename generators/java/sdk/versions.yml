@@ -1,3 +1,18 @@
+- version: 3.14.8
+  changelogEntry:
+    - summary: |
+        Fix critical wire test generation failures causing build crashes. Implemented service name resolution to handle IR vs Dynamic IR mismatches and added graceful error handling instead of build failures.
+      type: fix
+  createdAt: "2025-11-12"
+  irVersion: 61
+
+- version: 3.14.7
+  changelogEntry:
+    - summary: Fix inconsistent behavior between local and remote Java generation by ensuring license files are copied and platform headers are populated in all generation scenarios
+      type: fix
+  createdAt: "2025-11-11"
+  irVersion: 61
+
 - version: 3.14.6
   changelogEntry:
     - summary: |
