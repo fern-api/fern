@@ -156,7 +156,9 @@ function modifyDockerBuildCommand(
     if (modified !== command && aliases.length > 0) {
         // Find where to insert additional -t flags (right before the context path at the end)
         const parts = modified.split(" ");
-        const contextIndex = parts.findIndex((p, i) => i > 0 && !p.startsWith("-") && parts[i - 1] !== "-t" && parts[i - 1] !== "-f");
+        const contextIndex = parts.findIndex(
+            (p, i) => i > 0 && !p.startsWith("-") && parts[i - 1] !== "-t" && parts[i - 1] !== "-f"
+        );
 
         if (contextIndex > 0) {
             const additionalTags = aliases.map((a) => `-t ${a}:${version}`).join(" ");
