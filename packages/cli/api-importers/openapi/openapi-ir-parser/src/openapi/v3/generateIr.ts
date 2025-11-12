@@ -50,7 +50,7 @@ import { hasIncompleteExample } from "./hasIncompleteExample";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 import { runResolutions } from "./runResolutions";
 
-export async function generateIr({
+export function generateIr({
     openApi,
     taskContext,
     options,
@@ -62,7 +62,7 @@ export async function generateIr({
     options: ParseOpenAPIOptions;
     source: Source;
     namespace: string | undefined;
-}): Promise<OpenApiIntermediateRepresentation> {
+}): OpenApiIntermediateRepresentation {
     openApi = runResolutions({ openapi: openApi });
 
     // Create a temporary context for reference resolution during security scheme processing
@@ -116,11 +116,11 @@ export async function generateIr({
         taskContext.logger.debug("Endpoint filter applied...");
     }
 
-    for (const [path, pathItem] of Object.entries(openApi.paths ?? {})) {
+    Object.entries(openApi.paths ?? {}).forEach(([path, pathItem]) => {
         if (pathItem == null) {
-            continue;
+            return;
         }
-        const convertedOperations = await convertPathItem(path, pathItem, openApi, context);
+        const convertedOperations = convertPathItem(path, pathItem, openApi, context);
         for (const operation of convertedOperations) {
             const operationAudiences = getAudiences({ operation });
             if (audiences.length > 0 && !audiences.some((audience) => operationAudiences.includes(audience))) {
@@ -147,13 +147,13 @@ export async function generateIr({
                     assertNever(operation);
             }
         }
-    }
-    for (const [path, pathItem] of Object.entries(getWebhooksPathsObject(openApi))) {
+    });
+    Object.entries(getWebhooksPathsObject(openApi)).forEach(([path, pathItem]) => {
         if (pathItem == null) {
-            continue;
+            return;
         }
         taskContext.logger.debug(`Converting path ${path}`);
-        const convertedWebhooks = await convertPathItemToWebhooks(path, pathItem, openApi, context);
+        const convertedWebhooks = convertPathItemToWebhooks(path, pathItem, openApi, context);
         for (const webhook of convertedWebhooks) {
             const webhookAudiences = getAudiences({ operation: webhook });
             if (audiences.length > 0 && !audiences.some((audience) => webhookAudiences.includes(audience))) {
@@ -161,7 +161,7 @@ export async function generateIr({
             }
             webhooksWithExample.push(...webhook.value);
         }
-    }
+    });
 
     const schemasWithExample: Record<string, SchemaWithExample> = Object.fromEntries(
         Object.entries(openApi.components?.schemas ?? {})

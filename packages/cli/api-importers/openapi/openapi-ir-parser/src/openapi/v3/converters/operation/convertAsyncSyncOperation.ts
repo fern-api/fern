@@ -13,7 +13,7 @@ export interface AsyncAndSyncEndpoints {
     sync: EndpointWithExample[];
 }
 
-export async function convertAsyncSyncOperation({
+export function convertAsyncSyncOperation({
     operationContext,
     context,
     asyncExtension,
@@ -23,7 +23,7 @@ export async function convertAsyncSyncOperation({
     context: AbstractOpenAPIV3ParserContext;
     asyncExtension: AsyncFernExtensionSchema;
     source: Source;
-}): Promise<AsyncAndSyncEndpoints> {
+}): AsyncAndSyncEndpoints {
     const { operation, pathItemParameters, operationParameters } = operationContext;
 
     const headerToIgnore = asyncExtension.discriminant.name;
@@ -33,7 +33,7 @@ export async function convertAsyncSyncOperation({
     const filteredPathItemParams = filterParameters({ context, headerToIgnore, parameters: pathItemParameters });
     const filteredOperationParams = filterParameters({ context, headerToIgnore, parameters: operationParameters });
 
-    const syncOperation = await convertHttpOperation({
+    const syncOperation = convertHttpOperation({
         operationContext: {
             ...operationContext,
             pathItemParameters: filteredPathItemParams,
@@ -52,7 +52,7 @@ export async function convertAsyncSyncOperation({
         source
     });
 
-    const asyncOperation = await convertHttpOperation({
+    const asyncOperation = convertHttpOperation({
         operationContext: {
             ...operationContext,
             pathItemParameters: filteredPathItemParams,

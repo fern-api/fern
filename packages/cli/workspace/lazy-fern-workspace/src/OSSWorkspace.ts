@@ -120,7 +120,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         settings?: OSSWorkspace.Settings
     ): Promise<OpenApiIntermediateRepresentation> {
         const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs, relativePathToDependency });
-        return await parse({
+        return parse({
             context,
             documents: await this.loader.loadDocuments({
                 context,

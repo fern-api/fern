@@ -60,16 +60,16 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
         this.loader = new InMemoryOpenAPILoader();
     }
 
-    public async getOpenAPIIr(
+    public getOpenAPIIr(
         {
             context
         }: {
             context: TaskContext;
         },
         options?: OpenAPIWorkspace.Settings
-    ): Promise<OpenApiIntermediateRepresentation> {
+    ): OpenApiIntermediateRepresentation {
         const document = this.loader.loadDocument(this.spec);
-        return await parse({
+        return parse({
             context,
             documents: [document],
             options: {

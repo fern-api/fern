@@ -21,11 +21,7 @@ function isCodeReference(value: unknown): value is CodeReference {
     return isPlainObject(value) && typeof (value as { $ref?: unknown }).$ref === "string";
 }
 
-function isUrl(ref: string): boolean {
-    return ref.startsWith("http://") || ref.startsWith("https://");
-}
-
-async function maybeResolveCodeReference(code: unknown, baseDir: string | undefined): Promise<string | undefined> {
+function maybeResolveCodeReference(code: unknown, baseDir: string | undefined): string | undefined {
     if (code == null) {
         return undefined;
     }
@@ -35,19 +31,6 @@ async function maybeResolveCodeReference(code: unknown, baseDir: string | undefi
     }
 
     if (isCodeReference(code)) {
-        if (isUrl(code.$ref)) {
-            try {
-                const response = await fetch(code.$ref);
-                if (!response.ok) {
-                    return undefined;
-                }
-                const content = await response.text();
-                return content;
-            } catch (error) {
-                return undefined;
-            }
-        }
-
         const resolvedPath = resolvePath(baseDir ?? process.cwd(), code.$ref);
         if (existsSync(resolvedPath)) {
             try {
@@ -62,10 +45,7 @@ async function maybeResolveCodeReference(code: unknown, baseDir: string | undefi
     return undefined;
 }
 
-async function resolveCodeSamples(
-    codeSamples: unknown,
-    baseDir: string | undefined
-): Promise<RawSchemas.ExampleCodeSampleSchema[]> {
+function resolveCodeSamples(codeSamples: unknown, baseDir: string | undefined): RawSchemas.ExampleCodeSampleSchema[] {
     if (!Array.isArray(codeSamples)) {
         return [];
     }
@@ -77,7 +57,7 @@ async function resolveCodeSamples(
         }
 
         const sampleRecord = sample as Record<string, unknown>;
-        const code = await maybeResolveCodeReference(sampleRecord.code, baseDir);
+        const code = maybeResolveCodeReference(sampleRecord.code, baseDir);
         if (code != null) {
             resolved.push({
                 ...sample,
@@ -89,11 +69,11 @@ async function resolveCodeSamples(
     return resolved;
 }
 
-export async function getExamplesFromExtension(
+export function getExamplesFromExtension(
     operationContext: OperationContext,
     operationObject: OpenAPIV3.OperationObject,
     context: AbstractOpenAPIV3ParserContext
-): Promise<EndpointExample[]> {
+): EndpointExample[] {
     const exampleEndpointCalls = getExtension<RawSchemas.ExampleEndpointCallSchema[]>(
         operationObject,
         FernOpenAPIExtension.EXAMPLES
@@ -101,25 +81,23 @@ export async function getExamplesFromExtension(
 
     const baseDir = context.source.type === "openapi" ? dirname(context.source.file) : undefined;
 
-    const resolvedExamples = await Promise.all(
-        (exampleEndpointCalls ?? []).map(async (example) => {
-            if (!isPlainObject(example)) {
-                return example;
-            }
-
-            const exampleRecord = example as Record<string, unknown>;
-            const codeSamples = exampleRecord["code-samples"];
-            if (codeSamples != null) {
-                const resolvedCodeSamples = await resolveCodeSamples(codeSamples, baseDir);
-                return {
-                    ...example,
-                    "code-samples": resolvedCodeSamples
-                };
-            }
-
+    const resolvedExamples = (exampleEndpointCalls ?? []).map((example) => {
+        if (!isPlainObject(example)) {
             return example;
-        })
-    );
+        }
+
+        const exampleRecord = example as Record<string, unknown>;
+        const codeSamples = exampleRecord["code-samples"];
+        if (codeSamples != null) {
+            const resolvedCodeSamples = resolveCodeSamples(codeSamples, baseDir);
+            return {
+                ...example,
+                "code-samples": resolvedCodeSamples
+            };
+        }
+
+        return example;
+    });
 
     const validatedExampleEndpointCalls: RawSchemas.ExampleEndpointCallArraySchema = resolvedExamples.filter(
         (example) => {

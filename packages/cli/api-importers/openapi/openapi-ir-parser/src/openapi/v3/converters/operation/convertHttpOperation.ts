@@ -25,7 +25,7 @@ import { ConvertedParameters, convertParameters } from "../endpoint/convertParam
 import { convertRequest, convertToSingleRequest } from "../endpoint/convertRequest";
 import { convertResponse } from "../endpoint/convertResponse";
 
-export async function convertHttpOperation({
+export function convertHttpOperation({
     operationContext,
     context,
     responseStatusCode,
@@ -39,7 +39,7 @@ export async function convertHttpOperation({
     suffix?: string;
     streamFormat: "sse" | "json" | undefined;
     source: Source;
-}): Promise<EndpointWithExample[]> {
+}): EndpointWithExample[] {
     const { document, operation, path, method, baseBreadcrumbs } = operationContext;
 
     const idempotent = getExtension<boolean>(operation, FernOpenAPIExtension.IDEMPOTENT);
@@ -258,7 +258,7 @@ export async function convertHttpOperation({
 
     const retries = getFernRetriesExtension(operation);
     const availability = getFernAvailability(operation);
-    const examples = await getExamplesFromExtension(operationContext, operation, context);
+    const examples = getExamplesFromExtension(operationContext, operation, context);
     const serverName = getExtension<string>(operation, FernOpenAPIExtension.SERVER_NAME_V2);
     return convertedRequests.map((request) => ({
         summary: operation.summary,

@@ -34,7 +34,7 @@ export interface AsyncAPIDocument {
     settings: ParseOpenAPIOptions;
 }
 
-export async function parse({
+export function parse({
     context,
     documents,
     options
@@ -42,7 +42,7 @@ export async function parse({
     context: TaskContext;
     documents: Document[];
     options?: Partial<ParseOpenAPIOptions>;
-}): Promise<OpenApiIntermediateRepresentation> {
+}): OpenApiIntermediateRepresentation {
     let ir: OpenApiIntermediateRepresentation = {
         apiVersion: undefined,
         title: undefined,
@@ -75,7 +75,7 @@ export async function parse({
             const source = document.source != null ? document.source : OpenApiIrSource.openapi({ file: "<memory>" });
             switch (document.type) {
                 case "openapi": {
-                    const openapiIr = await generateIrFromV3({
+                    const openapiIr = generateIrFromV3({
                         taskContext: context,
                         openApi: document.value,
                         options: getParseOptions({ options: document.settings, overrides: options }),

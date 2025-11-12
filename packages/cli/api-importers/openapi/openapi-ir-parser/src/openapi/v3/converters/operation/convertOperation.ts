@@ -48,7 +48,7 @@ export interface ConvertedStreamingOperation {
     nonStreaming: EndpointWithExample[];
 }
 
-export async function convertOperation({
+export function convertOperation({
     context,
     pathItemContext,
     operation,
@@ -58,7 +58,7 @@ export async function convertOperation({
     pathItemContext: PathItemContext;
     operation: OpenAPIV3.OperationObject;
     convertToWebhook: boolean;
-}): Promise<ConvertedOperation | undefined> {
+}): ConvertedOperation | undefined {
     const shouldIgnore = getExtension<boolean>(operation, FernOpenAPIExtension.IGNORE);
     if (shouldIgnore != null && shouldIgnore) {
         context.logger.debug(
@@ -96,7 +96,7 @@ export async function convertOperation({
 
     const streamingExtension = getFernStreamingExtension(operation);
     if (streamingExtension != null) {
-        const streamingOperation = await convertStreamingOperation({
+        const streamingOperation = convertStreamingOperation({
             context,
             operationContext,
             streamingExtension
@@ -112,7 +112,7 @@ export async function convertOperation({
 
     const asyncExtension = getFernAsyncExtension(operation);
     if (asyncExtension != null) {
-        const asyncAndSync = await convertAsyncSyncOperation({
+        const asyncAndSync = convertAsyncSyncOperation({
             context,
             operationContext,
             asyncExtension,
@@ -125,7 +125,7 @@ export async function convertOperation({
         };
     }
 
-    const convertedHttpOperations = await convertHttpOperation({
+    const convertedHttpOperations = convertHttpOperation({
         context,
         operationContext,
         streamFormat: undefined,

@@ -7,12 +7,12 @@ import { FernOpenAPIExtension } from "../extensions/fernExtensions";
 import { PathItemContext } from "./contexts";
 import { ConvertedOperation, ConvertedWebhookOperation, convertOperation } from "./operation/convertOperation";
 
-export async function convertPathItem(
+export function convertPathItem(
     path: string,
     pathItemObject: OpenAPIV3.PathItemObject,
     document: OpenAPIV3.Document,
     context: AbstractOpenAPIV3ParserContext
-): Promise<ConvertedOperation[]> {
+): ConvertedOperation[] {
     const result: ConvertedOperation[] = [];
     const operations = getOperationObjectsFromPathItem(pathItemObject);
 
@@ -29,7 +29,7 @@ export async function convertPathItem(
             continue;
         }
         const convertToWebhook = isWebhook({ operation: operation.operation });
-        const convertedOperations = await convertOperation({
+        const convertedOperations = convertOperation({
             context,
             pathItemContext: {
                 ...basePathItemContext,
@@ -45,12 +45,12 @@ export async function convertPathItem(
     return result;
 }
 
-export async function convertPathItemToWebhooks(
+export function convertPathItemToWebhooks(
     path: string,
     pathItemObject: OpenAPIV3.PathItemObject,
     document: OpenAPIV3.Document,
     context: AbstractOpenAPIV3ParserContext
-): Promise<ConvertedWebhookOperation[]> {
+): ConvertedWebhookOperation[] {
     const result: ConvertedWebhookOperation[] = [];
     const operations = getOperationObjectsFromPathItem(pathItemObject);
 
@@ -66,7 +66,7 @@ export async function convertPathItemToWebhooks(
             context.logger.debug(`Skipping endpoint "${operation.method} ${path}"`);
             continue;
         }
-        const convertedOperations = await convertOperation({
+        const convertedOperations = convertOperation({
             context,
             pathItemContext: {
                 ...basePathItemContext,

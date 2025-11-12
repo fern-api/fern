@@ -18,7 +18,7 @@ export interface StreamingEndpoints {
     nonStreaming: EndpointWithExample[];
 }
 
-export async function convertStreamingOperation({
+export function convertStreamingOperation({
     operationContext,
     context,
     streamingExtension
@@ -26,10 +26,10 @@ export async function convertStreamingOperation({
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;
     streamingExtension: FernStreamingExtension;
-}): Promise<StreamingEndpoints> {
+}): StreamingEndpoints {
     switch (streamingExtension.type) {
         case "stream": {
-            const streamingOperations = await convertHttpOperation({
+            const streamingOperations = convertHttpOperation({
                 operationContext,
                 context,
                 streamFormat: streamingExtension.format,
@@ -57,7 +57,7 @@ export async function convertStreamingOperation({
                 operation: operationContext.operation,
                 response: streamingExtension.responseStream
             });
-            const streamingOperations = await convertHttpOperation({
+            const streamingOperations = convertHttpOperation({
                 operationContext: {
                     ...operationContext,
                     sdkMethodName:
@@ -96,7 +96,7 @@ export async function convertStreamingOperation({
                 operation: operationContext.operation,
                 response: streamingExtension.response
             });
-            const nonStreamingOperations = await convertHttpOperation({
+            const nonStreamingOperations = convertHttpOperation({
                 streamFormat: undefined,
                 operationContext: {
                     ...operationContext,
