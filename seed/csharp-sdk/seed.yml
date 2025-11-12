@@ -9,7 +9,7 @@ buildScripts:
       - dotnet tool restore
   compileScript:
     commands:
-      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true .
+      - dotnet build src -c Release .
   testScript:
     commands:
       - dotnet test src
@@ -42,7 +42,7 @@ scripts:
       - dotnet sln src/*.sln add src/*DynamicSnippets/*.csproj 
       
       # build it all
-      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true
+      - dotnet build src -c Release
       
       # something changed in seed so that fixtures are getting created with the correct namespace (not just 'SeedApi')
       # but that actually disabled the tests from running (because the pattern matching didn't find any)
