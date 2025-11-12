@@ -240,10 +240,13 @@ export class SimpleTypescriptProject extends TypescriptProject {
                         default: defaultExport
                     },
                     ...this.getFoldersForExports().reduce((acc, folder) => {
-                        const cjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/${folder}/index.js`;
-                        const cjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/${folder}/index.d.ts`;
-                        const mjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/index.mjs`;
-                        const mjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/index.d.mts`;
+                        const isSubpackageExport =
+                            this.generateMultipleExports && this.subpackageExportPaths.includes(folder);
+                        const fileName = isSubpackageExport ? "exports" : "index";
+                        const cjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/${folder}/${fileName}.js`;
+                        const cjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/${folder}/${fileName}.d.ts`;
+                        const mjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/${fileName}.mjs`;
+                        const mjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/${fileName}.d.mts`;
                         const defaultTypesExport = this.outputEsm ? mjsTypesFile : cjsTypesFile;
                         const defaultExport = this.outputEsm ? mjsFile : cjsFile;
 

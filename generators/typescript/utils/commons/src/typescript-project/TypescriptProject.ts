@@ -31,6 +31,8 @@ export declare namespace TypescriptProject {
         packageManager: "yarn" | "pnpm";
         formatter: "prettier" | "biome" | "oxfmt";
         linter: "biome" | "oxlint" | "none";
+        generateMultipleExports: boolean;
+        subpackageExportPaths?: string[];
     }
 }
 
@@ -107,6 +109,8 @@ export abstract class TypescriptProject {
     protected readonly packageManager: "yarn" | "pnpm";
     private readonly formatter: "prettier" | "biome" | "oxfmt";
     private readonly linter: "biome" | "oxlint" | "none";
+    protected readonly generateMultipleExports: boolean;
+    protected readonly subpackageExportPaths: string[];
 
     private readonly runScripts: boolean;
 
@@ -128,7 +132,9 @@ export abstract class TypescriptProject {
         testPath,
         packageManager,
         formatter,
-        linter
+        linter,
+        generateMultipleExports,
+        subpackageExportPaths
     }: TypescriptProject.Init) {
         this.npmPackage = npmPackage;
         this.runScripts = runScripts;
@@ -148,6 +154,8 @@ export abstract class TypescriptProject {
         this.packageManager = packageManager;
         this.formatter = formatter;
         this.linter = linter;
+        this.generateMultipleExports = generateMultipleExports;
+        this.subpackageExportPaths = subpackageExportPaths ?? [];
     }
 
     protected async addCommonFilesToVolume(): Promise<void> {
@@ -167,6 +175,9 @@ export abstract class TypescriptProject {
         const exports = [];
         if (this.exportSerde) {
             exports.push("serialization");
+        }
+        if (this.generateMultipleExports) {
+            exports.push(...this.subpackageExportPaths);
         }
         return exports;
     }
