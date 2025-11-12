@@ -34,21 +34,21 @@ export class SeedApiClient {
     }
 
     /**
-     * @param {string} accountId
+     * @param {string} account_id
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.getAccount("account_id")
      */
     public getAccount(
-        accountId: string,
+        account_id: string,
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.Account> {
-        return core.HttpResponsePromise.fromPromise(this.__getAccount(accountId, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__getAccount(account_id, requestOptions));
     }
 
     private async __getAccount(
-        accountId: string,
+        account_id: string,
         requestOptions?: SeedApiClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.Account>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -56,7 +56,7 @@ export class SeedApiClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `account/${core.url.encodePathParam(accountId)}`,
+                `account/${core.url.encodePathParam(account_id)}`,
             ),
             method: "GET",
             headers: _headers,

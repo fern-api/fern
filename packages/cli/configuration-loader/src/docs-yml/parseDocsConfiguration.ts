@@ -371,7 +371,8 @@ function convertThemeConfig(
         sidebar: theme.sidebar ?? "default",
         tabs: theme.tabs ?? "default",
         body: theme.body ?? "default",
-        pageActions: theme.pageActions ?? "default"
+        pageActions: theme.pageActions ?? "default",
+        footerNav: theme.footerNav ?? "default"
     };
 }
 

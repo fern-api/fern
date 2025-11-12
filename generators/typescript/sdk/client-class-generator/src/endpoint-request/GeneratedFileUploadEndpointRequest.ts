@@ -11,7 +11,6 @@ import {
     GetReferenceOpts,
     getParameterNameForPositionalPathParameter,
     getTextOfTsNode,
-    ImportsManager,
     PackageId
 } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
@@ -35,32 +34,32 @@ export declare namespace GeneratedFileUploadEndpointRequest {
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
-        importsManager: ImportsManager;
         includeSerdeLayer: boolean;
         allowExtraFields: boolean;
         omitUndefined: boolean;
         formDataSupport: "Node16" | "Node18";
+        parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     }
 }
 
 export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequest {
-    private static FORM_DATA_VARIABLE_NAME = "_request";
-    private static FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME = "_maybeEncodedRequest";
+    private static readonly FORM_DATA_VARIABLE_NAME = "_request";
+    private static readonly FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME = "_maybeEncodedRequest";
 
-    private importsManager: ImportsManager;
-    private ir: IntermediateRepresentation;
-    private requestParameter: FileUploadRequestParameter | undefined;
+    private readonly ir: IntermediateRepresentation;
+    private readonly requestParameter: FileUploadRequestParameter | undefined;
     private queryParams: GeneratedQueryParams | undefined;
-    private service: HttpService;
-    private endpoint: HttpEndpoint;
-    private requestBody: HttpRequestBody.FileUpload;
-    private generatedSdkClientClass: GeneratedSdkClientClassImpl;
-    private retainOriginalCasing: boolean;
-    private inlineFileProperties: boolean;
-    private includeSerdeLayer: boolean;
-    private allowExtraFields: boolean;
-    private omitUndefined: boolean;
+    private readonly service: HttpService;
+    private readonly endpoint: HttpEndpoint;
+    private readonly requestBody: HttpRequestBody.FileUpload;
+    private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
+    private readonly retainOriginalCasing: boolean;
+    private readonly inlineFileProperties: boolean;
+    private readonly includeSerdeLayer: boolean;
+    private readonly allowExtraFields: boolean;
+    private readonly omitUndefined: boolean;
     private readonly formDataSupport: "Node16" | "Node18";
+    private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
 
     constructor({
         ir,
@@ -71,11 +70,11 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         generatedSdkClientClass,
         retainOriginalCasing,
         inlineFileProperties,
-        importsManager,
         includeSerdeLayer,
         allowExtraFields,
         omitUndefined,
-        formDataSupport
+        formDataSupport,
+        parameterNaming
     }: GeneratedFileUploadEndpointRequest.Init) {
         this.ir = ir;
         this.service = service;
@@ -84,11 +83,11 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
-        this.importsManager = importsManager;
         this.includeSerdeLayer = includeSerdeLayer;
         this.allowExtraFields = allowExtraFields;
         this.omitUndefined = omitUndefined;
         this.formDataSupport = formDataSupport;
+        this.parameterNaming = parameterNaming;
         if (
             this.inlineFileProperties ||
             requestBody.properties.some((property) => property.type === "bodyProperty") ||
@@ -220,7 +219,8 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             parameters.push({
                 name: getParameterNameForPositionalPathParameter({
                     pathParameter,
-                    retainOriginalCasing: this.retainOriginalCasing
+                    retainOriginalCasing: this.retainOriginalCasing,
+                    parameterNaming: this.parameterNaming
                 }),
                 type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode)
             });

@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add support for a minimal footer navigation theme.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.116.0
+
+- changelogEntry:
+    - summary: |
         Do not upload _snippet-templates.json_ files to FDR.
       type: fix
   irVersion: 61

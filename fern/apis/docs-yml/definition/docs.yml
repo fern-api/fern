@@ -719,6 +719,12 @@ types:
       body: optional<BodyThemeConfig>
       tabs: optional<TabsThemeConfig>
       page-actions: optional<PageActionsThemeConfig>
+      footer-nav: optional<FooterNavThemeConfig>
+
+  FooterNavThemeConfig:
+    enum:
+      - default
+      - minimal
 
   TabsThemeConfig:
     enum:

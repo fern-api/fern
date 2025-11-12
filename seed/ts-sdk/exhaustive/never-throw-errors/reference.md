@@ -1060,7 +1060,7 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredField</a>(string_, { ...params }) -> core.APIResponse<SeedExhaustive.NestedObjectWithRequiredField, SeedExhaustive.endpoints.object.getAndReturnNestedWithRequiredField.Error></code></summary>
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredField</a>(string, { ...params }) -> core.APIResponse<SeedExhaustive.NestedObjectWithRequiredField, SeedExhaustive.endpoints.object.getAndReturnNestedWithRequiredField.Error></code></summary>
 <dl>
 <dd>
 
@@ -1108,7 +1108,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
 <dl>
 <dd>
 
-**string_:** `string` 
+**string:** `string` 
     
 </dd>
 </dl>
