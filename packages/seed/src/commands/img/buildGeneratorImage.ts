@@ -53,16 +53,13 @@ async function buildFromPublishConfig(
           ? [publishConfig.preBuildCommands]
           : [];
 
-    // Determine if we should pipe output based on log level
-    const shouldPipeOutput = logLevel === LogLevel.Debug || logLevel === LogLevel.Trace;
-
     if (preBuild.length > 0) {
         context.logger.info("Running pre-build commands...");
         // Use workingDirectory if specified, otherwise use repoRoot
         const workingDir = publishConfig.workingDirectory
             ? path.join(repoRoot, publishConfig.workingDirectory)
             : repoRoot;
-        await runCommands(preBuild, context, workingDir, shouldPipeOutput);
+        await runCommands(preBuild, context, workingDir, shouldPipeOutput(logLevel));
     }
 
     const publishAliases = dockerConfig.aliases ?? [];
@@ -79,7 +76,7 @@ async function buildFromPublishConfig(
         "docker",
         ["build", "-f", dockerConfig.file, ...tagArgs, dockerConfig.context ?? "."],
         {
-            doNotPipeOutput: !shouldPipeOutput,
+            doNotPipeOutput: !shouldPipeOutput(logLevel),
             cwd: repoRoot
         }
     );
@@ -102,7 +99,6 @@ async function buildFromTestConfigFallback(
     context.logger.info("No publish.docker config found. Using test.docker fallback...");
 
     const commands = Array.isArray(testDocker.command) ? testDocker.command : [testDocker.command];
-    const shouldPipeOutput = logLevel === LogLevel.Debug || logLevel === LogLevel.Trace;
 
     context.logger.info(`Building docker image for ${generator.workspaceName}...`);
     for (const cmd of commands) {
@@ -116,7 +112,7 @@ async function buildFromTestConfigFallback(
             throw new Error(`Invalid command: ${cmd}`);
         }
         const { exitCode } = await loggingExeca(context.logger, bin, args, {
-            doNotPipeOutput: !shouldPipeOutput,
+            doNotPipeOutput: !shouldPipeOutput(logLevel),
             cwd: repoRoot
         });
         if (exitCode !== 0) {
@@ -144,4 +140,8 @@ async function buildFromTestConfigFallback(
     }
 
     context.logger.info(`Successfully built and tagged docker image(s): ${destTags.join(", ")}`);
+}
+
+export function shouldPipeOutput(logLevel: LogLevel): boolean {
+    return logLevel === LogLevel.Debug || logLevel === LogLevel.Trace;
 }
