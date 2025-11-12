@@ -13,7 +13,6 @@ import {
     TypeId,
     WebSocketChannel
 } from "@fern-fern/ir-sdk/api";
-import { FdrSnippetTemplate, FdrSnippetTemplateClient, FdrSnippetTemplateEnvironment } from "@fern-fern/snippet-sdk";
 import {
     AsIsManager,
     BundledTypescriptProject,
@@ -54,7 +53,6 @@ import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { WebsocketTypeSchemaGenerator } from "@fern-typescript/websocket-type-schema-generator";
 import { writeFile } from "fs/promises";
 import { Directory, Project, SourceFile, ts } from "ts-morph";
-import { v4 as uuidv4 } from "uuid";
 import { BaseClientContextImpl } from "./contexts/base-client/BaseClientContextImpl";
 import { SdkContextImpl } from "./contexts/SdkContextImpl";
 import { ContributingGenerator } from "./contributing/ContributingGenerator";
@@ -73,7 +71,6 @@ import { VersionDeclarationReferencer } from "./declaration-referencers/VersionD
 import { WebsocketSocketDeclarationReferencer } from "./declaration-referencers/WebsocketSocketDeclarationReferencer";
 import { WebsocketTypeSchemaDeclarationReferencer } from "./declaration-referencers/WebsocketTypeSchemaDeclarationReferencer";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
-import { TemplateGenerator } from "./TemplateGenerator";
 import { TypeScriptGeneratorAgent } from "./TypeScriptGeneratorAgent";
 import { TestGenerator } from "./test-generator/TestGenerator";
 import { VersionFileGenerator } from "./version/VersionFileGenerator";
@@ -104,7 +101,6 @@ export declare namespace SdkGenerator {
         generateOAuthClients: boolean;
         originalReadmeFilepath: AbsoluteFilePath | undefined;
         snippetFilepath: AbsoluteFilePath | undefined;
-        snippetTemplateFilepath: AbsoluteFilePath | undefined;
         shouldBundle: boolean;
         shouldUseBrandedStringAliases: boolean;
         isPackagePrivate: boolean;
@@ -177,7 +173,6 @@ export class SdkGenerator {
     private extraScripts: Record<string, string> = {};
 
     private endpointSnippets: FernGeneratorExec.Endpoint[] = [];
-    private endpointSnippetTemplates: FdrSnippetTemplate.SnippetRegistryEntry[] = [];
 
     private project: Project;
     private rootDirectory: Directory;
@@ -227,7 +222,6 @@ export class SdkGenerator {
     private websocketGenerator: WebsocketClassGenerator;
     private referenceConfigBuilder: ReferenceConfigBuilder;
     private generatorAgent: TypeScriptGeneratorAgent;
-    private FdrClient: FdrSnippetTemplateClient | undefined;
     private readonly asIsManager: AsIsManager;
     private websocketSocketDeclarationReferencer: WebsocketSocketDeclarationReferencer;
     private websocketTypeSchemaDeclarationReferencer: WebsocketTypeSchemaDeclarationReferencer;
@@ -522,16 +516,6 @@ export class SdkGenerator {
             ir: intermediateRepresentation
         });
 
-        this.FdrClient =
-            this.config.executionEnvironment !== "local"
-                ? new FdrSnippetTemplateClient({
-                      environment:
-                          this.config.executionEnvironment === "dev"
-                              ? "https://registry-dev2.buildwithfern.com"
-                              : FdrSnippetTemplateEnvironment.Prod
-                  })
-                : undefined;
-
         this.asIsManager = new AsIsManager({
             useBigInt: config.useBigInt,
             generateWireTests: config.generateWireTests,
@@ -652,32 +636,6 @@ export class SdkGenerator {
                 this.config.snippetFilepath,
                 JSON.stringify(await FernGeneratorExecSerializers.Snippets.jsonOrThrow(snippets), undefined, 4)
             );
-            if (this.config.snippetTemplateFilepath != null) {
-                this.context.logger.debug(
-                    `Generating snippet templates for Org: ${this.config.organization}, API: ${
-                        this.config.apiName
-                    } for package ${this.npmPackage?.packageName ?? "package_unknown"} at version: ${
-                        this.npmPackage?.version ?? "0.0.0"
-                    }.`
-                );
-                await writeFile(
-                    this.config.snippetTemplateFilepath,
-                    JSON.stringify(this.endpointSnippetTemplates, undefined, 4)
-                );
-                if (this.FdrClient != null) {
-                    this.context.logger.debug("FDR Client found, registering snippet templates.");
-                    try {
-                        await this.FdrClient.templates.registerBatch({
-                            orgId: this.config.organization,
-                            apiId: this.config.apiName,
-                            apiDefinitionId: this.intermediateRepresentation.fdrApiDefinitionId ?? uuidv4(),
-                            snippets: this.endpointSnippetTemplates
-                        });
-                    } catch (e) {
-                        this.context.logger.warn("Failed to register snippet templates with FDR, this is OK");
-                    }
-                }
-            }
             this.context.logger.debug("Generated snippets");
 
             try {
@@ -1255,64 +1213,6 @@ export class SdkGenerator {
             for (const endpoint of service.endpoints) {
                 if (packageId.isRoot) {
                     serviceReference = this.referenceConfigBuilder.addRootSection();
-                }
-
-                if (this.config.snippetTemplateFilepath != null && this.npmPackage != null) {
-                    const project = new Project({
-                        useInMemoryFileSystem: true
-                    });
-                    const sourceFile = project.createSourceFile("snippet-test", undefined, { overwrite: true });
-                    const importsManager = new ImportsManager({
-                        packagePath: this.relativePackagePath
-                    });
-                    const endpointContext = this.generateSdkContext(
-                        { sourceFile, importsManager },
-                        { isForSnippet: true }
-                    );
-
-                    const clientSourceFile = project.createSourceFile("snippet-client", undefined, { overwrite: true });
-                    const clientImportsManager = new ImportsManager({
-                        packagePath: this.relativePackagePath
-                    });
-                    const clientContext = this.generateSdkContext(
-                        { sourceFile: clientSourceFile, importsManager: clientImportsManager },
-                        { isForSnippet: true }
-                    );
-
-                    const snippetTemplate = new TemplateGenerator({
-                        endpointContext,
-                        clientContext,
-                        npmPackage: this.npmPackage,
-                        auth: this.intermediateRepresentation.auth,
-                        headers: this.intermediateRepresentation.headers,
-                        variables: this.intermediateRepresentation.variables,
-                        endpoint,
-                        packageId,
-                        rootPackageId: rootPackage,
-                        includeSerdeLayer: this.config.includeSerdeLayer,
-                        retainOriginalCasing: this.config.retainOriginalCasing,
-                        inlineFileProperties: this.config.inlineFileProperties,
-                        requireDefaultEnvironment: this.config.requireDefaultEnvironment
-                    }).generateSnippetTemplate();
-
-                    if (snippetTemplate != null) {
-                        const endpointPath = FernGeneratorExec.EndpointPath(getFullPathForEndpoint(endpoint));
-                        this.context.logger.debug(
-                            `Snippet template created for endpoint: ${endpoint.method} ${endpointPath}`
-                        );
-                        this.endpointSnippetTemplates.push({
-                            sdk: FdrSnippetTemplate.Sdk.typescript({
-                                package: this.npmPackage.packageName,
-                                version: this.npmPackage.version
-                            }),
-                            endpointId: {
-                                path: endpointPath,
-                                method: endpoint.method,
-                                identifierOverride: endpoint.id
-                            },
-                            snippetTemplate
-                        });
-                    }
                 }
 
                 let examplesForEndpoint: ExampleEndpointCall[] = [];

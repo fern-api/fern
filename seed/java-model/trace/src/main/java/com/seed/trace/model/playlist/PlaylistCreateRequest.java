@@ -110,7 +110,9 @@ public final class PlaylistCreateRequest implements IPlaylistCreateRequest {
 
     @java.lang.Override
     public _FinalStage addAllProblems(List<String> problems) {
-      this.problems.addAll(problems);
+      if (problems != null) {
+        this.problems.addAll(problems);
+      }
       return this;
     }
 
@@ -127,7 +129,9 @@ public final class PlaylistCreateRequest implements IPlaylistCreateRequest {
     )
     public _FinalStage problems(List<String> problems) {
       this.problems.clear();
-      this.problems.addAll(problems);
+      if (problems != null) {
+        this.problems.addAll(problems);
+      }
       return this;
     }
 

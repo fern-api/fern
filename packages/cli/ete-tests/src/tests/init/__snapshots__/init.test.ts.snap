@@ -93,9 +93,6 @@ navigation:
 colors:
   accentPrimary: '#ffffff'
   background: '#000000'
-ai-search:
-  location:
-    - docs
 ",
         "name": "docs.yml",
         "type": "file",

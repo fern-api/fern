@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Do not upload _snippet-templates.json_ files to FDR.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.115.6
+
+- changelogEntry:
+    - summary: |
         Fix PyPI credentials to use standard environment variable names (PYPI_USERNAME, PYPI_PASSWORD) and correct package version propagation for local generation
       type: fix
   irVersion: 61

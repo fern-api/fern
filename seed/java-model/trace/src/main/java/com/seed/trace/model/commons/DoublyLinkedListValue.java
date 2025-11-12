@@ -104,12 +104,16 @@ public final class DoublyLinkedListValue {
     )
     public Builder nodes(Map<String, DoublyLinkedListNodeValue> nodes) {
       this.nodes.clear();
-      this.nodes.putAll(nodes);
+      if (nodes != null) {
+        this.nodes.putAll(nodes);
+      }
       return this;
     }
 
     public Builder putAllNodes(Map<String, DoublyLinkedListNodeValue> nodes) {
-      this.nodes.putAll(nodes);
+      if (nodes != null) {
+        this.nodes.putAll(nodes);
+      }
       return this;
     }
 

@@ -47,6 +47,16 @@ public abstract class AbstractHttpResponseParserGenerator {
     private static final String INTEGER_ONE = "1";
     private static final String DECIMAL_ONE = "1.0";
 
+    /** Helper method to generate diagnostic string for container types. Useful for debugging and error messages. */
+    private static String getContainerDiagnosticString(com.fern.ir.model.types.ContainerType container) {
+        return "Container details - isOptional:" + container.isOptional()
+                + ", isNullable:" + container.isNullable()
+                + ", isList:" + container.isList()
+                + ", isSet:" + container.isSet()
+                + ", isMap:" + container.isMap()
+                + ", isLiteral:" + container.getLiteral().isPresent();
+    }
+
     protected final AbstractEndpointWriterVariableNameContext variables;
     protected final ClientGeneratorContext clientGeneratorContext;
     protected final HttpEndpoint httpEndpoint;
@@ -839,26 +849,43 @@ public abstract class AbstractHttpResponseParserGenerator {
             if (propertyPath.isEmpty() && !container.isOptional()) {
                 addPreviousIfPresent();
                 if (currentOptional || previousWasOptional) {
-                    String emptyCollectionString;
-                    if (container.isList()) {
-                        emptyCollectionString = "List";
+                    if (container.isNullable()) {
+                        codeBlocks.add(CodeBlock.builder().add(".orElse(null)").build());
+                        // For nullable containers, return the underlying type since we've unwrapped it
+                        com.fern.ir.model.types.TypeReference nullableType = container
+                                .getNullable()
+                                .orElseThrow(() -> new IllegalStateException(
+                                        "Container marked as nullable but getNullable() returned empty"));
+                        return new GetSnippetOutput(nullableType, codeBlocks);
+                    } else if (container.isList()) {
+                        codeBlocks.add(CodeBlock.builder()
+                                .add(".orElse($T.emptyList())", Collections.class)
+                                .build());
                     } else if (container.isSet()) {
-                        emptyCollectionString = "Set";
+                        codeBlocks.add(CodeBlock.builder()
+                                .add(".orElse($T.emptySet())", Collections.class)
+                                .build());
                     } else if (container.isMap()) {
-                        emptyCollectionString = "Map";
+                        codeBlocks.add(CodeBlock.builder()
+                                .add(".orElse($T.emptyMap())", Collections.class)
+                                .build());
+                    } else if (container.getLiteral().isPresent()) {
+                        throw new RuntimeException("Unexpected literal container in response parsing. " + "Literal: "
+                                + container.getLiteral().get());
                     } else {
-                        throw new RuntimeException("Unexpected container type");
+                        // This should not happen if we've covered all container types
+                        throw new RuntimeException(
+                                "Unexpected container type. " + getContainerDiagnosticString(container));
                     }
-                    codeBlocks.add(CodeBlock.builder()
-                            .add(".orElse($T.empty$L())", Collections.class, emptyCollectionString)
-                            .build());
                 }
                 return new GetSnippetOutput(typeReference, codeBlocks);
             }
             com.fern.ir.model.types.TypeReference ref = container
                     .getOptional()
-                    .orElseThrow(
-                            () -> new RuntimeException("Unexpected non-optional container type in snippet generation"));
+                    .or(() -> container.getNullable())
+                    .orElseThrow(() -> new RuntimeException(
+                            "Unexpected non-optional, non-nullable container type in snippet generation. "
+                                    + getContainerDiagnosticString(container)));
             return ref.visit(new NestedPropertySnippetGenerator(
                     ref,
                     propertyPath,
@@ -1248,12 +1275,17 @@ public abstract class AbstractHttpResponseParserGenerator {
             CodeBlock hasNextPageBlock;
 
             if (nextSnippet.typeReference.getContainer().isPresent()) {
-                if (nextSnippet.typeReference.getContainer().get().isOptional()) {
+                com.fern.ir.model.types.ContainerType containerType =
+                        nextSnippet.typeReference.getContainer().get();
+                if (containerType.isOptional()) {
                     hasNextPageBlock = CodeBlock.of("$L.isPresent()", variables.getStartingAfterVariableName());
+                } else if (containerType.isNullable()) {
+                    hasNextPageBlock = CodeBlock.of("$L != null", variables.getStartingAfterVariableName());
                 } else {
                     throw new IllegalStateException(
-                            "Found non-optional container as next page token. This should be impossible "
-                                    + "due to fern check validation.");
+                            "Found non-optional, non-nullable container as next page token. This should be impossible "
+                                    + "due to fern check validation. "
+                                    + getContainerDiagnosticString(containerType));
                 }
             } else if (nextSnippet.typeReference.getPrimitive().isPresent()) {
                 hasNextPageBlock = ZeroValueUtils.isNonzeroValue(
