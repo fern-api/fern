@@ -9,11 +9,5 @@ export interface ApiConfigurationV2Schema
         FernDefinition.fernDefinition.WithEnvironmentsSchema {
     auth?: FernDefinition.fernDefinition.ApiAuthSchema;
     specs: FernDefinition.ApiConfigurationV2SpecsSchema;
-    /**
-     * Global default API import settings that apply to all specs in this API configuration.
-     * Individual spec settings in specs[].settings will override these defaults.
-     * Generator settings in groups.generators[].api.settings will override both.
-     * Settings hierarchy (highest to lowest priority): generator > spec > api.
-     */
-    settings?: FernDefinition.BaseApiSettingsSchema;
+    settings?: FernDefinition.ApiConfigurationV2SettingsSchema;
 }

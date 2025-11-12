@@ -279,19 +279,23 @@ types:
 
   ## V2 API Configuration
   APIConfigurationV2Schema:
-    properties:
-      auth: optional<auth.ApiAuthSchema>
-      specs: APIConfigurationV2SpecsSchema
-      settings:
-        type: optional<BaseAPISettingsSchema>
-        docs: |
-          Global default API import settings that apply to all specs in this API configuration.
-          Individual spec settings in specs[].settings will override these defaults.
-          Generator settings in groups.generators[].api.settings will override both.
-          Settings hierarchy (highest to lowest priority): generator > spec > api.
     extends:
       - file.WithHeadersSchema
       - environments.WithEnvironmentsSchema
+    properties:
+      auth: optional<auth.ApiAuthSchema>
+      specs: APIConfigurationV2SpecsSchema
+      settings: optional<APIConfigurationV2SettingsSchema>
+
+  APIConfigurationV2SettingsSchema:
+    extends:
+      - OpenAPISettingsSchema
+      - AsyncAPISettingsSchema
+    docs: |
+      Global default API import settings that apply to all specs in this API configuration.
+      Individual spec settings in specs[].settings will override these defaults.
+      Generator settings in groups.generators[].api.settings will override both.
+      Settings hierarchy (highest to lowest priority): generator > spec > api.
 
   APIConfigurationV2SpecsSchema:
     discriminated: false

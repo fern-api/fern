@@ -7,7 +7,7 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { ApiAuthSchema } from "../../fernDefinition/resources/auth/types/ApiAuthSchema";
 import { ApiConfigurationV2SpecsSchema } from "./ApiConfigurationV2SpecsSchema";
-import { BaseApiSettingsSchema } from "./BaseApiSettingsSchema";
+import { ApiConfigurationV2SettingsSchema } from "./ApiConfigurationV2SettingsSchema";
 import { WithHeadersSchema } from "../../fernDefinition/resources/file/types/WithHeadersSchema";
 import { WithEnvironmentsSchema } from "../../fernDefinition/resources/environments/types/WithEnvironmentsSchema";
 
@@ -18,7 +18,7 @@ export const ApiConfigurationV2Schema: core.serialization.ObjectSchema<
     .object({
         auth: ApiAuthSchema.optional(),
         specs: ApiConfigurationV2SpecsSchema,
-        settings: BaseApiSettingsSchema.optional(),
+        settings: ApiConfigurationV2SettingsSchema.optional(),
     })
     .extend(WithHeadersSchema)
     .extend(WithEnvironmentsSchema);
@@ -27,6 +27,6 @@ export declare namespace ApiConfigurationV2Schema {
     export interface Raw extends WithHeadersSchema.Raw, WithEnvironmentsSchema.Raw {
         auth?: ApiAuthSchema.Raw | null;
         specs: ApiConfigurationV2SpecsSchema.Raw;
-        settings?: BaseApiSettingsSchema.Raw | null;
+        settings?: ApiConfigurationV2SettingsSchema.Raw | null;
     }
 }
