@@ -368,7 +368,8 @@ function addImgCommand(cli: Argv) {
                 );
             }
 
-            const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+            const logLevel = argv["log-level"];
+            const taskContextFactory = new TaskContextFactory(logLevel);
             const taskContext = taskContextFactory.create(`Building docker image for ${generator.workspaceName}`);
 
             taskContext.logger.info(`Using version: ${version}`);
@@ -376,7 +377,8 @@ function addImgCommand(cli: Argv) {
             await buildGeneratorImage({
                 generator,
                 version,
-                context: taskContext
+                context: taskContext,
+                logLevel
             });
         }
     );

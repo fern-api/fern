@@ -1,4 +1,5 @@
 import { loggingExeca } from "@fern-api/logging-execa";
+import { LogLevel } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
 import path from "path";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
@@ -7,11 +8,13 @@ import { runCommands } from "../../utils/publishUtilities";
 export async function buildGeneratorImage({
     generator,
     version,
-    context
+    context,
+    logLevel
 }: {
     generator: GeneratorWorkspace;
     version: string;
     context: TaskContext;
+    logLevel: LogLevel;
 }): Promise<void> {
     try {
         const repoRoot = path.dirname(path.dirname(generator.absolutePathToWorkspace));
@@ -19,9 +22,9 @@ export async function buildGeneratorImage({
         const dockerConfig = publishConfig && "docker" in publishConfig ? publishConfig.docker : undefined;
 
         if (dockerConfig) {
-            await buildFromPublishConfig(generator, dockerConfig, publishConfig, version, repoRoot, context);
+            await buildFromPublishConfig(generator, dockerConfig, publishConfig, version, repoRoot, context, logLevel);
         } else {
-            await buildFromTestConfigFallback(generator, version, repoRoot, context);
+            await buildFromTestConfigFallback(generator, version, repoRoot, context, logLevel);
         }
 
         context.logger.info("Image(s) available in your local docker daemon.");
@@ -41,7 +44,8 @@ async function buildFromPublishConfig(
     publishConfig: { preBuildCommands?: string | string[]; workingDirectory?: string },
     version: string,
     repoRoot: string,
-    context: TaskContext
+    context: TaskContext,
+    logLevel: LogLevel
 ): Promise<void> {
     const preBuild = Array.isArray(publishConfig.preBuildCommands)
         ? publishConfig.preBuildCommands
@@ -49,9 +53,16 @@ async function buildFromPublishConfig(
           ? [publishConfig.preBuildCommands]
           : [];
 
+    // Determine if we should pipe output based on log level
+    const shouldPipeOutput = logLevel === LogLevel.Debug || logLevel === LogLevel.Trace;
+
     if (preBuild.length > 0) {
         context.logger.info("Running pre-build commands...");
-        await runCommands(preBuild, context, repoRoot);
+        // Use workingDirectory if specified, otherwise use repoRoot
+        const workingDir = publishConfig.workingDirectory
+            ? path.join(repoRoot, publishConfig.workingDirectory)
+            : repoRoot;
+        await runCommands(preBuild, context, workingDir, shouldPipeOutput);
     }
 
     const publishAliases = dockerConfig.aliases ?? [];
@@ -68,7 +79,7 @@ async function buildFromPublishConfig(
         "docker",
         ["build", "-f", dockerConfig.file, ...tagArgs, dockerConfig.context ?? "."],
         {
-            doNotPipeOutput: true,
+            doNotPipeOutput: !shouldPipeOutput,
             cwd: repoRoot
         }
     );
@@ -80,17 +91,18 @@ async function buildFromTestConfigFallback(
     generator: GeneratorWorkspace,
     version: string,
     repoRoot: string,
-    context: TaskContext
+    context: TaskContext,
+    logLevel: LogLevel
 ): Promise<void> {
     const testDocker = generator.workspaceConfig.test?.docker;
     if (!testDocker) {
-        context.failAndThrow(`No publish.docker or test.docker config found for ${generator.workspaceName}`);
-        return;
+        throw new Error(`No publish.docker or test.docker config found for ${generator.workspaceName}`);
     }
 
     context.logger.info("No publish.docker config found. Using test.docker fallback...");
 
     const commands = Array.isArray(testDocker.command) ? testDocker.command : [testDocker.command];
+    const shouldPipeOutput = logLevel === LogLevel.Debug || logLevel === LogLevel.Trace;
 
     context.logger.info(`Building docker image for ${generator.workspaceName}...`);
     for (const cmd of commands) {
@@ -101,16 +113,14 @@ async function buildFromTestConfigFallback(
         const bin = parts[0];
         const args = parts.slice(1);
         if (!bin) {
-            context.failAndThrow(`Invalid command: ${cmd}`);
-            return;
+            throw new Error(`Invalid command: ${cmd}`);
         }
         const { exitCode } = await loggingExeca(context.logger, bin, args, {
-            doNotPipeOutput: true,
+            doNotPipeOutput: !shouldPipeOutput,
             cwd: repoRoot
         });
         if (exitCode !== 0) {
-            context.failAndThrow(`Failed to run ${cmd}`);
-            return;
+            throw new Error(`Failed to run ${cmd}`);
         }
     }
 
