@@ -571,7 +571,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 })
                 .option("github-mode", {
                     type: "string",
-                    choices: ["push", "pull-request", "commit", "release"],
+                    choices: ["push", "pull-request", "release"],
                     description: "Override github.mode for all generators in the group"
                 })
                 .option("github-branch", {

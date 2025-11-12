@@ -5,7 +5,7 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml
 } from "@fern-api/configuration-loader";
-import { ContainerRunner, visitDiscriminatedUnion } from "@fern-api/core-utils";
+import { assertNever, ContainerRunner, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
@@ -197,7 +197,6 @@ function applyGithubOverrides(
                 return "push";
             case "pull-request":
                 return "pullRequest";
-            case "commit":
             case "release":
                 return "commitAndRelease";
             default:
@@ -241,6 +240,8 @@ function applyGithubOverrides(
                             });
                         case "commitAndRelease":
                             return FernFiddle.GithubOutputModeV2.commitAndRelease(base);
+                        default:
+                            return assertNever(target as never);
                     }
                 },
                 pullRequest: (cfg) => {
@@ -267,6 +268,8 @@ function applyGithubOverrides(
                             });
                         case "commitAndRelease":
                             return FernFiddle.GithubOutputModeV2.commitAndRelease(base);
+                        default:
+                            return assertNever(target as never);
                     }
                 },
                 commitAndRelease: (cfg) => {
@@ -293,6 +296,8 @@ function applyGithubOverrides(
                             });
                         case "commitAndRelease":
                             return FernFiddle.GithubOutputModeV2.commitAndRelease(base);
+                        default:
+                            return assertNever(target as never);
                     }
                 },
                 _other: () => currentGithubConfig
