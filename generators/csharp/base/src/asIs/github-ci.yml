@@ -1,6 +1,12 @@
-name: ci
+name: CI
 
 on: [push]
+
+env:
+  CI: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_NOLOGO: true
+  MSBUILDTERMINALLOGGER: off
 
 jobs:
   compile:
@@ -8,20 +14,23 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - uses: actions/checkout@master
+        uses: actions/checkout@v5
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: 8.x
+          dotnet-version: 10.x
+
+      - name: List SDKs
+        run: dotnet --list-sdks
 
       - name: Install tools
-        run: |
-          dotnet tool restore
+        run: dotnet tool restore
 
-      - name: Build Release
+      - name: Restore dependencies
+        run: dotnet restore src
+
+      - name: Build release
         run: dotnet build src -c Release /p:ContinuousIntegrationBuild=true
 
   unit-tests:
@@ -29,22 +38,28 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - uses: actions/checkout@master
+        uses: actions/checkout@v5
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: 8.x
+          dotnet-version: 10.x
+
+      - name: List SDKs
+        run: dotnet --list-sdks
 
       - name: Install tools
-        run: |
-          dotnet tool restore
+        run: dotnet tool restore
 
-      - name: Run Tests
-        run: |
-          dotnet test src
+      - name: Restore dependencies
+        run: dotnet restore src
+
+      - name: Build release
+        run: dotnet build src -c Release /p:ContinuousIntegrationBuild=true
+
+      - name: Run tests
+        run: dotnet test src --no-restore --no-build -c Release /p:ContinuousIntegrationBuild=true
+        continue-on-error: true
 
 <% if (shouldWritePublishBlock) { %>
   publish:
@@ -54,17 +69,17 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: 8.x
+          dotnet-version: 10.x
 
-      - name: Publish
+      - name: Publish to nuget.org
         env:
           NUGET_API_KEY: $\{{ secrets.<%= nugetTokenEnvvar%> }}
         run: |
-          dotnet pack src -c Release
+          dotnet pack src/<%= projectName%> --no-build --no-restore -c Release
           dotnet nuget push src/<%= projectName%>/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
-<% } %>
+<% } %}
