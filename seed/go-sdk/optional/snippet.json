@@ -2,6 +2,17 @@
     "endpoints": [
         {
             "id": {
+                "path": "/deploy/{actionId}/versions/{id}",
+                "method": "POST",
+                "identifier_override": "endpoint_optional.sendOptionalNullableWithAllOptionalProperties"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/optional/fern\"\n\tfernclient \"github.com/optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Optional.SendOptionalNullableWithAllOptionalProperties(\n\tcontext.TODO(),\n\t\"actionId\",\n\t\"id\",\n\t\u0026fern.DeployParams{\n\t\tUpdateDraft: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/send-optional-body",
                 "method": "POST",
                 "identifier_override": "endpoint_optional.sendOptionalBody"
@@ -9,6 +20,17 @@
             "snippet": {
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Optional.SendOptionalBody(\n\tcontext.TODO(),\n\tmap[string]interface{}{\n\t\t\"string\": map[string]interface{}{\n\t\t\t\"key\": \"value\",\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/send-optional-typed-body",
+                "method": "POST",
+                "identifier_override": "endpoint_optional.sendOptionalTypedBody"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/optional/fern\"\n\tfernclient \"github.com/optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Optional.SendOptionalTypedBody(\n\tcontext.TODO(),\n\t\u0026fern.SendOptionalBodyRequest{\n\t\tMessage: \"message\",\n\t},\n)\n"
             }
         }
     ]
