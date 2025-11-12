@@ -53,6 +53,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     private readonly ir: IntermediateRepresentation;
     private readonly packageId: PackageId;
     private readonly requestParameter: RequestParameter | undefined;
+    private pathOnlyRequestParameter: PathOnlyRequestParameter | undefined;
     private queryParams: GeneratedQueryParams | undefined;
     private readonly service: HttpService;
     private readonly endpoint: HttpEndpoint;
@@ -110,10 +111,11 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     private ensureRequestParameter(context: SdkContext): void {
         if (
             this.requestParameter == null &&
+            this.pathOnlyRequestParameter == null &&
             context.requestWrapper.shouldInlinePathParameters(this.endpoint.sdkRequest) &&
             isPathOnlyEndpoint(this.service, this.endpoint)
         ) {
-            this.requestParameter = new PathOnlyRequestParameter({
+            this.pathOnlyRequestParameter = new PathOnlyRequestParameter({
                 packageId: this.packageId,
                 service: this.service,
                 endpoint: this.endpoint
@@ -122,7 +124,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     }
 
     public getRequestParameter(context: SdkContext): ts.TypeNode | undefined {
-        return this.requestParameter?.getType(context);
+        return (this.requestParameter ?? this.pathOnlyRequestParameter)?.getType(context);
     }
 
     public getEndpointParameters(
@@ -145,8 +147,9 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                 docs: pathParameter.docs
             });
         }
-        if (this.requestParameter != null) {
-            parameters.push(this.requestParameter.getParameterDeclaration(context));
+        const requestParameter = this.requestParameter ?? this.pathOnlyRequestParameter;
+        if (requestParameter != null) {
+            parameters.push(requestParameter.getParameterDeclaration(context));
         }
         return parameters;
     }
@@ -182,17 +185,18 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                 result.push(generatedExample.build(context, opts));
             }
         }
-        if (this.requestParameter != null) {
-            const requestParameterExample = this.requestParameter.generateExample({ context, example, opts });
+        const requestParameter = this.requestParameter ?? this.pathOnlyRequestParameter;
+        if (requestParameter != null) {
+            const requestParameterExample = requestParameter.generateExample({ context, example, opts });
             if (
                 requestParameterExample != null &&
                 getTextOfTsNode(requestParameterExample) === "{}" &&
-                this.requestParameter.isOptional({ context })
+                requestParameter.isOptional({ context })
             ) {
                 // pass
             } else if (requestParameterExample != null) {
                 result.push(requestParameterExample);
-            } else if (!this.requestParameter.isOptional({ context })) {
+            } else if (!requestParameter.isOptional({ context })) {
                 return undefined;
             }
         }
@@ -203,9 +207,10 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         this.ensureRequestParameter(context);
         const statements: ts.Statement[] = [];
 
-        if (this.requestParameter != null) {
+        const requestParameter = this.requestParameter ?? this.pathOnlyRequestParameter;
+        if (requestParameter != null) {
             statements.push(
-                ...this.requestParameter.getInitialStatements(context, {
+                ...requestParameter.getInitialStatements(context, {
                     variablesInScope: this.getEndpointParameters(context).map((param) => param.name)
                 })
             );
@@ -267,7 +272,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         return generateHeaders({
             context,
             intermediateRepresentation: this.ir,
-            requestParameter: this.requestParameter,
+            requestParameter: this.requestParameter ?? this.pathOnlyRequestParameter,
             generatedSdkClientClass: this.generatedSdkClientClass,
             idempotencyHeaders: this.ir.idempotencyHeaders,
             service: this.service,
@@ -276,10 +281,11 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     }
 
     private getSerializedRequestBodyWithNullCheck(context: SdkContext): ts.Expression | undefined {
-        if (this.requestParameter == null || this.requestBody == null) {
+        const requestParameter = this.requestParameter ?? this.pathOnlyRequestParameter;
+        if (requestParameter == null || this.requestBody == null) {
             return undefined;
         }
-        const referenceToRequestBody = this.requestParameter.getReferenceToRequestBody(context);
+        const referenceToRequestBody = requestParameter.getReferenceToRequestBody(context);
         if (referenceToRequestBody == null) {
             return undefined;
         }
@@ -406,29 +412,33 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     }
 
     public getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined {
-        return this.requestParameter?.getReferenceToRequestBody(context);
+        return (this.requestParameter ?? this.pathOnlyRequestParameter)?.getReferenceToRequestBody(context);
     }
 
     public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
         this.ensureRequestParameter(context);
-        if (this.requestParameter == null) {
+        const requestParameter = this.requestParameter ?? this.pathOnlyRequestParameter;
+        if (requestParameter == null) {
             throw new Error("Cannot get reference to path parameter because request parameter is not defined.");
         }
-        return this.requestParameter.getReferenceToPathParameter(pathParameterKey, context);
+        return requestParameter.getReferenceToPathParameter(pathParameterKey, context);
     }
 
     public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
         this.ensureRequestParameter(context);
-        if (this.requestParameter == null) {
+        const requestParameter = this.requestParameter ?? this.pathOnlyRequestParameter;
+        if (requestParameter == null) {
             throw new Error("Cannot get reference to query parameter because request parameter is not defined.");
         }
-        return this.requestParameter.getReferenceToQueryParameter(queryParameterKey, context);
+        return requestParameter.getReferenceToQueryParameter(queryParameterKey, context);
     }
 
     public getQueryParams(context: SdkContext): GeneratedQueryParams {
         if (this.queryParams == null) {
             this.queryParams = new GeneratedQueryParams({
-                queryParameters: this.requestParameter?.getAllQueryParameters(context),
+                queryParameters: (this.requestParameter ?? this.pathOnlyRequestParameter)?.getAllQueryParameters(
+                    context
+                ),
                 referenceToQueryParameterProperty: (key, context) => this.getReferenceToQueryParameter(key, context)
             });
         }
