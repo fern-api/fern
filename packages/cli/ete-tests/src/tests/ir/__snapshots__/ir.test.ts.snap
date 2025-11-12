@@ -2118,6 +2118,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 }
@@ -9175,6 +9176,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 },
@@ -9259,6 +9261,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 }
@@ -9408,6 +9411,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 }
@@ -12430,6 +12434,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 }
@@ -13729,6 +13734,7 @@ exports[`ir > {"name":"packages"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 }
@@ -16117,6 +16123,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 },
@@ -16847,6 +16854,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 }
@@ -18944,6 +18952,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                         "internal"
                     ],
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 }
@@ -22930,6 +22939,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                         "test"
                     ],
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 }
@@ -32021,6 +32031,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "internal"
                     ],
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 },
@@ -34323,6 +34334,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "test"
                     ],
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 },
@@ -37116,6 +37128,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 },
@@ -37888,6 +37901,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 }
@@ -40907,6 +40921,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 },
@@ -41200,6 +41215,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 }
@@ -42443,6 +42459,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 }
