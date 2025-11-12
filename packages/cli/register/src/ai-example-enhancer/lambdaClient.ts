@@ -51,6 +51,7 @@ export class LambdaExampleEnhancer {
                     body: JSON.stringify({
                         method: request.method,
                         endpointPath: request.endpointPath,
+                        organizationId: request.organizationId,
                         operationSummary: request.operationSummary,
                         operationDescription: request.operationDescription,
                         originalRequestExample: request.originalRequestExample,
