@@ -65,11 +65,11 @@ module <%= gem_namespace %>
                 # Check if member_type is a Model class
                 next unless member_type.is_a?(Class) && member_type <= Model
 
-                # Try to coerce the hash into this model type
+                # Try to coerce the hash into this model type with strict mode
                 begin
-                  member_type.coerce(value)
+                  Utils.coerce(member_type, value, strict: true)
                   true
-                rescue StandardError
+                rescue Errors::TypeError
                   false
                 end
               end&.last&.call
@@ -96,4 +96,4 @@ module <%= gem_namespace %>
       end
     end
   end
-end  
+end    
