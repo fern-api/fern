@@ -39,11 +39,15 @@ export class RustDependencyManager {
     /**
      * Add a dependency to the manager
      */
-    public add(name: string, spec: RustDependencySpec | string, type: RustDependencyType = RustDependencyType.PROD): void {
+    public add(
+        name: string,
+        spec: RustDependencySpec | string,
+        type: RustDependencyType = RustDependencyType.PROD
+    ): void {
         const targetMap = this.getMapForType(type);
-        
-        const normalizedSpec: RustDependencySpec = typeof spec === 'string' ? { version: spec } : spec;
-        
+
+        const normalizedSpec: RustDependencySpec = typeof spec === "string" ? { version: spec } : spec;
+
         const existing = targetMap.get(name);
         if (existing) {
             const mergedSpec = this.mergeDependencySpecs(existing, normalizedSpec);
@@ -105,10 +109,7 @@ export class RustDependencyManager {
      * Merge two dependency specs, combining features
      */
     private mergeDependencySpecs(existing: RustDependencySpec, newSpec: RustDependencySpec): RustDependencySpec {
-        const mergedFeatures = new Set<string>([
-            ...(existing.features || []),
-            ...(newSpec.features || [])
-        ]);
+        const mergedFeatures = new Set<string>([...(existing.features || []), ...(newSpec.features || [])]);
 
         return {
             ...existing,
@@ -126,7 +127,7 @@ export class RustDependencyManager {
         }
 
         const sorted = Array.from(deps.entries()).sort(([a], [b]) => a.localeCompare(b));
-        return sorted.map(([name, spec]) => this.renderDependency(name, spec)).join('\n');
+        return sorted.map(([name, spec]) => this.renderDependency(name, spec)).join("\n");
     }
 
     /**
@@ -151,16 +152,16 @@ export class RustDependencyManager {
         }
 
         if (spec.features && spec.features.length > 0) {
-            const featuresStr = spec.features.map(f => `"${f}"`).join(', ');
+            const featuresStr = spec.features.map((f) => `"${f}"`).join(", ");
             parts.push(`features = [${featuresStr}]`);
         }
 
         if (spec.optional) {
-            parts.push('optional = true');
+            parts.push("optional = true");
         }
 
         if (spec.defaultFeatures === false) {
-            parts.push('default-features = false');
+            parts.push("default-features = false");
         }
 
         if (spec.package) {
@@ -187,7 +188,7 @@ export class RustDependencyManager {
             parts.push(`registry = "${spec.registry}"`);
         }
 
-        return `${name} = { ${parts.join(', ')} }`;
+        return `${name} = { ${parts.join(", ")} }`;
     }
 
     /**
@@ -195,23 +196,23 @@ export class RustDependencyManager {
      */
     private renderFeatures(): string {
         if (this.features.size === 0 && this.defaultFeatures.size === 0) {
-            return '';
+            return "";
         }
 
         const lines: string[] = [];
 
         if (this.defaultFeatures.size > 0) {
             const defaults = Array.from(this.defaultFeatures).sort();
-            const defaultsStr = defaults.map(f => `"${f}"`).join(', ');
+            const defaultsStr = defaults.map((f) => `"${f}"`).join(", ");
             lines.push(`default = [${defaultsStr}]`);
         }
 
         const sortedFeatures = Array.from(this.features.entries()).sort(([a], [b]) => a.localeCompare(b));
         for (const [name, members] of sortedFeatures) {
-            const membersStr = members.map(m => `"${m}"`).join(', ');
+            const membersStr = members.map((m) => `"${m}"`).join(", ");
             lines.push(`${name} = [${membersStr}]`);
         }
 
-        return lines.join('\n');
+        return lines.join("\n");
     }
 }

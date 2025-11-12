@@ -96,7 +96,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         const tomlSections = this.context.dependencyManager.toTomlSections();
         content = content.replace(/\{\{EXTRA_DEPENDENCIES\}\}/g, tomlSections.dependencies);
         content = content.replace(/\{\{EXTRA_DEV_DEPENDENCIES\}\}/g, tomlSections.devDependencies);
-        
+
         if (tomlSections.features) {
             content = content.replace(/\{\{FEATURES\}\}/g, `\n[features]\n${tomlSections.features}`);
         } else {

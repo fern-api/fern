@@ -1,8 +1,9 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
+import type * as FernIr from "@fern-fern/ir-sdk/api";
 import { HttpEndpoint, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { AsIsFileDefinition } from "../AsIs";
-import { RustDependencyManager, RustDependencyType, RustProject } from "../project";
+import { RustDependencyManager, RustDependencySpec, RustDependencyType, RustProject } from "../project";
 import {
     convertPascalToSnakeCase,
     convertToSnakeCase,
@@ -81,7 +82,7 @@ export abstract class AbstractRustGeneratorContext<
             if (typeof versionOrSpec === "string") {
                 this.dependencyManager.add(name, versionOrSpec);
             } else {
-                this.dependencyManager.add(name, versionOrSpec as any);
+                this.dependencyManager.add(name, versionOrSpec as RustDependencySpec);
             }
         }
 
@@ -165,7 +166,15 @@ export abstract class AbstractRustGeneratorContext<
 
                 if (endpoint.response?.body) {
                     const usesBuiltin = endpoint.response.body._visit({
-                        json: (json: any) => this.typeReferenceUsesBuiltin(json.responseBodyType, typeName),
+                        json: (json: FernIr.JsonResponse) => {
+                            return json._visit({
+                                response: (response: FernIr.JsonResponseBody) =>
+                                    this.typeReferenceUsesBuiltin(response.responseBodyType, typeName),
+                                nestedPropertyAsResponse: (nested: FernIr.JsonResponseBodyWithProperty) =>
+                                    this.typeReferenceUsesBuiltin(nested.responseBodyType, typeName),
+                                _other: () => false
+                            });
+                        },
                         fileDownload: () => false,
                         streaming: () => false,
                         streamParameter: () => false,
@@ -204,11 +213,11 @@ export abstract class AbstractRustGeneratorContext<
     /**
      * Check if a type shape uses a specific builtin type
      */
-    private typeShapeUsesBuiltin(shape: any, typeName: string): boolean {
+    private typeShapeUsesBuiltin(shape: FernIr.Type, typeName: string): boolean {
         return shape._visit({
-            alias: (alias: any) => this.typeReferenceUsesBuiltin(alias.aliasOf, typeName),
+            alias: (alias: FernIr.AliasTypeDeclaration) => this.typeReferenceUsesBuiltin(alias.aliasOf, typeName),
             enum: () => false,
-            object: (obj: any) => {
+            object: (obj: FernIr.ObjectTypeDeclaration) => {
                 for (const property of obj.properties) {
                     if (this.typeReferenceUsesBuiltin(property.valueType, typeName)) {
                         return true;
@@ -216,7 +225,7 @@ export abstract class AbstractRustGeneratorContext<
                 }
                 return false;
             },
-            union: (union: any) => {
+            union: (union: FernIr.UnionTypeDeclaration) => {
                 for (const variant of union.types) {
                     if (variant.shape.type === "singleProperty") {
                         if (this.typeReferenceUsesBuiltin(variant.shape.type, typeName)) {
@@ -231,7 +240,7 @@ export abstract class AbstractRustGeneratorContext<
                 }
                 return false;
             },
-            undiscriminatedUnion: (union: any) => {
+            undiscriminatedUnion: (union: FernIr.UndiscriminatedUnionTypeDeclaration) => {
                 for (const member of union.members) {
                     if (this.typeReferenceUsesBuiltin(member.type, typeName)) {
                         return true;
@@ -246,26 +255,26 @@ export abstract class AbstractRustGeneratorContext<
     /**
      * Check if a type reference uses a specific builtin type
      */
-    private typeReferenceUsesBuiltin(typeRef: any, typeName: string): boolean {
+    private typeReferenceUsesBuiltin(typeRef: FernIr.TypeReference, typeName: string): boolean {
         return typeRef._visit({
-            primitive: (primitive: any) => {
+            primitive: (primitive: FernIr.PrimitiveType) => {
                 return primitive.v1 === typeName;
             },
-            container: (container: any) => {
+            container: (container: FernIr.ContainerType) => {
                 return container._visit({
-                    list: (list: any) => this.typeReferenceUsesBuiltin(list, typeName),
-                    set: (set: any) => this.typeReferenceUsesBuiltin(set, typeName),
-                    optional: (optional: any) => this.typeReferenceUsesBuiltin(optional, typeName),
-                    nullable: (nullable: any) => this.typeReferenceUsesBuiltin(nullable, typeName),
-                    map: (map: any) =>
+                    list: (list: FernIr.TypeReference) => this.typeReferenceUsesBuiltin(list, typeName),
+                    set: (set: FernIr.TypeReference) => this.typeReferenceUsesBuiltin(set, typeName),
+                    optional: (optional: FernIr.TypeReference) => this.typeReferenceUsesBuiltin(optional, typeName),
+                    nullable: (nullable: FernIr.TypeReference) => this.typeReferenceUsesBuiltin(nullable, typeName),
+                    map: (map: FernIr.MapType) =>
                         this.typeReferenceUsesBuiltin(map.keyType, typeName) ||
                         this.typeReferenceUsesBuiltin(map.valueType, typeName),
                     literal: () => false,
                     _other: () => false
                 });
             },
-            named: (named: any) => {
-                const typeDecl = this.ir.types[named];
+            named: (named: FernIr.NamedType) => {
+                const typeDecl = this.ir.types[named.typeId];
                 if (typeDecl) {
                     return this.typeShapeUsesBuiltin(typeDecl.shape, typeName);
                 }
