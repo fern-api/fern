@@ -116,7 +116,7 @@ export async function buildNavigationForDirectory({
 
             if (matchingPageIndex !== -1) {
                 const matchingPage = subContents[matchingPageIndex];
-                if (matchingPage.type === "page") {
+                if (matchingPage != null && matchingPage.type === "page") {
                     overviewAbsolutePath = matchingPage.absolutePath;
                     filteredContents = subContents.filter((_, index) => index !== matchingPageIndex);
                 }
