@@ -149,3 +149,50 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           pnpm seed publish cli --ver ${{ inputs.version }} --log-level debug
           pnpm seed register cli
+
+  bulk-update-cli:
+    runs-on: ubuntu-latest
+    needs: [prod, manual]
+    if: ${{ always() && (needs.prod.result == 'success' || needs.manual.result == 'success') }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Get CLI version
+        id: get_version
+        run: |
+          if [ -n "${{ inputs.version }}" ]; then
+            # Manual publish - use the input version
+            echo "CLI_VERSION=${{ inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            # Automatic publish - extract from versions.yml
+            version=$(head -n 20 packages/cli/cli/versions.yml | grep -m 1 "version:" | awk '{print $2}')
+            echo "CLI_VERSION=${version}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Trigger bulk update
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          version="${{ steps.get_version.outputs.CLI_VERSION }}"
+          echo "Triggering bulk update for CLI version: ${version}"
+          
+          response=$(curl -s -w "\n%{http_code}" -X POST \
+            "https://autopilot.buildwithfern.com/api/bulk-update-cli" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${FERN_TOKEN}" \
+            -d "{\"newVersion\": \"${version}\"}")
+          
+          http_code=$(echo "$response" | tail -n 1)
+          body=$(echo "$response" | sed '$d')
+          
+          echo "Response status: ${http_code}"
+          echo "Response body: ${body}"
+          
+          if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
+            echo "✓ Bulk update triggered successfully"
+            exit 0
+          else
+            echo "✗ Bulk update failed with status ${http_code}"
+            exit 1
+          fi
