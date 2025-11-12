@@ -617,6 +617,7 @@ trevorblades
 trippable
 trivago
 tsconfg
+tsgolint
 tsup
 ttlock
 TVOS

@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getResource</a>(resourceId) -> SeedMixedCase.Resource</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getResource</a>(ResourceID) -> SeedMixedCase.Resource</code></summary>
 <dl>
 <dd>
 
@@ -29,7 +29,7 @@ await client.service.getResource("rsc-xyz");
 <dl>
 <dd>
 
-**resourceId:** `string` 
+**ResourceID:** `string` 
     
 </dd>
 </dl>
