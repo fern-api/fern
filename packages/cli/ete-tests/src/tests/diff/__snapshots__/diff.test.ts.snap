@@ -1,5 +1,5 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`breaking 1`] = `"{"bump":"major","nextVersion":"2.0.0"}"`;
+exports[`non-breaking 1`] = `"{"bump":"major","nextVersion":"2.0.0"}"`;
 
 exports[`non-breaking 1`] = `"{"bump":"minor","nextVersion":"1.2.0"}"`;
