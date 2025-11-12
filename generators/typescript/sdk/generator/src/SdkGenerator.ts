@@ -1698,10 +1698,8 @@ export class SdkGenerator {
             }
 
             const clientFilepath = this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId);
-            const relativePath = clientFilepath
-                .slice(1)
-                .replace(/^src\//, "")
-                .replace(/\/client$/, "");
+            const fullPath = this.exportsManager.convertExportedFilePathToFilePath(clientFilepath);
+            const relativePath = fullPath.replace(/^\//, "").replace(/^src\//, "").replace(/\/client\/Client\.ts$/, "");
             paths.push(relativePath);
         }
 
@@ -1721,8 +1719,12 @@ export class SdkGenerator {
             }
 
             const clientFilepath = this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId);
-            const packagePath = clientFilepath.slice(1).replace(/\/client$/, "");
-            const exportsFilepath = `${packagePath}/exports`;
+            const exportsFilepath: ExportedFilePath = {
+                directories: clientFilepath.directories.slice(0, -1), // Remove the "client" directory
+                file: {
+                    nameOnDisk: "exports.ts"
+                }
+            };
 
             this.withSourceFile({
                 filepath: exportsFilepath,
