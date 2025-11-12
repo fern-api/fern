@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 2.7.6
+- version: 2.9.0
   changelogEntry:
-    - type: chore
+    - type: feat
       summary: |
         Upgrade C# SDK generator Docker images to use .NET 10 SDK base image.
         * Improves package restoration and build performance
