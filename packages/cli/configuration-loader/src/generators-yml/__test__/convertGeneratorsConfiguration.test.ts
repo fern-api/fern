@@ -345,7 +345,9 @@ describe("convertGeneratorsConfiguration", () => {
 
         expect(mockLogger.warn).toHaveBeenCalledWith(expect.stringContaining("Warnings for generators.yml:"));
         expect(mockLogger.warn).toHaveBeenCalledWith(
-            expect.stringContaining('"api-settings" is deprecated. Please use "api.specs[].settings" instead.')
+            expect.stringContaining(
+                '"api-settings" is deprecated. Please use root-level "settings" for global defaults or "api.specs[].settings" for spec-specific settings instead.'
+            )
         );
         expect(mockLogger.warn).toHaveBeenCalledWith(
             expect.stringContaining('"async-api" is deprecated. Please use "api.specs[].asyncapi" instead.')
@@ -475,5 +477,273 @@ describe("convertGeneratorsConfiguration", () => {
                 'Using "api.namespaces" is deprecated. Please use "api.specs[].openapi", "api.specs[].asyncapi", or "api.specs[].proto" with the "namespace" property instead.'
             )
         );
+    });
+
+    describe("settings hierarchy (generator > spec > root)", () => {
+        it("root settings are applied to all API specs", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    settings: {
+                        "title-as-schema-name": true,
+                        "idiomatic-request-names": false
+                    },
+                    api: {
+                        specs: [
+                            {
+                                openapi: "path/to/spec1.yml"
+                            },
+                            {
+                                openapi: "path/to/spec2.yml"
+                            }
+                        ]
+                    }
+                },
+                context
+            });
+
+            // Verify both specs inherit root settings
+            expect(converted.api?.type).toBe("singleNamespace");
+            if (converted.api?.type === "singleNamespace") {
+                expect(converted.api.definitions).toHaveLength(2);
+                expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(true);
+                expect(converted.api.definitions[0]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
+                expect(converted.api.definitions[1]?.settings?.shouldUseTitleAsName).toBe(true);
+                expect(converted.api.definitions[1]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
+            }
+        });
+
+        it("spec settings override root settings", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    settings: {
+                        "title-as-schema-name": true,
+                        "idiomatic-request-names": false
+                    },
+                    api: {
+                        specs: [
+                            {
+                                openapi: "path/to/spec.yml",
+                                settings: {
+                                    "title-as-schema-name": false
+                                }
+                            }
+                        ]
+                    }
+                },
+                context
+            });
+
+            // Verify spec setting overrides root, but other root settings are preserved
+            expect(converted.api?.type).toBe("singleNamespace");
+            if (converted.api?.type === "singleNamespace") {
+                expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(false);
+                expect(converted.api.definitions[0]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
+            }
+        });
+
+        it("partial overrides preserve other root settings", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    settings: {
+                        "title-as-schema-name": true,
+                        "idiomatic-request-names": false,
+                        "coerce-enums-to-literals": true
+                    },
+                    api: {
+                        specs: [
+                            {
+                                openapi: "path/to/spec.yml",
+                                settings: {
+                                    "title-as-schema-name": false
+                                    // Only override one setting
+                                }
+                            }
+                        ]
+                    }
+                },
+                context
+            });
+
+            // Verify only specified setting is overridden, others preserved from root
+            expect(converted.api?.type).toBe("singleNamespace");
+            if (converted.api?.type === "singleNamespace") {
+                expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(false);
+                expect(converted.api.definitions[0]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
+                expect(converted.api.definitions[0]?.settings?.coerceEnumsToLiterals).toBe(true);
+            }
+        });
+
+        it("empty spec settings preserve root settings", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    settings: {
+                        "title-as-schema-name": true
+                    },
+                    api: {
+                        specs: [
+                            {
+                                openapi: "path/to/spec.yml",
+                                settings: {}
+                            }
+                        ]
+                    }
+                },
+                context
+            });
+
+            // Verify empty spec settings don't erase root settings
+            expect(converted.api?.type).toBe("singleNamespace");
+            if (converted.api?.type === "singleNamespace") {
+                expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(true);
+            }
+        });
+
+        it("multiple specs with different overrides", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    settings: {
+                        "title-as-schema-name": true,
+                        "idiomatic-request-names": false
+                    },
+                    api: {
+                        specs: [
+                            {
+                                openapi: "path/to/spec1.yml",
+                                settings: {
+                                    "title-as-schema-name": false
+                                }
+                            },
+                            {
+                                openapi: "path/to/spec2.yml"
+                                // No spec-level settings
+                            },
+                            {
+                                openapi: "path/to/spec3.yml",
+                                settings: {
+                                    "idiomatic-request-names": true
+                                }
+                            }
+                        ]
+                    }
+                },
+                context
+            });
+
+            // Verify each spec has correct merged settings
+            expect(converted.api?.type).toBe("singleNamespace");
+            if (converted.api?.type === "singleNamespace") {
+                expect(converted.api.definitions).toHaveLength(3);
+
+                // Spec 1: overrides title-as-schema-name
+                expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(false);
+                expect(converted.api.definitions[0]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
+
+                // Spec 2: inherits all root settings
+                expect(converted.api.definitions[1]?.settings?.shouldUseTitleAsName).toBe(true);
+                expect(converted.api.definitions[1]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
+
+                // Spec 3: overrides idiomatic-request-names
+                expect(converted.api.definitions[2]?.settings?.shouldUseTitleAsName).toBe(true);
+                expect(converted.api.definitions[2]?.settings?.shouldUseIdiomaticRequestNames).toBe(true);
+            }
+        });
+
+        it("OpenAPI-specific settings work alongside base settings", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    settings: {
+                        "title-as-schema-name": true
+                    },
+                    api: {
+                        specs: [
+                            {
+                                openapi: "path/to/openapi.yml",
+                                settings: {
+                                    "only-include-referenced-schemas": true,
+                                    "inline-path-parameters": true
+                                }
+                            }
+                        ]
+                    }
+                },
+                context
+            });
+
+            // Verify OpenAPI-specific settings merge with base settings
+            expect(converted.api?.type).toBe("singleNamespace");
+            if (converted.api?.type === "singleNamespace") {
+                expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(true);
+                expect(converted.api.definitions[0]?.settings?.onlyIncludeReferencedSchemas).toBe(true);
+                expect(converted.api.definitions[0]?.settings?.inlinePathParameters).toBe(true);
+            }
+        });
+
+        it("AsyncAPI-specific settings work alongside base settings", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    settings: {
+                        "title-as-schema-name": true
+                    },
+                    api: {
+                        specs: [
+                            {
+                                asyncapi: "path/to/asyncapi.yml",
+                                settings: {
+                                    "message-naming": "v2"
+                                }
+                            }
+                        ]
+                    }
+                },
+                context
+            });
+
+            // Verify AsyncAPI-specific settings merge with base settings
+            expect(converted.api?.type).toBe("singleNamespace");
+            if (converted.api?.type === "singleNamespace") {
+                expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(true);
+                expect(converted.api.definitions[0]?.settings?.asyncApiMessageNaming).toBe("v2");
+            }
+        });
+
+        it("no root settings maintains backward compatibility", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    api: {
+                        specs: [
+                            {
+                                openapi: "path/to/openapi.yml",
+                                settings: {
+                                    "title-as-schema-name": true
+                                }
+                            }
+                        ]
+                    }
+                },
+                context
+            });
+
+            // Verify existing configs without root settings still work
+            expect(converted.api?.type).toBe("singleNamespace");
+            if (converted.api?.type === "singleNamespace") {
+                expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(true);
+            }
+        });
     });
 });
