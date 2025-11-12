@@ -30,7 +30,9 @@ export class SimpleTypescriptProject extends TypescriptProject {
     protected async addFilesToVolume(): Promise<void> {
         this.addCommonFilesToVolume();
         await this.generateGitIgnore();
-        await this.generateNpmIgnore();
+        if (this.useLegacyExports) {
+            await this.generateNpmIgnore();
+        }
         await this.generateTsConfig();
         await this.generatePackageJson();
     }
@@ -56,7 +58,12 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 "biome.json",
                 "tsconfig.json",
                 "yarn.lock",
-                "pnpm-lock.yaml"
+                "pnpm-lock.yaml",
+                ".mock/",
+                "dist/",
+                "scripts/",
+                "jest.config.*",
+                "vitest.config.*"
             ].join("\n")
         );
     }
