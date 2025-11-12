@@ -63,7 +63,7 @@ async function writeDefinitionForOpenAPIWorkspace({
     const loader = new OpenAPILoader(workspace.absoluteFilePath);
     const specs = await getAllOpenAPISpecs({ context, specs: workspace.specs });
     for (const spec of specs) {
-        const ir = await parse({
+        const ir = parse({
             context,
             documents: await loader.loadDocuments({ context, specs: [spec] })
         });
