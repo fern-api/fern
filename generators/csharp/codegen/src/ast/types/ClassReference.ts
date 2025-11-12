@@ -1,5 +1,4 @@
 import { fail } from "node:assert";
-import { at } from "@fern-api/browser-compatible-base-generator";
 import { type Generation } from "../../context/generation-info";
 import { type Origin } from "../../context/model-navigator";
 import { type TypeScope } from "../../context/name-registry";
@@ -129,17 +128,9 @@ export class ClassReference extends Node {
             writer.write(`${alias}.${this.scopedName}`);
         } else {
             if (writer.skipImports) {
-                if (this.name === "T") {
-                    console.log(`Scoped Name: ${this.scopedName} - ${at({ multiline: true })}`);
-                }
                 writer.write(this.scopedName);
             } else {
                 if (this.fullyQualified) {
-                    // explicitly express namespaces
-                    if (this.name === "T") {
-                        console.log(`Fully Qualified: ${fqName} - ${at({ multiline: true })}`);
-                    }
-
                     writer.write(fqName);
                 } else {
                     // if the class needs to be partially qualified, or we're skipping imports,
@@ -156,36 +147,20 @@ export class ClassReference extends Node {
                             this.registry.isAmbiguousTypeName(segments[0]) ||
                             this.registry.isAmbiguousNamespaceName(segments[0])
                         ) {
-                            if (this.name === "T") {
-                                console.log(`Fully Scoped Name 2: ${fqName} - ${at({ multiline: true })}`);
-                            }
-
                             writer.write(fqName);
                         } else {
-                            if (this.name === "T") {
-                                console.log(
-                                    `Type Qualified Name: ${typeQualification} ... ${this.scopedName} - ${at({ multiline: true })}`
-                                );
-                            }
-
                             writer.write(`${typeQualification}${this.scopedName}`);
                         }
                     } else if (isAmbiguous && this.resolveNamespace() !== writer.namespace) {
                         // If the class is ambiguous and not in this specific namespace
                         // we must to fully qualify the type
                         // writer.addReference(this);
-                        if (this.name === "T") {
-                            console.log(`Fully Scoped Name 3: ${fqName} - ${at({ multiline: true })}`);
-                        }
                         writer.write(fqName);
                     } else {
                         // If the class is not ambiguous and is in this specific namespace,
                         // we can use the short name
                         writer.addReference(this);
                         writer.write(this.scopedName);
-                        if (this.name === "T") {
-                            console.log(`Scoped Name 2: ${this.scopedName} - ${at({ multiline: true })}`);
-                        }
                     }
                 }
             }
