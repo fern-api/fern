@@ -319,6 +319,7 @@ function addRunCommand(cli: Argv) {
     );
 }
 
+const DEFAULT_IMAGE_VERSION = "99.99.99";
 function addImgCommand(cli: Argv) {
     cli.command(
         "img <generator>",
@@ -333,7 +334,7 @@ function addImgCommand(cli: Argv) {
                 .option("ver", {
                     type: "string",
                     demandOption: false,
-                    description: "Version tag for the docker image (must be valid semver, defaults to 99.99.99)"
+                    description: `Version tag for the docker image (must be valid semver, defaults to ${DEFAULT_IMAGE_VERSION})`
                 })
                 .option("log-level", {
                     default: LogLevel.Info,
@@ -350,7 +351,7 @@ function addImgCommand(cli: Argv) {
                 );
             }
 
-            const version = argv.ver ?? "99.99.99";
+            const version = argv.ver ?? DEFAULT_IMAGE_VERSION;
             try {
                 assertValidSemVerOrThrow(version);
             } catch (error) {
