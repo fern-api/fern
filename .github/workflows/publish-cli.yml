@@ -186,7 +186,7 @@ jobs:
             "${host}/api/bulk-update-cli" \
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer ${FERN_TOKEN}" \
-            -d "{\"newVersion\": \"${version}\"}")
+            -d "{\"newVersion\": \"${version}\", \"changeMode\": \"commit\"}")
 
           http_code=$(echo "$response" | tail -n 1)
           body=$(echo "$response" | sed '$d')
