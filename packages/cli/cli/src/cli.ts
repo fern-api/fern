@@ -591,6 +591,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             if (argv.skipUpload && argv.docs == null) {
                 return cliContext.failWithoutThrowing("The --skip-upload flag can only be used with --docs.");
             }
+            if (argv.githubBranch != null && argv.githubMode != null && argv.githubMode !== "push") {
+                return cliContext.failWithoutThrowing(
+                    `--github-branch is only valid with --github-mode push. You specified --github-mode ${argv.githubMode}.`
+                );
+            }
             if (argv.api != null) {
                 return await generateAPIWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {

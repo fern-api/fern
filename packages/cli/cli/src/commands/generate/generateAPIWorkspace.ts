@@ -237,8 +237,8 @@ function applyGithubOverrides(
                     const newMode = githubMode ?? "pull-request";
 
                     if (githubBranch != null && newMode !== "push") {
-                        context.logger.warn(
-                            `--github-branch is only applicable to 'push' mode. Current mode is '${newMode}', ignoring branch override.`
+                        return context.failAndThrow(
+                            `--github-branch is only valid with 'push' mode. Generator '${generator.name}' is currently '${newMode}'. Pass --github-mode push to use --github-branch.`
                         );
                     }
 
@@ -278,8 +278,8 @@ function applyGithubOverrides(
                     const newMode = githubMode ?? "commit";
 
                     if (githubBranch != null && newMode !== "push") {
-                        context.logger.warn(
-                            `--github-branch is only applicable to 'push' mode. Current mode is '${newMode}', ignoring branch override.`
+                        return context.failAndThrow(
+                            `--github-branch is only valid with 'push' mode. Generator '${generator.name}' is currently '${newMode}'. Pass --github-mode push to use --github-branch.`
                         );
                     }
 
