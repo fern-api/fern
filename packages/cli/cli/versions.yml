@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add --github-mode and --github-branch CLI flags to override GitHub configuration in generators.yml without editing the file. The --github-branch flag is only valid with push mode and will error if used with other modes.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-12"
+  version: 0.117.0
+
+- changelogEntry:
+    - summary: |
         Add support for a minimal footer navigation theme.
       type: feat
   irVersion: 61
