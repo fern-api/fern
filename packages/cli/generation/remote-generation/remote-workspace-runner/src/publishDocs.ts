@@ -712,18 +712,16 @@ async function updateAiChatFromDocsDefinition({
 }
 
 function getAIEnhancerConfig(): AIExampleEnhancerConfig | undefined {
-    const openaiApiKey = process.env.OPENAI_API_KEY;
+    const fernAiEnhanceEnabled = process.env.FERN_AI_ENHANCE_EXAMPLES;
 
-    // Only enable if the API key is present
-    if (!openaiApiKey) {
+    if (fernAiEnhanceEnabled === "false") {
         return undefined;
     }
 
     return {
         enabled: true,
-        openaiApiKey,
         model: process.env.FERN_AI_MODEL || "gpt-4o-mini",
         maxRetries: parseInt(process.env.FERN_AI_MAX_RETRIES || "3"),
-        requestTimeoutMs: parseInt(process.env.FERN_AI_TIMEOUT_MS || "30000")
+        requestTimeoutMs: parseInt(process.env.FERN_AI_TIMEOUT_MS || "25000")
     };
 }

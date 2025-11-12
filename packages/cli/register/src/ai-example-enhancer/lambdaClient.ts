@@ -3,7 +3,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { AIExampleEnhancerConfig, ExampleEnhancementRequest, ExampleEnhancementResponse } from "./types";
 
 export class LambdaExampleEnhancer {
-    private config: Required<AIExampleEnhancerConfig>;
+    private config: Required<Omit<AIExampleEnhancerConfig, "openaiApiKey">> & Pick<AIExampleEnhancerConfig, "openaiApiKey">;
     private context: TaskContext;
     private lambdaOrigin: string;
     private token: FernToken;
@@ -14,7 +14,7 @@ export class LambdaExampleEnhancer {
             openaiApiKey: config.openaiApiKey,
             model: config.model ?? "gpt-4o-mini",
             maxRetries: config.maxRetries ?? 3,
-            requestTimeoutMs: config.requestTimeoutMs ?? 30000
+            requestTimeoutMs: config.requestTimeoutMs ?? 25000
         };
         this.context = context;
         this.lambdaOrigin =
