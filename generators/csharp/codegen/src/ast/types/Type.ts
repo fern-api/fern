@@ -2,12 +2,13 @@ import { fail } from "node:assert";
 import { PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
 import { type Generation } from "../../context/generation-info";
 import { hash, uniqueId } from "../../utils/text";
-import { TypeLiteral } from "../code/TypeLiteral";
+import { Literal } from "../code/Literal";
 import { AstNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
 import { ClassReference } from "./ClassReference";
-import { CoreClassReference } from "./CoreClassReference";
-import { TypeParameter } from "./TypeParameter";
+import { Interface } from "./Interface";
+
+export type Type = BaseType | ClassReference | Interface;
 
 /**
  * Base class for all C# type representations in the AST.
@@ -17,7 +18,7 @@ import { TypeParameter } from "./TypeParameter";
  * Each concrete type (Integer, String, List, etc.) extends this base class and
  * provides its own implementation of abstract members.
  */
-export abstract class Type extends AstNode {
+export abstract class BaseType extends AstNode {
     /**
      * Gets the multipart form method name used when this type is added to a multipart/form-data request.
      * For example, primitives use "AddStringPart", while objects use "AddJsonPart".
@@ -33,7 +34,7 @@ export abstract class Type extends AstNode {
     /**
      * The default value for this type (e.g., null for reference types, 0 for integers, etc.).
      */
-    public readonly defaultValue: TypeLiteral = this.csharp.TypeLiteral.null();
+    public readonly defaultValue: Literal = this.csharp.Literal.null();
 
     /**
      * Indicates whether this type is optional (nullable). Defaults to false.
@@ -50,7 +51,7 @@ export abstract class Type extends AstNode {
      * The string representation of this type, typically the constructor name.
      * Used primarily for debugging and default write implementations.
      */
-    public readonly type: string = this.constructor.name;
+    public readonly fullyQualifiedName: string = this.constructor.name;
 
     /**
      * Indicates whether this type represents an async enumerable (IAsyncEnumerable<T>).
@@ -79,7 +80,7 @@ export abstract class Type extends AstNode {
      * If this type is already optional, returns it unchanged.
      */
     public toOptionalIfNotAlready(): Type {
-        return this.csharp.Type.optional(this);
+        return new Optional(this, this.generation);
     }
 
     /**
@@ -104,7 +105,7 @@ export abstract class Type extends AstNode {
      * to provide more specific C# type syntax.
      */
     public override write(writer: Writer): void {
-        writer.write(this.type);
+        writer.write(this.fullyQualifiedName);
     }
 
     /**
@@ -126,8 +127,8 @@ export abstract class Type extends AstNode {
      * @param input - The input string to derive the default value from
      * @returns A typeLiteral for the appropriate type with a value, derived from the input string
      * */
-    public getDeterminsticDefault(input: string): TypeLiteral {
-        return this.csharp.TypeLiteral.nop();
+    public getDeterminsticDefault(input: string): Literal {
+        return this.csharp.Literal.nop();
     }
 }
 
@@ -135,7 +136,7 @@ export abstract class Type extends AstNode {
  * Base class for all primitive types in C# (int, string, bool, double, etc.).
  * Primitive types are serialized as strings in multipart form data.
  */
-abstract class PrimitiveType extends Type {
+abstract class PrimitiveType extends BaseType {
     public override get multipartMethodName(): string {
         return "AddStringPart";
     }
@@ -149,7 +150,7 @@ abstract class PrimitiveType extends Type {
  * Base class for types that are always reference types but don't fit into CollectionType or ObjectType categories.
  * This includes delegates (Action, Func), optional types, union types, and special types like Binary and SystemType.
  */
-abstract class ReferenceType extends Type {
+abstract class ReferenceType extends BaseType {
     public override readonly isReferenceType: boolean | undefined = true;
 }
 
@@ -189,16 +190,70 @@ abstract class ObjectType extends ReferenceType {
     }
 }
 
-export namespace Type {
+/**
+ * Represents an optional (nullable) type in C#.
+ * For value types, this renders as T?, and for reference types, it also uses the nullable syntax.
+ */
+export class Optional extends ReferenceType {
+    public override readonly isOptional = true;
+
+    /**
+     * The underlying non-nullable type.
+     */
+    public readonly value: Type;
+
+    /**
+     * Creates a new optional type.
+     * @param value - The underlying non-nullable type
+     * @param generation - The generation context for code generation
+     */
+    constructor(value: Type, generation: Generation) {
+        super(generation);
+        this.value = value;
+    }
+
+    public override get isCollection(): boolean {
+        return false;
+    }
+
+    public override get multipartMethodName(): string {
+        return this.value.multipartMethodName;
+    }
+
+    public override get multipartMethodNameForCollection(): string {
+        return this.value.multipartMethodNameForCollection;
+    }
+
+    public override toOptionalIfNotAlready(): Type {
+        return this;
+    }
+
+    public override underlyingTypeIfOptional(): Type | undefined {
+        return this.value;
+    }
+
+    public override unwrapIfOptional(): Type {
+        return this.value;
+    }
+
+    public override write(writer: Writer): void {
+        this.value.write(writer);
+        if (!this.value.isOptional) {
+            writer.write("?");
+        }
+    }
+}
+
+export namespace Primitive {
     /**
      * Represents the C# `int` type (32-bit signed integer).
      */
     export class Integer extends PrimitiveType {
-        public override type = "int";
-        public override defaultValue = this.csharp.TypeLiteral.integer(0);
-        public override getDeterminsticDefault(input: string): TypeLiteral {
+        public override fullyQualifiedName = "int";
+        public override defaultValue = this.csharp.Literal.integer(0);
+        public override getDeterminsticDefault(input: string): Literal {
             // make a unique number using the defualtWith string as the seed.
-            return this.csharp.TypeLiteral.integer(hash(input) & 0x7fffffff);
+            return this.csharp.Literal.integer(hash(input) & 0x7fffffff);
         }
     }
 
@@ -206,11 +261,11 @@ export namespace Type {
      * Represents the C# `long` type (64-bit signed integer).
      */
     export class Long extends PrimitiveType {
-        public override type = "long";
-        public override defaultValue = this.csharp.TypeLiteral.long(0);
-        public override getDeterminsticDefault(input: string): TypeLiteral {
+        public override fullyQualifiedName = "long";
+        public override defaultValue = this.csharp.Literal.long(0);
+        public override getDeterminsticDefault(input: string): Literal {
             // make a unique number using the defualtWith string as the seed.
-            return this.csharp.TypeLiteral.long(hash(input) & 0x7ffffffffffff);
+            return this.csharp.Literal.long(hash(input) & 0x7ffffffffffff);
         }
     }
 
@@ -218,11 +273,11 @@ export namespace Type {
      * Represents the C# `uint` type (32-bit unsigned integer).
      */
     export class Uint extends PrimitiveType {
-        public override type = "uint";
-        public override defaultValue = this.csharp.TypeLiteral.uint(0);
-        public override getDeterminsticDefault(input: string): TypeLiteral {
+        public override fullyQualifiedName = "uint";
+        public override defaultValue = this.csharp.Literal.uint(0);
+        public override getDeterminsticDefault(input: string): Literal {
             // make a unique number using the defualtWith string as the seed.
-            return this.csharp.TypeLiteral.uint(hash(input) & 0x7fffffff);
+            return this.csharp.Literal.uint(hash(input) & 0x7fffffff);
         }
     }
 
@@ -230,11 +285,11 @@ export namespace Type {
      * Represents the C# `ulong` type (64-bit unsigned integer).
      */
     export class ULong extends PrimitiveType {
-        public override type = "ulong";
-        public override defaultValue = this.csharp.TypeLiteral.ulong(0);
-        public override getDeterminsticDefault(input: string): TypeLiteral {
+        public override fullyQualifiedName = "ulong";
+        public override defaultValue = this.csharp.Literal.ulong(0);
+        public override getDeterminsticDefault(input: string): Literal {
             // make a unique number using the defualtWith string as the seed.
-            return this.csharp.TypeLiteral.ulong(hash(input) & 0x7ffffffffffff);
+            return this.csharp.Literal.ulong(hash(input) & 0x7ffffffffffff);
         }
     }
 
@@ -243,12 +298,12 @@ export namespace Type {
      * Strings are reference types in C#.
      */
     export class String extends PrimitiveType {
-        public override type = "string";
-        public override defaultValue = this.csharp.TypeLiteral.string("");
+        public override fullyQualifiedName = "string";
+        public override defaultValue = this.csharp.Literal.string("");
         public override readonly isReferenceType: boolean | undefined = true;
-        public override getDeterminsticDefault(input: string): TypeLiteral {
+        public override getDeterminsticDefault(input: string): Literal {
             // make a unique string using the defualtWith string as the seed.
-            return this.csharp.TypeLiteral.string(`<${input}>`);
+            return this.csharp.Literal.string(`<${input}>`);
         }
     }
 
@@ -256,11 +311,11 @@ export namespace Type {
      * Represents the C# `bool` type.
      */
     export class Boolean extends PrimitiveType {
-        public override type = "bool";
-        public override defaultValue = this.csharp.TypeLiteral.boolean(false);
-        public override getDeterminsticDefault(input: string): TypeLiteral {
+        public override fullyQualifiedName = "bool";
+        public override defaultValue = this.csharp.Literal.boolean(false);
+        public override getDeterminsticDefault(input: string): Literal {
             // make a unique boolean using the defualtWith string as the seed.
-            return this.csharp.TypeLiteral.boolean(hash(input) % 2 === 0);
+            return this.csharp.Literal.boolean(hash(input) % 2 === 0);
         }
     }
 
@@ -268,11 +323,11 @@ export namespace Type {
      * Represents the C# `float` type (32-bit floating-point number).
      */
     export class Float extends PrimitiveType {
-        public override type = "float";
-        public override defaultValue = this.csharp.TypeLiteral.float(0);
-        public override getDeterminsticDefault(input: string): TypeLiteral {
+        public override fullyQualifiedName = "float";
+        public override defaultValue = this.csharp.Literal.float(0);
+        public override getDeterminsticDefault(input: string): Literal {
             // make a unique float using the defualtWith string as the seed.
-            return this.csharp.TypeLiteral.float((hash(input) & 0x7fffffff) / 100);
+            return this.csharp.Literal.float((hash(input) & 0x7fffffff) / 100);
         }
     }
 
@@ -280,51 +335,11 @@ export namespace Type {
      * Represents the C# `double` type (64-bit floating-point number).
      */
     export class Double extends PrimitiveType {
-        public override type = "double";
-        public override defaultValue = this.csharp.TypeLiteral.double(0);
-        public override getDeterminsticDefault(input: string): TypeLiteral {
+        public override fullyQualifiedName = "double";
+        public override defaultValue = this.csharp.Literal.double(0);
+        public override getDeterminsticDefault(input: string): Literal {
             // make a unique double using the defualtWith string as the seed.
-            return this.csharp.TypeLiteral.double((hash(input) & 0x7ffffffffffff) / 100);
-        }
-    }
-
-    /**
-     * Represents the C# `DateOnly` type (date without time component).
-     */
-    export class DateOnly extends PrimitiveType {
-        public override type = "DateOnly";
-        public override getDeterminsticDefault(input: string): TypeLiteral {
-            // make a unique date using the defualtWith string as the seed.
-            const date = new Date(hash(input) & 0x7ffffffffffff);
-            return this.csharp.TypeLiteral.date(date.toISOString());
-        }
-    }
-
-    /**
-     * Represents the C# `DateTime` type.
-     */
-    export class DateTime extends PrimitiveType {
-        public override type = "DateTime";
-        public override getDeterminsticDefault(input: string): TypeLiteral {
-            // make a unique date using the defualtWith string as the seed.
-            const date = new Date(hash(input) & 0x7ffffffffffff);
-            return this.csharp.TypeLiteral.datetime(date.toISOString());
-        }
-    }
-
-    /**
-     * Represents a UUID type, which is represented as a C# `string`.
-     * Note: C# GUID is a value type, but we use string for UUID compatibility.
-     */
-    export class Uuid extends PrimitiveType {
-        public override type = "string";
-        public override defaultValue = this.csharp.TypeLiteral.string("");
-
-        // C# GUID is a value type, but we use string for UUID
-        public override readonly isReferenceType: boolean | undefined = true;
-        public override getDeterminsticDefault(input: string): TypeLiteral {
-            // make a unique UUID using the defualtWith string as the seed.
-            return this.csharp.TypeLiteral.string(uniqueId(input));
+            return this.csharp.Literal.double((hash(input) & 0x7ffffffffffff) / 100);
         }
     }
 
@@ -332,9 +347,105 @@ export namespace Type {
      * Represents the C# `object` type (base type for all reference types).
      */
     export class Object extends ObjectType {
-        public override type = "object";
+        public override fullyQualifiedName = "object";
     }
 
+    export class AribitraryType extends PrimitiveType {
+        constructor(
+            public override readonly fullyQualifiedName: string,
+            generation: Generation
+        ) {
+            super(generation);
+        }
+    }
+}
+
+export namespace Value {
+    /**
+     * Represents the C# `byte[]` type (byte array/binary data).
+     * This type is used for binary data.
+     */
+    export class Binary extends ReferenceType {
+        public override get multipartMethodName(): string {
+            fail("byte[] can not be added to multipart form");
+            return "";
+        }
+
+        public override get multipartMethodNameForCollection(): string {
+            fail("byte[] can not be added to multipart form");
+            return "";
+        }
+
+        public override write(writer: Writer): void {
+            writer.write("byte[]");
+        }
+    }
+    /**
+     * Represents the C# `DateOnly` type (date without time component).
+     */
+    export class DateOnly extends PrimitiveType {
+        public override fullyQualifiedName = "DateOnly";
+        public override getDeterminsticDefault(input: string): Literal {
+            // make a unique date using the defualtWith string as the seed.
+            const date = new Date(hash(input) & 0x7ffffffffffff);
+            return this.csharp.Literal.date(date.toISOString());
+        }
+    }
+
+    /**
+     * Represents the C# `DateTime` type.
+     */
+    export class DateTime extends PrimitiveType {
+        public override fullyQualifiedName = "DateTime";
+        public override getDeterminsticDefault(input: string): Literal {
+            // make a unique date using the defualtWith string as the seed.
+            const date = new Date(hash(input) & 0x7ffffffffffff);
+            return this.csharp.Literal.datetime(date.toISOString());
+        }
+    }
+    /**
+     * Represents a UUID type, which is represented as a C# `string`.
+     * Note: C# GUID is a value type, but we use string for UUID compatibility.
+     */
+    export class Uuid extends PrimitiveType {
+        public override fullyQualifiedName = "string";
+        public override defaultValue = this.csharp.Literal.string("");
+
+        // C# GUID is a value type, but we use string for UUID
+        public override readonly isReferenceType: boolean | undefined = true;
+        public override getDeterminsticDefault(input: string): Literal {
+            // make a unique UUID using the defualtWith string as the seed.
+            return this.csharp.Literal.string(uniqueId(input));
+        }
+    }
+
+    /**
+     * Represents a string enum type (enum backed by string values).
+     * This extends PrimitiveType because string enums are serialized as strings.
+     */
+    export class StringEnum extends PrimitiveType {
+        /**
+         * The class reference for the string enum type.
+         */
+        public readonly value: ClassReference;
+
+        /**
+         * Creates a new string enum type.
+         * @param value - The class reference for the enum
+         * @param generation - The generation context for code generation
+         */
+        constructor(value: ClassReference, generation: Generation) {
+            super(generation);
+            this.value = value;
+        }
+
+        public override write(writer: Writer): void {
+            this.Types.StringEnum(this.value).write(writer);
+        }
+    }
+}
+
+export namespace Collection {
     /**
      * Represents a C# array type (T[]).
      * Arrays can be rendered as ReadOnlyMemory<T> for certain primitive types when configured.
@@ -371,7 +482,7 @@ export namespace Type {
         }
 
         private writeReadOnlyMemoryType({ writer, value }: { writer: Writer; value: Type }): void {
-            writer.writeNode(this.extern.System.ReadOnlyMemory(value));
+            writer.writeNode(this.System.ReadOnlyMemory(value));
         }
     }
 
@@ -412,18 +523,18 @@ export namespace Type {
                 this.writeReadOnlyMemoryType({ writer, value: this.value });
                 return;
             }
-            writer.writeNode(this.extern.System.Collections.Generic.List(this.value));
+            writer.writeNode(this.System.Collections.Generic.List(this.value));
         }
 
         public override writeEmptyCollectionInitializer(writer: Writer): void {
             if (isReadOnlyMemoryType({ writer, value: this.value })) {
                 return;
             }
-            writer.write(" = new ", this.extern.System.Collections.Generic.List(this.value), "();");
+            writer.writeStatement(" = ", this.System.Collections.Generic.List(this.value).new());
         }
 
         private writeReadOnlyMemoryType({ writer, value }: { writer: Writer; value: Type }): void {
-            writer.writeNode(this.extern.System.ReadOnlyMemory(value));
+            writer.writeNode(this.System.ReadOnlyMemory(value));
         }
     }
 
@@ -464,18 +575,18 @@ export namespace Type {
                 this.writeReadOnlyMemoryType({ writer, value: this.value });
                 return;
             }
-            writer.writeNode(this.extern.System.Collections.Generic.IEnumerable(this.value));
+            writer.writeNode(this.System.Collections.Generic.IEnumerable(this.value));
         }
 
         public override writeEmptyCollectionInitializer(writer: Writer): void {
             if (isReadOnlyMemoryType({ writer, value: this.value })) {
                 return;
             }
-            writer.writeStatement(" = ", this.extern.System.Collections.Generic.List(this.value).new());
+            writer.writeStatement(" = ", this.System.Collections.Generic.List(this.value).new());
         }
 
         private writeReadOnlyMemoryType({ writer, value }: { writer: Writer; value: Type }): void {
-            writer.writeNode(this.extern.System.ReadOnlyMemory(value));
+            writer.writeNode(this.System.ReadOnlyMemory(value));
         }
     }
 
@@ -503,11 +614,11 @@ export namespace Type {
         }
 
         public override write(writer: Writer): void {
-            writer.writeNode(this.extern.System.Collections.Generic.HashSet(this.value));
+            writer.writeNode(this.System.Collections.Generic.HashSet(this.value));
         }
 
         public override writeEmptyCollectionInitializer(writer: Writer): void {
-            writer.write(" = new ", this.extern.System.Collections.Generic.HashSet(this.value), "();");
+            writer.writeStatement(" = ", this.System.Collections.Generic.HashSet(this.value).new());
         }
     }
 
@@ -546,27 +657,27 @@ export namespace Type {
         }
 
         public override getCollectionItemType(): Type | undefined {
-            return this.csharp.Type.keyValuePair(this.keyType, this.valueType);
+            return this.Collection.keyValuePair(this.keyType, this.valueType);
         }
 
         public override write(writer: Writer): void {
             if (
                 this.options?.dontSimplify !== true &&
                 writer.generation.settings.simplifyObjectDictionaries &&
-                this.keyType instanceof Type.String &&
-                this.valueType instanceof Type.Optional &&
-                this.valueType.value instanceof Type.Object
+                this.keyType instanceof Primitive.String &&
+                this.valueType instanceof Optional &&
+                this.valueType.value instanceof Primitive.Object
             ) {
                 writer.write("object");
                 return;
             }
-            writer.write(this.extern.System.Collections.Generic.Dictionary(this.keyType, this.valueType));
+            writer.write(this.System.Collections.Generic.Dictionary(this.keyType, this.valueType));
         }
 
         public override writeEmptyCollectionInitializer(writer: Writer): void {
             writer.writeStatement(
                 " = ",
-                this.extern.System.Collections.Generic.Dictionary(this.keyType, this.valueType).new()
+                this.System.Collections.Generic.Dictionary(this.keyType, this.valueType).new()
             );
         }
     }
@@ -606,21 +717,21 @@ export namespace Type {
         }
 
         public override getCollectionItemType(): Type | undefined {
-            return this.csharp.Type.keyValuePair(this.keyType, this.valueType);
+            return this.Collection.keyValuePair(this.keyType, this.valueType);
         }
 
         public override write(writer: Writer): void {
             if (
                 this.options?.dontSimplify !== true &&
                 writer.generation.settings.simplifyObjectDictionaries &&
-                this.keyType instanceof Type.String &&
-                this.valueType instanceof Type.Optional &&
-                this.valueType.value instanceof Type.Object
+                this.keyType instanceof Primitive.String &&
+                this.valueType instanceof Optional &&
+                this.valueType.value instanceof Primitive.Object
             ) {
                 writer.write("object");
                 return;
             }
-            writer.writeNode(this.extern.System.Collections.Generic.IDictionary(this.keyType, this.valueType));
+            writer.writeNode(this.System.Collections.Generic.IDictionary(this.keyType, this.valueType));
         }
     }
 
@@ -654,122 +765,12 @@ export namespace Type {
         }
 
         public override write(writer: Writer): void {
-            writer.writeNode(this.extern.System.Collections.Generic.KeyValuePair(this.keyType, this.valueType));
+            writer.writeNode(this.System.Collections.Generic.KeyValuePair(this.keyType, this.valueType));
         }
     }
+}
 
-    /**
-     * Represents an optional (nullable) type in C#.
-     * For value types, this renders as T?, and for reference types, it also uses the nullable syntax.
-     */
-    export class Optional extends ReferenceType {
-        public override readonly isOptional = true;
-
-        /**
-         * The underlying non-nullable type.
-         */
-        public readonly value: Type;
-
-        /**
-         * Creates a new optional type.
-         * @param value - The underlying non-nullable type
-         * @param generation - The generation context for code generation
-         */
-        constructor(value: Type, generation: Generation) {
-            super(generation);
-            this.value = value;
-        }
-
-        public override get isCollection(): boolean {
-            return false;
-        }
-
-        public override get multipartMethodName(): string {
-            return this.value.multipartMethodName;
-        }
-
-        public override get multipartMethodNameForCollection(): string {
-            return this.value.multipartMethodNameForCollection;
-        }
-
-        public override toOptionalIfNotAlready(): Type {
-            return this;
-        }
-
-        public override underlyingTypeIfOptional(): Type | undefined {
-            return this.value;
-        }
-
-        public override unwrapIfOptional(): Type {
-            return this.value;
-        }
-
-        public override write(writer: Writer): void {
-            this.value.write(writer);
-            if (!this.value.isOptional) {
-                writer.write("?");
-            }
-        }
-    }
-
-    /**
-     * Represents a reference to a user-defined class or interface.
-     * The reference type status is indeterminate (undefined) as it depends on the referenced type.
-     */
-    export class Reference extends ObjectType {
-        public override readonly isReferenceType: boolean | undefined = undefined;
-
-        /**
-         * The class reference being referenced.
-         */
-        public readonly value: ClassReference;
-
-        /**
-         * Creates a new reference to a class or interface.
-         * @param value - The class reference
-         * @param generation - The generation context for code generation
-         */
-        constructor(value: ClassReference, generation: Generation) {
-            super(generation);
-            this.value = value;
-        }
-
-        public override get isAsyncEnumerable(): boolean {
-            return this.value.isAsyncEnumerable;
-        }
-
-        public override write(writer: Writer): void {
-            writer.writeNode(this.value);
-        }
-    }
-
-    /**
-     * Represents a reference to a core/runtime class.
-     * The reference type status is indeterminate (undefined) as it depends on the referenced type.
-     */
-    export class CoreReference extends ObjectType {
-        public override readonly isReferenceType: boolean | undefined = undefined;
-
-        /**
-         * The core class reference being referenced.
-         */
-        public readonly value: CoreClassReference;
-
-        /**
-         * Creates a new reference to a core class.
-         * @param value - The core class reference
-         * @param generation - The generation context for code generation
-         */
-        constructor(value: CoreClassReference, generation: Generation) {
-            super(generation);
-            this.value = value;
-        }
-
-        public override write(writer: Writer): void {
-            writer.write(this.value.name);
-        }
-    }
-
+export namespace Special {
     /**
      * Represents a discriminated union type using the OneOf library.
      * This type allows a value to be one of several possible types.
@@ -777,7 +778,7 @@ export namespace Type {
      * TODO: Handle multipart form detection in the .NET runtime to determine whether struct/string/enum/string enum
      * should become string part, or anything else which should become json part.
      */
-    export class OneOf extends Type {
+    export class OneOf extends BaseType {
         /**
          * The possible member types that this OneOf can represent.
          */
@@ -810,7 +811,7 @@ export namespace Type {
         }
 
         public override write(writer: Writer): void {
-            const oneOf = this.extern.OneOf.OneOf(this.memberValues);
+            const oneOf = this.OneOf.OneOf(this.memberValues);
             writer.addReference(oneOf);
             writer.writeNode(oneOf);
         }
@@ -848,34 +849,9 @@ export namespace Type {
         }
 
         public override write(writer: Writer): void {
-            const oneOfBase = this.extern.OneOf.OneOfBase(this.memberValues);
+            const oneOfBase = this.OneOf.OneOfBase(this.memberValues);
             writer.addReference(oneOfBase);
             writer.writeNode(oneOfBase);
-        }
-    }
-
-    /**
-     * Represents a string enum type (enum backed by string values).
-     * This extends PrimitiveType because string enums are serialized as strings.
-     */
-    export class StringEnum extends PrimitiveType {
-        /**
-         * The class reference for the string enum type.
-         */
-        public readonly value: ClassReference;
-
-        /**
-         * Creates a new string enum type.
-         * @param value - The class reference for the enum
-         * @param generation - The generation context for code generation
-         */
-        constructor(value: ClassReference, generation: Generation) {
-            super(generation);
-            this.value = value;
-        }
-
-        public override write(writer: Writer): void {
-            this.types.StringEnum(this.value).write(writer);
         }
     }
 
@@ -887,14 +863,14 @@ export namespace Type {
         /**
          * The type parameters for the Action delegate (parameter types).
          */
-        public readonly typeParameters: (Type | TypeParameter)[];
+        public readonly typeParameters: Type[];
 
         /**
          * Creates a new Action delegate type.
          * @param typeParameters - The parameter types for the action
          * @param generation - The generation context for code generation
          */
-        constructor(typeParameters: (Type | TypeParameter)[], generation: Generation) {
+        constructor(typeParameters: Type[], generation: Generation) {
             super(generation);
             this.typeParameters = typeParameters;
         }
@@ -920,12 +896,12 @@ export namespace Type {
         /**
          * The return type of the function.
          */
-        public readonly returnType: Type | TypeParameter;
+        public readonly returnType: Type;
 
         /**
          * The type parameters for the Func delegate (parameter types).
          */
-        public readonly typeParameters: (Type | TypeParameter)[];
+        public readonly typeParameters: Type[];
 
         /**
          * Creates a new Func delegate type.
@@ -933,11 +909,7 @@ export namespace Type {
          * @param returnType - The return type of the function
          * @param generation - The generation context for code generation
          */
-        constructor(
-            typeParameters: (Type | TypeParameter)[],
-            returnType: Type | TypeParameter,
-            generation: Generation
-        ) {
+        constructor(typeParameters: Type[], returnType: Type, generation: Generation) {
             super(generation);
             this.typeParameters = typeParameters;
             this.returnType = returnType;
@@ -954,7 +926,7 @@ export namespace Type {
         }
 
         public override write(writer: Writer): void {
-            writer.writeNode(this.extern.System.Func(this.typeParameters, this.returnType));
+            writer.writeNode(this.System.Func(this.typeParameters, this.returnType));
         }
     }
 
@@ -1010,27 +982,9 @@ export namespace Type {
             writer.write("global::System.Type");
         }
     }
-
-    /**
-     * Represents the C# `byte[]` type (byte array/binary data).
-     * This type is used for binary data.
-     */
-    export class Binary extends ReferenceType {
-        public override get multipartMethodName(): string {
-            fail("byte[] can not be added to multipart form");
-            return "";
-        }
-
-        public override get multipartMethodNameForCollection(): string {
-            fail("byte[] can not be added to multipart form");
-            return "";
-        }
-
-        public override write(writer: Writer): void {
-            writer.write("byte[]");
-        }
-    }
 }
+
+export namespace Reference {}
 
 /**
  * Converts an array of C# type names to their corresponding PrimitiveTypeV1 enum values.
@@ -1078,32 +1032,32 @@ export function convertReadOnlyPrimitiveTypes(readOnlyMemoryTypeNames: string[])
  * @returns true if the type should be rendered as ReadOnlyMemory, false otherwise
  */
 function isReadOnlyMemoryType({ writer, value }: { writer: Writer; value: Type }): boolean {
-    if (value instanceof Type.Optional) {
+    if (value instanceof Optional) {
         return isReadOnlyMemoryType({ writer, value: value.value });
     }
     // Check if it's a primitive type that should be ReadOnlyMemory
-    if (value instanceof Type.Integer) {
+    if (value instanceof Primitive.Integer) {
         return writer.isReadOnlyMemoryType("int");
     }
-    if (value instanceof Type.Long) {
+    if (value instanceof Primitive.Long) {
         return writer.isReadOnlyMemoryType("long");
     }
-    if (value instanceof Type.Uint) {
+    if (value instanceof Primitive.Uint) {
         return writer.isReadOnlyMemoryType("uint");
     }
-    if (value instanceof Type.ULong) {
+    if (value instanceof Primitive.ULong) {
         return writer.isReadOnlyMemoryType("ulong");
     }
-    if (value instanceof Type.String) {
+    if (value instanceof Primitive.String) {
         return writer.isReadOnlyMemoryType("string");
     }
-    if (value instanceof Type.Boolean) {
+    if (value instanceof Primitive.Boolean) {
         return writer.isReadOnlyMemoryType("bool");
     }
-    if (value instanceof Type.Float) {
+    if (value instanceof Primitive.Float) {
         return writer.isReadOnlyMemoryType("float");
     }
-    if (value instanceof Type.Double) {
+    if (value instanceof Primitive.Double) {
         return writer.isReadOnlyMemoryType("double");
     }
     return false;

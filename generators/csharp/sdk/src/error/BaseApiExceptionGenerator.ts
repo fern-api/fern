@@ -2,20 +2,17 @@ import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-
-export class BaseApiExceptionGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+export class BaseApiExceptionGenerator extends FileGenerator<CSharpFile> {
     public doGenerate(): CSharpFile {
         const class_ = this.csharp.class_({
-            reference: this.types.BaseApiException,
+            reference: this.Types.BaseApiException,
             access: ast.Access.Public,
-            parentClassReference: this.types.BaseException,
+            parentClassReference: this.Types.BaseException,
             primaryConstructor: {
                 parameters: [
-                    this.csharp.parameter({ name: "message", type: this.csharp.Type.string }),
-                    this.csharp.parameter({ name: "statusCode", type: this.csharp.Type.integer }),
-                    this.csharp.parameter({ name: "body", type: this.csharp.Type.object })
+                    this.csharp.parameter({ name: "message", type: this.Primitive.string }),
+                    this.csharp.parameter({ name: "statusCode", type: this.Primitive.integer }),
+                    this.csharp.parameter({ name: "body", type: this.Primitive.object })
                 ],
                 superClassArguments: [this.csharp.codeblock("message")]
             },
@@ -24,7 +21,7 @@ export class BaseApiExceptionGenerator extends FileGenerator<CSharpFile, SdkCust
         class_.addField({
             origin: class_.explicit("StatusCode"),
             enclosingType: class_,
-            type: this.csharp.Type.integer,
+            type: this.Primitive.integer,
             access: ast.Access.Public,
             get: true,
             initializer: this.csharp.codeblock("statusCode"),
@@ -34,7 +31,7 @@ export class BaseApiExceptionGenerator extends FileGenerator<CSharpFile, SdkCust
         class_.addField({
             origin: class_.explicit("Body"),
             enclosingType: class_,
-            type: this.csharp.Type.object,
+            type: this.Primitive.object,
             access: ast.Access.Public,
             get: true,
             initializer: this.csharp.codeblock("body"),
@@ -53,7 +50,7 @@ export class BaseApiExceptionGenerator extends FileGenerator<CSharpFile, SdkCust
     protected getFilepath(): RelativeFilePath {
         return join(
             this.constants.folders.publicCoreFiles,
-            RelativeFilePath.of(`${this.types.BaseApiException.name}.cs`)
+            RelativeFilePath.of(`${this.Types.BaseApiException.name}.cs`)
         );
     }
 }

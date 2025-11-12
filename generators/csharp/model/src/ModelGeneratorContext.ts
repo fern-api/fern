@@ -1,19 +1,17 @@
 import { AbstractFormatter, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
-import { AsIsFiles, BaseCsharpGeneratorContext } from "@fern-api/csharp-base";
-import { CsharpGeneratorContext } from "@fern-api/csharp-codegen";
+import { AsIsFiles, GeneratorContext } from "@fern-api/csharp-base";
+import { CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
 import { CsharpFormatter } from "@fern-api/csharp-formatter";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernFilepath, IntermediateRepresentation, TypeId, WellKnownProtobufType } from "@fern-fern/ir-sdk/api";
 
-import { ModelCustomConfigSchema } from "./ModelCustomConfig";
-
-export class ModelGeneratorContext extends BaseCsharpGeneratorContext<ModelCustomConfigSchema> {
+export class ModelGeneratorContext extends GeneratorContext {
     public readonly formatter: AbstractFormatter;
     public constructor(
         ir: IntermediateRepresentation,
         config: FernGeneratorExec.config.GeneratorConfig,
-        customConfig: ModelCustomConfigSchema,
+        customConfig: CsharpConfigSchema,
         generatorNotificationService: GeneratorNotificationService
     ) {
         super(
@@ -21,7 +19,7 @@ export class ModelGeneratorContext extends BaseCsharpGeneratorContext<ModelCusto
             config,
             customConfig,
             generatorNotificationService,
-            new CsharpGeneratorContext(ir, config, customConfig, {
+            new Generation(ir, ir.apiName.pascalCase.unsafeName, customConfig, config, {
                 makeRelativeFilePath: (path: string) => RelativeFilePath.of(path),
                 makeAbsoluteFilePath: (path: string) => AbsoluteFilePath.of(path),
                 getNamespaceForTypeId: (typeId: TypeId) => this.getNamespaceForTypeId(typeId),
@@ -36,47 +34,8 @@ export class ModelGeneratorContext extends BaseCsharpGeneratorContext<ModelCusto
         this.formatter = new CsharpFormatter();
     }
 
-    public get generation() {
-        return this.common.generation;
-    }
-    public get namespaces() {
-        return this.generation.namespaces;
-    }
-    public get registry() {
-        return this.generation.registry;
-    }
-    public get extern() {
-        return this.generation.extern;
-    }
-    public get settings() {
-        return this.generation.settings;
-    }
-    public get constants() {
-        return this.generation.constants;
-    }
-    public get names() {
-        return this.generation.names;
-    }
-    public get types() {
-        return this.generation.types;
-    }
-    public get model() {
-        return this.generation.model;
-    }
-    public get csharp() {
-        return this.generation.csharp;
-    }
-    public get System() {
-        return this.extern.System;
-    }
-    public get NUnit() {
-        return this.extern.NUnit;
-    }
-    public get OneOf() {
-        return this.extern.OneOf;
-    }
-    public get Google() {
-        return this.extern.Google;
+    override getAsyncCoreAsIsFiles(): string[] {
+        return [];
     }
 
     /**
@@ -124,9 +83,7 @@ export class ModelGeneratorContext extends BaseCsharpGeneratorContext<ModelCusto
             files.push(AsIsFiles.Json.EnumSerializer);
         }
 
-        const resolvedProtoAnyType = this.common.protobufResolver.resolveWellKnownProtobufType(
-            WellKnownProtobufType.any()
-        );
+        const resolvedProtoAnyType = this.protobufResolver.resolveWellKnownProtobufType(WellKnownProtobufType.any());
         if (resolvedProtoAnyType != null) {
             files.push(AsIsFiles.ProtoAnyMapper);
         }
@@ -160,7 +117,7 @@ export class ModelGeneratorContext extends BaseCsharpGeneratorContext<ModelCusto
         return files;
     }
 
-    getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
+    public override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
         return fernFilepath.packagePath.map((segmentName) => segmentName.pascalCase.safeName);
     }
 
