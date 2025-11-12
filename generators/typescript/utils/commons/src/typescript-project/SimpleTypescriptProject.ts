@@ -54,6 +54,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 SimpleTypescriptProject.GIT_IGNORE_FILENAME,
                 ".github",
                 SimpleTypescriptProject.FERN_IGNORE_FILENAME,
+                ".fern",
                 SimpleTypescriptProject.PRETTIER_RC_FILENAME,
                 "biome.json",
                 "tsconfig.json",

@@ -9,6 +9,7 @@ import { SidebarThemeConfig } from "./SidebarThemeConfig";
 import { BodyThemeConfig } from "./BodyThemeConfig";
 import { TabsThemeConfig } from "./TabsThemeConfig";
 import { PageActionsThemeConfig } from "./PageActionsThemeConfig";
+import { FooterNavThemeConfig } from "./FooterNavThemeConfig";
 
 export const ThemeConfig: core.serialization.ObjectSchema<serializers.ThemeConfig.Raw, FernDocsConfig.ThemeConfig> =
     core.serialization.object({
@@ -16,6 +17,7 @@ export const ThemeConfig: core.serialization.ObjectSchema<serializers.ThemeConfi
         body: BodyThemeConfig.optional(),
         tabs: TabsThemeConfig.optional(),
         pageActions: core.serialization.property("page-actions", PageActionsThemeConfig.optional()),
+        footerNav: core.serialization.property("footer-nav", FooterNavThemeConfig.optional()),
     });
 
 export declare namespace ThemeConfig {
@@ -24,5 +26,6 @@ export declare namespace ThemeConfig {
         body?: BodyThemeConfig.Raw | null;
         tabs?: TabsThemeConfig.Raw | null;
         "page-actions"?: PageActionsThemeConfig.Raw | null;
+        "footer-nav"?: FooterNavThemeConfig.Raw | null;
     }
 }

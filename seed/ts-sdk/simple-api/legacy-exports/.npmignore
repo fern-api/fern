@@ -4,6 +4,7 @@ tests
 .gitignore
 .github
 .fernignore
+.fern
 .prettierrc.yml
 biome.json
 tsconfig.json
