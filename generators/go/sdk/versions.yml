@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.15.0
+  changelogEntry:
+    - summary: |
+        Add custom license file support for local generation and normalize version format with 'v' prefix following Go conventions
+      type: feat
+  createdAt: "2025-11-11"
+  irVersion: 60
+
 - version: 1.14.2
   changelogEntry:
     - summary: |
