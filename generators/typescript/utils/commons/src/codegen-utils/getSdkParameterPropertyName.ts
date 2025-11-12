@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { Name, NameAndWireValue } from "@fern-fern/ir-sdk/api";
 
 /**
@@ -15,17 +16,19 @@ export function getSdkParameterPropertyName({
     retainOriginalCasing: boolean;
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
 }): string {
-    if (parameterNaming != null) {
-        switch (parameterNaming) {
-            case "originalName":
-                return isNameAndWireValue(name) ? name.name.originalName : name.originalName;
-            case "wireValue":
-                return isNameAndWireValue(name) ? name.wireValue : name.originalName;
-            case "camelCase":
-                return isNameAndWireValue(name) ? name.name.camelCase.unsafeName : name.camelCase.unsafeName;
-            case "snakeCase":
-                return isNameAndWireValue(name) ? name.name.snakeCase.unsafeName : name.snakeCase.unsafeName;
-        }
+    switch (parameterNaming) {
+        case "originalName":
+            return isNameAndWireValue(name) ? name.name.originalName : name.originalName;
+        case "wireValue":
+            return isNameAndWireValue(name) ? name.wireValue : name.originalName;
+        case "camelCase":
+            return isNameAndWireValue(name) ? name.name.camelCase.unsafeName : name.camelCase.unsafeName;
+        case "snakeCase":
+            return isNameAndWireValue(name) ? name.name.snakeCase.unsafeName : name.snakeCase.unsafeName;
+        case "default":
+            break; // fall through to default behavior
+        default:
+            assertNever(parameterNaming);
     }
 
     if (isNameAndWireValue(name)) {
