@@ -23,6 +23,7 @@ import { getParameterNameForFile } from "../endpoints/utils/getParameterNameForF
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter";
+import { isPathOnlyEndpoint } from "../request-parameter/isPathOnlyEndpoint";
 import { PathOnlyRequestParameter } from "../request-parameter/PathOnlyRequestParameter";
 import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest";
 
@@ -121,7 +122,8 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         if (
             this.requestParameter == null &&
             this.pathOnlyRequestParameter == null &&
-            context.requestWrapper.shouldInlinePathParameters(this.endpoint.sdkRequest)
+            context.requestWrapper.shouldInlinePathParameters(this.endpoint.sdkRequest) &&
+            isPathOnlyEndpoint(this.service, this.endpoint)
         ) {
             this.pathOnlyRequestParameter = new PathOnlyRequestParameter({
                 packageId: this.packageId,

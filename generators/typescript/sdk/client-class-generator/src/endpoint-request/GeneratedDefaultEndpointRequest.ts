@@ -24,6 +24,7 @@ import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
 import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
+import { isPathOnlyEndpoint } from "../request-parameter/isPathOnlyEndpoint";
 import { PathOnlyRequestParameter } from "../request-parameter/PathOnlyRequestParameter";
 import { RequestBodyParameter } from "../request-parameter/RequestBodyParameter";
 import { RequestParameter } from "../request-parameter/RequestParameter";
@@ -111,7 +112,8 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     private ensureRequestParameter(context: SdkContext): void {
         if (
             this.requestParameter == null &&
-            context.requestWrapper.shouldInlinePathParameters(this.endpoint.sdkRequest)
+            context.requestWrapper.shouldInlinePathParameters(this.endpoint.sdkRequest) &&
+            isPathOnlyEndpoint(this.service, this.endpoint)
         ) {
             this.requestParameter = new PathOnlyRequestParameter({
                 packageId: this.packageId,
