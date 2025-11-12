@@ -49,8 +49,6 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import okhttp3.*;
 
@@ -138,11 +136,10 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             } else if (generatedWrappedRequest.requestBodyGetter().get() instanceof InlinedRequestBodyGetters) {
                 InlinedRequestBodyGetters inlinedRequestBodyGetter = ((InlinedRequestBodyGetters)
                         generatedWrappedRequest.requestBodyGetter().get());
-                // Build a properties map with only body parameters, preserving nullable semantics
-                initializeRequestBodyProperties(inlinedRequestBodyGetter, requestBodyCodeBlock);
+                // Serialize the request object directly instead of manually building a properties map.
                 initializeRequestBody(
                         generatedObjectMapper,
-                        variables.getRequestBodyPropertiesName(),
+                        requestParameterName,
                         requestBodyCodeBlock,
                         sendContentType,
                         contentType);
@@ -195,13 +192,16 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         requestBodyCodeBlock.add(";\n");
         requestBodyCodeBlock.unindent();
         for (EnrichedObjectProperty header : generatedWrappedRequest.headerParams()) {
+            // Use the original header name from the Name object
+            // The wireValue is empty to trigger @JsonIgnore, so we get the name from Name.getOriginalName()
+            String headerName = header.objectProperty().getName().getName().getOriginalName();
             if (typeNameIsOptional(header.poetTypeName())) {
                 requestBodyCodeBlock
                         .beginControlFlow("if ($L.$N().isPresent())", requestParameterName, header.getterProperty())
                         .addStatement(
                                 "$L.addHeader($S, $L)",
                                 AbstractEndpointWriter.REQUEST_BUILDER_NAME,
-                                header.wireKey().get(),
+                                headerName,
                                 PoetTypeNameStringifier.stringify(
                                         CodeBlock.of("$L.$N().get()", "request", header.getterProperty())
                                                 .toString(),
@@ -211,7 +211,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 requestBodyCodeBlock.addStatement(
                         "$L.addHeader($S, $L)",
                         AbstractEndpointWriter.REQUEST_BUILDER_NAME,
-                        header.wireKey().get(),
+                        headerName,
                         PoetTypeNameStringifier.stringify(
                                 CodeBlock.of("$L.$N()", "request", header.getterProperty())
                                         .toString(),
@@ -221,22 +221,6 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         requestBodyCodeBlock.addStatement(
                 "$T $L = $L.build()", Request.class, variables.getOkhttpRequestName(), REQUEST_BUILDER_NAME);
         return requestBodyCodeBlock.build();
-    }
-
-    private void initializeRequestBodyProperties(
-            InlinedRequestBodyGetters inlinedRequestBody, CodeBlock.Builder requestBodyCodeBlock) {
-        requestBodyCodeBlock.addStatement(
-                "$T $L = new $T<>()",
-                ParameterizedTypeName.get(Map.class, String.class, Object.class),
-                variables.getRequestBodyPropertiesName(),
-                HashMap.class);
-        for (EnrichedObjectProperty bodyProperty : inlinedRequestBody.properties()) {
-            requestBodyCodeBlock.addStatement(
-                    "$L.put($S, $L)",
-                    variables.getRequestBodyPropertiesName(),
-                    bodyProperty.wireKey().get(),
-                    requestParameterName + "." + bodyProperty.getterProperty().name + "()");
-        }
     }
 
     private void initializeRequestBody(

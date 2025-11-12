@@ -45,7 +45,7 @@ public class EndpointsPrimitiveWireTest {
         String expectedRequestBody = "" + "\"string\"";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
-        Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
         if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
             String discriminator = null;
             if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
@@ -76,8 +76,9 @@ public class EndpointsPrimitiveWireTest {
         String expectedResponseBody = "" + "\"string\"";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertEquals(
-                expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+        Assertions.assertTrue(
+                jsonEquals(expectedResponseNode, actualResponseNode),
+                "Response body structure does not match expected");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type"))
@@ -116,7 +117,7 @@ public class EndpointsPrimitiveWireTest {
         String expectedRequestBody = "" + "1";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
-        Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
         if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
             String discriminator = null;
             if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
@@ -147,8 +148,9 @@ public class EndpointsPrimitiveWireTest {
         String expectedResponseBody = "" + "1";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertEquals(
-                expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+        Assertions.assertTrue(
+                jsonEquals(expectedResponseNode, actualResponseNode),
+                "Response body structure does not match expected");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type"))
@@ -187,7 +189,7 @@ public class EndpointsPrimitiveWireTest {
         String expectedRequestBody = "" + "1000000";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
-        Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
         if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
             String discriminator = null;
             if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
@@ -218,8 +220,9 @@ public class EndpointsPrimitiveWireTest {
         String expectedResponseBody = "" + "1000000";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertEquals(
-                expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+        Assertions.assertTrue(
+                jsonEquals(expectedResponseNode, actualResponseNode),
+                "Response body structure does not match expected");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type"))
@@ -258,7 +261,7 @@ public class EndpointsPrimitiveWireTest {
         String expectedRequestBody = "" + "1.1";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
-        Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
         if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
             String discriminator = null;
             if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
@@ -289,8 +292,9 @@ public class EndpointsPrimitiveWireTest {
         String expectedResponseBody = "" + "1.1";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertEquals(
-                expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+        Assertions.assertTrue(
+                jsonEquals(expectedResponseNode, actualResponseNode),
+                "Response body structure does not match expected");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type"))
@@ -329,7 +333,7 @@ public class EndpointsPrimitiveWireTest {
         String expectedRequestBody = "" + "true";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
-        Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
         if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
             String discriminator = null;
             if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
@@ -360,8 +364,9 @@ public class EndpointsPrimitiveWireTest {
         String expectedResponseBody = "" + "true";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertEquals(
-                expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+        Assertions.assertTrue(
+                jsonEquals(expectedResponseNode, actualResponseNode),
+                "Response body structure does not match expected");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type"))
@@ -401,7 +406,7 @@ public class EndpointsPrimitiveWireTest {
         String expectedRequestBody = "" + "\"2024-01-15T09:30:00Z\"";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
-        Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
         if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
             String discriminator = null;
             if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
@@ -432,8 +437,9 @@ public class EndpointsPrimitiveWireTest {
         String expectedResponseBody = "" + "\"2024-01-15T09:30:00Z\"";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertEquals(
-                expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+        Assertions.assertTrue(
+                jsonEquals(expectedResponseNode, actualResponseNode),
+                "Response body structure does not match expected");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type"))
@@ -472,7 +478,7 @@ public class EndpointsPrimitiveWireTest {
         String expectedRequestBody = "" + "\"2023-01-15\"";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
-        Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
         if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
             String discriminator = null;
             if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
@@ -503,8 +509,9 @@ public class EndpointsPrimitiveWireTest {
         String expectedResponseBody = "" + "\"2023-01-15\"";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertEquals(
-                expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+        Assertions.assertTrue(
+                jsonEquals(expectedResponseNode, actualResponseNode),
+                "Response body structure does not match expected");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type"))
@@ -545,7 +552,7 @@ public class EndpointsPrimitiveWireTest {
         String expectedRequestBody = "" + "\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
-        Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
         if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
             String discriminator = null;
             if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
@@ -576,8 +583,9 @@ public class EndpointsPrimitiveWireTest {
         String expectedResponseBody = "" + "\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertEquals(
-                expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+        Assertions.assertTrue(
+                jsonEquals(expectedResponseNode, actualResponseNode),
+                "Response body structure does not match expected");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type"))
@@ -616,7 +624,7 @@ public class EndpointsPrimitiveWireTest {
         String expectedRequestBody = "" + "\"SGVsbG8gd29ybGQh\"";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
-        Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
         if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
             String discriminator = null;
             if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
@@ -647,8 +655,9 @@ public class EndpointsPrimitiveWireTest {
         String expectedResponseBody = "" + "\"SGVsbG8gd29ybGQh\"";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertEquals(
-                expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+        Assertions.assertTrue(
+                jsonEquals(expectedResponseNode, actualResponseNode),
+                "Response body structure does not match expected");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type"))
@@ -673,5 +682,30 @@ public class EndpointsPrimitiveWireTest {
         if (actualResponseNode.isObject()) {
             Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
         }
+    }
+
+    /**
+     * Compares two JsonNodes with numeric equivalence (149 == 149.0).
+     */
+    private boolean jsonEquals(JsonNode a, JsonNode b) {
+        if (a.equals(b)) return true;
+        if (a.isNumber() && b.isNumber()) return Math.abs(a.doubleValue() - b.doubleValue()) < 1e-10;
+        if (a.isObject() && b.isObject()) {
+            if (a.size() != b.size()) return false;
+            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = a.fields();
+            while (iter.hasNext()) {
+                java.util.Map.Entry<String, JsonNode> entry = iter.next();
+                if (!jsonEquals(entry.getValue(), b.get(entry.getKey()))) return false;
+            }
+            return true;
+        }
+        if (a.isArray() && b.isArray()) {
+            if (a.size() != b.size()) return false;
+            for (int i = 0; i < a.size(); i++) {
+                if (!jsonEquals(a.get(i), b.get(i))) return false;
+            }
+            return true;
+        }
+        return false;
     }
 }
