@@ -292,7 +292,7 @@ dotnet_diagnostic.IDE0005.severity = error
     }: {
         absolutePathToSrcDirectory: AbsoluteFilePath;
     }): Promise<AbsoluteFilePath> {
-        await access(path.join(absolutePathToSrcDirectory, `${this.name}.sln`)).catch(() =>
+        await access(path.join(absolutePathToSrcDirectory, `${this.name}.slnx`)).catch(() =>
             loggingExeca(this.context.logger, "dotnet", ["new", "sln", "-n", this.name, "--no-update-check"], {
                 doNotPipeOutput: true,
                 cwd: absolutePathToSrcDirectory
