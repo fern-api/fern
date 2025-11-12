@@ -10,6 +10,7 @@ import { ApiConfigurationSchema } from "./ApiConfigurationSchema";
 import { WhitelabelConfigurationSchema } from "./WhitelabelConfigurationSchema";
 import { OutputMetadataSchema } from "./OutputMetadataSchema";
 import { ReadmeSchema } from "./ReadmeSchema";
+import { BaseApiSettingsSchema } from "./BaseApiSettingsSchema";
 import { GeneratorGroupSchema } from "../../group/types/GeneratorGroupSchema";
 import { ReviewersSchema } from "../../reviewers/types/ReviewersSchema";
 import { GeneratorsOpenApiSchema } from "./GeneratorsOpenApiSchema";
@@ -24,6 +25,7 @@ export const GeneratorsConfigurationSchema: core.serialization.ObjectSchema<
     whitelabel: WhitelabelConfigurationSchema.optional(),
     metadata: OutputMetadataSchema.optional(),
     readme: ReadmeSchema.optional(),
+    settings: BaseApiSettingsSchema.optional(),
     "default-group": core.serialization.string().optional(),
     groups: core.serialization.record(core.serialization.string(), GeneratorGroupSchema).optional(),
     reviewers: ReviewersSchema.optional(),
@@ -41,6 +43,7 @@ export declare namespace GeneratorsConfigurationSchema {
         whitelabel?: WhitelabelConfigurationSchema.Raw | null;
         metadata?: OutputMetadataSchema.Raw | null;
         readme?: ReadmeSchema.Raw | null;
+        settings?: BaseApiSettingsSchema.Raw | null;
         "default-group"?: string | null;
         groups?: Record<string, GeneratorGroupSchema.Raw> | null;
         reviewers?: ReviewersSchema.Raw | null;

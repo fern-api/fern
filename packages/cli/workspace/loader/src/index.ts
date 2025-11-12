@@ -5,6 +5,7 @@ export {
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation,
     type IdentifiableSource
 } from "@fern-api/api-workspace-commons";
+export { applyGeneratorSettingsToDefinitions } from "./applyGeneratorSettings";
 export * from "./handleFailedWorkspaceParserResult";
 export { loadAPIWorkspace } from "./loadAPIWorkspace";
 export { loadDocsWorkspace } from "./loadDocsWorkspace";

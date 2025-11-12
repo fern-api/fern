@@ -19,6 +19,13 @@ types:
         type: optional<OutputMetadataSchema>
       readme:
         type: optional<ReadmeSchema>
+      settings:
+        type: optional<BaseAPISettingsSchema>
+        docs: |
+          Global default API import settings that apply to all specs across all APIs.
+          Individual spec settings in api.specs[].settings will override these defaults.
+          Generator settings in groups.generators[].api.settings will override both.
+          Settings hierarchy (highest to lowest priority): generator > spec > root.
       default-group:
         type: optional<string>
       groups:
