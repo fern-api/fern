@@ -9,6 +9,14 @@
 
 - changelogEntry:
     - summary: |
+        Retrieve package name from module.path configuration for Go SDK generator to support local generation workflows
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.116.1
+
+- changelogEntry:
+    - summary: |
         Add support for a minimal footer navigation theme.
       type: feat
   irVersion: 61
