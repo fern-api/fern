@@ -16,7 +16,8 @@ export function buildUrl({
     retainOriginalCasing,
     omitUndefined,
     parameterNaming,
-    getReferenceToPathParameterVariableFromRequest
+    getReferenceToPathParameterVariableFromRequest,
+    forceInlinePathParameters = false
 }: {
     endpoint: {
         sdkRequest: SdkRequest | undefined;
@@ -31,6 +32,7 @@ export function buildUrl({
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     omitUndefined: boolean;
     getReferenceToPathParameterVariableFromRequest: GetReferenceToPathParameterVariableFromRequest;
+    forceInlinePathParameters?: boolean;
 }): ts.Expression | undefined {
     if (endpoint.allPathParameters.length === 0) {
         if (endpoint.fullPath.head.length === 0) {
@@ -53,7 +55,8 @@ export function buildUrl({
                 generatedClientClass,
                 retainOriginalCasing,
                 parameterNaming,
-                shouldInlinePathParameters: context.requestWrapper.shouldInlinePathParameters(endpoint.sdkRequest),
+                shouldInlinePathParameters:
+                    forceInlinePathParameters || context.requestWrapper.shouldInlinePathParameters(endpoint.sdkRequest),
                 getReferenceToPathParameterVariableFromRequest
             });
 

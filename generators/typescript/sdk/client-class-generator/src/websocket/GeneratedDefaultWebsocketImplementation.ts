@@ -1,5 +1,5 @@
-import { SetRequired } from "@fern-api/core-utils";
-import {
+import type { SetRequired } from "@fern-api/core-utils";
+import type {
     IntermediateRepresentation,
     NameAndWireValue,
     PathParameter,
@@ -11,13 +11,13 @@ import {
     getParameterNameForPropertyPathParameterName,
     getPropertyKey,
     getTextOfTsNode,
-    PackageId
+    type PackageId
 } from "@fern-typescript/commons";
-import { ChannelSignature, GeneratedWebsocketImplementation, SdkContext } from "@fern-typescript/contexts";
+import type { ChannelSignature, GeneratedWebsocketImplementation, SdkContext } from "@fern-typescript/contexts";
 import {
-    ClassDeclarationStructure,
-    InterfaceDeclarationStructure,
-    ModuleDeclarationStructure,
+    type ClassDeclarationStructure,
+    type InterfaceDeclarationStructure,
+    type ModuleDeclarationStructure,
     Scope,
     StructureKind,
     ts
@@ -251,7 +251,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 ts.factory.createBindingElement(
                     undefined,
                     localVarName !== propertyNames.propertyName
-                        ? ts.factory.createStringLiteral(propertyNames.propertyName)
+                        ? ts.factory.createIdentifier(propertyNames.propertyName)
                         : undefined,
                     ts.factory.createIdentifier(localVarName)
                 )
@@ -455,6 +455,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
 
     private getReferenceToWebsocket(context: SdkContext, pathParameterLocalNames: Map<string, string>): ts.Expression {
         const baseUrl = this.getBaseUrl(this.channel, context);
+
         const url = buildUrl({
             endpoint: {
                 allPathParameters: [...this.intermediateRepresentation.pathParameters, ...this.channel.pathParameters],
@@ -476,7 +477,9 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     );
                 }
                 return ts.factory.createIdentifier(localVarName);
-            }
+            },
+            // For websockets, we always inline path parameters since we manually destructure them
+            forceInlinePathParameters: true
         });
 
         if (url == null) {
