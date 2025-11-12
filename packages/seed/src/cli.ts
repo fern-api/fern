@@ -7,6 +7,7 @@ import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import { generateCliChangelog } from "./commands/generate/generateCliChangelog";
 import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog";
+import { buildGeneratorImage } from "./commands/img/buildGeneratorImage";
 import { getLatestCli } from "./commands/latest/getLatestCli";
 import { getLatestGenerator } from "./commands/latest/getLatestGenerator";
 import { getLatestVersionsYml } from "./commands/latest/getLatestVersionsYml";
@@ -361,53 +362,11 @@ function addImgCommand(cli: Argv) {
             const taskContextFactory = new TaskContextFactory(argv["log-level"]);
             const taskContext = taskContextFactory.create(`Building docker image for ${generator.workspaceName}`);
 
-            try {
-                const dockerCommands =
-                    typeof generator.workspaceConfig.test.docker.command === "string"
-                        ? [generator.workspaceConfig.test.docker.command]
-                        : generator.workspaceConfig.test.docker.command;
-
-                if (dockerCommands == null) {
-                    throw new Error(`Failed. No docker command for ${generator.workspaceName}`);
-                }
-
-                taskContext.logger.info(`Building docker image for ${generator.workspaceName}...`);
-
-                const { runScript } = await import("./runScript");
-                const { CONSOLE_LOGGER } = await import("@fern-api/logger");
-                const path = await import("path");
-
-                const dockerBuildReturn = await runScript({
-                    commands: dockerCommands,
-                    logger: CONSOLE_LOGGER,
-                    workingDir: path.dirname(path.dirname(generator.absolutePathToWorkspace)),
-                    doNotPipeOutput: false
-                });
-
-                if (dockerBuildReturn.exitCode !== 0) {
-                    throw new Error(`Failed to build the docker container for ${generator.workspaceName}.`);
-                }
-
-                // Tag the image with the specified version
-                const dockerImageName = generator.workspaceConfig.test.docker.image;
-                const baseImageName = dockerImageName.replace(/:.*$/, ""); // Remove any existing tag
-                const taggedImageName = `${baseImageName}:${version}`;
-
-                taskContext.logger.info(`Tagging image as ${taggedImageName}...`);
-
-                const { execSync } = await import("child_process");
-                execSync(`docker tag ${dockerImageName} ${taggedImageName}`, { stdio: "inherit" });
-
-                taskContext.logger.info(`Successfully built and tagged docker image: ${taggedImageName}`);
-                taskContext.logger.info(`Image is available in your local docker daemon.`);
-            } catch (error) {
-                taskContext.logger.error(
-                    `Encountered error while building docker image. ${
-                        error instanceof Error ? (error.stack ?? error.message) : error
-                    }`
-                );
-                throw error;
-            }
+            await buildGeneratorImage({
+                generator,
+                version,
+                context: taskContext
+            });
         }
     );
 }
