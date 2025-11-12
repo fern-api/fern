@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.35.4
+  changelogEntry:
+    - summary: Resolve PydanticUserError for mutually recursive models in Pydantic v2.
+      type: fix
+  createdAt: "2025-11-12"
+  irVersion: 61
+
 - version: 4.35.3
   changelogEntry:
     - summary: Fix double Optional wrapping for unknown types in nullable fields by mapping unknown to Any instead of Optional[Any].
