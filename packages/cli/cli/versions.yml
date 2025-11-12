@@ -1,6 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add global `settings` flag to `generators.yml` configuration.
+        Overrideable by `api.specs[].settings` (which is itself overrideable by `group.generators[].settings` as before).
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-12"
+  version: 0.119.0
+
+- changelogEntry:
+    - summary: |
         Add support for external URLs in `<Code src="...">` tags in docs markdown. Code snippets can now reference external URLs (e.g., raw.githubusercontent.com) to fetch code content dynamically.
       type: feat
   irVersion: 61
