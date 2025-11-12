@@ -206,8 +206,13 @@ function getPackageNameFromGeneratorConfig(generatorInvocation: GeneratorInvocat
         if (packageName != null) {
             return packageName;
         }
-    }
 
+        // go-sdk generator uses module.path to set the package name
+        const modulePath = (generatorInvocation.raw.config as { module?: { path?: string } }).module?.path;
+        if (modulePath != null) {
+            return modulePath;
+        }
+    }
     return undefined;
 }
 
