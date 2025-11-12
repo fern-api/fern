@@ -19,6 +19,7 @@ import { DockerScriptRunner, LocalScriptRunner, ScriptRunner } from "./commands/
 import { TaskContextFactory } from "./commands/test/TaskContextFactory";
 import { DockerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/test-runner";
 import { FIXTURES, LANGUAGE_SPECIFIC_FIXTURE_PREFIXES, testGenerator } from "./commands/test/testWorkspaceFixtures";
+import { assertValidSemVerOrThrow } from "./commands/validate/semVerUtils";
 import { validateCliRelease } from "./commands/validate/validateCliChangelog";
 import { validateGenerator } from "./commands/validate/validateGeneratorChangelog";
 import { validateVersionsYml } from "./commands/validate/validateVersionsYml";
@@ -41,6 +42,7 @@ export async function tryRunCli(): Promise<void> {
 
     addTestCommand(cli);
     addRunCommand(cli);
+    addImgCommand(cli);
     addGetAvailableFixturesCommand(cli);
     addRegisterCommands(cli);
     addPublishCommands(cli);
@@ -312,6 +314,100 @@ function addRunCommand(cli: Argv) {
                 local: argv.local,
                 keepDocker: argv.keepDocker
             });
+        }
+    );
+}
+
+function addImgCommand(cli: Argv) {
+    cli.command(
+        "img <generator>",
+        "Builds a docker image for the specified generator and stores it in the local docker daemon",
+        (yargs) =>
+            yargs
+                .positional("generator", {
+                    type: "string",
+                    demandOption: true,
+                    description: "Generator to build docker image for"
+                })
+                .option("version", {
+                    type: "string",
+                    demandOption: false,
+                    description: "Version tag for the docker image (must be valid semver, defaults to 99.99.99)"
+                })
+                .option("log-level", {
+                    default: LogLevel.Info,
+                    choices: LOG_LEVELS
+                }),
+        async (argv) => {
+            const generators = await loadGeneratorWorkspaces();
+            throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
+
+            const generator = generators.find((g) => g.workspaceName === argv.generator);
+            if (generator == null) {
+                throw new Error(
+                    `Generator ${argv.generator} not found. Please make sure that there is a folder with the name ${argv.generator} in the seed directory.`
+                );
+            }
+
+            const version = argv.version ?? "99.99.99";
+            try {
+                assertValidSemVerOrThrow(version);
+            } catch (error) {
+                throw new Error(
+                    `Invalid version: ${version}. Version must be a valid semver (e.g., 1.2.3 or 1.2.3-rc5).`
+                );
+            }
+
+            const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+            const taskContext = taskContextFactory.create(`Building docker image for ${generator.workspaceName}`);
+
+            try {
+                const dockerCommands =
+                    typeof generator.workspaceConfig.test.docker.command === "string"
+                        ? [generator.workspaceConfig.test.docker.command]
+                        : generator.workspaceConfig.test.docker.command;
+
+                if (dockerCommands == null) {
+                    throw new Error(`Failed. No docker command for ${generator.workspaceName}`);
+                }
+
+                taskContext.logger.info(`Building docker image for ${generator.workspaceName}...`);
+
+                const { runScript } = await import("./runScript");
+                const { CONSOLE_LOGGER } = await import("@fern-api/logger");
+                const path = await import("path");
+
+                const dockerBuildReturn = await runScript({
+                    commands: dockerCommands,
+                    logger: CONSOLE_LOGGER,
+                    workingDir: path.dirname(path.dirname(generator.absolutePathToWorkspace)),
+                    doNotPipeOutput: false
+                });
+
+                if (dockerBuildReturn.exitCode !== 0) {
+                    throw new Error(`Failed to build the docker container for ${generator.workspaceName}.`);
+                }
+
+                // Tag the image with the specified version
+                const dockerImageName = generator.workspaceConfig.test.docker.image;
+                const baseImageName = dockerImageName.replace(/:.*$/, ""); // Remove any existing tag
+                const taggedImageName = `${baseImageName}:${version}`;
+
+                taskContext.logger.info(`Tagging image as ${taggedImageName}...`);
+
+                const { execSync } = await import("child_process");
+                execSync(`docker tag ${dockerImageName} ${taggedImageName}`, { stdio: "inherit" });
+
+                taskContext.logger.info(`Successfully built and tagged docker image: ${taggedImageName}`);
+                taskContext.logger.info(`Image is available in your local docker daemon.`);
+            } catch (error) {
+                taskContext.logger.error(
+                    `Encountered error while building docker image. ${
+                        error instanceof Error ? (error.stack ?? error.message) : error
+                    }`
+                );
+                throw error;
+            }
         }
     );
 }
