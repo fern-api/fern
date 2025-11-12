@@ -235,14 +235,25 @@ async function enhanceSingleExample(
 
         const enhancedResult = await enhancer.enhanceExample(enhancementRequest);
 
+        const enhancedReq = enhancedResult.enhancedRequestExample;
+        const enhancedRes = enhancedResult.enhancedResponseExample;
+
+        const requestChanged = enhancedReq !== undefined && !deepEqual(enhancedReq, originalRequestExample);
+        const responseChanged = enhancedRes !== undefined && !deepEqual(enhancedRes, originalResponseExample);
+
+        if (!requestChanged && !responseChanged) {
+            context.logger.debug(`AI returned no changes for ${endpoint.method} ${example.path}`);
+            return example;
+        }
+
         const enhancedExampleRecord: EnhancedExampleRecord = {
             endpoint: example.path,
             method: endpoint.method,
             pathParameters: example.pathParameters,
             queryParameters: example.queryParameters,
             headers: example.headers,
-            requestBody: enhancedResult.enhancedRequestExample,
-            responseBody: enhancedResult.enhancedResponseExample
+            requestBody: requestChanged ? enhancedReq : undefined,
+            responseBody: responseChanged ? enhancedRes : undefined
         };
         enhancedExampleRecords.push(enhancedExampleRecord);
 
@@ -250,24 +261,24 @@ async function enhanceSingleExample(
             ...example
         };
 
-        if (enhancedResult.enhancedRequestExample && example.requestBodyV3) {
-            enhancedExample.requestBody = enhancedResult.enhancedRequestExample;
+        if (requestChanged && example.requestBodyV3) {
+            enhancedExample.requestBody = enhancedReq;
             enhancedExample.requestBodyV3 = {
                 ...example.requestBodyV3,
-                value: enhancedResult.enhancedRequestExample
+                value: enhancedReq
             };
         }
 
-        if (enhancedResult.enhancedResponseExample && example.responseBodyV3) {
-            enhancedExample.responseBody = enhancedResult.enhancedResponseExample;
+        if (responseChanged && example.responseBodyV3) {
+            enhancedExample.responseBody = enhancedRes;
             enhancedExample.responseBodyV3 = {
                 ...example.responseBodyV3,
-                value: enhancedResult.enhancedResponseExample
+                value: enhancedRes
             };
         }
 
         stats.count++;
-        context.logger.info(`✨ Successfully enhanced example for ${endpoint.method} ${example.path}`);
+        context.logger.info(`Successfully enhanced example for ${endpoint.method} ${example.path}`);
         return enhancedExample;
     } catch (error) {
         context.logger.warn(`Failed to enhance example for ${endpoint.method} ${example.path}: ${error}`);
@@ -324,4 +335,49 @@ function extractExampleValue(bodyV3: BodyV3 | undefined): unknown {
         default:
             return bodyV3.value;
     }
+}
+
+function deepEqual(a: unknown, b: unknown): boolean {
+    if (Object.is(a, b)) {
+        return true;
+    }
+
+    if (a === null || b === null || a === undefined || b === undefined) {
+        return a === b;
+    }
+
+    if (typeof a !== typeof b) {
+        return false;
+    }
+
+    if (typeof a !== "object") {
+        return false;
+    }
+
+    if (Array.isArray(a) && Array.isArray(b)) {
+        if (a.length !== b.length) {
+            return false;
+        }
+        return a.every((item, index) => deepEqual(item, b[index]));
+    }
+
+    if (Array.isArray(a) || Array.isArray(b)) {
+        return false;
+    }
+
+    const aObj = a as Record<string, unknown>;
+    const bObj = b as Record<string, unknown>;
+
+    const aKeys = Object.keys(aObj).sort();
+    const bKeys = Object.keys(bObj).sort();
+
+    if (aKeys.length !== bKeys.length) {
+        return false;
+    }
+
+    if (!aKeys.every((key, index) => key === bKeys[index])) {
+        return false;
+    }
+
+    return aKeys.every((key) => deepEqual(aObj[key], bObj[key]));
 }
