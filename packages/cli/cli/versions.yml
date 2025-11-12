@@ -5,7 +5,16 @@
       type: feat
   irVersion: 61
   createdAt: "2025-11-12"
-  version: 0.118.1
+  version: 0.119.1
+
+- changelogEntry:
+    - summary: |
+        Add global `settings` flag to `generators.yml` configuration.
+        Overrideable by `api.specs[].settings` (which is itself overrideable by `group.generators[].settings` as before).
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-12"
+  version: 0.119.0
 
 - changelogEntry:
     - summary: |
