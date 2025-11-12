@@ -55,7 +55,8 @@ export class LambdaExampleEnhancer {
                         operationSummary: request.operationSummary,
                         operationDescription: request.operationDescription,
                         originalRequestExample: request.originalRequestExample,
-                        originalResponseExample: request.originalResponseExample
+                        originalResponseExample: request.originalResponseExample,
+                        openApiSpec: request.openApiSpec
                     }),
                     signal: AbortSignal.timeout(this.config.requestTimeoutMs)
                 });
