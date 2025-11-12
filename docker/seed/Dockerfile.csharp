@@ -64,5 +64,3 @@ RUN dotnet restore /dependencies.csproj
 RUN rm /dependencies.csproj
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
-
-
