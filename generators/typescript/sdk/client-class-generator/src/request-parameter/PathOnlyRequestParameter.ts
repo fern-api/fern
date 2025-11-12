@@ -96,10 +96,40 @@ export class PathOnlyRequestParameter implements RequestParameter {
         example: ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Expression | undefined {
-        const requestWrapperExample = context.requestWrapper
-            .getGeneratedRequestWrapper(this.packageId, this.endpoint.name)
-            .generateExample(example);
-        return requestWrapperExample?.build(context, opts);
+        const generatedRequestWrapper = context.requestWrapper.getGeneratedRequestWrapper(
+            this.packageId,
+            this.endpoint.name
+        );
+
+        const exampleParameters = [...example.servicePathParameters, ...example.endpointPathParameters];
+        const properties: ts.PropertyAssignment[] = [];
+
+        const allPathParameters = [...this.service.pathParameters, ...this.endpoint.pathParameters];
+
+        for (const pathParameter of allPathParameters) {
+            const propertyName = generatedRequestWrapper.getPropertyNameOfPathParameter(pathParameter);
+
+            const exampleParameter = exampleParameters.find(
+                (param) => param.name.originalName === pathParameter.name.originalName
+            );
+
+            let valueExpression: ts.Expression;
+            if (exampleParameter != null) {
+                const generatedExample = context.type.getGeneratedExample(exampleParameter.value);
+                valueExpression = generatedExample.build(context, opts);
+            } else {
+                valueExpression = ts.factory.createIdentifier("undefined");
+            }
+
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createStringLiteral(propertyName.propertyName),
+                    valueExpression
+                )
+            );
+        }
+
+        return ts.factory.createObjectLiteralExpression(properties, /* multiline */ true);
     }
 
     public isOptional({ context }: { context: SdkContext }): boolean {
