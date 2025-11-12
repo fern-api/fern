@@ -59,9 +59,9 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 "tsconfig.json",
                 "yarn.lock",
                 "pnpm-lock.yaml",
-                ".mock/",
-                "dist/",
-                "scripts/",
+                ".mock",
+                "dist",
+                "scripts",
                 "jest.config.*",
                 "vitest.config.*"
             ].join("\n")
