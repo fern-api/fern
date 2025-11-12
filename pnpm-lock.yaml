@@ -7791,7 +7791,10 @@ importers:
         version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/generator-cli:
-    dependencies:
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../configs
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../commons/fs-utils
@@ -7801,13 +7804,6 @@ importers:
       '@octokit/rest':
         specifier: ^20.1.2
         version: 20.1.2
-      es-toolkit:
-        specifier: ^1.39.10
-        version: 1.39.10
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../configs
       '@types/jest':
         specifier: ^29.5.11
         version: 29.5.14
@@ -7820,6 +7816,9 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
+      es-toolkit:
+        specifier: ^1.39.10
+        version: 1.39.10
       esbuild:
         specifier: ^0.24.2
         version: 0.24.2
