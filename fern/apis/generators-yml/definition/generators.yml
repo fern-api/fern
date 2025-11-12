@@ -22,9 +22,9 @@ types:
       settings:
         type: optional<BaseAPISettingsSchema>
         docs: |
-          Global default API import settings that apply to all specs across all APIs.
+          Global default parser settings that apply universally to all generations.
           Individual spec settings in api.specs[].settings will override these defaults.
-          Generator settings in groups.generators[].api.settings will override both.
+          Individual generator settings in groups.generators[].api.settings will override both.
           Settings hierarchy (highest to lowest priority): generator > spec > root.
       default-group:
         type: optional<string>
@@ -397,7 +397,7 @@ types:
       inline-all-of-schemas:
         type: optional<boolean>
         docs: |
-          Whether to inline allOf schemas. If false, allOf schemas will be 
+          Whether to inline allOf schemas. If false, allOf schemas will be
           extended in the code generation.
         default: false
       resolve-aliases:
