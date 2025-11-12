@@ -1,4 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.28.12
+  changelogEntry:
+    - summary: |
+        Include more files and folders in .npmignore:
+        * .mock
+        * .fern
+        * dist
+        * scripts
+        * jest.config.* 
+        * vitest.config.*
+      type: fix
+    - summary: |
+        Only generate _.npmignore_ when `useLegacyExports: true`.
+        When `useLegacyExports: false`, we generate a _package.json_ with `"files"` field which makes _.npmignore_ redundant.
+      type: fix
+  createdAt: "2025-11-11"
+  irVersion: 61
+
 - version: 3.28.11
   changelogEntry:
     - summary: |

@@ -54,14 +54,15 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 SimpleTypescriptProject.GIT_IGNORE_FILENAME,
                 ".github",
                 SimpleTypescriptProject.FERN_IGNORE_FILENAME,
+                ".fern",
                 SimpleTypescriptProject.PRETTIER_RC_FILENAME,
                 "biome.json",
                 "tsconfig.json",
                 "yarn.lock",
                 "pnpm-lock.yaml",
-                ".mock/",
-                "dist/",
-                "scripts/",
+                ".mock",
+                "dist",
+                "scripts",
                 "jest.config.*",
                 "vitest.config.*"
             ].join("\n")
