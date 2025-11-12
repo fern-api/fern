@@ -256,6 +256,7 @@ export abstract class AbstractRustGeneratorContext<
                     list: (list: any) => this.typeReferenceUsesBuiltin(list, typeName),
                     set: (set: any) => this.typeReferenceUsesBuiltin(set, typeName),
                     optional: (optional: any) => this.typeReferenceUsesBuiltin(optional, typeName),
+                    nullable: (nullable: any) => this.typeReferenceUsesBuiltin(nullable, typeName),
                     map: (map: any) =>
                         this.typeReferenceUsesBuiltin(map.keyType, typeName) ||
                         this.typeReferenceUsesBuiltin(map.valueType, typeName),
