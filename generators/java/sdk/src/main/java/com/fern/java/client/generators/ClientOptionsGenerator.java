@@ -97,6 +97,36 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .build();
     }
 
+    private static Optional<MavenPublishTarget> extractMavenTarget(PublishingConfig publishConfig) {
+        // Try github.target
+        if (publishConfig.getGithub().isPresent()) {
+            GithubPublish github = publishConfig.getGithub().get();
+            if (github.getTarget().getMaven().isPresent()) {
+                return github.getTarget().getMaven();
+            }
+        }
+
+        // Try direct.target
+        if (publishConfig.getDirect().isPresent()) {
+            com.fern.ir.model.publish.DirectPublish direct =
+                    publishConfig.getDirect().get();
+            if (direct.getTarget().getMaven().isPresent()) {
+                return direct.getTarget().getMaven();
+            }
+        }
+
+        // Try filesystem.publishTarget
+        if (publishConfig.getFilesystem().isPresent()) {
+            Filesystem filesystem = publishConfig.getFilesystem().get();
+            if (filesystem.getPublishTarget().isPresent()
+                    && filesystem.getPublishTarget().get().getMaven().isPresent()) {
+                return filesystem.getPublishTarget().get().getMaven();
+            }
+        }
+
+        return Optional.empty();
+    }
+
     private static Map<String, String> getPlatformHeadersEntries(
             PlatformHeaders platformHeaders, GeneratorConfig generatorConfig, IntermediateRepresentation ir) {
         Map<String, String> entries = new HashMap<>();
@@ -117,158 +147,15 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         }
         // Fallback to IR publishConfig (local generation)
         else if (ir.getPublishConfig().isPresent()) {
-            ir.getPublishConfig().get().visit(new PublishingConfig.Visitor<Void>() {
-                @Override
-                public Void visitGithub(GithubPublish github) {
-                    github.getTarget().visit(new com.fern.ir.model.publish.PublishTarget.Visitor<Void>() {
-                        @Override
-                        public Void visitMaven(MavenPublishTarget maven) {
-                            if (maven.getCoordinate().isPresent()) {
-                                entries.put(
-                                        platformHeaders.getSdkName(),
-                                        maven.getCoordinate().get());
-                            }
-                            if (maven.getVersion().isPresent()) {
-                                entries.put(
-                                        platformHeaders.getSdkVersion(),
-                                        maven.getVersion().get());
-                            }
-                            return null;
-                        }
-
-                        @Override
-                        public Void visitPostman(com.fern.ir.model.publish.PostmanPublishTarget postmanPublishTarget) {
-                            return null;
-                        }
-
-                        @Override
-                        public Void visitNpm(com.fern.ir.model.publish.NpmPublishTarget npmPublishTarget) {
-                            return null;
-                        }
-
-                        @Override
-                        public Void visitPypi(com.fern.ir.model.publish.PypiPublishTarget pypiPublishTarget) {
-                            return null;
-                        }
-
-                        @Override
-                        public Void visitCrates(com.fern.ir.model.publish.CratesPublishTarget cratesPublishTarget) {
-                            return null;
-                        }
-
-                        @Override
-                        public Void _visitUnknown(Object unknown) {
-                            return null;
-                        }
-                    });
-                    return null;
-                }
-
-                @Override
-                public Void visitDirect(com.fern.ir.model.publish.DirectPublish directPublish) {
-                    directPublish.getTarget().visit(new com.fern.ir.model.publish.PublishTarget.Visitor<Void>() {
-                        @Override
-                        public Void visitMaven(MavenPublishTarget maven) {
-                            if (maven.getCoordinate().isPresent()) {
-                                entries.put(
-                                        platformHeaders.getSdkName(),
-                                        maven.getCoordinate().get());
-                            }
-                            if (maven.getVersion().isPresent()) {
-                                entries.put(
-                                        platformHeaders.getSdkVersion(),
-                                        maven.getVersion().get());
-                            }
-                            return null;
-                        }
-
-                        @Override
-                        public Void visitPostman(com.fern.ir.model.publish.PostmanPublishTarget postmanPublishTarget) {
-                            return null;
-                        }
-
-                        @Override
-                        public Void visitNpm(com.fern.ir.model.publish.NpmPublishTarget npmPublishTarget) {
-                            return null;
-                        }
-
-                        @Override
-                        public Void visitPypi(com.fern.ir.model.publish.PypiPublishTarget pypiPublishTarget) {
-                            return null;
-                        }
-
-                        @Override
-                        public Void visitCrates(com.fern.ir.model.publish.CratesPublishTarget cratesPublishTarget) {
-                            return null;
-                        }
-
-                        @Override
-                        public Void _visitUnknown(Object unknown) {
-                            return null;
-                        }
-                    });
-                    return null;
-                }
-
-                @Override
-                public Void visitFilesystem(Filesystem filesystem) {
-                    if (filesystem.getPublishTarget().isPresent()) {
-                        filesystem
-                                .getPublishTarget()
-                                .get()
-                                .visit(new com.fern.ir.model.publish.PublishTarget.Visitor<Void>() {
-                                    @Override
-                                    public Void visitMaven(MavenPublishTarget maven) {
-                                        if (maven.getCoordinate().isPresent()) {
-                                            entries.put(
-                                                    platformHeaders.getSdkName(),
-                                                    maven.getCoordinate().get());
-                                        }
-                                        if (maven.getVersion().isPresent()) {
-                                            entries.put(
-                                                    platformHeaders.getSdkVersion(),
-                                                    maven.getVersion().get());
-                                        }
-                                        return null;
-                                    }
-
-                                    @Override
-                                    public Void visitPostman(
-                                            com.fern.ir.model.publish.PostmanPublishTarget postmanPublishTarget) {
-                                        return null;
-                                    }
-
-                                    @Override
-                                    public Void visitNpm(com.fern.ir.model.publish.NpmPublishTarget npmPublishTarget) {
-                                        return null;
-                                    }
-
-                                    @Override
-                                    public Void visitPypi(
-                                            com.fern.ir.model.publish.PypiPublishTarget pypiPublishTarget) {
-                                        return null;
-                                    }
-
-                                    @Override
-                                    public Void visitCrates(
-                                            com.fern.ir.model.publish.CratesPublishTarget cratesPublishTarget) {
-                                        return null;
-                                    }
-
-                                    @Override
-                                    public Void _visitUnknown(Object unknown) {
-                                        return null;
-                                    }
-                                });
-                    }
-                    return null;
-                }
-
-                @Override
-                public Void _visitUnknown(Object unknown) {
-                    return null;
-                }
-            });
+            Optional<MavenPublishTarget> mavenTarget =
+                    extractMavenTarget(ir.getPublishConfig().get());
+            if (mavenTarget.isPresent()) {
+                mavenTarget.get().getCoordinate().ifPresent(coord -> entries.put(platformHeaders.getSdkName(), coord));
+                mavenTarget
+                        .get()
+                        .getVersion()
+                        .ifPresent(version -> entries.put(platformHeaders.getSdkVersion(), version));
+            }
         }
 
         if (platformHeaders.getUserAgent().isPresent()) {
