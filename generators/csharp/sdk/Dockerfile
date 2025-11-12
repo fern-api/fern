@@ -17,7 +17,7 @@ COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
-RUN dotnet tool install -g csharpier --version "1.1.2"
+RUN dotnet tool install -g csharpier --version "1.2.1"
 
 COPY generators/csharp/sdk/features.yml /assets/features.yml
 COPY generators/csharp/sdk/dist /dist
