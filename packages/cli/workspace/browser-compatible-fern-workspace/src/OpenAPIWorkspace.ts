@@ -1,4 +1,4 @@
-import { BaseOpenAPIWorkspace, BaseOpenAPIWorkspaceSync } from "@fern-api/api-workspace-commons";
+import { BaseOpenAPIWorkspace } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
@@ -31,7 +31,7 @@ export declare namespace OpenAPIWorkspace {
     export type Settings = BaseOpenAPIWorkspace.Settings;
 }
 
-export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
+export class OpenAPIWorkspace extends BaseOpenAPIWorkspace {
     private spec: OpenAPIWorkspace.Spec;
     private loader: InMemoryOpenAPILoader;
 
