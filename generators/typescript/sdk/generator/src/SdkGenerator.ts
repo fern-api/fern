@@ -1699,7 +1699,10 @@ export class SdkGenerator {
 
             const clientFilepath = this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId);
             const fullPath = this.exportsManager.convertExportedFilePathToFilePath(clientFilepath);
-            const relativePath = fullPath.replace(/^\//, "").replace(/^src\//, "").replace(/\/client\/Client\.ts$/, "");
+            const relativePath = fullPath
+                .replace(/^\//, "")
+                .replace(/^src\//, "")
+                .replace(/\/client\/Client\.ts$/, "");
             paths.push(relativePath);
         }
 
