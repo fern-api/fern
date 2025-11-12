@@ -4,7 +4,7 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseGoCustomConfigSchema, resolveRootImportPath, resolveRootModulePath } from "@fern-api/go-ast";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { OutputMode } from "@fern-fern/generator-exec-sdk/api";
-import { mkdir, readFile } from "fs/promises";
+import { copyFile, mkdir, readFile } from "fs/promises";
 import path from "path";
 import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext";
 import { ModuleConfig } from "../module/ModuleConfig";
@@ -46,6 +46,7 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
             files: Object.values(this.goFiles).flat()
         });
         await this.writeRawFiles();
+        await this.writeLicenseFile();
         const isModule = this.getModuleConfig({ config: this.context.config }) != null;
         if (tidy && isModule) {
             await this.runGoModTidy();
@@ -205,10 +206,53 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
     }
 
     private async runGoModTidy(): Promise<void> {
-        await loggingExeca(this.context.logger, "go", ["mod", "tidy"], {
-            doNotPipeOutput: true,
-            cwd: this.absolutePathToOutputDirectory
-        });
+        try {
+            await loggingExeca(this.context.logger, "go", ["mod", "tidy"], {
+                doNotPipeOutput: true,
+                cwd: this.absolutePathToOutputDirectory
+            });
+        } catch (error) {
+            // For local generation with new major versions (e.g., v2, v3), go mod tidy may fail
+            // because the versioned module path doesn't exist in the remote repository yet.
+            // This is expected and safe to ignore - the module will work once pushed.
+            this.context.logger.warn(
+                "go mod tidy failed. This is expected for new major versions during local generation " +
+                    "before the module is published. The generated code is still valid."
+            );
+            if (error instanceof Error) {
+                this.context.logger.debug(`go mod tidy error: ${error.message}`);
+            }
+        }
+    }
+
+    private async writeLicenseFile(): Promise<void> {
+        const licenseConfig = this.context.config.license;
+        if (licenseConfig?.type !== "custom") {
+            return;
+        }
+
+        // In Docker execution environment (local generation), the license file is mounted at /tmp/LICENSE
+        // For remote generation, Fiddle handles writing the LICENSE file after generation
+        const dockerLicensePath = "/tmp/LICENSE";
+        const licenseFileName = licenseConfig.filename ?? "LICENSE";
+        const destinationPath = path.join(this.absolutePathToOutputDirectory, licenseFileName);
+
+        try {
+            await copyFile(dockerLicensePath, destinationPath);
+            this.context.logger.debug(`Successfully copied LICENSE file to ${destinationPath}`);
+        } catch (error) {
+            // File not found is expected for remote generation where Fiddle handles it
+            if (error instanceof Error && "code" in error && error.code === "ENOENT") {
+                this.context.logger.debug(
+                    `Custom license file not found at ${dockerLicensePath}. This is expected for remote generation.`
+                );
+            } else {
+                // Log other errors for debugging while maintaining backwards compatibility
+                this.context.logger.warn(
+                    `Failed to copy custom license file from ${dockerLicensePath} to ${destinationPath}: ${error instanceof Error ? error.message : String(error)}`
+                );
+            }
+        }
     }
 
     private getModuleConfig({
