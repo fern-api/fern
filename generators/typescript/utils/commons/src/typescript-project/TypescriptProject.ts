@@ -31,7 +31,7 @@ export declare namespace TypescriptProject {
         packageManager: "yarn" | "pnpm";
         formatter: "prettier" | "biome" | "oxfmt";
         linter: "biome" | "oxlint" | "none";
-        generateMultipleExports: boolean;
+        generateMultipleExports?: boolean;
         subpackageExportPaths?: string[];
     }
 }
@@ -154,7 +154,7 @@ export abstract class TypescriptProject {
         this.packageManager = packageManager;
         this.formatter = formatter;
         this.linter = linter;
-        this.generateMultipleExports = generateMultipleExports;
+        this.generateMultipleExports = generateMultipleExports ?? false;
         this.subpackageExportPaths = subpackageExportPaths ?? [];
     }
 
