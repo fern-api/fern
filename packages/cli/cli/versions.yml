@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add support for external URL references in OpenAPI code samples. Code samples can now reference external URLs using $ref, enabling dynamic code examples from remote sources.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-12"
+  version: 0.118.0
+
+- changelogEntry:
+    - summary: |
         Add support for hidden versions.
       type: feat
   irVersion: 61

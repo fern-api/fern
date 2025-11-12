@@ -21,7 +21,11 @@ function isCodeReference(value: unknown): value is CodeReference {
     return isPlainObject(value) && typeof (value as { $ref?: unknown }).$ref === "string";
 }
 
-function maybeResolveCodeReference(code: unknown, baseDir: string | undefined): string | undefined {
+function isUrl(ref: string): boolean {
+    return ref.startsWith("http://") || ref.startsWith("https://");
+}
+
+async function maybeResolveCodeReference(code: unknown, baseDir: string | undefined): Promise<string | undefined> {
     if (code == null) {
         return undefined;
     }
@@ -31,6 +35,19 @@ function maybeResolveCodeReference(code: unknown, baseDir: string | undefined): 
     }
 
     if (isCodeReference(code)) {
+        if (isUrl(code.$ref)) {
+            try {
+                const response = await fetch(code.$ref);
+                if (!response.ok) {
+                    return undefined;
+                }
+                const content = await response.text();
+                return content;
+            } catch (error) {
+                return undefined;
+            }
+        }
+
         const resolvedPath = resolvePath(baseDir ?? process.cwd(), code.$ref);
         if (existsSync(resolvedPath)) {
             try {
@@ -45,7 +62,10 @@ function maybeResolveCodeReference(code: unknown, baseDir: string | undefined): 
     return undefined;
 }
 
-function resolveCodeSamples(codeSamples: unknown, baseDir: string | undefined): RawSchemas.ExampleCodeSampleSchema[] {
+async function resolveCodeSamples(
+    codeSamples: unknown,
+    baseDir: string | undefined
+): Promise<RawSchemas.ExampleCodeSampleSchema[]> {
     if (!Array.isArray(codeSamples)) {
         return [];
     }
@@ -57,7 +77,7 @@ function resolveCodeSamples(codeSamples: unknown, baseDir: string | undefined): 
         }
 
         const sampleRecord = sample as Record<string, unknown>;
-        const code = maybeResolveCodeReference(sampleRecord.code, baseDir);
+        const code = await maybeResolveCodeReference(sampleRecord.code, baseDir);
         if (code != null) {
             resolved.push({
                 ...sample,
@@ -69,11 +89,11 @@ function resolveCodeSamples(codeSamples: unknown, baseDir: string | undefined): 
     return resolved;
 }
 
-export function getExamplesFromExtension(
+export async function getExamplesFromExtension(
     operationContext: OperationContext,
     operationObject: OpenAPIV3.OperationObject,
     context: AbstractOpenAPIV3ParserContext
-): EndpointExample[] {
+): Promise<EndpointExample[]> {
     const exampleEndpointCalls = getExtension<RawSchemas.ExampleEndpointCallSchema[]>(
         operationObject,
         FernOpenAPIExtension.EXAMPLES
@@ -81,23 +101,25 @@ export function getExamplesFromExtension(
 
     const baseDir = context.source.type === "openapi" ? dirname(context.source.file) : undefined;
 
-    const resolvedExamples = (exampleEndpointCalls ?? []).map((example) => {
-        if (!isPlainObject(example)) {
+    const resolvedExamples = await Promise.all(
+        (exampleEndpointCalls ?? []).map(async (example) => {
+            if (!isPlainObject(example)) {
+                return example;
+            }
+
+            const exampleRecord = example as Record<string, unknown>;
+            const codeSamples = exampleRecord["code-samples"];
+            if (codeSamples != null) {
+                const resolvedCodeSamples = await resolveCodeSamples(codeSamples, baseDir);
+                return {
+                    ...example,
+                    "code-samples": resolvedCodeSamples
+                };
+            }
+
             return example;
-        }
-
-        const exampleRecord = example as Record<string, unknown>;
-        const codeSamples = exampleRecord["code-samples"];
-        if (codeSamples != null) {
-            const resolvedCodeSamples = resolveCodeSamples(codeSamples, baseDir);
-            return {
-                ...example,
-                "code-samples": resolvedCodeSamples
-            };
-        }
-
-        return example;
-    });
+        })
+    );
 
     const validatedExampleEndpointCalls: RawSchemas.ExampleEndpointCallArraySchema = resolvedExamples.filter(
         (example) => {
