@@ -232,12 +232,20 @@
       type: fix
   irVersion: 61
   createdAt: "2025-11-05"
-  version: 0.107.9
+  version: 0.108.0
 
 - changelogEntry:
     - summary: |
         Improve anyOf/oneOf example generation to prefer variants with examples and use schema-level examples when available. This addresses cases where unions with multiple types were generating fallback examples instead of using provided examples.
       type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.8
+
+- changelogEntry:
+    - summary: |
+        Add support for x-fern-playground-enabled extension in OpenAPI v3 to control whether endpoints are shown in the API playground. The extension value is parsed and stored in the IR's HttpEndpoint.apiPlayground field.
+      type: feat
   irVersion: 61
   createdAt: "2025-11-05"
   version: 0.107.8
