@@ -21,54 +21,62 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      packages: ${{ steps.derive.outputs.packages_json }}
-      packages_space: ${{ steps.derive.outputs.packages_space }}
+      ts: ${{ steps.set-output.outputs.ts }}
+      java: ${{ steps.set-output.outputs.java }}
+      python: ${{ steps.set-output.outputs.python }}
+      csharp: ${{ steps.set-output.outputs.csharp }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 200
 
-      - uses: ./.github/actions/check-for-changed-files
-        id: changes
+      - name: Check for ts changes
+        id: ts
+        uses: ./.github/actions/check-for-changed-files
         with:
-          files: |
-            .github/workflows/seed-dockers.yml
-            docker/seed/Dockerfile.ts
-            docker/seed/Dockerfile.java
-            docker/seed/Dockerfile.python
-            docker/seed/Dockerfile.csharp
+          files: docker/seed/Dockerfile.ts
 
-      - id: derive
-        shell: bash
+      - name: Check for java changes
+        id: java
+        uses: ./.github/actions/check-for-changed-files
+        with:
+          files: docker/seed/Dockerfile.java
+
+      - name: Check for python changes
+        id: python
+        uses: ./.github/actions/check-for-changed-files
+        with:
+          files: docker/seed/Dockerfile.python
+
+      - name: Check for csharp changes
+        id: csharp
+        uses: ./.github/actions/check-for-changed-files
+        with:
+          files: docker/seed/Dockerfile.csharp
+
+      - name: Check for workflow changes
+        id: workflow
+        uses: ./.github/actions/check-for-changed-files
+        with:
+          files: .github/workflows/seed-dockers.yml
+
+      - name: Set outputs
+        id: set-output
         run: |
-          files="${{ steps.changes.outputs.all_changed_files }}"
-          declare -A pkgs=()
-          for f in $files; do
-            case "$f" in
-              docker/seed/Dockerfile.ts) pkgs[ts]=1;;
-              docker/seed/Dockerfile.java) pkgs[java]=1;;
-              docker/seed/Dockerfile.python) pkgs[python]=1;;
-              docker/seed/Dockerfile.csharp) pkgs[csharp]=1;;
-              .github/workflows/seed-dockers.yml)
-                # Workflow changes trigger rebuilds for all images
-                pkgs[ts]=1; pkgs[java]=1; pkgs[python]=1; pkgs[csharp]=1;;
-            esac
-          done
-
-          # Build JSON array and space-delimited list
-          json="["
-          space=""
-          first=1
-          for k in "${!pkgs[@]}"; do
-            space+="$k "
-            if [ $first -eq 0 ]; then json+=", "; fi
-            json+="\"$k\""
-            first=0
-          done
-          json+="]"
-
-          echo "packages_json=$json" >> "$GITHUB_OUTPUT"
-          echo "packages_space=${space% }" >> "$GITHUB_OUTPUT"
+          # If workflow changed, rebuild all images
+          if [[ "${{ steps.workflow.outputs.any_changed }}" == "true" ]]; then
+            echo "ts=true" >> $GITHUB_OUTPUT
+            echo "java=true" >> $GITHUB_OUTPUT
+            echo "python=true" >> $GITHUB_OUTPUT
+            echo "csharp=true" >> $GITHUB_OUTPUT
+            echo "Workflow changed, rebuilding all images"
+          else
+            echo "ts=${{ steps.ts.outputs.any_changed }}" >> $GITHUB_OUTPUT
+            echo "java=${{ steps.java.outputs.any_changed }}" >> $GITHUB_OUTPUT
+            echo "python=${{ steps.python.outputs.any_changed }}" >> $GITHUB_OUTPUT
+            echo "csharp=${{ steps.csharp.outputs.any_changed }}" >> $GITHUB_OUTPUT
+            echo "Set outputs based on individual file changes"
+          fi
 
   generate-sha:
     runs-on: ubuntu-latest
@@ -80,12 +88,10 @@ jobs:
         run: echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
   build-container:
-    if: ${{ needs.changes.outputs.packages_space != '' }}
+    if: ${{ (matrix.package == 'ts' && needs.changes.outputs.ts == 'true') || (matrix.package == 'java' && needs.changes.outputs.java == 'true') || (matrix.package == 'python' && needs.changes.outputs.python == 'true') || (matrix.package == 'csharp' && needs.changes.outputs.csharp == 'true') }}
     strategy:
       matrix:
-        # Parse JSON array containing names of all filters matching any of changed files
-        # e.g. ['package1', 'package2'] if both package folders contains changes
-        package: ${{ fromJSON(needs.changes.outputs.packages) }}
+        package: [ts, java, python, csharp]
         runner: [ubuntu-latest, ubuntu-24.04-arm]
         arch: [amd64, arm64]
         exclude:
@@ -136,7 +142,7 @@ jobs:
       image_sha: ${{ steps.meta.outputs.version }} # This gets the SHA tag
 
   merge-manifests:
-    if: ${{ needs.changes.outputs.packages_space != '' }}
+    if: ${{ needs.changes.outputs.ts == 'true' || needs.changes.outputs.java == 'true' || needs.changes.outputs.python == 'true' || needs.changes.outputs.csharp == 'true' }}
     needs: [changes, build-container, generate-sha]
     runs-on: ubuntu-latest
     steps:
@@ -149,9 +155,28 @@ jobs:
           username: fernapi
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
+      - name: Build package list
+        id: build-list
+        run: |
+          packages=""
+          if [[ "${{ needs.changes.outputs.ts }}" == "true" ]]; then
+            packages+="ts "
+          fi
+          if [[ "${{ needs.changes.outputs.java }}" == "true" ]]; then
+            packages+="java "
+          fi
+          if [[ "${{ needs.changes.outputs.python }}" == "true" ]]; then
+            packages+="python "
+          fi
+          if [[ "${{ needs.changes.outputs.csharp }}" == "true" ]]; then
+            packages+="csharp "
+          fi
+          echo "packages=${packages% }" >> $GITHUB_OUTPUT
+          echo "Building manifests for: ${packages% }"
+
       - name: Create and push manifest
         run: |
-          packages='${{ needs.changes.outputs.packages_space }}'
+          packages='${{ steps.build-list.outputs.packages }}'
           sha='${{ needs.generate-sha.outputs.sha }}'
           for package in $packages; do
             docker buildx imagetools create -t fernapi/${package}-seed:latest \
