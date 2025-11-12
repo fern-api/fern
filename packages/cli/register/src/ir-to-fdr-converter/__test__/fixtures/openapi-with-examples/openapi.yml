@@ -1,0 +1,225 @@
+openapi: 3.0.3
+info:
+  title: OpenAPI with Examples Test
+  version: 1.0.0
+  description: OpenAPI spec for testing request and response examples
+
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+
+paths:
+  /products:
+    post:
+      operationId: createProduct
+      summary: Create a new product
+      description: Creates a new product with the provided information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProductRequest"
+            examples:
+              basic:
+                summary: Basic product creation
+                value:
+                  name: "Wireless Mouse"
+                  description: "Ergonomic wireless mouse with USB receiver"
+                  price: 29.99
+                  category: "Electronics"
+              withTags:
+                summary: Product with tags
+                value:
+                  name: "Gaming Keyboard"
+                  description: "Mechanical keyboard with RGB lighting"
+                  price: 89.99
+                  category: "Electronics"
+                  tags:
+                    - "gaming"
+                    - "rgb"
+                    - "mechanical"
+      responses:
+        "201":
+          description: Product created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+              examples:
+                basic:
+                  summary: Basic product response
+                  value:
+                    id: "prod_123456"
+                    name: "Wireless Mouse"
+                    description: "Ergonomic wireless mouse with USB receiver"
+                    price: 29.99
+                    category: "Electronics"
+                    createdAt: "2024-01-15T10:30:00Z"
+                    updatedAt: "2024-01-15T10:30:00Z"
+                withTags:
+                  summary: Product with tags response
+                  value:
+                    id: "prod_789012"
+                    name: "Gaming Keyboard"
+                    description: "Mechanical keyboard with RGB lighting"
+                    price: 89.99
+                    category: "Electronics"
+                    tags:
+                      - "gaming"
+                      - "rgb"
+                      - "mechanical"
+                    createdAt: "2024-01-15T11:00:00Z"
+                    updatedAt: "2024-01-15T11:00:00Z"
+        "400":
+          description: Invalid product data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              examples:
+                invalidPrice:
+                  summary: Invalid price error
+                  value:
+                    code: "INVALID_PRICE"
+                    message: "Price must be a positive number"
+
+  /products/{productId}:
+    get:
+      operationId: getProduct
+      summary: Get product by ID
+      description: Retrieves a product by its unique identifier
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          description: The unique identifier of the product
+          schema:
+            type: string
+            example: "prod_123456"
+      responses:
+        "200":
+          description: Product found successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+              examples:
+                success:
+                  summary: Successful product retrieval
+                  value:
+                    id: "prod_123456"
+                    name: "Wireless Mouse"
+                    description: "Ergonomic wireless mouse with USB receiver"
+                    price: 29.99
+                    category: "Electronics"
+                    createdAt: "2024-01-15T10:30:00Z"
+                    updatedAt: "2024-01-15T10:30:00Z"
+        "404":
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              examples:
+                notFound:
+                  summary: Product not found error
+                  value:
+                    code: "PRODUCT_NOT_FOUND"
+                    message: "The requested product could not be found"
+
+components:
+  schemas:
+    CreateProductRequest:
+      type: object
+      required:
+        - name
+        - price
+        - category
+      properties:
+        name:
+          type: string
+          description: Product name
+          example: "Wireless Mouse"
+        description:
+          type: string
+          description: Product description
+          example: "Ergonomic wireless mouse with USB receiver"
+        price:
+          type: number
+          format: double
+          description: Product price in USD
+          example: 29.99
+        category:
+          type: string
+          description: Product category
+          example: "Electronics"
+        tags:
+          type: array
+          items:
+            type: string
+          description: Product tags
+          example: ["electronics", "accessories"]
+
+    Product:
+      type: object
+      required:
+        - id
+        - name
+        - price
+        - category
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          type: string
+          description: Unique product identifier
+          example: "prod_123456"
+        name:
+          type: string
+          description: Product name
+          example: "Wireless Mouse"
+        description:
+          type: string
+          description: Product description
+          example: "Ergonomic wireless mouse with USB receiver"
+        price:
+          type: number
+          format: double
+          description: Product price in USD
+          example: 29.99
+        category:
+          type: string
+          description: Product category
+          example: "Electronics"
+        tags:
+          type: array
+          items:
+            type: string
+          description: Product tags
+          example: ["electronics", "accessories"]
+        createdAt:
+          type: string
+          format: date-time
+          description: When the product was created
+          example: "2024-01-15T10:30:00Z"
+        updatedAt:
+          type: string
+          format: date-time
+          description: When the product was last updated
+          example: "2024-01-15T10:30:00Z"
+
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          description: Error code
+          example: "PRODUCT_NOT_FOUND"
+        message:
+          type: string
+          description: Human-readable error message
+          example: "The requested product could not be found"

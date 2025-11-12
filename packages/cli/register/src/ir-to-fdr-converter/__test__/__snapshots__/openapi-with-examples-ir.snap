@@ -1,0 +1,2241 @@
+{
+  "apiDisplayName": undefined,
+  "apiDocs": undefined,
+  "apiName": {
+    "camelCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+    "originalName": "",
+    "pascalCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+    "screamingSnakeCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+    "snakeCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+  },
+  "apiVersion": undefined,
+  "audiences": undefined,
+  "auth": {
+    "docs": undefined,
+    "requirement": "ALL",
+    "schemes": [],
+  },
+  "basePath": undefined,
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "dynamic": undefined,
+  "environments": {
+    "defaultEnvironment": "Production server",
+    "environments": {
+      "_visit": [Function],
+      "environments": [
+        {
+          "docs": "Production server",
+          "id": "Production server",
+          "name": {
+            "camelCase": {
+              "safeName": "productionServer",
+              "unsafeName": "productionServer",
+            },
+            "originalName": "Production server",
+            "pascalCase": {
+              "safeName": "ProductionServer",
+              "unsafeName": "ProductionServer",
+            },
+            "screamingSnakeCase": {
+              "safeName": "PRODUCTION_SERVER",
+              "unsafeName": "PRODUCTION_SERVER",
+            },
+            "snakeCase": {
+              "safeName": "production_server",
+              "unsafeName": "production_server",
+            },
+          },
+          "url": "https://api.example.com/v1",
+        },
+      ],
+      "type": "singleBaseUrl",
+    },
+  },
+  "errorDiscriminationStrategy": {
+    "_visit": [Function],
+    "type": "statusCode",
+  },
+  "errors": {
+    "CreateProductRequestBadRequestError": {
+      "discriminantValue": {
+        "name": {
+          "camelCase": {
+            "safeName": "createProductRequestBadRequestError",
+            "unsafeName": "createProductRequestBadRequestError",
+          },
+          "originalName": "CreateProductRequestBadRequestError",
+          "pascalCase": {
+            "safeName": "CreateProductRequestBadRequestError",
+            "unsafeName": "CreateProductRequestBadRequestError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_PRODUCT_REQUEST_BAD_REQUEST_ERROR",
+            "unsafeName": "CREATE_PRODUCT_REQUEST_BAD_REQUEST_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "create_product_request_bad_request_error",
+            "unsafeName": "create_product_request_bad_request_error",
+          },
+        },
+        "wireValue": "CreateProductRequestBadRequestError",
+      },
+      "displayName": "BadRequestError",
+      "docs": "Invalid product data",
+      "examples": [],
+      "name": {
+        "errorId": "CreateProductRequestBadRequestError",
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "createProductRequestBadRequestError",
+            "unsafeName": "createProductRequestBadRequestError",
+          },
+          "originalName": "CreateProductRequestBadRequestError",
+          "pascalCase": {
+            "safeName": "CreateProductRequestBadRequestError",
+            "unsafeName": "CreateProductRequestBadRequestError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_PRODUCT_REQUEST_BAD_REQUEST_ERROR",
+            "unsafeName": "CREATE_PRODUCT_REQUEST_BAD_REQUEST_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "create_product_request_bad_request_error",
+            "unsafeName": "create_product_request_bad_request_error",
+          },
+        },
+      },
+      "statusCode": 400,
+      "type": {
+        "_visit": [Function],
+        "default": undefined,
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "inline": false,
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
+        "type": "named",
+        "typeId": "Error",
+      },
+      "v2Examples": {
+        "autogeneratedExamples": {},
+        "userSpecifiedExamples": {
+          "invalidPrice": {
+            "code": "INVALID_PRICE",
+            "message": "Price must be a positive number",
+          },
+        },
+      },
+    },
+    "GetProductRequestNotFoundError": {
+      "discriminantValue": {
+        "name": {
+          "camelCase": {
+            "safeName": "getProductRequestNotFoundError",
+            "unsafeName": "getProductRequestNotFoundError",
+          },
+          "originalName": "GetProductRequestNotFoundError",
+          "pascalCase": {
+            "safeName": "GetProductRequestNotFoundError",
+            "unsafeName": "GetProductRequestNotFoundError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "GET_PRODUCT_REQUEST_NOT_FOUND_ERROR",
+            "unsafeName": "GET_PRODUCT_REQUEST_NOT_FOUND_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "get_product_request_not_found_error",
+            "unsafeName": "get_product_request_not_found_error",
+          },
+        },
+        "wireValue": "GetProductRequestNotFoundError",
+      },
+      "displayName": "NotFoundError",
+      "docs": "Product not found",
+      "examples": [],
+      "name": {
+        "errorId": "GetProductRequestNotFoundError",
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "getProductRequestNotFoundError",
+            "unsafeName": "getProductRequestNotFoundError",
+          },
+          "originalName": "GetProductRequestNotFoundError",
+          "pascalCase": {
+            "safeName": "GetProductRequestNotFoundError",
+            "unsafeName": "GetProductRequestNotFoundError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "GET_PRODUCT_REQUEST_NOT_FOUND_ERROR",
+            "unsafeName": "GET_PRODUCT_REQUEST_NOT_FOUND_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "get_product_request_not_found_error",
+            "unsafeName": "get_product_request_not_found_error",
+          },
+        },
+      },
+      "statusCode": 404,
+      "type": {
+        "_visit": [Function],
+        "default": undefined,
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "inline": false,
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
+        "type": "named",
+        "typeId": "Error",
+      },
+      "v2Examples": {
+        "autogeneratedExamples": {},
+        "userSpecifiedExamples": {
+          "notFound": {
+            "code": "PRODUCT_NOT_FOUND",
+            "message": "The requested product could not be found",
+          },
+        },
+      },
+    },
+  },
+  "fdrApiDefinitionId": undefined,
+  "generationMetadata": undefined,
+  "headers": [],
+  "idempotencyHeaders": [],
+  "pathParameters": [],
+  "publishConfig": undefined,
+  "readmeConfig": undefined,
+  "rootPackage": {
+    "docs": undefined,
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": undefined,
+      "packagePath": [],
+    },
+    "hasEndpointsInTree": false,
+    "navigationConfig": undefined,
+    "service": "service_",
+    "subpackages": [],
+    "types": [
+      "CreateProductRequest",
+      "Product",
+      "Error",
+    ],
+    "webhooks": undefined,
+    "websocket": undefined,
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": true,
+    "platformHeaders": {
+      "language": "",
+      "sdkName": "",
+      "sdkVersion": "",
+      "userAgent": undefined,
+    },
+  },
+  "selfHosted": false,
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {},
+  },
+  "services": {
+    "service_": {
+      "audiences": undefined,
+      "availability": undefined,
+      "basePath": {
+        "head": "",
+        "parts": [],
+      },
+      "displayName": undefined,
+      "encoding": undefined,
+      "endpoints": [
+        {
+          "allPathParameters": [],
+          "audiences": [],
+          "auth": false,
+          "autogeneratedExamples": [],
+          "availability": undefined,
+          "basePath": undefined,
+          "baseUrl": "Production server",
+          "displayName": "Create a new product",
+          "docs": "Creates a new product with the provided information",
+          "errors": [
+            {
+              "docs": "Invalid product data",
+              "error": {
+                "errorId": "CreateProductRequestBadRequestError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "file": undefined,
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "createProductRequestBadRequestError",
+                    "unsafeName": "createProductRequestBadRequestError",
+                  },
+                  "originalName": "CreateProductRequestBadRequestError",
+                  "pascalCase": {
+                    "safeName": "CreateProductRequestBadRequestError",
+                    "unsafeName": "CreateProductRequestBadRequestError",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "CREATE_PRODUCT_REQUEST_BAD_REQUEST_ERROR",
+                    "unsafeName": "CREATE_PRODUCT_REQUEST_BAD_REQUEST_ERROR",
+                  },
+                  "snakeCase": {
+                    "safeName": "create_product_request_bad_request_error",
+                    "unsafeName": "create_product_request_bad_request_error",
+                  },
+                },
+              },
+            },
+          ],
+          "fullPath": {
+            "head": "/products",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_.createProduct",
+          "idempotent": false,
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "createProduct",
+              "unsafeName": "createProduct",
+            },
+            "originalName": "createProduct",
+            "pascalCase": {
+              "safeName": "CreateProduct",
+              "unsafeName": "CreateProduct",
+            },
+            "screamingSnakeCase": {
+              "safeName": "CREATE_PRODUCT",
+              "unsafeName": "CREATE_PRODUCT",
+            },
+            "snakeCase": {
+              "safeName": "create_product",
+              "unsafeName": "create_product",
+            },
+          },
+          "pagination": undefined,
+          "path": {
+            "head": "/products",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": {
+            "_visit": [Function],
+            "contentType": "application/json",
+            "docs": undefined,
+            "requestBodyType": {
+              "_visit": [Function],
+              "default": undefined,
+              "displayName": undefined,
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "inline": false,
+              "name": {
+                "camelCase": {
+                  "safeName": "createProductRequest",
+                  "unsafeName": "createProductRequest",
+                },
+                "originalName": "CreateProductRequest",
+                "pascalCase": {
+                  "safeName": "CreateProductRequest",
+                  "unsafeName": "CreateProductRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CREATE_PRODUCT_REQUEST",
+                  "unsafeName": "CREATE_PRODUCT_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "create_product_request",
+                  "unsafeName": "create_product_request",
+                },
+              },
+              "type": "named",
+              "typeId": "CreateProductRequest",
+            },
+            "type": "reference",
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "Basic product creation": {
+                  "category": "Electronics",
+                  "description": "Ergonomic wireless mouse with USB receiver",
+                  "name": "Wireless Mouse",
+                  "price": 29.99,
+                },
+                "Product with tags": {
+                  "category": "Electronics",
+                  "description": "Mechanical keyboard with RGB lighting",
+                  "name": "Gaming Keyboard",
+                  "price": 89.99,
+                  "tags": [
+                    "gaming",
+                    "rgb",
+                    "mechanical",
+                  ],
+                },
+              },
+            },
+          },
+          "response": {
+            "body": {
+              "_visit": [Function],
+              "type": "json",
+              "value": {
+                "_visit": [Function],
+                "docs": "Product created successfully",
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "product",
+                      "unsafeName": "product",
+                    },
+                    "originalName": "Product",
+                    "pascalCase": {
+                      "safeName": "Product",
+                      "unsafeName": "Product",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "PRODUCT",
+                      "unsafeName": "PRODUCT",
+                    },
+                    "snakeCase": {
+                      "safeName": "product",
+                      "unsafeName": "product",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "Product",
+                },
+                "type": "response",
+                "v2Examples": {
+                  "autogeneratedExamples": {},
+                  "userSpecifiedExamples": {
+                    "Basic product response": {
+                      "category": "Electronics",
+                      "createdAt": "2024-01-15T10:30:00Z",
+                      "description": "Ergonomic wireless mouse with USB receiver",
+                      "id": "prod_123456",
+                      "name": "Wireless Mouse",
+                      "price": 29.99,
+                      "updatedAt": "2024-01-15T10:30:00Z",
+                    },
+                    "Product with tags response": {
+                      "category": "Electronics",
+                      "createdAt": "2024-01-15T11:00:00Z",
+                      "description": "Mechanical keyboard with RGB lighting",
+                      "id": "prod_789012",
+                      "name": "Gaming Keyboard",
+                      "price": 89.99,
+                      "tags": [
+                        "gaming",
+                        "rgb",
+                        "mechanical",
+                      ],
+                      "updatedAt": "2024-01-15T11:00:00Z",
+                    },
+                  },
+                },
+              },
+            },
+            "statusCode": 201,
+          },
+          "retries": undefined,
+          "sdkRequest": undefined,
+          "security": undefined,
+          "source": {
+            "_visit": [Function],
+            "type": "openapi",
+          },
+          "transport": undefined,
+          "userSpecifiedExamples": [],
+          "v2BaseUrls": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {},
+            "userSpecifiedExamples": {
+              "Basic product creation_Basic product response_201": {
+                "codeSamples": undefined,
+                "displayName": "Basic product creation",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "POST",
+                    "path": "/products",
+                  },
+                  "environment": "Production server",
+                  "headers": {},
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "requestBody": {
+                    "category": "Electronics",
+                    "description": "Ergonomic wireless mouse with USB receiver",
+                    "name": "Wireless Mouse",
+                    "price": 29.99,
+                  },
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "category": "Electronics",
+                      "createdAt": "2024-01-15T10:30:00Z",
+                      "description": "Ergonomic wireless mouse with USB receiver",
+                      "id": "prod_123456",
+                      "name": "Wireless Mouse",
+                      "price": 29.99,
+                      "updatedAt": "2024-01-15T10:30:00Z",
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 201,
+                },
+              },
+              "Product with tags_Basic product response_201": {
+                "codeSamples": undefined,
+                "displayName": "Product with tags",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "POST",
+                    "path": "/products",
+                  },
+                  "environment": "Production server",
+                  "headers": {},
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "requestBody": {
+                    "category": "Electronics",
+                    "description": "Mechanical keyboard with RGB lighting",
+                    "name": "Gaming Keyboard",
+                    "price": 89.99,
+                    "tags": [
+                      "gaming",
+                      "rgb",
+                      "mechanical",
+                    ],
+                  },
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "category": "Electronics",
+                      "createdAt": "2024-01-15T10:30:00Z",
+                      "description": "Ergonomic wireless mouse with USB receiver",
+                      "id": "prod_123456",
+                      "name": "Wireless Mouse",
+                      "price": 29.99,
+                      "updatedAt": "2024-01-15T10:30:00Z",
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 201,
+                },
+              },
+              "base_Basic product response_201": {
+                "codeSamples": undefined,
+                "displayName": "Basic product response",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "POST",
+                    "path": "/products",
+                  },
+                  "environment": "Production server",
+                  "headers": {},
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "requestBody": undefined,
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "category": "Electronics",
+                      "createdAt": "2024-01-15T10:30:00Z",
+                      "description": "Ergonomic wireless mouse with USB receiver",
+                      "id": "prod_123456",
+                      "name": "Wireless Mouse",
+                      "price": 29.99,
+                      "updatedAt": "2024-01-15T10:30:00Z",
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 201,
+                },
+              },
+              "base_Product with tags response_201": {
+                "codeSamples": undefined,
+                "displayName": "Product with tags response",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "POST",
+                    "path": "/products",
+                  },
+                  "environment": "Production server",
+                  "headers": {},
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "requestBody": undefined,
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "category": "Electronics",
+                      "createdAt": "2024-01-15T11:00:00Z",
+                      "description": "Mechanical keyboard with RGB lighting",
+                      "id": "prod_789012",
+                      "name": "Gaming Keyboard",
+                      "price": 89.99,
+                      "tags": [
+                        "gaming",
+                        "rgb",
+                        "mechanical",
+                      ],
+                      "updatedAt": "2024-01-15T11:00:00Z",
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 201,
+                },
+              },
+            },
+          },
+          "v2RequestBodies": {
+            "requestBodies": [
+              {
+                "_visit": [Function],
+                "contentType": "application/json",
+                "docs": undefined,
+                "requestBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "createProductRequest",
+                      "unsafeName": "createProductRequest",
+                    },
+                    "originalName": "CreateProductRequest",
+                    "pascalCase": {
+                      "safeName": "CreateProductRequest",
+                      "unsafeName": "CreateProductRequest",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "CREATE_PRODUCT_REQUEST",
+                      "unsafeName": "CREATE_PRODUCT_REQUEST",
+                    },
+                    "snakeCase": {
+                      "safeName": "create_product_request",
+                      "unsafeName": "create_product_request",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "CreateProductRequest",
+                },
+                "type": "reference",
+                "v2Examples": {
+                  "autogeneratedExamples": {},
+                  "userSpecifiedExamples": {
+                    "Basic product creation": {
+                      "category": "Electronics",
+                      "description": "Ergonomic wireless mouse with USB receiver",
+                      "name": "Wireless Mouse",
+                      "price": 29.99,
+                    },
+                    "Product with tags": {
+                      "category": "Electronics",
+                      "description": "Mechanical keyboard with RGB lighting",
+                      "name": "Gaming Keyboard",
+                      "price": 89.99,
+                      "tags": [
+                        "gaming",
+                        "rgb",
+                        "mechanical",
+                      ],
+                    },
+                  },
+                },
+              },
+            ],
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "body": {
+                  "_visit": [Function],
+                  "type": "json",
+                  "value": {
+                    "_visit": [Function],
+                    "docs": "Product created successfully",
+                    "responseBodyType": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "displayName": undefined,
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": undefined,
+                        "packagePath": [],
+                      },
+                      "inline": false,
+                      "name": {
+                        "camelCase": {
+                          "safeName": "product",
+                          "unsafeName": "product",
+                        },
+                        "originalName": "Product",
+                        "pascalCase": {
+                          "safeName": "Product",
+                          "unsafeName": "Product",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "PRODUCT",
+                          "unsafeName": "PRODUCT",
+                        },
+                        "snakeCase": {
+                          "safeName": "product",
+                          "unsafeName": "product",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "Product",
+                    },
+                    "type": "response",
+                    "v2Examples": {
+                      "autogeneratedExamples": {},
+                      "userSpecifiedExamples": {
+                        "Basic product response": {
+                          "category": "Electronics",
+                          "createdAt": "2024-01-15T10:30:00Z",
+                          "description": "Ergonomic wireless mouse with USB receiver",
+                          "id": "prod_123456",
+                          "name": "Wireless Mouse",
+                          "price": 29.99,
+                          "updatedAt": "2024-01-15T10:30:00Z",
+                        },
+                        "Product with tags response": {
+                          "category": "Electronics",
+                          "createdAt": "2024-01-15T11:00:00Z",
+                          "description": "Mechanical keyboard with RGB lighting",
+                          "id": "prod_789012",
+                          "name": "Gaming Keyboard",
+                          "price": 89.99,
+                          "tags": [
+                            "gaming",
+                            "rgb",
+                            "mechanical",
+                          ],
+                          "updatedAt": "2024-01-15T11:00:00Z",
+                        },
+                      },
+                    },
+                  },
+                },
+                "statusCode": 201,
+              },
+            ],
+          },
+        },
+        {
+          "allPathParameters": [
+            {
+              "docs": "The unique identifier of the product",
+              "location": "ENDPOINT",
+              "name": {
+                "camelCase": {
+                  "safeName": "productId",
+                  "unsafeName": "productId",
+                },
+                "originalName": "productId",
+                "pascalCase": {
+                  "safeName": "ProductId",
+                  "unsafeName": "ProductId",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PRODUCT_ID",
+                  "unsafeName": "PRODUCT_ID",
+                },
+                "snakeCase": {
+                  "safeName": "product_id",
+                  "unsafeName": "product_id",
+                },
+              },
+              "v2Examples": {
+                "autogeneratedExamples": {
+                  "productId_example": "prod_123456",
+                },
+                "userSpecifiedExamples": {},
+              },
+              "valueType": {
+                "_visit": [Function],
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "_visit": [Function],
+                    "default": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                },
+                "type": "primitive",
+              },
+              "variable": undefined,
+            },
+          ],
+          "audiences": [],
+          "auth": false,
+          "autogeneratedExamples": [],
+          "availability": undefined,
+          "basePath": undefined,
+          "baseUrl": "Production server",
+          "displayName": "Get product by ID",
+          "docs": "Retrieves a product by its unique identifier",
+          "errors": [
+            {
+              "docs": "Product not found",
+              "error": {
+                "errorId": "GetProductRequestNotFoundError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "file": undefined,
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "getProductRequestNotFoundError",
+                    "unsafeName": "getProductRequestNotFoundError",
+                  },
+                  "originalName": "GetProductRequestNotFoundError",
+                  "pascalCase": {
+                    "safeName": "GetProductRequestNotFoundError",
+                    "unsafeName": "GetProductRequestNotFoundError",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "GET_PRODUCT_REQUEST_NOT_FOUND_ERROR",
+                    "unsafeName": "GET_PRODUCT_REQUEST_NOT_FOUND_ERROR",
+                  },
+                  "snakeCase": {
+                    "safeName": "get_product_request_not_found_error",
+                    "unsafeName": "get_product_request_not_found_error",
+                  },
+                },
+              },
+            },
+          ],
+          "fullPath": {
+            "head": "/products/",
+            "parts": [
+              {
+                "pathParameter": "productId",
+                "tail": "",
+              },
+            ],
+          },
+          "headers": [],
+          "id": "endpoint_.getProduct",
+          "idempotent": false,
+          "method": "GET",
+          "name": {
+            "camelCase": {
+              "safeName": "getProduct",
+              "unsafeName": "getProduct",
+            },
+            "originalName": "getProduct",
+            "pascalCase": {
+              "safeName": "GetProduct",
+              "unsafeName": "GetProduct",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET_PRODUCT",
+              "unsafeName": "GET_PRODUCT",
+            },
+            "snakeCase": {
+              "safeName": "get_product",
+              "unsafeName": "get_product",
+            },
+          },
+          "pagination": undefined,
+          "path": {
+            "head": "/products/",
+            "parts": [
+              {
+                "pathParameter": "productId",
+                "tail": "",
+              },
+            ],
+          },
+          "pathParameters": [
+            {
+              "docs": "The unique identifier of the product",
+              "location": "ENDPOINT",
+              "name": {
+                "camelCase": {
+                  "safeName": "productId",
+                  "unsafeName": "productId",
+                },
+                "originalName": "productId",
+                "pascalCase": {
+                  "safeName": "ProductId",
+                  "unsafeName": "ProductId",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PRODUCT_ID",
+                  "unsafeName": "PRODUCT_ID",
+                },
+                "snakeCase": {
+                  "safeName": "product_id",
+                  "unsafeName": "product_id",
+                },
+              },
+              "v2Examples": {
+                "autogeneratedExamples": {
+                  "productId_example": "prod_123456",
+                },
+                "userSpecifiedExamples": {},
+              },
+              "valueType": {
+                "_visit": [Function],
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "_visit": [Function],
+                    "default": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                },
+                "type": "primitive",
+              },
+              "variable": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "requestBody": undefined,
+          "response": {
+            "body": {
+              "_visit": [Function],
+              "type": "json",
+              "value": {
+                "_visit": [Function],
+                "docs": "Product found successfully",
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "product",
+                      "unsafeName": "product",
+                    },
+                    "originalName": "Product",
+                    "pascalCase": {
+                      "safeName": "Product",
+                      "unsafeName": "Product",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "PRODUCT",
+                      "unsafeName": "PRODUCT",
+                    },
+                    "snakeCase": {
+                      "safeName": "product",
+                      "unsafeName": "product",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "Product",
+                },
+                "type": "response",
+                "v2Examples": {
+                  "autogeneratedExamples": {},
+                  "userSpecifiedExamples": {
+                    "Successful product retrieval": {
+                      "category": "Electronics",
+                      "createdAt": "2024-01-15T10:30:00Z",
+                      "description": "Ergonomic wireless mouse with USB receiver",
+                      "id": "prod_123456",
+                      "name": "Wireless Mouse",
+                      "price": 29.99,
+                      "updatedAt": "2024-01-15T10:30:00Z",
+                    },
+                  },
+                },
+              },
+            },
+            "statusCode": 200,
+          },
+          "retries": undefined,
+          "sdkRequest": undefined,
+          "security": undefined,
+          "source": {
+            "_visit": [Function],
+            "type": "openapi",
+          },
+          "transport": undefined,
+          "userSpecifiedExamples": [],
+          "v2BaseUrls": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {},
+            "userSpecifiedExamples": {
+              "base_Successful product retrieval_200": {
+                "codeSamples": undefined,
+                "displayName": "Successful product retrieval",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "GET",
+                    "path": "/products/prod_123456",
+                  },
+                  "environment": "Production server",
+                  "headers": {},
+                  "pathParameters": {
+                    "productId": "prod_123456",
+                  },
+                  "queryParameters": {},
+                  "requestBody": undefined,
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "category": "Electronics",
+                      "createdAt": "2024-01-15T10:30:00Z",
+                      "description": "Ergonomic wireless mouse with USB receiver",
+                      "id": "prod_123456",
+                      "name": "Wireless Mouse",
+                      "price": 29.99,
+                      "updatedAt": "2024-01-15T10:30:00Z",
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 200,
+                },
+              },
+            },
+          },
+          "v2RequestBodies": {
+            "requestBodies": undefined,
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "body": {
+                  "_visit": [Function],
+                  "type": "json",
+                  "value": {
+                    "_visit": [Function],
+                    "docs": "Product found successfully",
+                    "responseBodyType": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "displayName": undefined,
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": undefined,
+                        "packagePath": [],
+                      },
+                      "inline": false,
+                      "name": {
+                        "camelCase": {
+                          "safeName": "product",
+                          "unsafeName": "product",
+                        },
+                        "originalName": "Product",
+                        "pascalCase": {
+                          "safeName": "Product",
+                          "unsafeName": "Product",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "PRODUCT",
+                          "unsafeName": "PRODUCT",
+                        },
+                        "snakeCase": {
+                          "safeName": "product",
+                          "unsafeName": "product",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "Product",
+                    },
+                    "type": "response",
+                    "v2Examples": {
+                      "autogeneratedExamples": {},
+                      "userSpecifiedExamples": {
+                        "Successful product retrieval": {
+                          "category": "Electronics",
+                          "createdAt": "2024-01-15T10:30:00Z",
+                          "description": "Ergonomic wireless mouse with USB receiver",
+                          "id": "prod_123456",
+                          "name": "Wireless Mouse",
+                          "price": 29.99,
+                          "updatedAt": "2024-01-15T10:30:00Z",
+                        },
+                      },
+                    },
+                  },
+                },
+                "statusCode": 200,
+              },
+            ],
+          },
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+      "transport": undefined,
+    },
+  },
+  "sourceConfig": undefined,
+  "subpackages": {},
+  "types": {
+    "CreateProductRequest": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "createProductRequest",
+            "unsafeName": "createProductRequest",
+          },
+          "originalName": "CreateProductRequest",
+          "pascalCase": {
+            "safeName": "CreateProductRequest",
+            "unsafeName": "CreateProductRequest",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_PRODUCT_REQUEST",
+            "unsafeName": "CREATE_PRODUCT_REQUEST",
+          },
+          "snakeCase": {
+            "safeName": "create_product_request",
+            "unsafeName": "create_product_request",
+          },
+        },
+        "typeId": "CreateProductRequest",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Product name",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+                "originalName": "name",
+                "pascalCase": {
+                  "safeName": "Name",
+                  "unsafeName": "Name",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "NAME",
+                  "unsafeName": "NAME",
+                },
+                "snakeCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+              },
+              "wireValue": "name",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "CreateProductRequestName_example_0": "Wireless Mouse",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Product description",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "description",
+                  "unsafeName": "description",
+                },
+                "originalName": "description",
+                "pascalCase": {
+                  "safeName": "Description",
+                  "unsafeName": "Description",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "DESCRIPTION",
+                  "unsafeName": "DESCRIPTION",
+                },
+                "snakeCase": {
+                  "safeName": "description",
+                  "unsafeName": "description",
+                },
+              },
+              "wireValue": "description",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "CreateProductRequestDescription_example_0": "Ergonomic wireless mouse with USB receiver",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Product price in USD",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "price",
+                  "unsafeName": "price",
+                },
+                "originalName": "price",
+                "pascalCase": {
+                  "safeName": "Price",
+                  "unsafeName": "Price",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PRICE",
+                  "unsafeName": "PRICE",
+                },
+                "snakeCase": {
+                  "safeName": "price",
+                  "unsafeName": "price",
+                },
+              },
+              "wireValue": "price",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "CreateProductRequestPrice_example_0": 29.99,
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "DOUBLE",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "double",
+                  "validation": {
+                    "exclusiveMax": undefined,
+                    "exclusiveMin": undefined,
+                    "max": undefined,
+                    "min": undefined,
+                    "multipleOf": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Product category",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "category",
+                  "unsafeName": "category",
+                },
+                "originalName": "category",
+                "pascalCase": {
+                  "safeName": "Category",
+                  "unsafeName": "Category",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CATEGORY",
+                  "unsafeName": "CATEGORY",
+                },
+                "snakeCase": {
+                  "safeName": "category",
+                  "unsafeName": "category",
+                },
+              },
+              "wireValue": "category",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "CreateProductRequestCategory_example_0": "Electronics",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Product tags",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "tags",
+                  "unsafeName": "tags",
+                },
+                "originalName": "tags",
+                "pascalCase": {
+                  "safeName": "Tags",
+                  "unsafeName": "Tags",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TAGS",
+                  "unsafeName": "TAGS",
+                },
+                "snakeCase": {
+                  "safeName": "tags",
+                  "unsafeName": "tags",
+                },
+              },
+              "wireValue": "tags",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "CreateProductRequestTags_example_0": [
+                  "electronics",
+                  "accessories",
+                ],
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "container": {
+                    "_visit": [Function],
+                    "list": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "type": "string",
+                          "validation": {
+                            "format": undefined,
+                            "maxLength": undefined,
+                            "minLength": undefined,
+                            "pattern": undefined,
+                          },
+                        },
+                      },
+                      "type": "primitive",
+                    },
+                    "type": "list",
+                  },
+                  "type": "container",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "CreateProductRequest_example_autogenerated": {
+            "category": "Electronics",
+            "name": "Wireless Mouse",
+            "price": 29.99,
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "Error": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
+        "typeId": "Error",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Error code",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "code",
+                  "unsafeName": "code",
+                },
+                "originalName": "code",
+                "pascalCase": {
+                  "safeName": "Code",
+                  "unsafeName": "Code",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CODE",
+                  "unsafeName": "CODE",
+                },
+                "snakeCase": {
+                  "safeName": "code",
+                  "unsafeName": "code",
+                },
+              },
+              "wireValue": "code",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ErrorCode_example_0": "PRODUCT_NOT_FOUND",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Human-readable error message",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+                "originalName": "message",
+                "pascalCase": {
+                  "safeName": "Message",
+                  "unsafeName": "Message",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MESSAGE",
+                  "unsafeName": "MESSAGE",
+                },
+                "snakeCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+              },
+              "wireValue": "message",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ErrorMessage_example_0": "The requested product could not be found",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "Error_example_autogenerated": {
+            "code": "PRODUCT_NOT_FOUND",
+            "message": "The requested product could not be found",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "Product": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "product",
+            "unsafeName": "product",
+          },
+          "originalName": "Product",
+          "pascalCase": {
+            "safeName": "Product",
+            "unsafeName": "Product",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PRODUCT",
+            "unsafeName": "PRODUCT",
+          },
+          "snakeCase": {
+            "safeName": "product",
+            "unsafeName": "product",
+          },
+        },
+        "typeId": "Product",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Unique product identifier",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "wireValue": "id",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ProductId_example_0": "prod_123456",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Product name",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+                "originalName": "name",
+                "pascalCase": {
+                  "safeName": "Name",
+                  "unsafeName": "Name",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "NAME",
+                  "unsafeName": "NAME",
+                },
+                "snakeCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+              },
+              "wireValue": "name",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ProductName_example_0": "Wireless Mouse",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Product description",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "description",
+                  "unsafeName": "description",
+                },
+                "originalName": "description",
+                "pascalCase": {
+                  "safeName": "Description",
+                  "unsafeName": "Description",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "DESCRIPTION",
+                  "unsafeName": "DESCRIPTION",
+                },
+                "snakeCase": {
+                  "safeName": "description",
+                  "unsafeName": "description",
+                },
+              },
+              "wireValue": "description",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ProductDescription_example_0": "Ergonomic wireless mouse with USB receiver",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Product price in USD",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "price",
+                  "unsafeName": "price",
+                },
+                "originalName": "price",
+                "pascalCase": {
+                  "safeName": "Price",
+                  "unsafeName": "Price",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PRICE",
+                  "unsafeName": "PRICE",
+                },
+                "snakeCase": {
+                  "safeName": "price",
+                  "unsafeName": "price",
+                },
+              },
+              "wireValue": "price",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ProductPrice_example_0": 29.99,
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "DOUBLE",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "double",
+                  "validation": {
+                    "exclusiveMax": undefined,
+                    "exclusiveMin": undefined,
+                    "max": undefined,
+                    "min": undefined,
+                    "multipleOf": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Product category",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "category",
+                  "unsafeName": "category",
+                },
+                "originalName": "category",
+                "pascalCase": {
+                  "safeName": "Category",
+                  "unsafeName": "Category",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CATEGORY",
+                  "unsafeName": "CATEGORY",
+                },
+                "snakeCase": {
+                  "safeName": "category",
+                  "unsafeName": "category",
+                },
+              },
+              "wireValue": "category",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ProductCategory_example_0": "Electronics",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Product tags",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "tags",
+                  "unsafeName": "tags",
+                },
+                "originalName": "tags",
+                "pascalCase": {
+                  "safeName": "Tags",
+                  "unsafeName": "Tags",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TAGS",
+                  "unsafeName": "TAGS",
+                },
+                "snakeCase": {
+                  "safeName": "tags",
+                  "unsafeName": "tags",
+                },
+              },
+              "wireValue": "tags",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ProductTags_example_0": [
+                  "electronics",
+                  "accessories",
+                ],
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "container": {
+                    "_visit": [Function],
+                    "list": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "type": "string",
+                          "validation": {
+                            "format": undefined,
+                            "maxLength": undefined,
+                            "minLength": undefined,
+                            "pattern": undefined,
+                          },
+                        },
+                      },
+                      "type": "primitive",
+                    },
+                    "type": "list",
+                  },
+                  "type": "container",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "When the product was created",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "createdAt",
+                  "unsafeName": "createdAt",
+                },
+                "originalName": "createdAt",
+                "pascalCase": {
+                  "safeName": "CreatedAt",
+                  "unsafeName": "CreatedAt",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CREATED_AT",
+                  "unsafeName": "CREATED_AT",
+                },
+                "snakeCase": {
+                  "safeName": "created_at",
+                  "unsafeName": "created_at",
+                },
+              },
+              "wireValue": "createdAt",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ProductCreatedAt_example_0": "2024-01-15T10:30:00Z",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": "date-time",
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "When the product was last updated",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "updatedAt",
+                  "unsafeName": "updatedAt",
+                },
+                "originalName": "updatedAt",
+                "pascalCase": {
+                  "safeName": "UpdatedAt",
+                  "unsafeName": "UpdatedAt",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "UPDATED_AT",
+                  "unsafeName": "UPDATED_AT",
+                },
+                "snakeCase": {
+                  "safeName": "updated_at",
+                  "unsafeName": "updated_at",
+                },
+              },
+              "wireValue": "updatedAt",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ProductUpdatedAt_example_0": "2024-01-15T10:30:00Z",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": "date-time",
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "Product_example_autogenerated": {
+            "category": "Electronics",
+            "createdAt": "2024-01-15T10:30:00Z",
+            "id": "prod_123456",
+            "name": "Wireless Mouse",
+            "price": 29.99,
+            "updatedAt": "2024-01-15T10:30:00Z",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+  },
+  "variables": [],
+  "webhookGroups": {},
+  "websocketChannels": undefined,
+}

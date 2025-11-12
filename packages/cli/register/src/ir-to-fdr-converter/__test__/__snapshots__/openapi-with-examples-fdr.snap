@@ -1,0 +1,826 @@
+{
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": "Production server",
+        "description": "Creates a new product with the provided information",
+        "environments": [
+          {
+            "baseUrl": "https://api.example.com/v1",
+            "id": "Production server",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [
+          {
+            "availability": undefined,
+            "description": "Invalid product data",
+            "examples": [
+              {
+                "description": undefined,
+                "name": "invalidPrice",
+                "responseBody": {
+                  "type": "json",
+                  "value": {
+                    "code": "INVALID_PRICE",
+                    "message": "Price must be a positive number",
+                  },
+                },
+              },
+            ],
+            "name": "BadRequestError",
+            "statusCode": 400,
+            "type": {
+              "type": "alias",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "Error",
+              },
+            },
+          },
+        ],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": "Basic product response",
+            "path": "/products",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": {
+              "type": "json",
+              "value": undefined,
+            },
+            "responseBody": {
+              "category": "Electronics",
+              "createdAt": "2024-01-15T10:30:00Z",
+              "description": "Ergonomic wireless mouse with USB receiver",
+              "id": "prod_123456",
+              "name": "Wireless Mouse",
+              "price": 29.99,
+              "updatedAt": "2024-01-15T10:30:00Z",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "category": "Electronics",
+                "createdAt": "2024-01-15T10:30:00Z",
+                "description": "Ergonomic wireless mouse with USB receiver",
+                "id": "prod_123456",
+                "name": "Wireless Mouse",
+                "price": 29.99,
+                "updatedAt": "2024-01-15T10:30:00Z",
+              },
+            },
+            "responseStatusCode": 201,
+          },
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": "Product with tags response",
+            "path": "/products",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": {
+              "type": "json",
+              "value": undefined,
+            },
+            "responseBody": {
+              "category": "Electronics",
+              "createdAt": "2024-01-15T11:00:00Z",
+              "description": "Mechanical keyboard with RGB lighting",
+              "id": "prod_789012",
+              "name": "Gaming Keyboard",
+              "price": 89.99,
+              "tags": [
+                "gaming",
+                "rgb",
+                "mechanical",
+              ],
+              "updatedAt": "2024-01-15T11:00:00Z",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "category": "Electronics",
+                "createdAt": "2024-01-15T11:00:00Z",
+                "description": "Mechanical keyboard with RGB lighting",
+                "id": "prod_789012",
+                "name": "Gaming Keyboard",
+                "price": 89.99,
+                "tags": [
+                  "gaming",
+                  "rgb",
+                  "mechanical",
+                ],
+                "updatedAt": "2024-01-15T11:00:00Z",
+              },
+            },
+            "responseStatusCode": 201,
+          },
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": "Basic product creation",
+            "path": "/products",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": {
+              "category": "Electronics",
+              "description": "Ergonomic wireless mouse with USB receiver",
+              "name": "Wireless Mouse",
+              "price": 29.99,
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "category": "Electronics",
+                "description": "Ergonomic wireless mouse with USB receiver",
+                "name": "Wireless Mouse",
+                "price": 29.99,
+              },
+            },
+            "responseBody": {
+              "category": "Electronics",
+              "createdAt": "2024-01-15T10:30:00Z",
+              "description": "Ergonomic wireless mouse with USB receiver",
+              "id": "prod_123456",
+              "name": "Wireless Mouse",
+              "price": 29.99,
+              "updatedAt": "2024-01-15T10:30:00Z",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "category": "Electronics",
+                "createdAt": "2024-01-15T10:30:00Z",
+                "description": "Ergonomic wireless mouse with USB receiver",
+                "id": "prod_123456",
+                "name": "Wireless Mouse",
+                "price": 29.99,
+                "updatedAt": "2024-01-15T10:30:00Z",
+              },
+            },
+            "responseStatusCode": 201,
+          },
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": "Product with tags",
+            "path": "/products",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": {
+              "category": "Electronics",
+              "description": "Mechanical keyboard with RGB lighting",
+              "name": "Gaming Keyboard",
+              "price": 89.99,
+              "tags": [
+                "gaming",
+                "rgb",
+                "mechanical",
+              ],
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "category": "Electronics",
+                "description": "Mechanical keyboard with RGB lighting",
+                "name": "Gaming Keyboard",
+                "price": 89.99,
+                "tags": [
+                  "gaming",
+                  "rgb",
+                  "mechanical",
+                ],
+              },
+            },
+            "responseBody": {
+              "category": "Electronics",
+              "createdAt": "2024-01-15T10:30:00Z",
+              "description": "Ergonomic wireless mouse with USB receiver",
+              "id": "prod_123456",
+              "name": "Wireless Mouse",
+              "price": 29.99,
+              "updatedAt": "2024-01-15T10:30:00Z",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "category": "Electronics",
+                "createdAt": "2024-01-15T10:30:00Z",
+                "description": "Ergonomic wireless mouse with USB receiver",
+                "id": "prod_123456",
+                "name": "Wireless Mouse",
+                "price": 29.99,
+                "updatedAt": "2024-01-15T10:30:00Z",
+              },
+            },
+            "responseStatusCode": 201,
+          },
+        ],
+        "headers": [],
+        "id": "createProduct",
+        "includeInApiExplorer": undefined,
+        "method": "POST",
+        "multiAuth": undefined,
+        "name": "Create a new product",
+        "originalEndpointId": "endpoint_.createProduct",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/products",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": {
+          "description": undefined,
+          "type": {
+            "contentType": "application/json",
+            "description": undefined,
+            "shape": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "CreateProductRequest",
+              },
+            },
+            "type": "json",
+          },
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "description": undefined,
+              "type": {
+                "contentType": "application/json",
+                "description": undefined,
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "CreateProductRequest",
+                  },
+                },
+                "type": "json",
+              },
+            },
+          ],
+        },
+        "response": {
+          "description": "Product created successfully",
+          "statusCode": 201,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "Product",
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Product created successfully",
+              "statusCode": 201,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "Product",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": "Production server",
+        "description": "Retrieves a product by its unique identifier",
+        "environments": [
+          {
+            "baseUrl": "https://api.example.com/v1",
+            "id": "Production server",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [
+          {
+            "availability": undefined,
+            "description": "Product not found",
+            "examples": [
+              {
+                "description": undefined,
+                "name": "notFound",
+                "responseBody": {
+                  "type": "json",
+                  "value": {
+                    "code": "PRODUCT_NOT_FOUND",
+                    "message": "The requested product could not be found",
+                  },
+                },
+              },
+            ],
+            "name": "NotFoundError",
+            "statusCode": 404,
+            "type": {
+              "type": "alias",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "Error",
+              },
+            },
+          },
+        ],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/products/prod_123456",
+            "pathParameters": {
+              "productId": "prod_123456",
+            },
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
+            "responseBody": {
+              "category": "Electronics",
+              "createdAt": "2024-01-15T10:30:00Z",
+              "description": "Ergonomic wireless mouse with USB receiver",
+              "id": "prod_123456",
+              "name": "Wireless Mouse",
+              "price": 29.99,
+              "updatedAt": "2024-01-15T10:30:00Z",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "category": "Electronics",
+                "createdAt": "2024-01-15T10:30:00Z",
+                "description": "Ergonomic wireless mouse with USB receiver",
+                "id": "prod_123456",
+                "name": "Wireless Mouse",
+                "price": 29.99,
+                "updatedAt": "2024-01-15T10:30:00Z",
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "getProduct",
+        "includeInApiExplorer": undefined,
+        "method": "GET",
+        "multiAuth": undefined,
+        "name": "Get product by ID",
+        "originalEndpointId": "endpoint_.getProduct",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/products/",
+            },
+            {
+              "type": "pathParameter",
+              "value": "productId",
+            },
+            {
+              "type": "literal",
+              "value": "",
+            },
+          ],
+          "pathParameters": [
+            {
+              "availability": undefined,
+              "description": "The unique identifier of the product",
+              "explode": undefined,
+              "key": "productId",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+            },
+          ],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": undefined,
+        "requestsV2": {
+          "requests": undefined,
+        },
+        "response": {
+          "description": "Product found successfully",
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "Product",
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Product found successfully",
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "Product",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+    ],
+    "pointsTo": undefined,
+    "subpackages": [],
+    "types": [
+      "CreateProductRequest",
+      "Product",
+      "Error",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {},
+  "types": {
+    "CreateProductRequest": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "CreateProductRequest",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Product name",
+            "key": "name",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Product description",
+            "key": "description",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Product price in USD",
+            "key": "price",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "double",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Product category",
+            "key": "category",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Product tags",
+            "key": "tags",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "regex": undefined,
+                    "type": "string",
+                  },
+                },
+                "type": "list",
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "Error": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "Error",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Error code",
+            "key": "code",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Human-readable error message",
+            "key": "message",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "Product": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "Product",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Unique product identifier",
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Product name",
+            "key": "name",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Product description",
+            "key": "description",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Product price in USD",
+            "key": "price",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "double",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Product category",
+            "key": "category",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Product tags",
+            "key": "tags",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "regex": undefined,
+                    "type": "string",
+                  },
+                },
+                "type": "list",
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "When the product was created",
+            "key": "createdAt",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": "date-time",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "When the product was last updated",
+            "key": "updatedAt",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": "date-time",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}
