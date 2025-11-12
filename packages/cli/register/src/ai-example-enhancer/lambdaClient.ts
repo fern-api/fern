@@ -2,8 +2,11 @@ import { FernToken } from "@fern-api/auth";
 import { TaskContext } from "@fern-api/task-context";
 import { AIExampleEnhancerConfig, ExampleEnhancementRequest, ExampleEnhancementResponse } from "./types";
 
+type AIEnhancerResolvedConfig = Required<Omit<AIExampleEnhancerConfig, "openaiApiKey">> &
+    Pick<AIExampleEnhancerConfig, "openaiApiKey">;
+
 export class LambdaExampleEnhancer {
-    private config: Required<Omit<AIExampleEnhancerConfig, "openaiApiKey">> & Pick<AIExampleEnhancerConfig, "openaiApiKey">;
+    private config: AIEnhancerResolvedConfig;
     private context: TaskContext;
     private lambdaOrigin: string;
     private token: FernToken;

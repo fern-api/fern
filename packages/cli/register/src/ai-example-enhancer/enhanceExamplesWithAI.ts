@@ -40,6 +40,7 @@ export async function enhanceExamplesWithAI(
     config: AIExampleEnhancerConfig,
     context: TaskContext,
     token: FernToken,
+    organizationId: string,
     sourceFilePath?: AbsoluteFilePath
 ): Promise<FdrCjsSdk.api.v1.register.ApiDefinition> {
     if (!config.enabled) {
@@ -60,6 +61,7 @@ export async function enhanceExamplesWithAI(
         apiDefinition,
         enhancer,
         context,
+        organizationId,
         examplesEnhanced,
         enhancedExampleRecords,
         coveredEndpoints
@@ -88,6 +90,7 @@ async function enhancePackageExamples(
     apiDefinition: FdrCjsSdk.api.v1.register.ApiDefinition,
     enhancer: LambdaExampleEnhancer,
     context: TaskContext,
+    organizationId: string,
     stats: { count: number; total: number },
     enhancedExampleRecords: EnhancedExampleRecord[],
     coveredEndpoints: Set<string>
@@ -99,6 +102,7 @@ async function enhancePackageExamples(
             subpackage as unknown as FdrCjsSdk.api.v1.register.ApiDefinitionPackage,
             enhancer,
             context,
+            organizationId,
             stats,
             enhancedExampleRecords,
             coveredEndpoints
@@ -111,6 +115,7 @@ async function enhancePackageExamples(
         apiDefinition.rootPackage,
         enhancer,
         context,
+        organizationId,
         stats,
         enhancedExampleRecords,
         coveredEndpoints
@@ -127,6 +132,7 @@ async function enhancePackageEndpoints(
     pkg: FdrCjsSdk.api.v1.register.ApiDefinitionPackage,
     enhancer: LambdaExampleEnhancer,
     context: TaskContext,
+    organizationId: string,
     stats: { count: number; total: number },
     enhancedExampleRecords: EnhancedExampleRecord[],
     coveredEndpoints: Set<string>
@@ -137,6 +143,7 @@ async function enhancePackageEndpoints(
                 endpoint as unknown as EndpointV3,
                 enhancer,
                 context,
+                organizationId,
                 stats,
                 enhancedExampleRecords,
                 coveredEndpoints
@@ -154,6 +161,7 @@ async function enhanceEndpointExamples(
     endpoint: EndpointV3,
     enhancer: LambdaExampleEnhancer,
     context: TaskContext,
+    organizationId: string,
     stats: { count: number; total: number },
     enhancedExampleRecords: EnhancedExampleRecord[],
     coveredEndpoints: Set<string>
@@ -165,6 +173,7 @@ async function enhanceEndpointExamples(
                 endpoint,
                 enhancer,
                 context,
+                organizationId,
                 stats,
                 enhancedExampleRecords,
                 coveredEndpoints
@@ -183,6 +192,7 @@ async function enhanceSingleExample(
     endpoint: EndpointV3,
     enhancer: LambdaExampleEnhancer,
     context: TaskContext,
+    organizationId: string,
     stats: { count: number; total: number },
     enhancedExampleRecords: EnhancedExampleRecord[],
     coveredEndpoints: Set<string>
@@ -216,6 +226,7 @@ async function enhanceSingleExample(
         const enhancementRequest: ExampleEnhancementRequest = {
             endpointPath: example.path,
             method: endpoint.method,
+            organizationId,
             operationSummary: endpoint.summary,
             operationDescription: endpoint.description,
             originalRequestExample,

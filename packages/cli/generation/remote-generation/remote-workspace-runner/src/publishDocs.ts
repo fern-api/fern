@@ -244,6 +244,7 @@ export async function publishDocs({
                     aiEnhancerConfig,
                     context,
                     token,
+                    organization,
                     sourceFilePath
                 );
             }

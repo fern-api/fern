@@ -16,6 +16,7 @@ export interface EnhancedExample {
 export interface ExampleEnhancementRequest {
     endpointPath: string;
     method: string;
+    organizationId: string;
     operationSummary?: string;
     operationDescription?: string;
     requestSchema?: unknown;
