@@ -368,7 +368,9 @@ export class SdkGenerator {
             allowCustomFetcher: config.allowCustomFetcher,
             generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
             requireDefaultEnvironment: config.requireDefaultEnvironment,
-            retainOriginalCasing: config.retainOriginalCasing
+            retainOriginalCasing: config.retainOriginalCasing,
+            baseClientTypeDeclarationReferencer: this.baseClientTypeDeclarationReferencer,
+            errorResolver: this.errorResolver
         });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
             containingDirectory: [],
@@ -466,7 +468,9 @@ export class SdkGenerator {
             generateEndpointMetadata: config.generateEndpointMetadata
         });
         this.baseClientTypeGenerator = new BaseClientTypeGenerator({
-            generateIdempotentRequestOptions: this.hasIdempotentEndpoints()
+            generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
+            errorResolver: this.errorResolver,
+            intermediateRepresentation
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation,
@@ -571,12 +575,10 @@ export class SdkGenerator {
         if (this.config.neverThrowErrors) {
             this.generateEndpointErrorUnion();
         }
-        if (!this.config.neverThrowErrors || this.generateOAuthClients) {
-            this.generateGenericAPISdkError();
-            this.generateTimeoutSdkError();
-            if (this.config.includeSerdeLayer) {
-                this.generateSdkErrorSchemas();
-            }
+        this.generateGenericAPISdkError();
+        this.generateTimeoutSdkError();
+        if (this.config.includeSerdeLayer && (!this.config.neverThrowErrors || this.generateOAuthClients)) {
+            this.generateSdkErrorSchemas();
         }
 
         let exportSerde: boolean = false;

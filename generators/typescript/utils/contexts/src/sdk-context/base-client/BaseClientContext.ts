@@ -1,5 +1,7 @@
 import { SetRequired } from "@fern-api/core-utils";
-import { InterfaceDeclarationStructure } from "ts-morph";
+import { DeclaredErrorName } from "@fern-fern/ir-sdk/api";
+import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons";
+import { InterfaceDeclarationStructure, SourceFile } from "ts-morph";
 import { SdkContext } from "../SdkContext";
 
 export interface BaseClientContext {
@@ -10,4 +12,15 @@ export interface BaseClientContext {
     generateBaseIdempotentRequestOptionsInterface(
         context: SdkContext
     ): SetRequired<InterfaceDeclarationStructure, "properties">;
+    getReferenceToHandleGlobalStatusCodeError(args: {
+        importsManager: ImportsManager;
+        exportsManager: ExportsManager;
+        sourceFile: SourceFile;
+    }): Reference;
+    getReferenceToHandleNonStatusCodeError(args: {
+        importsManager: ImportsManager;
+        exportsManager: ExportsManager;
+        sourceFile: SourceFile;
+    }): Reference;
+    getGlobalErrorNames(): Set<DeclaredErrorName>;
 }

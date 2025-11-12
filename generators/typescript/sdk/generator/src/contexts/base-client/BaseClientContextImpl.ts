@@ -1,10 +1,26 @@
 import { SetRequired } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { getParameterNameForRootPathParameter, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
+import { DeclaredErrorName, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import {
+    ExportsManager,
+    getParameterNameForRootPathParameter,
+    getPropertyKey,
+    getTextOfTsNode,
+    ImportsManager,
+    Reference
+} from "@fern-typescript/commons";
 import { BaseClientContext, SdkContext } from "@fern-typescript/contexts";
+import { ErrorResolver } from "@fern-typescript/resolvers";
 import { endpointUtils } from "@fern-typescript/sdk-client-class-generator";
-import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, StructureKind, ts } from "ts-morph";
+import {
+    InterfaceDeclarationStructure,
+    OptionalKind,
+    PropertySignatureStructure,
+    SourceFile,
+    StructureKind,
+    ts
+} from "ts-morph";
+import { BaseClientTypeDeclarationReferencer } from "../../declaration-referencers/BaseClientTypeDeclarationReferencer";
 
 export declare namespace BaseClientContextImpl {
     export interface Init {
@@ -13,6 +29,8 @@ export declare namespace BaseClientContextImpl {
         requireDefaultEnvironment: boolean;
         retainOriginalCasing: boolean;
         generateIdempotentRequestOptions: boolean;
+        baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
+        errorResolver: ErrorResolver;
     }
 }
 const OPTIONS_INTERFACE_NAME = "BaseClientOptions";
@@ -31,6 +49,9 @@ export class BaseClientContextImpl implements BaseClientContext {
     private readonly requireDefaultEnvironment: boolean;
     private readonly retainOriginalCasing: boolean;
     private readonly generateIdempotentRequestOptions: boolean;
+    private readonly baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
+    private readonly errorResolver: ErrorResolver;
+    private readonly globalErrorNames: Set<DeclaredErrorName>;
 
     public static readonly OPTIONS_INTERFACE_NAME = OPTIONS_INTERFACE_NAME;
 
@@ -52,13 +73,18 @@ export class BaseClientContextImpl implements BaseClientContext {
         allowCustomFetcher,
         requireDefaultEnvironment,
         retainOriginalCasing,
-        generateIdempotentRequestOptions
+        generateIdempotentRequestOptions,
+        baseClientTypeDeclarationReferencer,
+        errorResolver
     }: BaseClientContextImpl.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.allowCustomFetcher = allowCustomFetcher;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
         this.retainOriginalCasing = retainOriginalCasing;
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
+        this.baseClientTypeDeclarationReferencer = baseClientTypeDeclarationReferencer;
+        this.errorResolver = errorResolver;
+        this.globalErrorNames = this.computeGlobalErrorNames();
 
         this.authHeaders = [];
         for (const authScheme of intermediateRepresentation.auth.schemes) {
@@ -79,6 +105,41 @@ export class BaseClientContextImpl implements BaseClientContext {
                 }
             });
         }
+    }
+
+    private computeGlobalErrorNames(): Set<DeclaredErrorName> {
+        const allServices = Object.values(this.intermediateRepresentation.services);
+        if (allServices.length === 0) {
+            return new Set();
+        }
+
+        const allEndpoints = allServices.flatMap((service) => service.endpoints);
+        if (allEndpoints.length === 0) {
+            return new Set();
+        }
+
+        const errorNamesByEndpoint = allEndpoints.map(
+            (endpoint) => new Set(endpoint.errors.map((e) => JSON.stringify(e.error)))
+        );
+
+        if (errorNamesByEndpoint.length === 0) {
+            return new Set();
+        }
+
+        const intersectionStrings = new Set(errorNamesByEndpoint[0]);
+        for (let i = 1; i < errorNamesByEndpoint.length; i++) {
+            for (const errorNameString of intersectionStrings) {
+                if (!errorNamesByEndpoint[i]?.has(errorNameString)) {
+                    intersectionStrings.delete(errorNameString);
+                }
+            }
+        }
+
+        return new Set(Array.from(intersectionStrings).map((s) => JSON.parse(s) as DeclaredErrorName));
+    }
+
+    public getGlobalErrorNames(): Set<DeclaredErrorName> {
+        return this.globalErrorNames;
     }
 
     public anyRequiredBaseClientOptions(context: SdkContext): boolean {
@@ -441,6 +502,22 @@ export class BaseClientContextImpl implements BaseClientContext {
     }
     private getOptionNameForVariable(variable: FernIr.VariableDeclaration): string {
         return variable.name.camelCase.unsafeName;
+    }
+
+    public getReferenceToHandleGlobalStatusCodeError(args: {
+        importsManager: ImportsManager;
+        exportsManager: ExportsManager;
+        sourceFile: SourceFile;
+    }): Reference {
+        return this.baseClientTypeDeclarationReferencer.getReferenceToHandleGlobalStatusCodeError(args);
+    }
+
+    public getReferenceToHandleNonStatusCodeError(args: {
+        importsManager: ImportsManager;
+        exportsManager: ExportsManager;
+        sourceFile: SourceFile;
+    }): Reference {
+        return this.baseClientTypeDeclarationReferencer.getReferenceToHandleNonStatusCodeError(args);
     }
 }
 
