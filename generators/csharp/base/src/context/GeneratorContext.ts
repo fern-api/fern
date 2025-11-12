@@ -1,5 +1,8 @@
 import { fail } from "node:assert";
+import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
+import { ast, CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
     DeclaredErrorName,
     EnumTypeDeclaration,
@@ -23,98 +26,176 @@ import {
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
-import { ast, Generation } from "..";
-import { convertReadOnlyPrimitiveTypes, Writer } from "../ast";
-import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
+import { AsIsFiles } from "../AsIs";
 import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
+import { CsharpProject } from "../project";
+import { CORE_DIRECTORY_NAME, PUBLIC_CORE_DIRECTORY_NAME } from "../project/CsharpProject";
 import { CsharpProtobufTypeMapper } from "../proto/CsharpProtobufTypeMapper";
 import { ProtobufResolver } from "../proto/ProtobufResolver";
 import { CsharpTypeMapper } from "./CsharpTypeMapper";
-import { MinimalGeneratorConfig, Support } from "./common";
-export type Namespace = string;
 
-export class CsharpGeneratorContext<CustomConfig extends BaseCsharpCustomConfigSchema> {
-    public readonly csharpTypeMapper: CsharpTypeMapper;
-    public readonly csharpProtobufTypeMapper: CsharpProtobufTypeMapper;
-    public readonly protobufResolver: ProtobufResolver;
-    private allNamespaceSegments?: Set<string>;
-    private allTypeClassReferences?: Map<string, Set<Namespace>>;
-    private readOnlyMemoryTypes: Set<PrimitiveTypeV1>;
-    public readonly generation: Generation;
+type Namespace = string;
 
-    public get namespaces() {
-        return this.generation.namespaces;
-    }
-    public get registry() {
-        return this.generation.registry;
-    }
-    public get extern() {
-        return this.generation.extern;
-    }
-    public get settings() {
-        return this.generation.settings;
-    }
-    public get constants() {
-        return this.generation.constants;
-    }
-    public get names() {
-        return this.generation.names;
-    }
-    public get types() {
-        return this.generation.types;
-    }
-    public get model() {
-        return this.generation.model;
-    }
-    public get csharp() {
-        return this.generation.csharp;
-    }
-    public get System() {
-        return this.extern.System;
-    }
-    public get NUnit() {
-        return this.extern.NUnit;
-    }
-    public get OneOf() {
-        return this.extern.OneOf;
-    }
-    public get Google() {
-        return this.extern.Google;
-    }
+export abstract class GeneratorContext extends AbstractGeneratorContext {
+    public publishConfig: FernGeneratorExec.NugetGithubPublishInfo | undefined;
+    public readonly project: CsharpProject;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
-        public config: MinimalGeneratorConfig,
-        public customConfig: CustomConfig,
-        private support: Support
+        config: FernGeneratorExec.config.GeneratorConfig,
+        protected readonly customConfig: CsharpConfigSchema,
+        generatorNotificationService: GeneratorNotificationService,
+        public readonly generation: Generation
     ) {
-        this.generation = new Generation(
-            ir,
-            this.ir.apiName.pascalCase.unsafeName,
-            customConfig,
-            this.config,
-            this.support
-        );
+        super(config, generatorNotificationService);
+        this.project = new CsharpProject({
+            context: this,
+            name: this.generation.namespaces.root
+        });
+
+        config.output.mode._visit<void>({
+            github: (github) => {
+                if (github.publishInfo?.type === "nuget") {
+                    this.publishConfig = github.publishInfo;
+                }
+            },
+            publish: () => undefined,
+            downloadFiles: () => undefined,
+            _other: () => undefined
+        });
 
         this.csharpTypeMapper = new CsharpTypeMapper(this);
         this.csharpProtobufTypeMapper = new CsharpProtobufTypeMapper(this);
         this.protobufResolver = new ProtobufResolver(this, this.csharpTypeMapper);
+
         this.readOnlyMemoryTypes = new Set<PrimitiveTypeV1>(
-            convertReadOnlyPrimitiveTypes(this.settings.readOnlyMemoryTypes)
+            ast.convertReadOnlyPrimitiveTypes(this.settings.readOnlyMemoryTypes)
         );
     }
+
+    private allNamespaceSegments?: Set<string>;
+    private allTypeClassReferences?: Map<string, Set<Namespace>>;
+    private readOnlyMemoryTypes: Set<PrimitiveTypeV1>;
+
+    /** Provides access to C# code generation utilities */
+    public get csharp() {
+        return this.generation.csharp;
+    }
+
+    /** Provides access to generation settings and configuration */
+    public get settings() {
+        return this.generation.settings;
+    }
+
+    /** Provides access to generation constants */
+    public get constants() {
+        return this.generation.constants;
+    }
+
+    /** Provides access to namespace management utilities */
+    public get namespaces() {
+        return this.generation.namespaces;
+    }
+
+    /** Provides access to naming utilities for generating consistent identifiers */
+    public get names() {
+        return this.generation.names;
+    }
+
+    /** Provides access to the model navigation and inspection utilities */
+    public get model() {
+        return this.generation.model;
+    }
+    /** Provides access to text formatting utilities */
+    public get format() {
+        return this.generation.format;
+    }
+
+    /** Provides access to the type registry for looking up generated types */
+    public get registry() {
+        return this.generation.registry;
+    }
+    /** Provides access to type information and utilities */
+    public get Types() {
+        return this.generation.Types;
+    }
+
+    /** Provides access to .NET System namespace types and utilities */
+    public get System() {
+        return this.generation.extern.System;
+    }
+
+    /** Provides access to NUnit testing framework types */
+    public get NUnit() {
+        return this.generation.extern.NUnit;
+    }
+
+    /** Provides access to OneOf discriminated union library types */
+    public get OneOf() {
+        return this.generation.extern.OneOf;
+    }
+
+    /** Provides access to Google protocol buffer types */
+    public get Google() {
+        return this.generation.extern.Google;
+    }
+    public get Grpc() {
+        return this.generation.extern.Grpc;
+    }
+    /** Provides access to WireMock.Net testing/mocking library types */
+    public get WireMock() {
+        return this.generation.extern.WireMock;
+    }
+    /** Provides access to primitive types */
+    public get Primitive() {
+        return this.generation.Primitive;
+    }
+    /** Provides access to value types */
+    public get Value() {
+        return this.generation.Value;
+    }
+    /** Provides access to collection types */
+    public get Collection() {
+        return this.generation.Collection;
+    }
+    /** Provides access to special types */
+    public get Special() {
+        return this.generation.Special;
+    }
+    public readonly csharpTypeMapper: CsharpTypeMapper;
+    public readonly csharpProtobufTypeMapper: CsharpProtobufTypeMapper;
+    public readonly protobufResolver: ProtobufResolver;
 
     public hasGrpcEndpoints(): boolean {
         // TODO: Replace this with the this.ir.sdkConfig.hasGrpcEndpoints property (when available).
         return Object.values(this.ir.services).some((service) => service.transport?.type === "grpc");
     }
 
+    public getIdempotencyHeaders(): HttpHeader[] {
+        return this.ir.idempotencyHeaders;
+    }
     public hasIdempotencyHeaders(): boolean {
         return this.getIdempotencyHeaders().length > 0;
     }
 
-    public getIdempotencyHeaders(): HttpHeader[] {
-        return this.ir.idempotencyHeaders;
+    public getCoreDirectory(): RelativeFilePath {
+        return RelativeFilePath.of(CORE_DIRECTORY_NAME);
+    }
+
+    public getPublicCoreDirectory(): RelativeFilePath {
+        return join(this.getCoreDirectory(), RelativeFilePath.of(PUBLIC_CORE_DIRECTORY_NAME));
+    }
+
+    public getAsIsTestUtils(): string[] {
+        return Object.values(AsIsFiles.Test.Utils);
+    }
+
+    public getRawAsIsFiles(): string[] {
+        return [AsIsFiles.EditorConfig, AsIsFiles.GitIgnore];
+    }
+
+    public shouldCreateCustomPagination(): boolean {
+        return false;
     }
 
     public getIdempotencyFields(clsOrInterface: ast.Class | ast.Interface, useRequired: boolean = true): void {
@@ -133,7 +214,7 @@ export class CsharpGeneratorContext<CustomConfig extends BaseCsharpCustomConfigS
         }
     }
 
-    public getIdempotencyInitializers(writer: Writer) {
+    public getIdempotencyInitializers(writer: ast.Writer) {
         for (const header of this.getIdempotencyHeaders()) {
             const type = this.csharpTypeMapper.convert({ reference: header.valueType });
 
@@ -258,8 +339,10 @@ export class CsharpGeneratorContext<CustomConfig extends BaseCsharpCustomConfigS
     }
 
     public getFullNamespaceSegments(fernFilepath: FernFilepath): string[] {
-        return [this.namespaces.root, ...this.support.getChildNamespaceSegments(fernFilepath)];
+        return [this.namespaces.root, ...this.getChildNamespaceSegments(fernFilepath)];
     }
+
+    public abstract getChildNamespaceSegments(fernFilepath: FernFilepath): string[];
 
     public createJsonAccessAttribute(propertyAccess: ObjectPropertyAccess): ast.Annotation {
         let argument: string;
@@ -284,31 +367,24 @@ export class CsharpGeneratorContext<CustomConfig extends BaseCsharpCustomConfigS
 
     public createJsonPropertyNameAttribute(name: string): ast.Annotation {
         return this.csharp.annotation({
-            reference: this.extern.System.Text.Json.Serialization.JsonPropertyName,
+            reference: this.System.Text.Json.Serialization.JsonPropertyName,
             argument: `"${name}"`
         });
     }
 
     public getCurrentVersionValueAccess(): ast.CodeBlock {
         return this.csharp.codeblock((writer) => {
-            writer.writeNode(this.types.Version);
+            writer.writeNode(this.Types.Version);
             writer.write(".");
-            writer.write(this.model.getPropertyNameFor(this.types.Version.explicit("Current")));
+            writer.write(this.model.getPropertyNameFor(this.Types.Version.explicit("Current")));
         });
     }
 
     public getEnumerableEmptyKeyValuePairsInitializer(): ast.MethodInvocation {
         return this.csharp.invokeMethod({
-            on: this.extern.System.Linq.Enumerable,
+            on: this.System.Linq.Enumerable,
             method: "Empty",
-            generics: [
-                this.csharp.Type.reference(
-                    this.extern.System.Collections.Generic.KeyValuePair(
-                        this.csharp.Type.string,
-                        this.csharp.Type.string
-                    )
-                )
-            ],
+            generics: [this.System.Collections.Generic.KeyValuePair(this.Primitive.string, this.Primitive.string)],
             arguments_: []
         });
     }
@@ -376,7 +452,7 @@ export class CsharpGeneratorContext<CustomConfig extends BaseCsharpCustomConfigS
 
             override: true,
             parameters: [],
-            return_: this.csharp.Type.string,
+            return_: this.Primitive.string,
             doc: {
                 inheritdoc: true
             },
@@ -384,7 +460,7 @@ export class CsharpGeneratorContext<CustomConfig extends BaseCsharpCustomConfigS
                 writer.write("return ");
                 writer.writeNodeStatement(
                     this.csharp.invokeMethod({
-                        on: this.types.JsonUtils,
+                        on: this.Types.JsonUtils,
                         method: "Serialize",
                         arguments_: [this.csharp.codeblock("this")]
                     })
@@ -489,7 +565,7 @@ export class CsharpGeneratorContext<CustomConfig extends BaseCsharpCustomConfigS
     /**
      * Prints the Type in a simple string format.
      */
-    public printType(type: ast.Type | ast.TypeParameter): string {
+    public printType(type: ast.Type): string {
         return type.toString({
             namespace: this.namespaces.root,
             allNamespaceSegments: this.getAllNamespaceSegments(),
@@ -567,12 +643,12 @@ export class CsharpGeneratorContext<CustomConfig extends BaseCsharpCustomConfigS
         cancellationToken: ast.CodeBlock;
     }): ast.MethodInvocation {
         return this.csharp.invokeMethod({
-            on: this.types.CustomPagerFactory,
+            on: this.Types.CustomPagerFactory,
             method: "CreateAsync",
             async: true,
             arguments_: [
                 this.csharp.instantiateClass({
-                    classReference: this.types.CustomPagerContext,
+                    classReference: this.Types.CustomPagerContext,
                     arguments_: [],
                     properties: [
                         {
@@ -599,29 +675,17 @@ export class CsharpGeneratorContext<CustomConfig extends BaseCsharpCustomConfigS
         });
     }
 
-    public getCoreAsIsFiles(): string[] {
-        return this.support.getCoreAsIsFiles();
-    }
+    public abstract getCoreAsIsFiles(): string[];
 
-    public getCoreTestAsIsFiles(): string[] {
-        return this.support.getCoreTestAsIsFiles();
-    }
+    public abstract getCoreTestAsIsFiles(): string[];
 
-    public getPublicCoreAsIsFiles(): string[] {
-        return this.support.getPublicCoreAsIsFiles();
-    }
+    public abstract getPublicCoreAsIsFiles(): string[];
 
-    public getAsyncCoreAsIsFiles(): string[] {
-        return this.support.getAsyncCoreAsIsFiles();
-    }
+    public abstract getAsyncCoreAsIsFiles(): string[];
 
-    public getDirectoryForTypeId(typeId: TypeId): string {
-        return this.support.getDirectoryForTypeId(typeId);
-    }
+    public abstract getDirectoryForTypeId(typeId: TypeId): string;
 
-    public getNamespaceForTypeId(typeId: TypeId): string {
-        return this.support.getNamespaceForTypeId(typeId);
-    }
+    public abstract getNamespaceForTypeId(typeId: TypeId): string;
 
     public getSubpackageClassReference(subpackage: Subpackage): ast.ClassReference {
         return this.csharp.classReference({
@@ -629,15 +693,6 @@ export class CsharpGeneratorContext<CustomConfig extends BaseCsharpCustomConfigS
             namespace: this.getNamespaceFromFernFilepath(subpackage.fernFilepath),
             origin: subpackage
         });
-    }
-
-    /**
-     * Returns the service with the given id
-     * @param serviceId
-     * @returns
-     */
-    public getHttpServiceOrThrow(serviceId: ServiceId): HttpService {
-        return this.ir.services[serviceId] || fail(`Service with id ${serviceId} not found`);
     }
 
     /**
@@ -653,14 +708,16 @@ export class CsharpGeneratorContext<CustomConfig extends BaseCsharpCustomConfigS
         return Object.values(this.ir.subpackages).find((subpackage) => subpackage.service === serviceId);
     }
 
-    public getSubpackageClassReferenceForServiceIdOrThrow(serviceId: ServiceId): ast.ClassReference {
+    public getSubpackageClassReferenceForServiceId(serviceId: ServiceId): ast.ClassReference {
         return this.getSubpackageClassReference(
             this.getSubpackageForServiceId(serviceId) ?? fail(`subpackage ${serviceId} not found`)
         );
     }
 
     public getNamespaceForServiceId(serviceId: ServiceId): string {
-        return this.getNamespaceFromFernFilepath(this.getHttpServiceOrThrow(serviceId).name.fernFilepath);
+        return this.getNamespaceFromFernFilepath(
+            this.getHttpService(serviceId)?.name.fernFilepath ?? fail(`Service with id ${serviceId} not found`)
+        );
     }
 
     public getExceptionClassReference(declaredErrorName: DeclaredErrorName): ast.ClassReference {
@@ -692,25 +749,25 @@ export class CsharpGeneratorContext<CustomConfig extends BaseCsharpCustomConfigS
             classReference: this.csharp.classReference({
                 origin: protobufService,
                 name: `${serviceName}.${serviceName}Client`,
-                namespace: this.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufService.file)
+                namespace: this.protobufResolver.getNamespaceFromProtobufFile(protobufService.file)
             }),
             protobufService
         };
     }
 
     precalculate() {
-        this.extern.System.Collections.Generic.KeyValuePair();
-        this.extern.System.Collections.Generic.IEnumerable();
-        this.extern.System.Collections.Generic.IAsyncEnumerable();
-        this.extern.System.Collections.Generic.HashSet();
-        this.extern.System.Collections.Generic.List();
-        this.extern.System.Collections.Generic.Dictionary();
+        this.System.Collections.Generic.KeyValuePair();
+        this.System.Collections.Generic.IEnumerable();
+        this.System.Collections.Generic.IAsyncEnumerable();
+        this.System.Collections.Generic.HashSet();
+        this.System.Collections.Generic.List();
+        this.System.Collections.Generic.Dictionary();
 
         // types that can get used
-        this.types.ReadOnlyAdditionalProperties();
-        this.types.JsonUtils;
-        this.types.StringEnumSerializer;
-        this.types.IStringEnum;
+        this.Types.ReadOnlyAdditionalProperties();
+        this.Types.JsonUtils;
+        this.Types.StringEnumSerializer;
+        this.Types.IStringEnum;
 
         // start with the models
         for (const [typeId, typeDeclaration] of Object.entries(this.ir.types)) {
@@ -848,20 +905,20 @@ export class CsharpGeneratorContext<CustomConfig extends BaseCsharpCustomConfigS
         });
 
         const initialClassReferences = [
-            this.types.RawClient,
-            this.types.RequestOptions,
-            this.types.RequestOptionsInterface,
-            this.types.ClientOptions,
-            this.types.JsonRequest,
-            this.types.Version,
-            this.types.ValueConvert,
-            this.types.BaseException,
-            this.types.RootClient,
-            this.types.RootClientForSnippets,
-            this.types.BaseApiException,
-            this.types.Headers,
-            this.types.Environments,
-            this.types.TestClient
+            this.Types.RawClient,
+            this.Types.RequestOptions,
+            this.Types.RequestOptionsInterface,
+            this.Types.ClientOptions,
+            this.Types.JsonRequest,
+            this.Types.Version,
+            this.Types.ValueConvert,
+            this.Types.BaseException,
+            this.Types.RootClient,
+            this.Types.RootClientForSnippets,
+            this.Types.BaseApiException,
+            this.Types.Headers,
+            this.Types.Environments,
+            this.Types.TestClient
         ];
 
         // subpackages
@@ -869,8 +926,8 @@ export class CsharpGeneratorContext<CustomConfig extends BaseCsharpCustomConfigS
             // generate the subpackage class references
             this.getSubpackageClassReference(subpackage);
             if (subpackage.service) {
-                const service = this.getHttpServiceOrThrow(subpackage.service);
-                for (const endpoint of service.endpoints) {
+                const service = this.getHttpService(subpackage.service);
+                for (const endpoint of service?.endpoints ?? []) {
                     endpoint.sdkRequest?.shape._visit({
                         wrapper: (wrapper) => {
                             if (wrapper.wrapperName && subpackage.service) {

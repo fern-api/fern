@@ -2,14 +2,16 @@ import { fail } from "assert";
 import { type Generation } from "../../context/generation-info";
 import { type Provenance } from "../../context/model-navigator";
 import { is } from "../../utils/type-guards";
+import { Literal } from "../code/Literal";
 import { Node } from "../core/AstNode";
 import { Writer } from "../core/Writer";
 import { Access } from "../language/Access";
 import { type ClassReference } from "./ClassReference";
 import { Field, FieldArgsWithName, FieldArgsWithOrigin } from "./Field";
 import { Method } from "./Method";
+import { Optional, type Type } from "./Type";
 
-export declare namespace BaseType {
+export declare namespace DefinedType {
     interface Args extends Node.Args {
         /* The name of the C# class */
         name?: string;
@@ -27,7 +29,7 @@ export declare namespace BaseType {
     }
 }
 
-export abstract class BaseType extends Node {
+export abstract class DefinedType extends Node {
     public readonly access: Access;
     public readonly partial: boolean;
     public readonly reference: ClassReference;
@@ -37,7 +39,7 @@ export abstract class BaseType extends Node {
     protected methods: Method[] = [];
 
     constructor(
-        { name, namespace, access, partial, interfaceReferences, enclosingType, origin }: BaseType.Args,
+        { name, namespace, access, partial, interfaceReferences, enclosingType, origin }: DefinedType.Args,
         generation: Generation
     ) {
         super(origin, generation);
@@ -105,5 +107,50 @@ export abstract class BaseType extends Node {
         const method = new Method(args, this.generation);
         this.methods.push(method);
         return method;
+    }
+
+    public get multipartMethodName(): string {
+        return "AddJsonPart";
+    }
+
+    public get multipartMethodNameForCollection(): string {
+        return "AddJsonParts";
+    }
+
+    public get isOptional(): boolean {
+        return false;
+    }
+
+    public get isCollection(): boolean {
+        return false;
+    }
+
+    public get isReferenceType(): boolean | undefined {
+        return undefined;
+    }
+
+    public toOptionalIfNotAlready(): Type {
+        return new Optional(this, this.generation);
+    }
+
+    public underlyingTypeIfOptional(): Type | undefined {
+        return this;
+    }
+
+    public unwrapIfOptional(): Type {
+        return this;
+    }
+
+    /** returns true if this class reference is the IAsyncEnumerable class */
+    public get isAsyncEnumerable() {
+        return this.name === "IAsyncEnumerable" && this.namespace === "System.Collections.Generic";
+    }
+
+    public get defaultValue(): Literal {
+        return this.csharp.Literal.null();
+    }
+
+    public get fullyQualifiedName(): string {
+        return this.reference.fullyQualifiedName;
     }
 }

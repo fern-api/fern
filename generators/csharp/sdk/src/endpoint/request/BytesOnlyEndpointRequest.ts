@@ -16,11 +16,7 @@ export class BytesOnlyEndpointRequest extends EndpointRequest {
     }
 
     public getParameterType(): ast.Type {
-        return this.csharp.Type.coreClass(
-            this.csharp.coreClassReference({
-                name: "Stream"
-            })
-        );
+        return this.System.IO.Stream;
     }
 
     public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {

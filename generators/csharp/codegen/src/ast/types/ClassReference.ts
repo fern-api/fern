@@ -3,11 +3,12 @@ import { type Generation } from "../../context/generation-info";
 import { type Origin } from "../../context/model-navigator";
 import { type TypeScope } from "../../context/name-registry";
 import { type ClassInstantiation } from "../code/ClassInstantiation";
+import { Literal } from "../code/Literal";
 import { Node } from "../core/AstNode";
 import type { Writer } from "../core/Writer";
 import { type Field } from "./Field";
-import { Type } from "./Type";
-import { TypeParameter } from "./TypeParameter";
+import { Optional, Type } from "./Type";
+
 export declare namespace ClassReference {
     interface Identity {
         /* The name of the C# class */
@@ -22,11 +23,13 @@ export declare namespace ClassReference {
         /* The namespace alias for C# class */
         namespaceAlias?: string;
         /* Any generics used in the class reference */
-        generics?: (Type | TypeParameter | ClassReference)[];
+        generics?: Type[];
         /* Whether or not the class reference should be fully-qualified */
         fullyQualified?: boolean;
         /* force global:: qualifier */
         global?: boolean;
+        /* Whether or not the class reference is a collection */
+        isCollection?: boolean;
     }
 
     interface CreationArgs extends Args {
@@ -40,10 +43,11 @@ export class ClassReference extends Node {
     public readonly namespace: string;
     public readonly namespaceAlias: string | undefined;
     public readonly enclosingType: ClassReference | undefined;
-    public readonly generics: (Type | TypeParameter | ClassReference)[];
+    public readonly generics: Type[];
     public readonly fullyQualified: boolean;
     public readonly global: boolean;
     public readonly fullyQualifiedName: string;
+    public readonly isCollection: boolean;
     private readonly namespaceSegments: string[];
 
     constructor(
@@ -56,7 +60,8 @@ export class ClassReference extends Node {
             fullyQualified,
             global,
             fullyQualifiedName,
-            origin
+            origin,
+            isCollection
         }: ClassReference.CreationArgs,
         readonly scope: TypeScope,
         generation: Generation
@@ -70,10 +75,13 @@ export class ClassReference extends Node {
         this.fullyQualified = fullyQualified ?? false;
         this.global = global ?? false;
         this.namespaceSegments = this.namespace.split(".");
+        this.isCollection = isCollection ?? false;
         if (enclosingType != null) {
-            this.fullyQualifiedName = `${enclosingType.fullyQualifiedName}.${name}`;
+            this.fullyQualifiedName = enclosingType.fullyQualifiedName
+                ? `${enclosingType.fullyQualifiedName}.${name}`
+                : name;
         } else {
-            this.fullyQualifiedName = fullyQualifiedName;
+            this.fullyQualifiedName = fullyQualifiedName ? fullyQualifiedName : name;
         }
     }
 
@@ -111,6 +119,10 @@ export class ClassReference extends Node {
         // the fully qualified name of the type (with global:: qualifier if it necessary)
         const fqName = `${shouldGlobal ? "global::" : ""}${this.fullyQualifiedName}`;
 
+        if (!this.namespace) {
+            writer.write(this.name);
+            return;
+        }
         if (this.namespaceAlias != null) {
             const alias = writer.addNamespaceAlias(this.namespaceAlias, this.resolveNamespace());
             writer.write(`${alias}.${this.scopedName}`);
@@ -119,7 +131,6 @@ export class ClassReference extends Node {
                 writer.write(this.scopedName);
             } else {
                 if (this.fullyQualified) {
-                    // explicitly express namespaces
                     writer.write(fqName);
                 } else {
                     // if the class needs to be partially qualified, or we're skipping imports,
@@ -340,16 +351,6 @@ export class ClassReference extends Node {
         return this.registry.resolveNamespace(this.namespace);
     }
 
-    /** returns true if this class reference is the IAsyncEnumerable class */
-    public get isAsyncEnumerable() {
-        return this.name === "IAsyncEnumerable" && this.namespace === "System.Collections.Generic";
-    }
-
-    /** returns this class reference as a type reference */
-    public asTypeRef(): Type {
-        return this.csharp.Type.reference(this);
-    }
-
     /** returns this class reference as a fully qualified class reference */
     public asFullyQualified() {
         return this.csharp.classReferenceInternal({
@@ -386,5 +387,40 @@ export class ClassReference extends Node {
 
     public registerMethod(name: string, origin?: Origin): string {
         return name;
+    }
+
+    public get multipartMethodName(): string {
+        return "AddJsonPart";
+    }
+
+    public get multipartMethodNameForCollection(): string {
+        return "AddJsonParts";
+    }
+
+    public get isOptional(): boolean {
+        return false;
+    }
+
+    public get isReferenceType(): boolean | undefined {
+        return undefined;
+    }
+
+    public toOptionalIfNotAlready(): Type {
+        return new Optional(this, this.generation);
+    }
+
+    public underlyingTypeIfOptional(): Type | undefined {
+        return undefined;
+    }
+
+    public unwrapIfOptional(): Type {
+        return this;
+    }
+    public get defaultValue(): Literal {
+        return this.csharp.Literal.null();
+    }
+    /** returns true if this class reference is the IAsyncEnumerable class */
+    public get isAsyncEnumerable() {
+        return this.name === "IAsyncEnumerable" && this.namespace === "System.Collections.Generic";
     }
 }

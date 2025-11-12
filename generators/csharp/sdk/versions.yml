@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.7.5
+  changelogEntry:
+    - type: fix
+      summary: |
+        Support enums in multipart-forms.
+        Corrected date-normalization code in tests generation.
+  createdAt: "2025-11-11"
+  irVersion: 61
+
 - version: 2.7.4
   changelogEntry:
     - type: chore

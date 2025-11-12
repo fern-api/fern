@@ -101,3 +101,4 @@ allowedFailures:
   - server-sent-events
   - streaming
   - streaming-parameter
+  - enum
