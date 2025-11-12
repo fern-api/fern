@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add support for folder-based section pages in docs navigation. When a folder name matches a child MDX page name (e.g., folder `fern-ai.utils` contains `fern-ai.utils.mdx`), the folder automatically becomes a section with an associated page. The matching MDX file serves as the section's overview page, and clicking the section title navigates to that page.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-12"
+  version: 0.120.0
+
+- changelogEntry:
+    - summary: |
         Add x-fern-playground extension to OpenAPI importer to control API playground visibility. Defaults to true.
       type: feat
   irVersion: 61
