@@ -227,15 +227,21 @@ export abstract class AbstractRustGeneratorContext<
             },
             union: (union: FernIr.UnionTypeDeclaration) => {
                 for (const variant of union.types) {
-                    if (variant.shape.type === "singleProperty") {
-                        if (this.typeReferenceUsesBuiltin(variant.shape.type, typeName)) {
-                            return true;
-                        }
-                    } else if (variant.shape.type === "samePropertiesAsObject") {
-                        const typeDecl = this.ir.types[variant.shape.typeId];
-                        if (typeDecl && this.typeShapeUsesBuiltin(typeDecl.shape, typeName)) {
-                            return true;
-                        }
+                    const usesBuiltin = variant.shape._visit({
+                        singleProperty: (property: FernIr.SingleUnionTypeProperty) =>
+                            this.typeReferenceUsesBuiltin(property.type, typeName),
+                        samePropertiesAsObject: (declaredType: FernIr.DeclaredTypeName) => {
+                            const typeDecl = this.ir.types[declaredType.typeId];
+                            if (typeDecl) {
+                                return this.typeShapeUsesBuiltin(typeDecl.shape, typeName);
+                            }
+                            return false;
+                        },
+                        noProperties: () => false,
+                        _other: () => false
+                    });
+                    if (usesBuiltin) {
+                        return true;
                     }
                 }
                 return false;
