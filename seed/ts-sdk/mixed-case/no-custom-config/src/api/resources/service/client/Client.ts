@@ -20,21 +20,21 @@ export class Service {
     }
 
     /**
-     * @param {string} resourceId
+     * @param {string} ResourceID
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.service.getResource("rsc-xyz")
      */
     public getResource(
-        resourceId: string,
+        ResourceID: string,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<SeedMixedCase.Resource> {
-        return core.HttpResponsePromise.fromPromise(this.__getResource(resourceId, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__getResource(ResourceID, requestOptions));
     }
 
     private async __getResource(
-        resourceId: string,
+        ResourceID: string,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<SeedMixedCase.Resource>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -42,7 +42,7 @@ export class Service {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/resource/${core.url.encodePathParam(resourceId)}`,
+                `/resource/${core.url.encodePathParam(ResourceID)}`,
             ),
             method: "GET",
             headers: _headers,

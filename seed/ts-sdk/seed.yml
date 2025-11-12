@@ -110,6 +110,18 @@ fixtures:
     - outputFolder: consolidate-type-files
       customConfig:
         consolidateTypeFiles: true
+    - outputFolder: parameter-naming-original-name
+      customConfig:
+        parameterNaming: originalName
+    - outputFolder: parameter-naming-wire-value
+      customConfig:
+        parameterNaming: wireValue
+    - outputFolder: parameter-naming-camel-case
+      customConfig:
+        parameterNaming: camelCase
+    - outputFolder: parameter-naming-snake-case
+      customConfig:
+        parameterNaming: snakeCase
   error-property:
     - outputFolder: no-custom-config
       customConfig: null
@@ -166,6 +178,18 @@ fixtures:
     - outputFolder: serde
       customConfig:
         noSerdeLayer: false
+    - outputFolder: parameter-naming-original-name
+      customConfig:
+        parameterNaming: originalName
+    - outputFolder: parameter-naming-wire-value
+      customConfig:
+        parameterNaming: wireValue
+    - outputFolder: parameter-naming-camel-case
+      customConfig:
+        parameterNaming: camelCase
+    - outputFolder: parameter-naming-snake-case
+      customConfig:
+        parameterNaming: snakeCase
   request-parameters:
     - outputFolder: no-custom-config
       customConfig: null
@@ -271,6 +295,18 @@ fixtures:
       customConfig:
         inlinePathParameters: true
         retainOriginalCasing: true
+    - outputFolder: parameter-naming-original-name
+      customConfig:
+        parameterNaming: originalName
+    - outputFolder: parameter-naming-wire-value
+      customConfig:
+        parameterNaming: wireValue
+    - outputFolder: parameter-naming-camel-case
+      customConfig:
+        parameterNaming: camelCase
+    - outputFolder: parameter-naming-snake-case
+      customConfig:
+        parameterNaming: snakeCase
   websocket:
     - outputFolder: no-websocket-clients
     - outputFolder: serde

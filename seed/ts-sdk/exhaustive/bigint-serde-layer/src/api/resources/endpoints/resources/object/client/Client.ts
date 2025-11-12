@@ -402,7 +402,7 @@ export class Object_ {
     }
 
     /**
-     * @param {string} string_
+     * @param {string} string
      * @param {SeedExhaustive.types.NestedObjectWithRequiredField} request
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -429,17 +429,17 @@ export class Object_ {
      *     })
      */
     public getAndReturnNestedWithRequiredField(
-        string_: string,
+        string: string,
         request: SeedExhaustive.types.NestedObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField> {
         return core.HttpResponsePromise.fromPromise(
-            this.__getAndReturnNestedWithRequiredField(string_, request, requestOptions),
+            this.__getAndReturnNestedWithRequiredField(string, request, requestOptions),
         );
     }
 
     private async __getAndReturnNestedWithRequiredField(
-        string_: string,
+        string: string,
         request: SeedExhaustive.types.NestedObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithRequiredField>> {
@@ -452,7 +452,7 @@ export class Object_ {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/object/get-and-return-nested-with-required-field/${core.url.encodePathParam(string_)}`,
+                `/object/get-and-return-nested-with-required-field/${core.url.encodePathParam(string)}`,
             ),
             method: "POST",
             headers: _headers,
