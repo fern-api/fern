@@ -8,6 +8,27 @@ on:
       - "docker/seed/*"
       - ".github/workflows/seed-dockers.yml"
   workflow_dispatch:
+    inputs:
+      all:
+        description: Rebuild all seed containers
+        type: boolean
+        default: false
+      ts:
+        description: Rebuild TypeScript seed container
+        type: boolean
+        default: false
+      java:
+        description: Rebuild Java seed container
+        type: boolean
+        default: false
+      python:
+        description: Rebuild Python seed container
+        type: boolean
+        default: false
+      csharp:
+        description: Rebuild C# seed container
+        type: boolean
+        default: false
 
 # Cancel previous workflows on previous push
 concurrency:
@@ -63,19 +84,36 @@ jobs:
       - name: Set outputs
         id: set-output
         run: |
-          # If workflow changed, rebuild all images
-          if [[ "${{ steps.workflow.outputs.any_changed }}" == "true" ]]; then
-            echo "ts=true" >> $GITHUB_OUTPUT
-            echo "java=true" >> $GITHUB_OUTPUT
-            echo "python=true" >> $GITHUB_OUTPUT
-            echo "csharp=true" >> $GITHUB_OUTPUT
-            echo "Workflow changed, rebuilding all images"
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            # Manual run: use inputs to select packages
+            if [[ "${{ inputs.all }}" == "true" ]]; then
+              echo "ts=true" >> $GITHUB_OUTPUT
+              echo "java=true" >> $GITHUB_OUTPUT
+              echo "python=true" >> $GITHUB_OUTPUT
+              echo "csharp=true" >> $GITHUB_OUTPUT
+              echo "Manual run: rebuilding all images"
+            else
+              echo "ts=${{ inputs.ts }}" >> $GITHUB_OUTPUT
+              echo "java=${{ inputs.java }}" >> $GITHUB_OUTPUT
+              echo "python=${{ inputs.python }}" >> $GITHUB_OUTPUT
+              echo "csharp=${{ inputs.csharp }}" >> $GITHUB_OUTPUT
+              echo "Manual run: selected images set from inputs"
+            fi
           else
-            echo "ts=${{ steps.ts.outputs.any_changed }}" >> $GITHUB_OUTPUT
-            echo "java=${{ steps.java.outputs.any_changed }}" >> $GITHUB_OUTPUT
-            echo "python=${{ steps.python.outputs.any_changed }}" >> $GITHUB_OUTPUT
-            echo "csharp=${{ steps.csharp.outputs.any_changed }}" >> $GITHUB_OUTPUT
-            echo "Set outputs based on individual file changes"
+            # Push event: use path-based change detection
+            if [[ "${{ steps.workflow.outputs.any_changed }}" == "true" ]]; then
+              echo "ts=true" >> $GITHUB_OUTPUT
+              echo "java=true" >> $GITHUB_OUTPUT
+              echo "python=true" >> $GITHUB_OUTPUT
+              echo "csharp=true" >> $GITHUB_OUTPUT
+              echo "Workflow changed, rebuilding all images"
+            else
+              echo "ts=${{ steps.ts.outputs.any_changed }}" >> $GITHUB_OUTPUT
+              echo "java=${{ steps.java.outputs.any_changed }}" >> $GITHUB_OUTPUT
+              echo "python=${{ steps.python.outputs.any_changed }}" >> $GITHUB_OUTPUT
+              echo "csharp=${{ steps.csharp.outputs.any_changed }}" >> $GITHUB_OUTPUT
+              echo "Set outputs based on individual file changes"
+            fi
           fi
 
   generate-sha:
