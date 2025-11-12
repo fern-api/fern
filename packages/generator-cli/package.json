@@ -21,13 +21,11 @@
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
     "test:update": "vitest -u --run --passWithNoTests --globals --disable-console-intercept"
   },
-  "dependencies": {
+  "devDependencies": {
     "@octokit/rest": "^20.1.2",
     "es-toolkit": "^1.32.0",
     "@fern-api/fs-utils": "workspace:*",
-    "@fern-api/github": "workspace:*"
-  },
-  "devDependencies": {
+    "@fern-api/github": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@types/jest": "^29.5.11",
     "@types/node": "^22.0.0",
