@@ -154,6 +154,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [prod, manual]
     if: ${{ always() && (needs.prod.result == 'success' || needs.manual.result == 'success') }}
+    env:
+      # Autopilot host URL (should include scheme, e.g., https://autopilot.example.com)
+      AUTOPILOT_HOST: ${{ vars.AUTOPILOT_HOST != '' && vars.AUTOPILOT_HOST || 'https://autopilot.buildwithfern.com' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -175,10 +178,12 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
           version="${{ steps.get_version.outputs.CLI_VERSION }}"
+          host="${AUTOPILOT_HOST%/}"
+          echo "Using autopilot host: ${host}"
           echo "Triggering bulk update for CLI version: ${version}"
 
           response=$(curl -s -w "\n%{http_code}" -X POST \
-            "https://autopilot.buildwithfern.com/api/bulk-update-cli" \
+            "${host}/api/bulk-update-cli" \
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer ${FERN_TOKEN}" \
             -d "{\"newVersion\": \"${version}\"}")
