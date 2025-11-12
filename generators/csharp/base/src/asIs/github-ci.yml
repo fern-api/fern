@@ -2,6 +2,12 @@ name: ci
 
 on: [push]
 
+env:
+  CI: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_NOLOGO: true
+  MSBUILDTERMINALLOGGER: off
+
 jobs:
   compile:
     runs-on: ubuntu-latest
@@ -17,12 +23,18 @@ jobs:
         with:
           dotnet-version: 10.x
 
+      - name: List SDKs
+        run: dotnet --list-sdks
+
       - name: Install tools
         run: |
           dotnet tool restore
 
+      - name: Restore dependencies
+        run: dotnet restore src
+
       - name: Build Release
-        run: dotnet build src -c Release /p:ContinuousIntegrationBuild=true
+        run: dotnet build src -c Release /p:ContinuousIntegrationBuild=true --no-restore
 
   unit-tests:
     runs-on: ubuntu-latest
@@ -38,13 +50,21 @@ jobs:
         with:
           dotnet-version: 10.x
 
+      - name: List SDKs
+        run: dotnet --list-sdks
+
       - name: Install tools
         run: |
           dotnet tool restore
 
+      - name: Restore dependencies
+        run: dotnet restore src
+
+      - name: Build Release
+        run: dotnet build src -c Release /p:ContinuousIntegrationBuild=true --no-restore
+
       - name: Run Tests
-        run: |
-          dotnet test src
+        run: dotnet test src -c Release /p:ContinuousIntegrationBuild=true --no-build --no-restore
 
 <% if (shouldWritePublishBlock) { %>
   publish:
@@ -61,10 +81,23 @@ jobs:
         with:
           dotnet-version: 10.x
 
+      - name: List SDKs
+        run: dotnet --list-sdks
+
+      - name: Install tools
+        run: |
+          dotnet tool restore
+
+      - name: Restore dependencies
+        run: dotnet restore src
+
+      - name: Build Release
+        run: dotnet build src -c Release /p:ContinuousIntegrationBuild=true --no-restore
+
       - name: Publish
         env:
           NUGET_API_KEY: $\{{ secrets.<%= nugetTokenEnvvar%> }}
         run: |
-          dotnet pack src -c Release
+          dotnet pack src/<%= projectName%> -c Release /p:ContinuousIntegrationBuild=true --no-build --no-restore
           dotnet nuget push src/<%= projectName%>/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
 <% } %>
