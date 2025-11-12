@@ -329,7 +329,7 @@ function addImgCommand(cli: Argv) {
                     demandOption: true,
                     description: "Generator to build docker image for"
                 })
-                .option("version", {
+                .option("ver", {
                     type: "string",
                     demandOption: false,
                     description: "Version tag for the docker image (must be valid semver, defaults to 99.99.99)"
@@ -349,7 +349,7 @@ function addImgCommand(cli: Argv) {
                 );
             }
 
-            const version = argv.version ?? "99.99.99";
+            const version = argv.ver ?? "99.99.99";
             try {
                 assertValidSemVerOrThrow(version);
             } catch (error) {
