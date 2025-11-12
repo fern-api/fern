@@ -21,7 +21,7 @@ pub struct ObjectWithOptionalField {
     pub uuid: Option<Uuid>,
     #[serde(rename = "base64")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub base_64: Option<String>,
+    pub base_64: Option<Vec<u8>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub list: Option<Vec<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
