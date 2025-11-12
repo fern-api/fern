@@ -194,59 +194,117 @@ function applyGithubOverrides(
         if (generator.outputMode.type === "githubV2") {
             hasGithubGenerator = true;
 
-            const currentGithubConfig = generator.outputMode;
+            const currentOutputMode = generator.outputMode;
+            const currentGithubConfig = currentOutputMode.githubV2;
 
-            // Create a new output mode with overridden values
-            const newOutputMode = FernFiddle.OutputMode._visit(currentGithubConfig, {
-                githubV2: (githubConfig) => {
-                    const newMode = githubMode ?? githubConfig.type;
-
-                    // Create the appropriate github output mode based on the mode
+            // Create a new github output mode with overridden values
+            const newGithubConfig = FernFiddle.GithubOutputModeV2._visit(currentGithubConfig, {
+                push: (pushConfig) => {
+                    const newMode = githubMode ?? "push";
                     switch (newMode) {
                         case "push":
-                            return FernFiddle.OutputMode.githubV2(
-                                FernFiddle.GithubOutputModeV2.push({
-                                    owner: githubConfig.owner,
-                                    repo: githubConfig.repo,
-                                    branch:
-                                        githubBranch ??
-                                        (githubConfig.type === "push" ? githubConfig.branch : undefined),
-                                    license: githubConfig.license,
-                                    publishInfo: githubConfig.publishInfo,
-                                    downloadSnippets: githubConfig.downloadSnippets
-                                })
-                            );
+                            return FernFiddle.GithubOutputModeV2.push({
+                                owner: pushConfig.owner,
+                                repo: pushConfig.repo,
+                                branch: githubBranch ?? pushConfig.branch,
+                                license: pushConfig.license,
+                                publishInfo: pushConfig.publishInfo,
+                                downloadSnippets: pushConfig.downloadSnippets
+                            });
                         case "pull-request":
-                            return FernFiddle.OutputMode.githubV2(
-                                FernFiddle.GithubOutputModeV2.pullRequest({
-                                    owner: githubConfig.owner,
-                                    repo: githubConfig.repo,
-                                    branch:
-                                        githubBranch ??
-                                        (githubConfig.type === "pullRequest" ? githubConfig.branch : undefined),
-                                    license: githubConfig.license,
-                                    publishInfo: githubConfig.publishInfo,
-                                    downloadSnippets: githubConfig.downloadSnippets,
-                                    reviewers: githubConfig.type === "pullRequest" ? githubConfig.reviewers : undefined
-                                })
-                            );
+                            return FernFiddle.GithubOutputModeV2.pullRequest({
+                                owner: pushConfig.owner,
+                                repo: pushConfig.repo,
+                                license: pushConfig.license,
+                                publishInfo: pushConfig.publishInfo,
+                                downloadSnippets: pushConfig.downloadSnippets,
+                                reviewers: undefined
+                            });
                         case "commit":
                         case "release":
-                            return FernFiddle.OutputMode.githubV2(
-                                FernFiddle.GithubOutputModeV2.commitAndRelease({
-                                    owner: githubConfig.owner,
-                                    repo: githubConfig.repo,
-                                    license: githubConfig.license,
-                                    publishInfo: githubConfig.publishInfo,
-                                    downloadSnippets: githubConfig.downloadSnippets
-                                })
-                            );
+                            return FernFiddle.GithubOutputModeV2.commitAndRelease({
+                                owner: pushConfig.owner,
+                                repo: pushConfig.repo,
+                                license: pushConfig.license,
+                                publishInfo: pushConfig.publishInfo,
+                                downloadSnippets: pushConfig.downloadSnippets
+                            });
+                        default:
+                            return currentGithubConfig;
+                    }
+                },
+                pullRequest: (prConfig) => {
+                    const newMode = githubMode ?? "pull-request";
+                    switch (newMode) {
+                        case "push":
+                            return FernFiddle.GithubOutputModeV2.push({
+                                owner: prConfig.owner,
+                                repo: prConfig.repo,
+                                branch: githubBranch,
+                                license: prConfig.license,
+                                publishInfo: prConfig.publishInfo,
+                                downloadSnippets: prConfig.downloadSnippets
+                            });
+                        case "pull-request":
+                            return FernFiddle.GithubOutputModeV2.pullRequest({
+                                owner: prConfig.owner,
+                                repo: prConfig.repo,
+                                license: prConfig.license,
+                                publishInfo: prConfig.publishInfo,
+                                downloadSnippets: prConfig.downloadSnippets,
+                                reviewers: prConfig.reviewers
+                            });
+                        case "commit":
+                        case "release":
+                            return FernFiddle.GithubOutputModeV2.commitAndRelease({
+                                owner: prConfig.owner,
+                                repo: prConfig.repo,
+                                license: prConfig.license,
+                                publishInfo: prConfig.publishInfo,
+                                downloadSnippets: prConfig.downloadSnippets
+                            });
+                        default:
+                            return currentGithubConfig;
+                    }
+                },
+                commitAndRelease: (commitConfig) => {
+                    const newMode = githubMode ?? "commit";
+                    switch (newMode) {
+                        case "push":
+                            return FernFiddle.GithubOutputModeV2.push({
+                                owner: commitConfig.owner,
+                                repo: commitConfig.repo,
+                                branch: githubBranch,
+                                license: commitConfig.license,
+                                publishInfo: commitConfig.publishInfo,
+                                downloadSnippets: commitConfig.downloadSnippets
+                            });
+                        case "pull-request":
+                            return FernFiddle.GithubOutputModeV2.pullRequest({
+                                owner: commitConfig.owner,
+                                repo: commitConfig.repo,
+                                license: commitConfig.license,
+                                publishInfo: commitConfig.publishInfo,
+                                downloadSnippets: commitConfig.downloadSnippets,
+                                reviewers: undefined
+                            });
+                        case "commit":
+                        case "release":
+                            return FernFiddle.GithubOutputModeV2.commitAndRelease({
+                                owner: commitConfig.owner,
+                                repo: commitConfig.repo,
+                                license: commitConfig.license,
+                                publishInfo: commitConfig.publishInfo,
+                                downloadSnippets: commitConfig.downloadSnippets
+                            });
                         default:
                             return currentGithubConfig;
                     }
                 },
                 _other: () => currentGithubConfig
             });
+
+            const newOutputMode = FernFiddle.OutputMode.githubV2(newGithubConfig);
 
             const modifiedGenerator: generatorsYml.GeneratorInvocation = {
                 ...generator,
