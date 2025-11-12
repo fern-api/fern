@@ -30,16 +30,7 @@ export class Block extends AstNode {
             writer.writeStatement(...each);
         }
     }
-    /*
-    // 
-    var(name: string, type: ClassReference | Type, initialValue?: Expression): Local;
-    var(name: string, initialValue: Expression);
-    var(name: string, typeOrInitialValue: Expression | ClassReference | Type, initialValue?: Expression) {
-        if (type) {
-            this.statements.push([type, " ", name]);
-        }
-    }
-    */
+
     append(codeblock: CodeBlock) {
         this.statements.push(codeblock);
     }
@@ -52,9 +43,5 @@ export class Block extends AstNode {
         }
 
         return this;
-    }
-
-    if(condition: string, block: Block) {
-        //
     }
 }
