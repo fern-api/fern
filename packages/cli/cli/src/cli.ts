@@ -568,6 +568,15 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     description: "Skip asset upload step and generate fake links for preview",
                     default: false
+                })
+                .option("github-mode", {
+                    type: "string",
+                    choices: ["push", "pull-request", "commit", "release"],
+                    description: "Override github.mode for all generators in the group"
+                })
+                .option("github-branch", {
+                    type: "string",
+                    description: "Override github.branch for all generators in the group"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -599,7 +608,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     force: argv.force,
                     runner: argv.runner as ContainerRunner,
                     inspect: false,
-                    lfsOverride: argv.lfsOverride
+                    lfsOverride: argv.lfsOverride,
+                    githubMode: argv.githubMode,
+                    githubBranch: argv.githubBranch
                 });
             }
             if (argv.docs != null) {
@@ -645,7 +656,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 force: argv.force,
                 runner: argv.runner as ContainerRunner,
                 inspect: false,
-                lfsOverride: argv.lfsOverride
+                lfsOverride: argv.lfsOverride,
+                githubMode: argv.githubMode,
+                githubBranch: argv.githubBranch
             });
         }
     );

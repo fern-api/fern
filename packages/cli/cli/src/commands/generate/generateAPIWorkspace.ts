@@ -32,7 +32,9 @@ export async function generateWorkspace({
     mode,
     runner,
     inspect,
-    lfsOverride
+    lfsOverride,
+    githubMode,
+    githubBranch
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -49,6 +51,8 @@ export async function generateWorkspace({
     runner: ContainerRunner | undefined;
     inspect: boolean;
     lfsOverride: string | undefined;
+    githubMode: string | undefined;
+    githubBranch: string | undefined;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -77,6 +81,11 @@ export async function generateWorkspace({
     // Apply lfs-override if specified
     if (lfsOverride != null) {
         group = applyLfsOverride(group, lfsOverride, context);
+    }
+
+    // Apply github overrides if specified
+    if (githubMode != null || githubBranch != null) {
+        group = applyGithubOverrides(group, githubMode, githubBranch, context);
     }
 
     await validateAPIWorkspaceAndLogIssues({
@@ -162,6 +171,111 @@ function applyLfsOverride(
 
         context.logger.info(
             `Overriding output for generator '${generator.name}' to local-file-system at: ${outputPath}`
+        );
+    }
+
+    return {
+        ...group,
+        generators: modifiedGenerators
+    };
+}
+
+function applyGithubOverrides(
+    group: generatorsYml.GeneratorGroup,
+    githubMode: string | undefined,
+    githubBranch: string | undefined,
+    context: TaskContext
+): generatorsYml.GeneratorGroup {
+    const modifiedGenerators: generatorsYml.GeneratorInvocation[] = [];
+    let hasGithubGenerator = false;
+
+    for (const generator of group.generators) {
+        // Check if this generator uses github output mode
+        if (generator.outputMode.type === "githubV2") {
+            hasGithubGenerator = true;
+
+            const currentGithubConfig = generator.outputMode;
+
+            // Create a new output mode with overridden values
+            const newOutputMode = FernFiddle.OutputMode._visit(currentGithubConfig, {
+                githubV2: (githubConfig) => {
+                    const newMode = githubMode ?? githubConfig.type;
+
+                    // Create the appropriate github output mode based on the mode
+                    switch (newMode) {
+                        case "push":
+                            return FernFiddle.OutputMode.githubV2(
+                                FernFiddle.GithubOutputModeV2.push({
+                                    owner: githubConfig.owner,
+                                    repo: githubConfig.repo,
+                                    branch:
+                                        githubBranch ??
+                                        (githubConfig.type === "push" ? githubConfig.branch : undefined),
+                                    license: githubConfig.license,
+                                    publishInfo: githubConfig.publishInfo,
+                                    downloadSnippets: githubConfig.downloadSnippets
+                                })
+                            );
+                        case "pull-request":
+                            return FernFiddle.OutputMode.githubV2(
+                                FernFiddle.GithubOutputModeV2.pullRequest({
+                                    owner: githubConfig.owner,
+                                    repo: githubConfig.repo,
+                                    branch:
+                                        githubBranch ??
+                                        (githubConfig.type === "pullRequest" ? githubConfig.branch : undefined),
+                                    license: githubConfig.license,
+                                    publishInfo: githubConfig.publishInfo,
+                                    downloadSnippets: githubConfig.downloadSnippets,
+                                    reviewers: githubConfig.type === "pullRequest" ? githubConfig.reviewers : undefined
+                                })
+                            );
+                        case "commit":
+                        case "release":
+                            return FernFiddle.OutputMode.githubV2(
+                                FernFiddle.GithubOutputModeV2.commitAndRelease({
+                                    owner: githubConfig.owner,
+                                    repo: githubConfig.repo,
+                                    license: githubConfig.license,
+                                    publishInfo: githubConfig.publishInfo,
+                                    downloadSnippets: githubConfig.downloadSnippets
+                                })
+                            );
+                        default:
+                            return currentGithubConfig;
+                    }
+                },
+                _other: () => currentGithubConfig
+            });
+
+            const modifiedGenerator: generatorsYml.GeneratorInvocation = {
+                ...generator,
+                outputMode: newOutputMode
+            };
+
+            modifiedGenerators.push(modifiedGenerator);
+
+            const overrideMessages: string[] = [];
+            if (githubMode != null) {
+                overrideMessages.push(`mode=${githubMode}`);
+            }
+            if (githubBranch != null) {
+                overrideMessages.push(`branch=${githubBranch}`);
+            }
+            if (overrideMessages.length > 0) {
+                context.logger.info(
+                    `Overriding github config for generator '${generator.name}': ${overrideMessages.join(", ")}`
+                );
+            }
+        } else {
+            // Keep the generator as-is if it doesn't use github output mode
+            modifiedGenerators.push(generator);
+        }
+    }
+
+    if (!hasGithubGenerator && (githubMode != null || githubBranch != null)) {
+        context.logger.warn(
+            "GitHub override flags were specified, but no generators in this group use GitHub output mode"
         );
     }
 

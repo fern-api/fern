@@ -28,7 +28,9 @@ export async function generateAPIWorkspaces({
     force,
     runner,
     inspect,
-    lfsOverride
+    lfsOverride,
+    githubMode,
+    githubBranch
 }: {
     project: Project;
     cliContext: CliContext;
@@ -43,6 +45,8 @@ export async function generateAPIWorkspaces({
     runner: ContainerRunner | undefined;
     inspect: boolean;
     lfsOverride: string | undefined;
+    githubMode: string | undefined;
+    githubBranch: string | undefined;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
 
@@ -126,7 +130,9 @@ export async function generateAPIWorkspaces({
                     mode,
                     runner,
                     inspect,
-                    lfsOverride
+                    lfsOverride,
+                    githubMode,
+                    githubBranch
                 });
             });
         })
