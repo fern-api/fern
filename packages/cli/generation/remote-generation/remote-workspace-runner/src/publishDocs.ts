@@ -645,7 +645,7 @@ async function updateAiChatFromDocsDefinition({
     domain: string;
     customDomains: string[];
 }): Promise<void> {
-    if (docsDefinition.config.aiChatConfig == null) {
+    if (docsDefinition.config.aiChatConfig == null || isPreview) {
         return;
     }
     context.logger.debug("Processing AI Chat configuration from docs.yml");

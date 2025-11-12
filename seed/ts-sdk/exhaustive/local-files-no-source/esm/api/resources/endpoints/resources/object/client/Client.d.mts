@@ -90,7 +90,7 @@ export declare class Object_ {
     getAndReturnNestedWithOptionalField(request: SeedExhaustive.types.NestedObjectWithOptionalField, requestOptions?: Object_.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithOptionalField>;
     private __getAndReturnNestedWithOptionalField;
     /**
-     * @param {string} string_
+     * @param {string} string
      * @param {SeedExhaustive.types.NestedObjectWithRequiredField} request
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -116,7 +116,7 @@ export declare class Object_ {
      *         }
      *     })
      */
-    getAndReturnNestedWithRequiredField(string_: string, request: SeedExhaustive.types.NestedObjectWithRequiredField, requestOptions?: Object_.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField>;
+    getAndReturnNestedWithRequiredField(string: string, request: SeedExhaustive.types.NestedObjectWithRequiredField, requestOptions?: Object_.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField>;
     private __getAndReturnNestedWithRequiredField;
     /**
      * @param {SeedExhaustive.types.NestedObjectWithRequiredField[]} request

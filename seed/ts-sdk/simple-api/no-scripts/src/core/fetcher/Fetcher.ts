@@ -8,10 +8,10 @@ import { getErrorResponseBody } from "./getErrorResponseBody.js";
 import { getFetchFn } from "./getFetchFn.js";
 import { getRequestBody } from "./getRequestBody.js";
 import { getResponseBody } from "./getResponseBody.js";
+import { Headers } from "./Headers.js";
 import { makeRequest } from "./makeRequest.js";
 import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.js";
 import { requestWithRetries } from "./requestWithRetries.js";
-import { Headers } from "./Headers.js";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 

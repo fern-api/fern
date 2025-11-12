@@ -440,7 +440,7 @@ export class Playlist {
      * Deletes a playlist
      *
      * @param {number} serviceParam
-     * @param {SeedTrace.PlaylistId} playlistId
+     * @param {SeedTrace.PlaylistId} playlist_id
      * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -448,15 +448,15 @@ export class Playlist {
      */
     public deletePlaylist(
         serviceParam: number,
-        playlistId: SeedTrace.PlaylistId,
+        playlist_id: SeedTrace.PlaylistId,
         requestOptions?: Playlist.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.playlist.deletePlaylist.Error>> {
-        return core.HttpResponsePromise.fromPromise(this.__deletePlaylist(serviceParam, playlistId, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__deletePlaylist(serviceParam, playlist_id, requestOptions));
     }
 
     private async __deletePlaylist(
         serviceParam: number,
-        playlistId: SeedTrace.PlaylistId,
+        playlist_id: SeedTrace.PlaylistId,
         requestOptions?: Playlist.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.playlist.deletePlaylist.Error>>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -472,7 +472,7 @@ export class Playlist {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(serializers.PlaylistId.jsonOrThrow(playlistId, { omitUndefined: true }))}`,
+                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(serializers.PlaylistId.jsonOrThrow(playlist_id, { omitUndefined: true }))}`,
             ),
             method: "DELETE",
             headers: _headers,

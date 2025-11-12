@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .resource_status import ResourceStatus
 
@@ -91,4 +92,6 @@ Resource_User(
     extra_properties={"foo": "bar", "baz": "qux"},
 )
 """
-Resource = typing.Union[Resource_User, Resource_Organization]
+Resource = typing_extensions.Annotated[
+    typing.Union[Resource_User, Resource_Organization], pydantic.Field(discriminator="resource_type")
+]

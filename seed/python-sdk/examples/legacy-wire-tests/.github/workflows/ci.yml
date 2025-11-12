@@ -53,7 +53,7 @@ jobs:
       - name: Publish to pypi
         run: |
           poetry config repositories.remote 
-          poetry --no-interaction -v publish --build --repository remote --username "$" --password "$"
+          poetry --no-interaction -v publish --build --repository remote --username "$PYPI_USERNAME" --password "$PYPI_PASSWORD"
         env:
-          : ${{ secrets. }}
-          : ${{ secrets. }}
+          PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}

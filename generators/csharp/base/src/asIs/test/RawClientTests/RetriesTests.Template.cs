@@ -144,7 +144,7 @@ public class RetriesTests
             .WillSetStateTo("Server Error")
             .RespondWith(WireMockResponse.Create().WithStatusCode(429).WithBody("Failure"));
 
-        var request = new MultipartFormRequest{
+        var request = new <%= namespaces.core %>.MultipartFormRequest{
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
             Path = "/test",
@@ -184,7 +184,7 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new MultipartFormRequest{
+        var request = new <%= context.namespaces.core %>.MultipartFormRequest{
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
             Path = "/test",

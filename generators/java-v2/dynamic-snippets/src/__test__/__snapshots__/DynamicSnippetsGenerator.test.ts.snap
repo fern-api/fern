@@ -17,10 +17,10 @@ client.service().getMetadata(
     GetMetadataRequest
         .builder()
         .xAPIVersion("0.0.1")
+        .shallow(false)
         .tag(
             Arrays.asList(Optional.of("development"), Optional.of("public"))
         )
-        .shallow(false)
         .build()
 );
 "
@@ -43,10 +43,10 @@ client.service().getMetadata(
     GetMetadataRequest
         .builder()
         .xAPIVersion("0.0.1")
+        .shallow(false)
         .tag(
             Arrays.asList(Optional.of("development"))
         )
-        .shallow(false)
         .build()
 );
 "
@@ -87,15 +87,16 @@ client.service().createBigEntity(
         .extendedMovie(
             ExtendedMovie
                 .builder()
-                .cast(
-                    Arrays.asList("John Travolta", "Samuel L. Jackson", "Uma Thurman", "Bruce Willis")
-                )
                 .id("movie-sda231x")
                 .title("Pulp Fiction")
                 .from("Quentin Tarantino")
                 .rating(8.5)
                 .type("movie")
                 .tag("tag-12efs9dv")
+                .revenue(1000000L)
+                .cast(
+                    Arrays.asList("John Travolta", "Samuel L. Jackson", "Uma Thurman", "Bruce Willis")
+                )
                 .metadata(
                     new HashMap<String, Object>() {{
                         put("academyAward", true);
@@ -106,7 +107,6 @@ client.service().createBigEntity(
                         }});
                     }}
                 )
-                .revenue(1000000L)
                 .build()
         )
         .eventInfo(
@@ -172,6 +172,8 @@ client.service().createMovie(
         .rating(8.0)
         .type("movie")
         .tag("development")
+        .revenue(1000000L)
+        .prequel("movie-cv9b914f")
         .metadata(
             new HashMap<String, Object>() {{
                 put("actors", new ArrayList<Object>(Arrays.asList("Christian Bale", "Florence Pugh", "Willem Dafoe")));
@@ -182,8 +184,6 @@ client.service().createMovie(
                 }});
             }}
         )
-        .revenue(1000000L)
-        .prequel("movie-cv9b914f")
         .build()
 );
 "
@@ -596,6 +596,9 @@ AcmeAcmeClient client = AcmeAcmeClient
 client.nullable().getUsers(
     GetUsersRequest
         .builder()
+        .extra(
+            Nullable.ofNull()
+        )
         .usernames(
             Arrays.asList(Optional.of("john.doe"), Optional.of("jane.doe"))
         )
@@ -605,9 +608,6 @@ client.nullable().getUsers(
                     Nullable.ofNull()
                 )
             )
-        )
-        .extra(
-            Nullable.ofNull()
         )
         .build()
 );

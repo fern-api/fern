@@ -5,7 +5,7 @@ import typing
 from dataclasses import dataclass
 from pathlib import Path
 from types import TracebackType
-from typing import List, Optional, Sequence, Set, Type
+from typing import TYPE_CHECKING, List, Optional, Sequence, Set, Type
 
 from .dependency_manager import DependencyManager
 from .filepath import Filepath
@@ -17,7 +17,10 @@ from fern_python.codegen import AST
 from fern_python.codegen.pyproject_toml import PyProjectToml, PyProjectTomlPackageConfig
 from fern_python.codegen.requirements_txt import RequirementsTxt
 
-from fern.generator_exec import GithubOutputMode, LicenseConfig, PypiMetadata
+from fern.generator_exec import GeneratorUpdate, GithubOutputMode, LicenseConfig, LogLevel, LogUpdate, PypiMetadata
+
+if TYPE_CHECKING:
+    from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
 
 @dataclass(frozen=True)
@@ -49,6 +52,7 @@ class Project:
         exclude_types_from_init_exports: Optional[bool] = False,
         lazy_imports: bool = True,
         recursion_limit: Optional[int] = None,
+        generator_exec_wrapper: Optional[GeneratorExecWrapper] = None,
     ) -> None:
         relative_path_to_project = relative_path_to_project.replace(".", "/")
         if flat_layout:
@@ -75,6 +79,7 @@ class Project:
         self._extras: typing.Dict[str, List[str]] = {}
         self._user_defined_toml = user_defined_toml
         self._exclude_types_from_init_exports = exclude_types_from_init_exports
+        self._generator_exec_wrapper = generator_exec_wrapper
 
     def add_init_exports(self, path: AST.ModulePath, exports: List[ModuleExport]) -> None:
         self._module_manager.register_additional_exports(path, exports)
@@ -205,6 +210,46 @@ class Project:
             if self._generate_readme:
                 with open(os.path.join(self._root_filepath, "README.md"), "w") as f:
                     f.write("")
+
+            # copy LICENSE file if custom license is specified
+            self._copy_license_file()
+
+    def _copy_license_file(self) -> None:
+        """Copy LICENSE file from /tmp/LICENSE to project root for local generation."""
+        if self.license_ is not None:
+            license_union = self.license_.get_as_union()
+            if license_union.type == "custom":
+                # In Docker execution environment (local generation), the license file is mounted at /tmp/LICENSE
+                # For remote generation, Fiddle handles writing the LICENSE file after generation
+                docker_license_path = "/tmp/LICENSE"
+                destination_path = os.path.join(self._root_filepath, license_union.filename)
+
+                try:
+                    import shutil
+
+                    shutil.copyfile(docker_license_path, destination_path)
+                except FileNotFoundError:
+                    # File not found - this is expected for remote generation where Fiddle handles it
+                    if self._generator_exec_wrapper is not None:
+                        self._generator_exec_wrapper.send_update(
+                            GeneratorUpdate.factory.log(
+                                LogUpdate(
+                                    level=LogLevel.WARN,
+                                    message=f"Custom license file not found at {docker_license_path}. This is expected for remote generation.",
+                                )
+                            )
+                        )
+                except Exception as e:
+                    # Log any other errors for debugging while maintaining backwards compatibility
+                    if self._generator_exec_wrapper is not None:
+                        self._generator_exec_wrapper.send_update(
+                            GeneratorUpdate.factory.log(
+                                LogUpdate(
+                                    level=LogLevel.WARN,
+                                    message=f"Failed to copy custom license file from {docker_license_path} to {destination_path}: {e}",
+                                )
+                            )
+                        )
 
     def __enter__(self) -> Project:
         return self

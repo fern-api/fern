@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix npm authentication in the publish workflow by properly configuring the npm registry with NODE_AUTH_TOKEN.
+      type: fix
+  createdAt: "2025-11-11"
+  version: 0.4.3
+
+- changelogEntry:
+    - summary: |
         Fix an issue where the `generator-cli github pr ...` and `generator-cli github push` commands would fail when the GitHub repository is empty.
       type: fix
   createdAt: "2025-11-06"

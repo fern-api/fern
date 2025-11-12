@@ -3,8 +3,6 @@ import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
-
-import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export declare namespace WellKnownProtoStructGenerator {
@@ -16,11 +14,7 @@ export declare namespace WellKnownProtoStructGenerator {
     }
 }
 
-export class WellKnownProtoStructGenerator extends FileGenerator<
-    CSharpFile,
-    ModelCustomConfigSchema,
-    ModelGeneratorContext
-> {
+export class WellKnownProtoStructGenerator extends FileGenerator<CSharpFile, ModelGeneratorContext> {
     private classReference: ast.ClassReference;
     private typeDeclaration: TypeDeclaration;
     private protoValueClassReference: ast.ClassReference;
@@ -43,18 +37,18 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
             namespace: this.classReference.namespace,
             access: ast.Access.Public,
             sealed: true,
-            parentClassReference: this.csharp.Type.map(
-                this.csharp.Type.string,
-                this.csharp.Type.optional(this.csharp.Type.reference(this.protoValueClassReference))
+            parentClassReference: this.Collection.map(
+                this.Primitive.string,
+                this.protoValueClassReference.toOptionalIfNotAlready()
             ),
             summary: this.typeDeclaration.docs,
-            annotations: [this.extern.System.Serializable]
+            annotations: [this.System.Serializable]
         });
 
         class_.addConstructor(this.getDefaultConstructor());
         class_.addConstructor(this.getKeyValuePairConstructor());
 
-        this.context.common.getToStringMethod(class_);
+        this.context.getToStringMethod(class_);
         this.getToProtoMethod(class_);
         this.getFromProtoMethod(class_);
 
@@ -68,23 +62,23 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
         });
     }
 
-    private getDefaultConstructor(): ast.Class.Constructor {
+    private getDefaultConstructor() {
         return {
             access: ast.Access.Public,
             parameters: []
         };
     }
 
-    private getKeyValuePairConstructor(): ast.Class.Constructor {
+    private getKeyValuePairConstructor() {
         return {
             access: ast.Access.Public,
             parameters: [
                 this.csharp.parameter({
                     name: "value",
-                    type: this.csharp.Type.list(
-                        this.csharp.Type.keyValuePair(
-                            this.csharp.Type.string,
-                            this.csharp.Type.optional(this.csharp.Type.reference(this.protoValueClassReference))
+                    type: this.Collection.list(
+                        this.Collection.keyValuePair(
+                            this.Primitive.string,
+                            this.protoValueClassReference.toOptionalIfNotAlready()
                         )
                     )
                 })
@@ -112,12 +106,12 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
             access: ast.Access.Internal,
             isAsync: false,
             parameters: [],
-            return_: this.csharp.Type.reference(this.extern.Google.Protobuf.WellKnownTypes.Struct),
+            return_: this.Google.Protobuf.WellKnownTypes.Struct,
             body: this.csharp.codeblock((writer) => {
                 writer.write("var result = ");
                 writer.writeNodeStatement(
                     this.csharp.instantiateClass({
-                        classReference: this.extern.Google.Protobuf.WellKnownTypes.Struct,
+                        classReference: this.Google.Protobuf.WellKnownTypes.Struct,
                         arguments_: []
                     })
                 );
@@ -145,10 +139,10 @@ export class WellKnownProtoStructGenerator extends FileGenerator<
             parameters: [
                 this.csharp.parameter({
                     name: "value",
-                    type: this.csharp.Type.reference(this.extern.Google.Protobuf.WellKnownTypes.Struct)
+                    type: this.Google.Protobuf.WellKnownTypes.Struct
                 })
             ],
-            return_: this.csharp.Type.reference(this.classReference),
+            return_: this.classReference,
             body: this.csharp.codeblock((writer) => {
                 writer.write("var result = ");
                 writer.writeNodeStatement(

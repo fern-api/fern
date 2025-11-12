@@ -1,10 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.35.4
+- version: 4.36.1
   changelogEntry:
     - summary: Resolve PydanticUserError for mutually recursive models in Pydantic v2.
       type: fix
   createdAt: "2025-11-12"
+  irVersion: 61
+
+- version: 4.36.0
+  changelogEntry:
+    - summary: Add custom license file copying and GitHub installation token population for local generation workflows
+      type: feat
+  createdAt: "2025-11-11"
   irVersion: 61
 
 - version: 4.35.3

@@ -21,6 +21,17 @@
                 "type": "typescript",
                 "client": "import { SeedObjectsWithImportsClient } from \"@fern/optional\";\n\nconst client = new SeedObjectsWithImportsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.optional.sendOptionalTypedBody({\n    message: \"message\"\n});\n"
             }
+        },
+        {
+            "id": {
+                "path": "/deploy/{actionId}/versions/{id}",
+                "method": "POST",
+                "identifier_override": "endpoint_optional.sendOptionalNullableWithAllOptionalProperties"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedObjectsWithImportsClient } from \"@fern/optional\";\n\nconst client = new SeedObjectsWithImportsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.optional.sendOptionalNullableWithAllOptionalProperties(\"actionId\", \"id\", {\n    updateDraft: true\n});\n"
+            }
         }
     ],
     "types": {}

@@ -1,5 +1,5 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbstractCsharpGeneratorCli, TestFileGenerator } from "@fern-api/csharp-base";
+import { AbstractCsharpGeneratorCli, CsharpConfigSchema, TestFileGenerator } from "@fern-api/csharp-base";
 import {
     generateModels,
     generateTests as generateModelTests,
@@ -10,6 +10,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { fail } from "assert";
 import { writeFile } from "fs/promises";
 import { SnippetJsonGenerator } from "./endpoint/snippets/SnippetJsonGenerator";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator";
@@ -27,13 +28,12 @@ import { RequestOptionsGenerator } from "./options/RequestOptionsGenerator";
 import { RequestOptionsInterfaceGenerator } from "./options/RequestOptionsInterfaceGenerator";
 import { buildReference } from "./reference/buildReference";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 import { WebSocketClientGenerator } from "./websocket/WebsocketClientGenerator";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
 
-export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
+export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
     protected constructContext({
         ir,
         customConfig,
@@ -41,22 +41,22 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         generatorNotificationService
     }: {
         ir: IntermediateRepresentation;
-        customConfig: SdkCustomConfigSchema;
+        customConfig: CsharpConfigSchema;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;
     }): SdkGeneratorContext {
         return new SdkGeneratorContext(ir, generatorConfig, customConfig, generatorNotificationService);
     }
 
-    protected parseCustomConfigOrThrow(customConfig: unknown): SdkCustomConfigSchema {
-        const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
+    protected parseCustomConfigOrThrow(customConfig: unknown): CsharpConfigSchema {
+        const parsed = customConfig != null ? CsharpConfigSchema.parse(customConfig) : undefined;
         if (parsed != null) {
             return this.validateCustomConfig(parsed);
         }
         return {};
     }
 
-    private validateCustomConfig(customConfig: SdkCustomConfigSchema): SdkCustomConfigSchema {
+    private validateCustomConfig(customConfig: CsharpConfigSchema): CsharpConfigSchema {
         const baseExceptionClassName = customConfig["base-exception-class-name"];
         const baseApiExceptionClassName = customConfig["base-api-exception-class-name"];
 
@@ -102,7 +102,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         // generate names for everything up front.
-        context.common.precalculate();
+        context.precalculate();
 
         // before generating anything, generate the models first so that we
         // can identify collisions or ambiguities in the generated code.
@@ -129,8 +129,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
 
         const subpackages = context.getSubpackages(Object.keys(context.ir.subpackages));
         for (const subpackage of subpackages) {
-            const service =
-                subpackage.service != null ? context.common.getHttpServiceOrThrow(subpackage.service) : undefined;
+            const service = subpackage.service != null ? context.getHttpService(subpackage.service) : undefined;
             // skip subpackages that have no endpoints (recursively)
             if (context.subPackageHasEndpointsRecursively(subpackage)) {
                 const subClient = new SubPackageClientGenerator({
@@ -147,7 +146,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
             }
 
             if (context.subPackageHasWebsocketEndpointsRecursively(subpackage)) {
-                const websocketChannel = context.common.getWebsocketChannel(subpackage.websocket);
+                const websocketChannel = context.getWebsocketChannel(subpackage.websocket);
                 if (websocketChannel) {
                     const websocketApi = new WebSocketClientGenerator({
                         context,
@@ -170,7 +169,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         const requestOptions = new RequestOptionsGenerator(context, baseOptionsGenerator);
         context.project.addSourceFiles(requestOptions.generate());
 
-        if (context.common.hasIdempotencyHeaders()) {
+        if (context.hasIdempotencyHeaders()) {
             const idempotentRequestOptionsInterface = new IdempotentRequestOptionsInterfaceGenerator(
                 context,
                 baseOptionsGenerator
@@ -187,15 +186,6 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         const baseApiException = new BaseApiExceptionGenerator(context);
         context.project.addSourceFiles(baseApiException.generate());
 
-        const oauth = context.getOauth();
-        if (oauth != null) {
-            const oauthTokenProvider = new OauthTokenProviderGenerator({
-                context,
-                scheme: oauth
-            });
-            context.project.addSourceFiles(oauthTokenProvider.generate());
-        }
-
         if (context.settings.generateErrorTypes) {
             for (const _error of Object.values(context.ir.errors)) {
                 const errorGenerator = new ErrorGenerator(context, _error);
@@ -208,8 +198,12 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
 
         const rootServiceId = context.ir.rootPackage.service;
         if (rootServiceId != null) {
-            const service = context.common.getHttpServiceOrThrow(rootServiceId);
-            this.generateRequests(context, service, rootServiceId);
+            const service = context.getHttpService(rootServiceId);
+            this.generateRequests(
+                context,
+                service ?? fail(`Service with id ${rootServiceId} not found`),
+                rootServiceId
+            );
         }
 
         context.ir.environments?.environments._visit({
@@ -235,6 +229,14 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
             for (const file of wellKnownProtobufFiles) {
                 context.project.addSourceFiles(file);
             }
+        }
+        const oauth = context.getOauth();
+        if (oauth != null) {
+            const oauthTokenProvider = new OauthTokenProviderGenerator({
+                context,
+                scheme: oauth
+            });
+            context.project.addSourceFiles(oauthTokenProvider.generate());
         }
 
         const testGenerator = new TestFileGenerator(context);
