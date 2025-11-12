@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Test publish new rc release.
+      type: chore
+  createdAt: "2025-11-12"
+  version: 0.4.4-rc0
+
+- changelogEntry:
+    - summary: |
         Fix npm authentication in the publish workflow by properly configuring the npm registry with NODE_AUTH_TOKEN.
       type: fix
   createdAt: "2025-11-11"
