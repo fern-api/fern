@@ -8,7 +8,9 @@ import { Type } from "../types/Type";
 const generation = new Generation(
     {} as unknown as IntermediateRepresentation,
     "",
-    {} as CsharpConfigSchema,
+    {
+        namespace: "TestNamespace"
+    } as CsharpConfigSchema,
     {} as FernGeneratorExec.config.GeneratorConfig
 );
 
@@ -385,60 +387,48 @@ describe("Type support", () => {
 
     describe("Action and Func delegates", () => {
         it("Action with no parameters", () => {
-            const type = generation.Special.action({ typeParameters: [] });
+            const type = generation.System.Action([]);
             expect(getTypeOutput(type)).toBe("Action");
         });
 
         it("Action with one parameter", () => {
-            const type = generation.Special.action({
-                typeParameters: [generation.Primitive.string]
-            });
+            const type = generation.System.Action([generation.Primitive.string]);
             expect(getTypeOutput(type)).toBe("Action<string>");
         });
 
         it("Action with multiple parameters", () => {
-            const type = generation.Special.action({
-                typeParameters: [generation.Primitive.string, generation.Primitive.integer]
-            });
+            const type = generation.System.Action([generation.Primitive.string, generation.Primitive.integer]);
             expect(getTypeOutput(type)).toBe("Action<string, int>");
         });
 
         it("Func with return type", () => {
-            const type = generation.Special.func({
-                typeParameters: [],
-                returnType: generation.Primitive.string
-            });
+            const type = generation.System.Func([], generation.Primitive.string);
             expect(getTypeOutput(type)).toBe("Func<string>");
         });
 
         it("Func with parameters and return type", () => {
-            const type = generation.Special.func({
-                typeParameters: [generation.Primitive.integer],
-                returnType: generation.Primitive.string
-            });
+            const type = generation.System.Func([generation.Primitive.integer], generation.Primitive.string);
             expect(getTypeOutput(type)).toBe("Func<int, string>");
         });
 
         it("Func with multiple parameters and return type", () => {
-            const type = generation.Special.func({
-                typeParameters: [generation.Primitive.string, generation.Primitive.integer],
-                returnType: generation.Primitive.boolean
-            });
+            const type = generation.System.Func(
+                [generation.Primitive.string, generation.Primitive.integer],
+                generation.Primitive.boolean
+            );
             expect(getTypeOutput(type)).toBe("Func<string, int, bool>");
         });
 
         it("optional Action", () => {
-            const type = generation.Special.action({
-                typeParameters: [generation.Primitive.string]
-            }).toOptionalIfNotAlready();
+            const type = generation.System.Action([generation.Primitive.string]).toOptionalIfNotAlready();
             expect(getTypeOutput(type)).toBe("Action<string>?");
         });
 
         it("optional Func", () => {
-            const type = generation.Special.func({
-                typeParameters: [generation.Primitive.integer],
-                returnType: generation.Primitive.string
-            }).toOptionalIfNotAlready();
+            const type = generation.System.Func(
+                [generation.Primitive.integer],
+                generation.Primitive.string
+            ).toOptionalIfNotAlready();
             expect(getTypeOutput(type)).toBe("Func<int, string>?");
         });
     });
@@ -516,23 +506,23 @@ describe("Type support", () => {
         });
 
         it("Func returning optional list", () => {
-            const type = generation.Special.func({
-                typeParameters: [generation.Primitive.string],
-                returnType: generation.Collection.list(generation.Primitive.integer).toOptionalIfNotAlready()
-            });
+            const type = generation.System.Func(
+                [generation.Primitive.string],
+                generation.Collection.list(generation.Primitive.integer).toOptionalIfNotAlready()
+            );
             expect(getTypeOutput(type)).toBe("Func<string, IEnumerable<int>?>");
         });
     });
 
     describe("systemType", () => {
         it("systemType", () => {
-            const type = generation.Special.systemType;
-            expect(getTypeOutput(type)).toBe("global::System.Type");
+            const type = generation.System.Type;
+            expect(getTypeOutput(type)).toBe("System.Type");
         });
 
         it("optional systemType", () => {
-            const type = generation.Special.systemType.toOptionalIfNotAlready();
-            expect(getTypeOutput(type)).toBe("global::System.Type?");
+            const type = generation.System.Type.toOptionalIfNotAlready();
+            expect(getTypeOutput(type)).toBe("System.Type?");
         });
     });
 
@@ -556,29 +546,17 @@ describe("Type support", () => {
         });
 
         it("fileParam", () => {
-            const fileParamRef = generation.csharp.classReference({
-                name: "FileParameter",
-                namespace: "Core"
-            });
-            const type = generation.Special.fileParam(fileParamRef);
+            const type = generation.Types.FileParameter;
             expect(getTypeOutput(type)).toContain("FileParameter");
         });
 
         it("optional fileParam", () => {
-            const fileParamRef = generation.csharp.classReference({
-                name: "FileParameter",
-                namespace: "Core"
-            });
-            const type = generation.Special.fileParam(fileParamRef).toOptionalIfNotAlready();
+            const type = generation.Types.FileParameter.toOptionalIfNotAlready();
             expect(getTypeOutput(type)).toContain("FileParameter?");
         });
 
         it("list of fileParams", () => {
-            const fileParamRef = generation.csharp.classReference({
-                name: "FileParameter",
-                namespace: "Core"
-            });
-            const type = generation.Collection.list(generation.Special.fileParam(fileParamRef));
+            const type = generation.Collection.list(generation.Types.FileParameter);
             expect(getTypeOutput(type)).toContain("IEnumerable<FileParameter>");
         });
     });
@@ -703,29 +681,22 @@ describe("Type support", () => {
                 });
 
                 it("FileParameter", () => {
-                    const fileParamRef = generation.csharp.classReference({
-                        name: "FileParameter",
-                        namespace: "Core"
-                    });
-                    const fileParam = generation.Special.fileParam(fileParamRef);
+                    const fileParam = generation.Types.FileParameter;
                     expect(fileParam.isReferenceType).toBe(true);
                 });
 
                 it("Action", () => {
-                    const action = generation.Special.action({ typeParameters: [] });
+                    const action = generation.System.Action([]);
                     expect(action.isReferenceType).toBe(true);
                 });
 
                 it("Func", () => {
-                    const func = generation.Special.func({
-                        typeParameters: [],
-                        returnType: generation.Primitive.string
-                    });
+                    const func = generation.System.Func([], generation.Primitive.string);
                     expect(func.isReferenceType).toBe(true);
                 });
 
                 it("SystemType", () => {
-                    expect(generation.Special.systemType.isReferenceType).toBe(true);
+                    expect(generation.System.Type.isReferenceType).toBe(true);
                 });
 
                 it("Binary", () => {
@@ -804,24 +775,17 @@ describe("Type support", () => {
             });
 
             it("delegates are not optional by default", () => {
-                const action = generation.Special.action({ typeParameters: [] });
+                const action = generation.System.Action([]);
                 expect(action.isOptional).toBe(false);
 
-                const func = generation.Special.func({
-                    typeParameters: [],
-                    returnType: generation.Primitive.string
-                });
+                const func = generation.System.Func([], generation.Primitive.string);
                 expect(func.isOptional).toBe(false);
             });
 
             it("special types are not optional by default", () => {
-                expect(generation.Special.systemType.isOptional).toBe(false);
+                expect(generation.System.Type.isOptional).toBe(false);
 
-                const fileParamRef = generation.csharp.classReference({
-                    name: "FileParameter",
-                    namespace: "Core"
-                });
-                const fileParam = generation.Special.fileParam(fileParamRef);
+                const fileParam = generation.Types.FileParameter;
                 expect(fileParam.isOptional).toBe(false);
             });
         });
@@ -891,16 +855,13 @@ describe("Type support", () => {
             });
 
             it("special types are not collections", () => {
-                expect(generation.Special.systemType.isCollection).toBe(false);
+                expect(generation.System.Type.isCollection).toBe(false);
                 expect(generation.Value.binary.isCollection).toBe(false);
 
-                const action = generation.Special.action({ typeParameters: [] });
+                const action = generation.System.Action([]);
                 expect(action.isCollection).toBe(false);
 
-                const func = generation.Special.func({
-                    typeParameters: [],
-                    returnType: generation.Primitive.string
-                });
+                const func = generation.System.Func([], generation.Primitive.string);
                 expect(func.isCollection).toBe(false);
             });
         });
@@ -1174,25 +1135,20 @@ describe("Type support", () => {
             });
 
             it("Optional<SystemType>", () => {
-                const type = generation.Special.systemType.toOptionalIfNotAlready();
+                const type = generation.System.Type.toOptionalIfNotAlready();
                 expect(type.isOptional).toBe(true);
-                expect(getTypeOutput(type)).toBe("global::System.Type?");
+                expect(getTypeOutput(type)).toBe("System.Type?");
             });
 
             it("Optional<Action>", () => {
-                const action = generation.Special.action({
-                    typeParameters: [generation.Primitive.string]
-                });
+                const action = generation.System.Action([generation.Primitive.string]);
                 const type = action.toOptionalIfNotAlready();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("Action<string>?");
             });
 
             it("Optional<Func>", () => {
-                const func = generation.Special.func({
-                    typeParameters: [generation.Primitive.integer],
-                    returnType: generation.Primitive.string
-                });
+                const func = generation.System.Func([generation.Primitive.integer], generation.Primitive.string);
                 const type = func.toOptionalIfNotAlready();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("Func<int, string>?");
@@ -1214,8 +1170,7 @@ describe("Type support", () => {
             });
 
             it("Optional<FileParameter>", () => {
-                const fileParamRef = generation.csharp.classReference({ name: "FileParameter", namespace: "Core" });
-                const fileParam = generation.Special.fileParam(fileParamRef);
+                const fileParam = generation.Types.FileParameter;
                 const type = fileParam.toOptionalIfNotAlready();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toContain("FileParameter?");

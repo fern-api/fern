@@ -2,7 +2,7 @@ import { fail } from "node:assert";
 import { Literal } from "../ast/code/Literal";
 import { AstNode } from "../ast/core/AstNode";
 import { ClassReference } from "../ast/types/ClassReference";
-import { BaseType, Collection, Optional, Primitive, Special, Type, Value } from "../ast/types/Type";
+import { BaseType, Collection, Optional, Primitive, Type, Value } from "../ast/types/Type";
 import { type Provenance } from "../context/model-navigator";
 import { is as DynamicIR } from "./dynamic-ir-type-guards";
 import { is as IR } from "./ir-type-guards";
@@ -87,12 +87,6 @@ export const is = {
         map: (value: Type | undefined) => value instanceof Collection.Map,
         idictionary: (value: Type | undefined) => value instanceof Collection.IDictionary,
         keyValuePair: (value: Type | undefined) => value instanceof Collection.KeyValuePair
-    },
-    Special: {
-        fileParam: (value: Type | undefined) => value instanceof Special.FileParameter,
-        systemType: (value: Type | undefined) => value instanceof Special.SystemType,
-        func: (value: Type | undefined) => value instanceof Special.Func,
-        action: (value: Type | undefined) => value instanceof Special.Action
     },
 
     Literal: {

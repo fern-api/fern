@@ -1,10 +1,9 @@
+import { fail } from "node:assert";
 import { Arguments } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, WithGeneration, Writer } from "@fern-api/csharp-codegen";
-
 import { FernIr } from "@fern-fern/ir-sdk";
 import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
-
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { EndpointRequest } from "../request/EndpointRequest";
 import { getContentTypeFromRequestBody } from "../utils/getContentTypeFromRequestBody";
@@ -266,7 +265,10 @@ export class RawClient extends WithGeneration {
                     assertNever(encoding);
             }
         } else {
-            return csharpType.multipartMethodName;
+            return (
+                csharpType.multipartMethodName ??
+                fail(`Type ${csharpType.fullyQualifiedName} does not support adding to a multipart form`)
+            );
         }
     }
 

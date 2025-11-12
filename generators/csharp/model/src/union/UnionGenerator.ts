@@ -221,18 +221,15 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                     const memberType = this.getCsharpType(type);
                     return this.csharp.parameter({
                         name: `on${type.discriminantValue.name.pascalCase.unsafeName}`,
-                        type: this.Special.func({
-                            typeParameters: [memberType],
-                            returnType: tType
-                        })
+                        type: this.System.Func([memberType], tType)
                     });
                 }),
                 this.csharp.parameter({
                     name: "onUnknown_",
-                    type: this.Special.func({
-                        typeParameters: [this.Primitive.string, this.Primitive.object.toOptionalIfNotAlready()],
-                        returnType: tType
-                    })
+                    type: this.System.Func(
+                        [this.Primitive.string, this.Primitive.object.toOptionalIfNotAlready()],
+                        tType
+                    )
                 })
             ],
             body: this.csharp.codeblock((writer: Writer) => {
@@ -259,16 +256,12 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                     const memberType = this.getCsharpType(type);
                     return this.csharp.parameter({
                         name: `on${type.discriminantValue.name.pascalCase.unsafeName}`,
-                        type: this.Special.action({
-                            typeParameters: [memberType]
-                        })
+                        type: this.System.Action([memberType])
                     });
                 }),
                 this.csharp.parameter({
                     name: "onUnknown_",
-                    type: this.Special.action({
-                        typeParameters: [this.Primitive.string, this.Primitive.object.toOptionalIfNotAlready()]
-                    })
+                    type: this.System.Action([this.Primitive.string, this.Primitive.object.toOptionalIfNotAlready()])
                 })
             ],
             body: this.csharp.codeblock((writer: Writer) => {
@@ -503,7 +496,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
             parameters: [
                 this.csharp.parameter({
                     name: "typeToConvert",
-                    type: this.Special.systemType
+                    type: this.System.Type
                 })
             ],
             bodyType: ast.Method.BodyType.Expression,
@@ -527,7 +520,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 }),
                 this.csharp.parameter({
                     name: "typeToConvert",
-                    type: this.Special.systemType
+                    type: this.System.Type
                 }),
                 this.csharp.parameter({
                     name: "options",

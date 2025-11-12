@@ -48,12 +48,14 @@ export class CsharpTypeMapper extends WithGeneration {
     public convertFromFileProperty({ property }: { property: FernIr.FileProperty }): ast.Type {
         switch (property.type) {
             case "file": {
-                const csharpType = this.Special.fileParam(this.Types.FileParameter);
-                return property.isOptional ? csharpType.toOptionalIfNotAlready() : csharpType;
+                return property.isOptional
+                    ? this.Types.FileParameter.toOptionalIfNotAlready()
+                    : this.Types.FileParameter;
             }
             case "fileArray": {
-                const csharpType = this.Collection.list(this.Special.fileParam(this.Types.FileParameter));
-                return property.isOptional ? csharpType.toOptionalIfNotAlready() : csharpType;
+                return property.isOptional
+                    ? this.Types.FileParameter.toOptionalIfNotAlready()
+                    : this.Types.FileParameter;
             }
             default:
                 assertNever(property);

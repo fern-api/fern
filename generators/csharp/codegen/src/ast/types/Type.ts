@@ -23,13 +23,13 @@ export abstract class BaseType extends AstNode {
      * Gets the multipart form method name used when this type is added to a multipart/form-data request.
      * For example, primitives use "AddStringPart", while objects use "AddJsonPart".
      */
-    public abstract get multipartMethodName(): string;
+    public abstract get multipartMethodName(): string | null;
 
     /**
      * Gets the multipart form method name used when a collection of this type is added to a multipart/form-data request.
      * For example, primitives use "AddStringParts", while objects use "AddJsonParts".
      */
-    public abstract get multipartMethodNameForCollection(): string;
+    public abstract get multipartMethodNameForCollection(): string | null;
 
     /**
      * The default value for this type (e.g., null for reference types, 0 for integers, etc.).
@@ -137,11 +137,11 @@ export abstract class BaseType extends AstNode {
  * Primitive types are serialized as strings in multipart form data.
  */
 abstract class PrimitiveType extends BaseType {
-    public override get multipartMethodName(): string {
+    public override get multipartMethodName(): string | null {
         return "AddStringPart";
     }
 
-    public override get multipartMethodNameForCollection(): string {
+    public override get multipartMethodNameForCollection(): string | null {
         return "AddStringParts";
     }
 }
@@ -163,11 +163,11 @@ abstract class CollectionType extends ReferenceType {
         return true;
     }
 
-    public override get multipartMethodName(): string {
+    public override get multipartMethodName(): string | null {
         return "AddJsonPart";
     }
 
-    public override get multipartMethodNameForCollection(): string {
+    public override get multipartMethodNameForCollection(): string | null {
         return "AddJsonParts";
     }
 }
@@ -177,11 +177,11 @@ abstract class CollectionType extends ReferenceType {
  * Object types are serialized as JSON in multipart form data and are always reference types.
  */
 abstract class ObjectType extends ReferenceType {
-    public override get multipartMethodName(): string {
+    public override get multipartMethodName(): string | null {
         return "AddJsonPart";
     }
 
-    public override get multipartMethodNameForCollection(): string {
+    public override get multipartMethodNameForCollection(): string | null {
         return "AddJsonParts";
     }
 
@@ -216,11 +216,11 @@ export class Optional extends ReferenceType {
         return false;
     }
 
-    public override get multipartMethodName(): string {
+    public override get multipartMethodName(): string | null {
         return this.value.multipartMethodName;
     }
 
-    public override get multipartMethodNameForCollection(): string {
+    public override get multipartMethodNameForCollection(): string | null {
         return this.value.multipartMethodNameForCollection;
     }
 
@@ -366,7 +366,7 @@ export namespace Value {
      * This type is used for binary data.
      */
     export class Binary extends ReferenceType {
-        public override get multipartMethodName(): string {
+        public override get multipartMethodName(): string | null {
             fail("byte[] can not be added to multipart form");
             return "";
         }
@@ -506,11 +506,11 @@ export namespace Collection {
             this.value = value;
         }
 
-        public override get multipartMethodName(): string {
+        public override get multipartMethodName(): string | null {
             return this.value.multipartMethodNameForCollection;
         }
 
-        public override get multipartMethodNameForCollection(): string {
+        public override get multipartMethodNameForCollection(): string | null {
             return this.value.multipartMethodNameForCollection;
         }
 
@@ -558,11 +558,11 @@ export namespace Collection {
             this.value = value;
         }
 
-        public override get multipartMethodName(): string {
+        public override get multipartMethodName(): string | null {
             return this.value.multipartMethodNameForCollection;
         }
 
-        public override get multipartMethodNameForCollection(): string {
+        public override get multipartMethodNameForCollection(): string | null {
             return this.value.multipartMethodNameForCollection;
         }
 
@@ -769,222 +769,6 @@ export namespace Collection {
         }
     }
 }
-
-export namespace Special {
-    /**
-     * Represents a discriminated union type using the OneOf library.
-     * This type allows a value to be one of several possible types.
-     * @remarks
-     * TODO: Handle multipart form detection in the .NET runtime to determine whether struct/string/enum/string enum
-     * should become string part, or anything else which should become json part.
-     */
-    export class OneOf extends BaseType {
-        /**
-         * The possible member types that this OneOf can represent.
-         */
-        public readonly memberValues: Type[];
-
-        /**
-         * Creates a new OneOf type.
-         * @param memberValues - The array of possible types for this union
-         * @param generation - The generation context for code generation
-         */
-        constructor(memberValues: Type[], generation: Generation) {
-            super(generation);
-            this.memberValues = memberValues;
-        }
-
-        public override get multipartMethodName(): string {
-            return "AddJsonPart";
-        }
-
-        public override get multipartMethodNameForCollection(): string {
-            return "AddJsonParts";
-        }
-
-        /**
-         * Returns the array of possible types that this OneOf can represent.
-         * @returns An array of Type objects representing the possible values
-         */
-        public oneOfTypes(): Type[] {
-            return this.memberValues;
-        }
-
-        public override write(writer: Writer): void {
-            const oneOf = this.OneOf.OneOf(this.memberValues);
-            writer.addReference(oneOf);
-            writer.writeNode(oneOf);
-        }
-    }
-
-    /**
-     * Represents the base class for a OneOf discriminated union type.
-     * This is used when generating base classes for union types.
-     * @remarks
-     * TODO: Handle multipart form detection in the .NET runtime to determine whether struct/string/enum/string enum
-     * should become string part, or anything else which should become json part.
-     */
-    export class OneOfBase extends ReferenceType {
-        /**
-         * The possible member types that this OneOfBase can represent.
-         */
-        public readonly memberValues: Type[];
-
-        /**
-         * Creates a new OneOfBase type.
-         * @param memberValues - The array of possible types for this union
-         * @param generation - The generation context for code generation
-         */
-        constructor(memberValues: Type[], generation: Generation) {
-            super(generation);
-            this.memberValues = memberValues;
-        }
-
-        public override get multipartMethodName(): string {
-            return "AddJsonPart";
-        }
-
-        public override get multipartMethodNameForCollection(): string {
-            return "AddJsonParts";
-        }
-
-        public override write(writer: Writer): void {
-            const oneOfBase = this.OneOf.OneOfBase(this.memberValues);
-            writer.addReference(oneOfBase);
-            writer.writeNode(oneOfBase);
-        }
-    }
-
-    /**
-     * Represents a C# `Action<T1, T2, ...>` delegate type.
-     * Action delegates represent methods that don't return a value.
-     */
-    export class Action extends ReferenceType {
-        /**
-         * The type parameters for the Action delegate (parameter types).
-         */
-        public readonly typeParameters: Type[];
-
-        /**
-         * Creates a new Action delegate type.
-         * @param typeParameters - The parameter types for the action
-         * @param generation - The generation context for code generation
-         */
-        constructor(typeParameters: Type[], generation: Generation) {
-            super(generation);
-            this.typeParameters = typeParameters;
-        }
-
-        public override get multipartMethodName(): string {
-            throw new Error("Action can not be added to multipart form");
-        }
-
-        public override get multipartMethodNameForCollection(): string {
-            throw new Error("Action can not be added to multipart form");
-        }
-
-        public override write(writer: Writer): void {
-            this.System.Action(this.typeParameters).write(writer);
-        }
-    }
-
-    /**
-     * Represents a C# `Func<T1, T2, ..., TResult>` delegate type.
-     * Func delegates represent methods that return a value.
-     */
-    export class Func extends ReferenceType {
-        /**
-         * The return type of the function.
-         */
-        public readonly returnType: Type;
-
-        /**
-         * The type parameters for the Func delegate (parameter types).
-         */
-        public readonly typeParameters: Type[];
-
-        /**
-         * Creates a new Func delegate type.
-         * @param typeParameters - The parameter types for the function
-         * @param returnType - The return type of the function
-         * @param generation - The generation context for code generation
-         */
-        constructor(typeParameters: Type[], returnType: Type, generation: Generation) {
-            super(generation);
-            this.typeParameters = typeParameters;
-            this.returnType = returnType;
-        }
-
-        public override get multipartMethodName(): string {
-            fail("Func can not be added to multipart form");
-            return "";
-        }
-
-        public override get multipartMethodNameForCollection(): string {
-            fail("Func can not be added to multipart form");
-            return "";
-        }
-
-        public override write(writer: Writer): void {
-            writer.writeNode(this.System.Func(this.typeParameters, this.returnType));
-        }
-    }
-
-    /**
-     * Represents a file parameter type used for file uploads.
-     * This type is specifically used in multipart form data for file uploads.
-     */
-    export class FileParameter extends ReferenceType {
-        /**
-         * The class reference representing the file parameter type.
-         */
-        public readonly value: ClassReference;
-
-        /**
-         * Creates a new file parameter type.
-         * @param value - The class reference for the file parameter
-         * @param generation - The generation context for code generation
-         */
-        constructor(value: ClassReference, generation: Generation) {
-            super(generation);
-            this.value = value;
-        }
-
-        public override get multipartMethodName(): string {
-            return "AddFileParameterPart";
-        }
-
-        public override get multipartMethodNameForCollection(): string {
-            return "AddFileParameterParts";
-        }
-
-        public override write(writer: Writer): void {
-            writer.writeNode(this.value);
-        }
-    }
-
-    /**
-     * Represents the C# `System.Type` type (type reflection).
-     * This type represents type metadata at runtime.
-     */
-    export class SystemType extends ReferenceType {
-        public override get multipartMethodName(): string {
-            fail("System.Type can not be added to multipart form");
-            return "";
-        }
-
-        public override get multipartMethodNameForCollection(): string {
-            fail("System.Type can not be added to multipart form");
-            return "";
-        }
-
-        public override write(writer: Writer): void {
-            writer.write("global::System.Type");
-        }
-    }
-}
-
-export namespace Reference {}
 
 /**
  * Converts an array of C# type names to their corresponding PrimitiveTypeV1 enum values.
