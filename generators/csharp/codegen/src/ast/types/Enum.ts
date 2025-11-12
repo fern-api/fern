@@ -66,7 +66,7 @@ export class Enum extends Node {
         this.fields.push({
             name: field.name,
             value: this.csharp.annotation({
-                reference: this.extern.System.Runtime.Serialization.EnumMember,
+                reference: this.System.Runtime.Serialization.EnumMember,
                 argument: this.csharp.codeblock((writer) => {
                     writer.write("Value = ");
                     writer.writeNode(this.csharp.string_({ string: field.value }));

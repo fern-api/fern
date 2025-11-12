@@ -4,7 +4,6 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { SingleBaseUrlEnvironments } from "@fern-fern/ir-sdk/api";
 
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export declare namespace SingleUrlEnvironmentGenerator {
@@ -14,11 +13,7 @@ export declare namespace SingleUrlEnvironmentGenerator {
     }
 }
 
-export class SingleUrlEnvironmentGenerator extends FileGenerator<
-    CSharpFile,
-    SdkCustomConfigSchema,
-    SdkGeneratorContext
-> {
+export class SingleUrlEnvironmentGenerator extends FileGenerator<CSharpFile> {
     private singleUrlEnvironments: SingleBaseUrlEnvironments;
 
     constructor({ context, singleUrlEnvironments }: SingleUrlEnvironmentGenerator.Args) {
@@ -28,10 +23,10 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<
 
     public doGenerate(): CSharpFile {
         const class_ = this.csharp.class_({
-            reference: this.types.Environments,
+            reference: this.Types.Environments,
             partial: false,
             access: ast.Access.Public,
-            annotations: [this.extern.System.Serializable]
+            annotations: [this.System.Serializable]
         });
 
         for (const environment of this.singleUrlEnvironments.environments) {
@@ -45,7 +40,7 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<
                 enclosingType: class_,
                 access: ast.Access.Public,
                 const_: true,
-                type: this.csharp.Type.string,
+                type: this.Primitive.string,
                 initializer: this.csharp.codeblock(this.csharp.string_({ string: environment.url }))
             });
         }
@@ -61,6 +56,6 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<
     }
 
     protected getFilepath(): RelativeFilePath {
-        return join(this.constants.folders.publicCoreFiles, RelativeFilePath.of(`${this.types.Environments.name}.cs`));
+        return join(this.constants.folders.publicCoreFiles, RelativeFilePath.of(`${this.Types.Environments.name}.cs`));
     }
 }

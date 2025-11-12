@@ -1,7 +1,7 @@
 import { fail } from "node:assert";
 import { AbstractFormatter, GeneratorNotificationService, NopFormatter } from "@fern-api/base-generator";
-import { AsIsFiles, BaseCsharpGeneratorContext } from "@fern-api/csharp-base";
-import { ast, CsharpGeneratorContext } from "@fern-api/csharp-codegen";
+import { AsIsFiles, GeneratorContext } from "@fern-api/csharp-base";
+import { ast, CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
 
 import { CsharpFormatter } from "@fern-api/csharp-formatter";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
@@ -28,9 +28,8 @@ import { CsharpGeneratorAgent } from "./CsharpGeneratorAgent";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
 import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsGenerator";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
-export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomConfigSchema> {
+export class SdkGeneratorContext extends GeneratorContext {
     public readonly formatter: AbstractFormatter;
     public readonly nopFormatter: AbstractFormatter;
     public readonly endpointGenerator: EndpointGenerator;
@@ -39,7 +38,7 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
     public constructor(
         ir: IntermediateRepresentation,
         config: FernGeneratorExec.config.GeneratorConfig,
-        customConfig: SdkCustomConfigSchema,
+        customConfig: CsharpConfigSchema,
         generatorNotificationService: GeneratorNotificationService
     ) {
         super(
@@ -47,7 +46,7 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
             config,
             customConfig,
             generatorNotificationService,
-            new CsharpGeneratorContext(ir, config, customConfig, {
+            new Generation(ir, ir.apiName.pascalCase.unsafeName, customConfig, config, {
                 makeRelativeFilePath: (path: string) => RelativeFilePath.of(path),
                 makeAbsoluteFilePath: (path: string) => AbsoluteFilePath.of(path),
                 getNamespaceForTypeId: (typeId: TypeId) => this.getNamespaceForTypeId(typeId),
@@ -71,63 +70,14 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
         this.snippetGenerator = new EndpointSnippetsGenerator({ context: this });
     }
 
-    public get generation() {
-        return this.common.generation;
-    }
-    public get namespaces() {
-        return this.generation.namespaces;
-    }
-    public get registry() {
-        return this.generation.registry;
-    }
-    public get extern() {
-        return this.generation.extern;
-    }
-    public get settings() {
-        return this.generation.settings;
-    }
-    public get constants() {
-        return this.generation.constants;
-    }
-    public get names() {
-        return this.generation.names;
-    }
-    public get types() {
-        return this.generation.types;
-    }
-    public get model() {
-        return this.generation.model;
-    }
-    public get csharp() {
-        return this.generation.csharp;
-    }
-    public get System() {
-        return this.extern.System;
-    }
-    public get NUnit() {
-        return this.extern.NUnit;
-    }
-    public get OneOf() {
-        return this.extern.OneOf;
-    }
-    public get Google() {
-        return this.extern.Google;
-    }
-
     public getAdditionalQueryParametersType(): ast.Type {
-        return this.csharp.Type.list(
-            this.csharp.Type.reference(
-                this.extern.System.Collections.Generic.KeyValuePair(this.csharp.Type.string, this.csharp.Type.string)
-            )
+        return this.Collection.list(
+            this.System.Collections.Generic.KeyValuePair(this.Primitive.string, this.Primitive.string)
         );
     }
 
     public getAdditionalBodyPropertiesType(): ast.Type {
-        return this.csharp.Type.optional(this.csharp.Type.object);
-    }
-
-    public getSubpackageOrThrow(subpackageId: SubpackageId): Subpackage {
-        return this.ir.subpackages[subpackageId] || fail(`Subpackage with id ${subpackageId} not found`);
+        return this.Primitive.object.toOptionalIfNotAlready();
     }
 
     public getSubpackage(subpackageId: SubpackageId): Subpackage | undefined {
@@ -163,7 +113,7 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
 
     public getNamespaceForTypeId(typeId: TypeId): string {
         const typeDeclaration = this.model.dereferenceType(typeId).typeDeclaration;
-        return this.common.getNamespaceFromFernFilepath(typeDeclaration.name.fernFilepath);
+        return this.getNamespaceFromFernFilepath(typeDeclaration.name.fernFilepath);
     }
 
     public getAccessFromRootClient(fernFilepath: FernFilepath): string {
@@ -235,7 +185,7 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
         if (this.settings.includeExceptionHandler) {
             files.push(AsIsFiles.ExceptionHandler);
         }
-        if (this.common.hasGrpcEndpoints()) {
+        if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.RawGrpcClient);
         }
         if (this.hasPagination()) {
@@ -249,9 +199,7 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
         } else {
             files.push(AsIsFiles.Json.EnumSerializer);
         }
-        const resolvedProtoAnyType = this.common.protobufResolver.resolveWellKnownProtobufType(
-            WellKnownProtobufType.any()
-        );
+        const resolvedProtoAnyType = this.protobufResolver.resolveWellKnownProtobufType(WellKnownProtobufType.any());
         if (resolvedProtoAnyType != null) {
             files.push(AsIsFiles.ProtoAnyMapper);
         }
@@ -275,7 +223,7 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
             AsIsFiles.Test.RawClientTests.RetriesTests,
             AsIsFiles.Test.RawClientTests.QueryParameterTests
         ];
-        if (this.common.hasIdempotencyHeaders()) {
+        if (this.hasIdempotencyHeaders()) {
             files.push(AsIsFiles.Test.RawClientTests.IdempotentHeadersTests);
         }
         if (this.settings.generateNewAdditionalProperties) {
@@ -294,7 +242,7 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
     }
 
     public getAsyncCoreAsIsFiles(): string[] {
-        if (this.common.hasWebSocketEndpoints) {
+        if (this.hasWebSocketEndpoints) {
             // recurse thru all the entries in AsIsFiles.WebSocketAsync and create the files from the templates
             const files: string[] = [];
 
@@ -320,7 +268,7 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
         if (this.settings.generateNewAdditionalProperties) {
             files.push(AsIsFiles.Json.AdditionalProperties);
         }
-        if (this.common.hasGrpcEndpoints()) {
+        if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.GrpcRequestOptions);
         }
         return files;
@@ -348,7 +296,7 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
     }
 
     public getDirectoryForServiceId(serviceId: ServiceId): string {
-        const service = this.common.getHttpServiceOrThrow(serviceId);
+        const service = this.getHttpService(serviceId) ?? fail(`Service with id ${serviceId} not found`);
         return this.getDirectoryForFernFilepath(service.name.fernFilepath);
     }
 
@@ -375,7 +323,7 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
         return undefined;
     }
 
-    public resolveEndpointOrThrow(service: HttpService, endpointId: EndpointId): HttpEndpoint {
+    public resolveEndpoint(service: HttpService, endpointId: EndpointId): HttpEndpoint {
         const httpEndpoint = service.endpoints.find((endpoint) => endpoint.id === endpointId);
         if (httpEndpoint == null) {
             throw new Error(`Failed to find token endpoint ${endpointId}`);
@@ -418,12 +366,12 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
         if (subpackage == null) {
             return false;
         }
-        const service = this.common.getHttpService(subpackage.service);
+        const service = this.getHttpService(subpackage.service);
         if (service == null) {
             return false;
         }
 
-        return !!this.common.getHttpService(subpackage?.service)?.endpoints?.length;
+        return !!this.getHttpService(subpackage?.service)?.endpoints?.length;
     }
 
     /**

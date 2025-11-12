@@ -1,6 +1,6 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ClassReference } from "../../ast";
-import { BaseCsharpCustomConfigSchema } from "../../custom-config";
+import { CsharpConfigSchema } from "../../custom-config";
 import { MinimalGeneratorConfig } from "../common";
 import { Generation } from "../generation-info";
 import { NameRegistry } from "../name-registry";
@@ -8,7 +8,7 @@ import { NameRegistry } from "../name-registry";
 const generation = new Generation(
     {} as unknown as IntermediateRepresentation,
     "",
-    {} as BaseCsharpCustomConfigSchema,
+    {} as CsharpConfigSchema,
     {} as MinimalGeneratorConfig
 );
 

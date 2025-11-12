@@ -1,5 +1,4 @@
-import { ast, WithGeneration } from "@fern-api/csharp-codegen";
-
+import { ast, text, WithGeneration } from "@fern-api/csharp-codegen";
 import { ExampleEndpointCall, ExampleTypeReference, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
@@ -13,7 +12,7 @@ export declare namespace TestClass {
 
 export class MockEndpointGenerator extends WithGeneration {
     constructor(private readonly context: SdkGeneratorContext) {
-        super(context);
+        super(context.generation);
     }
 
     public generateForExample(endpoint: HttpEndpoint, example: ExampleEndpointCall): ast.CodeBlock {
@@ -40,7 +39,12 @@ export class MockEndpointGenerator extends WithGeneration {
 
                 if (example.request != null) {
                     writer.writeLine(`const string requestJson${suffix} = """`);
-                    writer.writeLine(JSON.stringify(this.normalizeDatetimes(example.request.jsonExample), null, 2));
+                    writer.writeLine(
+                        JSON.stringify(example.request.jsonExample, text.normalizeDates, 2).replace(
+                            /"\\{1,2}\$ref"/g,
+                            '"$ref\"'
+                        )
+                    );
                     writer.writeTextStatement('"""');
                 }
                 writer.newLine();
@@ -48,7 +52,12 @@ export class MockEndpointGenerator extends WithGeneration {
                 if (jsonExampleResponse != null) {
                     if (responseBodyType === "json") {
                         writer.writeLine(`const string mockResponse${suffix} = """`);
-                        writer.writeLine(JSON.stringify(this.normalizeDatetimes(jsonExampleResponse), null, 2));
+                        writer.writeLine(
+                            JSON.stringify(jsonExampleResponse, text.normalizeDates, 2).replace(
+                                /"\\{1,2}\$ref"/g,
+                                '"$ref\"'
+                            )
+                        );
                         writer.writeTextStatement('"""');
                     } else if (responseBodyType === "text") {
                         writer.writeTextStatement(
@@ -140,26 +149,5 @@ export class MockEndpointGenerator extends WithGeneration {
             case "unknown":
                 return undefined;
         }
-    }
-
-    private normalizeDatetimes(obj: unknown): unknown {
-        function isValidDateString(datetimeString: string): boolean {
-            const date = new Date(datetimeString);
-            return !isNaN(date.getTime()) && datetimeString.includes("T");
-        }
-
-        if (typeof obj === "string" && isValidDateString(obj)) {
-            return new Date(obj).toISOString();
-        } else if (Array.isArray(obj)) {
-            return obj.map((item) => this.normalizeDatetimes(item));
-        } else if (obj != null && typeof obj === "object") {
-            const result: Record<string, unknown> = {};
-            for (const [key, value] of Object.entries(obj)) {
-                result[key] = this.normalizeDatetimes(value);
-            }
-            return result;
-        }
-
-        return obj;
     }
 }
