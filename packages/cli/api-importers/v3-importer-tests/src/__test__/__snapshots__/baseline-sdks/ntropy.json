@@ -65970,6 +65970,7 @@
       }
     }
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_transactions": {
       "docs": "\nThe Transaction API allows you to manage, retrieve and search through enriched transactions. A transaction contains\nboth the enrichment fields and the original input fields. They are made available after being \n[enriched](#tag/Enrichment).",

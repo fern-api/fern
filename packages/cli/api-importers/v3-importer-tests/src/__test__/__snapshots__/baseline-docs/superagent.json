@@ -13995,6 +13995,7 @@
     },
     "pathParameters": []
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_agent": {
       "fernFilepath": {

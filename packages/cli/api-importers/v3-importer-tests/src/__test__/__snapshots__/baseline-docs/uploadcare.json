@@ -47735,6 +47735,7 @@
       }
     }
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_upload": {
       "fernFilepath": {

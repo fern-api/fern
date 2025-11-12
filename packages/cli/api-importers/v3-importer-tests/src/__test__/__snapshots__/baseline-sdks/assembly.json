@@ -47302,6 +47302,7 @@
       }
     }
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_files": {
       "fernFilepath": {
