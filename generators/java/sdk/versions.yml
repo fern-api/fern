@@ -1,3 +1,10 @@
+- version: 3.14.10
+  changelogEntry:
+    - summary: Fix wire test JSON numeric comparison failures by adding normalization helper that converts whole number doubles (149.0) to longs (149) before assertion, resolving Jackson serialization vs API spec mismatches
+      type: fix
+  createdAt: "2025-11-12"
+  irVersion: 61
+
 - version: 3.14.9
   changelogEntry:
     - summary: Fix wire test compilation errors when using staged builders with collections. Builder method calls now correctly order required fields before collections like Lists, Sets, and Maps.

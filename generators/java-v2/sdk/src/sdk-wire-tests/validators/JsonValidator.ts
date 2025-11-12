@@ -39,7 +39,6 @@ export class JsonValidator {
     /**
      * Generates enhanced JSON validation with support for complex types
      * Provides better validation than basic JsonNode.equals() for unions, generics, etc.
-     * Normalizes numeric values to handle 149.0 vs 149 comparisons.
      */
     public generateEnhancedJsonValidation(
         writer: Writer,
@@ -48,7 +47,6 @@ export class JsonValidator {
         actualVarName: string,
         expectedVarName: string
     ): void {
-        // Normalize both JsonNodes to handle numeric equivalence (149.0 vs 149)
         writer.writeLine(`JsonNode normalized${this.capitalize(actualVarName)} = normalizeNumbers(${actualVarName});`);
         writer.writeLine(
             `JsonNode normalized${this.capitalize(expectedVarName)} = normalizeNumbers(${expectedVarName});`
