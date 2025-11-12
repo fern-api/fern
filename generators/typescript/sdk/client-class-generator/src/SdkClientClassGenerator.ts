@@ -32,6 +32,7 @@ export declare namespace SdkClientClassGenerator {
         omitFernHeaders: boolean;
         useDefaultRequestParameterValues: boolean;
         generateEndpointMetadata: boolean;
+        parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     }
 
     export namespace generateService {
@@ -69,6 +70,7 @@ export class SdkClientClassGenerator {
     private readonly omitFernHeaders: boolean;
     private readonly useDefaultRequestParameterValues: boolean;
     private readonly generateEndpointMetadata: boolean;
+    private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
 
     constructor({
         intermediateRepresentation,
@@ -94,7 +96,8 @@ export class SdkClientClassGenerator {
         formDataSupport,
         omitFernHeaders,
         useDefaultRequestParameterValues,
-        generateEndpointMetadata
+        generateEndpointMetadata,
+        parameterNaming
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -120,6 +123,7 @@ export class SdkClientClassGenerator {
         this.omitFernHeaders = omitFernHeaders;
         this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
         this.generateEndpointMetadata = generateEndpointMetadata;
+        this.parameterNaming = parameterNaming;
     }
 
     public generateService({
@@ -156,7 +160,8 @@ export class SdkClientClassGenerator {
             formDataSupport: this.formDataSupport,
             omitFernHeaders: this.omitFernHeaders,
             useDefaultRequestParameterValues: this.useDefaultRequestParameterValues,
-            generateEndpointMetadata: this.generateEndpointMetadata
+            generateEndpointMetadata: this.generateEndpointMetadata,
+            parameterNaming: this.parameterNaming
         });
     }
 }

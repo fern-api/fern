@@ -38,6 +38,7 @@ export declare namespace GeneratedDefaultWebsocketImplementation {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         omitUndefined: boolean;
+        parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     }
 }
 
@@ -61,7 +62,8 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     private readonly includeSerdeLayer: boolean;
     private readonly retainOriginalCasing: boolean;
     private readonly omitUndefined: boolean;
-    channel: WebSocketChannel;
+    private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+    public readonly channel: WebSocketChannel;
 
     constructor({
         intermediateRepresentation,
@@ -73,7 +75,8 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         requireDefaultEnvironment,
         includeSerdeLayer,
         retainOriginalCasing,
-        omitUndefined
+        omitUndefined,
+        parameterNaming
     }: GeneratedDefaultWebsocketImplementation.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -85,6 +88,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
+        this.parameterNaming = parameterNaming;
     }
 
     public getSignature(context: SdkContext): ChannelSignature {
@@ -463,6 +467,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
             omitUndefined: this.omitUndefined,
+            parameterNaming: this.parameterNaming,
             getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
                 const localVarName = pathParameterLocalNames.get(pathParameter.name.originalName);
                 if (localVarName == null) {
@@ -634,7 +639,8 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             propertyName: getParameterNameForPropertyPathParameterName({
                 pathParameterName: pathParameter.name,
                 retainOriginalCasing: this.retainOriginalCasing,
-                includeSerdeLayer: this.includeSerdeLayer
+                includeSerdeLayer: this.includeSerdeLayer,
+                parameterNaming: this.parameterNaming
             })
         };
     }

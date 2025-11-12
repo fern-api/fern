@@ -142,7 +142,7 @@ export declare namespace SdkContextImpl {
         useDefaultRequestParameterValues: boolean;
         generateReadWriteOnlyTypes: boolean;
         flattenRequestParameters: boolean;
-        parameterNaming?: "originalName" | "wireValue" | "camelCase" | "snakeCase";
+        parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     }
 }
 

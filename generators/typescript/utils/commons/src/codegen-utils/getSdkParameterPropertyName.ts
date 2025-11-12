@@ -13,7 +13,7 @@ export function getSdkParameterPropertyName({
     name: NameAndWireValue | Name;
     includeSerdeLayer: boolean;
     retainOriginalCasing: boolean;
-    parameterNaming?: "originalName" | "wireValue" | "camelCase" | "snakeCase";
+    parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
 }): string {
     if (parameterNaming != null) {
         switch (parameterNaming) {
@@ -22,9 +22,9 @@ export function getSdkParameterPropertyName({
             case "wireValue":
                 return isNameAndWireValue(name) ? name.wireValue : name.originalName;
             case "camelCase":
-                return isNameAndWireValue(name) ? name.name.camelCase.safeName : name.camelCase.safeName;
+                return isNameAndWireValue(name) ? name.name.camelCase.unsafeName : name.camelCase.unsafeName;
             case "snakeCase":
-                return isNameAndWireValue(name) ? name.name.snakeCase.safeName : name.snakeCase.safeName;
+                return isNameAndWireValue(name) ? name.name.snakeCase.unsafeName : name.snakeCase.unsafeName;
         }
     }
 

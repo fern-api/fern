@@ -15,6 +15,7 @@ export function buildUrl({
     includeSerdeLayer,
     retainOriginalCasing,
     omitUndefined,
+    parameterNaming,
     getReferenceToPathParameterVariableFromRequest
 }: {
     endpoint: {
@@ -27,6 +28,7 @@ export function buildUrl({
     context: SdkContext;
     includeSerdeLayer: boolean;
     retainOriginalCasing: boolean;
+    parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     omitUndefined: boolean;
     getReferenceToPathParameterVariableFromRequest: GetReferenceToPathParameterVariableFromRequest;
 }): ts.Expression | undefined {
@@ -50,6 +52,7 @@ export function buildUrl({
                 pathParameter,
                 generatedClientClass,
                 retainOriginalCasing,
+                parameterNaming,
                 shouldInlinePathParameters: context.requestWrapper.shouldInlinePathParameters(endpoint.sdkRequest),
                 getReferenceToPathParameterVariableFromRequest
             });
@@ -84,12 +87,14 @@ function getReferenceToPathParameter({
     generatedClientClass,
     retainOriginalCasing,
     shouldInlinePathParameters,
+    parameterNaming,
     getReferenceToPathParameterVariableFromRequest
 }: {
     pathParameter: PathParameter;
     generatedClientClass: GeneratedSdkClientClassImpl;
     retainOriginalCasing: boolean;
     shouldInlinePathParameters: boolean;
+    parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     getReferenceToPathParameterVariableFromRequest: GetReferenceToPathParameterVariableFromRequest;
 }): ts.Expression {
     if (pathParameter.variable != null) {
@@ -103,7 +108,8 @@ function getReferenceToPathParameter({
             } else {
                 const pathParamName = getParameterNameForPositionalPathParameter({
                     pathParameter,
-                    retainOriginalCasing
+                    retainOriginalCasing,
+                    parameterNaming
                 });
                 return ts.factory.createIdentifier(pathParamName);
             }

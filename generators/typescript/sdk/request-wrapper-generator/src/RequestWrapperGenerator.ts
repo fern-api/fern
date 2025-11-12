@@ -18,7 +18,7 @@ export declare namespace RequestWrapperGenerator {
             shouldInlinePathParameters: boolean;
             formDataSupport: "Node16" | "Node18";
             flattenRequestParameters: boolean;
-            parameterNaming?: "originalName" | "wireValue" | "camelCase" | "snakeCase";
+            parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         }
     }
 }
