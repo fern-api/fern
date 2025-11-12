@@ -907,7 +907,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         });
 
         if (endpointSpecificErrors.length === 0) {
-            return defaultBody[0] ?? ts.factory.createEmptyStatement();
+            return ts.factory.createBlock(defaultBody, true);
         }
 
         return ts.factory.createSwitchStatement(
