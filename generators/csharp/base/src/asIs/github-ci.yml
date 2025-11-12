@@ -6,7 +6,6 @@ env:
   CI: true
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   DOTNET_NOLOGO: true
-  MSBUILDTERMINALLOGGER: off
 
 jobs:
   compile:
@@ -23,12 +22,11 @@ jobs:
         with:
           dotnet-version: 10.x
 
-      - name: List SDKs
-        run: dotnet --list-sdks
+      - name: Print .NET info
+        run: dotnet --info
 
       - name: Install tools
-        run: |
-          dotnet tool restore
+        run: dotnet tool restore
 
       - name: Restore dependencies
         run: dotnet restore src
@@ -50,8 +48,8 @@ jobs:
         with:
           dotnet-version: 10.x
 
-      - name: List SDKs
-        run: dotnet --list-sdks
+      - name: Print .NET info
+        run: dotnet --info
 
       - name: Install tools
         run: |
@@ -81,12 +79,11 @@ jobs:
         with:
           dotnet-version: 10.x
 
-      - name: List SDKs
-        run: dotnet --list-sdks
+      - name: Print .NET info
+        run: dotnet --info
 
       - name: Install tools
-        run: |
-          dotnet tool restore
+        run: dotnet tool restore
 
       - name: Restore dependencies
         run: dotnet restore src
