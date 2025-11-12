@@ -77,6 +77,70 @@ export class TestClassBuilder {
     }
 
     /**
+     * Writes the closing brace for the test class and any helper methods
+     */
+    public closeTestClass(writer: Writer): void {
+        // Generate helper method for normalizing JsonNode numbers at end of class
+        this.generateNormalizeNumbersHelper(writer);
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
+    /**
+     * Generates a helper method that normalizes numeric values in JsonNode trees.
+     * Converts whole number doubles (149.0) to longs (149) to enable numeric equivalence comparison.
+     * This matches Jackson's behavior and handles the common case where API specs define numbers
+     * as doubles but serialize whole numbers without decimal points.
+     */
+    private generateNormalizeNumbersHelper(writer: Writer): void {
+        writer.writeLine("");
+        writer.writeLine("/**");
+        writer.writeLine(" * Normalizes numeric values in a JsonNode tree for comparison.");
+        writer.writeLine(" * Converts whole number doubles (e.g., 149.0) to longs (e.g., 149).");
+        writer.writeLine(" */");
+        writer.writeLine("private JsonNode normalizeNumbers(JsonNode node) {");
+        writer.indent();
+
+        writer.writeLine("if (node.isNumber()) {");
+        writer.indent();
+        writer.writeLine("double value = node.doubleValue();");
+        writer.writeLine("if (value == Math.floor(value) && !Double.isInfinite(value)) {");
+        writer.indent();
+        writer.writeLine("return objectMapper.getNodeFactory().numberNode((long) value);");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeLine("return node;");
+        writer.dedent();
+        writer.writeLine("}");
+
+        writer.writeLine("if (node.isObject()) {");
+        writer.indent();
+        writer.writeLine(
+            "com.fasterxml.jackson.databind.node.ObjectNode normalized = objectMapper.createObjectNode();"
+        );
+        writer.writeLine("node.fields().forEachRemaining(entry -> {");
+        writer.indent();
+        writer.writeLine("normalized.set(entry.getKey(), normalizeNumbers(entry.getValue()));");
+        writer.dedent();
+        writer.writeLine("});");
+        writer.writeLine("return normalized;");
+        writer.dedent();
+        writer.writeLine("}");
+
+        writer.writeLine("if (node.isArray()) {");
+        writer.indent();
+        writer.writeLine("com.fasterxml.jackson.databind.node.ArrayNode normalized = objectMapper.createArrayNode();");
+        writer.writeLine("node.forEach(element -> normalized.add(normalizeNumbers(element)));");
+        writer.writeLine("return normalized;");
+        writer.dedent();
+        writer.writeLine("}");
+
+        writer.writeLine("return node;");
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
+    /**
      * Generates environment configuration for the client builder
      * Supports both single URL and multi-URL environment setups
      */

@@ -48,7 +48,10 @@ public class NoAuthWireTest {
         String expectedRequestBody = "" + "{\n" + "  \"key\": \"value\"\n" + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
-        Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
+        JsonNode normalizedActualJson = normalizeNumbers(actualJson);
+        JsonNode normalizedExpectedJson = normalizeNumbers(expectedJson);
+        Assertions.assertEquals(
+                normalizedExpectedJson, normalizedActualJson, "Request body structure does not match expected");
         if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
             String discriminator = null;
             if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
@@ -79,8 +82,12 @@ public class NoAuthWireTest {
         String expectedResponseBody = "" + "true";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
+        JsonNode normalizedActualResponseNode = normalizeNumbers(actualResponseNode);
+        JsonNode normalizedExpectedResponseNode = normalizeNumbers(expectedResponseNode);
         Assertions.assertEquals(
-                expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+                normalizedExpectedResponseNode,
+                normalizedActualResponseNode,
+                "Response body structure does not match expected");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type"))
@@ -105,5 +112,32 @@ public class NoAuthWireTest {
         if (actualResponseNode.isObject()) {
             Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
         }
+    }
+
+    /**
+     * Normalizes numeric values in a JsonNode tree for comparison.
+     * Converts whole number doubles (e.g., 149.0) to longs (e.g., 149).
+     */
+    private JsonNode normalizeNumbers(JsonNode node) {
+        if (node.isNumber()) {
+            double value = node.doubleValue();
+            if (value == Math.floor(value) && !Double.isInfinite(value)) {
+                return objectMapper.getNodeFactory().numberNode((long) value);
+            }
+            return node;
+        }
+        if (node.isObject()) {
+            com.fasterxml.jackson.databind.node.ObjectNode normalized = objectMapper.createObjectNode();
+            node.fields().forEachRemaining(entry -> {
+                normalized.set(entry.getKey(), normalizeNumbers(entry.getValue()));
+            });
+            return normalized;
+        }
+        if (node.isArray()) {
+            com.fasterxml.jackson.databind.node.ArrayNode normalized = objectMapper.createArrayNode();
+            node.forEach(element -> normalized.add(normalizeNumbers(element)));
+            return normalized;
+        }
+        return node;
     }
 }

@@ -12,7 +12,7 @@ export class JsonValidator {
      * Formats a JSON object as a multi-line Java string variable with proper concatenation.
      */
     public formatMultilineJson(writer: Writer, variableName: string, jsonData: unknown): void {
-        const formattedJson = JSON.stringify(jsonData, null, 2);
+        const formattedJson = JSON.stringify(jsonData, this.createJsonReplacer(), 2);
         const lines = formattedJson.split("\n");
 
         writer.writeLine(`String ${variableName} = ""`);
@@ -39,6 +39,7 @@ export class JsonValidator {
     /**
      * Generates enhanced JSON validation with support for complex types
      * Provides better validation than basic JsonNode.equals() for unions, generics, etc.
+     * Normalizes numeric values to handle 149.0 vs 149 comparisons.
      */
     public generateEnhancedJsonValidation(
         writer: Writer,
@@ -47,8 +48,13 @@ export class JsonValidator {
         actualVarName: string,
         expectedVarName: string
     ): void {
+        // Normalize both JsonNodes to handle numeric equivalence (149.0 vs 149)
+        writer.writeLine(`JsonNode normalized${this.capitalize(actualVarName)} = normalizeNumbers(${actualVarName});`);
         writer.writeLine(
-            `Assertions.assertEquals(${expectedVarName}, ${actualVarName}, ` +
+            `JsonNode normalized${this.capitalize(expectedVarName)} = normalizeNumbers(${expectedVarName});`
+        );
+        writer.writeLine(
+            `Assertions.assertEquals(normalized${this.capitalize(expectedVarName)}, normalized${this.capitalize(actualVarName)}, ` +
                 `"${context === "request" ? "Request" : "Response"} body structure does not match expected");`
         );
 
@@ -235,5 +241,28 @@ export class JsonValidator {
             return "next";
         }
         return undefined;
+    }
+
+    /**
+     * Creates a JSON replacer that normalizes floating point numbers.
+     * Converts whole numbers (e.g., 149.0) to integers (149) to match Jackson's serialization behavior.
+     */
+    private createJsonReplacer(): (key: string, value: unknown) => unknown {
+        return (_key: string, value: unknown) => {
+            if (typeof value === "number" && Number.isFinite(value)) {
+                // If it's a whole number, return it as an integer
+                if (Number.isInteger(value) || value === Math.floor(value)) {
+                    return Math.floor(value);
+                }
+            }
+            return value;
+        };
+    }
+
+    /**
+     * Capitalizes the first letter of a string
+     */
+    private capitalize(str: string): string {
+        return str.charAt(0).toUpperCase() + str.slice(1);
     }
 }
