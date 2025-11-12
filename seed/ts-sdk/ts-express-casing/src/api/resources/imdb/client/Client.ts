@@ -96,7 +96,7 @@ export class Imdb {
     }
 
     /**
-     * @param {SeedApi.MovieId} movieId
+     * @param {SeedApi.MovieId} movie_id
      * @param {Imdb.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link SeedApi.MovieDoesNotExistError}
@@ -105,14 +105,14 @@ export class Imdb {
      *     await client.imdb.getMovie("movie_id")
      */
     public getMovie(
-        movieId: SeedApi.MovieId,
+        movie_id: SeedApi.MovieId,
         requestOptions?: Imdb.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.Movie> {
-        return core.HttpResponsePromise.fromPromise(this.__getMovie(movieId, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__getMovie(movie_id, requestOptions));
     }
 
     private async __getMovie(
-        movieId: SeedApi.MovieId,
+        movie_id: SeedApi.MovieId,
         requestOptions?: Imdb.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.Movie>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -124,7 +124,7 @@ export class Imdb {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/movies/${core.url.encodePathParam(movieId)}`,
+                `/movies/${core.url.encodePathParam(movie_id)}`,
             ),
             method: "GET",
             headers: _headers,

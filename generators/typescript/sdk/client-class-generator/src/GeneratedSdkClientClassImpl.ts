@@ -95,6 +95,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         omitFernHeaders: boolean;
         useDefaultRequestParameterValues: boolean;
         generateEndpointMetadata: boolean;
+        parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     }
 }
 
@@ -129,12 +130,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly npmPackage: NpmPackage | undefined;
     private readonly packageId: PackageId;
     private readonly retainOriginalCasing: boolean;
+    private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly inlineFileProperties: boolean;
     private readonly includeSerdeLayer: boolean;
     private readonly omitUndefined: boolean;
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly allowExtraFields: boolean;
-    private readonly importsManager: ImportsManager;
     private readonly exportsManager: ExportsManager;
     private readonly oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private oauthAuthScheme: OAuthScheme | undefined;
@@ -143,9 +144,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private inferredAuthScheme: InferredAuthScheme | undefined;
     private authProvider: AuthProviderInstance | undefined;
     private readonly authHeaders: HeaderAuthScheme[];
-    private readonly service: HttpService | undefined;
     private readonly omitFernHeaders: boolean;
-    private readonly useDefaultRequestParameterValues: boolean;
     private readonly anyEndpointWithAuth: boolean;
     private readonly generateEndpointMetadata: boolean;
 
@@ -169,15 +168,14 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         inlineFileProperties,
         omitUndefined,
         allowExtraFields,
-        importsManager,
         oauthTokenProviderGenerator,
         exportsManager,
         streamType,
         fileResponseType,
         formDataSupport,
         omitFernHeaders,
-        useDefaultRequestParameterValues,
-        generateEndpointMetadata
+        generateEndpointMetadata,
+        parameterNaming
     }: GeneratedSdkClientClassImpl.Init) {
         this.isRoot = isRoot;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -194,18 +192,16 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.omitUndefined = omitUndefined;
         this.allowExtraFields = allowExtraFields;
         this.formDataSupport = formDataSupport;
-        this.importsManager = importsManager;
         this.exportsManager = exportsManager;
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
         this.omitFernHeaders = omitFernHeaders;
-        this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
         this.generateEndpointMetadata = generateEndpointMetadata;
+        this.parameterNaming = parameterNaming;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
 
         const service = packageResolver.getServiceDeclaration(packageId);
-        this.service = service;
 
         this.anyEndpointWithAuth = anyEndpointWithAuth({ packageId, packageResolver });
 
@@ -279,7 +275,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         includeSerdeLayer,
                         retainOriginalCasing: this.retainOriginalCasing,
                         omitUndefined: this.omitUndefined,
-                        generateEndpointMetadata: this.generateEndpointMetadata
+                        generateEndpointMetadata: this.generateEndpointMetadata,
+                        parameterNaming
                     });
                 };
 
@@ -303,7 +300,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             omitUndefined: this.omitUndefined,
                             streamType,
                             fileResponseType,
-                            generateEndpointMetadata: this.generateEndpointMetadata
+                            generateEndpointMetadata: this.generateEndpointMetadata,
+                            parameterNaming
                         }),
                     json: (jsonResponse) =>
                         getDefaultEndpointImplementation({
@@ -324,7 +322,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             retainOriginalCasing: this.retainOriginalCasing,
                             omitUndefined: this.omitUndefined,
                             streamType,
-                            generateEndpointMetadata: this.generateEndpointMetadata
+                            generateEndpointMetadata: this.generateEndpointMetadata,
+                            parameterNaming
                         }),
                     streamParameter: (streamParameter) =>
                         // TODO(amckinney): For now we just generate the stream variant of the endpoint.
@@ -343,7 +342,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             retainOriginalCasing: this.retainOriginalCasing,
                             omitUndefined: this.omitUndefined,
                             streamType,
-                            generateEndpointMetadata: this.generateEndpointMetadata
+                            generateEndpointMetadata: this.generateEndpointMetadata,
+                            parameterNaming
                         }),
                     text: (textResponse) => {
                         return getDefaultEndpointImplementation({
@@ -365,7 +365,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             omitUndefined: this.omitUndefined,
                             streamType,
                             fileResponseType,
-                            generateEndpointMetadata: this.generateEndpointMetadata
+                            generateEndpointMetadata: this.generateEndpointMetadata,
+                            parameterNaming
                         });
                     },
                     _other: () => {
@@ -386,7 +387,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 generatedSdkClientClass: this,
                 includeSerdeLayer: this.includeSerdeLayer,
                 retainOriginalCasing: this.retainOriginalCasing,
-                omitUndefined: this.omitUndefined
+                omitUndefined: this.omitUndefined,
+                parameterNaming
             });
         } else {
             this.generatedWebsocketImplementation = undefined;
@@ -458,12 +460,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 requestBody,
                 generatedSdkClientClass: this,
                 retainOriginalCasing: this.retainOriginalCasing,
-                exportsManager: this.exportsManager
+                exportsManager: this.exportsManager,
+                parameterNaming: this.parameterNaming
             });
         }
         if (requestBody?.type === "fileUpload") {
             return new GeneratedFileUploadEndpointRequest({
-                importsManager: this.importsManager,
                 ir: this.intermediateRepresentation,
                 packageId,
                 service,
@@ -475,7 +477,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 includeSerdeLayer: this.includeSerdeLayer,
                 allowExtraFields: this.allowExtraFields,
                 omitUndefined: this.omitUndefined,
-                formDataSupport: this.formDataSupport
+                formDataSupport: this.formDataSupport,
+                parameterNaming: this.parameterNaming
             });
         } else {
             return new GeneratedDefaultEndpointRequest({
@@ -487,7 +490,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 requestBody,
                 generatedSdkClientClass: this,
                 retainOriginalCasing: this.retainOriginalCasing,
-                exportsManager: this.exportsManager
+                parameterNaming: this.parameterNaming
             });
         }
     }
@@ -2292,7 +2295,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return this.getReferenceToOption(
             getParameterNameForRootPathParameter({
                 pathParameter,
-                retainOriginalCasing: this.retainOriginalCasing
+                retainOriginalCasing: this.retainOriginalCasing,
+                parameterNaming: this.parameterNaming
             })
         );
     }

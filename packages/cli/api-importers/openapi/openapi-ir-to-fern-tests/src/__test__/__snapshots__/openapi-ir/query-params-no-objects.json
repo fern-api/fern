@@ -270,7 +270,7 @@
                     "schema": {
                       "type": "int"
                     },
-                    "generatedName": "SearchRequestAfter",
+                    "generatedName": "SearchRequestAfterZero",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -279,7 +279,7 @@
                       "format": "date",
                       "type": "string"
                     },
-                    "generatedName": "SearchRequestAfter",
+                    "generatedName": "SearchRequestAfterOne",
                     "groupName": [],
                     "type": "primitive"
                   }

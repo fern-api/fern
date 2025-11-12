@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .error_info import ErrorInfo
 from .exception_info import ExceptionInfo
@@ -81,12 +82,15 @@ class WorkspaceSubmissionUpdateInfo_Finished(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-WorkspaceSubmissionUpdateInfo = typing.Union[
-    WorkspaceSubmissionUpdateInfo_Running,
-    WorkspaceSubmissionUpdateInfo_Ran,
-    WorkspaceSubmissionUpdateInfo_Stopped,
-    WorkspaceSubmissionUpdateInfo_Traced,
-    WorkspaceSubmissionUpdateInfo_TracedV2,
-    WorkspaceSubmissionUpdateInfo_Errored,
-    WorkspaceSubmissionUpdateInfo_Finished,
+WorkspaceSubmissionUpdateInfo = typing_extensions.Annotated[
+    typing.Union[
+        WorkspaceSubmissionUpdateInfo_Running,
+        WorkspaceSubmissionUpdateInfo_Ran,
+        WorkspaceSubmissionUpdateInfo_Stopped,
+        WorkspaceSubmissionUpdateInfo_Traced,
+        WorkspaceSubmissionUpdateInfo_TracedV2,
+        WorkspaceSubmissionUpdateInfo_Errored,
+        WorkspaceSubmissionUpdateInfo_Finished,
+    ],
+    pydantic.Field(discriminator="type"),
 ]

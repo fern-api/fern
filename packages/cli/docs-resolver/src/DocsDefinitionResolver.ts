@@ -643,7 +643,8 @@ export class DocsDefinitionResolver {
                           sidebar: this.parsedDocsConfig.theme.sidebar,
                           body: this.parsedDocsConfig.theme.body,
                           tabs: this.parsedDocsConfig.theme.tabs,
-                          "page-actions": this.parsedDocsConfig.theme.pageActions
+                          "page-actions": this.parsedDocsConfig.theme.pageActions,
+                          footerNav: this.parsedDocsConfig.theme.footerNav
                       }
                     : undefined,
             // deprecated
@@ -671,8 +672,8 @@ export class DocsDefinitionResolver {
             return this.apiWorkspaces[0];
         }
         const errorMessage = apiSection.apiName
-            ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs`
-            : "Failed to load API Definition referenced in docs";
+            ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs.\nA valid API configuration was not found at the path: fern/apis/${apiSection.apiName}.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions`
+            : "Failed to load API Definition referenced in docs.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions";
         throw new Error(errorMessage);
     }
 
@@ -686,8 +687,8 @@ export class DocsDefinitionResolver {
             return this.ossWorkspaces[0];
         }
         const errorMessage = apiSection.apiName
-            ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs`
-            : "Failed to load API Definition referenced in docs";
+            ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs.\nA valid API configuration was not found at the path: fern/apis/${apiSection.apiName}.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions`
+            : "Failed to load API Definition referenced in docs.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions";
         throw new Error(errorMessage);
     }
 

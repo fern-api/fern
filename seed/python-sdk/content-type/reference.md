@@ -160,7 +160,7 @@ client.service.patch_complex(
 <dl>
 <dd>
 
-**metadata:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` 
+**metadata:** `typing.Optional[typing.Dict[str, typing.Any]]` 
     
 </dd>
 </dl>
@@ -208,7 +208,7 @@ client.service.patch_complex(
 <dl>
 <dd>
 
-**settings:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` 
+**settings:** `typing.Optional[typing.Dict[str, typing.Any]]` 
     
 </dd>
 </dl>

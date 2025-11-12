@@ -22,8 +22,8 @@ class User(UniversalBaseModel):
     created_at: dt.datetime
     updated_at: dt.datetime
     identities: typing.Optional[typing.List[Identity]] = None
-    app_metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
-    user_metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    app_metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
+    user_metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
     picture: typing.Optional[str] = None
     name: typing.Optional[str] = None
     nickname: typing.Optional[str] = None

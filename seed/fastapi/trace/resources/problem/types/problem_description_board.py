@@ -84,7 +84,7 @@ class ProblemDescriptionBoard(UniversalRootModel):
             return test_case_id(unioned_value.value)
 
 
-from ...commons.types.variable_value import VariableValue  # noqa: E402, I001
+from ...commons.types.variable_value import VariableValue  # noqa: E402, F401, I001
 
 
 class _ProblemDescriptionBoard:

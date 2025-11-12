@@ -13,6 +13,7 @@ export declare namespace BaseClientContextImpl {
         requireDefaultEnvironment: boolean;
         retainOriginalCasing: boolean;
         generateIdempotentRequestOptions: boolean;
+        parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     }
 }
 const OPTIONS_INTERFACE_NAME = "BaseClientOptions";
@@ -30,6 +31,7 @@ export class BaseClientContextImpl implements BaseClientContext {
     private readonly allowCustomFetcher: boolean;
     private readonly requireDefaultEnvironment: boolean;
     private readonly retainOriginalCasing: boolean;
+    private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly generateIdempotentRequestOptions: boolean;
 
     public static readonly OPTIONS_INTERFACE_NAME = OPTIONS_INTERFACE_NAME;
@@ -52,13 +54,15 @@ export class BaseClientContextImpl implements BaseClientContext {
         allowCustomFetcher,
         requireDefaultEnvironment,
         retainOriginalCasing,
-        generateIdempotentRequestOptions
+        generateIdempotentRequestOptions,
+        parameterNaming
     }: BaseClientContextImpl.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.allowCustomFetcher = allowCustomFetcher;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
         this.retainOriginalCasing = retainOriginalCasing;
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
+        this.parameterNaming = parameterNaming;
 
         this.authHeaders = [];
         for (const authScheme of intermediateRepresentation.auth.schemes) {
@@ -135,7 +139,8 @@ export class BaseClientContextImpl implements BaseClientContext {
                 name: getPropertyKey(
                     getParameterNameForRootPathParameter({
                         pathParameter,
-                        retainOriginalCasing: this.retainOriginalCasing
+                        retainOriginalCasing: this.retainOriginalCasing,
+                        parameterNaming: this.parameterNaming
                     })
                 ),
                 type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode)

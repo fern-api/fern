@@ -44,7 +44,7 @@ class Movie(UniversalBaseModel):
     type: typing.Literal["movie"] = "movie"
     tag: Tag
     book: typing.Optional[str] = None
-    metadata: typing.Dict[str, typing.Optional[typing.Any]]
+    metadata: typing.Dict[str, typing.Any]
     revenue: int
 
     if IS_PYDANTIC_V2:

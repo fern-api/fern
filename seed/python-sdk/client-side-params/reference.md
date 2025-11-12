@@ -292,7 +292,7 @@ client.service.search_resources(
 <dl>
 <dd>
 
-**filters:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` 
+**filters:** `typing.Optional[typing.Dict[str, typing.Any]]` 
     
 </dd>
 </dl>
@@ -650,7 +650,7 @@ client.service.create_user(
 <dl>
 <dd>
 
-**user_metadata:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` 
+**user_metadata:** `typing.Optional[typing.Dict[str, typing.Any]]` 
     
 </dd>
 </dl>
@@ -658,7 +658,7 @@ client.service.create_user(
 <dl>
 <dd>
 
-**app_metadata:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` 
+**app_metadata:** `typing.Optional[typing.Dict[str, typing.Any]]` 
     
 </dd>
 </dl>
@@ -786,7 +786,7 @@ client.service.update_user(
 <dl>
 <dd>
 
-**user_metadata:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` 
+**user_metadata:** `typing.Optional[typing.Dict[str, typing.Any]]` 
     
 </dd>
 </dl>
@@ -794,7 +794,7 @@ client.service.update_user(
 <dl>
 <dd>
 
-**app_metadata:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` 
+**app_metadata:** `typing.Optional[typing.Dict[str, typing.Any]]` 
     
 </dd>
 </dl>

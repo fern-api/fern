@@ -11,6 +11,7 @@
     <PackageProjectUrl>https://github.com/no-retries/fern</PackageProjectUrl>
     <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
   </PropertyGroup>
+
   <PropertyGroup>
     <UsePortableDateOnly>false</UsePortableDateOnly>
   </PropertyGroup>
@@ -42,13 +43,16 @@
     <PackageReference Include="System.Net.Http" Version="[4.3.4,)" />
     <PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />
   </ItemGroup>
+
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="" />
   </ItemGroup>
+
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>SeedNoRetries.Test</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
+
   <Import Project="SeedNoRetries.Custom.props" Condition="Exists('SeedNoRetries.Custom.props')" />
 </Project>

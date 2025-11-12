@@ -20,21 +20,21 @@ export class Organizations {
     }
 
     /**
-     * @param {string} organizationId
+     * @param {string} organization_id
      * @param {Organizations.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.organizations.getOrganization("organization_id")
      */
     public getOrganization(
-        organizationId: string,
+        organization_id: string,
         requestOptions?: Organizations.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.Organization> {
-        return core.HttpResponsePromise.fromPromise(this.__getOrganization(organizationId, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__getOrganization(organization_id, requestOptions));
     }
 
     private async __getOrganization(
-        organizationId: string,
+        organization_id: string,
         requestOptions?: Organizations.RequestOptions,
     ): Promise<core.WithRawResponse<SeedPathParameters.Organization>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -42,7 +42,7 @@ export class Organizations {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenantId)}/organizations/${core.url.encodePathParam(organizationId)}/`,
+                `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/`,
             ),
             method: "GET",
             headers: _headers,
@@ -111,7 +111,7 @@ export class Organizations {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenantId)}/organizations/${core.url.encodePathParam(organizationId)}/users/${core.url.encodePathParam(userId)}`,
+                `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organizationId)}/users/${core.url.encodePathParam(userId)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -154,7 +154,7 @@ export class Organizations {
     }
 
     /**
-     * @param {string} organizationId
+     * @param {string} organization_id
      * @param {SeedPathParameters.SearchOrganizationsRequest} request
      * @param {Organizations.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -164,17 +164,17 @@ export class Organizations {
      *     })
      */
     public searchOrganizations(
-        organizationId: string,
+        organization_id: string,
         request: SeedPathParameters.SearchOrganizationsRequest = {},
         requestOptions?: Organizations.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.Organization[]> {
         return core.HttpResponsePromise.fromPromise(
-            this.__searchOrganizations(organizationId, request, requestOptions),
+            this.__searchOrganizations(organization_id, request, requestOptions),
         );
     }
 
     private async __searchOrganizations(
-        organizationId: string,
+        organization_id: string,
         request: SeedPathParameters.SearchOrganizationsRequest = {},
         requestOptions?: Organizations.RequestOptions,
     ): Promise<core.WithRawResponse<SeedPathParameters.Organization[]>> {
@@ -189,7 +189,7 @@ export class Organizations {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenantId)}/organizations/${core.url.encodePathParam(organizationId)}/search`,
+                `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/search`,
             ),
             method: "GET",
             headers: _headers,

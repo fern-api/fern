@@ -79,7 +79,7 @@ publishing {
                 description = 'SDK with custom license'
                 licenses {
                     license {
-                        name = 'Example Corporation Software Development Kit License Agreement'
+                        name = 'Custom License (LICENSE)'
                     }
                 }
                 developers {
