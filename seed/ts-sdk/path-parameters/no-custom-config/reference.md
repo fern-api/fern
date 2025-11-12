@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client/Client.ts">getOrganization</a>(organizationId) -> SeedPathParameters.Organization</code></summary>
+<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client/Client.ts">getOrganization</a>(organization_id) -> SeedPathParameters.Organization</code></summary>
 <dl>
 <dd>
 
@@ -29,7 +29,7 @@ await client.organizations.getOrganization("organization_id");
 <dl>
 <dd>
 
-**organizationId:** `string` 
+**organization_id:** `string` 
     
 </dd>
 </dl>
@@ -101,7 +101,7 @@ await client.organizations.getOrganizationUser({
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client/Client.ts">searchOrganizations</a>(organizationId, { ...params }) -> SeedPathParameters.Organization[]</code></summary>
+<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client/Client.ts">searchOrganizations</a>(organization_id, { ...params }) -> SeedPathParameters.Organization[]</code></summary>
 <dl>
 <dd>
 
@@ -132,7 +132,7 @@ await client.organizations.searchOrganizations("organization_id", {
 <dl>
 <dd>
 
-**organizationId:** `string` 
+**organization_id:** `string` 
     
 </dd>
 </dl>
