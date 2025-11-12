@@ -538,6 +538,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 }
@@ -1246,4 +1247,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `4853086`;
+exports[`dependencies > file dependencies 1`] = `4853473`;
