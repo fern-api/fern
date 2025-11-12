@@ -52,6 +52,22 @@ internal record MultipartFormRequest : BaseRequest
         }
     }
 
+    internal void AddJsonParts<T>(string name, IEnumerable<T>? value) =>
+        AddJsonParts(name, value, null);
+
+    internal void AddJsonParts<T>(string name, IEnumerable<T>? value, string? contentType)
+    {
+        if (value is null)
+        {
+            return;
+        }
+
+        foreach (var item in value)
+        {
+            AddJsonPart(name, item, contentType);
+        }
+    }
+
     internal void AddStringPart(string name, object? value) => AddStringPart(name, value, null);
 
     internal void AddStringPart(string name, object? value, string? contentType)
@@ -151,6 +167,9 @@ internal record MultipartFormRequest : BaseRequest
             }
         });
     }
+
+    internal void AddFileParameterPart(string name, Stream? stream) =>
+        AddStreamPart(name, stream, null, null);
 
     internal void AddFileParameterPart(string name, FileParameter? file) =>
         AddFileParameterPart(name, file, null);

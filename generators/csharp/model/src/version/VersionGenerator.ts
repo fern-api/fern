@@ -2,15 +2,14 @@ import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
-export class VersionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
+export class VersionGenerator extends FileGenerator<CSharpFile> {
     private classReference: ast.ClassReference;
 
     constructor(context: ModelGeneratorContext) {
         super(context);
-        this.classReference = this.types.Version;
+        this.classReference = this.Types.Version;
     }
 
     public doGenerate(): CSharpFile {
@@ -18,13 +17,13 @@ export class VersionGenerator extends FileGenerator<CSharpFile, ModelCustomConfi
             reference: this.classReference,
             partial: false,
             access: ast.Access.Internal,
-            annotations: [this.extern.System.Serializable]
+            annotations: [this.System.Serializable]
         });
 
         class_.addField({
             origin: class_.explicit("Current"),
             enclosingType: class_,
-            type: this.csharp.Type.string,
+            type: this.Primitive.string,
             access: ast.Access.Public,
             const_: true,
             initializer: this.csharp.codeblock(

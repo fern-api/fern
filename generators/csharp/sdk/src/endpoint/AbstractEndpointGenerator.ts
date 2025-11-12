@@ -15,7 +15,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
     protected readonly context: SdkGeneratorContext;
 
     public constructor({ context }: { context: SdkGeneratorContext }) {
-        super(context);
+        super(context.generation);
         this.context = context;
         this.exampleGenerator = new ExampleGenerator(context);
     }
@@ -102,9 +102,9 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
     protected getPagerReturnType(endpoint: HttpEndpoint): ast.Type {
         const itemType = this.getPaginationItemType(endpoint);
         if (endpoint.pagination?.type === "custom") {
-            return this.csharp.Type.reference(this.types.CustomPagerClass(itemType));
+            return this.Types.CustomPagerClass(itemType);
         }
-        return this.csharp.Type.reference(this.types.Pager(itemType));
+        return this.Types.Pager(itemType);
     }
 
     protected getPaginationItemType(endpoint: HttpEndpoint): ast.Type {
@@ -125,11 +125,11 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
             unboxOptionals: true
         });
 
-        if (is.Type.list(listItemType)) {
+        if (is.Collection.list(listItemType)) {
             return listItemType.getCollectionItemType();
         }
         throw new Error(
-            `Pagination result type for endpoint ${endpoint.name.originalName} must be a list, but is ${listItemType.type}.`
+            `Pagination result type for endpoint ${endpoint.name.originalName} must be a list, but is ${listItemType.fullyQualifiedName}.`
         );
     }
 
@@ -247,12 +247,12 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
                 }).doGenerateSnippet({ example: exampleEndpointCall, parseDatetimes });
             case "justRequestBody": {
                 if (endpoint.requestBody?.type === "bytes") {
-                    return this.extern.System.IO.MemoryStream.new({
+                    return this.System.IO.MemoryStream.new({
                         arguments_: [
                             this.csharp.invokeMethod({
-                                on: this.extern.System.Text.Encoding_UTF8,
+                                on: this.System.Text.Encoding_UTF8,
                                 method: "GetBytes",
-                                arguments_: [this.csharp.TypeLiteral.string("[bytes]")]
+                                arguments_: [this.csharp.Literal.string("[bytes]")]
                             })
                         ]
                     });

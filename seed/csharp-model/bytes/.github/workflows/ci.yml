@@ -22,7 +22,7 @@ jobs:
           dotnet tool restore
 
       - name: Build Release
-        run: dotnet build src -c Release /p:ContinuousIntegrationBuild=true
+        run: dotnet build src -c Release
 
   unit-tests:
     runs-on: ubuntu-latest

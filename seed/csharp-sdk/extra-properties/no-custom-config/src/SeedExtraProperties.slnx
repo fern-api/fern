@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SeedExtraProperties.Test/SeedExtraProperties.Test.csproj" />
+  <Project Path="SeedExtraProperties/SeedExtraProperties.csproj" />
+</Solution>
