@@ -235,6 +235,13 @@ function applyGithubOverrides(
                 },
                 pullRequest: (prConfig) => {
                     const newMode = githubMode ?? "pull-request";
+                    
+                    if (githubBranch != null && newMode !== "push") {
+                        context.logger.warn(
+                            `--github-branch is only applicable to 'push' mode. Current mode is '${newMode}', ignoring branch override.`
+                        );
+                    }
+                    
                     switch (newMode) {
                         case "push":
                             return FernFiddle.GithubOutputModeV2.push({
@@ -269,6 +276,13 @@ function applyGithubOverrides(
                 },
                 commitAndRelease: (commitConfig) => {
                     const newMode = githubMode ?? "commit";
+                    
+                    if (githubBranch != null && newMode !== "push") {
+                        context.logger.warn(
+                            `--github-branch is only applicable to 'push' mode. Current mode is '${newMode}', ignoring branch override.`
+                        );
+                    }
+                    
                     switch (newMode) {
                         case "push":
                             return FernFiddle.GithubOutputModeV2.push({
