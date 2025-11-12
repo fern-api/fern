@@ -5,7 +5,7 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml
 } from "@fern-api/configuration-loader";
-import { ContainerRunner } from "@fern-api/core-utils";
+import { ContainerRunner, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
@@ -186,6 +186,25 @@ function applyGithubOverrides(
     githubBranch: string | undefined,
     context: TaskContext
 ): generatorsYml.GeneratorGroup {
+    type TargetMode = "push" | "pullRequest" | "commitAndRelease";
+
+    const normalizeTargetMode = (mode: string | undefined, currentMode: TargetMode): TargetMode => {
+        if (mode == null) {
+            return currentMode;
+        }
+        switch (mode) {
+            case "push":
+                return "push";
+            case "pull-request":
+                return "pullRequest";
+            case "commit":
+            case "release":
+                return "commitAndRelease";
+            default:
+                return currentMode;
+        }
+    };
+
     const modifiedGenerators: generatorsYml.GeneratorInvocation[] = [];
     let hasGithubGenerator = false;
 
@@ -194,135 +213,94 @@ function applyGithubOverrides(
         if (generator.outputMode.type === "githubV2") {
             hasGithubGenerator = true;
 
-            const currentOutputMode = generator.outputMode;
-            const currentGithubConfig = currentOutputMode.githubV2;
+            const currentGithubConfig = generator.outputMode.githubV2;
 
             // Create a new github output mode with overridden values
-            const newGithubConfig = FernFiddle.GithubOutputModeV2._visit(currentGithubConfig, {
-                push: (pushConfig) => {
-                    const newMode = githubMode ?? "push";
-                    switch (newMode) {
-                        case "push":
-                            return FernFiddle.GithubOutputModeV2.push({
-                                owner: pushConfig.owner,
-                                repo: pushConfig.repo,
-                                branch: githubBranch ?? pushConfig.branch,
-                                license: pushConfig.license,
-                                publishInfo: pushConfig.publishInfo,
-                                downloadSnippets: pushConfig.downloadSnippets
-                            });
-                        case "pull-request":
-                            return FernFiddle.GithubOutputModeV2.pullRequest({
-                                owner: pushConfig.owner,
-                                repo: pushConfig.repo,
-                                license: pushConfig.license,
-                                publishInfo: pushConfig.publishInfo,
-                                downloadSnippets: pushConfig.downloadSnippets,
-                                reviewers: undefined
-                            });
-                        case "commit":
-                        case "release":
-                            return FernFiddle.GithubOutputModeV2.commitAndRelease({
-                                owner: pushConfig.owner,
-                                repo: pushConfig.repo,
-                                license: pushConfig.license,
-                                publishInfo: pushConfig.publishInfo,
-                                downloadSnippets: pushConfig.downloadSnippets
-                            });
-                        default:
-                            return currentGithubConfig;
-                    }
-                },
-                pullRequest: (prConfig) => {
-                    const newMode = githubMode ?? "pull-request";
+            const newGithubConfig = visitDiscriminatedUnion(currentGithubConfig, "type")._visit({
+                push: (cfg) => {
+                    const target = normalizeTargetMode(githubMode, "push");
 
-                    if (githubBranch != null && newMode !== "push") {
+                    if (githubBranch != null && target !== "push") {
                         return context.failAndThrow(
-                            `--github-branch is only valid with 'push' mode. Generator '${generator.name}' is currently '${newMode}'. Pass --github-mode push to use --github-branch.`
+                            `--github-branch is only valid with 'push' mode. Generator '${generator.name}' is currently '${target}'. Pass --github-mode push to use --github-branch.`
                         );
                     }
 
-                    switch (newMode) {
+                    const { branch: _branch, ...base } = cfg;
+
+                    switch (target) {
                         case "push":
                             return FernFiddle.GithubOutputModeV2.push({
-                                owner: prConfig.owner,
-                                repo: prConfig.repo,
-                                branch: githubBranch,
-                                license: prConfig.license,
-                                publishInfo: prConfig.publishInfo,
-                                downloadSnippets: prConfig.downloadSnippets
+                                ...base,
+                                branch: githubBranch ?? cfg.branch
                             });
-                        case "pull-request":
+                        case "pullRequest":
                             return FernFiddle.GithubOutputModeV2.pullRequest({
-                                owner: prConfig.owner,
-                                repo: prConfig.repo,
-                                license: prConfig.license,
-                                publishInfo: prConfig.publishInfo,
-                                downloadSnippets: prConfig.downloadSnippets,
-                                reviewers: prConfig.reviewers
+                                ...base,
+                                reviewers: undefined
                             });
-                        case "commit":
-                        case "release":
-                            return FernFiddle.GithubOutputModeV2.commitAndRelease({
-                                owner: prConfig.owner,
-                                repo: prConfig.repo,
-                                license: prConfig.license,
-                                publishInfo: prConfig.publishInfo,
-                                downloadSnippets: prConfig.downloadSnippets
-                            });
-                        default:
-                            return currentGithubConfig;
+                        case "commitAndRelease":
+                            return FernFiddle.GithubOutputModeV2.commitAndRelease(base);
                     }
                 },
-                commitAndRelease: (commitConfig) => {
-                    const newMode = githubMode ?? "commit";
+                pullRequest: (cfg) => {
+                    const target = normalizeTargetMode(githubMode, "pullRequest");
 
-                    if (githubBranch != null && newMode !== "push") {
+                    if (githubBranch != null && target !== "push") {
                         return context.failAndThrow(
-                            `--github-branch is only valid with 'push' mode. Generator '${generator.name}' is currently '${newMode}'. Pass --github-mode push to use --github-branch.`
+                            `--github-branch is only valid with 'push' mode. Generator '${generator.name}' is currently '${target}'. Pass --github-mode push to use --github-branch.`
                         );
                     }
 
-                    switch (newMode) {
+                    const { reviewers: _reviewers, ...base } = cfg;
+
+                    switch (target) {
                         case "push":
                             return FernFiddle.GithubOutputModeV2.push({
-                                owner: commitConfig.owner,
-                                repo: commitConfig.repo,
-                                branch: githubBranch,
-                                license: commitConfig.license,
-                                publishInfo: commitConfig.publishInfo,
-                                downloadSnippets: commitConfig.downloadSnippets
+                                ...base,
+                                branch: githubBranch
                             });
-                        case "pull-request":
+                        case "pullRequest":
                             return FernFiddle.GithubOutputModeV2.pullRequest({
-                                owner: commitConfig.owner,
-                                repo: commitConfig.repo,
-                                license: commitConfig.license,
-                                publishInfo: commitConfig.publishInfo,
-                                downloadSnippets: commitConfig.downloadSnippets,
+                                ...base,
+                                reviewers: cfg.reviewers
+                            });
+                        case "commitAndRelease":
+                            return FernFiddle.GithubOutputModeV2.commitAndRelease(base);
+                    }
+                },
+                commitAndRelease: (cfg) => {
+                    const target = normalizeTargetMode(githubMode, "commitAndRelease");
+
+                    if (githubBranch != null && target !== "push") {
+                        return context.failAndThrow(
+                            `--github-branch is only valid with 'push' mode. Generator '${generator.name}' is currently '${target}'. Pass --github-mode push to use --github-branch.`
+                        );
+                    }
+
+                    const base = cfg;
+
+                    switch (target) {
+                        case "push":
+                            return FernFiddle.GithubOutputModeV2.push({
+                                ...base,
+                                branch: githubBranch
+                            });
+                        case "pullRequest":
+                            return FernFiddle.GithubOutputModeV2.pullRequest({
+                                ...base,
                                 reviewers: undefined
                             });
-                        case "commit":
-                        case "release":
-                            return FernFiddle.GithubOutputModeV2.commitAndRelease({
-                                owner: commitConfig.owner,
-                                repo: commitConfig.repo,
-                                license: commitConfig.license,
-                                publishInfo: commitConfig.publishInfo,
-                                downloadSnippets: commitConfig.downloadSnippets
-                            });
-                        default:
-                            return currentGithubConfig;
+                        case "commitAndRelease":
+                            return FernFiddle.GithubOutputModeV2.commitAndRelease(base);
                     }
                 },
                 _other: () => currentGithubConfig
             });
 
-            const newOutputMode = FernFiddle.OutputMode.githubV2(newGithubConfig);
-
             const modifiedGenerator: generatorsYml.GeneratorInvocation = {
                 ...generator,
-                outputMode: newOutputMode
+                outputMode: FernFiddle.OutputMode.githubV2(newGithubConfig)
             };
 
             modifiedGenerators.push(modifiedGenerator);
