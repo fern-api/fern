@@ -2,7 +2,7 @@ import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationServi
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
 import { HttpEndpoint, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { AsIsFileDefinition } from "../AsIs";
-import { RustProject } from "../project";
+import { RustDependencyManager, RustDependencyType, RustProject } from "../project";
 import {
     convertPascalToSnakeCase,
     convertToSnakeCase,
@@ -16,6 +16,7 @@ export abstract class AbstractRustGeneratorContext<
     CustomConfig extends BaseRustCustomConfigSchema
 > extends AbstractGeneratorContext {
     public readonly project: RustProject;
+    public readonly dependencyManager: RustDependencyManager;
     public publishConfig: FernGeneratorExec.CratesGithubPublishInfo | undefined;
 
     public constructor(
@@ -38,6 +39,10 @@ export abstract class AbstractRustGeneratorContext<
             _other: () => undefined
         });
 
+        this.dependencyManager = new RustDependencyManager();
+        this.addBaseDependencies();
+        this.detectAndAddFeatureDependencies();
+
         this.project = new RustProject({
             context: this,
             crateName: this.getCrateName(),
@@ -47,6 +52,258 @@ export abstract class AbstractRustGeneratorContext<
 
         // Pre-register ALL filenames before any generation
         this.registerAllFilenames(ir);
+    }
+
+    /**
+     * Add base dependencies that are always required
+     */
+    private addBaseDependencies(): void {
+        this.dependencyManager.add("serde", { version: "1.0", features: ["derive"] });
+        this.dependencyManager.add("serde_json", "1.0");
+        this.dependencyManager.add("reqwest", {
+            version: "0.12",
+            features: ["json"],
+            defaultFeatures: false
+        });
+        this.dependencyManager.add("reqwest-sse", "0.1");
+        this.dependencyManager.add("tokio", { version: "1.0", features: ["full"] });
+        this.dependencyManager.add("futures", "0.3");
+        this.dependencyManager.add("bytes", "1.0");
+        this.dependencyManager.add("thiserror", "1.0");
+        this.dependencyManager.add("percent-encoding", "2.3");
+        this.dependencyManager.add("ordered-float", { version: "4.5", features: ["serde"] });
+        this.dependencyManager.add("pin-project", "1.1");
+
+        this.dependencyManager.add("tokio-test", "0.4", RustDependencyType.DEV);
+
+        const extraDeps = this.customConfig.extraDependencies ?? {};
+        for (const [name, versionOrSpec] of Object.entries(extraDeps)) {
+            if (typeof versionOrSpec === "string") {
+                this.dependencyManager.add(name, versionOrSpec);
+            } else {
+                this.dependencyManager.add(name, versionOrSpec as any);
+            }
+        }
+
+        const extraDevDeps = this.customConfig.extraDevDependencies ?? {};
+        for (const [name, version] of Object.entries(extraDevDeps)) {
+            this.dependencyManager.add(name, version, RustDependencyType.DEV);
+        }
+    }
+
+    /**
+     * Detect features from IR and add conditional dependencies
+     */
+    private detectAndAddFeatureDependencies(): void {
+        const usesDateTime = this.irUsesType("datetime");
+        const usesUuid = this.irUsesType("uuid");
+        const usesBigInt = this.irUsesType("bigInteger");
+
+        if (usesDateTime) {
+            this.dependencyManager.add("chrono", { version: "0.4", features: ["serde"] });
+        }
+
+        if (usesUuid) {
+            this.dependencyManager.add("uuid", { version: "1.0", features: ["serde"] });
+        }
+
+        if (usesBigInt) {
+            this.dependencyManager.add("num-bigint", { version: "0.4", features: ["serde"] });
+        }
+
+        const hasFileUpload = this.hasFileUploadEndpoints();
+        const hasStreaming = this.hasStreamingEndpoints();
+
+        if (hasFileUpload) {
+            const reqwest = this.dependencyManager.get("reqwest");
+            if (reqwest) {
+                const features = reqwest.features || [];
+                if (!features.includes("multipart")) {
+                    features.push("multipart");
+                }
+                this.dependencyManager.add("reqwest", { ...reqwest, features });
+            }
+        }
+
+        if (hasStreaming) {
+            const reqwest = this.dependencyManager.get("reqwest");
+            if (reqwest) {
+                const features = reqwest.features || [];
+                if (!features.includes("stream")) {
+                    features.push("stream");
+                }
+                this.dependencyManager.add("reqwest", { ...reqwest, features });
+            }
+        }
+    }
+
+    /**
+     * Check if IR uses a specific primitive type
+     */
+    private irUsesType(typeName: "datetime" | "uuid" | "bigInteger"): boolean {
+        for (const typeDecl of Object.values(this.ir.types)) {
+            if (this.typeShapeUsesBuiltin(typeDecl.shape, typeName)) {
+                return true;
+            }
+        }
+
+        for (const service of Object.values(this.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody != null) {
+                    if (endpoint.requestBody.type === "inlinedRequestBody") {
+                        for (const property of endpoint.requestBody.properties) {
+                            if (this.typeReferenceUsesBuiltin(property.valueType, typeName)) {
+                                return true;
+                            }
+                        }
+                    } else if (endpoint.requestBody.type === "reference") {
+                        if (this.typeReferenceUsesBuiltin(endpoint.requestBody.requestBodyType, typeName)) {
+                            return true;
+                        }
+                    }
+                }
+
+                if (endpoint.response?.body) {
+                    const usesBuiltin = endpoint.response.body._visit({
+                        json: (json: any) => this.typeReferenceUsesBuiltin(json.responseBodyType, typeName),
+                        fileDownload: () => false,
+                        streaming: () => false,
+                        streamParameter: () => false,
+                        text: () => false,
+                        bytes: () => false,
+                        _other: () => false
+                    });
+                    if (usesBuiltin) {
+                        return true;
+                    }
+                }
+
+                for (const param of endpoint.queryParameters) {
+                    if (this.typeReferenceUsesBuiltin(param.valueType, typeName)) {
+                        return true;
+                    }
+                }
+
+                for (const param of endpoint.pathParameters) {
+                    if (this.typeReferenceUsesBuiltin(param.valueType, typeName)) {
+                        return true;
+                    }
+                }
+
+                for (const header of endpoint.headers) {
+                    if (this.typeReferenceUsesBuiltin(header.valueType, typeName)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if a type shape uses a specific builtin type
+     */
+    private typeShapeUsesBuiltin(shape: any, typeName: string): boolean {
+        return shape._visit({
+            alias: (alias: any) => this.typeReferenceUsesBuiltin(alias.aliasOf, typeName),
+            enum: () => false,
+            object: (obj: any) => {
+                for (const property of obj.properties) {
+                    if (this.typeReferenceUsesBuiltin(property.valueType, typeName)) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            union: (union: any) => {
+                for (const variant of union.types) {
+                    if (variant.shape.type === "singleProperty") {
+                        if (this.typeReferenceUsesBuiltin(variant.shape.type, typeName)) {
+                            return true;
+                        }
+                    } else if (variant.shape.type === "samePropertiesAsObject") {
+                        const typeDecl = this.ir.types[variant.shape.typeId];
+                        if (typeDecl && this.typeShapeUsesBuiltin(typeDecl.shape, typeName)) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            },
+            undiscriminatedUnion: (union: any) => {
+                for (const member of union.members) {
+                    if (this.typeReferenceUsesBuiltin(member.type, typeName)) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            _other: () => false
+        });
+    }
+
+    /**
+     * Check if a type reference uses a specific builtin type
+     */
+    private typeReferenceUsesBuiltin(typeRef: any, typeName: string): boolean {
+        return typeRef._visit({
+            primitive: (primitive: any) => {
+                return primitive.v1 === typeName;
+            },
+            container: (container: any) => {
+                return container._visit({
+                    list: (list: any) => this.typeReferenceUsesBuiltin(list, typeName),
+                    set: (set: any) => this.typeReferenceUsesBuiltin(set, typeName),
+                    optional: (optional: any) => this.typeReferenceUsesBuiltin(optional, typeName),
+                    map: (map: any) =>
+                        this.typeReferenceUsesBuiltin(map.keyType, typeName) ||
+                        this.typeReferenceUsesBuiltin(map.valueType, typeName),
+                    literal: () => false,
+                    _other: () => false
+                });
+            },
+            named: (named: any) => {
+                const typeDecl = this.ir.types[named];
+                if (typeDecl) {
+                    return this.typeShapeUsesBuiltin(typeDecl.shape, typeName);
+                }
+                return false;
+            },
+            unknown: () => false,
+            _other: () => false
+        });
+    }
+
+    /**
+     * Check if IR has any file upload endpoints
+     */
+    private hasFileUploadEndpoints(): boolean {
+        return Object.values(this.ir.services).some((service) =>
+            service.endpoints.some((endpoint) => endpoint.requestBody?.type === "fileUpload")
+        );
+    }
+
+    /**
+     * Check if IR has any streaming endpoints
+     */
+    private hasStreamingEndpoints(): boolean {
+        return Object.values(this.ir.services).some((service) =>
+            service.endpoints.some((endpoint) => {
+                if (!endpoint.response?.body) {
+                    return false;
+                }
+                return endpoint.response.body._visit({
+                    streaming: () => true,
+                    streamParameter: () => true,
+                    json: () => false,
+                    fileDownload: () => false,
+                    text: () => false,
+                    bytes: () => false,
+                    _other: () => false
+                });
+            })
+        );
     }
 
     /**
