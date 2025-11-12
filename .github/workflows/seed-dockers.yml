@@ -21,21 +21,22 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      packages: ${{ steps.changes.outputs.all_changed_files }}
+      packages: ${{ steps.filter.outputs.changes }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 200
 
-      - uses: ./.github/actions/check-for-changed-files
-        id: changes
+      - uses: dorny/paths-filter@v3
+        id: filter
         with:
-          files: |
-            .github/workflows/seed-dockers.yml
-            docker/seed/Dockerfile.ts
-            docker/seed/Dockerfile.java
-            docker/seed/Dockerfile.python
-            docker/seed/Dockerfile.csharp
+          filters: |
+            ts:
+              - 'docker/seed/Dockerfile.ts'
+            java:
+              - 'docker/seed/Dockerfile.java'
+            python:
+              - 'docker/seed/Dockerfile.python'
+            csharp:
+              - 'docker/seed/Dockerfile.csharp'
 
   generate-sha:
     runs-on: ubuntu-latest
@@ -47,7 +48,7 @@ jobs:
         run: echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
   build-container:
-    if: ${{ needs.changes.outputs.packages != '' && toJSON(fromJSON(needs.changes.outputs.packages)) != '[]' }}
+    if: ${{ needs.changes.outputs.packages != '[]' }}
     strategy:
       matrix:
         # Parse JSON array containing names of all filters matching any of changed files
@@ -103,7 +104,7 @@ jobs:
       image_sha: ${{ steps.meta.outputs.version }} # This gets the SHA tag
 
   merge-manifests:
-    if: ${{ needs.changes.outputs.packages != '' && toJSON(fromJSON(needs.changes.outputs.packages)) != '[]' }}
+    if: ${{ needs.changes.outputs.packages != '[]' }}
     needs: [changes, build-container, generate-sha]
     runs-on: ubuntu-latest
     steps:
