@@ -4,7 +4,7 @@ import { TaskContext } from "@fern-api/task-context";
 
 import { OpenAPISpec } from "../Spec";
 
-export async function convertSpecToWorkspace({ context, spec }: { context: TaskContext; spec: OpenAPISpec }): Promise<FernWorkspace> {
+export function convertSpecToWorkspace({ context, spec }: { context: TaskContext; spec: OpenAPISpec }): FernWorkspace {
     const openapi = new OpenAPIWorkspace({
         spec: {
             parsed: spec.openapi,
@@ -13,7 +13,7 @@ export async function convertSpecToWorkspace({ context, spec }: { context: TaskC
         },
         generatorsConfiguration: undefined
     });
-    return await openapi.toFernWorkspace(
+    return openapi.toFernWorkspace(
         {
             context
         },
