@@ -4136,18 +4136,6 @@ importers:
 
   packages/cli/api-importers/openapi-pruner:
     dependencies:
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../commons/core-utils
-      '@fern-api/logger':
-        specifier: workspace:*
-        version: link:../../logger
-      '@fern-api/task-context':
-        specifier: workspace:*
-        version: link:../../task-context
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
       openapi-types:
         specifier: ^12.1.3
         version: 12.1.3
