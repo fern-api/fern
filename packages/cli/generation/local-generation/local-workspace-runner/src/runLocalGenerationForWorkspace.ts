@@ -170,7 +170,7 @@ export async function runLocalGenerationForWorkspace({
                     keepDocker,
                     context: interactiveTaskContext,
                     irVersionOverride: generatorInvocation.irVersionOverride,
-                    outputVersionOverride: undefined,
+                    outputVersionOverride: version,
                     writeUnitTests: organization.ok ? (organization?.body.snippetUnitTestsEnabled ?? false) : false,
                     generateOauthClients: organization.ok ? (organization?.body.oauthClientEnabled ?? false) : false,
                     generatePaginatedClients: organization.ok ? (organization?.body.paginationEnabled ?? false) : false,
@@ -192,17 +192,17 @@ export async function runLocalGenerationForWorkspace({
 }
 
 function getPackageNameFromGeneratorConfig(generatorInvocation: GeneratorInvocation): string | undefined {
-    // Check config.package_name first
-    if (typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null) {
-        const packageName = (generatorInvocation.raw.config as { package_name?: string }).package_name;
+    // Check output.package-name for npm/PyPI/etc.
+    if (typeof generatorInvocation.raw?.output === "object" && generatorInvocation.raw?.output !== null) {
+        const packageName = (generatorInvocation.raw.output as { ["package-name"]?: string })["package-name"];
         if (packageName != null) {
             return packageName;
         }
     }
 
-    // Check output.package-name for npm/PyPI/etc.
-    if (typeof generatorInvocation.raw?.output === "object" && generatorInvocation.raw?.output !== null) {
-        const packageName = (generatorInvocation.raw.output as { ["package-name"]?: string })["package-name"];
+    // Check config.package_name if output.package-name is not set
+    if (typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null) {
+        const packageName = (generatorInvocation.raw.config as { package_name?: string }).package_name;
         if (packageName != null) {
             return packageName;
         }

@@ -23,8 +23,8 @@ import {
 import {
     generateInlinePropertiesModule,
     getExampleEndpointCalls,
-    getParameterNameForPropertyPathParameterName,
     getPropertyKey,
+    getSdkParameterPropertyName,
     getTextOfTsNode,
     PackageId,
     TypeReferenceNode
@@ -62,6 +62,7 @@ export declare namespace GeneratedRequestWrapperImpl {
         shouldInlinePathParameters: boolean;
         formDataSupport: "Node16" | "Node18";
         flattenRequestParameters: boolean;
+        parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     }
 }
 
@@ -79,6 +80,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private _shouldInlinePathParameters: boolean;
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly flattenRequestParameters: boolean;
+    private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
 
     constructor({
         service,
@@ -91,7 +93,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         enableInlineTypes,
         shouldInlinePathParameters,
         formDataSupport,
-        flattenRequestParameters
+        flattenRequestParameters,
+        parameterNaming
     }: GeneratedRequestWrapperImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
@@ -104,6 +107,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         this._shouldInlinePathParameters = shouldInlinePathParameters;
         this.formDataSupport = formDataSupport;
         this.flattenRequestParameters = flattenRequestParameters;
+        this.parameterNaming = parameterNaming;
     }
 
     public shouldInlinePathParameters(): boolean {
@@ -692,8 +696,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public getPropertyNameOfFileParameterFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
         return {
             safeName: name.name.camelCase.safeName,
-            propertyName:
-                this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue
+            propertyName: getSdkParameterPropertyName({
+                name,
+                includeSerdeLayer: this.includeSerdeLayer,
+                retainOriginalCasing: this.retainOriginalCasing,
+                parameterNaming: this.parameterNaming
+            })
         };
     }
 
@@ -704,8 +712,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public getPropertyNameOfQueryParameterFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
         return {
             safeName: name.name.camelCase.safeName,
-            propertyName:
-                this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue
+            propertyName: getSdkParameterPropertyName({
+                name,
+                includeSerdeLayer: this.includeSerdeLayer,
+                retainOriginalCasing: this.retainOriginalCasing,
+                parameterNaming: this.parameterNaming
+            })
         };
     }
 
@@ -716,10 +728,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public getPropertyNameOfPathParameterFromName(name: Name): RequestWrapperNonBodyProperty {
         return {
             safeName: name.camelCase.safeName,
-            propertyName: getParameterNameForPropertyPathParameterName({
+            propertyName: getSdkParameterPropertyName({
+                name,
                 includeSerdeLayer: this.includeSerdeLayer,
                 retainOriginalCasing: this.retainOriginalCasing,
-                pathParameterName: name
+                parameterNaming: this.parameterNaming
             })
         };
     }
@@ -731,8 +744,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public getPropertyNameOfNonLiteralHeaderFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
         return {
             safeName: name.name.camelCase.safeName,
-            propertyName:
-                this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue
+            propertyName: getSdkParameterPropertyName({
+                name,
+                includeSerdeLayer: this.includeSerdeLayer,
+                retainOriginalCasing: this.retainOriginalCasing,
+                parameterNaming: this.parameterNaming
+            })
         };
     }
 

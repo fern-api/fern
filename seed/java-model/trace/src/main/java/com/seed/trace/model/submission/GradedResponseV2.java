@@ -115,7 +115,9 @@ public final class GradedResponseV2 {
 
     @java.lang.Override
     public _FinalStage putAllTestCases(Map<String, TestCaseGrade> testCases) {
-      this.testCases.putAll(testCases);
+      if (testCases != null) {
+        this.testCases.putAll(testCases);
+      }
       return this;
     }
 
@@ -126,7 +128,9 @@ public final class GradedResponseV2 {
     )
     public _FinalStage testCases(Map<String, TestCaseGrade> testCases) {
       this.testCases.clear();
-      this.testCases.putAll(testCases);
+      if (testCases != null) {
+        this.testCases.putAll(testCases);
+      }
       return this;
     }
 

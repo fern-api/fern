@@ -42,6 +42,7 @@ export * from "./DocsTypographyConfig";
 export * from "./LayoutConfig";
 export * from "./DocsSettingsConfig";
 export * from "./ThemeConfig";
+export * from "./FooterNavThemeConfig";
 export * from "./TabsThemeConfig";
 export * from "./BodyThemeConfig";
 export * from "./SidebarThemeConfig";

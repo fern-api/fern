@@ -42,7 +42,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -267,6 +266,38 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         }
     }
 
+    private static void copyGradleWrapperFromResources(Path outputDirectory) {
+        try {
+            copyResourceFile("gradle-wrapper/gradlew", outputDirectory.resolve("gradlew"), true);
+            copyResourceFile("gradle-wrapper/gradlew.bat", outputDirectory.resolve("gradlew.bat"), false);
+            Path wrapperDir = outputDirectory.resolve("gradle").resolve("wrapper");
+            Files.createDirectories(wrapperDir);
+            copyResourceFile(
+                    "gradle-wrapper/gradle/wrapper/gradle-wrapper.jar",
+                    wrapperDir.resolve("gradle-wrapper.jar"),
+                    false);
+            copyResourceFile(
+                    "gradle-wrapper/gradle/wrapper/gradle-wrapper.properties",
+                    wrapperDir.resolve("gradle-wrapper.properties"),
+                    false);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to copy gradle wrapper from resources", e);
+        }
+    }
+
+    private static void copyResourceFile(String resourcePath, Path destination, boolean makeExecutable)
+            throws IOException {
+        try (var inputStream = AbstractGeneratorCli.class.getClassLoader().getResourceAsStream(resourcePath)) {
+            if (inputStream == null) {
+                throw new IOException("Resource not found: " + resourcePath);
+            }
+            Files.copy(inputStream, destination, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            if (makeExecutable) {
+                destination.toFile().setExecutable(true);
+            }
+        }
+    }
+
     private final List<GeneratedFile> generatedFiles = new ArrayList<>();
 
     private Path outputDirectory = null;
@@ -438,12 +469,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         generatedFiles.forEach(
                 generatedFile -> generatedFile.write(outputDirectory, true, customConfig.packagePrefix()));
         if (publishResult.generateFullProject()) {
-            runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
-            Path gradlewPath = outputDirectory.resolve("gradlew");
-            if (Files.exists(gradlewPath)) {
-                runCommandBlocking(
-                        new String[] {"./gradlew", ":spotlessApply"}, outputDirectory, Collections.emptyMap());
-            }
+            copyGradleWrapperFromResources(outputDirectory);
         }
     }
 
@@ -484,11 +510,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 mavenGithubPublishInfo.flatMap(MavenGithubPublishInfo::getSignature)));
         // write files to disk
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
-        runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
-        Path gradlewPath = outputDirectory.resolve("gradlew");
-        if (Files.exists(gradlewPath)) {
-            runCommandBlocking(new String[] {"./gradlew", ":spotlessApply"}, outputDirectory, Collections.emptyMap());
-        }
+        copyGradleWrapperFromResources(outputDirectory);
     }
 
     public boolean customConfigPublishToCentral(GeneratorConfig _generatorConfig) {
@@ -530,11 +552,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 generatorConfig);
 
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
-        runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
-        Path gradlewPath = outputDirectory.resolve("gradlew");
-        if (Files.exists(gradlewPath)) {
-            runCommandBlocking(new String[] {"./gradlew", ":spotlessApply"}, outputDirectory, Collections.emptyMap());
-        }
+        copyGradleWrapperFromResources(outputDirectory);
 
         // run publish
         if (!generatorConfig.getDryRun()) {

@@ -64,6 +64,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             includeApiReference: parsed?.includeApiReference ?? false,
             tolerateRepublish: parsed?.tolerateRepublish ?? false,
             retainOriginalCasing: parsed?.retainOriginalCasing ?? false,
+            parameterNaming: parsed?.parameterNaming ?? "default",
             allowExtraFields: parsed?.allowExtraFields ?? false,
             inlineFileProperties: parsed?.inlineFileProperties ?? true,
             inlinePathParameters: parsed?.inlinePathParameters ?? true,
@@ -182,10 +183,6 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                     config.output.snippetFilepath != null
                         ? AbsoluteFilePath.of(config.output.snippetFilepath)
                         : undefined,
-                snippetTemplateFilepath:
-                    config.output.snippetTemplateFilepath != null
-                        ? AbsoluteFilePath.of(config.output.snippetTemplateFilepath)
-                        : undefined,
                 shouldUseBrandedStringAliases: customConfig.useBrandedStringAliases,
                 isPackagePrivate: customConfig.isPackagePrivate,
                 neverThrowErrors: customConfig.neverThrowErrors,
@@ -208,6 +205,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 includeContentHeadersOnFileDownloadResponse: customConfig.includeContentHeadersOnFileDownloadResponse,
                 includeSerdeLayer: !customConfig.noSerdeLayer,
                 retainOriginalCasing: customConfig.retainOriginalCasing ?? false,
+                parameterNaming: customConfig.parameterNaming ?? "default",
                 noOptionalProperties: customConfig.noOptionalProperties,
                 tolerateRepublish: customConfig.tolerateRepublish,
                 allowExtraFields: customConfig.allowExtraFields ?? false,

@@ -10,7 +10,6 @@ import {
     SdkRequestShape
 } from "@fern-fern/ir-sdk/api";
 import {
-    ExportsManager,
     Fetcher,
     GetReferenceOpts,
     getParameterNameForPositionalPathParameter,
@@ -41,7 +40,7 @@ export declare namespace GeneratedDefaultEndpointRequest {
         requestBody: HttpRequestBody.InlinedRequestBody | HttpRequestBody.Reference | undefined;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         retainOriginalCasing: boolean;
-        exportsManager: ExportsManager;
+        parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     }
 }
 
@@ -51,16 +50,16 @@ interface LiteralPropertyValue {
 }
 
 export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest {
-    private ir: IntermediateRepresentation;
-    private packageId: PackageId;
-    private requestParameter: RequestParameter | undefined;
+    private readonly ir: IntermediateRepresentation;
+    private readonly packageId: PackageId;
+    private readonly requestParameter: RequestParameter | undefined;
     private queryParams: GeneratedQueryParams | undefined;
-    private service: HttpService;
-    private endpoint: HttpEndpoint;
-    private requestBody: HttpRequestBody.InlinedRequestBody | HttpRequestBody.Reference | undefined;
-    private generatedSdkClientClass: GeneratedSdkClientClassImpl;
-    private retainOriginalCasing: boolean;
-    private exportsManager: ExportsManager;
+    private readonly service: HttpService;
+    private readonly endpoint: HttpEndpoint;
+    private readonly requestBody: HttpRequestBody.InlinedRequestBody | HttpRequestBody.Reference | undefined;
+    private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
+    private readonly retainOriginalCasing: boolean;
+    private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
 
     constructor({
         ir,
@@ -71,7 +70,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         requestBody,
         generatedSdkClientClass,
         retainOriginalCasing,
-        exportsManager
+        parameterNaming
     }: GeneratedDefaultEndpointRequest.Init) {
         this.ir = ir;
         this.packageId = packageId;
@@ -80,6 +79,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         this.requestBody = requestBody;
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.parameterNaming = parameterNaming;
         this.requestParameter =
             sdkRequest != null
                 ? SdkRequestShape._visit<RequestParameter>(sdkRequest.shape, {
@@ -101,8 +101,6 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                       }
                   })
                 : undefined;
-
-        this.exportsManager = exportsManager;
     }
 
     /**
@@ -140,7 +138,8 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             parameters.push({
                 name: getParameterNameForPositionalPathParameter({
                     pathParameter,
-                    retainOriginalCasing: this.retainOriginalCasing
+                    retainOriginalCasing: this.retainOriginalCasing,
+                    parameterNaming: this.parameterNaming
                 }),
                 type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode),
                 docs: pathParameter.docs

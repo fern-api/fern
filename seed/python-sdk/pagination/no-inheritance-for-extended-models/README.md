@@ -132,6 +132,15 @@ for page in response.iter_pages():
     yield page
 ```
 
+```python
+# You can also iterate through pages and access the typed response per page
+pager = client.complex_.search(...)
+for page in pager.iter_pages():
+    print(page.response)  # access the typed response for each page
+    for item in page:
+        print(item)
+```
+
 ## Advanced
 
 ### Access Raw Response Data
@@ -146,11 +155,11 @@ client = SeedPagination(
     ...,
 )
 pager = client.complex_.search(...)
-print(pager.response.headers)  # access the response headers for the first page
+print(pager.response)  # access the typed response for the first page
 for item in pager:
     print(item)  # access the underlying object(s)
 for page in pager.iter_pages():
-    print(page.response.headers)  # access the response headers for each page
+    print(page.response)  # access the typed response for each page
     for item in page:
         print(item)  # access the underlying object(s)
 ```
