@@ -21,6 +21,8 @@ class Berry(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .cat import Cat  # noqa: E402, I001
+from .dog import Dog  # noqa: E402, I001
 from .animal import Animal  # noqa: E402, I001
 
-update_forward_refs(Berry)
+update_forward_refs(Berry, Cat=Cat, Dog=Dog)
