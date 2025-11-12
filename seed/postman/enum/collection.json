@@ -258,6 +258,12 @@
     {
       "_type": "container",
       "description": null,
+      "name": "Multipart Form",
+      "item": []
+    },
+    {
+      "_type": "container",
+      "description": null,
       "name": "Path Param",
       "item": [
         {
