@@ -1,12 +1,6 @@
-name: CI
+name: ci
 
 on: [push]
-
-env:
-  CI: true
-  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
-  DOTNET_NOLOGO: true
-  MSBUILDTERMINALLOGGER: off
 
 jobs:
   compile:
@@ -16,21 +10,18 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v5
 
+      - uses: actions/checkout@master
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.x
 
-      - name: List SDKs
-        run: dotnet --list-sdks
-
       - name: Install tools
-        run: dotnet tool restore
+        run: |
+          dotnet tool restore
 
-      - name: Restore dependencies
-        run: dotnet restore src
-
-      - name: Build release
+      - name: Build Release
         run: dotnet build src -c Release /p:ContinuousIntegrationBuild=true
 
   unit-tests:
@@ -40,26 +31,20 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v5
 
+      - uses: actions/checkout@master
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.x
 
-      - name: List SDKs
-        run: dotnet --list-sdks
-
       - name: Install tools
-        run: dotnet tool restore
+        run: |
+          dotnet tool restore
 
-      - name: Restore dependencies
-        run: dotnet restore src
-
-      - name: Build release
-        run: dotnet build src -c Release /p:ContinuousIntegrationBuild=true
-
-      - name: Run tests
-        run: dotnet test src --no-restore --no-build -c Release /p:ContinuousIntegrationBuild=true
-        continue-on-error: true
+      - name: Run Tests
+        run: |
+          dotnet test src
 
 <% if (shouldWritePublishBlock) { %>
   publish:
@@ -76,10 +61,10 @@ jobs:
         with:
           dotnet-version: 10.x
 
-      - name: Publish to nuget.org
+      - name: Publish
         env:
           NUGET_API_KEY: $\{{ secrets.<%= nugetTokenEnvvar%> }}
         run: |
-          dotnet pack src/<%= projectName%> --no-build --no-restore -c Release
+          dotnet pack src -c Release
           dotnet nuget push src/<%= projectName%>/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
-<% } %}
+<% } %>
