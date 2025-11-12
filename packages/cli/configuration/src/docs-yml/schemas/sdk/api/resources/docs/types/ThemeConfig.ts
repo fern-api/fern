@@ -9,4 +9,5 @@ export interface ThemeConfig {
     body?: FernDocsConfig.BodyThemeConfig;
     tabs?: FernDocsConfig.TabsThemeConfig;
     pageActions?: FernDocsConfig.PageActionsThemeConfig;
+    footerNav?: FernDocsConfig.FooterNavThemeConfig;
 }

@@ -643,7 +643,8 @@ export class DocsDefinitionResolver {
                           sidebar: this.parsedDocsConfig.theme.sidebar,
                           body: this.parsedDocsConfig.theme.body,
                           tabs: this.parsedDocsConfig.theme.tabs,
-                          "page-actions": this.parsedDocsConfig.theme.pageActions
+                          "page-actions": this.parsedDocsConfig.theme.pageActions,
+                          footerNav: this.parsedDocsConfig.theme.footerNav
                       }
                     : undefined,
             // deprecated
