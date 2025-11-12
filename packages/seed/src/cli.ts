@@ -322,16 +322,23 @@ function addRunCommand(cli: Argv) {
 const DEFAULT_IMAGE_VERSION = "99.99.99";
 function addImgCommand(cli: Argv) {
     cli.command(
-        "img <generator>",
+        "img <generator> [tag]",
         "Builds a docker image for the specified generator and stores it in the local docker daemon",
         (yargs) =>
             yargs
+                .version(false)
                 .positional("generator", {
                     type: "string",
                     demandOption: true,
                     description: "Generator to build docker image for"
                 })
-                .option("ver", {
+                .positional("tag", {
+                    type: "string",
+                    demandOption: false,
+                    description: "Version tag (optional positional)"
+                })
+                .option("version", {
+                    alias: "v",
                     type: "string",
                     demandOption: false,
                     description: `Version tag for the docker image (must be valid semver, defaults to ${DEFAULT_IMAGE_VERSION})`
@@ -351,7 +358,8 @@ function addImgCommand(cli: Argv) {
                 );
             }
 
-            const version = argv.ver ?? DEFAULT_IMAGE_VERSION;
+            const positionalTag = argv.tag as string | undefined;
+            const version = positionalTag ?? argv.version ?? DEFAULT_IMAGE_VERSION;
             try {
                 assertValidSemVerOrThrow(version);
             } catch (error) {
@@ -362,6 +370,8 @@ function addImgCommand(cli: Argv) {
 
             const taskContextFactory = new TaskContextFactory(argv["log-level"]);
             const taskContext = taskContextFactory.create(`Building docker image for ${generator.workspaceName}`);
+
+            taskContext.logger.info(`Using version: ${version}`);
 
             await buildGeneratorImage({
                 generator,

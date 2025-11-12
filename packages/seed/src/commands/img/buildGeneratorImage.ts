@@ -1,7 +1,8 @@
+import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import path from "path";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
-import { runScript } from "../../runScript";
+import { runCommands } from "../../utils/publishUtilities";
 
 export async function buildGeneratorImage({
     generator,
@@ -13,24 +14,17 @@ export async function buildGeneratorImage({
     context: TaskContext;
 }): Promise<void> {
     try {
-        const dockerCommands = getDockerBuildCommands(generator);
+        const repoRoot = path.dirname(path.dirname(generator.absolutePathToWorkspace));
+        const publishConfig = generator.workspaceConfig.publish;
+        const dockerConfig = publishConfig && "docker" in publishConfig ? publishConfig.docker : undefined;
 
-        context.logger.info(`Building docker image for ${generator.workspaceName}...`);
-
-        await buildWithSeedCommands(dockerCommands, generator, context);
-
-        const destTags = computeDestTags(generator, version);
-
-        context.logger.info(`Tagging image with version ${version}...`);
-        if (destTags.length > 1) {
-            context.logger.debug(`Tagging ${destTags.length} image names: ${destTags.join(", ")}`);
+        if (dockerConfig) {
+            await buildFromPublishConfig(generator, dockerConfig, publishConfig, version, repoRoot, context);
+        } else {
+            await buildFromTestConfigFallback(generator, version, repoRoot, context);
         }
 
-        const sourceTag = generator.workspaceConfig.test.docker.image;
-        await tagImages(sourceTag, destTags, context);
-
-        context.logger.info(`Successfully built and tagged docker image(s): ${destTags.join(", ")}`);
-        context.logger.info(`Image(s) available in your local docker daemon.`);
+        context.logger.info("Image(s) available in your local docker daemon.");
     } catch (error) {
         context.logger.error(
             `Encountered error while building docker image. ${
@@ -41,72 +35,103 @@ export async function buildGeneratorImage({
     }
 }
 
-function getDockerBuildCommands(generator: GeneratorWorkspace): string[] {
-    const dockerCommands =
-        typeof generator.workspaceConfig.test.docker.command === "string"
-            ? [generator.workspaceConfig.test.docker.command]
-            : generator.workspaceConfig.test.docker.command;
-
-    if (dockerCommands == null) {
-        throw new Error(`Failed. No docker command for ${generator.workspaceName}`);
-    }
-
-    return dockerCommands;
-}
-
-async function buildWithSeedCommands(
-    commands: string[],
+async function buildFromPublishConfig(
     generator: GeneratorWorkspace,
+    dockerConfig: { file: string; image: string; context?: string; aliases?: string[] },
+    publishConfig: { preBuildCommands?: string | string[]; workingDirectory?: string },
+    version: string,
+    repoRoot: string,
     context: TaskContext
 ): Promise<void> {
-    const { CONSOLE_LOGGER } = await import("@fern-api/logger");
+    const preBuild = Array.isArray(publishConfig.preBuildCommands)
+        ? publishConfig.preBuildCommands
+        : publishConfig.preBuildCommands
+          ? [publishConfig.preBuildCommands]
+          : [];
 
-    const dockerBuildReturn = await runScript({
-        commands,
-        logger: CONSOLE_LOGGER,
-        workingDir: path.dirname(path.dirname(generator.absolutePathToWorkspace)),
-        doNotPipeOutput: false
-    });
-
-    if (dockerBuildReturn.exitCode !== 0) {
-        throw new Error(`Failed to build the docker container for ${generator.workspaceName}.`);
+    if (preBuild.length > 0) {
+        context.logger.info("Running pre-build commands...");
+        await runCommands(preBuild, context, repoRoot);
     }
+
+    const publishAliases = dockerConfig.aliases ?? [];
+    const topLevelAliases = generator.workspaceConfig.imageAliases ?? [];
+    const aliases = publishAliases.length > 0 ? publishAliases : topLevelAliases;
+
+    const images = [dockerConfig.image, ...aliases].map((name) => `${name}:${version}`);
+    const tagArgs = images.map((i) => ["-t", i]).flat();
+
+    context.logger.info(`Building Docker image(s): ${images.join(", ")}`);
+
+    await loggingExeca(
+        context.logger,
+        "docker",
+        ["build", "-f", dockerConfig.file, ...tagArgs, dockerConfig.context ?? "."],
+        {
+            doNotPipeOutput: true,
+            cwd: repoRoot
+        }
+    );
+
+    context.logger.info(`Successfully built and tagged docker image(s): ${images.join(", ")}`);
 }
 
-function computeDestTags(generator: GeneratorWorkspace, version: string): string[] {
-    const imageNames = [generator.workspaceConfig.image, ...(generator.workspaceConfig.imageAliases ?? [])];
+async function buildFromTestConfigFallback(
+    generator: GeneratorWorkspace,
+    version: string,
+    repoRoot: string,
+    context: TaskContext
+): Promise<void> {
+    const testDocker = generator.workspaceConfig.test?.docker;
+    if (!testDocker) {
+        context.failAndThrow(`No publish.docker or test.docker config found for ${generator.workspaceName}`);
+        return;
+    }
 
-    return imageNames.map((imageName) => {
-        const lastColonIndex = imageName.lastIndexOf(":");
-        if (lastColonIndex === -1) {
-            return `${imageName}:${version}`;
+    context.logger.info("No publish.docker config found. Using test.docker fallback...");
+
+    const commands = Array.isArray(testDocker.command) ? testDocker.command : [testDocker.command];
+
+    context.logger.info(`Building docker image for ${generator.workspaceName}...`);
+    for (const cmd of commands) {
+        if (!cmd) {
+            continue;
         }
-
-        const afterColon = imageName.substring(lastColonIndex + 1);
-        if (afterColon.includes("/")) {
-            return `${imageName}:${version}`;
+        const parts = cmd.split(" ").filter(Boolean);
+        const bin = parts[0];
+        const args = parts.slice(1);
+        if (!bin) {
+            context.failAndThrow(`Invalid command: ${cmd}`);
+            return;
         }
-
-        const baseImageName = imageName.substring(0, lastColonIndex);
-        return `${baseImageName}:${version}`;
-    });
-}
-
-async function tagImages(sourceTag: string, destTags: string[], context: TaskContext): Promise<void> {
-    const { CONSOLE_LOGGER } = await import("@fern-api/logger");
-
-    for (const destTag of destTags) {
-        context.logger.debug(`Tagging ${sourceTag} as ${destTag}...`);
-
-        const tagResult = await runScript({
-            commands: [`docker tag ${sourceTag} ${destTag}`],
-            logger: CONSOLE_LOGGER,
-            workingDir: process.cwd(),
-            doNotPipeOutput: false
+        const { exitCode } = await loggingExeca(context.logger, bin, args, {
+            doNotPipeOutput: true,
+            cwd: repoRoot
         });
-
-        if (tagResult.exitCode !== 0) {
-            throw new Error(`Failed to tag image ${sourceTag} as ${destTag}`);
+        if (exitCode !== 0) {
+            context.failAndThrow(`Failed to run ${cmd}`);
+            return;
         }
     }
+
+    const baseImageNoTag = testDocker.image.replace(/:latest$/, "").replace(/:.*$/, "");
+    const topLevelAliases = generator.workspaceConfig.imageAliases ?? [];
+    const latestTags = [`${baseImageNoTag}:latest`, ...topLevelAliases.map((a) => `${a}:latest`)];
+
+    context.logger.debug("Removing :latest tags...");
+    for (const latestTag of latestTags) {
+        try {
+            await loggingExeca(context.logger, "docker", ["rmi", latestTag], { doNotPipeOutput: true });
+        } catch {}
+    }
+
+    const destTags = [`${baseImageNoTag}:${version}`, ...topLevelAliases.map((a) => `${a}:${version}`)];
+    context.logger.info(`Tagging image with version ${version}...`);
+    for (const dest of destTags) {
+        await loggingExeca(context.logger, "docker", ["tag", `${baseImageNoTag}:latest`, dest], {
+            doNotPipeOutput: true
+        });
+    }
+
+    context.logger.info(`Successfully built and tagged docker image(s): ${destTags.join(", ")}`);
 }
