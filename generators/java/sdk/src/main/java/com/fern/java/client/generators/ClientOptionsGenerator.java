@@ -19,7 +19,12 @@ package com.fern.java.client.generators;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.ir.model.ir.ApiVersionScheme;
 import com.fern.ir.model.ir.HeaderApiVersionScheme;
+import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.ir.model.ir.PlatformHeaders;
+import com.fern.ir.model.publish.Filesystem;
+import com.fern.ir.model.publish.GithubPublish;
+import com.fern.ir.model.publish.MavenPublishTarget;
+import com.fern.ir.model.publish.PublishingConfig;
 import com.fern.ir.model.types.EnumValue;
 import com.fern.ir.model.variables.VariableDeclaration;
 import com.fern.ir.model.variables.VariableId;
@@ -93,8 +98,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     }
 
     private static Map<String, String> getPlatformHeadersEntries(
-            PlatformHeaders platformHeaders, GeneratorConfig generatorConfig) {
+            PlatformHeaders platformHeaders, GeneratorConfig generatorConfig, IntermediateRepresentation ir) {
         Map<String, String> entries = new HashMap<>();
+
+        // Try generatorConfig.publish first (remote generation)
         if (generatorConfig.getPublish().isPresent()) {
             entries.put(
                     platformHeaders.getSdkName(),
@@ -108,6 +115,162 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     platformHeaders.getSdkVersion(),
                     generatorConfig.getPublish().get().getVersion());
         }
+        // Fallback to IR publishConfig (local generation)
+        else if (ir.getPublishConfig().isPresent()) {
+            ir.getPublishConfig().get().visit(new PublishingConfig.Visitor<Void>() {
+                @Override
+                public Void visitGithub(GithubPublish github) {
+                    github.getTarget().visit(new com.fern.ir.model.publish.PublishTarget.Visitor<Void>() {
+                        @Override
+                        public Void visitMaven(MavenPublishTarget maven) {
+                            if (maven.getCoordinate().isPresent()) {
+                                entries.put(
+                                        platformHeaders.getSdkName(),
+                                        maven.getCoordinate().get());
+                            }
+                            if (maven.getVersion().isPresent()) {
+                                entries.put(
+                                        platformHeaders.getSdkVersion(),
+                                        maven.getVersion().get());
+                            }
+                            return null;
+                        }
+
+                        @Override
+                        public Void visitPostman(com.fern.ir.model.publish.PostmanPublishTarget postmanPublishTarget) {
+                            return null;
+                        }
+
+                        @Override
+                        public Void visitNpm(com.fern.ir.model.publish.NpmPublishTarget npmPublishTarget) {
+                            return null;
+                        }
+
+                        @Override
+                        public Void visitPypi(com.fern.ir.model.publish.PypiPublishTarget pypiPublishTarget) {
+                            return null;
+                        }
+
+                        @Override
+                        public Void visitCrates(com.fern.ir.model.publish.CratesPublishTarget cratesPublishTarget) {
+                            return null;
+                        }
+
+                        @Override
+                        public Void _visitUnknown(Object unknown) {
+                            return null;
+                        }
+                    });
+                    return null;
+                }
+
+                @Override
+                public Void visitDirect(com.fern.ir.model.publish.DirectPublish directPublish) {
+                    directPublish.getTarget().visit(new com.fern.ir.model.publish.PublishTarget.Visitor<Void>() {
+                        @Override
+                        public Void visitMaven(MavenPublishTarget maven) {
+                            if (maven.getCoordinate().isPresent()) {
+                                entries.put(
+                                        platformHeaders.getSdkName(),
+                                        maven.getCoordinate().get());
+                            }
+                            if (maven.getVersion().isPresent()) {
+                                entries.put(
+                                        platformHeaders.getSdkVersion(),
+                                        maven.getVersion().get());
+                            }
+                            return null;
+                        }
+
+                        @Override
+                        public Void visitPostman(com.fern.ir.model.publish.PostmanPublishTarget postmanPublishTarget) {
+                            return null;
+                        }
+
+                        @Override
+                        public Void visitNpm(com.fern.ir.model.publish.NpmPublishTarget npmPublishTarget) {
+                            return null;
+                        }
+
+                        @Override
+                        public Void visitPypi(com.fern.ir.model.publish.PypiPublishTarget pypiPublishTarget) {
+                            return null;
+                        }
+
+                        @Override
+                        public Void visitCrates(com.fern.ir.model.publish.CratesPublishTarget cratesPublishTarget) {
+                            return null;
+                        }
+
+                        @Override
+                        public Void _visitUnknown(Object unknown) {
+                            return null;
+                        }
+                    });
+                    return null;
+                }
+
+                @Override
+                public Void visitFilesystem(Filesystem filesystem) {
+                    if (filesystem.getPublishTarget().isPresent()) {
+                        filesystem
+                                .getPublishTarget()
+                                .get()
+                                .visit(new com.fern.ir.model.publish.PublishTarget.Visitor<Void>() {
+                                    @Override
+                                    public Void visitMaven(MavenPublishTarget maven) {
+                                        if (maven.getCoordinate().isPresent()) {
+                                            entries.put(
+                                                    platformHeaders.getSdkName(),
+                                                    maven.getCoordinate().get());
+                                        }
+                                        if (maven.getVersion().isPresent()) {
+                                            entries.put(
+                                                    platformHeaders.getSdkVersion(),
+                                                    maven.getVersion().get());
+                                        }
+                                        return null;
+                                    }
+
+                                    @Override
+                                    public Void visitPostman(
+                                            com.fern.ir.model.publish.PostmanPublishTarget postmanPublishTarget) {
+                                        return null;
+                                    }
+
+                                    @Override
+                                    public Void visitNpm(com.fern.ir.model.publish.NpmPublishTarget npmPublishTarget) {
+                                        return null;
+                                    }
+
+                                    @Override
+                                    public Void visitPypi(
+                                            com.fern.ir.model.publish.PypiPublishTarget pypiPublishTarget) {
+                                        return null;
+                                    }
+
+                                    @Override
+                                    public Void visitCrates(
+                                            com.fern.ir.model.publish.CratesPublishTarget cratesPublishTarget) {
+                                        return null;
+                                    }
+
+                                    @Override
+                                    public Void _visitUnknown(Object unknown) {
+                                        return null;
+                                    }
+                                });
+                    }
+                    return null;
+                }
+
+                @Override
+                public Void _visitUnknown(Object unknown) {
+                    return null;
+                }
+            });
+        }
+
         if (platformHeaders.getUserAgent().isPresent()) {
             entries.put(
                     platformHeaders.getUserAgent().get().getHeader(),
@@ -179,7 +342,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
         String platformHeadersPutString = getPlatformHeadersEntries(
                         generatorContext.getIr().getSdkConfig().getPlatformHeaders(),
-                        generatorContext.getGeneratorConfig())
+                        generatorContext.getGeneratorConfig(),
+                        generatorContext.getIr())
                 .entrySet()
                 .stream()
                 .map(val -> CodeBlock.of("put($S, $S);", val.getKey(), val.getValue())
