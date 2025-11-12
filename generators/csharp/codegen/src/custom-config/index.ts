@@ -1,1 +1,1 @@
-export { BaseCsharpCustomConfigSchema } from "./BaseCsharpCustomConfigSchema";
+export { CsharpConfigSchema } from "./CsharpConfigSchema";

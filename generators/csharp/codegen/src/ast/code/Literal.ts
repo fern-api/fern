@@ -17,7 +17,7 @@ export interface ConstructorField {
     /**
      * The literal value to assign to the field.
      */
-    value: TypeLiteral;
+    value: Literal;
 }
 
 /**
@@ -27,23 +27,23 @@ export interface DictionaryEntry {
     /**
      * The key of the dictionary entry.
      */
-    key: TypeLiteral;
+    key: Literal;
 
     /**
      * The value of the dictionary entry.
      */
-    value: TypeLiteral;
+    value: Literal;
 }
 
 /**
  * Base class for all C# literal value representations in the AST.
  *
- * TypeLiterals represent concrete values that can be written directly into code,
+ * Literals represent concrete values that can be written directly into code,
  * such as numbers (42, 3.14), strings ("hello"), booleans (true), collections ([1, 2, 3]),
  * and object initializers. Each subclass knows how to render its specific literal type
  * using the appropriate C# syntax.
  */
-export abstract class TypeLiteral extends AstNode {
+export abstract class Literal extends AstNode {
     /**
      * Writes this literal value to the provided writer using appropriate C# syntax.
      */
@@ -58,12 +58,12 @@ export abstract class TypeLiteral extends AstNode {
     }
 }
 
-// Namespace for all TypeLiteral classes
-export namespace TypeLiteral {
+// Namespace for all Literal classes
+export namespace Literal {
     /**
      * Represents a boolean literal value in C# (true or false).
      */
-    export class Boolean extends TypeLiteral {
+    export class Boolean extends Literal {
         /**
          * The boolean value.
          */
@@ -88,7 +88,7 @@ export namespace TypeLiteral {
      * Represents a class instantiation literal with constructor arguments.
      * This generates code like `new ClassName(field1: value1, field2: value2)`.
      */
-    export class Class_ extends TypeLiteral {
+    export class Class_ extends Literal {
         /**
          * The fields to initialize in the constructor.
          */
@@ -112,7 +112,7 @@ export namespace TypeLiteral {
         }
 
         public write(writer: Writer): void {
-            const fields = this.fields.filter((field) => !(field.value instanceof TypeLiteral.Nop));
+            const fields = this.fields.filter((field) => !(field.value instanceof Literal.Nop));
             writer.writeNode(
                 this.reference.new({
                     arguments_: fields.map((field) => ({ name: field.name, assignment: field.value })),
@@ -126,7 +126,7 @@ export namespace TypeLiteral {
      * Represents a DateOnly literal in C# (date without time component).
      * This generates code like `DateOnly.Parse("2023-01-15")`.
      */
-    export class Date extends TypeLiteral {
+    export class Date extends Literal {
         /**
          * The date string in a parseable format.
          */
@@ -151,7 +151,7 @@ export namespace TypeLiteral {
      * Represents a DateTime literal in C# with timezone adjustment.
      * This generates code like `DateTime.Parse("...", null, DateTimeStyles.AdjustToUniversal)`.
      */
-    export class DateTime extends TypeLiteral {
+    export class DateTime extends Literal {
         /**
          * The datetime string in a parseable format.
          */
@@ -171,7 +171,7 @@ export namespace TypeLiteral {
             writer.write(
                 this.System.DateTime,
                 `.Parse("${this.value}", null, `,
-                this.extern.System.Globalization.DateTimeStyles,
+                this.System.Globalization.DateTimeStyles,
                 ".AdjustToUniversal)"
             );
         }
@@ -181,7 +181,7 @@ export namespace TypeLiteral {
      * Represents a decimal literal in C# (high-precision decimal number).
      * This generates code like `42.5m` (the 'm' suffix denotes decimal type).
      */
-    export class Decimal extends TypeLiteral {
+    export class Decimal extends Literal {
         /**
          * The decimal value.
          */
@@ -206,7 +206,7 @@ export namespace TypeLiteral {
      * Represents a double literal in C# (64-bit floating-point number).
      * This generates code like `3.14` (no suffix needed for double).
      */
-    export class Double extends TypeLiteral {
+    export class Double extends Literal {
         /**
          * The double value.
          */
@@ -231,7 +231,7 @@ export namespace TypeLiteral {
      * Represents a float literal in C# (32-bit floating-point number).
      * This generates code like `3.14f` (the 'f' suffix denotes float type).
      */
-    export class Float extends TypeLiteral {
+    export class Float extends Literal {
         /**
          * The float value.
          */
@@ -256,7 +256,7 @@ export namespace TypeLiteral {
      * Represents an integer literal in C# (32-bit signed integer).
      * This generates code like `42` (no suffix needed for int).
      */
-    export class Integer extends TypeLiteral {
+    export class Integer extends Literal {
         /**
          * The integer value.
          */
@@ -281,7 +281,7 @@ export namespace TypeLiteral {
      * Represents a long literal in C# (64-bit signed integer).
      * This generates code like `42L` (the 'L' suffix denotes long type).
      */
-    export class Long extends TypeLiteral {
+    export class Long extends Literal {
         /**
          * The long value.
          */
@@ -306,7 +306,7 @@ export namespace TypeLiteral {
      * Represents an unsigned integer literal in C# (32-bit unsigned integer).
      * This generates code like `42u` (the 'u' suffix denotes unsigned int).
      */
-    export class Uint extends TypeLiteral {
+    export class Uint extends Literal {
         /**
          * The unsigned integer value.
          */
@@ -331,7 +331,7 @@ export namespace TypeLiteral {
      * Represents an unsigned long literal in C# (64-bit unsigned integer).
      * This generates code like `42ul` (the 'ul' suffix denotes unsigned long).
      */
-    export class Ulong extends TypeLiteral {
+    export class Ulong extends Literal {
         /**
          * The unsigned long value.
          */
@@ -356,7 +356,7 @@ export namespace TypeLiteral {
      * Represents a reference to another AST node as a literal value.
      * This allows embedding arbitrary AST nodes within literal contexts.
      */
-    export class Reference extends TypeLiteral {
+    export class Reference extends Literal {
         /**
          * The AST node being referenced.
          */
@@ -381,7 +381,7 @@ export namespace TypeLiteral {
      * Represents a string literal in C# with proper escaping.
      * This generates code like `"hello world"` with appropriate character escaping.
      */
-    export class String extends TypeLiteral {
+    export class String extends Literal {
         /**
          * The string value.
          */
@@ -406,7 +406,7 @@ export namespace TypeLiteral {
      * Represents a null literal in C#.
      * This generates the code `null`.
      */
-    export class Null extends TypeLiteral {
+    export class Null extends Literal {
         public write(writer: Writer): void {
             writer.write("null");
         }
@@ -416,7 +416,7 @@ export namespace TypeLiteral {
      * Represents a no-operation literal that writes nothing.
      * This is useful for filtering out optional values or placeholder fields.
      */
-    export class Nop extends TypeLiteral {
+    export class Nop extends Literal {
         public write(writer: Writer): void {
             // No-op: writes nothing
         }
@@ -426,7 +426,7 @@ export namespace TypeLiteral {
      * Represents a List<T> collection initializer literal in C#.
      * This generates code like `new List<int>() { 1, 2, 3 }`.
      */
-    export class List extends TypeLiteral {
+    export class List extends Literal {
         /**
          * The element type of the list.
          */
@@ -435,7 +435,7 @@ export namespace TypeLiteral {
         /**
          * The literal values to include in the list.
          */
-        public readonly values: TypeLiteral[];
+        public readonly values: Literal[];
 
         /**
          * Creates a new List literal.
@@ -443,21 +443,21 @@ export namespace TypeLiteral {
          * @param values - The literal values to initialize the list with
          * @param generation - The generation context for code generation
          */
-        constructor(valueType: Type, values: TypeLiteral[], generation: Generation) {
+        constructor(valueType: Type, values: Literal[], generation: Generation) {
             super(generation);
             this.valueType = valueType;
             this.values = values;
         }
 
         public write(writer: Writer): void {
-            writer.write("new ", this.System.Collections.Generic.List(this.valueType), "()");
+            writer.write(this.System.Collections.Generic.List(this.valueType).new());
 
             if (this.values.length === 0) {
                 return;
             }
 
             writer.pushScope();
-            for (const value of this.values.filter((value) => !(value instanceof TypeLiteral.Nop))) {
+            for (const value of this.values.filter((value) => !(value instanceof Literal.Nop))) {
                 value.write(writer);
                 writer.writeLine(",");
             }
@@ -469,7 +469,7 @@ export namespace TypeLiteral {
      * Represents a HashSet<T> collection initializer literal in C#.
      * This generates code like `new HashSet<int>() { 1, 2, 3 }`.
      */
-    export class Set extends TypeLiteral {
+    export class Set extends Literal {
         /**
          * The element type of the set.
          */
@@ -478,7 +478,7 @@ export namespace TypeLiteral {
         /**
          * The literal values to include in the set.
          */
-        public readonly values: TypeLiteral[];
+        public readonly values: Literal[];
 
         /**
          * Creates a new HashSet literal.
@@ -486,21 +486,21 @@ export namespace TypeLiteral {
          * @param values - The literal values to initialize the set with
          * @param generation - The generation context for code generation
          */
-        constructor(valueType: Type, values: TypeLiteral[], generation: Generation) {
+        constructor(valueType: Type, values: Literal[], generation: Generation) {
             super(generation);
             this.valueType = valueType;
             this.values = values;
         }
 
         public write(writer: Writer): void {
-            writer.write("new ", this.System.Collections.Generic.HashSet(this.valueType), "()");
+            writer.write(this.System.Collections.Generic.HashSet(this.valueType).new());
 
             if (this.values.length === 0) {
                 return;
             }
 
             writer.pushScope();
-            for (const value of this.values.filter((value) => !(value instanceof TypeLiteral.Nop))) {
+            for (const value of this.values.filter((value) => !(value instanceof Literal.Nop))) {
                 value.write(writer);
                 writer.writeLine(",");
             }
@@ -512,7 +512,7 @@ export namespace TypeLiteral {
      * Represents a Dictionary<TKey, TValue> collection initializer literal in C#.
      * This generates code like `new Dictionary<string, int>() { ["key1"] = 1, ["key2"] = 2 }`.
      */
-    export class Dictionary extends TypeLiteral {
+    export class Dictionary extends Literal {
         /**
          * The entries to include in the dictionary.
          */
@@ -543,11 +543,9 @@ export namespace TypeLiteral {
         }
 
         public write(writer: Writer): void {
-            writer.write("new ", this.System.Collections.Generic.Dictionary(this.keyType, this.valueType), "()");
+            writer.write(this.System.Collections.Generic.Dictionary(this.keyType, this.valueType).new());
 
-            const entries = this.entries.filter(
-                (entry) => !is.TypeLiteral.nop(entry.key) && !is.TypeLiteral.nop(entry.value)
-            );
+            const entries = this.entries.filter((entry) => !is.Literal.nop(entry.key) && !is.Literal.nop(entry.value));
             if (entries.length === 0) {
                 return;
             }
@@ -572,7 +570,7 @@ export namespace TypeLiteral {
      * For example, a JavaScript object `{ name: "Alice", age: 30 }` becomes
      * `new Dictionary<string, object>() { ["name"] = "Alice", ["age"] = 30 }`.
      */
-    export class Unknown extends TypeLiteral {
+    export class Unknown extends Literal {
         /**
          * The unknown value to convert to C# syntax.
          */
@@ -639,7 +637,7 @@ export namespace TypeLiteral {
             // biome-ignore lint/suspicious/noExplicitAny: allow
             value: any[];
         }): void {
-            writer.write("new ", this.System.Collections.Generic.List(this.csharp.Type.object), "()");
+            writer.write(this.System.Collections.Generic.List(this.Primitive.object).new());
             if (value.length === 0) {
                 return;
             }
@@ -661,9 +659,7 @@ export namespace TypeLiteral {
         private writeUnknownMap({ writer, value }: { writer: Writer; value: object }): void {
             const entries = Object.entries(value);
             writer.write(
-                "new ",
-                this.System.Collections.Generic.Dictionary(this.csharp.Type.string, this.csharp.Type.object),
-                "()"
+                this.System.Collections.Generic.Dictionary(this.Primitive.string, this.Primitive.object).new()
             );
             if (entries.length === 0) {
                 return;

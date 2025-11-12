@@ -1,4 +1,5 @@
-import { ast, GrpcClientInfo } from "@fern-api/csharp-codegen";
+import { GrpcClientInfo } from "@fern-api/csharp-base";
+import { ast } from "@fern-api/csharp-codegen";
 import { ExampleEndpointCall, HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
@@ -27,14 +28,14 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
         const parameters = [...endpointSignatureInfo.baseParameters];
         parameters.push(
             this.csharp.parameter({
-                type: this.csharp.Type.optional(this.csharp.Type.reference(this.types.GrpcRequestOptions)),
+                type: this.Types.GrpcRequestOptions.toOptionalIfNotAlready(),
                 name: this.names.parameters.requestOptions,
                 initializer: "null"
             })
         );
         parameters.push(
             this.csharp.parameter({
-                type: this.csharp.Type.reference(this.extern.System.Threading.CancellationToken),
+                type: this.System.Threading.CancellationToken,
                 name: this.names.parameters.cancellationToken,
                 initializer: "default"
             })
@@ -118,7 +119,7 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
             writer.popScope();
 
             writer.write("catch (");
-            writer.writeNode(this.extern.Grpc.Core.RpcException);
+            writer.writeNode(this.Grpc.Core.RpcException);
             writer.writeLine(" rpc)");
             writer.pushScope();
             writer.writeNodeStatement(this.handleRpcException());
@@ -143,7 +144,7 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
                             writer.write(`${this.names.parameters.requestOptions} ?? `);
                             writer.writeNode(
                                 this.csharp.instantiateClass({
-                                    classReference: this.types.GrpcRequestOptions,
+                                    classReference: this.Types.GrpcRequestOptions,
                                     arguments_: []
                                 })
                             );
@@ -196,7 +197,7 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
             writer.write("throw ");
             writer.writeNode(
                 this.csharp.instantiateClass({
-                    classReference: this.types.BaseApiException,
+                    classReference: this.Types.BaseApiException,
                     arguments_: [
                         this.csharp.codeblock('$"Error with gRPC status code {statusCode}"'),
                         this.csharp.codeblock("statusCode"),
@@ -212,7 +213,7 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
             writer.write("throw ");
             writer.writeNode(
                 this.csharp.instantiateClass({
-                    classReference: this.types.BaseException,
+                    classReference: this.Types.BaseException,
                     arguments_: [this.csharp.codeblock('"Error"'), this.csharp.codeblock("e")]
                 })
             );

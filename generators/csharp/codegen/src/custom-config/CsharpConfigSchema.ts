@@ -1,10 +1,11 @@
 import { z } from "zod";
 import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
 
-export const BaseCsharpCustomConfigSchema = z.object({
+export const CsharpConfigSchema = z.object({
     // Influence dynamic snippets.
     namespace: z.string().optional(),
     "base-api-exception-class-name": z.string().optional(),
+    "simplify-object-dictionaries": z.boolean().optional(),
     "base-exception-class-name": z.string().optional(),
     "client-class-name": z.string().optional(),
     "environment-class-name": z.string().optional(),
@@ -66,9 +67,9 @@ export const BaseCsharpCustomConfigSchema = z.object({
             "(Deprecated) The extra dependencies to add into the csproj file. Use the [ProjectName].Custom.props to configure additional dependencies instead."
         ),
     "pascal-case-environments": z.boolean().optional(),
-    "simplify-object-dictionaries": z.boolean().optional(),
+
     "experimental-enable-forward-compatible-enums": z.boolean().optional(),
     "experimental-additional-properties": z.boolean().optional()
 });
 
-export type BaseCsharpCustomConfigSchema = z.infer<typeof BaseCsharpCustomConfigSchema>;
+export type CsharpConfigSchema = z.infer<typeof CsharpConfigSchema>;

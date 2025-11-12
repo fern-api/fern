@@ -1,15 +1,10 @@
 import { File } from "@fern-api/base-generator";
-import { BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
-import { BaseCsharpGeneratorContext } from "./context/BaseCsharpGeneratorContext";
+import { GeneratorContext } from "./context/GeneratorContext";
 
-export abstract class AsyncFileGenerator<
-    GeneratedFile extends File,
-    CustomConfig extends BaseCsharpCustomConfigSchema,
-    Context extends BaseCsharpGeneratorContext<CustomConfig>
-> {
-    constructor(protected readonly context: Context) {}
+export abstract class AsyncFileGenerator<GeneratedFile extends File> {
+    constructor(protected readonly context: GeneratorContext) {}
 
     public async generate(): Promise<GeneratedFile> {
         if (await this.shouldGenerate()) {
