@@ -96,6 +96,8 @@ export function generateIntermediateRepresentation({
     dynamicGeneratorConfig,
     generationMetadata
 }: generateIntermediateRepresentation.Args): IntermediateRepresentation {
+    const apiSettings = workspace.generatorsConfiguration?.api?.settings;
+
     const casingsGenerator = constructCasingsGenerator({ generationLanguage, keywords, smartCasing });
 
     const irGraph = new IrGraph(audiences);

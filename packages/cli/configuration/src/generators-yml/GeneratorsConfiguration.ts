@@ -34,6 +34,7 @@ export interface SingleNamespaceAPIDefinition
         RawSchemas.WithHeadersSchema {
     type: "singleNamespace";
     definitions: APIDefinitionLocation[];
+    settings?: APIDefinitionSettings;
 }
 
 export interface MultiNamespaceAPIDefinition
@@ -43,6 +44,7 @@ export interface MultiNamespaceAPIDefinition
     type: "multiNamespace";
     rootDefinitions: APIDefinitionLocation[] | undefined;
     definitions: Record<string, APIDefinitionLocation[]>;
+    settings?: APIDefinitionSettings;
 }
 
 export interface ConjureAPIDefinition
@@ -51,6 +53,7 @@ export interface ConjureAPIDefinition
         RawSchemas.WithHeadersSchema {
     type: "conjure";
     pathToConjureDefinition: string;
+    settings?: APIDefinitionSettings;
 }
 
 export interface APIDefinitionSettings {

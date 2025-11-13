@@ -365,7 +365,8 @@ async function parseApiConfigurationV2Schema({
         return {
             type: "conjure",
             pathToConjureDefinition: apiConfiguration.specs.conjure,
-            ...partialConfig
+            ...partialConfig,
+            settings: apiSettings
         };
     }
 
@@ -439,7 +440,8 @@ async function parseApiConfigurationV2Schema({
         return {
             type: "singleNamespace",
             definitions: rootDefinitions,
-            ...partialConfig
+            ...partialConfig,
+            settings: apiSettings
         };
     }
     // Yes namespaces
@@ -447,7 +449,8 @@ async function parseApiConfigurationV2Schema({
         type: "multiNamespace",
         rootDefinitions,
         definitions: namespacedDefinitions,
-        ...partialConfig
+        ...partialConfig,
+        settings: apiSettings
     };
 }
 
