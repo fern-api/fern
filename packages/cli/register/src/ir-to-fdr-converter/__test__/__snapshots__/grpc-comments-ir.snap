@@ -22,7 +22,7 @@
   },
   "apiPlayground": true,
   "apiVersion": undefined,
-  "audiences": undefined,
+  "audiences": [],
   "auth": {
     "docs": undefined,
     "requirement": "ALL",
@@ -185,7 +185,7 @@
           "availability": undefined,
           "basePath": undefined,
           "baseUrl": undefined,
-          "displayName": undefined,
+          "displayName": "Add a Comment",
           "docs": "buf:lint:ignore RPC_REQUEST_STANDARD_NAME
  Create a comment on a resource",
           "errors": [],
@@ -1314,5 +1314,5 @@
   },
   "variables": [],
   "webhookGroups": {},
-  "websocketChannels": undefined,
+  "websocketChannels": {},
 }

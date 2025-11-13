@@ -101,7 +101,7 @@
           "includeInApiExplorer": undefined,
           "method": "POST",
           "multiAuth": undefined,
-          "name": "Create Comment",
+          "name": "Add a Comment",
           "originalEndpointId": "endpoint_commentsService.createcomment",
           "path": {
             "parts": [

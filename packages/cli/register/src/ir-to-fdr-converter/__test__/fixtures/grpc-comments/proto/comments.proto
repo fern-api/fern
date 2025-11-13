@@ -5,6 +5,7 @@ package comments.v1;
 option go_package = "github.com/fern-api/fern/comments/v1";
 
 import "google/api/annotations.proto";
+import "fern/options.proto";
 
 service CommentsService {
   // buf:lint:ignore RPC_REQUEST_STANDARD_NAME
@@ -15,6 +16,7 @@ service CommentsService {
       response_body: "comment"
       body: "*"
     };
+    option (fern.summary) = "Add a Comment";
   }
 }
 
