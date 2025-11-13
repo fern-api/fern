@@ -124,12 +124,13 @@ export function parse({
                     assertNever(document);
             }
         } catch (error) {
-            context.logger.debug(
-                `Skipping parsing document ${document.type === "openapi" ? document.value.info?.title : document.source?.file}`
+            context.logger.error(
+                `Failed to parse document ${document.type === "openapi" ? document.value.info?.title : document.source?.file}`
             );
             if (error instanceof Error) {
-                context.logger.debug(error.message, error.stack ? "\n" + error.stack : "");
+                context.logger.error(error.message, error.stack ? "\n" + error.stack : "");
             }
+            context.failWithoutThrowing(`Failed to parse document`);
         }
     }
     return ir;
