@@ -5,6 +5,19 @@
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Forward Compatible Enums](#forward-compatible-enums)
+- [Contributing](#contributing)
+
 ## Requirements
 
 This SDK requires:
