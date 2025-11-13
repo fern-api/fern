@@ -387,9 +387,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         assert(workspace.didSucceed);
 
         if (!(workspace.workspace instanceof OSSWorkspace)) {
-            throw new Error(
-                `Expected OSSWorkspace for gRPC processing, got ${workspace.workspace.constructor.name}`
-            );
+            throw new Error(`Expected OSSWorkspace for gRPC processing, got ${workspace.workspace.constructor.name}`);
         }
 
         const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
