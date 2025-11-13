@@ -16,8 +16,8 @@ export declare namespace UnionClient {
 export class UnionClient {
     protected readonly _options: UnionClient.Options;
 
-    constructor(_options: UnionClient.Options) {
-        this._options = normalizeClientOptions(_options);
+    constructor(options: UnionClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     /**

@@ -30,8 +30,8 @@ export class EndpointsClient {
     protected _union: UnionClient | undefined;
     protected _urls: UrlsClient | undefined;
 
-    constructor(_options: EndpointsClient.Options) {
-        this._options = normalizeClientOptions(_options);
+    constructor(options: EndpointsClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     public get container(): ContainerClient {

@@ -23,10 +23,10 @@ export class SeedExhaustiveClient {
     protected _noReqBody: NoReqBodyClient | undefined;
     protected _reqWithHeaders: ReqWithHeadersClient | undefined;
 
-    constructor(_options: SeedExhaustiveClient.Options) {
+    constructor(options: SeedExhaustiveClient.Options) {
         this._options = {
-            ..._options,
-            logging: core.logging.createLogger(_options?.logging),
+            ...options,
+            logging: core.logging.createLogger(options?.logging),
             headers: mergeHeaders(
                 {
                     "X-Fern-Language": "JavaScript",
@@ -36,7 +36,7 @@ export class SeedExhaustiveClient {
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },
-                _options?.headers,
+                options?.headers,
             ),
         };
     }

@@ -16,8 +16,8 @@ export declare namespace EnumClient {
 export class EnumClient {
     protected readonly _options: EnumClient.Options;
 
-    constructor(_options: EnumClient.Options) {
-        this._options = normalizeClientOptions(_options);
+    constructor(options: EnumClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     /**

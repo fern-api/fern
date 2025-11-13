@@ -16,8 +16,8 @@ export declare namespace ParamsClient {
 export class ParamsClient {
     protected readonly _options: ParamsClient.Options;
 
-    constructor(_options: ParamsClient.Options) {
-        this._options = normalizeClientOptions(_options);
+    constructor(options: ParamsClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     /**

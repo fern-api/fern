@@ -16,8 +16,8 @@ export declare namespace InlinedRequestsClient {
 export class InlinedRequestsClient {
     protected readonly _options: InlinedRequestsClient.Options;
 
-    constructor(_options: InlinedRequestsClient.Options) {
-        this._options = normalizeClientOptions(_options);
+    constructor(options: InlinedRequestsClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     /**

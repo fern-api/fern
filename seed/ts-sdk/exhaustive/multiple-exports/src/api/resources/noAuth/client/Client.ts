@@ -16,8 +16,8 @@ export declare namespace NoAuthClient {
 export class NoAuthClient {
     protected readonly _options: NoAuthClient.Options;
 
-    constructor(_options: NoAuthClient.Options) {
-        this._options = normalizeClientOptions(_options);
+    constructor(options: NoAuthClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     /**

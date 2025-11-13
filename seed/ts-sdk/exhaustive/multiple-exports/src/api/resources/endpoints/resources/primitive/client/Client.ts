@@ -15,8 +15,8 @@ export declare namespace PrimitiveClient {
 export class PrimitiveClient {
     protected readonly _options: PrimitiveClient.Options;
 
-    constructor(_options: PrimitiveClient.Options) {
-        this._options = normalizeClientOptions(_options);
+    constructor(options: PrimitiveClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     /**

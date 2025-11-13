@@ -16,8 +16,8 @@ export declare namespace Object_Client {
 export class Object_Client {
     protected readonly _options: Object_Client.Options;
 
-    constructor(_options: Object_Client.Options) {
-        this._options = normalizeClientOptions(_options);
+    constructor(options: Object_Client.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     /**

@@ -15,8 +15,8 @@ export declare namespace UrlsClient {
 export class UrlsClient {
     protected readonly _options: UrlsClient.Options;
 
-    constructor(_options: UrlsClient.Options) {
-        this._options = normalizeClientOptions(_options);
+    constructor(options: UrlsClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     /**

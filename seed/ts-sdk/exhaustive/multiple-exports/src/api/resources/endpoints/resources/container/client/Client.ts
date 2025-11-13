@@ -16,8 +16,8 @@ export declare namespace ContainerClient {
 export class ContainerClient {
     protected readonly _options: ContainerClient.Options;
 
-    constructor(_options: ContainerClient.Options) {
-        this._options = normalizeClientOptions(_options);
+    constructor(options: ContainerClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     /**

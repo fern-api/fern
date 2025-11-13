@@ -16,8 +16,8 @@ export declare namespace NoReqBodyClient {
 export class NoReqBodyClient {
     protected readonly _options: NoReqBodyClient.Options;
 
-    constructor(_options: NoReqBodyClient.Options) {
-        this._options = normalizeClientOptions(_options);
+    constructor(options: NoReqBodyClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     /**

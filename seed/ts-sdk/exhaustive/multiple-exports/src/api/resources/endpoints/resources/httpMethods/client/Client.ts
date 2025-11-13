@@ -16,8 +16,8 @@ export declare namespace HttpMethodsClient {
 export class HttpMethodsClient {
     protected readonly _options: HttpMethodsClient.Options;
 
-    constructor(_options: HttpMethodsClient.Options) {
-        this._options = normalizeClientOptions(_options);
+    constructor(options: HttpMethodsClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     /**

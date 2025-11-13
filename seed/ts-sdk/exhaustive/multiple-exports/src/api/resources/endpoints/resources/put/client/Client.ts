@@ -16,8 +16,8 @@ export declare namespace PutClient {
 export class PutClient {
     protected readonly _options: PutClient.Options;
 
-    constructor(_options: PutClient.Options) {
-        this._options = normalizeClientOptions(_options);
+    constructor(options: PutClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     /**

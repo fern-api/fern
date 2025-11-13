@@ -110,6 +110,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public static readonly ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
     public static readonly OPTIONS_INTERFACE_NAME = "Options";
     public static readonly OPTIONS_PRIVATE_MEMBER = "_options";
+    private static readonly OPTIONS_PARAMETER_NAME = "options";
     public static readonly AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getAuthorizationHeader";
     public static readonly CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getCustomAuthorizationHeaders";
     public static readonly METADATA_FOR_TOKEN_SUPPLIER_VAR = "_metadata";
@@ -719,7 +720,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             ];
             const parameters = [
                 {
-                    name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
+                    name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
                     type: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode(
                             ts.factory.createQualifiedName(
@@ -795,7 +796,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         } else if (this.isRoot && this.authProvider && this.anyEndpointWithAuth) {
             const parameters = [
                 {
-                    name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
+                    name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
                     type: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode(
                             ts.factory.createQualifiedName(
@@ -848,7 +849,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         } else if (!this.isRoot && this.authProvider && this.anyEndpointWithAuth) {
             const parameters = [
                 {
-                    name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
+                    name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
                     type: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode(
                             ts.factory.createQualifiedName(
@@ -866,7 +867,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             ];
             const statements = code`
                 ${this.getCtorOptionsStatements(context)}
-                ${getTextOfTsNode(AuthProviderInstance.getReferenceToField())} = _options.${AuthProviderInstance.OPTIONS_PROPERTY_NAME};
+                ${getTextOfTsNode(AuthProviderInstance.getReferenceToField())} = options.${AuthProviderInstance.OPTIONS_PROPERTY_NAME};
             `;
             serviceClass.ctors.push({
                 parameters,
@@ -877,7 +878,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 statements: this.getCtorOptionsStatements(context).toString({ dprintOptions: { indentWidth: 4 } }),
                 parameters: [
                     {
-                        name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
+                        name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
                         type: getTextOfTsNode(
                             ts.factory.createTypeReferenceNode(
                                 ts.factory.createQualifiedName(
@@ -1088,10 +1089,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 namedImports: ["mergeHeaders"]
             });
             return code`this._options = {
-                    ..._options,
+                    ...options,
                     logging: ${getTextOfTsNode(
                         context.coreUtilities.logging.createLogger._invoke(
-                            ts.factory.createIdentifier("_options?.logging")
+                            ts.factory.createIdentifier("options?.logging")
                         )
                     )},
                     headers: mergeHeaders(${getTextOfTsNode(
@@ -1100,7 +1101,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(header), value)
                             )
                         )
-                    )}, _options?.headers),
+                    )}, options?.headers),
                 };`;
         }
 
@@ -1108,10 +1109,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             context.importsManager.addImportFromRoot("BaseClient", {
                 namedImports: ["normalizeClientOptions"]
             });
-            return code`this._options = normalizeClientOptions(_options);`;
+            return code`this._options = normalizeClientOptions(options);`;
         }
 
-        return code`this._options = _options;`;
+        return code`this._options = options;`;
     }
 
     public shouldGenerateAuthorizationHeaderHelperMethod(): boolean {

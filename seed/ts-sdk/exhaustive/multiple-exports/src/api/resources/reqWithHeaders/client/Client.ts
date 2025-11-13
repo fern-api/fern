@@ -16,8 +16,8 @@ export declare namespace ReqWithHeadersClient {
 export class ReqWithHeadersClient {
     protected readonly _options: ReqWithHeadersClient.Options;
 
-    constructor(_options: ReqWithHeadersClient.Options) {
-        this._options = normalizeClientOptions(_options);
+    constructor(options: ReqWithHeadersClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     /**
