@@ -44,6 +44,6 @@
     "simple-git": "^3.24.0",
     "stylelint": "^16.1.0",
     "typescript": "5.9.3",
-    "vitest": "^2.1.9"
+    "vitest": "^4.0.8"
   }
 }
