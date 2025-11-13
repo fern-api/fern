@@ -5,7 +5,15 @@
       type: fix
   irVersion: 61
   createdAt: "2025-11-12"
-  version: 0.119.2
+  version: 0.120.1
+
+- changelogEntry:
+    - summary: |
+        Rename OpenAPI extensions: x-fern-playground → x-fern-explorer and x-fern-playground-enabled → x-fern-explorer-enabled. The old extension keys are no longer recognized.
+      type: break
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 0.120.0
 
 - changelogEntry:
     - summary: |
