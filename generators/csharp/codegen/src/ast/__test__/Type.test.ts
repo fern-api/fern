@@ -3,12 +3,14 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { CsharpConfigSchema, is } from "../..";
 import { Generation } from "../../context/generation-info";
 
-import { Type } from "../types/Type";
+import { Type } from "../types/IType";
 
 const generation = new Generation(
     {} as unknown as IntermediateRepresentation,
     "",
-    {} as CsharpConfigSchema,
+    {
+        namespace: "TestNamespace"
+    } as CsharpConfigSchema,
     {} as FernGeneratorExec.config.GeneratorConfig
 );
 
@@ -95,37 +97,37 @@ describe("Type support", () => {
 
     describe("Optional types", () => {
         it("optional string", () => {
-            const type = generation.Primitive.string.toOptionalIfNotAlready();
+            const type = generation.Primitive.string.asOptional();
             expect(getTypeOutput(type)).toBe("string?");
         });
 
         it("optional int", () => {
-            const type = generation.Primitive.integer.toOptionalIfNotAlready();
+            const type = generation.Primitive.integer.asOptional();
             expect(getTypeOutput(type)).toBe("int?");
         });
 
         it("optional bool", () => {
-            const type = generation.Primitive.boolean.toOptionalIfNotAlready();
+            const type = generation.Primitive.boolean.asOptional();
             expect(getTypeOutput(type)).toBe("bool?");
         });
 
         it("optional long", () => {
-            const type = generation.Primitive.long.toOptionalIfNotAlready();
+            const type = generation.Primitive.long.asOptional();
             expect(getTypeOutput(type)).toBe("long?");
         });
 
         it("optional double", () => {
-            const type = generation.Primitive.double.toOptionalIfNotAlready();
+            const type = generation.Primitive.double.asOptional();
             expect(getTypeOutput(type)).toBe("double?");
         });
 
         it("optional DateTime", () => {
-            const type = generation.Value.dateTime.toOptionalIfNotAlready();
+            const type = generation.Value.dateTime.asOptional();
             expect(getTypeOutput(type)).toBe("DateTime?");
         });
 
         it("double optional should not add multiple question marks", () => {
-            const type = generation.Primitive.integer.toOptionalIfNotAlready().toOptionalIfNotAlready();
+            const type = generation.Primitive.integer.asOptional().asOptional();
             expect(getTypeOutput(type)).toBe("int?");
         });
     });
@@ -148,20 +150,18 @@ describe("Type support", () => {
             });
 
             it("list of optional strings", () => {
-                const type = generation.Collection.list(generation.Primitive.string.toOptionalIfNotAlready());
+                const type = generation.Collection.list(generation.Primitive.string.asOptional());
                 expect(getTypeOutput(type)).toBe("IEnumerable<string?>");
             });
 
             it("optional list of strings", () => {
-                const type = generation.Collection.list(generation.Primitive.string).toOptionalIfNotAlready();
+                const type = generation.Collection.list(generation.Primitive.string).asOptional();
 
                 expect(getTypeOutput(type)).toBe("IEnumerable<string>?");
             });
 
             it("optional list of optional integers", () => {
-                const type = generation.Collection.list(
-                    generation.Primitive.integer.toOptionalIfNotAlready()
-                ).toOptionalIfNotAlready();
+                const type = generation.Collection.list(generation.Primitive.integer.asOptional()).asOptional();
 
                 expect(getTypeOutput(type)).toBe("IEnumerable<int?>?");
             });
@@ -196,7 +196,7 @@ describe("Type support", () => {
             });
 
             it("optional array of strings", () => {
-                const type = generation.Collection.array(generation.Primitive.string).toOptionalIfNotAlready();
+                const type = generation.Collection.array(generation.Primitive.string).asOptional();
 
                 expect(getTypeOutput(type)).toBe("string[]?");
             });
@@ -214,7 +214,7 @@ describe("Type support", () => {
             });
 
             it("optional set of strings", () => {
-                const type = generation.Collection.set(generation.Primitive.string).toOptionalIfNotAlready();
+                const type = generation.Collection.set(generation.Primitive.string).asOptional();
 
                 expect(getTypeOutput(type)).toBe("HashSet<string>?");
             });
@@ -239,7 +239,7 @@ describe("Type support", () => {
             it("map with optional values", () => {
                 const type = generation.Collection.map(
                     generation.Primitive.string,
-                    generation.Primitive.integer.toOptionalIfNotAlready()
+                    generation.Primitive.integer.asOptional()
                 );
                 expect(getTypeOutput(type)).toBe("Dictionary<string, int?>");
             });
@@ -248,7 +248,7 @@ describe("Type support", () => {
                 const type = generation.Collection.map(
                     generation.Primitive.string,
                     generation.Primitive.string
-                ).toOptionalIfNotAlready();
+                ).asOptional();
                 expect(getTypeOutput(type)).toBe("Dictionary<string, string>?");
             });
 
@@ -290,7 +290,7 @@ describe("Type support", () => {
                 const type = generation.Collection.keyValuePair(
                     generation.Primitive.string,
                     generation.Primitive.integer
-                ).toOptionalIfNotAlready();
+                ).asOptional();
                 expect(getTypeOutput(type)).toBe("KeyValuePair<string, int>?");
             });
         });
@@ -350,7 +350,7 @@ describe("Type support", () => {
                 name: "MyCustomClass",
                 namespace: "MyNamespace"
             });
-            const type = classRef.toOptionalIfNotAlready();
+            const type = classRef.asOptional();
             expect(getTypeOutput(type)).toContain("MyCustomClass?");
         });
 
@@ -385,60 +385,48 @@ describe("Type support", () => {
 
     describe("Action and Func delegates", () => {
         it("Action with no parameters", () => {
-            const type = generation.Special.action({ typeParameters: [] });
+            const type = generation.System.Action([]);
             expect(getTypeOutput(type)).toBe("Action");
         });
 
         it("Action with one parameter", () => {
-            const type = generation.Special.action({
-                typeParameters: [generation.Primitive.string]
-            });
+            const type = generation.System.Action([generation.Primitive.string]);
             expect(getTypeOutput(type)).toBe("Action<string>");
         });
 
         it("Action with multiple parameters", () => {
-            const type = generation.Special.action({
-                typeParameters: [generation.Primitive.string, generation.Primitive.integer]
-            });
+            const type = generation.System.Action([generation.Primitive.string, generation.Primitive.integer]);
             expect(getTypeOutput(type)).toBe("Action<string, int>");
         });
 
         it("Func with return type", () => {
-            const type = generation.Special.func({
-                typeParameters: [],
-                returnType: generation.Primitive.string
-            });
+            const type = generation.System.Func([], generation.Primitive.string);
             expect(getTypeOutput(type)).toBe("Func<string>");
         });
 
         it("Func with parameters and return type", () => {
-            const type = generation.Special.func({
-                typeParameters: [generation.Primitive.integer],
-                returnType: generation.Primitive.string
-            });
+            const type = generation.System.Func([generation.Primitive.integer], generation.Primitive.string);
             expect(getTypeOutput(type)).toBe("Func<int, string>");
         });
 
         it("Func with multiple parameters and return type", () => {
-            const type = generation.Special.func({
-                typeParameters: [generation.Primitive.string, generation.Primitive.integer],
-                returnType: generation.Primitive.boolean
-            });
+            const type = generation.System.Func(
+                [generation.Primitive.string, generation.Primitive.integer],
+                generation.Primitive.boolean
+            );
             expect(getTypeOutput(type)).toBe("Func<string, int, bool>");
         });
 
         it("optional Action", () => {
-            const type = generation.Special.action({
-                typeParameters: [generation.Primitive.string]
-            }).toOptionalIfNotAlready();
+            const type = generation.System.Action([generation.Primitive.string]).asOptional();
             expect(getTypeOutput(type)).toBe("Action<string>?");
         });
 
         it("optional Func", () => {
-            const type = generation.Special.func({
-                typeParameters: [generation.Primitive.integer],
-                returnType: generation.Primitive.string
-            }).toOptionalIfNotAlready();
+            const type = generation.System.Func(
+                [generation.Primitive.integer],
+                generation.Primitive.string
+            ).asOptional();
             expect(getTypeOutput(type)).toBe("Func<int, string>?");
         });
     });
@@ -462,7 +450,7 @@ describe("Type support", () => {
             const type = generation.extern.OneOf.OneOf([
                 generation.Primitive.string,
                 generation.Primitive.integer
-            ]).toOptionalIfNotAlready();
+            ]).asOptional();
 
             expect(getTypeOutput(type)).toContain("OneOf<string, int>?");
         });
@@ -479,14 +467,14 @@ describe("Type support", () => {
                 name: "Person",
                 namespace: "Models"
             });
-            const type = generation.Collection.list(classRef.toOptionalIfNotAlready()).toOptionalIfNotAlready();
+            const type = generation.Collection.list(classRef.asOptional()).asOptional();
             expect(getTypeOutput(type)).toContain("IEnumerable<Person?>?");
         });
 
         it("map with optional string keys to optional list of integers", () => {
             const type = generation.Collection.map(
                 generation.Primitive.string,
-                generation.Collection.list(generation.Primitive.integer).toOptionalIfNotAlready()
+                generation.Collection.list(generation.Primitive.integer).asOptional()
             );
             expect(getTypeOutput(type)).toBe("Dictionary<string, IEnumerable<int>?>");
         });
@@ -501,9 +489,7 @@ describe("Type support", () => {
         });
 
         it("optional set of optional integers", () => {
-            const type = generation.Collection.set(
-                generation.Primitive.integer.toOptionalIfNotAlready()
-            ).toOptionalIfNotAlready();
+            const type = generation.Collection.set(generation.Primitive.integer.asOptional()).asOptional();
             expect(getTypeOutput(type)).toBe("HashSet<int?>?");
         });
 
@@ -516,23 +502,23 @@ describe("Type support", () => {
         });
 
         it("Func returning optional list", () => {
-            const type = generation.Special.func({
-                typeParameters: [generation.Primitive.string],
-                returnType: generation.Collection.list(generation.Primitive.integer).toOptionalIfNotAlready()
-            });
+            const type = generation.System.Func(
+                [generation.Primitive.string],
+                generation.Collection.list(generation.Primitive.integer).asOptional()
+            );
             expect(getTypeOutput(type)).toBe("Func<string, IEnumerable<int>?>");
         });
     });
 
     describe("systemType", () => {
         it("systemType", () => {
-            const type = generation.Special.systemType;
-            expect(getTypeOutput(type)).toBe("global::System.Type");
+            const type = generation.System.Type;
+            expect(getTypeOutput(type)).toBe("System.Type");
         });
 
         it("optional systemType", () => {
-            const type = generation.Special.systemType.toOptionalIfNotAlready();
-            expect(getTypeOutput(type)).toBe("global::System.Type?");
+            const type = generation.System.Type.asOptional();
+            expect(getTypeOutput(type)).toBe("System.Type?");
         });
     });
 
@@ -551,34 +537,22 @@ describe("Type support", () => {
                 name: "Color",
                 namespace: "Enums"
             });
-            const type = generation.Value.stringEnum(enumRef).toOptionalIfNotAlready();
+            const type = generation.Value.stringEnum(enumRef).asOptional();
             expect(getTypeOutput(type)).toContain("StringEnum<Color>?");
         });
 
         it("fileParam", () => {
-            const fileParamRef = generation.csharp.classReference({
-                name: "FileParameter",
-                namespace: "Core"
-            });
-            const type = generation.Special.fileParam(fileParamRef);
+            const type = generation.Types.FileParameter;
             expect(getTypeOutput(type)).toContain("FileParameter");
         });
 
         it("optional fileParam", () => {
-            const fileParamRef = generation.csharp.classReference({
-                name: "FileParameter",
-                namespace: "Core"
-            });
-            const type = generation.Special.fileParam(fileParamRef).toOptionalIfNotAlready();
+            const type = generation.Types.FileParameter.asOptional();
             expect(getTypeOutput(type)).toContain("FileParameter?");
         });
 
         it("list of fileParams", () => {
-            const fileParamRef = generation.csharp.classReference({
-                name: "FileParameter",
-                namespace: "Core"
-            });
-            const type = generation.Collection.list(generation.Special.fileParam(fileParamRef));
+            const type = generation.Collection.list(generation.Types.FileParameter);
             expect(getTypeOutput(type)).toContain("IEnumerable<FileParameter>");
         });
     });
@@ -703,29 +677,22 @@ describe("Type support", () => {
                 });
 
                 it("FileParameter", () => {
-                    const fileParamRef = generation.csharp.classReference({
-                        name: "FileParameter",
-                        namespace: "Core"
-                    });
-                    const fileParam = generation.Special.fileParam(fileParamRef);
+                    const fileParam = generation.Types.FileParameter;
                     expect(fileParam.isReferenceType).toBe(true);
                 });
 
                 it("Action", () => {
-                    const action = generation.Special.action({ typeParameters: [] });
+                    const action = generation.System.Action([]);
                     expect(action.isReferenceType).toBe(true);
                 });
 
                 it("Func", () => {
-                    const func = generation.Special.func({
-                        typeParameters: [],
-                        returnType: generation.Primitive.string
-                    });
+                    const func = generation.System.Func([], generation.Primitive.string);
                     expect(func.isReferenceType).toBe(true);
                 });
 
                 it("SystemType", () => {
-                    expect(generation.Special.systemType.isReferenceType).toBe(true);
+                    expect(generation.System.Type.isReferenceType).toBe(true);
                 });
 
                 it("Binary", () => {
@@ -746,13 +713,13 @@ describe("Type support", () => {
 
             describe("Optional types are always reference types", () => {
                 it("optional value type becomes reference type", () => {
-                    const optionalInt = generation.Primitive.integer.toOptionalIfNotAlready();
+                    const optionalInt = generation.Primitive.integer.asOptional();
                     // Optional value types become nullable reference types
                     expect(optionalInt.isReferenceType).toBe(true);
                 });
 
                 it("optional reference type remains reference type", () => {
-                    const optionalString = generation.Primitive.string.toOptionalIfNotAlready();
+                    const optionalString = generation.Primitive.string.asOptional();
                     // Optional reference types remain nullable reference types
                     expect(optionalString.isReferenceType).toBe(true);
                 });
@@ -791,37 +758,30 @@ describe("Type support", () => {
             });
 
             it("optional wrapper makes types optional", () => {
-                const optionalString = generation.Primitive.string.toOptionalIfNotAlready();
+                const optionalString = generation.Primitive.string.asOptional();
                 expect(optionalString.isOptional).toBe(true);
 
-                const optionalInt = generation.Primitive.integer.toOptionalIfNotAlready();
+                const optionalInt = generation.Primitive.integer.asOptional();
                 expect(optionalInt.isOptional).toBe(true);
             });
 
             it("optional collections are optional", () => {
-                const optionalList = generation.Collection.list(generation.Primitive.string).toOptionalIfNotAlready();
+                const optionalList = generation.Collection.list(generation.Primitive.string).asOptional();
                 expect(optionalList.isOptional).toBe(true);
             });
 
             it("delegates are not optional by default", () => {
-                const action = generation.Special.action({ typeParameters: [] });
+                const action = generation.System.Action([]);
                 expect(action.isOptional).toBe(false);
 
-                const func = generation.Special.func({
-                    typeParameters: [],
-                    returnType: generation.Primitive.string
-                });
+                const func = generation.System.Func([], generation.Primitive.string);
                 expect(func.isOptional).toBe(false);
             });
 
             it("special types are not optional by default", () => {
-                expect(generation.Special.systemType.isOptional).toBe(false);
+                expect(generation.System.Type.isOptional).toBe(false);
 
-                const fileParamRef = generation.csharp.classReference({
-                    name: "FileParameter",
-                    namespace: "Core"
-                });
-                const fileParam = generation.Special.fileParam(fileParamRef);
+                const fileParam = generation.Types.FileParameter;
                 expect(fileParam.isOptional).toBe(false);
             });
         });
@@ -885,72 +845,40 @@ describe("Type support", () => {
             });
 
             it("optional collection - isCollection", () => {
-                const optionalList = generation.Collection.list(generation.Primitive.string).toOptionalIfNotAlready();
+                const optionalList = generation.Collection.list(generation.Primitive.string).asOptional();
 
                 expect(optionalList.isCollection).toBe(false);
             });
 
             it("special types are not collections", () => {
-                expect(generation.Special.systemType.isCollection).toBe(false);
+                expect(generation.System.Type.isCollection).toBe(false);
                 expect(generation.Value.binary.isCollection).toBe(false);
 
-                const action = generation.Special.action({ typeParameters: [] });
+                const action = generation.System.Action([]);
                 expect(action.isCollection).toBe(false);
 
-                const func = generation.Special.func({
-                    typeParameters: [],
-                    returnType: generation.Primitive.string
-                });
+                const func = generation.System.Func([], generation.Primitive.string);
                 expect(func.isCollection).toBe(false);
             });
         });
 
-        describe("underlyingTypeIfOptional method", () => {
-            it("returns undefined for non-optional types", () => {
-                expect(generation.Primitive.string.underlyingTypeIfOptional()).toBeUndefined();
-                expect(generation.Primitive.integer.underlyingTypeIfOptional()).toBeUndefined();
-            });
-
-            it("returns underlying type for optional types", () => {
-                const optionalString = generation.Primitive.string.toOptionalIfNotAlready();
-                const underlying = optionalString.underlyingTypeIfOptional();
-                expect(underlying).toBeDefined();
-                if (underlying) {
-                    expect(getTypeOutput(underlying)).toBe("string");
-                }
-            });
-
-            it("returns underlying type for optional custom types", () => {
-                const classRef = generation.csharp.classReference({
-                    name: "Person",
-                    namespace: "Models"
-                });
-                const optionalPerson = classRef.toOptionalIfNotAlready();
-                const underlying = optionalPerson.underlyingTypeIfOptional();
-                expect(underlying).toBeDefined();
-                if (underlying) {
-                    expect(getTypeOutput(underlying)).toContain("Person");
-                }
-            });
-        });
-
-        describe("unwrapIfOptional method", () => {
+        describe("asNonOptional method", () => {
             it("returns self for non-optional types", () => {
                 const stringType = generation.Primitive.string;
-                expect(stringType.unwrapIfOptional()).toBe(stringType);
+                expect(stringType.asNonOptional()).toBe(stringType);
             });
 
             it("unwraps optional types", () => {
-                const optionalInt = generation.Primitive.integer.toOptionalIfNotAlready();
-                const unwrapped = optionalInt.unwrapIfOptional();
+                const optionalInt = generation.Primitive.integer.asOptional();
+                const unwrapped = optionalInt.asNonOptional();
                 expect(unwrapped.isOptional).toBe(false);
                 expect(getTypeOutput(unwrapped)).toBe("int");
             });
 
             it("unwraps optional collections", () => {
-                const optionalList = generation.Collection.list(generation.Primitive.string).toOptionalIfNotAlready();
+                const optionalList = generation.Collection.list(generation.Primitive.string).asOptional();
 
-                const unwrapped = optionalList.unwrapIfOptional();
+                const unwrapped = optionalList.asNonOptional();
                 expect(unwrapped.isOptional).toBe(false);
                 expect(getTypeOutput(unwrapped)).toBe("IEnumerable<string>");
             });
@@ -1014,24 +942,24 @@ describe("Type support", () => {
             });
         });
 
-        describe("toOptionalIfNotAlready method", () => {
+        describe("asOptional method", () => {
             it("makes non-optional types optional", () => {
                 const stringType = generation.Primitive.string;
-                const optionalString = stringType.toOptionalIfNotAlready();
+                const optionalString = stringType.asOptional();
                 expect(optionalString.isOptional).toBe(true);
                 expect(getTypeOutput(optionalString)).toBe("string?");
             });
 
             it("does not double-wrap already optional types", () => {
-                const optionalInt = generation.Primitive.integer.toOptionalIfNotAlready();
-                const doubleOptional = optionalInt.toOptionalIfNotAlready();
+                const optionalInt = generation.Primitive.integer.asOptional();
+                const doubleOptional = optionalInt.asOptional();
                 expect(doubleOptional.isOptional).toBe(true);
                 expect(getTypeOutput(doubleOptional)).toBe("int?");
             });
 
             it("makes collections optional", () => {
                 const list = generation.Collection.list(generation.Primitive.string);
-                const optionalList = list.toOptionalIfNotAlready();
+                const optionalList = list.asOptional();
                 expect(optionalList.isOptional).toBe(true);
                 expect(getTypeOutput(optionalList)).toBe("IEnumerable<string>?");
             });
@@ -1082,125 +1010,108 @@ describe("Type support", () => {
             });
         });
 
-        describe("isAsyncEnumerable property", () => {
-            it("regular types are not async enumerable", () => {
-                expect(generation.Primitive.string.isAsyncEnumerable).toBe(false);
-                expect(generation.Primitive.integer.isAsyncEnumerable).toBe(false);
-            });
-
-            it("collections are not async enumerable by default", () => {
-                const list = generation.Collection.list(generation.Primitive.string);
-                expect(list.isAsyncEnumerable).toBe(false);
-            });
-        });
-
         describe("COMPREHENSIVE: Optional variants of ALL types", () => {
             it("Optional<Integer>", () => {
-                const type = generation.Primitive.integer.toOptionalIfNotAlready();
+                const type = generation.Primitive.integer.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("int?");
             });
 
             it("Optional<Long>", () => {
-                const type = generation.Primitive.long.toOptionalIfNotAlready();
+                const type = generation.Primitive.long.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("long?");
             });
 
             it("Optional<Uint>", () => {
-                const type = generation.Primitive.uint.toOptionalIfNotAlready();
+                const type = generation.Primitive.uint.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("uint?");
             });
 
             it("Optional<ULong>", () => {
-                const type = generation.Primitive.ulong.toOptionalIfNotAlready();
+                const type = generation.Primitive.ulong.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("ulong?");
             });
 
             it("Optional<Boolean>", () => {
-                const type = generation.Primitive.boolean.toOptionalIfNotAlready();
+                const type = generation.Primitive.boolean.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("bool?");
             });
 
             it("Optional<Float>", () => {
-                const type = generation.Primitive.float.toOptionalIfNotAlready();
+                const type = generation.Primitive.float.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("float?");
             });
 
             it("Optional<Double>", () => {
-                const type = generation.Primitive.double.toOptionalIfNotAlready();
+                const type = generation.Primitive.double.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("double?");
             });
 
             it("Optional<DateOnly>", () => {
-                const type = generation.Value.dateOnly.toOptionalIfNotAlready();
+                const type = generation.Value.dateOnly.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("DateOnly?");
             });
 
             it("Optional<DateTime>", () => {
-                const type = generation.Value.dateTime.toOptionalIfNotAlready();
+                const type = generation.Value.dateTime.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("DateTime?");
             });
 
             it("Optional<String>", () => {
-                const type = generation.Primitive.string.toOptionalIfNotAlready();
+                const type = generation.Primitive.string.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("string?");
             });
 
             it("Optional<Uuid>", () => {
-                const type = generation.Value.uuid.toOptionalIfNotAlready();
+                const type = generation.Value.uuid.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("string?");
             });
 
             it("Optional<Binary>", () => {
-                const type = generation.Value.binary.toOptionalIfNotAlready();
+                const type = generation.Value.binary.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("byte[]?");
             });
 
             it("Optional<Object>", () => {
-                const type = generation.Primitive.object.toOptionalIfNotAlready();
+                const type = generation.Primitive.object.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("object?");
             });
 
             it("Optional<SystemType>", () => {
-                const type = generation.Special.systemType.toOptionalIfNotAlready();
+                const type = generation.System.Type.asOptional();
                 expect(type.isOptional).toBe(true);
-                expect(getTypeOutput(type)).toBe("global::System.Type?");
+                expect(getTypeOutput(type)).toBe("System.Type?");
             });
 
             it("Optional<Action>", () => {
-                const action = generation.Special.action({
-                    typeParameters: [generation.Primitive.string]
-                });
-                const type = action.toOptionalIfNotAlready();
+                const action = generation.System.Action([generation.Primitive.string]);
+                const type = action.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("Action<string>?");
             });
 
             it("Optional<Func>", () => {
-                const func = generation.Special.func({
-                    typeParameters: [generation.Primitive.integer],
-                    returnType: generation.Primitive.string
-                });
-                const type = func.toOptionalIfNotAlready();
+                const func = generation.System.Func([generation.Primitive.integer], generation.Primitive.string);
+                const type = func.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("Func<int, string>?");
             });
 
             it("Optional<CustomClass>", () => {
                 const classRef = generation.csharp.classReference({ name: "Person", namespace: "Models" });
-                const type = classRef.toOptionalIfNotAlready();
+                const type = classRef.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toContain("Person?");
             });
@@ -1208,15 +1119,14 @@ describe("Type support", () => {
             it("Optional<StringEnum>", () => {
                 const enumRef = generation.csharp.classReference({ name: "Color", namespace: "Enums" });
                 const stringEnum = generation.Value.stringEnum(enumRef);
-                const type = stringEnum.toOptionalIfNotAlready();
+                const type = stringEnum.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toContain("StringEnum<Color>?");
             });
 
             it("Optional<FileParameter>", () => {
-                const fileParamRef = generation.csharp.classReference({ name: "FileParameter", namespace: "Core" });
-                const fileParam = generation.Special.fileParam(fileParamRef);
-                const type = fileParam.toOptionalIfNotAlready();
+                const fileParam = generation.Types.FileParameter;
+                const type = fileParam.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toContain("FileParameter?");
             });
@@ -1226,7 +1136,7 @@ describe("Type support", () => {
                     generation.Primitive.string,
                     generation.Primitive.integer
                 ]);
-                const type = oneOf.toOptionalIfNotAlready();
+                const type = oneOf.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toContain("OneOf<string, int>?");
             });
@@ -1236,7 +1146,7 @@ describe("Type support", () => {
                     generation.Primitive.string,
                     generation.Primitive.integer
                 );
-                const type = kvp.toOptionalIfNotAlready();
+                const type = kvp.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("KeyValuePair<string, int>?");
             });
@@ -1344,35 +1254,35 @@ describe("Type support", () => {
         describe("COMPREHENSIVE: Optional List of ALL types", () => {
             it("Optional<List<Integer>>", () => {
                 const list = generation.Collection.list(generation.Primitive.integer);
-                const type = list.toOptionalIfNotAlready();
+                const type = list.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("IEnumerable<int>?");
             });
 
             it("Optional<List<String>>", () => {
                 const list = generation.Collection.list(generation.Primitive.string);
-                const type = list.toOptionalIfNotAlready();
+                const type = list.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("IEnumerable<string>?");
             });
 
             it("Optional<List<Boolean>>", () => {
                 const list = generation.Collection.list(generation.Primitive.boolean);
-                const type = list.toOptionalIfNotAlready();
+                const type = list.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("IEnumerable<bool>?");
             });
 
             it("Optional<List<Double>>", () => {
                 const list = generation.Collection.list(generation.Primitive.double);
-                const type = list.toOptionalIfNotAlready();
+                const type = list.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("IEnumerable<double>?");
             });
 
             it("Optional<List<DateTime>>", () => {
                 const list = generation.Collection.list(generation.Value.dateTime);
-                const type = list.toOptionalIfNotAlready();
+                const type = list.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("IEnumerable<DateTime>?");
             });
@@ -1380,7 +1290,7 @@ describe("Type support", () => {
             it("Optional<List<CustomClass>>", () => {
                 const classRef = generation.csharp.classReference({ name: "Person", namespace: "Models" });
                 const list = generation.Collection.list(classRef);
-                const type = list.toOptionalIfNotAlready();
+                const type = list.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toContain("IEnumerable<Person>?");
             });
@@ -1388,38 +1298,38 @@ describe("Type support", () => {
 
         describe("COMPREHENSIVE: List of Optional ALL types", () => {
             it("List<Optional<Integer>>", () => {
-                const optional = generation.Primitive.integer.toOptionalIfNotAlready();
+                const optional = generation.Primitive.integer.asOptional();
                 const type = generation.Collection.list(optional);
                 expect(getTypeOutput(type)).toBe("IEnumerable<int?>");
             });
 
             it("List<Optional<String>>", () => {
-                const optional = generation.Primitive.string.toOptionalIfNotAlready();
+                const optional = generation.Primitive.string.asOptional();
                 const type = generation.Collection.list(optional);
                 expect(getTypeOutput(type)).toBe("IEnumerable<string?>");
             });
 
             it("List<Optional<Boolean>>", () => {
-                const optional = generation.Primitive.boolean.toOptionalIfNotAlready();
+                const optional = generation.Primitive.boolean.asOptional();
                 const type = generation.Collection.list(optional);
                 expect(getTypeOutput(type)).toBe("IEnumerable<bool?>");
             });
 
             it("List<Optional<Double>>", () => {
-                const optional = generation.Primitive.double.toOptionalIfNotAlready();
+                const optional = generation.Primitive.double.asOptional();
                 const type = generation.Collection.list(optional);
                 expect(getTypeOutput(type)).toBe("IEnumerable<double?>");
             });
 
             it("List<Optional<DateTime>>", () => {
-                const optional = generation.Value.dateTime.toOptionalIfNotAlready();
+                const optional = generation.Value.dateTime.asOptional();
                 const type = generation.Collection.list(optional);
                 expect(getTypeOutput(type)).toBe("IEnumerable<DateTime?>");
             });
 
             it("List<Optional<CustomClass>>", () => {
                 const classRef = generation.csharp.classReference({ name: "Person", namespace: "Models" });
-                const optional = classRef.toOptionalIfNotAlready();
+                const optional = classRef.asOptional();
                 const type = generation.Collection.list(optional);
                 expect(getTypeOutput(type)).toContain("IEnumerable<Person?>");
             });
@@ -1429,7 +1339,7 @@ describe("Type support", () => {
                     generation.Primitive.string,
                     generation.Primitive.integer
                 ]);
-                const optional = oneOf.toOptionalIfNotAlready();
+                const optional = oneOf.asOptional();
                 const type = generation.Collection.list(optional);
                 expect(getTypeOutput(type)).toContain("IEnumerable<OneOf<string, int>?>");
             });
@@ -1437,34 +1347,34 @@ describe("Type support", () => {
 
         describe("COMPREHENSIVE: Optional List of Optional ALL types", () => {
             it("Optional<List<Optional<Integer>>>", () => {
-                const optional = generation.Primitive.integer.toOptionalIfNotAlready();
+                const optional = generation.Primitive.integer.asOptional();
                 const list = generation.Collection.list(optional);
-                const type = list.toOptionalIfNotAlready();
+                const type = list.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("IEnumerable<int?>?");
             });
 
             it("Optional<List<Optional<String>>>", () => {
-                const optional = generation.Primitive.string.toOptionalIfNotAlready();
+                const optional = generation.Primitive.string.asOptional();
                 const list = generation.Collection.list(optional);
-                const type = list.toOptionalIfNotAlready();
+                const type = list.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("IEnumerable<string?>?");
             });
 
             it("Optional<List<Optional<Boolean>>>", () => {
-                const optional = generation.Primitive.boolean.toOptionalIfNotAlready();
+                const optional = generation.Primitive.boolean.asOptional();
                 const list = generation.Collection.list(optional);
-                const type = list.toOptionalIfNotAlready();
+                const type = list.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toBe("IEnumerable<bool?>?");
             });
 
             it("Optional<List<Optional<CustomClass>>>", () => {
                 const classRef = generation.csharp.classReference({ name: "Person", namespace: "Models" });
-                const optional = classRef.toOptionalIfNotAlready();
+                const optional = classRef.asOptional();
                 const list = generation.Collection.list(optional);
-                const type = list.toOptionalIfNotAlready();
+                const type = list.asOptional();
                 expect(type.isOptional).toBe(true);
                 expect(getTypeOutput(type)).toContain("IEnumerable<Person?>?");
             });
@@ -1494,20 +1404,20 @@ describe("Type support", () => {
 
             it("Optional<Set<Integer>>", () => {
                 const set = generation.Collection.set(generation.Primitive.integer);
-                const type = set.toOptionalIfNotAlready();
+                const type = set.asOptional();
                 expect(getTypeOutput(type)).toBe("HashSet<int>?");
             });
 
             it("Set<Optional<Integer>>", () => {
-                const optional = generation.Primitive.integer.toOptionalIfNotAlready();
+                const optional = generation.Primitive.integer.asOptional();
                 const type = generation.Collection.set(optional);
                 expect(getTypeOutput(type)).toBe("HashSet<int?>");
             });
 
             it("Optional<Set<Optional<String>>>", () => {
-                const optional = generation.Primitive.string.toOptionalIfNotAlready();
+                const optional = generation.Primitive.string.asOptional();
                 const set = generation.Collection.set(optional);
-                const type = set.toOptionalIfNotAlready();
+                const type = set.asOptional();
                 expect(getTypeOutput(type)).toBe("HashSet<string?>?");
             });
         });
@@ -1541,20 +1451,20 @@ describe("Type support", () => {
 
             it("Optional<Array<Integer>>", () => {
                 const array = generation.Collection.array(generation.Primitive.integer);
-                const type = array.toOptionalIfNotAlready();
+                const type = array.asOptional();
                 expect(getTypeOutput(type)).toBe("int[]?");
             });
 
             it("Array<Optional<String>>", () => {
-                const optional = generation.Primitive.string.toOptionalIfNotAlready();
+                const optional = generation.Primitive.string.asOptional();
                 const type = generation.Collection.array(optional);
                 expect(getTypeOutput(type)).toBe("string?[]");
             });
 
             it("Optional<Array<Optional<Integer>>>", () => {
-                const optional = generation.Primitive.integer.toOptionalIfNotAlready();
+                const optional = generation.Primitive.integer.asOptional();
                 const array = generation.Collection.array(optional);
-                const type = array.toOptionalIfNotAlready();
+                const type = array.asOptional();
                 expect(getTypeOutput(type)).toBe("int?[]?");
             });
         });
@@ -1566,21 +1476,21 @@ describe("Type support", () => {
             });
 
             it("Map<String, Optional<Integer>>", () => {
-                const optional = generation.Primitive.integer.toOptionalIfNotAlready();
+                const optional = generation.Primitive.integer.asOptional();
                 const type = generation.Collection.map(generation.Primitive.string, optional);
                 expect(getTypeOutput(type)).toBe("Dictionary<string, int?>");
             });
 
             it("Optional<Map<String, Integer>>", () => {
                 const map = generation.Collection.map(generation.Primitive.string, generation.Primitive.integer);
-                const type = map.toOptionalIfNotAlready();
+                const type = map.asOptional();
                 expect(getTypeOutput(type)).toBe("Dictionary<string, int>?");
             });
 
             it("Optional<Map<String, Optional<Boolean>>>", () => {
-                const optional = generation.Primitive.boolean.toOptionalIfNotAlready();
+                const optional = generation.Primitive.boolean.asOptional();
                 const map = generation.Collection.map(generation.Primitive.string, optional);
-                const type = map.toOptionalIfNotAlready();
+                const type = map.asOptional();
                 expect(getTypeOutput(type)).toBe("Dictionary<string, bool?>?");
             });
 
@@ -1592,7 +1502,7 @@ describe("Type support", () => {
 
             it("Map<String, Optional<List<Integer>>>", () => {
                 const list = generation.Collection.list(generation.Primitive.integer);
-                const optional = list.toOptionalIfNotAlready();
+                const optional = list.asOptional();
                 const type = generation.Collection.map(generation.Primitive.string, optional);
                 expect(getTypeOutput(type)).toBe("Dictionary<string, IEnumerable<int>?>");
             });
@@ -1605,10 +1515,10 @@ describe("Type support", () => {
 
             it("Optional<List<Map<String, Optional<CustomClass>>>>", () => {
                 const classRef = generation.csharp.classReference({ name: "Data", namespace: "Models" });
-                const optional = classRef.toOptionalIfNotAlready();
+                const optional = classRef.asOptional();
                 const map = generation.Collection.map(generation.Primitive.string, optional);
                 const list = generation.Collection.list(map);
-                const type = list.toOptionalIfNotAlready();
+                const type = list.asOptional();
                 expect(getTypeOutput(type)).toContain("IEnumerable<Dictionary<string, Data?>>");
             });
         });

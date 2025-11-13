@@ -104,7 +104,7 @@
               },
               "request_id": {
                 "docs": "",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -131,11 +131,11 @@
               },
               "field": {
                 "docs": "Optional. Used to identify a particular field or query parameter that was in error.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "message": {
                 "docs": "Optional. Human readable description of the error.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
             },
             "source": {
@@ -217,10 +217,10 @@ types:
           A string indicating the kind of error, used to further qualify the
           HTTP response code
       message:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Optional. Human readable description of the error.
       field:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Optional. Used to identify a particular field or query parameter that
           was in error.
@@ -236,7 +236,7 @@ types:
         type: string
         docs: The type is error.list
       request_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: ''
         validation:
           format: uuid
@@ -280,7 +280,7 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
               "examples": [
                 {
                   "headers": {
-                    "Intercom-Version": "1.0",
+                    "Intercom-Version": "root.IntercomVersion",
                   },
                   "name": "Successful",
                   "request": {
@@ -338,7 +338,7 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
                 },
                 {
                   "headers": {
-                    "Intercom-Version": "1.0",
+                    "Intercom-Version": "root.IntercomVersion",
                   },
                   "name": "Bad Request",
                   "request": {},
@@ -395,7 +395,7 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
               "pagination": undefined,
               "path": "/companies",
               "request": {
-                "body": "optional<root.CreateOrUpdateCompanyRequest>",
+                "body": "nullable<root.CreateOrUpdateCompanyRequest>",
                 "content-type": "application/json",
               },
               "response": {
@@ -576,7 +576,7 @@ service:
         openapi: ../openapi.yml
       display-name: Create or Update a company
       request:
-        body: optional<root.CreateOrUpdateCompanyRequest>
+        body: nullable<root.CreateOrUpdateCompanyRequest>
         content-type: application/json
       response:
         docs: Successful
@@ -588,7 +588,7 @@ service:
       examples:
         - name: Successful
           headers:
-            Intercom-Version: '1.0'
+            Intercom-Version: root.IntercomVersion
           request:
             name: my company
             company_id: company_remote_id
@@ -630,7 +630,7 @@ service:
                     count: 3
         - name: Bad Request
           headers:
-            Intercom-Version: '1.0'
+            Intercom-Version: root.IntercomVersion
           request: {}
           response:
             body:
@@ -783,7 +783,7 @@ types:
             "properties": {
               "count": {
                 "docs": "The number of items in the user segment. It's returned when `include_count=true` is included in the request.",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "created_at": {
                 "docs": "The time the segment was created.",
@@ -858,7 +858,7 @@ types:
         type: optional<SegmentPersonType>
         docs: 'Type of the contact: contact (lead) or user.'
       count:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: >-
           The number of items in the user segment. It's returned when
           `include_count=true` is included in the request.

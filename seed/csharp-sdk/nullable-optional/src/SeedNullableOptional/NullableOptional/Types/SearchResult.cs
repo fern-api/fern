@@ -194,12 +194,12 @@ public record SearchResult
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<SearchResult>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(SearchResult).IsAssignableFrom(typeToConvert);
 
         public override SearchResult Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

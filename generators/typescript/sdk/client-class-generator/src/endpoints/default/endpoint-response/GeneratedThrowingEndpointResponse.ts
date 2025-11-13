@@ -334,12 +334,22 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                               ts.factory.createIdentifier("length")
                           ),
                           ts.factory.createToken(ts.SyntaxKind.GreaterThanEqualsToken),
-                          ts.factory.createParenthesizedExpression(
-                              ts.factory.createBinaryExpression(
-                                  stepPropertyAccess,
-                                  ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                  ts.factory.createNumericLiteral("1")
-                              )
+                          // access to stepPropertyAccess should be an integer so that it compares correctly to items.length
+                          ts.factory.createCallExpression(
+                              ts.factory.createPropertyAccessExpression(
+                                  ts.factory.createIdentifier("Math"),
+                                  ts.factory.createIdentifier("floor")
+                              ),
+                              undefined,
+                              [
+                                  ts.factory.createParenthesizedExpression(
+                                      ts.factory.createBinaryExpression(
+                                          stepPropertyAccess,
+                                          ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                          ts.factory.createNumericLiteral("1")
+                                      )
+                                  )
+                              ]
                           )
                       );
                   })()

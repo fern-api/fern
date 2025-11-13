@@ -38,6 +38,11 @@ defaultCustomConfig: {}
 scripts:
   - docker: fernapi/csharp-seed
     commands:
+      # Check for .NET 10
+      # if you are getting an error from this and using docker, run `docker pull fernapi/csharp-seed:latest`
+      # otherwise install .NET 10 
+      - 'command -v dotnet >/dev/null 2>&1 && ver=$(dotnet --version) && major=$(echo "$ver" | cut -d. -f1) && [ "$major" -ge 10 ] || { echo "ERROR: .NET SDK 10+ required (found ${ver:-not found})"; false; }'
+
       # add the dynamic snippets project to the solution
       - dotnet sln src add src/*DynamicSnippets/*.csproj 
       

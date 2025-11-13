@@ -158,10 +158,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
     public get Collection() {
         return this.generation.Collection;
     }
-    /** Provides access to special types */
-    public get Special() {
-        return this.generation.Special;
-    }
+
     public readonly csharpTypeMapper: CsharpTypeMapper;
     public readonly csharpProtobufTypeMapper: CsharpProtobufTypeMapper;
     public readonly protobufResolver: ProtobufResolver;

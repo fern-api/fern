@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.9.1
+  changelogEntry:
+    - type: fix
+      summary: |
+        Add check in test script to verify that .NET 10 is installed.
+  createdAt: "2025-11-13"
+  irVersion: 61
+
 - version: 2.9.0
   changelogEntry:
     - type: feat

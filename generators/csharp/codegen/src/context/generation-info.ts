@@ -6,7 +6,8 @@ import { join } from "path";
 import { is, text } from "..";
 import * as ast from "../ast";
 import { ClassReference } from "../ast/types/ClassReference";
-import { Collection, Primitive, Special, Type, Value } from "../ast/types/Type";
+import { Type } from "../ast/types/IType";
+import { Collection, Primitive, Value } from "../ast/types/Type";
 import { CSharp } from "../csharp";
 import { type CsharpConfigSchema } from "../custom-config";
 import { lazy } from "../utils/lazy";
@@ -491,7 +492,10 @@ export class Generation {
         FileParameter: () =>
             this.csharp.classReference({
                 namespace: this.namespaces.publicCore,
-                origin: this.model.staticExplicit("FileParameter")
+                origin: this.model.staticExplicit("FileParameter"),
+                multipartMethodName: "AddFileParameterPart",
+                multipartMethodNameForCollection: "AddFileParameterParts",
+                isReferenceType: true
             }),
         /** HTTP header management utilities */
         Headers: () =>
@@ -1039,65 +1043,6 @@ export class Generation {
          */
         keyValuePair: (keyType: Type, valueType: Type) => {
             return new Collection.KeyValuePair(keyType, valueType, this);
-        }
-    });
-    public Special = lazy({
-        /**
-         * Creates a OneOf union type.
-         *
-         * @param memberValues - Array of possible types in the union
-         * @returns A Type object representing the OneOf<T1, T2, ...> type
-         */
-        oneOf: (memberValues: Type[]) => {
-            return new Special.OneOf(memberValues, this);
-        },
-        /**
-         * Creates a OneOfBase union type.
-         *
-         * @param memberValues - Array of possible types in the union
-         * @returns A Type object representing the OneOfBase<T1, T2, ...> type
-         */
-        oneOfBase: (memberValues: Type[]) => {
-            return new Special.OneOfBase(memberValues, this);
-        },
-        /**
-         * Creates an Action delegate type.
-         *
-         * @param typeParameters - Array of type parameters for the Action
-         * @returns A Type object representing the C# Action<T1, T2, ...> type
-         */
-        action: ({ typeParameters }: { typeParameters: Type[] }) => {
-            return new Special.Action(typeParameters, this);
-        },
-
-        /**
-         * Creates a Func delegate type.
-         *
-         * @param typeParameters - Array of type parameters for the Func
-         * @param returnType - The return type of the Func
-         * @returns A Type object representing the C# Func<T1, T2, ..., TResult> type
-         */
-        func: ({ typeParameters, returnType }: { typeParameters: Type[]; returnType: Type }) => {
-            return new Special.Func(typeParameters, returnType, this);
-        },
-
-        /**
-         * Creates a generic C# type placeholder.
-         *
-         * @returns A Type object representing a generic C# type
-         */
-        systemType: () => {
-            return new Special.SystemType(this);
-        },
-
-        /**
-         * Creates a file parameter type.
-         *
-         * @param classReference - The class reference for the file parameter
-         * @returns A Type object representing a file parameter type
-         */
-        fileParam: (classReference: ClassReference) => {
-            return new Special.FileParameter(classReference, this);
         }
     });
 

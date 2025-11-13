@@ -19,21 +19,21 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "ChatCompletionsCreateStreamRequest",
+      "generatedRequestName": "CreateChatCompletionsStreamRequest",
       "request": {
         "schema": {
           "allOf": [],
           "properties": [
             {
               "conflict": {},
-              "generatedName": "chatCompletionsCreateStreamRequestStream",
+              "generatedName": "createChatCompletionsStreamRequestStream",
               "key": "stream",
               "schema": {
                 "value": {
                   "value": true,
                   "type": "boolean"
                 },
-                "generatedName": "ChatCompletionsCreateStreamRequestStream",
+                "generatedName": "CreateChatCompletionsStreamRequestStream",
                 "groupName": [],
                 "type": "literal"
               },
@@ -41,13 +41,13 @@
             },
             {
               "conflict": {},
-              "generatedName": "chatCompletionsCreateStreamRequestPrompt",
+              "generatedName": "createChatCompletionsStreamRequestPrompt",
               "key": "prompt",
               "schema": {
                 "schema": {
                   "type": "string"
                 },
-                "generatedName": "ChatCompletionsCreateStreamRequestPrompt",
+                "generatedName": "CreateChatCompletionsStreamRequestPrompt",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -55,7 +55,7 @@
             }
           ],
           "allOfPropertyConflicts": [],
-          "generatedName": "ChatCompletionsCreateStreamRequest",
+          "generatedName": "CreateChatCompletionsStreamRequest",
           "groupName": [],
           "additionalProperties": false,
           "source": {
@@ -77,7 +77,7 @@
         "description": "",
         "fullExamples": [],
         "schema": {
-          "generatedName": "ChatCompletionsCreateStreamResponse",
+          "generatedName": "CreateChatCompletionsStreamResponse",
           "schema": "CompletionChunk",
           "source": {
             "file": "../openapi.yml",
@@ -161,21 +161,21 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "ChatCompletionsCreateRequest",
+      "generatedRequestName": "CreateChatCompletionsRequest",
       "request": {
         "schema": {
           "allOf": [],
           "properties": [
             {
               "conflict": {},
-              "generatedName": "chatCompletionsCreateRequestStream",
+              "generatedName": "createChatCompletionsRequestStream",
               "key": "stream",
               "schema": {
                 "value": {
                   "value": false,
                   "type": "boolean"
                 },
-                "generatedName": "ChatCompletionsCreateRequestStream",
+                "generatedName": "CreateChatCompletionsRequestStream",
                 "groupName": [],
                 "type": "literal"
               },
@@ -183,13 +183,13 @@
             },
             {
               "conflict": {},
-              "generatedName": "chatCompletionsCreateRequestPrompt",
+              "generatedName": "createChatCompletionsRequestPrompt",
               "key": "prompt",
               "schema": {
                 "schema": {
                   "type": "string"
                 },
-                "generatedName": "ChatCompletionsCreateRequestPrompt",
+                "generatedName": "CreateChatCompletionsRequestPrompt",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -197,7 +197,7 @@
             }
           ],
           "allOfPropertyConflicts": [],
-          "generatedName": "ChatCompletionsCreateRequest",
+          "generatedName": "CreateChatCompletionsRequest",
           "groupName": [],
           "additionalProperties": false,
           "source": {
@@ -218,7 +218,7 @@
       "response": {
         "description": "",
         "schema": {
-          "generatedName": "ChatCompletionsCreateResponse",
+          "generatedName": "CreateChatCompletionsResponse",
           "schema": "Completion",
           "source": {
             "file": "../openapi.yml",

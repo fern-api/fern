@@ -103,9 +103,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     protected get Collection() {
         return this.generation.Collection;
     }
-    protected get Special() {
-        return this.generation.Special;
-    }
 
     public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[]> {
         const snippets: Record<FernGeneratorCli.FeatureId, string[]> = {};

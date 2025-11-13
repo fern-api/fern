@@ -146,7 +146,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelGenerato
             parameters: [
                 this.csharp.parameter({
                     name: "other",
-                    type: this.Primitive.string.toOptionalIfNotAlready()
+                    type: this.Primitive.string.asOptional()
                 })
             ],
             return_: this.Primitive.boolean,

@@ -3,7 +3,7 @@ import { AstNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
 import { type Expression } from "../language/Expression";
 import { type ClassReference } from "../types/ClassReference";
-import { type Type } from "../types/Type";
+import { type Type } from "../types/IType";
 
 export declare namespace Variable {
     interface Args {

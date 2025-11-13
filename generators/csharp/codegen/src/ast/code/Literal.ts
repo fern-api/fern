@@ -3,7 +3,7 @@ import { is } from "../../utils/type-guards";
 import { AstNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
 import { ClassReference } from "../types/ClassReference";
-import { Type } from "../types/Type";
+import { Type } from "../types/IType";
 
 /**
  * Represents a field in a class constructor initialization.

@@ -2,7 +2,7 @@ import { type Generation } from "../../context/generation-info";
 import { AstNode } from "../core";
 import { Writer } from "../core/Writer";
 import { ClassReference } from "../types/ClassReference";
-import { Type } from "../types/Type";
+import { Type } from "../types/IType";
 
 export declare namespace Parameter {
     interface Args {

@@ -16,7 +16,7 @@
               },
             ],
             "status-code": 422,
-            "type": "HTTPValidationError",
+            "type": "HttpValidationError",
           },
           "CreateAToolApiV1ToolsPostRequestUnprocessableEntityError": {
             "docs": "Validation Error",
@@ -28,7 +28,7 @@
               },
             ],
             "status-code": 422,
-            "type": "HTTPValidationError",
+            "type": "HttpValidationError",
           },
           "CreateAgentApiV1AgentsPostRequestUnprocessableEntityError": {
             "docs": "Validation Error",
@@ -40,7 +40,7 @@
               },
             ],
             "status-code": 422,
-            "type": "HTTPValidationError",
+            "type": "HttpValidationError",
           },
           "CreateApiTokenApiV1ApiTokensPostRequestUnprocessableEntityError": {
             "docs": "Validation Error",
@@ -52,7 +52,7 @@
               },
             ],
             "status-code": 422,
-            "type": "HTTPValidationError",
+            "type": "HttpValidationError",
           },
           "CreateDocumentApiV1DocumentsPostRequestUnprocessableEntityError": {
             "docs": "Validation Error",
@@ -64,7 +64,7 @@
               },
             ],
             "status-code": 422,
-            "type": "HTTPValidationError",
+            "type": "HttpValidationError",
           },
           "DeleteAgentApiV1AgentsAgentIdDeleteRequestUnprocessableEntityError": {
             "docs": "Validation Error",
@@ -76,7 +76,7 @@
               },
             ],
             "status-code": 422,
-            "type": "HTTPValidationError",
+            "type": "HttpValidationError",
           },
           "DeleteApiTokenApiV1ApiTokensTokenIdDeleteRequestUnprocessableEntityError": {
             "docs": "Validation Error",
@@ -88,7 +88,7 @@
               },
             ],
             "status-code": 422,
-            "type": "HTTPValidationError",
+            "type": "HttpValidationError",
           },
           "DeleteDocumentApiV1DocumentsDocumentIdDeleteRequestUnprocessableEntityError": {
             "docs": "Validation Error",
@@ -100,7 +100,7 @@
               },
             ],
             "status-code": 422,
-            "type": "HTTPValidationError",
+            "type": "HttpValidationError",
           },
           "DeletePromptApiV1PromptsPromptIdDeleteRequestUnprocessableEntityError": {
             "docs": "Validation Error",
@@ -112,7 +112,7 @@
               },
             ],
             "status-code": 422,
-            "type": "HTTPValidationError",
+            "type": "HttpValidationError",
           },
           "DeleteToolApiV1ToolsToolIdDeleteRequestUnprocessableEntityError": {
             "docs": "Validation Error",
@@ -124,7 +124,7 @@
               },
             ],
             "status-code": 422,
-            "type": "HTTPValidationError",
+            "type": "HttpValidationError",
           },
           "GetAgentApiV1AgentsAgentIdGetRequestUnprocessableEntityError": {
             "docs": "Validation Error",
@@ -136,7 +136,7 @@
               },
             ],
             "status-code": 422,
-            "type": "HTTPValidationError",
+            "type": "HttpValidationError",
           },
           "GetApiTokenApiV1ApiTokensTokenIdGetRequestUnprocessableEntityError": {
             "docs": "Validation Error",
@@ -148,7 +148,7 @@
               },
             ],
             "status-code": 422,
-            "type": "HTTPValidationError",
+            "type": "HttpValidationError",
           },
           "GetDocumentApiV1DocumentsDocumentIdGetRequestUnprocessableEntityError": {
             "docs": "Validation Error",
@@ -160,7 +160,7 @@
               },
             ],
             "status-code": 422,
-            "type": "HTTPValidationError",
+            "type": "HttpValidationError",
           },
           "GetPromptApiV1PromptsPromptIdGetRequestUnprocessableEntityError": {
             "docs": "Validation Error",
@@ -172,7 +172,7 @@
               },
             ],
             "status-code": 422,
-            "type": "HTTPValidationError",
+            "type": "HttpValidationError",
           },
           "GetToolApiV1ToolsToolIdGetRequestUnprocessableEntityError": {
             "docs": "Validation Error",
@@ -184,7 +184,7 @@
               },
             ],
             "status-code": 422,
-            "type": "HTTPValidationError",
+            "type": "HttpValidationError",
           },
           "PatchAgentApiV1AgentsAgentIdPatchRequestUnprocessableEntityError": {
             "docs": "Validation Error",
@@ -196,7 +196,7 @@
               },
             ],
             "status-code": 422,
-            "type": "HTTPValidationError",
+            "type": "HttpValidationError",
           },
           "PatchPromptApiV1PromptsPromptIdPatchRequestUnprocessableEntityError": {
             "docs": "Validation Error",
@@ -208,7 +208,7 @@
               },
             ],
             "status-code": 422,
-            "type": "HTTPValidationError",
+            "type": "HttpValidationError",
           },
           "PromptAgentApiV1AgentsAgentIdPredictPostRequestUnprocessableEntityError": {
             "docs": "Validation Error",
@@ -220,7 +220,7 @@
               },
             ],
             "status-code": 422,
-            "type": "HTTPValidationError",
+            "type": "HttpValidationError",
           },
           "ReadUserApiV1UsersUserIdGetRequestUnprocessableEntityError": {
             "docs": "Validation Error",
@@ -232,7 +232,7 @@
               },
             ],
             "status-code": 422,
-            "type": "HTTPValidationError",
+            "type": "HttpValidationError",
           },
           "SignInApiV1AuthSignInPostRequestUnprocessableEntityError": {
             "docs": "Validation Error",
@@ -244,7 +244,7 @@
               },
             ],
             "status-code": 422,
-            "type": "HTTPValidationError",
+            "type": "HttpValidationError",
           },
           "SignUpApiV1AuthSignUpPostRequestUnprocessableEntityError": {
             "docs": "Validation Error",
@@ -256,11 +256,11 @@
               },
             ],
             "status-code": 422,
-            "type": "HTTPValidationError",
+            "type": "HttpValidationError",
           },
         },
         "types": {
-          "HTTPValidationError": {
+          "HttpValidationError": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
@@ -304,132 +304,132 @@
       "rawContents": "errors:
   CreateAgentApiV1AgentsPostRequestUnprocessableEntityError:
     status-code: 422
-    type: HTTPValidationError
+    type: HttpValidationError
     docs: Validation Error
     examples:
       - value: {}
   GetAgentApiV1AgentsAgentIdGetRequestUnprocessableEntityError:
     status-code: 422
-    type: HTTPValidationError
+    type: HttpValidationError
     docs: Validation Error
     examples:
       - value: {}
   DeleteAgentApiV1AgentsAgentIdDeleteRequestUnprocessableEntityError:
     status-code: 422
-    type: HTTPValidationError
+    type: HttpValidationError
     docs: Validation Error
     examples:
       - value: {}
   PatchAgentApiV1AgentsAgentIdPatchRequestUnprocessableEntityError:
     status-code: 422
-    type: HTTPValidationError
+    type: HttpValidationError
     docs: Validation Error
     examples:
       - value: {}
   PromptAgentApiV1AgentsAgentIdPredictPostRequestUnprocessableEntityError:
     status-code: 422
-    type: HTTPValidationError
+    type: HttpValidationError
     docs: Validation Error
     examples:
       - value: {}
   SignInApiV1AuthSignInPostRequestUnprocessableEntityError:
     status-code: 422
-    type: HTTPValidationError
+    type: HttpValidationError
     docs: Validation Error
     examples:
       - value: {}
   SignUpApiV1AuthSignUpPostRequestUnprocessableEntityError:
     status-code: 422
-    type: HTTPValidationError
+    type: HttpValidationError
     docs: Validation Error
     examples:
       - value: {}
   ReadUserApiV1UsersUserIdGetRequestUnprocessableEntityError:
     status-code: 422
-    type: HTTPValidationError
+    type: HttpValidationError
     docs: Validation Error
     examples:
       - value: {}
   CreateApiTokenApiV1ApiTokensPostRequestUnprocessableEntityError:
     status-code: 422
-    type: HTTPValidationError
+    type: HttpValidationError
     docs: Validation Error
     examples:
       - value: {}
   GetApiTokenApiV1ApiTokensTokenIdGetRequestUnprocessableEntityError:
     status-code: 422
-    type: HTTPValidationError
+    type: HttpValidationError
     docs: Validation Error
     examples:
       - value: {}
   DeleteApiTokenApiV1ApiTokensTokenIdDeleteRequestUnprocessableEntityError:
     status-code: 422
-    type: HTTPValidationError
+    type: HttpValidationError
     docs: Validation Error
     examples:
       - value: {}
   CreateDocumentApiV1DocumentsPostRequestUnprocessableEntityError:
     status-code: 422
-    type: HTTPValidationError
+    type: HttpValidationError
     docs: Validation Error
     examples:
       - value: {}
   GetDocumentApiV1DocumentsDocumentIdGetRequestUnprocessableEntityError:
     status-code: 422
-    type: HTTPValidationError
+    type: HttpValidationError
     docs: Validation Error
     examples:
       - value: {}
   DeleteDocumentApiV1DocumentsDocumentIdDeleteRequestUnprocessableEntityError:
     status-code: 422
-    type: HTTPValidationError
+    type: HttpValidationError
     docs: Validation Error
     examples:
       - value: {}
   CreateAPromptApiV1PromptsPostRequestUnprocessableEntityError:
     status-code: 422
-    type: HTTPValidationError
+    type: HttpValidationError
     docs: Validation Error
     examples:
       - value: {}
   GetPromptApiV1PromptsPromptIdGetRequestUnprocessableEntityError:
     status-code: 422
-    type: HTTPValidationError
+    type: HttpValidationError
     docs: Validation Error
     examples:
       - value: {}
   DeletePromptApiV1PromptsPromptIdDeleteRequestUnprocessableEntityError:
     status-code: 422
-    type: HTTPValidationError
+    type: HttpValidationError
     docs: Validation Error
     examples:
       - value: {}
   PatchPromptApiV1PromptsPromptIdPatchRequestUnprocessableEntityError:
     status-code: 422
-    type: HTTPValidationError
+    type: HttpValidationError
     docs: Validation Error
     examples:
       - value: {}
   CreateAToolApiV1ToolsPostRequestUnprocessableEntityError:
     status-code: 422
-    type: HTTPValidationError
+    type: HttpValidationError
     docs: Validation Error
     examples:
       - value: {}
   GetToolApiV1ToolsToolIdGetRequestUnprocessableEntityError:
     status-code: 422
-    type: HTTPValidationError
+    type: HttpValidationError
     docs: Validation Error
     examples:
       - value: {}
   DeleteToolApiV1ToolsToolIdDeleteRequestUnprocessableEntityError:
     status-code: 422
-    type: HTTPValidationError
+    type: HttpValidationError
     docs: Validation Error
     examples:
       - value: {}
 types:
-  HTTPValidationError:
+  HttpValidationError:
     properties:
       detail:
         type: optional<list<ValidationError>>
@@ -560,8 +560,11 @@ types:
               "method": "DELETE",
               "pagination": undefined,
               "path": "/api/v1/agents/{agentId}",
-              "path-parameters": {
-                "agentId": "string",
+              "request": {
+                "name": "DeleteAgentApiV1AgentsAgentIdDeleteRequest",
+                "path-parameters": {
+                  "agentId": "string",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -601,8 +604,11 @@ types:
               "method": "GET",
               "pagination": undefined,
               "path": "/api/v1/agents/{agentId}",
-              "path-parameters": {
-                "agentId": "string",
+              "request": {
+                "name": "GetAgentApiV1AgentsAgentIdGetRequest",
+                "path-parameters": {
+                  "agentId": "string",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -677,14 +683,15 @@ types:
               "method": "PATCH",
               "pagination": undefined,
               "path": "/api/v1/agents/{agentId}",
-              "path-parameters": {
-                "agentId": "string",
-              },
               "request": {
                 "body": {
                   "type": "map<string, unknown>",
                 },
                 "content-type": "application/json",
+                "name": "PatchAgentApiV1AgentsAgentIdPatchRequest",
+                "path-parameters": {
+                  "agentId": "string",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -729,9 +736,6 @@ types:
               "method": "POST",
               "pagination": undefined,
               "path": "/api/v1/agents/{agentId}/predict",
-              "path-parameters": {
-                "agentId": "string",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -747,7 +751,9 @@ types:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PredictAgent",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "agentId": "string",
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -838,9 +844,11 @@ types:
       docs: Get a specific agent
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        agentId: string
       display-name: Get Agent
+      request:
+        name: GetAgentApiV1AgentsAgentIdGetRequest
+        path-parameters:
+          agentId: string
       response:
         docs: Successful Response
         type: unknown
@@ -863,9 +871,11 @@ types:
       docs: Delete a specific agent
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        agentId: string
       display-name: Delete Agent
+      request:
+        name: DeleteAgentApiV1AgentsAgentIdDeleteRequest
+        path-parameters:
+          agentId: string
       response:
         docs: Successful Response
         type: unknown
@@ -889,12 +899,13 @@ types:
       docs: Patch a specific agent
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        agentId: string
       display-name: Patch Agent
       request:
         body:
           type: map<string, unknown>
+        path-parameters:
+          agentId: string
+        name: PatchAgentApiV1AgentsAgentIdPatchRequest
         content-type: application/json
       response:
         docs: Successful Response
@@ -920,11 +931,11 @@ types:
       docs: Invoke a specific agent
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        agentId: string
       display-name: Prompt Agent
       request:
         name: PredictAgent
+        path-parameters:
+          agentId: string
         body:
           properties:
             input:
@@ -1046,8 +1057,11 @@ imports:
               "method": "DELETE",
               "pagination": undefined,
               "path": "/api/v1/api-tokens/{tokenId}",
-              "path-parameters": {
-                "tokenId": "string",
+              "request": {
+                "name": "DeleteApiTokenApiV1ApiTokensTokenIdDeleteRequest",
+                "path-parameters": {
+                  "tokenId": "string",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -1087,8 +1101,11 @@ imports:
               "method": "GET",
               "pagination": undefined,
               "path": "/api/v1/api-tokens/{tokenId}",
-              "path-parameters": {
-                "tokenId": "string",
+              "request": {
+                "name": "GetApiTokenApiV1ApiTokensTokenIdGetRequest",
+                "path-parameters": {
+                  "tokenId": "string",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -1197,9 +1214,11 @@ imports:
       docs: Get a specific API token
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        tokenId: string
       display-name: Get Api Token
+      request:
+        name: GetApiTokenApiV1ApiTokensTokenIdGetRequest
+        path-parameters:
+          tokenId: string
       response:
         docs: Successful Response
         type: unknown
@@ -1223,9 +1242,11 @@ imports:
       docs: Delete a specific API token
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        tokenId: string
       display-name: Delete Api Token
+      request:
+        name: DeleteApiTokenApiV1ApiTokensTokenIdDeleteRequest
+        path-parameters:
+          tokenId: string
       response:
         docs: Successful Response
         type: unknown
@@ -1543,8 +1564,11 @@ service:
               "method": "DELETE",
               "pagination": undefined,
               "path": "/api/v1/documents/{documentId}",
-              "path-parameters": {
-                "documentId": "string",
+              "request": {
+                "name": "DeleteDocumentApiV1DocumentsDocumentIdDeleteRequest",
+                "path-parameters": {
+                  "documentId": "string",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -1584,8 +1608,11 @@ service:
               "method": "GET",
               "pagination": undefined,
               "path": "/api/v1/documents/{documentId}",
-              "path-parameters": {
-                "documentId": "string",
+              "request": {
+                "name": "GetDocumentApiV1DocumentsDocumentIdGetRequest",
+                "path-parameters": {
+                  "documentId": "string",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -1708,9 +1735,11 @@ service:
       docs: Get a specific document
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        documentId: string
       display-name: Get Document
+      request:
+        name: GetDocumentApiV1DocumentsDocumentIdGetRequest
+        path-parameters:
+          documentId: string
       response:
         docs: Successful Response
         type: unknown
@@ -1734,9 +1763,11 @@ service:
       docs: Delete a specific document
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        documentId: string
       display-name: Delete Document
+      request:
+        name: DeleteDocumentApiV1DocumentsDocumentIdDeleteRequest
+        path-parameters:
+          documentId: string
       response:
         docs: Successful Response
         type: unknown
@@ -1853,8 +1884,11 @@ imports:
               "method": "DELETE",
               "pagination": undefined,
               "path": "/api/v1/prompts/{promptId}",
-              "path-parameters": {
-                "promptId": "string",
+              "request": {
+                "name": "DeletePromptApiV1PromptsPromptIdDeleteRequest",
+                "path-parameters": {
+                  "promptId": "string",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -1894,8 +1928,11 @@ imports:
               "method": "GET",
               "pagination": undefined,
               "path": "/api/v1/prompts/{promptId}",
-              "path-parameters": {
-                "promptId": "string",
+              "request": {
+                "name": "GetPromptApiV1PromptsPromptIdGetRequest",
+                "path-parameters": {
+                  "promptId": "string",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -1970,14 +2007,15 @@ imports:
               "method": "PATCH",
               "pagination": undefined,
               "path": "/api/v1/prompts/{promptId}",
-              "path-parameters": {
-                "promptId": "string",
-              },
               "request": {
                 "body": {
                   "type": "map<string, unknown>",
                 },
                 "content-type": "application/json",
+                "name": "PatchPromptApiV1PromptsPromptIdPatchRequest",
+                "path-parameters": {
+                  "promptId": "string",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -2059,9 +2097,11 @@ imports:
       docs: Get a specific prompt
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        promptId: string
       display-name: Get Prompt
+      request:
+        name: GetPromptApiV1PromptsPromptIdGetRequest
+        path-parameters:
+          promptId: string
       response:
         docs: Successful Response
         type: unknown
@@ -2084,9 +2124,11 @@ imports:
       docs: Delete a specific prompt
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        promptId: string
       display-name: Delete Prompt
+      request:
+        name: DeletePromptApiV1PromptsPromptIdDeleteRequest
+        path-parameters:
+          promptId: string
       response:
         docs: Successful Response
         type: unknown
@@ -2110,12 +2152,13 @@ imports:
       docs: Patch a specific prompt
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        promptId: string
       display-name: Patch Prompt
       request:
         body:
           type: map<string, unknown>
+        path-parameters:
+          promptId: string
+        name: PatchPromptApiV1PromptsPromptIdPatchRequest
         content-type: application/json
       response:
         docs: Successful Response
@@ -2234,8 +2277,11 @@ imports:
               "method": "DELETE",
               "pagination": undefined,
               "path": "/api/v1/tools/{toolId}",
-              "path-parameters": {
-                "toolId": "string",
+              "request": {
+                "name": "DeleteToolApiV1ToolsToolIdDeleteRequest",
+                "path-parameters": {
+                  "toolId": "string",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -2275,8 +2321,11 @@ imports:
               "method": "GET",
               "pagination": undefined,
               "path": "/api/v1/tools/{toolId}",
-              "path-parameters": {
-                "toolId": "string",
+              "request": {
+                "name": "GetToolApiV1ToolsToolIdGetRequest",
+                "path-parameters": {
+                  "toolId": "string",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -2389,9 +2438,11 @@ imports:
       docs: Get a specific tool
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        toolId: string
       display-name: Get Tool
+      request:
+        name: GetToolApiV1ToolsToolIdGetRequest
+        path-parameters:
+          toolId: string
       response:
         docs: Successful Response
         type: unknown
@@ -2414,9 +2465,11 @@ imports:
       docs: Delete a specific tool
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        toolId: string
       display-name: Delete Tool
+      request:
+        name: DeleteToolApiV1ToolsToolIdDeleteRequest
+        path-parameters:
+          toolId: string
       response:
         docs: Successful Response
         type: unknown
@@ -2544,8 +2597,11 @@ imports:
               "method": "GET",
               "pagination": undefined,
               "path": "/api/v1/users/{userId}",
-              "path-parameters": {
-                "userId": "string",
+              "request": {
+                "name": "ReadUserApiV1UsersUserIdGetRequest",
+                "path-parameters": {
+                  "userId": "string",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -2621,9 +2677,11 @@ imports:
       method: GET
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        userId: string
       display-name: Read User
+      request:
+        name: ReadUserApiV1UsersUserIdGetRequest
+        path-parameters:
+          userId: string
       response:
         docs: Successful Response
         type: unknown
