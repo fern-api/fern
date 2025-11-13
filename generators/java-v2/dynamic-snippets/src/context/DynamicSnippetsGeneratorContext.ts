@@ -248,7 +248,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         }
 
         required.sort((a, b) => (indexMap.get(a.name.wireValue) ?? 0) - (indexMap.get(b.name.wireValue) ?? 0));
-        optional.sort((a, b) => (indexMap.get(a.name.wireValue) ?? 0) - (indexMap.get(b.name.wireValue) ?? 0));
 
         return [...required, ...optional];
     }

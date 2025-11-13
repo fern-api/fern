@@ -1,3 +1,11 @@
+- version: 3.14.12
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets compilation errors for literal-typed parameters. Literal-typed parameters (e.g., prompt: literal<"You are a helpful assistant">, stream: literal<false>) are now correctly filtered from builder method calls in generated snippets, as these fields only have hardcoded getters without corresponding setters. This maintains parity with Java v1 behavior where literal fields are excluded from all class builders (both model and request classes).
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 61
+
 - version: 3.14.11
   changelogEntry:
     - summary: |

@@ -15,7 +15,7 @@ export declare namespace DynamicTypeLiteralMapper {
 
     // Identifies what the type is being converted as, which sometimes influences how
     // the type is instantiated.
-    type ConvertedAs = "mapKey" | "mapValue";
+    type ConvertedAs = "mapKey" | "mapValue" | "request";
 }
 
 export class DynamicTypeLiteralMapper {
@@ -54,11 +54,11 @@ export class DynamicTypeLiteralMapper {
         }
         switch (args.typeReference.type) {
             case "list":
-                return this.convertList({ list: args.typeReference.value, value: args.value });
+                return this.convertList({ list: args.typeReference.value, value: args.value, as: args.as });
             case "literal":
                 return this.convertLiteral({ literal: args.typeReference.value, value: args.value });
             case "map":
-                return this.convertMap({ map: args.typeReference, value: args.value });
+                return this.convertMap({ map: args.typeReference, value: args.value, as: args.as });
             case "named": {
                 const named = this.context.resolveNamedType({ typeId: args.typeReference.value });
                 if (named == null) {
@@ -113,7 +113,7 @@ export class DynamicTypeLiteralMapper {
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
             case "set":
-                return this.convertSet({ set: args.typeReference.value, value: args.value });
+                return this.convertSet({ set: args.typeReference.value, value: args.value, as: args.as });
             case "unknown":
                 return this.convertUnknown({ value: args.value });
             default:
@@ -121,7 +121,15 @@ export class DynamicTypeLiteralMapper {
         }
     }
 
-    private convertList({ list, value }: { list: FernIr.dynamic.TypeReference; value: unknown }): java.TypeLiteral {
+    private convertList({
+        list,
+        value,
+        as
+    }: {
+        list: FernIr.dynamic.TypeReference;
+        value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
+    }): java.TypeLiteral {
         if (!Array.isArray(value)) {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -138,10 +146,10 @@ export class DynamicTypeLiteralMapper {
                 this.context.errors.scope({ index });
                 try {
                     if (isItemOptional) {
-                        const itemValue = this.convert({ typeReference: list.value, value: v });
+                        const itemValue = this.convert({ typeReference: list.value, value: v, as });
                         return this.wrapInOptionalIfNotNop(itemValue, true);
                     }
-                    return this.convert({ typeReference: list, value: v });
+                    return this.convert({ typeReference: list, value: v, as });
                 } finally {
                     this.context.errors.unscope();
                 }
@@ -177,7 +185,15 @@ export class DynamicTypeLiteralMapper {
         }
     }
 
-    private convertSet({ set, value }: { set: FernIr.dynamic.TypeReference; value: unknown }): java.TypeLiteral {
+    private convertSet({
+        set,
+        value,
+        as
+    }: {
+        set: FernIr.dynamic.TypeReference;
+        value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
+    }): java.TypeLiteral {
         if (!Array.isArray(value)) {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -190,7 +206,7 @@ export class DynamicTypeLiteralMapper {
             values: value.map((v, index) => {
                 this.context.errors.scope({ index });
                 try {
-                    return this.convert({ typeReference: set, value: v });
+                    return this.convert({ typeReference: set, value: v, as });
                 } finally {
                     this.context.errors.unscope();
                 }
@@ -198,7 +214,15 @@ export class DynamicTypeLiteralMapper {
         });
     }
 
-    private convertMap({ map, value }: { map: FernIr.dynamic.MapType; value: unknown }): java.TypeLiteral {
+    private convertMap({
+        map,
+        value,
+        as
+    }: {
+        map: FernIr.dynamic.MapType;
+        value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
+    }): java.TypeLiteral {
         if (typeof value !== "object" || value == null) {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -214,7 +238,11 @@ export class DynamicTypeLiteralMapper {
                 try {
                     return {
                         key: this.convert({ typeReference: map.key, value: key, as: "mapKey" }),
-                        value: this.convert({ typeReference: map.value, value, as: "mapValue" })
+                        value: this.convert({
+                            typeReference: map.value,
+                            value,
+                            as: as === "request" ? as : "mapValue"
+                        })
                     };
                 } finally {
                     this.context.errors.unscope();
@@ -338,15 +366,15 @@ export class DynamicTypeLiteralMapper {
             parameters: object_.properties,
             values: this.context.getRecord(value) ?? {}
         });
-        const filteredProperties = properties.filter(
-            (property) => !this.context.isDirectLiteral(property.typeReference)
-        );
-        const sortedProperties = this.context.sortTypeInstancesByRequiredFirst(filteredProperties, object_.properties);
+        const filteredProperties =
+            as === "request"
+                ? properties.filter((property) => !this.context.isDirectLiteral(property.typeReference))
+                : properties;
         return java.TypeLiteral.builder({
             classReference: this.context.getJavaClassReferenceFromDeclaration({
                 declaration: object_.declaration
             }),
-            parameters: sortedProperties.map((property) => {
+            parameters: filteredProperties.map((property) => {
                 this.context.errors.scope(property.name.wireValue);
                 try {
                     return {
