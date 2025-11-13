@@ -1081,8 +1081,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     private getCtorOptionsStatements(context: SdkContext): Code {
-        const rootHeaders = this.isRoot ? this.getRootHeaders(context) : [];
-        const shouldGenerateRootHeaders = this.isRoot && rootHeaders.length > 0;
+        const rootHeaders = this.getRootHeaders(context);
+        const shouldGenerateRootHeaders = rootHeaders.length > 0;
 
         context.importsManager.addImportFromRoot("BaseClient", {
             namedImports: ["normalizeClientOptions"]
