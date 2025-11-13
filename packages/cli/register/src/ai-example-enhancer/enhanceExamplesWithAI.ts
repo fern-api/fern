@@ -389,6 +389,10 @@ async function enhancePackageEndpoints(
                 const item = batch[j];
                 const result = batchResponse.results[j];
 
+                if (!item) {
+                    continue;
+                }
+
                 if (result && !result.error) {
                     enhancementResults.set(item.endpointKey, {
                         enhancedReq: result.enhancedRequestExample,
