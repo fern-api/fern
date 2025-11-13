@@ -177,6 +177,7 @@ export class SdkGenerator {
 
     private project: Project;
     private snippetProject: Project | undefined;
+    private snippetCounter = 0;
     private rootDirectory: Directory;
     private exportsManager: ExportsManager;
     private readonly publicExportsManager: PublicExportsManager;
@@ -1458,7 +1459,7 @@ export class SdkGenerator {
             });
         }
 
-        const sourceFile = this.snippetProject.createSourceFile("snippet-" + Date.now(), undefined, {
+        const sourceFile = this.snippetProject.createSourceFile(`snippet-${this.snippetCounter++}.ts`, undefined, {
             overwrite: false
         });
         const importsManager = new ImportsManager({
