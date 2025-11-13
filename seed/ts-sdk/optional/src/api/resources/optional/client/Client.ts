@@ -160,4 +160,88 @@ export class Optional {
                 });
         }
     }
+
+    /**
+     * Tests optional(nullable(T)) where T has only optional properties.
+     * This should not generate wire tests expecting {} when Optional.empty() is passed.
+     *
+     * @param {string} actionId
+     * @param {string} id
+     * @param {SeedObjectsWithImports.DeployParams | null} request
+     * @param {Optional.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.optional.sendOptionalNullableWithAllOptionalProperties("actionId", "id", {
+     *         updateDraft: true
+     *     })
+     */
+    public sendOptionalNullableWithAllOptionalProperties(
+        actionId: string,
+        id: string,
+        request?: SeedObjectsWithImports.DeployParams | null,
+        requestOptions?: Optional.RequestOptions,
+    ): core.HttpResponsePromise<SeedObjectsWithImports.DeployResponse> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__sendOptionalNullableWithAllOptionalProperties(actionId, id, request, requestOptions),
+        );
+    }
+
+    private async __sendOptionalNullableWithAllOptionalProperties(
+        actionId: string,
+        id: string,
+        request?: SeedObjectsWithImports.DeployParams | null,
+        requestOptions?: Optional.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedObjectsWithImports.DeployResponse>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `deploy/${core.url.encodePathParam(actionId)}/versions/${core.url.encodePathParam(id)}`,
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request != null ? request : undefined,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as SeedObjectsWithImports.DeployResponse,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedObjectsWithImportsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedObjectsWithImportsError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedObjectsWithImportsTimeoutError(
+                    "Timeout exceeded when calling POST /deploy/{actionId}/versions/{id}.",
+                );
+            case "unknown":
+                throw new errors.SeedObjectsWithImportsError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
 }

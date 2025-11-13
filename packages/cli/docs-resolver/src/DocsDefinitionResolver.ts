@@ -643,7 +643,8 @@ export class DocsDefinitionResolver {
                           sidebar: this.parsedDocsConfig.theme.sidebar,
                           body: this.parsedDocsConfig.theme.body,
                           tabs: this.parsedDocsConfig.theme.tabs,
-                          "page-actions": this.parsedDocsConfig.theme.pageActions
+                          "page-actions": this.parsedDocsConfig.theme.pageActions,
+                          footerNav: this.parsedDocsConfig.theme.footerNav
                       }
                     : undefined,
             // deprecated
@@ -792,6 +793,13 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.VersionedNode> {
         const id = this.#idgen.get("versioned");
 
+        const defaultVersion = versioned.versions[0];
+        if (defaultVersion?.hidden === true) {
+            throw new Error(
+                `The default version "${defaultVersion.version}" cannot be hidden. Please set a non-hidden version as the first version in your versions list, or remove the hidden flag from the default version.`
+            );
+        }
+
         return {
             id,
             type: "versioned",
@@ -920,7 +928,7 @@ export class DocsDefinitionResolver {
             default: isDefault,
             availability: version.availability != null ? convertAvailability(version.availability) : undefined,
             landingPage: version.landingPage ? this.toLandingPageNode(version.landingPage, slug) : undefined,
-            hidden: undefined,
+            hidden: version.hidden,
             authed: undefined,
             viewers: version.viewers,
             orphaned: version.orphaned,

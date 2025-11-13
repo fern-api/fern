@@ -371,7 +371,8 @@ function convertThemeConfig(
         sidebar: theme.sidebar ?? "default",
         tabs: theme.tabs ?? "default",
         body: theme.body ?? "default",
-        pageActions: theme.pageActions ?? "default"
+        pageActions: theme.pageActions ?? "default",
+        footerNav: theme.footerNav ?? "default"
     };
 }
 
@@ -488,6 +489,7 @@ async function getVersionedNavigationConfiguration({
             navigation: versionNavigation,
             availability: version.availability,
             slug: version.slug,
+            hidden: version.hidden,
             viewers: parseRoles(version.viewers),
             orphaned: version.orphaned,
             featureFlags: convertFeatureFlag(version.featureFlag)

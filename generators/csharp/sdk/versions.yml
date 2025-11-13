@@ -1,9 +1,50 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.9.0
+  changelogEntry:
+    - type: feat
+      summary: |
+        Upgrade C# SDK generator Docker images to use .NET 10 SDK base image.
+        * Improves package restoration and build performance
+        * .NET 10 uses .slnx solution files instead of .sln files, which are more readable and generate deterministically
+        * This change does not affect the target framework of generated SDKs
+  createdAt: "2025-11-12"
+  irVersion: 61
+
+- version: 2.8.0
+  changelogEntry:
+    - type: feat
+      summary: |
+        .github/workflows/ci.yml file changes:
+        * Update actions/checkout to v5
+        * Update actions/setup-dotnet to v5
+        * Use .NET 10 SDK
+        * Split up restore and build steps
+        * Don't build the test project unless running tests
+  createdAt: "2025-11-12"
+  irVersion: 61
+
+- version: 2.7.5
+  changelogEntry:
+    - type: fix
+      summary: |
+        Support enums in multipart-forms.
+        Corrected date-normalization code in tests generation.
+  createdAt: "2025-11-11"
+  irVersion: 61
+
+- version: 2.7.4
+  changelogEntry:
+    - type: chore
+      summary: |
+        Upgrade C# formatter csharpier to 1.2.1.
+  createdAt: "2025-11-11"
+  irVersion: 61
+
 - version: 2.7.3
   changelogEntry:
     - type: fix
       summary: |
-        Refactor package dependencies in c# generation so Dynamic Snippets in the browser can work.
+        Refactor package dependencies in C# generation so Dynamic Snippets in the browser can work.
   createdAt: "2025-11-10"
   irVersion: 61
 

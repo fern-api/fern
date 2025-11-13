@@ -40548,6 +40548,7 @@
       }
     }
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_search": {
       "docs": "Search",

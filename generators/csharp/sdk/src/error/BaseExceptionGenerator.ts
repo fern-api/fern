@@ -2,21 +2,18 @@ import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-
-export class BaseExceptionGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+export class BaseExceptionGenerator extends FileGenerator<CSharpFile> {
     public doGenerate(): CSharpFile {
         const class_ = this.csharp.class_({
-            reference: this.types.BaseException,
+            reference: this.Types.BaseException,
             access: ast.Access.Public,
-            parentClassReference: this.extern.System.Exception,
+            parentClassReference: this.System.Exception,
             primaryConstructor: {
                 parameters: [
-                    this.csharp.parameter({ name: "message", type: this.csharp.Type.string }),
+                    this.csharp.parameter({ name: "message", type: this.Primitive.string }),
                     this.csharp.parameter({
                         name: "innerException",
-                        type: this.csharp.Type.optional(this.csharp.Type.reference(this.extern.System.Exception)),
+                        type: this.System.Exception.toOptionalIfNotAlready(),
                         initializer: "null"
                     })
                 ],
@@ -34,6 +31,6 @@ export class BaseExceptionGenerator extends FileGenerator<CSharpFile, SdkCustomC
         });
     }
     protected getFilepath(): RelativeFilePath {
-        return join(this.constants.folders.publicCoreFiles, RelativeFilePath.of(`${this.types.BaseException.name}.cs`));
+        return join(this.constants.folders.publicCoreFiles, RelativeFilePath.of(`${this.Types.BaseException.name}.cs`));
     }
 }

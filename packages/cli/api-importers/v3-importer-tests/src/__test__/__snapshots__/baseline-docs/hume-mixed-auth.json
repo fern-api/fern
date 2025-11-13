@@ -15720,6 +15720,7 @@
       }
     }
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_chat": {
       "fernFilepath": {

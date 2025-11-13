@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SeedQueryParameters.Test/SeedQueryParameters.Test.csproj" />
+  <Project Path="SeedQueryParameters/SeedQueryParameters.csproj" />
+</Solution>

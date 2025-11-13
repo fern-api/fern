@@ -16,7 +16,7 @@ overrides:
   node-fetch@2.x>whatwg-url: ^14.0.0
   qs: 6.13.0
   url-join: ^4.0.1
-  '@fern-api/fdr-sdk': 0.140.0-a411fe32c
+  '@fern-api/fdr-sdk': 0.140.1-ec53d68c0
   es-toolkit: ^1.39.10
   ts-essentials: ^10.1.1
   form-data: ^4.0.4
@@ -92,8 +92,8 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@24.10.0)(jsdom@27.1.0)(msw@2.12.0(@types/node@24.10.0)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        specifier: ^4.0.8
+        version: 4.0.8(@types/debug@4.1.12)(@types/node@24.10.0)(jsdom@27.1.0)(msw@2.12.1(@types/node@24.10.0)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.3.3)
 
   generators/base:
     dependencies:
@@ -145,7 +145,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/browser-compatible-base:
     dependencies:
@@ -182,7 +182,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/csharp/base:
     devDependencies:
@@ -224,7 +224,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/csharp/codegen:
     dependencies:
@@ -258,7 +258,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/csharp/dynamic-snippets:
     devDependencies:
@@ -300,7 +300,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/csharp/formatter:
     dependencies:
@@ -328,7 +328,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/csharp/model:
     devDependencies:
@@ -370,10 +370,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
-      zod:
-        specifier: ^3.22.3
-        version: 3.25.76
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/csharp/sdk:
     devDependencies:
@@ -433,10 +430,7 @@ importers:
         version: 4.0.1
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
-      zod:
-        specifier: ^3.22.3
-        version: 3.25.76
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/go-v2/ast:
     devDependencies:
@@ -463,7 +457,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -514,16 +508,16 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/go-v2/dynamic-snippets:
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
-        version: 0.2.3(esbuild@0.25.12)
+        version: 0.2.3(esbuild@0.27.0)
       '@esbuild-plugins/node-modules-polyfill':
         specifier: ^0.2.2
-        version: 0.2.2(esbuild@0.25.12)
+        version: 0.2.2(esbuild@0.27.0)
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
@@ -559,7 +553,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/go-v2/formatter:
     dependencies:
@@ -584,7 +578,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/go-v2/model:
     devDependencies:
@@ -623,7 +617,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/go-v2/sdk:
     devDependencies:
@@ -683,7 +677,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/java-v2/ast:
     dependencies:
@@ -711,7 +705,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/java-v2/base:
     devDependencies:
@@ -744,16 +738,16 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/java-v2/dynamic-snippets:
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
-        version: 0.2.3(esbuild@0.25.12)
+        version: 0.2.3(esbuild@0.27.0)
       '@esbuild-plugins/node-modules-polyfill':
         specifier: ^0.2.2
-        version: 0.2.2(esbuild@0.25.12)
+        version: 0.2.2(esbuild@0.27.0)
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
@@ -792,7 +786,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/java-v2/sdk:
     devDependencies:
@@ -849,7 +843,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/openapi:
     devDependencies:
@@ -903,7 +897,7 @@ importers:
         version: 4.0.1
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/php/base:
     devDependencies:
@@ -948,7 +942,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/php/codegen:
     dependencies:
@@ -979,7 +973,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -988,10 +982,10 @@ importers:
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
-        version: 0.2.3(esbuild@0.25.12)
+        version: 0.2.3(esbuild@0.27.0)
       '@esbuild-plugins/node-modules-polyfill':
         specifier: ^0.2.2
-        version: 0.2.2(esbuild@0.25.12)
+        version: 0.2.2(esbuild@0.27.0)
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
@@ -1030,7 +1024,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.8
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/php/model:
     devDependencies:
@@ -1066,7 +1060,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -1129,7 +1123,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -1177,7 +1171,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -1204,7 +1198,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/python-v2/base:
     dependencies:
@@ -1250,7 +1244,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/python-v2/browser-compatible-base:
     devDependencies:
@@ -1268,7 +1262,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -1277,10 +1271,10 @@ importers:
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
-        version: 0.2.3(esbuild@0.25.12)
+        version: 0.2.3(esbuild@0.27.0)
       '@esbuild-plugins/node-modules-polyfill':
         specifier: ^0.2.2
-        version: 0.2.2(esbuild@0.25.12)
+        version: 0.2.2(esbuild@0.27.0)
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
@@ -1322,7 +1316,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/python-v2/fastapi:
     devDependencies:
@@ -1343,7 +1337,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/python-v2/formatter:
     devDependencies:
@@ -1367,7 +1361,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/python-v2/pydantic-model:
     devDependencies:
@@ -1409,7 +1403,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
       zod:
         specifier: ^3.22.4
         version: 3.25.76
@@ -1451,7 +1445,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
       zod:
         specifier: ^3.22.4
         version: 3.25.76
@@ -1482,7 +1476,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/ruby-v2/base:
     devDependencies:
@@ -1536,16 +1530,16 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/ruby-v2/dynamic-snippets:
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
-        version: 0.2.3(esbuild@0.25.12)
+        version: 0.2.3(esbuild@0.27.0)
       '@esbuild-plugins/node-modules-polyfill':
         specifier: ^0.2.2
-        version: 0.2.2(esbuild@0.25.12)
+        version: 0.2.2(esbuild@0.27.0)
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
@@ -1584,7 +1578,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/ruby-v2/model:
     devDependencies:
@@ -1623,7 +1617,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/ruby-v2/sdk:
     devDependencies:
@@ -1695,7 +1689,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/ruby/cli:
     dependencies:
@@ -1732,7 +1726,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/ruby/codegen:
     dependencies:
@@ -1775,7 +1769,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/ruby/model:
     devDependencies:
@@ -1817,7 +1811,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -1865,7 +1859,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -1911,7 +1905,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/rust/codegen:
     dependencies:
@@ -1933,7 +1927,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/rust/dynamic-snippets:
     dependencies:
@@ -1976,7 +1970,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/rust/model:
     devDependencies:
@@ -2021,7 +2015,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
       zod:
         specifier: ^3.22.4
         version: 3.25.76
@@ -2082,7 +2076,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
       zod:
         specifier: ^3.22.4
         version: 3.25.76
@@ -2118,7 +2112,7 @@ importers:
         version: 5.9.2
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.2))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.2))(sass@1.94.0)(terser@5.44.1)
 
   generators/swift/codegen:
     dependencies:
@@ -2158,16 +2152,16 @@ importers:
         version: 5.9.2
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.2))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.2))(sass@1.94.0)(terser@5.44.1)
 
   generators/swift/dynamic-snippets:
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
-        version: 0.2.3(esbuild@0.25.12)
+        version: 0.2.3(esbuild@0.27.0)
       '@esbuild-plugins/node-modules-polyfill':
         specifier: ^0.2.2
-        version: 0.2.2(esbuild@0.25.12)
+        version: 0.2.2(esbuild@0.27.0)
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
@@ -2206,7 +2200,7 @@ importers:
         version: 5.9.2
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.2))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.2))(sass@1.94.0)(terser@5.44.1)
 
   generators/swift/model:
     dependencies:
@@ -2255,7 +2249,7 @@ importers:
         version: 5.9.2
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.2))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.2))(sass@1.94.0)(terser@5.44.1)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -2327,7 +2321,7 @@ importers:
         version: 5.9.2
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.2))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.2))(sass@1.94.0)(terser@5.44.1)
       zod:
         specifier: ^3.25.75
         version: 3.25.76
@@ -2372,7 +2366,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript-mcp/model:
     devDependencies:
@@ -2408,7 +2402,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript-mcp/server:
     devDependencies:
@@ -2453,7 +2447,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript-v2/ast:
     dependencies:
@@ -2481,7 +2475,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript-v2/base:
     devDependencies:
@@ -2499,7 +2493,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@24.10.0)(jsdom@27.1.0)(msw@2.12.0(@types/node@24.10.0)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@24.10.0)(jsdom@27.1.0)(msw@2.12.1(@types/node@24.10.0)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript-v2/browser-compatible-base:
     devDependencies:
@@ -2523,16 +2517,16 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@24.10.0)(jsdom@27.1.0)(msw@2.12.0(@types/node@24.10.0)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@24.10.0)(jsdom@27.1.0)(msw@2.12.1(@types/node@24.10.0)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript-v2/dynamic-snippets:
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
-        version: 0.2.3(esbuild@0.25.12)
+        version: 0.2.3(esbuild@0.27.0)
       '@esbuild-plugins/node-modules-polyfill':
         specifier: ^0.2.2
-        version: 0.2.2(esbuild@0.25.12)
+        version: 0.2.2(esbuild@0.27.0)
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
@@ -2568,7 +2562,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript-v2/formatter:
     dependencies:
@@ -2596,7 +2590,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/express/cli:
     devDependencies:
@@ -2644,7 +2638,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -2684,7 +2678,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/express/express-error-generator:
     dependencies:
@@ -2718,7 +2712,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/express/express-error-schema-generator:
     dependencies:
@@ -2755,7 +2749,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/express/express-inlined-request-body-generator:
     dependencies:
@@ -2783,7 +2777,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/express/express-inlined-request-body-schema-generator:
     dependencies:
@@ -2817,7 +2811,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/express/express-register-generator:
     dependencies:
@@ -2857,7 +2851,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/express/express-service-generator:
     dependencies:
@@ -2891,7 +2885,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/express/generator:
     dependencies:
@@ -2970,7 +2964,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/express/generic-express-error-generators:
     dependencies:
@@ -3001,7 +2995,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/model/type-generator:
     dependencies:
@@ -3035,7 +3029,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/model/type-reference-converters:
     dependencies:
@@ -3069,7 +3063,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/model/type-reference-example-generator:
     dependencies:
@@ -3103,7 +3097,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/model/type-schema-generator:
     dependencies:
@@ -3140,7 +3134,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/model/union-generator:
     dependencies:
@@ -3174,7 +3168,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/model/union-schema-generator:
     dependencies:
@@ -3208,7 +3202,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/sdk/cli:
     devDependencies:
@@ -3259,7 +3253,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/sdk/client-class-generator:
     dependencies:
@@ -3305,7 +3299,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/sdk/endpoint-error-union-generator:
     dependencies:
@@ -3342,7 +3336,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/sdk/environments-generator:
     dependencies:
@@ -3373,7 +3367,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/sdk/generator:
     dependencies:
@@ -3401,9 +3395,6 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: ^61.7.0
         version: 61.7.0
-      '@fern-fern/snippet-sdk':
-        specifier: ^0.0.6434
-        version: 0.0.6434
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -3455,9 +3446,6 @@ importers:
       '@fern-typescript/websocket-type-schema-generator':
         specifier: workspace:*
         version: link:../websocket-type-schema-generator
-      '@types/uuid':
-        specifier: ^9.0.8
-        version: 9.0.8
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -3467,9 +3455,6 @@ importers:
       ts-poet:
         specifier: ^6.7.0
         version: 6.12.0
-      uuid:
-        specifier: ^9.0.1
-        version: 9.0.1
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -3488,7 +3473,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/sdk/generic-sdk-error-generators:
     dependencies:
@@ -3519,7 +3504,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/sdk/request-wrapper-generator:
     dependencies:
@@ -3553,7 +3538,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/sdk/sdk-endpoint-type-schemas-generator:
     dependencies:
@@ -3596,7 +3581,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/sdk/sdk-error-generator:
     dependencies:
@@ -3630,7 +3615,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/sdk/sdk-error-schema-generator:
     dependencies:
@@ -3667,7 +3652,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/sdk/sdk-inlined-request-body-schema-generator:
     dependencies:
@@ -3701,7 +3686,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/sdk/websocket-type-schema-generator:
     dependencies:
@@ -3735,7 +3720,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/utils/abstract-error-class-generator:
     dependencies:
@@ -3763,7 +3748,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/utils/abstract-generator-cli:
     dependencies:
@@ -3812,7 +3797,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/utils/abstract-schema-generator:
     dependencies:
@@ -3840,7 +3825,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/utils/commons:
     dependencies:
@@ -3919,7 +3904,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/utils/contexts:
     dependencies:
@@ -3959,7 +3944,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   generators/typescript/utils/resolvers:
     dependencies:
@@ -3984,7 +3969,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/api-importers/asyncapi-to-ir:
     dependencies:
@@ -4024,7 +4009,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/api-importers/commons:
     dependencies:
@@ -4061,7 +4046,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/api-importers/conjure/conjure-sdk:
     devDependencies:
@@ -4079,7 +4064,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/api-importers/conjure/conjure-to-fern:
     dependencies:
@@ -4119,7 +4104,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/api-importers/conjure/conjure-to-fern-tests:
     dependencies:
@@ -4147,7 +4132,29 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
+
+  packages/cli/api-importers/openapi-pruner:
+    dependencies:
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../configs
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/api-importers/openapi-to-ir:
     dependencies:
@@ -4196,7 +4203,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/api-importers/openapi/openapi-ir:
     dependencies:
@@ -4221,7 +4228,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/api-importers/openapi/openapi-ir-parser:
     dependencies:
@@ -4273,7 +4280,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/api-importers/openapi/openapi-ir-to-fern:
     dependencies:
@@ -4322,7 +4329,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/api-importers/openapi/openapi-ir-to-fern-tests:
     dependencies:
@@ -4365,7 +4372,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/api-importers/openrpc-to-ir:
     dependencies:
@@ -4402,7 +4409,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/api-importers/v3-importer-commons:
     dependencies:
@@ -4469,7 +4476,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/api-importers/v3-importer-tests:
     dependencies:
@@ -4506,7 +4513,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/auth:
     dependencies:
@@ -4549,7 +4556,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/cli:
     devDependencies:
@@ -4801,7 +4808,7 @@ importers:
         version: 5.0.1
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
       yaml:
         specifier: 2.3.3
         version: 2.3.3
@@ -4829,7 +4836,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/cli-migrations:
     dependencies:
@@ -4899,7 +4906,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/cli-source-resolver:
     dependencies:
@@ -4933,7 +4940,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/configuration:
     dependencies:
@@ -4941,8 +4948,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/core-utils
       '@fern-api/fdr-sdk':
-        specifier: 0.140.0-a411fe32c
-        version: 0.140.0-a411fe32c(typescript@5.9.3)
+        specifier: 0.140.1-ec53d68c0
+        version: 0.140.1-ec53d68c0(typescript@5.9.3)
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../fern-definition/schema
@@ -4988,7 +4995,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/configuration-loader:
     dependencies:
@@ -4999,8 +5006,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/core-utils
       '@fern-api/fdr-sdk':
-        specifier: 0.140.0-a411fe32c
-        version: 0.140.0-a411fe32c(typescript@5.9.3)
+        specifier: 0.140.1-ec53d68c0
+        version: 0.140.1-ec53d68c0(typescript@5.9.3)
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../fern-definition/schema
@@ -5073,7 +5080,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/docs-importers/commons:
     dependencies:
@@ -5081,8 +5088,8 @@ importers:
         specifier: workspace:*
         version: link:../../configuration
       '@fern-api/fdr-sdk':
-        specifier: 0.140.0-a411fe32c
-        version: 0.140.0-a411fe32c(typescript@5.9.3)
+        specifier: 0.140.1-ec53d68c0
+        version: 0.140.1-ec53d68c0(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
@@ -5110,7 +5117,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/docs-importers/mintlify:
     dependencies:
@@ -5124,8 +5131,8 @@ importers:
         specifier: workspace:*
         version: link:../commons
       '@fern-api/fdr-sdk':
-        specifier: 0.140.0-a411fe32c
-        version: 0.140.0-a411fe32c(typescript@5.9.3)
+        specifier: 0.140.1-ec53d68c0
+        version: 0.140.1-ec53d68c0(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
@@ -5153,7 +5160,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/docs-importers/readme:
     dependencies:
@@ -5167,8 +5174,8 @@ importers:
         specifier: workspace:*
         version: link:../commons
       '@fern-api/fdr-sdk':
-        specifier: 0.140.0-a411fe32c
-        version: 0.140.0-a411fe32c(typescript@5.9.3)
+        specifier: 0.140.1-ec53d68c0
+        version: 0.140.1-ec53d68c0(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
@@ -5232,13 +5239,13 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/docs-markdown-utils:
     dependencies:
       '@fern-api/fdr-sdk':
-        specifier: 0.140.0-a411fe32c
-        version: 0.140.0-a411fe32c(typescript@5.9.3)
+        specifier: 0.140.1-ec53d68c0
+        version: 0.140.1-ec53d68c0(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5311,7 +5318,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -5322,8 +5329,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 0.140.0-a411fe32c
-        version: 0.140.0-a411fe32c(typescript@5.9.3)
+        specifier: 0.140.1-ec53d68c0
+        version: 0.140.1-ec53d68c0(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5408,7 +5415,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/docs-resolver:
     dependencies:
@@ -5434,8 +5441,8 @@ importers:
         specifier: 0.0.65
         version: 0.0.65(typescript@5.9.3)
       '@fern-api/fdr-sdk':
-        specifier: 0.140.0-a411fe32c
-        version: 0.140.0-a411fe32c(typescript@5.9.3)
+        specifier: 0.140.1-ec53d68c0
+        version: 0.140.1-ec53d68c0(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5511,7 +5518,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/ete-tests:
     dependencies:
@@ -5519,8 +5526,8 @@ importers:
         specifier: workspace:*
         version: link:../configuration
       '@fern-api/fdr-sdk':
-        specifier: 0.140.0-a411fe32c
-        version: 0.140.0-a411fe32c(typescript@5.9.3)
+        specifier: 0.140.1-ec53d68c0
+        version: 0.140.1-ec53d68c0(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5575,7 +5582,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/fern-definition/formatter:
     dependencies:
@@ -5618,7 +5625,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/fern-definition/ir-to-jsonschema:
     dependencies:
@@ -5673,7 +5680,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/fern-definition/schema:
     dependencies:
@@ -5698,7 +5705,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/fern-definition/validator:
     dependencies:
@@ -5771,7 +5778,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/generation/ir-generator:
     devDependencies:
@@ -5837,7 +5844,7 @@ importers:
         version: 9.0.1
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/generation/ir-generator-tests:
     dependencies:
@@ -5886,7 +5893,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/generation/ir-migrations:
     dependencies:
@@ -6121,7 +6128,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/generation/local-generation/docker-utils:
     dependencies:
@@ -6155,7 +6162,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/generation/local-generation/local-workspace-runner:
     dependencies:
@@ -6225,9 +6232,6 @@ importers:
       '@fern-api/rust-dynamic-snippets':
         specifier: workspace:*
         version: link:../../../../../generators/rust/dynamic-snippets
-      '@fern-api/sdk':
-        specifier: 0.12.3
-        version: 0.12.3
       '@fern-api/swift-dynamic-snippets':
         specifier: workspace:*
         version: link:../../../../../generators/swift/dynamic-snippets
@@ -6255,9 +6259,6 @@ importers:
       decompress:
         specifier: ^4.2.1
         version: 4.2.1
-      prettier2:
-        specifier: npm:prettier@^2.7.1
-        version: prettier@2.8.8
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
@@ -6271,9 +6272,6 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
-      '@types/prettier2':
-        specifier: npm:@types/prettier@^2.7.3
-        version: '@types/prettier@2.7.3'
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -6282,7 +6280,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/generation/protoc-gen-fern:
     dependencies:
@@ -6331,7 +6329,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/generation/protoc-gen-fern/bin: {}
 
@@ -6359,8 +6357,8 @@ importers:
         specifier: 0.0.6-2ee1b7e28
         version: 0.0.6-2ee1b7e28
       '@fern-api/fdr-sdk':
-        specifier: 0.140.0-a411fe32c
-        version: 0.140.0-a411fe32c(typescript@5.9.3)
+        specifier: 0.140.1-ec53d68c0
+        version: 0.140.1-ec53d68c0(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../../commons/fs-utils
@@ -6466,7 +6464,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/generation/source-resolver:
     dependencies:
@@ -6491,7 +6489,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/init:
     dependencies:
@@ -6567,7 +6565,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/logger:
     dependencies:
@@ -6589,7 +6587,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/login:
     dependencies:
@@ -6647,7 +6645,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/mock:
     dependencies:
@@ -6693,7 +6691,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/posthog-manager:
     dependencies:
@@ -6730,7 +6728,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/project-loader:
     dependencies:
@@ -6767,7 +6765,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/register:
     dependencies:
@@ -6790,8 +6788,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/core-utils
       '@fern-api/fdr-sdk':
-        specifier: 0.140.0-a411fe32c
-        version: 0.140.0-a411fe32c(typescript@5.9.3)
+        specifier: 0.140.1-ec53d68c0
+        version: 0.140.1-ec53d68c0(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -6834,7 +6832,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/semver-utils:
     dependencies:
@@ -6856,7 +6854,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/task-context:
     dependencies:
@@ -6878,7 +6876,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/workspace/browser-compatible-fern-workspace:
     dependencies:
@@ -6921,7 +6919,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/workspace/commons:
     dependencies:
@@ -6994,7 +6992,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/workspace/lazy-fern-workspace:
     dependencies:
@@ -7136,7 +7134,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/workspace/loader:
     dependencies:
@@ -7194,7 +7192,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/workspace/oss-validator:
     dependencies:
@@ -7234,7 +7232,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/yaml/docs-validator:
     dependencies:
@@ -7251,8 +7249,8 @@ importers:
         specifier: workspace:*
         version: link:../../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 0.140.0-a411fe32c
-        version: 0.140.0-a411fe32c(typescript@5.9.3)
+        specifier: 0.140.1-ec53d68c0
+        version: 0.140.1-ec53d68c0(typescript@5.9.3)
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../fern-definition/schema
@@ -7361,7 +7359,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/cli/yaml/generators-validator:
     dependencies:
@@ -7416,7 +7414,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/commons/casings-generator:
     dependencies:
@@ -7450,7 +7448,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/commons/core-utils:
     dependencies:
@@ -7517,7 +7515,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/commons/fs-utils:
     dependencies:
@@ -7557,7 +7555,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/commons/github:
     dependencies:
@@ -7588,7 +7586,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@22.19.0)(jsdom@27.1.0)(msw@2.12.0(@types/node@22.19.0)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@22.19.0)(jsdom@27.1.0)(msw@2.12.1(@types/node@22.19.0)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/commons/ir-utils:
     dependencies:
@@ -7628,7 +7626,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/commons/loadable:
     dependencies:
@@ -7650,7 +7648,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/commons/logging-execa:
     dependencies:
@@ -7678,7 +7676,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/commons/mock-utils:
     dependencies:
@@ -7730,7 +7728,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/commons/test-utils:
     devDependencies:
@@ -7772,19 +7770,19 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/configs:
     devDependencies:
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@24.10.0)(jsdom@27.1.0)(msw@2.12.0(@types/node@24.10.0)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@24.10.0)(jsdom@27.1.0)(msw@2.12.1(@types/node@24.10.0)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/core:
     dependencies:
       '@fern-api/fdr-sdk':
-        specifier: 0.140.0-a411fe32c
-        version: 0.140.0-a411fe32c(typescript@5.9.3)
+        specifier: 0.140.1-ec53d68c0
+        version: 0.140.1-ec53d68c0(typescript@5.9.3)
       '@fern-api/venus-api-sdk':
         specifier: 0.17.3-3-gf696595
         version: 0.17.3-3-gf696595
@@ -7812,10 +7810,13 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/generator-cli:
-    dependencies:
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../configs
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../commons/fs-utils
@@ -7825,13 +7826,6 @@ importers:
       '@octokit/rest':
         specifier: ^20.1.2
         version: 20.1.2
-      es-toolkit:
-        specifier: ^1.39.10
-        version: 1.39.10
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../configs
       '@types/jest':
         specifier: ^29.5.11
         version: 29.5.14
@@ -7844,6 +7838,9 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
+      es-toolkit:
+        specifier: ^1.39.10
+        version: 1.39.10
       esbuild:
         specifier: ^0.24.2
         version: 0.24.2
@@ -7861,7 +7858,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@22.19.0)(jsdom@27.1.0)(msw@2.12.0(@types/node@22.19.0)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@22.19.0)(jsdom@27.1.0)(msw@2.12.1(@types/node@22.19.0)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
       yargs:
         specifier: ^17.4.1
         version: 17.7.2
@@ -7882,7 +7879,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
   packages/scripts:
     devDependencies:
@@ -7909,7 +7906,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
       yaml:
         specifier: 2.3.3
         version: 2.3.3
@@ -8023,7 +8020,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
       yargs:
         specifier: ^17.4.1
         version: 17.7.2
@@ -8032,10 +8029,10 @@ importers:
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
-        version: 0.2.3(esbuild@0.25.12)
+        version: 0.2.3(esbuild@0.27.0)
       '@esbuild-plugins/node-modules-polyfill':
         specifier: ^0.2.2
-        version: 0.2.2(esbuild@0.25.12)
+        version: 0.2.2(esbuild@0.27.0)
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../../cli/workspace/commons
@@ -8077,7 +8074,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1)
+        version: 2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)
 
 packages:
 
@@ -9143,6 +9140,12 @@ packages:
     cpu: [ppc64]
     os: [aix]
 
+  '@esbuild/aix-ppc64@0.27.0':
+    resolution: {integrity: sha512-KuZrd2hRjz01y5JK9mEBSD3Vj3mbCvemhT466rSuJYeE/hjuBrHfjjcjMdTm/sz7au+++sdbJZJmuBwQLuw68A==}
+    engines: {node: '>=18'}
+    cpu: [ppc64]
+    os: [aix]
+
   '@esbuild/android-arm64@0.21.5':
     resolution: {integrity: sha512-c0uX9VAUBQ7dTDCjq+wdyGLowMdtR/GoC2U5IYk/7D1H1JYC0qseD7+11iMP2mRLN9RcCMRcjC4YMclCzGwS/A==}
     engines: {node: '>=12'}
@@ -9163,6 +9166,12 @@ packages:
 
   '@esbuild/android-arm64@0.25.12':
     resolution: {integrity: sha512-6AAmLG7zwD1Z159jCKPvAxZd4y/VTO0VkprYy+3N2FtJ8+BQWFXU+OxARIwA46c5tdD9SsKGZ/1ocqBS/gAKHg==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [android]
+
+  '@esbuild/android-arm64@0.27.0':
+    resolution: {integrity: sha512-CC3vt4+1xZrs97/PKDkl0yN7w8edvU2vZvAFGD16n9F0Cvniy5qvzRXjfO1l94efczkkQE6g1x0i73Qf5uthOQ==}
     engines: {node: '>=18'}
     cpu: [arm64]
     os: [android]
@@ -9191,6 +9200,12 @@ packages:
     cpu: [arm]
     os: [android]
 
+  '@esbuild/android-arm@0.27.0':
+    resolution: {integrity: sha512-j67aezrPNYWJEOHUNLPj9maeJte7uSMM6gMoxfPC9hOg8N02JuQi/T7ewumf4tNvJadFkvLZMlAq73b9uwdMyQ==}
+    engines: {node: '>=18'}
+    cpu: [arm]
+    os: [android]
+
   '@esbuild/android-x64@0.21.5':
     resolution: {integrity: sha512-D7aPRUUNHRBwHxzxRvp856rjUHRFW1SdQATKXH2hqA0kAZb1hKmi02OpYRacl0TxIGz/ZmXWlbZgjwWYaCakTA==}
     engines: {node: '>=12'}
@@ -9211,6 +9226,12 @@ packages:
 
   '@esbuild/android-x64@0.25.12':
     resolution: {integrity: sha512-5jbb+2hhDHx5phYR2By8GTWEzn6I9UqR11Kwf22iKbNpYrsmRB18aX/9ivc5cabcUiAT/wM+YIZ6SG9QO6a8kg==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [android]
+
+  '@esbuild/android-x64@0.27.0':
+    resolution: {integrity: sha512-wurMkF1nmQajBO1+0CJmcN17U4BP6GqNSROP8t0X/Jiw2ltYGLHpEksp9MpoBqkrFR3kv2/te6Sha26k3+yZ9Q==}
     engines: {node: '>=18'}
     cpu: [x64]
     os: [android]
@@ -9239,6 +9260,12 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
+  '@esbuild/darwin-arm64@0.27.0':
+    resolution: {integrity: sha512-uJOQKYCcHhg07DL7i8MzjvS2LaP7W7Pn/7uA0B5S1EnqAirJtbyw4yC5jQ5qcFjHK9l6o/MX9QisBg12kNkdHg==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [darwin]
+
   '@esbuild/darwin-x64@0.21.5':
     resolution: {integrity: sha512-se/JjF8NlmKVG4kNIuyWMV/22ZaerB+qaSi5MdrXtd6R08kvs2qCN4C09miupktDitvh8jRFflwGFBQcxZRjbw==}
     engines: {node: '>=12'}
@@ -9259,6 +9286,12 @@ packages:
 
   '@esbuild/darwin-x64@0.25.12':
     resolution: {integrity: sha512-HQ9ka4Kx21qHXwtlTUVbKJOAnmG1ipXhdWTmNXiPzPfWKpXqASVcWdnf2bnL73wgjNrFXAa3yYvBSd9pzfEIpA==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [darwin]
+
+  '@esbuild/darwin-x64@0.27.0':
+    resolution: {integrity: sha512-8mG6arH3yB/4ZXiEnXof5MK72dE6zM9cDvUcPtxhUZsDjESl9JipZYW60C3JGreKCEP+p8P/72r69m4AZGJd5g==}
     engines: {node: '>=18'}
     cpu: [x64]
     os: [darwin]
@@ -9287,6 +9320,12 @@ packages:
     cpu: [arm64]
     os: [freebsd]
 
+  '@esbuild/freebsd-arm64@0.27.0':
+    resolution: {integrity: sha512-9FHtyO988CwNMMOE3YIeci+UV+x5Zy8fI2qHNpsEtSF83YPBmE8UWmfYAQg6Ux7Gsmd4FejZqnEUZCMGaNQHQw==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [freebsd]
+
   '@esbuild/freebsd-x64@0.21.5':
     resolution: {integrity: sha512-J95kNBj1zkbMXtHVH29bBriQygMXqoVQOQYA+ISs0/2l3T9/kj42ow2mpqerRBxDJnmkUDCaQT/dfNXWX/ZZCQ==}
     engines: {node: '>=12'}
@@ -9307,6 +9346,12 @@ packages:
 
   '@esbuild/freebsd-x64@0.25.12':
     resolution: {integrity: sha512-TGbO26Yw2xsHzxtbVFGEXBFH0FRAP7gtcPE7P5yP7wGy7cXK2oO7RyOhL5NLiqTlBh47XhmIUXuGciXEqYFfBQ==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [freebsd]
+
+  '@esbuild/freebsd-x64@0.27.0':
+    resolution: {integrity: sha512-zCMeMXI4HS/tXvJz8vWGexpZj2YVtRAihHLk1imZj4efx1BQzN76YFeKqlDr3bUWI26wHwLWPd3rwh6pe4EV7g==}
     engines: {node: '>=18'}
     cpu: [x64]
     os: [freebsd]
@@ -9335,6 +9380,12 @@ packages:
     cpu: [arm64]
     os: [linux]
 
+  '@esbuild/linux-arm64@0.27.0':
+    resolution: {integrity: sha512-AS18v0V+vZiLJyi/4LphvBE+OIX682Pu7ZYNsdUHyUKSoRwdnOsMf6FDekwoAFKej14WAkOef3zAORJgAtXnlQ==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [linux]
+
   '@esbuild/linux-arm@0.21.5':
     resolution: {integrity: sha512-bPb5AHZtbeNGjCKVZ9UGqGwo8EUu4cLq68E95A53KlxAPRmUyYv2D6F0uUI65XisGOL1hBP5mTronbgo+0bFcA==}
     engines: {node: '>=12'}
@@ -9355,6 +9406,12 @@ packages:
 
   '@esbuild/linux-arm@0.25.12':
     resolution: {integrity: sha512-lPDGyC1JPDou8kGcywY0YILzWlhhnRjdof3UlcoqYmS9El818LLfJJc3PXXgZHrHCAKs/Z2SeZtDJr5MrkxtOw==}
+    engines: {node: '>=18'}
+    cpu: [arm]
+    os: [linux]
+
+  '@esbuild/linux-arm@0.27.0':
+    resolution: {integrity: sha512-t76XLQDpxgmq2cNXKTVEB7O7YMb42atj2Re2Haf45HkaUpjM2J0UuJZDuaGbPbamzZ7bawyGFUkodL+zcE+jvQ==}
     engines: {node: '>=18'}
     cpu: [arm]
     os: [linux]
@@ -9383,6 +9440,12 @@ packages:
     cpu: [ia32]
     os: [linux]
 
+  '@esbuild/linux-ia32@0.27.0':
+    resolution: {integrity: sha512-Mz1jxqm/kfgKkc/KLHC5qIujMvnnarD9ra1cEcrs7qshTUSksPihGrWHVG5+osAIQ68577Zpww7SGapmzSt4Nw==}
+    engines: {node: '>=18'}
+    cpu: [ia32]
+    os: [linux]
+
   '@esbuild/linux-loong64@0.21.5':
     resolution: {integrity: sha512-uHf1BmMG8qEvzdrzAqg2SIG/02+4/DHB6a9Kbya0XDvwDEKCoC8ZRWI5JJvNdUjtciBGFQ5PuBlpEOXQj+JQSg==}
     engines: {node: '>=12'}
@@ -9403,6 +9466,12 @@ packages:
 
   '@esbuild/linux-loong64@0.25.12':
     resolution: {integrity: sha512-h///Lr5a9rib/v1GGqXVGzjL4TMvVTv+s1DPoxQdz7l/AYv6LDSxdIwzxkrPW438oUXiDtwM10o9PmwS/6Z0Ng==}
+    engines: {node: '>=18'}
+    cpu: [loong64]
+    os: [linux]
+
+  '@esbuild/linux-loong64@0.27.0':
+    resolution: {integrity: sha512-QbEREjdJeIreIAbdG2hLU1yXm1uu+LTdzoq1KCo4G4pFOLlvIspBm36QrQOar9LFduavoWX2msNFAAAY9j4BDg==}
     engines: {node: '>=18'}
     cpu: [loong64]
     os: [linux]
@@ -9431,6 +9500,12 @@ packages:
     cpu: [mips64el]
     os: [linux]
 
+  '@esbuild/linux-mips64el@0.27.0':
+    resolution: {integrity: sha512-sJz3zRNe4tO2wxvDpH/HYJilb6+2YJxo/ZNbVdtFiKDufzWq4JmKAiHy9iGoLjAV7r/W32VgaHGkk35cUXlNOg==}
+    engines: {node: '>=18'}
+    cpu: [mips64el]
+    os: [linux]
+
   '@esbuild/linux-ppc64@0.21.5':
     resolution: {integrity: sha512-1hHV/Z4OEfMwpLO8rp7CvlhBDnjsC3CttJXIhBi+5Aj5r+MBvy4egg7wCbe//hSsT+RvDAG7s81tAvpL2XAE4w==}
     engines: {node: '>=12'}
@@ -9451,6 +9526,12 @@ packages:
 
   '@esbuild/linux-ppc64@0.25.12':
     resolution: {integrity: sha512-9meM/lRXxMi5PSUqEXRCtVjEZBGwB7P/D4yT8UG/mwIdze2aV4Vo6U5gD3+RsoHXKkHCfSxZKzmDssVlRj1QQA==}
+    engines: {node: '>=18'}
+    cpu: [ppc64]
+    os: [linux]
+
+  '@esbuild/linux-ppc64@0.27.0':
+    resolution: {integrity: sha512-z9N10FBD0DCS2dmSABDBb5TLAyF1/ydVb+N4pi88T45efQ/w4ohr/F/QYCkxDPnkhkp6AIpIcQKQ8F0ANoA2JA==}
     engines: {node: '>=18'}
     cpu: [ppc64]
     os: [linux]
@@ -9479,6 +9560,12 @@ packages:
     cpu: [riscv64]
     os: [linux]
 
+  '@esbuild/linux-riscv64@0.27.0':
+    resolution: {integrity: sha512-pQdyAIZ0BWIC5GyvVFn5awDiO14TkT/19FTmFcPdDec94KJ1uZcmFs21Fo8auMXzD4Tt+diXu1LW1gHus9fhFQ==}
+    engines: {node: '>=18'}
+    cpu: [riscv64]
+    os: [linux]
+
   '@esbuild/linux-s390x@0.21.5':
     resolution: {integrity: sha512-zus5sxzqBJD3eXxwvjN1yQkRepANgxE9lgOW2qLnmr8ikMTphkjgXu1HR01K4FJg8h1kEEDAqDcZQtbrRnB41A==}
     engines: {node: '>=12'}
@@ -9499,6 +9586,12 @@ packages:
 
   '@esbuild/linux-s390x@0.25.12':
     resolution: {integrity: sha512-MsKncOcgTNvdtiISc/jZs/Zf8d0cl/t3gYWX8J9ubBnVOwlk65UIEEvgBORTiljloIWnBzLs4qhzPkJcitIzIg==}
+    engines: {node: '>=18'}
+    cpu: [s390x]
+    os: [linux]
+
+  '@esbuild/linux-s390x@0.27.0':
+    resolution: {integrity: sha512-hPlRWR4eIDDEci953RI1BLZitgi5uqcsjKMxwYfmi4LcwyWo2IcRP+lThVnKjNtk90pLS8nKdroXYOqW+QQH+w==}
     engines: {node: '>=18'}
     cpu: [s390x]
     os: [linux]
@@ -9527,6 +9620,12 @@ packages:
     cpu: [x64]
     os: [linux]
 
+  '@esbuild/linux-x64@0.27.0':
+    resolution: {integrity: sha512-1hBWx4OUJE2cab++aVZ7pObD6s+DK4mPGpemtnAORBvb5l/g5xFGk0vc0PjSkrDs0XaXj9yyob3d14XqvnQ4gw==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [linux]
+
   '@esbuild/netbsd-arm64@0.24.2':
     resolution: {integrity: sha512-wuLK/VztRRpMt9zyHSazyCVdCXlpHkKm34WUyinD2lzK07FAHTq0KQvZZlXikNWkDGoT6x3TD51jKQ7gMVpopw==}
     engines: {node: '>=18'}
@@ -9541,6 +9640,12 @@ packages:
 
   '@esbuild/netbsd-arm64@0.25.12':
     resolution: {integrity: sha512-xXwcTq4GhRM7J9A8Gv5boanHhRa/Q9KLVmcyXHCTaM4wKfIpWkdXiMog/KsnxzJ0A1+nD+zoecuzqPmCRyBGjg==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [netbsd]
+
+  '@esbuild/netbsd-arm64@0.27.0':
+    resolution: {integrity: sha512-6m0sfQfxfQfy1qRuecMkJlf1cIzTOgyaeXaiVaaki8/v+WB+U4hc6ik15ZW6TAllRlg/WuQXxWj1jx6C+dfy3w==}
     engines: {node: '>=18'}
     cpu: [arm64]
     os: [netbsd]
@@ -9569,6 +9674,12 @@ packages:
     cpu: [x64]
     os: [netbsd]
 
+  '@esbuild/netbsd-x64@0.27.0':
+    resolution: {integrity: sha512-xbbOdfn06FtcJ9d0ShxxvSn2iUsGd/lgPIO2V3VZIPDbEaIj1/3nBBe1AwuEZKXVXkMmpr6LUAgMkLD/4D2PPA==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [netbsd]
+
   '@esbuild/openbsd-arm64@0.24.2':
     resolution: {integrity: sha512-YQbi46SBct6iKnszhSvdluqDmxCJA+Pu280Av9WICNwQmMxV7nLRHZfjQzwbPs3jeWnuAhE9Jy0NrnJ12Oz+0A==}
     engines: {node: '>=18'}
@@ -9583,6 +9694,12 @@ packages:
 
   '@esbuild/openbsd-arm64@0.25.12':
     resolution: {integrity: sha512-fF96T6KsBo/pkQI950FARU9apGNTSlZGsv1jZBAlcLL1MLjLNIWPBkj5NlSz8aAzYKg+eNqknrUJ24QBybeR5A==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [openbsd]
+
+  '@esbuild/openbsd-arm64@0.27.0':
+    resolution: {integrity: sha512-fWgqR8uNbCQ/GGv0yhzttj6sU/9Z5/Sv/VGU3F5OuXK6J6SlriONKrQ7tNlwBrJZXRYk5jUhuWvF7GYzGguBZQ==}
     engines: {node: '>=18'}
     cpu: [arm64]
     os: [openbsd]
@@ -9611,6 +9728,12 @@ packages:
     cpu: [x64]
     os: [openbsd]
 
+  '@esbuild/openbsd-x64@0.27.0':
+    resolution: {integrity: sha512-aCwlRdSNMNxkGGqQajMUza6uXzR/U0dIl1QmLjPtRbLOx3Gy3otfFu/VjATy4yQzo9yFDGTxYDo1FfAD9oRD2A==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [openbsd]
+
   '@esbuild/openharmony-arm64@0.25.10':
     resolution: {integrity: sha512-AVTSBhTX8Y/Fz6OmIVBip9tJzZEUcY8WLh7I59+upa5/GPhh2/aM6bvOMQySspnCCHvFi79kMtdJS1w0DXAeag==}
     engines: {node: '>=18'}
@@ -9619,6 +9742,12 @@ packages:
 
   '@esbuild/openharmony-arm64@0.25.12':
     resolution: {integrity: sha512-rm0YWsqUSRrjncSXGA7Zv78Nbnw4XL6/dzr20cyrQf7ZmRcsovpcRBdhD43Nuk3y7XIoW2OxMVvwuRvk9XdASg==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [openharmony]
+
+  '@esbuild/openharmony-arm64@0.27.0':
+    resolution: {integrity: sha512-nyvsBccxNAsNYz2jVFYwEGuRRomqZ149A39SHWk4hV0jWxKM0hjBPm3AmdxcbHiFLbBSwG6SbpIcUbXjgyECfA==}
     engines: {node: '>=18'}
     cpu: [arm64]
     os: [openharmony]
@@ -9647,6 +9776,12 @@ packages:
     cpu: [x64]
     os: [sunos]
 
+  '@esbuild/sunos-x64@0.27.0':
+    resolution: {integrity: sha512-Q1KY1iJafM+UX6CFEL+F4HRTgygmEW568YMqDA5UV97AuZSm21b7SXIrRJDwXWPzr8MGr75fUZPV67FdtMHlHA==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [sunos]
+
   '@esbuild/win32-arm64@0.21.5':
     resolution: {integrity: sha512-Z0gOTd75VvXqyq7nsl93zwahcTROgqvuAcYDUr+vOv8uHhNSKROyU961kgtCD1e95IqPKSQKH7tBTslnS3tA8A==}
     engines: {node: '>=12'}
@@ -9667,6 +9802,12 @@ packages:
 
   '@esbuild/win32-arm64@0.25.12':
     resolution: {integrity: sha512-rMmLrur64A7+DKlnSuwqUdRKyd3UE7oPJZmnljqEptesKM8wx9J8gx5u0+9Pq0fQQW8vqeKebwNXdfOyP+8Bsg==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [win32]
+
+  '@esbuild/win32-arm64@0.27.0':
+    resolution: {integrity: sha512-W1eyGNi6d+8kOmZIwi/EDjrL9nxQIQ0MiGqe/AWc6+IaHloxHSGoeRgDRKHFISThLmsewZ5nHFvGFWdBYlgKPg==}
     engines: {node: '>=18'}
     cpu: [arm64]
     os: [win32]
@@ -9695,6 +9836,12 @@ packages:
     cpu: [ia32]
     os: [win32]
 
+  '@esbuild/win32-ia32@0.27.0':
+    resolution: {integrity: sha512-30z1aKL9h22kQhilnYkORFYt+3wp7yZsHWus+wSKAJR8JtdfI76LJ4SBdMsCopTR3z/ORqVu5L1vtnHZWVj4cQ==}
+    engines: {node: '>=18'}
+    cpu: [ia32]
+    os: [win32]
+
   '@esbuild/win32-x64@0.21.5':
     resolution: {integrity: sha512-tQd/1efJuzPC6rCFwEvLtci/xNFcTZknmXs98FYDfGE4wP9ClFV98nyKrzJKVPMhdDnjzLhdUyMX4PsQAPjwIw==}
     engines: {node: '>=12'}
@@ -9715,6 +9862,12 @@ packages:
 
   '@esbuild/win32-x64@0.25.12':
     resolution: {integrity: sha512-alJC0uCZpTFrSL0CCDjcgleBXPnCrEAhTBILpeAp7M/OFgoqtAetfBzX0xM00MUsVVPpVjlPuMbREqnZCXaTnA==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [win32]
+
+  '@esbuild/win32-x64@0.27.0':
+    resolution: {integrity: sha512-aIitBcjQeyOhMTImhLZmtxfdOcuNRpwlPNmlFKPcHQYPhEssw75Cl1TSXJXpMkzaua9FUetx/4OQKq7eJul5Cg==}
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
@@ -9791,8 +9944,8 @@ packages:
     resolution: {integrity: sha512-3qhAAuc4ZJWLaFtyZzaYXfF9OQ5iviNrvLDXtjKScKUNS134fR3v3c3xedCidTq5KedapuBECziUaOmmd6KXVA==}
     engines: {node: '>=18.0.0'}
 
-  '@fern-api/fdr-sdk@0.140.0-a411fe32c':
-    resolution: {integrity: sha512-QTvlcs2+GqXYUkkr1Jz63jdY/5wKWzNoM31rLfMbWTxvzoI2LLQ1DdlCjYFFmXvPxxLsb6DGnmZMFXvM7J3uPA==}
+  '@fern-api/fdr-sdk@0.140.1-ec53d68c0':
+    resolution: {integrity: sha512-dWEwn7sOnwzopzaAqMcQAHUWZV8LVBi10ua37Fvz6dZfyS7HHgEM/iYGwR9A8ollnPxVw82CcbhxlrEK+tVAFg==}
 
   '@fern-api/generator-cli@0.3.0':
     resolution: {integrity: sha512-9FCrYy7j+SPDWNc82YIM6H6rlvUI6Zebzy3rqQj+JNz07cig6292X8AS58ydkM4Kj3NWEPHFW9qNo2KU/C9EHQ==}
@@ -9801,20 +9954,14 @@ packages:
   '@fern-api/logger@0.4.24-rc1':
     resolution: {integrity: sha512-yh0E2F3K3IPnJZcE4dv+u8I51iKgTgv/reinKo4K5YmYEG1iLtw5vBEYMOPkQmsYFPAKIh++OMB/6TrsahMWew==}
 
-  '@fern-api/sdk@0.12.3':
-    resolution: {integrity: sha512-sexxpQEHBmsAXW3UHo5x7NW8Z9TrHWYLGo/J7eFqHYSH8Sq9LA3vRlR0ni9h4FNlKnPDu9Y55L0BhsQVXYqPKA==}
-
-  '@fern-api/template-resolver@0.7.5':
-    resolution: {integrity: sha512-hmvSxuhyWMjn1DxJJS/R+CIaZcF5c+UBEyFqFOw+laoBtdDvNgEyCu7XP5cILVMABPHmt7kkIO5KbrsCS5S2kw==}
-
   '@fern-api/ui-core-utils@0.0.0':
     resolution: {integrity: sha512-8T3YLd+n8z5Vs+WNRIwH6PUW31ZC4/lkRD5G2+qyBcdePfOVYV3CHp3eiUrSSArOr0SJmzN/mQwPm3iAaey7nw==}
 
   '@fern-api/ui-core-utils@0.129.4-b6c699ad2':
     resolution: {integrity: sha512-V1jfV4u5fhpWEoLqCIA1QtRGpRR0NXyk68VGEHmEsezwA/gNF4587MJp5FWN59YsZmRt2hozODnp/umJ/iwkPg==}
 
-  '@fern-api/ui-core-utils@0.140.0-a411fe32c':
-    resolution: {integrity: sha512-SbuUpFM1GA5ZvMQlTfe39OTx9V1+v6/gK1U5yupPoz1d8G+cMbmhlsWL+q2JvR6r3BSk5I7QdC6bOF6t7qxU/Q==}
+  '@fern-api/ui-core-utils@0.140.1-ec53d68c0':
+    resolution: {integrity: sha512-Z3+dSjtb4wyqzKEJ4NCohMEIZx70adaEJQKrfLyA9MvMbv/PZsA+dAqolFQrTUTWylQgxFuBSor0tP3OEcV6NQ==}
 
   '@fern-api/venus-api-sdk@0.17.3-3-gf696595':
     resolution: {integrity: sha512-JwtEDPtlrayTOTc4NR9opF4bD1LQtz222h1UnKseAv6Saopg2iHvxoGSf0SQfHA8i8atw+eJMNbHBWWTPdbBrA==}
@@ -10039,9 +10186,6 @@ packages:
   '@fern-fern/postman-sdk@0.1.1':
     resolution: {integrity: sha512-wjeVDbw6xvsBe6I/uwZ1P0ZhzjpEAyzY9M0iQXEuZoYo5wsea3SeTCrqOub3jV0WDia0PFFacfpoV0U/sD7yIQ==}
 
-  '@fern-fern/snippet-sdk@0.0.6434':
-    resolution: {integrity: sha512-xqt1EHBHOVAAqpo4u/YFetvjRnhabLvxrcnL26DJrbqXj9UY0DWqlzRAOX6QBgisncZKnQKU1+10r7pKdf5g3Q==}
-
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
     engines: {node: '>=18.18.0'}
@@ -10071,8 +10215,8 @@ packages:
     resolution: {integrity: sha512-JWaTfCxI1eTmJ1BIv86vUfjVatOdxwD0DAVKYevY8SazeUUZtW+tNbsdejVO1GYE0GXJW1N1ahmiC3TFd+7wZA==}
     engines: {node: '>=18'}
 
-  '@inquirer/ansi@1.0.1':
-    resolution: {integrity: sha512-yqq0aJW/5XPhi5xOAL1xRCpe1eh8UFVgYFpFsjEqmIR8rKLyP+HINvFXwUaxYICflJrVlxnp7lLN6As735kVpw==}
+  '@inquirer/ansi@1.0.2':
+    resolution: {integrity: sha512-S8qNSZiYzFd0wAcyG5AXCvUHC5Sr7xpZ9wZ2py9XR88jUz8wooStVx5M6dRzczbBWjic9NP7+rY0Xi7qqK/aMQ==}
     engines: {node: '>=18'}
 
   '@inquirer/checkbox@4.2.4':
@@ -10093,8 +10237,8 @@ packages:
       '@types/node':
         optional: true
 
-  '@inquirer/confirm@5.1.19':
-    resolution: {integrity: sha512-wQNz9cfcxrtEnUyG5PndC8g3gZ7lGDBzmWiXZkX8ot3vfZ+/BLjR8EvyGX4YzQLeVqtAlY/YScZpW7CW8qMoDQ==}
+  '@inquirer/confirm@5.1.20':
+    resolution: {integrity: sha512-HDGiWh2tyRZa0M1ZnEIUCQro25gW/mN8ODByicQrbR1yHx4hT+IOpozCMi5TgBtUdklLwRI2mv14eNpftDluEw==}
     engines: {node: '>=18'}
     peerDependencies:
       '@types/node': '>=18'
@@ -10111,8 +10255,8 @@ packages:
       '@types/node':
         optional: true
 
-  '@inquirer/core@10.3.0':
-    resolution: {integrity: sha512-Uv2aPPPSK5jeCplQmQ9xadnFx2Zhj9b5Dj7bU6ZeCdDNNY11nhYy4btcSdtDguHqCT2h5oNeQTcUNSGGLA7NTA==}
+  '@inquirer/core@10.3.1':
+    resolution: {integrity: sha512-hzGKIkfomGFPgxKmnKEKeA+uCYBqC+TKtRx5LgyHRCrF6S2MliwRIjp3sUaWwVzMp7ZXVs8elB0Tfe682Rpg4w==}
     engines: {node: '>=18'}
     peerDependencies:
       '@types/node': '>=18'
@@ -10151,8 +10295,8 @@ packages:
     resolution: {integrity: sha512-lGPVU3yO9ZNqA7vTYz26jny41lE7yoQansmqdMLBEfqaGsmdg7V3W9mK9Pvb5IL4EVZ9GnSDGMO/cJXud5dMaw==}
     engines: {node: '>=18'}
 
-  '@inquirer/figures@1.0.14':
-    resolution: {integrity: sha512-DbFgdt+9/OZYFM+19dbpXOSeAstPy884FPy1KjDu4anWwymZeOYhMY1mdFri172htv6mvc/uvIAAi7b7tvjJBQ==}
+  '@inquirer/figures@1.0.15':
+    resolution: {integrity: sha512-t2IEY+unGHOzAaVM5Xx6DEWKeXlDDcNPeDyUpsRc6CUhBfU3VQOEl+Vssh7VNp1dR8MdUJBWhuObjXCsVpjN5g==}
     engines: {node: '>=18'}
 
   '@inquirer/input@4.2.4':
@@ -10218,8 +10362,8 @@ packages:
       '@types/node':
         optional: true
 
-  '@inquirer/type@3.0.8':
-    resolution: {integrity: sha512-lg9Whz8onIHRthWaN1Q9EGLa/0LFJjyM8mEUbL1eTi6yMGvBf8gvyDLtxSXztQsxMvhxxNpJYrwa1YHdq+w4Jw==}
+  '@inquirer/type@3.0.10':
+    resolution: {integrity: sha512-BvziSRxfz5Ov8ch0z/n3oijRSEcEsHnhggm4xFZe93DHcUCTlutlq9Ox4SVENAfcRD22UQq7T/atg9Wr3k09eA==}
     engines: {node: '>=18'}
     peerDependencies:
       '@types/node': '>=18'
@@ -10227,8 +10371,8 @@ packages:
       '@types/node':
         optional: true
 
-  '@inquirer/type@3.0.9':
-    resolution: {integrity: sha512-QPaNt/nmE2bLGQa9b7wwyRJoLZ7pN6rcyXvzU0YCmivmJyq1BVo94G98tStRWkoD1RgDX5C+dPlhhHzNdu/W/w==}
+  '@inquirer/type@3.0.8':
+    resolution: {integrity: sha512-lg9Whz8onIHRthWaN1Q9EGLa/0LFJjyM8mEUbL1eTi6yMGvBf8gvyDLtxSXztQsxMvhxxNpJYrwa1YHdq+w4Jw==}
     engines: {node: '>=18'}
     peerDependencies:
       '@types/node': '>=18'
@@ -10870,8 +11014,18 @@ packages:
     cpu: [arm]
     os: [android]
 
+  '@rollup/rollup-android-arm-eabi@4.53.2':
+    resolution: {integrity: sha512-yDPzwsgiFO26RJA4nZo8I+xqzh7sJTZIWQOxn+/XOdPE31lAvLIYCKqjV+lNH/vxE2L2iH3plKxDCRK6i+CwhA==}
+    cpu: [arm]
+    os: [android]
+
   '@rollup/rollup-android-arm64@4.52.3':
     resolution: {integrity: sha512-wd+u7SLT/u6knklV/ifG7gr5Qy4GUbH2hMWcDauPFJzmCZUAJ8L2bTkVXC2niOIxp8lk3iH/QX8kSrUxVZrOVw==}
+    cpu: [arm64]
+    os: [android]
+
+  '@rollup/rollup-android-arm64@4.53.2':
+    resolution: {integrity: sha512-k8FontTxIE7b0/OGKeSN5B6j25EuppBcWM33Z19JoVT7UTXFSo3D9CdU39wGTeb29NO3XxpMNauh09B+Ibw+9g==}
     cpu: [arm64]
     os: [android]
 
@@ -10880,8 +11034,18 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
+  '@rollup/rollup-darwin-arm64@4.53.2':
+    resolution: {integrity: sha512-A6s4gJpomNBtJ2yioj8bflM2oogDwzUiMl2yNJ2v9E7++sHrSrsQ29fOfn5DM/iCzpWcebNYEdXpaK4tr2RhfQ==}
+    cpu: [arm64]
+    os: [darwin]
+
   '@rollup/rollup-darwin-x64@4.52.3':
     resolution: {integrity: sha512-+Dyo7O1KUmIsbzx1l+4V4tvEVnVQqMOIYtrxK7ncLSknl1xnMHLgn7gddJVrYPNZfEB8CIi3hK8gq8bDhb3h5A==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@rollup/rollup-darwin-x64@4.53.2':
+    resolution: {integrity: sha512-e6XqVmXlHrBlG56obu9gDRPW3O3hLxpwHpLsBJvuI8qqnsrtSZ9ERoWUXtPOkY8c78WghyPHZdmPhHLWNdAGEw==}
     cpu: [x64]
     os: [darwin]
 
@@ -10890,8 +11054,18 @@ packages:
     cpu: [arm64]
     os: [freebsd]
 
+  '@rollup/rollup-freebsd-arm64@4.53.2':
+    resolution: {integrity: sha512-v0E9lJW8VsrwPux5Qe5CwmH/CF/2mQs6xU1MF3nmUxmZUCHazCjLgYvToOk+YuuUqLQBio1qkkREhxhc656ViA==}
+    cpu: [arm64]
+    os: [freebsd]
+
   '@rollup/rollup-freebsd-x64@4.52.3':
     resolution: {integrity: sha512-5M8kyi/OX96wtD5qJR89a/3x5x8x5inXBZO04JWhkQb2JWavOWfjgkdvUqibGJeNNaz1/Z1PPza5/tAPXICI6A==}
+    cpu: [x64]
+    os: [freebsd]
+
+  '@rollup/rollup-freebsd-x64@4.53.2':
+    resolution: {integrity: sha512-ClAmAPx3ZCHtp6ysl4XEhWU69GUB1D+s7G9YjHGhIGCSrsg00nEGRRZHmINYxkdoJehde8VIsDC5t9C0gb6yqA==}
     cpu: [x64]
     os: [freebsd]
 
@@ -10900,8 +11074,18 @@ packages:
     cpu: [arm]
     os: [linux]
 
+  '@rollup/rollup-linux-arm-gnueabihf@4.53.2':
+    resolution: {integrity: sha512-EPlb95nUsz6Dd9Qy13fI5kUPXNSljaG9FiJ4YUGU1O/Q77i5DYFW5KR8g1OzTcdZUqQQ1KdDqsTohdFVwCwjqg==}
+    cpu: [arm]
+    os: [linux]
+
   '@rollup/rollup-linux-arm-musleabihf@4.52.3':
     resolution: {integrity: sha512-ZYdtqgHTDfvrJHSh3W22TvjWxwOgc3ThK/XjgcNGP2DIwFIPeAPNsQxrJO5XqleSlgDux2VAoWQ5iJrtaC1TbA==}
+    cpu: [arm]
+    os: [linux]
+
+  '@rollup/rollup-linux-arm-musleabihf@4.53.2':
+    resolution: {integrity: sha512-BOmnVW+khAUX+YZvNfa0tGTEMVVEerOxN0pDk2E6N6DsEIa2Ctj48FOMfNDdrwinocKaC7YXUZ1pHlKpnkja/Q==}
     cpu: [arm]
     os: [linux]
 
@@ -10910,8 +11094,18 @@ packages:
     cpu: [arm64]
     os: [linux]
 
+  '@rollup/rollup-linux-arm64-gnu@4.53.2':
+    resolution: {integrity: sha512-Xt2byDZ+6OVNuREgBXr4+CZDJtrVso5woFtpKdGPhpTPHcNG7D8YXeQzpNbFRxzTVqJf7kvPMCub/pcGUWgBjA==}
+    cpu: [arm64]
+    os: [linux]
+
   '@rollup/rollup-linux-arm64-musl@4.52.3':
     resolution: {integrity: sha512-d3pY7LWno6SYNXRm6Ebsq0DJGoiLXTb83AIPCXl9fmtIQs/rXoS8SJxxUNtFbJ5MiOvs+7y34np77+9l4nfFMw==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@rollup/rollup-linux-arm64-musl@4.53.2':
+    resolution: {integrity: sha512-+LdZSldy/I9N8+klim/Y1HsKbJ3BbInHav5qE9Iy77dtHC/pibw1SR/fXlWyAk0ThnpRKoODwnAuSjqxFRDHUQ==}
     cpu: [arm64]
     os: [linux]
 
@@ -10920,8 +11114,18 @@ packages:
     cpu: [loong64]
     os: [linux]
 
+  '@rollup/rollup-linux-loong64-gnu@4.53.2':
+    resolution: {integrity: sha512-8ms8sjmyc1jWJS6WdNSA23rEfdjWB30LH8Wqj0Cqvv7qSHnvw6kgMMXRdop6hkmGPlyYBdRPkjJnj3KCUHV/uQ==}
+    cpu: [loong64]
+    os: [linux]
+
   '@rollup/rollup-linux-ppc64-gnu@4.52.3':
     resolution: {integrity: sha512-AUUH65a0p3Q0Yfm5oD2KVgzTKgwPyp9DSXc3UA7DtxhEb/WSPfbG4wqXeSN62OG5gSo18em4xv6dbfcUGXcagw==}
+    cpu: [ppc64]
+    os: [linux]
+
+  '@rollup/rollup-linux-ppc64-gnu@4.53.2':
+    resolution: {integrity: sha512-3HRQLUQbpBDMmzoxPJYd3W6vrVHOo2cVW8RUo87Xz0JPJcBLBr5kZ1pGcQAhdZgX9VV7NbGNipah1omKKe23/g==}
     cpu: [ppc64]
     os: [linux]
 
@@ -10930,8 +11134,18 @@ packages:
     cpu: [riscv64]
     os: [linux]
 
+  '@rollup/rollup-linux-riscv64-gnu@4.53.2':
+    resolution: {integrity: sha512-fMjKi+ojnmIvhk34gZP94vjogXNNUKMEYs+EDaB/5TG/wUkoeua7p7VCHnE6T2Tx+iaghAqQX8teQzcvrYpaQA==}
+    cpu: [riscv64]
+    os: [linux]
+
   '@rollup/rollup-linux-riscv64-musl@4.52.3':
     resolution: {integrity: sha512-OOFJa28dxfl8kLOPMUOQBCO6z3X2SAfzIE276fwT52uXDWUS178KWq0pL7d6p1kz7pkzA0yQwtqL0dEPoVcRWg==}
+    cpu: [riscv64]
+    os: [linux]
+
+  '@rollup/rollup-linux-riscv64-musl@4.53.2':
+    resolution: {integrity: sha512-XuGFGU+VwUUV5kLvoAdi0Wz5Xbh2SrjIxCtZj6Wq8MDp4bflb/+ThZsVxokM7n0pcbkEr2h5/pzqzDYI7cCgLQ==}
     cpu: [riscv64]
     os: [linux]
 
@@ -10940,8 +11154,18 @@ packages:
     cpu: [s390x]
     os: [linux]
 
+  '@rollup/rollup-linux-s390x-gnu@4.53.2':
+    resolution: {integrity: sha512-w6yjZF0P+NGzWR3AXWX9zc0DNEGdtvykB03uhonSHMRa+oWA6novflo2WaJr6JZakG2ucsyb+rvhrKac6NIy+w==}
+    cpu: [s390x]
+    os: [linux]
+
   '@rollup/rollup-linux-x64-gnu@4.52.3':
     resolution: {integrity: sha512-tPgGd6bY2M2LJTA1uGq8fkSPK8ZLYjDjY+ZLK9WHncCnfIz29LIXIqUgzCR0hIefzy6Hpbe8Th5WOSwTM8E7LA==}
+    cpu: [x64]
+    os: [linux]
+
+  '@rollup/rollup-linux-x64-gnu@4.53.2':
+    resolution: {integrity: sha512-yo8d6tdfdeBArzC7T/PnHd7OypfI9cbuZzPnzLJIyKYFhAQ8SvlkKtKBMbXDxe1h03Rcr7u++nFS7tqXz87Gtw==}
     cpu: [x64]
     os: [linux]
 
@@ -10950,8 +11174,18 @@ packages:
     cpu: [x64]
     os: [linux]
 
+  '@rollup/rollup-linux-x64-musl@4.53.2':
+    resolution: {integrity: sha512-ah59c1YkCxKExPP8O9PwOvs+XRLKwh/mV+3YdKqQ5AMQ0r4M4ZDuOrpWkUaqO7fzAHdINzV9tEVu8vNw48z0lA==}
+    cpu: [x64]
+    os: [linux]
+
   '@rollup/rollup-openharmony-arm64@4.52.3':
     resolution: {integrity: sha512-KTD/EqjZF3yvRaWUJdD1cW+IQBk4fbQaHYJUmP8N4XoKFZilVL8cobFSTDnjTtxWJQ3JYaMgF4nObY/+nYkumA==}
+    cpu: [arm64]
+    os: [openharmony]
+
+  '@rollup/rollup-openharmony-arm64@4.53.2':
+    resolution: {integrity: sha512-4VEd19Wmhr+Zy7hbUsFZ6YXEiP48hE//KPLCSVNY5RMGX2/7HZ+QkN55a3atM1C/BZCGIgqN+xrVgtdak2S9+A==}
     cpu: [arm64]
     os: [openharmony]
 
@@ -10960,8 +11194,18 @@ packages:
     cpu: [arm64]
     os: [win32]
 
+  '@rollup/rollup-win32-arm64-msvc@4.53.2':
+    resolution: {integrity: sha512-IlbHFYc/pQCgew/d5fslcy1KEaYVCJ44G8pajugd8VoOEI8ODhtb/j8XMhLpwHCMB3yk2J07ctup10gpw2nyMA==}
+    cpu: [arm64]
+    os: [win32]
+
   '@rollup/rollup-win32-ia32-msvc@4.52.3':
     resolution: {integrity: sha512-of1iHkTQSo3kr6dTIRX6t81uj/c/b15HXVsPcEElN5sS859qHrOepM5p9G41Hah+CTqSh2r8Bm56dL2z9UQQ7g==}
+    cpu: [ia32]
+    os: [win32]
+
+  '@rollup/rollup-win32-ia32-msvc@4.53.2':
+    resolution: {integrity: sha512-lNlPEGgdUfSzdCWU176ku/dQRnA7W+Gp8d+cWv73jYrb8uT7HTVVxq62DUYxjbaByuf1Yk0RIIAbDzp+CnOTFg==}
     cpu: [ia32]
     os: [win32]
 
@@ -10970,8 +11214,18 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@rollup/rollup-win32-x64-gnu@4.53.2':
+    resolution: {integrity: sha512-S6YojNVrHybQis2lYov1sd+uj7K0Q05NxHcGktuMMdIQ2VixGwAfbJ23NnlvvVV1bdpR2m5MsNBViHJKcA4ADw==}
+    cpu: [x64]
+    os: [win32]
+
   '@rollup/rollup-win32-x64-msvc@4.52.3':
     resolution: {integrity: sha512-zGIbEVVXVtauFgl3MRwGWEN36P5ZGenHRMgNw88X5wEhEBpq0XrMEZwOn07+ICrwM17XO5xfMZqh0OldCH5VTA==}
+    cpu: [x64]
+    os: [win32]
+
+  '@rollup/rollup-win32-x64-msvc@4.53.2':
+    resolution: {integrity: sha512-k+/Rkcyx//P6fetPoLMb8pBeqJBNGx81uuf7iljX9++yNBVRDQgD04L+SVXmXmh5ZP4/WOp4mWF0kmi06PW2tA==}
     cpu: [x64]
     os: [win32]
 
@@ -10993,6 +11247,9 @@ packages:
 
   '@sinonjs/fake-timers@10.3.0':
     resolution: {integrity: sha512-V4BG07kuYSUkTCSBHG8G8TNhM+F19jXFWnQtzj+we8DrkpSBCee9Z3Ms8yiGer/dlmhe35/Xdgyo3/0rQKg7YA==}
+
+  '@standard-schema/spec@1.0.0':
+    resolution: {integrity: sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA==}
 
   '@tokenizer/token@0.3.0':
     resolution: {integrity: sha512-OvjF+z51L3ov0OyAU0duzsYuvO01PH7x4t6DJx+guahgTnBHkhJdG7soQeTSFLWN3efnHyibZ4Z8l2EuWwJN3A==}
@@ -11036,6 +11293,9 @@ packages:
     resolution: {integrity: sha512-5O+dAJuahjV1PiRRYBRAJkpyCk9UjoWzdmhftmEwafoYx0DhPBT9qIwrKCCIpt/DdcG1g7/UD5lrf4qmHkp8TQ==}
     deprecated: This is a stub types definition. boxen provides its own type definitions, so you do not need this installed.
 
+  '@types/chai@5.2.3':
+    resolution: {integrity: sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/jxdPFUpOHHIXX91mcgEHbS5Lahr+pwZFR8A7GQleRWeI6cGFC2UA==}
+
   '@types/connect@3.4.38':
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
 
@@ -11047,6 +11307,9 @@ packages:
 
   '@types/decompress@4.2.7':
     resolution: {integrity: sha512-9z+8yjKr5Wn73Pt17/ldnmQToaFHZxK0N1GHysuk/JIPT8RIdQeoInM01wWPgypRcvb6VH1drjuFpQ4zmY437g==}
+
+  '@types/deep-eql@4.0.2':
+    resolution: {integrity: sha512-c9h9dVVMigMPc4bwTvC5dxqtqJZwQPePsWjPlpSOnojbor6pGqdk541lfA7AqFQr5pB1BRdq0juY9db81BwyFw==}
 
   '@types/diff@5.2.3':
     resolution: {integrity: sha512-K0Oqlrq3kQMaO2RhfrNQX5trmt+XLyom88zS0u84nnIcLvFnRUMRRHmrGny5GSM+kNO9IZLARsdQHDzkhAgmrQ==}
@@ -11335,6 +11598,9 @@ packages:
   '@vitest/expect@2.1.9':
     resolution: {integrity: sha512-UJCIkTBenHeKT1TTlKMJWy1laZewsRIzYighyYiJKZreqtdxSos/S1t+ktRMQWu2CKqaarrkeszJx1cgC5tGZw==}
 
+  '@vitest/expect@4.0.8':
+    resolution: {integrity: sha512-Rv0eabdP/xjAHQGr8cjBm+NnLHNoL268lMDK85w2aAGLFoVKLd8QGnVon5lLtkXQCoYaNL0wg04EGnyKkkKhPA==}
+
   '@vitest/mocker@2.1.9':
     resolution: {integrity: sha512-tVL6uJgoUdi6icpxmdrn5YNo3g3Dxv+IHJBr0GXHaEdTcw3F+cPKnsXFhli6nO+f/6SDKPHEK1UN+k+TQv0Ehg==}
     peerDependencies:
@@ -11346,20 +11612,46 @@ packages:
       vite:
         optional: true
 
+  '@vitest/mocker@4.0.8':
+    resolution: {integrity: sha512-9FRM3MZCedXH3+pIh+ME5Up2NBBHDq0wqwhOKkN4VnvCiKbVxddqH9mSGPZeawjd12pCOGnl+lo/ZGHt0/dQSg==}
+    peerDependencies:
+      msw: ^2.4.9
+      vite: ^6.0.0 || ^7.0.0-0
+    peerDependenciesMeta:
+      msw:
+        optional: true
+      vite:
+        optional: true
+
   '@vitest/pretty-format@2.1.9':
     resolution: {integrity: sha512-KhRIdGV2U9HOUzxfiHmY8IFHTdqtOhIzCpd8WRdJiE7D/HUcZVD0EgQCVjm+Q9gkUXWgBvMmTtZgIG48wq7sOQ==}
+
+  '@vitest/pretty-format@4.0.8':
+    resolution: {integrity: sha512-qRrjdRkINi9DaZHAimV+8ia9Gq6LeGz2CgIEmMLz3sBDYV53EsnLZbJMR1q84z1HZCMsf7s0orDgZn7ScXsZKg==}
 
   '@vitest/runner@2.1.9':
     resolution: {integrity: sha512-ZXSSqTFIrzduD63btIfEyOmNcBmQvgOVsPNPe0jYtESiXkhd8u2erDLnMxmGrDCwHCCHE7hxwRDCT3pt0esT4g==}
 
+  '@vitest/runner@4.0.8':
+    resolution: {integrity: sha512-mdY8Sf1gsM8hKJUQfiPT3pn1n8RF4QBcJYFslgWh41JTfrK1cbqY8whpGCFzBl45LN028g0njLCYm0d7XxSaQQ==}
+
   '@vitest/snapshot@2.1.9':
     resolution: {integrity: sha512-oBO82rEjsxLNJincVhLhaxxZdEtV0EFHMK5Kmx5sJ6H9L183dHECjiefOAdnqpIgT5eZwT04PoggUnW88vOBNQ==}
+
+  '@vitest/snapshot@4.0.8':
+    resolution: {integrity: sha512-Nar9OTU03KGiubrIOFhcfHg8FYaRaNT+bh5VUlNz8stFhCZPNrJvmZkhsr1jtaYvuefYFwK2Hwrq026u4uPWCw==}
 
   '@vitest/spy@2.1.9':
     resolution: {integrity: sha512-E1B35FwzXXTs9FHNK6bDszs7mtydNi5MIfUWpceJ8Xbfb1gBMscAnwLbEu+B44ed6W3XjL9/ehLPHR1fkf1KLQ==}
 
+  '@vitest/spy@4.0.8':
+    resolution: {integrity: sha512-nvGVqUunyCgZH7kmo+Ord4WgZ7lN0sOULYXUOYuHr55dvg9YvMz3izfB189Pgp28w0vWFbEEfNc/c3VTrqrXeA==}
+
   '@vitest/utils@2.1.9':
     resolution: {integrity: sha512-v0psaMSkNJ3A2NMrUEHFRzJtDPFn+/VWZ5WxImB21T9fjucJRmS7xCS3ppEnARb9y11OAzaD+P2Ps+b+BGX5iQ==}
+
+  '@vitest/utils@4.0.8':
+    resolution: {integrity: sha512-pdk2phO5NDvEFfUTxcTP8RFYjVj/kfLSPIN5ebP2Mu9kcIMeAQTbknqcFEyBcC4z2pJlJI9aS5UQjcYfhmKAow==}
 
   '@vue/compiler-core@3.5.22':
     resolution: {integrity: sha512-jQ0pFPmZwTEiRNSb+i9Ow/I/cHv2tXYqsnHKKyCQ08irI2kdF5qmYedmF8si8mA7zepUFmJ2hqzS8CQmNOWOkQ==}
@@ -11831,6 +12123,10 @@ packages:
     resolution: {integrity: sha512-4zNhdJD/iOjSH0A05ea+Ke6MU5mmpQcbQsSOkgdaUMJ9zTlDTD/GYlwohmIE2u0gaxHYiVHEn1Fw9mZ/ktJWgw==}
     engines: {node: '>=18'}
 
+  chai@6.2.1:
+    resolution: {integrity: sha512-p4Z49OGG5W/WBCPSS/dH3jQ73kD6tiMmUM+bckNK6Jr5JHMG3k9bg/BvKR8lKmtVBKmOiuVaV2ws8s9oSbwysg==}
+    engines: {node: '>=18'}
+
   chalk-template@1.1.2:
     resolution: {integrity: sha512-2bxTP2yUH7AJj/VAXfcA+4IcWGdQ87HwBANLt5XxGTeomo8yG0y95N1um9i5StvhT/Bl0/2cARA5v1PpPXUxUA==}
     engines: {node: '>=14.16'}
@@ -12126,8 +12422,8 @@ packages:
     engines: {node: '>=4'}
     hasBin: true
 
-  cssstyle@5.3.2:
-    resolution: {integrity: sha512-zDMqXh8Vs1CdRYZQ2M633m/SFgcjlu8RB8b/1h82i+6vpArF507NSYIWJHGlJaTWoS+imcnctmEz43txhbVkOw==}
+  cssstyle@5.3.3:
+    resolution: {integrity: sha512-OytmFH+13/QXONJcC75QNdMtKpceNk3u8ThBjyyYjkEcy/ekBwR1mMAuNvi3gdBPW3N5TlCzQ0WZw8H0lN/bDw==}
     engines: {node: '>=20'}
 
   csstype@3.1.3:
@@ -12458,6 +12754,11 @@ packages:
 
   esbuild@0.25.12:
     resolution: {integrity: sha512-bbPBYYrtZbkt6Os6FiTLCTFxvq4tt3JKall1vRwshA3fdVztsLAatFaZobhkBC8/BrPetoa0oksYoKXoG4ryJg==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  esbuild@0.27.0:
+    resolution: {integrity: sha512-jd0f4NHbD6cALCyGElNpGAOtWxSq46l9X/sWB0Nzd5er4Kz2YTm+Vl0qKFT9KUJvD8+fiO8AvoHhFvEatfVixA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -13815,6 +14116,9 @@ packages:
   magic-string@0.30.19:
     resolution: {integrity: sha512-2N21sPY9Ws53PZvsEpVtNuSW+ScYbQdp4b9qUaL+9QkHUrGFKo56Lg9Emg5s9V/qrtNBmiR01sYhUOwu3H+VOw==}
 
+  magic-string@0.30.21:
+    resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
+
   make-dir@1.3.0:
     resolution: {integrity: sha512-2w31R7SJtieJJnQtGc7RVL2StM2vGYVfqUOvUDxH6bC6aJTxPxTF0GnIgCyu7tjockiUWAYQRbxa7vKn34s5sQ==}
     engines: {node: '>=4'}
@@ -14139,8 +14443,8 @@ packages:
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
-  msw@2.12.0:
-    resolution: {integrity: sha512-jzf2eVnd8+iWXN74dccLrHUw3i3hFVvNVQRWS4vBl2KxaUt7Tdur0Eyda/DODGFkZDu2P5MXaeLe/9Qx8PZkrg==}
+  msw@2.12.1:
+    resolution: {integrity: sha512-arzsi9IZjjByiEw21gSUP82qHM8zkV69nNpWV6W4z72KiLvsDWoOp678ORV6cNfU/JGhlX0SsnD4oXo9gI6I2A==}
     engines: {node: '>=18'}
     hasBin: true
     peerDependencies:
@@ -14160,6 +14464,10 @@ packages:
   mute-stream@2.0.0:
     resolution: {integrity: sha512-WWdIxpyjEn+FhQJQQv9aQAYlHoNVdzIzUySNV1gHUPDSdZJ3yZn7pAAbQcV7B56Mvu881q9FZV+0Vx2xC44VWA==}
     engines: {node: ^18.17.0 || >=20.5.0}
+
+  mute-stream@3.0.0:
+    resolution: {integrity: sha512-dkEJPVvun4FryqBmZ5KhDo0K9iDXAwn08tMLDinNdRBNPcYEDiWYysLcc6k3mjTMlbP9KyylvRpd4wFtwrT9rw==}
+    engines: {node: ^20.17.0 || >=22.9.0}
 
   mz@2.7.0:
     resolution: {integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==}
@@ -14904,6 +15212,11 @@ packages:
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
+  rollup@4.53.2:
+    resolution: {integrity: sha512-MHngMYwGJVi6Fmnk6ISmnk7JAHRNF0UkuucA0CUW3N3a4KnONPEZz+vUanQP/ZC/iY1Qkf3bwPWzyY84wEks1g==}
+    engines: {node: '>=18.0.0', npm: '>=8.0.0'}
+    hasBin: true
+
   run-async@3.0.0:
     resolution: {integrity: sha512-540WwVDOMxA6dN6We19EcT9sc3hkXPw5mzRNGM3FkdN/vtE9NFvj5lFAPNwUDmJjXidm3v7TC1cTE7t17Ulm1Q==}
     engines: {node: '>=0.12.0'}
@@ -14923,8 +15236,8 @@ packages:
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  sass@1.93.3:
-    resolution: {integrity: sha512-elOcIZRTM76dvxNAjqYrucTSI0teAF/L2Lv0s6f6b7FOwcwIuA357bIE871580AjHJuSvLIRUosgV+lIWx6Rgg==}
+  sass@1.94.0:
+    resolution: {integrity: sha512-Dqh7SiYcaFtdv5Wvku6QgS5IGPm281L+ZtVD1U2FJa7Q0EFRlq8Z3sjYtz6gYObsYThUOz9ArwFqPZx+1azILQ==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -15134,6 +15447,9 @@ packages:
   statuses@2.0.2:
     resolution: {integrity: sha512-DvEy55V3DB7uknRo+4iOGT5fP1slR8wQohVdknigZPMpMstaKJQWhwiYBACJE3Ul2pTnATihhBYnRhZQHGBiRw==}
     engines: {node: '>= 0.8'}
+
+  std-env@3.10.0:
+    resolution: {integrity: sha512-5GS12FdOZNliM5mAOxFRg7Ir0pWz8MdpYm6AY6VPkGpbA7ZzmbzNcBJQ0GPvvyWgcY7QAhCgf9Uy89I03faLkg==}
 
   std-env@3.9.0:
     resolution: {integrity: sha512-UGvjygr6F6tpH7o2qyqR6QYpwraIjKSdtzyBdyytFOHmPZY917kwdwLG0RbOjWOnKmnm3PeHjaoLLMie7kPLQw==}
@@ -15407,6 +15723,10 @@ packages:
 
   tinyrainbow@1.2.0:
     resolution: {integrity: sha512-weEDEq7Z5eTHPDh4xjX789+fHfF+P8boiFB+0vbWzpbnbsEr/GRaohi/uMKxg8RZMXnl1ItAi/IUHWMsjDV7kQ==}
+    engines: {node: '>=14.0.0'}
+
+  tinyrainbow@3.0.3:
+    resolution: {integrity: sha512-PSkbLUoxOFRzJYjjxHJt9xro7D+iilgMX/C9lawzVuYiIdcihh9DXmVibBe8lmcFrRi/VzlPjBxbN7rH24q8/Q==}
     engines: {node: '>=14.0.0'}
 
   tinyspy@3.0.2:
@@ -15874,6 +16194,46 @@ packages:
       terser:
         optional: true
 
+  vite@7.2.2:
+    resolution: {integrity: sha512-BxAKBWmIbrDgrokdGZH1IgkIk/5mMHDreLDmCJ0qpyJaAteP8NvMhkwr/ZCQNqNH97bw/dANTE9PDzqwJghfMQ==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': ^20.19.0 || >=22.12.0
+      jiti: '>=1.21.0'
+      less: ^4.0.0
+      lightningcss: ^1.21.0
+      sass: ^1.70.0
+      sass-embedded: ^1.70.0
+      stylus: '>=0.54.8'
+      sugarss: ^5.0.0
+      terser: ^5.16.0
+      tsx: ^4.8.1
+      yaml: 2.3.3
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      jiti:
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      sass-embedded:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+      tsx:
+        optional: true
+      yaml:
+        optional: true
+
   vitest@2.1.9:
     resolution: {integrity: sha512-MSmPM9REYqDGBI8439mA4mWhV5sKmDlBKWIYbA3lRb2PTHACE0mgKwA8yQ2xq9vxDTuk4iPrECBAEW2aoFXY0Q==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -15891,6 +16251,40 @@ packages:
       '@types/node':
         optional: true
       '@vitest/browser':
+        optional: true
+      '@vitest/ui':
+        optional: true
+      happy-dom:
+        optional: true
+      jsdom:
+        optional: true
+
+  vitest@4.0.8:
+    resolution: {integrity: sha512-urzu3NCEV0Qa0Y2PwvBtRgmNtxhj5t5ULw7cuKhIHh3OrkKTLlut0lnBOv9qe5OvbkMH2g38G7KPDCTpIytBVg==}
+    engines: {node: ^20.0.0 || ^22.0.0 || >=24.0.0}
+    hasBin: true
+    peerDependencies:
+      '@edge-runtime/vm': '*'
+      '@types/debug': ^4.1.12
+      '@types/node': ^20.0.0 || ^22.0.0 || >=24.0.0
+      '@vitest/browser-playwright': 4.0.8
+      '@vitest/browser-preview': 4.0.8
+      '@vitest/browser-webdriverio': 4.0.8
+      '@vitest/ui': 4.0.8
+      happy-dom: '*'
+      jsdom: '*'
+    peerDependenciesMeta:
+      '@edge-runtime/vm':
+        optional: true
+      '@types/debug':
+        optional: true
+      '@types/node':
+        optional: true
+      '@vitest/browser-playwright':
+        optional: true
+      '@vitest/browser-preview':
+        optional: true
+      '@vitest/browser-webdriverio':
         optional: true
       '@vitest/ui':
         optional: true
@@ -17334,13 +17728,13 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@esbuild-plugins/node-globals-polyfill@0.2.3(esbuild@0.25.12)':
+  '@esbuild-plugins/node-globals-polyfill@0.2.3(esbuild@0.27.0)':
     dependencies:
-      esbuild: 0.25.12
+      esbuild: 0.27.0
 
-  '@esbuild-plugins/node-modules-polyfill@0.2.2(esbuild@0.25.12)':
+  '@esbuild-plugins/node-modules-polyfill@0.2.2(esbuild@0.27.0)':
     dependencies:
-      esbuild: 0.25.12
+      esbuild: 0.27.0
       escape-string-regexp: 4.0.0
       rollup-plugin-node-polyfills: 0.2.1
 
@@ -17356,6 +17750,9 @@ snapshots:
   '@esbuild/aix-ppc64@0.25.12':
     optional: true
 
+  '@esbuild/aix-ppc64@0.27.0':
+    optional: true
+
   '@esbuild/android-arm64@0.21.5':
     optional: true
 
@@ -17366,6 +17763,9 @@ snapshots:
     optional: true
 
   '@esbuild/android-arm64@0.25.12':
+    optional: true
+
+  '@esbuild/android-arm64@0.27.0':
     optional: true
 
   '@esbuild/android-arm@0.21.5':
@@ -17380,6 +17780,9 @@ snapshots:
   '@esbuild/android-arm@0.25.12':
     optional: true
 
+  '@esbuild/android-arm@0.27.0':
+    optional: true
+
   '@esbuild/android-x64@0.21.5':
     optional: true
 
@@ -17390,6 +17793,9 @@ snapshots:
     optional: true
 
   '@esbuild/android-x64@0.25.12':
+    optional: true
+
+  '@esbuild/android-x64@0.27.0':
     optional: true
 
   '@esbuild/darwin-arm64@0.21.5':
@@ -17404,6 +17810,9 @@ snapshots:
   '@esbuild/darwin-arm64@0.25.12':
     optional: true
 
+  '@esbuild/darwin-arm64@0.27.0':
+    optional: true
+
   '@esbuild/darwin-x64@0.21.5':
     optional: true
 
@@ -17414,6 +17823,9 @@ snapshots:
     optional: true
 
   '@esbuild/darwin-x64@0.25.12':
+    optional: true
+
+  '@esbuild/darwin-x64@0.27.0':
     optional: true
 
   '@esbuild/freebsd-arm64@0.21.5':
@@ -17428,6 +17840,9 @@ snapshots:
   '@esbuild/freebsd-arm64@0.25.12':
     optional: true
 
+  '@esbuild/freebsd-arm64@0.27.0':
+    optional: true
+
   '@esbuild/freebsd-x64@0.21.5':
     optional: true
 
@@ -17438,6 +17853,9 @@ snapshots:
     optional: true
 
   '@esbuild/freebsd-x64@0.25.12':
+    optional: true
+
+  '@esbuild/freebsd-x64@0.27.0':
     optional: true
 
   '@esbuild/linux-arm64@0.21.5':
@@ -17452,6 +17870,9 @@ snapshots:
   '@esbuild/linux-arm64@0.25.12':
     optional: true
 
+  '@esbuild/linux-arm64@0.27.0':
+    optional: true
+
   '@esbuild/linux-arm@0.21.5':
     optional: true
 
@@ -17462,6 +17883,9 @@ snapshots:
     optional: true
 
   '@esbuild/linux-arm@0.25.12':
+    optional: true
+
+  '@esbuild/linux-arm@0.27.0':
     optional: true
 
   '@esbuild/linux-ia32@0.21.5':
@@ -17476,6 +17900,9 @@ snapshots:
   '@esbuild/linux-ia32@0.25.12':
     optional: true
 
+  '@esbuild/linux-ia32@0.27.0':
+    optional: true
+
   '@esbuild/linux-loong64@0.21.5':
     optional: true
 
@@ -17486,6 +17913,9 @@ snapshots:
     optional: true
 
   '@esbuild/linux-loong64@0.25.12':
+    optional: true
+
+  '@esbuild/linux-loong64@0.27.0':
     optional: true
 
   '@esbuild/linux-mips64el@0.21.5':
@@ -17500,6 +17930,9 @@ snapshots:
   '@esbuild/linux-mips64el@0.25.12':
     optional: true
 
+  '@esbuild/linux-mips64el@0.27.0':
+    optional: true
+
   '@esbuild/linux-ppc64@0.21.5':
     optional: true
 
@@ -17510,6 +17943,9 @@ snapshots:
     optional: true
 
   '@esbuild/linux-ppc64@0.25.12':
+    optional: true
+
+  '@esbuild/linux-ppc64@0.27.0':
     optional: true
 
   '@esbuild/linux-riscv64@0.21.5':
@@ -17524,6 +17960,9 @@ snapshots:
   '@esbuild/linux-riscv64@0.25.12':
     optional: true
 
+  '@esbuild/linux-riscv64@0.27.0':
+    optional: true
+
   '@esbuild/linux-s390x@0.21.5':
     optional: true
 
@@ -17534,6 +17973,9 @@ snapshots:
     optional: true
 
   '@esbuild/linux-s390x@0.25.12':
+    optional: true
+
+  '@esbuild/linux-s390x@0.27.0':
     optional: true
 
   '@esbuild/linux-x64@0.21.5':
@@ -17548,6 +17990,9 @@ snapshots:
   '@esbuild/linux-x64@0.25.12':
     optional: true
 
+  '@esbuild/linux-x64@0.27.0':
+    optional: true
+
   '@esbuild/netbsd-arm64@0.24.2':
     optional: true
 
@@ -17555,6 +18000,9 @@ snapshots:
     optional: true
 
   '@esbuild/netbsd-arm64@0.25.12':
+    optional: true
+
+  '@esbuild/netbsd-arm64@0.27.0':
     optional: true
 
   '@esbuild/netbsd-x64@0.21.5':
@@ -17569,6 +18017,9 @@ snapshots:
   '@esbuild/netbsd-x64@0.25.12':
     optional: true
 
+  '@esbuild/netbsd-x64@0.27.0':
+    optional: true
+
   '@esbuild/openbsd-arm64@0.24.2':
     optional: true
 
@@ -17576,6 +18027,9 @@ snapshots:
     optional: true
 
   '@esbuild/openbsd-arm64@0.25.12':
+    optional: true
+
+  '@esbuild/openbsd-arm64@0.27.0':
     optional: true
 
   '@esbuild/openbsd-x64@0.21.5':
@@ -17590,10 +18044,16 @@ snapshots:
   '@esbuild/openbsd-x64@0.25.12':
     optional: true
 
+  '@esbuild/openbsd-x64@0.27.0':
+    optional: true
+
   '@esbuild/openharmony-arm64@0.25.10':
     optional: true
 
   '@esbuild/openharmony-arm64@0.25.12':
+    optional: true
+
+  '@esbuild/openharmony-arm64@0.27.0':
     optional: true
 
   '@esbuild/sunos-x64@0.21.5':
@@ -17608,6 +18068,9 @@ snapshots:
   '@esbuild/sunos-x64@0.25.12':
     optional: true
 
+  '@esbuild/sunos-x64@0.27.0':
+    optional: true
+
   '@esbuild/win32-arm64@0.21.5':
     optional: true
 
@@ -17618,6 +18081,9 @@ snapshots:
     optional: true
 
   '@esbuild/win32-arm64@0.25.12':
+    optional: true
+
+  '@esbuild/win32-arm64@0.27.0':
     optional: true
 
   '@esbuild/win32-ia32@0.21.5':
@@ -17632,6 +18098,9 @@ snapshots:
   '@esbuild/win32-ia32@0.25.12':
     optional: true
 
+  '@esbuild/win32-ia32@0.27.0':
+    optional: true
+
   '@esbuild/win32-x64@0.21.5':
     optional: true
 
@@ -17642,6 +18111,9 @@ snapshots:
     optional: true
 
   '@esbuild/win32-x64@0.25.12':
+    optional: true
+
+  '@esbuild/win32-x64@0.27.0':
     optional: true
 
   '@eslint-community/eslint-utils@4.9.0(eslint@8.57.1)':
@@ -17741,9 +18213,9 @@ snapshots:
 
   '@fern-api/fai-sdk@0.0.6-2ee1b7e28': {}
 
-  '@fern-api/fdr-sdk@0.140.0-a411fe32c(typescript@5.9.3)':
+  '@fern-api/fdr-sdk@0.140.1-ec53d68c0(typescript@5.9.3)':
     dependencies:
-      '@fern-api/ui-core-utils': 0.140.0-a411fe32c
+      '@fern-api/ui-core-utils': 0.140.1-ec53d68c0
       '@types/readable-stream': 4.0.22
       '@ungap/structured-clone': 1.3.0
       dayjs: 1.11.19
@@ -17773,22 +18245,6 @@ snapshots:
       '@fern-api/core-utils': 0.4.24-rc1
       chalk: 5.6.2
 
-  '@fern-api/sdk@0.12.3':
-    dependencies:
-      '@fern-api/template-resolver': 0.7.5
-      form-data: 4.0.4
-      formdata-node: 6.0.3
-      js-base64: 3.7.2
-      node-fetch: 2.7.0
-      qs: 6.13.0
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - encoding
-
-  '@fern-api/template-resolver@0.7.5':
-    dependencies:
-      prettier: 3.6.2
-
   '@fern-api/ui-core-utils@0.0.0':
     dependencies:
       strip-ansi: 7.1.2
@@ -17803,7 +18259,7 @@ snapshots:
       title: 3.5.3
       ua-parser-js: 1.0.41
 
-  '@fern-api/ui-core-utils@0.140.0-a411fe32c':
+  '@fern-api/ui-core-utils@0.140.1-ec53d68c0':
     dependencies:
       date-fns: 4.1.0
       date-fns-tz: 3.2.0(date-fns@4.1.0)
@@ -18064,16 +18520,6 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/snippet-sdk@0.0.6434':
-    dependencies:
-      form-data: 4.0.4
-      js-base64: 3.7.2
-      node-fetch: 2.7.0
-      qs: 6.13.0
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - encoding
-
   '@humanfs/core@0.19.1': {}
 
   '@humanfs/node@0.16.7':
@@ -18097,7 +18543,7 @@ snapshots:
 
   '@inquirer/ansi@1.0.0': {}
 
-  '@inquirer/ansi@1.0.1':
+  '@inquirer/ansi@1.0.2':
     optional: true
 
   '@inquirer/checkbox@4.2.4(@types/node@18.15.3)':
@@ -18117,26 +18563,26 @@ snapshots:
     optionalDependencies:
       '@types/node': 18.15.3
 
-  '@inquirer/confirm@5.1.19(@types/node@18.15.3)':
+  '@inquirer/confirm@5.1.20(@types/node@18.15.3)':
     dependencies:
-      '@inquirer/core': 10.3.0(@types/node@18.15.3)
-      '@inquirer/type': 3.0.9(@types/node@18.15.3)
+      '@inquirer/core': 10.3.1(@types/node@18.15.3)
+      '@inquirer/type': 3.0.10(@types/node@18.15.3)
     optionalDependencies:
       '@types/node': 18.15.3
     optional: true
 
-  '@inquirer/confirm@5.1.19(@types/node@22.19.0)':
+  '@inquirer/confirm@5.1.20(@types/node@22.19.0)':
     dependencies:
-      '@inquirer/core': 10.3.0(@types/node@22.19.0)
-      '@inquirer/type': 3.0.9(@types/node@22.19.0)
+      '@inquirer/core': 10.3.1(@types/node@22.19.0)
+      '@inquirer/type': 3.0.10(@types/node@22.19.0)
     optionalDependencies:
       '@types/node': 22.19.0
     optional: true
 
-  '@inquirer/confirm@5.1.19(@types/node@24.10.0)':
+  '@inquirer/confirm@5.1.20(@types/node@24.10.0)':
     dependencies:
-      '@inquirer/core': 10.3.0(@types/node@24.10.0)
-      '@inquirer/type': 3.0.9(@types/node@24.10.0)
+      '@inquirer/core': 10.3.1(@types/node@24.10.0)
+      '@inquirer/type': 3.0.10(@types/node@24.10.0)
     optionalDependencies:
       '@types/node': 24.10.0
     optional: true
@@ -18154,13 +18600,13 @@ snapshots:
     optionalDependencies:
       '@types/node': 18.15.3
 
-  '@inquirer/core@10.3.0(@types/node@18.15.3)':
+  '@inquirer/core@10.3.1(@types/node@18.15.3)':
     dependencies:
-      '@inquirer/ansi': 1.0.1
-      '@inquirer/figures': 1.0.14
-      '@inquirer/type': 3.0.9(@types/node@18.15.3)
+      '@inquirer/ansi': 1.0.2
+      '@inquirer/figures': 1.0.15
+      '@inquirer/type': 3.0.10(@types/node@18.15.3)
       cli-width: 4.1.0
-      mute-stream: 2.0.0
+      mute-stream: 3.0.0
       signal-exit: 4.1.0
       wrap-ansi: 6.2.0
       yoctocolors-cjs: 2.1.3
@@ -18168,13 +18614,13 @@ snapshots:
       '@types/node': 18.15.3
     optional: true
 
-  '@inquirer/core@10.3.0(@types/node@22.19.0)':
+  '@inquirer/core@10.3.1(@types/node@22.19.0)':
     dependencies:
-      '@inquirer/ansi': 1.0.1
-      '@inquirer/figures': 1.0.14
-      '@inquirer/type': 3.0.9(@types/node@22.19.0)
+      '@inquirer/ansi': 1.0.2
+      '@inquirer/figures': 1.0.15
+      '@inquirer/type': 3.0.10(@types/node@22.19.0)
       cli-width: 4.1.0
-      mute-stream: 2.0.0
+      mute-stream: 3.0.0
       signal-exit: 4.1.0
       wrap-ansi: 6.2.0
       yoctocolors-cjs: 2.1.3
@@ -18182,13 +18628,13 @@ snapshots:
       '@types/node': 22.19.0
     optional: true
 
-  '@inquirer/core@10.3.0(@types/node@24.10.0)':
+  '@inquirer/core@10.3.1(@types/node@24.10.0)':
     dependencies:
-      '@inquirer/ansi': 1.0.1
-      '@inquirer/figures': 1.0.14
-      '@inquirer/type': 3.0.9(@types/node@24.10.0)
+      '@inquirer/ansi': 1.0.2
+      '@inquirer/figures': 1.0.15
+      '@inquirer/type': 3.0.10(@types/node@24.10.0)
       cli-width: 4.1.0
-      mute-stream: 2.0.0
+      mute-stream: 3.0.0
       signal-exit: 4.1.0
       wrap-ansi: 6.2.0
       yoctocolors-cjs: 2.1.3
@@ -18221,7 +18667,7 @@ snapshots:
 
   '@inquirer/figures@1.0.13': {}
 
-  '@inquirer/figures@1.0.14':
+  '@inquirer/figures@1.0.15':
     optional: true
 
   '@inquirer/input@4.2.4(@types/node@18.15.3)':
@@ -18288,24 +18734,24 @@ snapshots:
     optionalDependencies:
       '@types/node': 18.15.3
 
-  '@inquirer/type@3.0.8(@types/node@18.15.3)':
-    optionalDependencies:
-      '@types/node': 18.15.3
-
-  '@inquirer/type@3.0.9(@types/node@18.15.3)':
+  '@inquirer/type@3.0.10(@types/node@18.15.3)':
     optionalDependencies:
       '@types/node': 18.15.3
     optional: true
 
-  '@inquirer/type@3.0.9(@types/node@22.19.0)':
+  '@inquirer/type@3.0.10(@types/node@22.19.0)':
     optionalDependencies:
       '@types/node': 22.19.0
     optional: true
 
-  '@inquirer/type@3.0.9(@types/node@24.10.0)':
+  '@inquirer/type@3.0.10(@types/node@24.10.0)':
     optionalDependencies:
       '@types/node': 24.10.0
     optional: true
+
+  '@inquirer/type@3.0.8(@types/node@18.15.3)':
+    optionalDependencies:
+      '@types/node': 18.15.3
 
   '@isaacs/balanced-match@4.0.1': {}
 
@@ -19227,67 +19673,133 @@ snapshots:
   '@rollup/rollup-android-arm-eabi@4.52.3':
     optional: true
 
+  '@rollup/rollup-android-arm-eabi@4.53.2':
+    optional: true
+
   '@rollup/rollup-android-arm64@4.52.3':
+    optional: true
+
+  '@rollup/rollup-android-arm64@4.53.2':
     optional: true
 
   '@rollup/rollup-darwin-arm64@4.52.3':
     optional: true
 
+  '@rollup/rollup-darwin-arm64@4.53.2':
+    optional: true
+
   '@rollup/rollup-darwin-x64@4.52.3':
+    optional: true
+
+  '@rollup/rollup-darwin-x64@4.53.2':
     optional: true
 
   '@rollup/rollup-freebsd-arm64@4.52.3':
     optional: true
 
+  '@rollup/rollup-freebsd-arm64@4.53.2':
+    optional: true
+
   '@rollup/rollup-freebsd-x64@4.52.3':
+    optional: true
+
+  '@rollup/rollup-freebsd-x64@4.53.2':
     optional: true
 
   '@rollup/rollup-linux-arm-gnueabihf@4.52.3':
     optional: true
 
+  '@rollup/rollup-linux-arm-gnueabihf@4.53.2':
+    optional: true
+
   '@rollup/rollup-linux-arm-musleabihf@4.52.3':
+    optional: true
+
+  '@rollup/rollup-linux-arm-musleabihf@4.53.2':
     optional: true
 
   '@rollup/rollup-linux-arm64-gnu@4.52.3':
     optional: true
 
+  '@rollup/rollup-linux-arm64-gnu@4.53.2':
+    optional: true
+
   '@rollup/rollup-linux-arm64-musl@4.52.3':
+    optional: true
+
+  '@rollup/rollup-linux-arm64-musl@4.53.2':
     optional: true
 
   '@rollup/rollup-linux-loong64-gnu@4.52.3':
     optional: true
 
+  '@rollup/rollup-linux-loong64-gnu@4.53.2':
+    optional: true
+
   '@rollup/rollup-linux-ppc64-gnu@4.52.3':
+    optional: true
+
+  '@rollup/rollup-linux-ppc64-gnu@4.53.2':
     optional: true
 
   '@rollup/rollup-linux-riscv64-gnu@4.52.3':
     optional: true
 
+  '@rollup/rollup-linux-riscv64-gnu@4.53.2':
+    optional: true
+
   '@rollup/rollup-linux-riscv64-musl@4.52.3':
+    optional: true
+
+  '@rollup/rollup-linux-riscv64-musl@4.53.2':
     optional: true
 
   '@rollup/rollup-linux-s390x-gnu@4.52.3':
     optional: true
 
+  '@rollup/rollup-linux-s390x-gnu@4.53.2':
+    optional: true
+
   '@rollup/rollup-linux-x64-gnu@4.52.3':
+    optional: true
+
+  '@rollup/rollup-linux-x64-gnu@4.53.2':
     optional: true
 
   '@rollup/rollup-linux-x64-musl@4.52.3':
     optional: true
 
+  '@rollup/rollup-linux-x64-musl@4.53.2':
+    optional: true
+
   '@rollup/rollup-openharmony-arm64@4.52.3':
+    optional: true
+
+  '@rollup/rollup-openharmony-arm64@4.53.2':
     optional: true
 
   '@rollup/rollup-win32-arm64-msvc@4.52.3':
     optional: true
 
+  '@rollup/rollup-win32-arm64-msvc@4.53.2':
+    optional: true
+
   '@rollup/rollup-win32-ia32-msvc@4.52.3':
+    optional: true
+
+  '@rollup/rollup-win32-ia32-msvc@4.53.2':
     optional: true
 
   '@rollup/rollup-win32-x64-gnu@4.52.3':
     optional: true
 
+  '@rollup/rollup-win32-x64-gnu@4.53.2':
+    optional: true
+
   '@rollup/rollup-win32-x64-msvc@4.52.3':
+    optional: true
+
+  '@rollup/rollup-win32-x64-msvc@4.53.2':
     optional: true
 
   '@sec-ant/readable-stream@0.4.1': {}
@@ -19305,6 +19817,8 @@ snapshots:
   '@sinonjs/fake-timers@10.3.0':
     dependencies:
       '@sinonjs/commons': 3.0.1
+
+  '@standard-schema/spec@1.0.0': {}
 
   '@tokenizer/token@0.3.0': {}
 
@@ -19363,13 +19877,18 @@ snapshots:
     dependencies:
       boxen: 7.1.1
 
+  '@types/chai@5.2.3':
+    dependencies:
+      '@types/deep-eql': 4.0.2
+      assertion-error: 2.0.1
+
   '@types/connect@3.4.38':
     dependencies:
       '@types/node': 18.19.130
 
   '@types/cors@2.8.19':
     dependencies:
-      '@types/node': 18.19.129
+      '@types/node': 18.19.130
 
   '@types/debug@4.1.12':
     dependencies:
@@ -19378,6 +19897,8 @@ snapshots:
   '@types/decompress@4.2.7':
     dependencies:
       '@types/node': 18.15.3
+
+  '@types/deep-eql@4.0.2': {}
 
   '@types/diff@5.2.3': {}
 
@@ -19412,7 +19933,7 @@ snapshots:
   '@types/fs-extra@11.0.4':
     dependencies:
       '@types/jsonfile': 6.1.4
-      '@types/node': 18.19.129
+      '@types/node': 18.19.130
 
   '@types/get-port@4.2.0':
     dependencies:
@@ -19465,7 +19986,7 @@ snapshots:
   '@types/jsonwebtoken@9.0.10':
     dependencies:
       '@types/ms': 2.1.0
-      '@types/node': 18.15.3
+      '@types/node': 18.19.130
 
   '@types/katex@0.16.7': {}
 
@@ -19497,7 +20018,7 @@ snapshots:
 
   '@types/node-fetch@2.6.9':
     dependencies:
-      '@types/node': 18.15.3
+      '@types/node': 18.19.130
       form-data: 4.0.4
 
   '@types/node@18.15.3': {}
@@ -19543,7 +20064,7 @@ snapshots:
 
   '@types/readable-stream@4.0.22':
     dependencies:
-      '@types/node': 18.19.129
+      '@types/node': 18.19.130
 
   '@types/semver@7.7.1': {}
 
@@ -19579,7 +20100,7 @@ snapshots:
 
   '@types/tar@6.1.13':
     dependencies:
-      '@types/node': 18.15.3
+      '@types/node': 18.19.130
       minipass: 4.2.8
 
   '@types/terminal-link@1.2.0':
@@ -19612,11 +20133,11 @@ snapshots:
 
   '@types/ws@8.18.1':
     dependencies:
-      '@types/node': 18.19.129
+      '@types/node': 18.19.130
 
   '@types/xml2js@0.4.14':
     dependencies:
-      '@types/node': 18.19.129
+      '@types/node': 18.19.130
 
   '@types/yargs-parser@21.0.3': {}
 
@@ -19702,50 +20223,77 @@ snapshots:
       chai: 5.3.3
       tinyrainbow: 1.2.0
 
-  '@vitest/mocker@2.1.9(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.2))(vite@5.4.20(@types/node@18.15.3)(sass@1.93.3)(terser@5.44.1))':
+  '@vitest/expect@4.0.8':
     dependencies:
-      '@vitest/spy': 2.1.9
-      estree-walker: 3.0.3
-      magic-string: 0.30.19
-    optionalDependencies:
-      msw: 2.12.0(@types/node@18.15.3)(typescript@5.9.2)
-      vite: 5.4.20(@types/node@18.15.3)(sass@1.93.3)(terser@5.44.1)
+      '@standard-schema/spec': 1.0.0
+      '@types/chai': 5.2.3
+      '@vitest/spy': 4.0.8
+      '@vitest/utils': 4.0.8
+      chai: 6.2.1
+      tinyrainbow: 3.0.3
 
-  '@vitest/mocker@2.1.9(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(vite@5.4.20(@types/node@18.15.3)(sass@1.93.3)(terser@5.44.1))':
+  '@vitest/mocker@2.1.9(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.2))(vite@5.4.20(@types/node@18.15.3)(sass@1.94.0)(terser@5.44.1))':
     dependencies:
       '@vitest/spy': 2.1.9
       estree-walker: 3.0.3
       magic-string: 0.30.19
     optionalDependencies:
-      msw: 2.12.0(@types/node@18.15.3)(typescript@5.9.3)
-      vite: 5.4.20(@types/node@18.15.3)(sass@1.93.3)(terser@5.44.1)
+      msw: 2.12.1(@types/node@18.15.3)(typescript@5.9.2)
+      vite: 5.4.20(@types/node@18.15.3)(sass@1.94.0)(terser@5.44.1)
 
-  '@vitest/mocker@2.1.9(msw@2.12.0(@types/node@22.19.0)(typescript@5.9.3))(vite@5.4.20(@types/node@22.19.0)(sass@1.93.3)(terser@5.44.1))':
+  '@vitest/mocker@2.1.9(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(vite@5.4.20(@types/node@18.15.3)(sass@1.94.0)(terser@5.44.1))':
     dependencies:
       '@vitest/spy': 2.1.9
       estree-walker: 3.0.3
       magic-string: 0.30.19
     optionalDependencies:
-      msw: 2.12.0(@types/node@22.19.0)(typescript@5.9.3)
-      vite: 5.4.20(@types/node@22.19.0)(sass@1.93.3)(terser@5.44.1)
+      msw: 2.12.1(@types/node@18.15.3)(typescript@5.9.3)
+      vite: 5.4.20(@types/node@18.15.3)(sass@1.94.0)(terser@5.44.1)
 
-  '@vitest/mocker@2.1.9(msw@2.12.0(@types/node@24.10.0)(typescript@5.9.3))(vite@5.4.20(@types/node@24.10.0)(sass@1.93.3)(terser@5.44.1))':
+  '@vitest/mocker@2.1.9(msw@2.12.1(@types/node@22.19.0)(typescript@5.9.3))(vite@5.4.20(@types/node@22.19.0)(sass@1.94.0)(terser@5.44.1))':
     dependencies:
       '@vitest/spy': 2.1.9
       estree-walker: 3.0.3
       magic-string: 0.30.19
     optionalDependencies:
-      msw: 2.12.0(@types/node@24.10.0)(typescript@5.9.3)
-      vite: 5.4.20(@types/node@24.10.0)(sass@1.93.3)(terser@5.44.1)
+      msw: 2.12.1(@types/node@22.19.0)(typescript@5.9.3)
+      vite: 5.4.20(@types/node@22.19.0)(sass@1.94.0)(terser@5.44.1)
+
+  '@vitest/mocker@2.1.9(msw@2.12.1(@types/node@24.10.0)(typescript@5.9.3))(vite@5.4.20(@types/node@24.10.0)(sass@1.94.0)(terser@5.44.1))':
+    dependencies:
+      '@vitest/spy': 2.1.9
+      estree-walker: 3.0.3
+      magic-string: 0.30.19
+    optionalDependencies:
+      msw: 2.12.1(@types/node@24.10.0)(typescript@5.9.3)
+      vite: 5.4.20(@types/node@24.10.0)(sass@1.94.0)(terser@5.44.1)
+
+  '@vitest/mocker@4.0.8(msw@2.12.1(@types/node@24.10.0)(typescript@5.9.3))(vite@7.2.2(@types/node@24.10.0)(sass@1.94.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.3.3))':
+    dependencies:
+      '@vitest/spy': 4.0.8
+      estree-walker: 3.0.3
+      magic-string: 0.30.21
+    optionalDependencies:
+      msw: 2.12.1(@types/node@24.10.0)(typescript@5.9.3)
+      vite: 7.2.2(@types/node@24.10.0)(sass@1.94.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.3.3)
 
   '@vitest/pretty-format@2.1.9':
     dependencies:
       tinyrainbow: 1.2.0
 
+  '@vitest/pretty-format@4.0.8':
+    dependencies:
+      tinyrainbow: 3.0.3
+
   '@vitest/runner@2.1.9':
     dependencies:
       '@vitest/utils': 2.1.9
       pathe: 1.1.2
+
+  '@vitest/runner@4.0.8':
+    dependencies:
+      '@vitest/utils': 4.0.8
+      pathe: 2.0.3
 
   '@vitest/snapshot@2.1.9':
     dependencies:
@@ -19753,15 +20301,28 @@ snapshots:
       magic-string: 0.30.19
       pathe: 1.1.2
 
+  '@vitest/snapshot@4.0.8':
+    dependencies:
+      '@vitest/pretty-format': 4.0.8
+      magic-string: 0.30.21
+      pathe: 2.0.3
+
   '@vitest/spy@2.1.9':
     dependencies:
       tinyspy: 3.0.2
+
+  '@vitest/spy@4.0.8': {}
 
   '@vitest/utils@2.1.9':
     dependencies:
       '@vitest/pretty-format': 2.1.9
       loupe: 3.2.1
       tinyrainbow: 1.2.0
+
+  '@vitest/utils@4.0.8':
+    dependencies:
+      '@vitest/pretty-format': 4.0.8
+      tinyrainbow: 3.0.3
 
   '@vue/compiler-core@3.5.22':
     dependencies:
@@ -20301,6 +20862,8 @@ snapshots:
       loupe: 3.2.1
       pathval: 2.0.1
 
+  chai@6.2.1: {}
+
   chalk-template@1.1.2:
     dependencies:
       chalk: 5.6.2
@@ -20619,7 +21182,7 @@ snapshots:
 
   cssesc@3.0.0: {}
 
-  cssstyle@5.3.2:
+  cssstyle@5.3.3:
     dependencies:
       '@asamuzakjp/css-color': 4.0.5
       '@csstools/css-syntax-patches-for-csstree': 1.0.15
@@ -21031,6 +21594,35 @@ snapshots:
       '@esbuild/win32-arm64': 0.25.12
       '@esbuild/win32-ia32': 0.25.12
       '@esbuild/win32-x64': 0.25.12
+
+  esbuild@0.27.0:
+    optionalDependencies:
+      '@esbuild/aix-ppc64': 0.27.0
+      '@esbuild/android-arm': 0.27.0
+      '@esbuild/android-arm64': 0.27.0
+      '@esbuild/android-x64': 0.27.0
+      '@esbuild/darwin-arm64': 0.27.0
+      '@esbuild/darwin-x64': 0.27.0
+      '@esbuild/freebsd-arm64': 0.27.0
+      '@esbuild/freebsd-x64': 0.27.0
+      '@esbuild/linux-arm': 0.27.0
+      '@esbuild/linux-arm64': 0.27.0
+      '@esbuild/linux-ia32': 0.27.0
+      '@esbuild/linux-loong64': 0.27.0
+      '@esbuild/linux-mips64el': 0.27.0
+      '@esbuild/linux-ppc64': 0.27.0
+      '@esbuild/linux-riscv64': 0.27.0
+      '@esbuild/linux-s390x': 0.27.0
+      '@esbuild/linux-x64': 0.27.0
+      '@esbuild/netbsd-arm64': 0.27.0
+      '@esbuild/netbsd-x64': 0.27.0
+      '@esbuild/openbsd-arm64': 0.27.0
+      '@esbuild/openbsd-x64': 0.27.0
+      '@esbuild/openharmony-arm64': 0.27.0
+      '@esbuild/sunos-x64': 0.27.0
+      '@esbuild/win32-arm64': 0.27.0
+      '@esbuild/win32-ia32': 0.27.0
+      '@esbuild/win32-x64': 0.27.0
 
   escalade@3.2.0: {}
 
@@ -22602,7 +23194,7 @@ snapshots:
     dependencies:
       '@acemir/cssom': 0.9.23
       '@asamuzakjp/dom-selector': 6.7.4
-      cssstyle: 5.3.2
+      cssstyle: 5.3.3
       data-urls: 6.0.0
       decimal.js: 10.6.0
       html-encoding-sniffer: 4.0.0
@@ -22810,6 +23402,10 @@ snapshots:
       sourcemap-codec: 1.4.8
 
   magic-string@0.30.19:
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.5.5
+
+  magic-string@0.30.21:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
 
@@ -23402,9 +23998,9 @@ snapshots:
 
   ms@2.1.3: {}
 
-  msw@2.12.0(@types/node@18.15.3)(typescript@5.9.2):
+  msw@2.12.1(@types/node@18.15.3)(typescript@5.9.2):
     dependencies:
-      '@inquirer/confirm': 5.1.19(@types/node@18.15.3)
+      '@inquirer/confirm': 5.1.20(@types/node@18.15.3)
       '@mswjs/interceptors': 0.40.0
       '@open-draft/deferred-promise': 2.2.0
       '@types/statuses': 2.0.6
@@ -23428,9 +24024,9 @@ snapshots:
       - '@types/node'
     optional: true
 
-  msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3):
+  msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3):
     dependencies:
-      '@inquirer/confirm': 5.1.19(@types/node@18.15.3)
+      '@inquirer/confirm': 5.1.20(@types/node@18.15.3)
       '@mswjs/interceptors': 0.40.0
       '@open-draft/deferred-promise': 2.2.0
       '@types/statuses': 2.0.6
@@ -23454,9 +24050,9 @@ snapshots:
       - '@types/node'
     optional: true
 
-  msw@2.12.0(@types/node@22.19.0)(typescript@5.9.3):
+  msw@2.12.1(@types/node@22.19.0)(typescript@5.9.3):
     dependencies:
-      '@inquirer/confirm': 5.1.19(@types/node@22.19.0)
+      '@inquirer/confirm': 5.1.20(@types/node@22.19.0)
       '@mswjs/interceptors': 0.40.0
       '@open-draft/deferred-promise': 2.2.0
       '@types/statuses': 2.0.6
@@ -23480,9 +24076,9 @@ snapshots:
       - '@types/node'
     optional: true
 
-  msw@2.12.0(@types/node@24.10.0)(typescript@5.9.3):
+  msw@2.12.1(@types/node@24.10.0)(typescript@5.9.3):
     dependencies:
-      '@inquirer/confirm': 5.1.19(@types/node@24.10.0)
+      '@inquirer/confirm': 5.1.20(@types/node@24.10.0)
       '@mswjs/interceptors': 0.40.0
       '@open-draft/deferred-promise': 2.2.0
       '@types/statuses': 2.0.6
@@ -23517,6 +24113,9 @@ snapshots:
   mute-stream@1.0.0: {}
 
   mute-stream@2.0.0: {}
+
+  mute-stream@3.0.0:
+    optional: true
 
   mz@2.7.0:
     dependencies:
@@ -24437,6 +25036,34 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.52.3
       fsevents: 2.3.3
 
+  rollup@4.53.2:
+    dependencies:
+      '@types/estree': 1.0.8
+    optionalDependencies:
+      '@rollup/rollup-android-arm-eabi': 4.53.2
+      '@rollup/rollup-android-arm64': 4.53.2
+      '@rollup/rollup-darwin-arm64': 4.53.2
+      '@rollup/rollup-darwin-x64': 4.53.2
+      '@rollup/rollup-freebsd-arm64': 4.53.2
+      '@rollup/rollup-freebsd-x64': 4.53.2
+      '@rollup/rollup-linux-arm-gnueabihf': 4.53.2
+      '@rollup/rollup-linux-arm-musleabihf': 4.53.2
+      '@rollup/rollup-linux-arm64-gnu': 4.53.2
+      '@rollup/rollup-linux-arm64-musl': 4.53.2
+      '@rollup/rollup-linux-loong64-gnu': 4.53.2
+      '@rollup/rollup-linux-ppc64-gnu': 4.53.2
+      '@rollup/rollup-linux-riscv64-gnu': 4.53.2
+      '@rollup/rollup-linux-riscv64-musl': 4.53.2
+      '@rollup/rollup-linux-s390x-gnu': 4.53.2
+      '@rollup/rollup-linux-x64-gnu': 4.53.2
+      '@rollup/rollup-linux-x64-musl': 4.53.2
+      '@rollup/rollup-openharmony-arm64': 4.53.2
+      '@rollup/rollup-win32-arm64-msvc': 4.53.2
+      '@rollup/rollup-win32-ia32-msvc': 4.53.2
+      '@rollup/rollup-win32-x64-gnu': 4.53.2
+      '@rollup/rollup-win32-x64-msvc': 4.53.2
+      fsevents: 2.3.3
+
   run-async@3.0.0: {}
 
   run-parallel@1.2.0:
@@ -24453,7 +25080,7 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sass@1.93.3:
+  sass@1.94.0:
     dependencies:
       chokidar: 4.0.3
       immutable: 5.1.4
@@ -24699,6 +25326,8 @@ snapshots:
 
   statuses@2.0.2:
     optional: true
+
+  std-env@3.10.0: {}
 
   std-env@3.9.0: {}
 
@@ -25108,6 +25737,8 @@ snapshots:
   tinypool@1.1.1: {}
 
   tinyrainbow@1.2.0: {}
+
+  tinyrainbow@3.0.3: {}
 
   tinyspy@3.0.2: {}
 
@@ -25532,13 +26163,13 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vite-node@2.1.9(@types/node@18.15.3)(sass@1.93.3)(terser@5.44.1):
+  vite-node@2.1.9(@types/node@18.15.3)(sass@1.94.0)(terser@5.44.1):
     dependencies:
       cac: 6.7.14
       debug: 4.4.3
       es-module-lexer: 1.7.0
       pathe: 1.1.2
-      vite: 5.4.20(@types/node@18.15.3)(sass@1.93.3)(terser@5.44.1)
+      vite: 5.4.20(@types/node@18.15.3)(sass@1.94.0)(terser@5.44.1)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -25550,13 +26181,13 @@ snapshots:
       - supports-color
       - terser
 
-  vite-node@2.1.9(@types/node@22.19.0)(sass@1.93.3)(terser@5.44.1):
+  vite-node@2.1.9(@types/node@22.19.0)(sass@1.94.0)(terser@5.44.1):
     dependencies:
       cac: 6.7.14
       debug: 4.4.3
       es-module-lexer: 1.7.0
       pathe: 1.1.2
-      vite: 5.4.20(@types/node@22.19.0)(sass@1.93.3)(terser@5.44.1)
+      vite: 5.4.20(@types/node@22.19.0)(sass@1.94.0)(terser@5.44.1)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -25568,13 +26199,13 @@ snapshots:
       - supports-color
       - terser
 
-  vite-node@2.1.9(@types/node@24.10.0)(sass@1.93.3)(terser@5.44.1):
+  vite-node@2.1.9(@types/node@24.10.0)(sass@1.94.0)(terser@5.44.1):
     dependencies:
       cac: 6.7.14
       debug: 4.4.3
       es-module-lexer: 1.7.0
       pathe: 1.1.2
-      vite: 5.4.20(@types/node@24.10.0)(sass@1.93.3)(terser@5.44.1)
+      vite: 5.4.20(@types/node@24.10.0)(sass@1.94.0)(terser@5.44.1)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -25586,7 +26217,7 @@ snapshots:
       - supports-color
       - terser
 
-  vite@5.4.20(@types/node@18.15.3)(sass@1.93.3)(terser@5.44.1):
+  vite@5.4.20(@types/node@18.15.3)(sass@1.94.0)(terser@5.44.1):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.5.6
@@ -25594,10 +26225,10 @@ snapshots:
     optionalDependencies:
       '@types/node': 18.15.3
       fsevents: 2.3.3
-      sass: 1.93.3
+      sass: 1.94.0
       terser: 5.44.1
 
-  vite@5.4.20(@types/node@22.19.0)(sass@1.93.3)(terser@5.44.1):
+  vite@5.4.20(@types/node@22.19.0)(sass@1.94.0)(terser@5.44.1):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.5.6
@@ -25605,10 +26236,10 @@ snapshots:
     optionalDependencies:
       '@types/node': 22.19.0
       fsevents: 2.3.3
-      sass: 1.93.3
+      sass: 1.94.0
       terser: 5.44.1
 
-  vite@5.4.20(@types/node@24.10.0)(sass@1.93.3)(terser@5.44.1):
+  vite@5.4.20(@types/node@24.10.0)(sass@1.94.0)(terser@5.44.1):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.5.6
@@ -25616,13 +26247,29 @@ snapshots:
     optionalDependencies:
       '@types/node': 24.10.0
       fsevents: 2.3.3
-      sass: 1.93.3
+      sass: 1.94.0
       terser: 5.44.1
 
-  vitest@2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.2))(sass@1.93.3)(terser@5.44.1):
+  vite@7.2.2(@types/node@24.10.0)(sass@1.94.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.3.3):
+    dependencies:
+      esbuild: 0.25.12
+      fdir: 6.5.0(picomatch@4.0.3)
+      picomatch: 4.0.3
+      postcss: 8.5.6
+      rollup: 4.53.2
+      tinyglobby: 0.2.15
+    optionalDependencies:
+      '@types/node': 24.10.0
+      fsevents: 2.3.3
+      sass: 1.94.0
+      terser: 5.44.1
+      tsx: 4.20.6
+      yaml: 2.3.3
+
+  vitest@2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.2))(sass@1.94.0)(terser@5.44.1):
     dependencies:
       '@vitest/expect': 2.1.9
-      '@vitest/mocker': 2.1.9(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.2))(vite@5.4.20(@types/node@18.15.3)(sass@1.93.3)(terser@5.44.1))
+      '@vitest/mocker': 2.1.9(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.2))(vite@5.4.20(@types/node@18.15.3)(sass@1.94.0)(terser@5.44.1))
       '@vitest/pretty-format': 2.1.9
       '@vitest/runner': 2.1.9
       '@vitest/snapshot': 2.1.9
@@ -25638,8 +26285,8 @@ snapshots:
       tinyexec: 0.3.2
       tinypool: 1.1.1
       tinyrainbow: 1.2.0
-      vite: 5.4.20(@types/node@18.15.3)(sass@1.93.3)(terser@5.44.1)
-      vite-node: 2.1.9(@types/node@18.15.3)(sass@1.93.3)(terser@5.44.1)
+      vite: 5.4.20(@types/node@18.15.3)(sass@1.94.0)(terser@5.44.1)
+      vite-node: 2.1.9(@types/node@18.15.3)(sass@1.94.0)(terser@5.44.1)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 18.15.3
@@ -25655,10 +26302,10 @@ snapshots:
       - supports-color
       - terser
 
-  vitest@2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1):
+  vitest@2.1.9(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1):
     dependencies:
       '@vitest/expect': 2.1.9
-      '@vitest/mocker': 2.1.9(msw@2.12.0(@types/node@18.15.3)(typescript@5.9.3))(vite@5.4.20(@types/node@18.15.3)(sass@1.93.3)(terser@5.44.1))
+      '@vitest/mocker': 2.1.9(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(vite@5.4.20(@types/node@18.15.3)(sass@1.94.0)(terser@5.44.1))
       '@vitest/pretty-format': 2.1.9
       '@vitest/runner': 2.1.9
       '@vitest/snapshot': 2.1.9
@@ -25674,8 +26321,8 @@ snapshots:
       tinyexec: 0.3.2
       tinypool: 1.1.1
       tinyrainbow: 1.2.0
-      vite: 5.4.20(@types/node@18.15.3)(sass@1.93.3)(terser@5.44.1)
-      vite-node: 2.1.9(@types/node@18.15.3)(sass@1.93.3)(terser@5.44.1)
+      vite: 5.4.20(@types/node@18.15.3)(sass@1.94.0)(terser@5.44.1)
+      vite-node: 2.1.9(@types/node@18.15.3)(sass@1.94.0)(terser@5.44.1)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 18.15.3
@@ -25691,10 +26338,10 @@ snapshots:
       - supports-color
       - terser
 
-  vitest@2.1.9(@types/node@22.19.0)(jsdom@27.1.0)(msw@2.12.0(@types/node@22.19.0)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1):
+  vitest@2.1.9(@types/node@22.19.0)(jsdom@27.1.0)(msw@2.12.1(@types/node@22.19.0)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1):
     dependencies:
       '@vitest/expect': 2.1.9
-      '@vitest/mocker': 2.1.9(msw@2.12.0(@types/node@22.19.0)(typescript@5.9.3))(vite@5.4.20(@types/node@22.19.0)(sass@1.93.3)(terser@5.44.1))
+      '@vitest/mocker': 2.1.9(msw@2.12.1(@types/node@22.19.0)(typescript@5.9.3))(vite@5.4.20(@types/node@22.19.0)(sass@1.94.0)(terser@5.44.1))
       '@vitest/pretty-format': 2.1.9
       '@vitest/runner': 2.1.9
       '@vitest/snapshot': 2.1.9
@@ -25710,8 +26357,8 @@ snapshots:
       tinyexec: 0.3.2
       tinypool: 1.1.1
       tinyrainbow: 1.2.0
-      vite: 5.4.20(@types/node@22.19.0)(sass@1.93.3)(terser@5.44.1)
-      vite-node: 2.1.9(@types/node@22.19.0)(sass@1.93.3)(terser@5.44.1)
+      vite: 5.4.20(@types/node@22.19.0)(sass@1.94.0)(terser@5.44.1)
+      vite-node: 2.1.9(@types/node@22.19.0)(sass@1.94.0)(terser@5.44.1)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 22.19.0
@@ -25727,10 +26374,10 @@ snapshots:
       - supports-color
       - terser
 
-  vitest@2.1.9(@types/node@24.10.0)(jsdom@27.1.0)(msw@2.12.0(@types/node@24.10.0)(typescript@5.9.3))(sass@1.93.3)(terser@5.44.1):
+  vitest@2.1.9(@types/node@24.10.0)(jsdom@27.1.0)(msw@2.12.1(@types/node@24.10.0)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1):
     dependencies:
       '@vitest/expect': 2.1.9
-      '@vitest/mocker': 2.1.9(msw@2.12.0(@types/node@24.10.0)(typescript@5.9.3))(vite@5.4.20(@types/node@24.10.0)(sass@1.93.3)(terser@5.44.1))
+      '@vitest/mocker': 2.1.9(msw@2.12.1(@types/node@24.10.0)(typescript@5.9.3))(vite@5.4.20(@types/node@24.10.0)(sass@1.94.0)(terser@5.44.1))
       '@vitest/pretty-format': 2.1.9
       '@vitest/runner': 2.1.9
       '@vitest/snapshot': 2.1.9
@@ -25746,8 +26393,8 @@ snapshots:
       tinyexec: 0.3.2
       tinypool: 1.1.1
       tinyrainbow: 1.2.0
-      vite: 5.4.20(@types/node@24.10.0)(sass@1.93.3)(terser@5.44.1)
-      vite-node: 2.1.9(@types/node@24.10.0)(sass@1.93.3)(terser@5.44.1)
+      vite: 5.4.20(@types/node@24.10.0)(sass@1.94.0)(terser@5.44.1)
+      vite-node: 2.1.9(@types/node@24.10.0)(sass@1.94.0)(terser@5.44.1)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 24.10.0
@@ -25762,6 +26409,46 @@ snapshots:
       - sugarss
       - supports-color
       - terser
+
+  vitest@4.0.8(@types/debug@4.1.12)(@types/node@24.10.0)(jsdom@27.1.0)(msw@2.12.1(@types/node@24.10.0)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.3.3):
+    dependencies:
+      '@vitest/expect': 4.0.8
+      '@vitest/mocker': 4.0.8(msw@2.12.1(@types/node@24.10.0)(typescript@5.9.3))(vite@7.2.2(@types/node@24.10.0)(sass@1.94.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.3.3))
+      '@vitest/pretty-format': 4.0.8
+      '@vitest/runner': 4.0.8
+      '@vitest/snapshot': 4.0.8
+      '@vitest/spy': 4.0.8
+      '@vitest/utils': 4.0.8
+      debug: 4.4.3
+      es-module-lexer: 1.7.0
+      expect-type: 1.2.2
+      magic-string: 0.30.21
+      pathe: 2.0.3
+      picomatch: 4.0.3
+      std-env: 3.10.0
+      tinybench: 2.9.0
+      tinyexec: 0.3.2
+      tinyglobby: 0.2.15
+      tinyrainbow: 3.0.3
+      vite: 7.2.2(@types/node@24.10.0)(sass@1.94.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.3.3)
+      why-is-node-running: 2.3.0
+    optionalDependencies:
+      '@types/debug': 4.1.12
+      '@types/node': 24.10.0
+      jsdom: 27.1.0
+    transitivePeerDependencies:
+      - jiti
+      - less
+      - lightningcss
+      - msw
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - tsx
+      - yaml
 
   vscode-languageserver-textdocument@1.0.12: {}
 

@@ -430,6 +430,48 @@ class PydanticModel:
             )
         )
 
+    def update_forward_refs_with_ghost_references(self, ghost_references: List[AST.ClassReference]) -> None:
+        # Filter out self-references
+        filtered_ghost_refs = [
+            ref
+            for ref in ghost_references
+            if ref.import_ is None
+            or ref.import_ != self._local_class_reference.import_
+            or ref.qualified_name_excluding_import != self._local_class_reference.qualified_name_excluding_import
+        ]
+
+        if not filtered_ghost_refs:
+            return
+
+        # Create new references without must_import_after_current_declaration flag
+        # since these will already be imported as ghost references
+        kwarg_refs = []
+        for ghost_ref in filtered_ghost_refs:
+            import dataclasses
+
+            kwarg_ref = dataclasses.replace(
+                ghost_ref,
+                must_import_after_current_declaration=False,
+                is_forward_reference=False,
+            )
+            kwarg_refs.append(kwarg_ref)
+
+        self._source_file.add_footer_expression(
+            AST.Expression(
+                AST.FunctionInvocation(
+                    function_definition=self._update_forward_ref_function_reference,
+                    args=[AST.Expression(self._local_class_reference)],
+                    kwargs=[
+                        (
+                            get_named_import_or_throw(kwarg_ref),
+                            AST.Expression(kwarg_ref),
+                        )
+                        for kwarg_ref in kwarg_refs
+                    ],
+                )
+            )
+        )
+
     def _get_v1_config_class(self) -> Optional[AST.ClassDeclaration]:
         config = AST.ClassDeclaration(name="Config")
 

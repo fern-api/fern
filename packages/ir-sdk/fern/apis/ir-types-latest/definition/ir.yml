@@ -67,6 +67,9 @@ types:
       selfHosted: optional<boolean>
       audiences: optional<list<audience.AudienceDefinition>>
       generationMetadata: optional<GenerationMetadata>
+      apiPlayground:
+        type: optional<boolean>
+        docs: Whether the API playground should be enabled. Defaults to true.
 
   GenerationMetadata:
     docs: |

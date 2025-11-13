@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SeedAccept.Test/SeedAccept.Test.csproj" />
+  <Project Path="SeedAccept/SeedAccept.csproj" />
+</Solution>

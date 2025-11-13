@@ -46,4 +46,6 @@ export interface IntermediateRepresentation {
     selfHosted: boolean | undefined;
     audiences: FernIr.AudienceDefinition[] | undefined;
     generationMetadata: FernIr.GenerationMetadata | undefined;
+    /** Whether the API playground should be enabled. Defaults to true. */
+    apiPlayground: boolean | undefined;
 }

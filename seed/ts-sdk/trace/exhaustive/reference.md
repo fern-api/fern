@@ -1305,7 +1305,7 @@ await client.playlist.updatePlaylist(1, SeedTrace.PlaylistId("playlistId"), {
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">deletePlaylist</a>(serviceParam, playlistId) -> core.APIResponse<void, SeedTrace.playlist.deletePlaylist.Error></code></summary>
+<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">deletePlaylist</a>(serviceParam, playlist_id) -> core.APIResponse<void, SeedTrace.playlist.deletePlaylist.Error></code></summary>
 <dl>
 <dd>
 
@@ -1356,7 +1356,7 @@ await client.playlist.deletePlaylist(1, SeedTrace.PlaylistId("playlist_id"));
 <dl>
 <dd>
 
-**playlistId:** `SeedTrace.PlaylistId` 
+**playlist_id:** `SeedTrace.PlaylistId` 
     
 </dd>
 </dl>

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SeedPublicObject.Test/SeedPublicObject.Test.csproj" />
+  <Project Path="SeedPublicObject/SeedPublicObject.csproj" />
+</Solution>
