@@ -1,0 +1,18 @@
+{
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "."
+  },
+  "include": ["./src/**/*", "./baml_client/**/*"],
+  "exclude": ["./lib/**/*", "./node_modules/**/*"],
+  "references": [
+    {
+      "path": "../../task-context"
+    },
+    {
+      "path": "../../../commons/core-utils"
+    }
+  ]
+}
