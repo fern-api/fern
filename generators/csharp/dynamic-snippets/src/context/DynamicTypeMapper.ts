@@ -41,7 +41,7 @@ export class DynamicTypeMapper extends WithGeneration {
             case "optional":
             case "nullable": {
                 const value = this.convert({ typeReference: args.typeReference.value });
-                return args.unboxOptionals ? value.unwrapIfOptional() : value.toOptionalIfNotAlready();
+                return args.unboxOptionals ? value.asNonOptional() : value.asOptional();
             }
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value });

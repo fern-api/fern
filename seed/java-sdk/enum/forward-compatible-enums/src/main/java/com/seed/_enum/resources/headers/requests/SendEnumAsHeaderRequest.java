@@ -5,11 +5,9 @@ package com.seed._enum.resources.headers.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed._enum.core.ObjectMappers;
 import com.seed._enum.types.ColorOrOperand;
@@ -46,22 +44,22 @@ public final class SendEnumAsHeaderRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("operand")
+    @JsonIgnore
     public Operand getOperand() {
         return operand;
     }
 
-    @JsonProperty("maybeOperand")
+    @JsonIgnore
     public Optional<Operand> getMaybeOperand() {
         return maybeOperand;
     }
 
-    @JsonProperty("operandOrColor")
+    @JsonIgnore
     public ColorOrOperand getOperandOrColor() {
         return operandOrColor;
     }
 
-    @JsonProperty("maybeOperandOrColor")
+    @JsonIgnore
     public Optional<ColorOrOperand> getMaybeOperandOrColor() {
         return maybeOperandOrColor;
     }
@@ -145,14 +143,12 @@ public final class SendEnumAsHeaderRequest {
         }
 
         @java.lang.Override
-        @JsonSetter("operand")
         public OperandOrColorStage operand(@NotNull Operand operand) {
             this.operand = Objects.requireNonNull(operand, "operand must not be null");
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("operandOrColor")
         public _FinalStage operandOrColor(@NotNull ColorOrOperand operandOrColor) {
             this.operandOrColor = Objects.requireNonNull(operandOrColor, "operandOrColor must not be null");
             return this;
@@ -165,7 +161,6 @@ public final class SendEnumAsHeaderRequest {
         }
 
         @java.lang.Override
-        @JsonSetter(value = "maybeOperandOrColor", nulls = Nulls.SKIP)
         public _FinalStage maybeOperandOrColor(Optional<ColorOrOperand> maybeOperandOrColor) {
             this.maybeOperandOrColor = maybeOperandOrColor;
             return this;
@@ -178,7 +173,6 @@ public final class SendEnumAsHeaderRequest {
         }
 
         @java.lang.Override
-        @JsonSetter(value = "maybeOperand", nulls = Nulls.SKIP)
         public _FinalStage maybeOperand(Optional<Operand> maybeOperand) {
             this.maybeOperand = maybeOperand;
             return this;

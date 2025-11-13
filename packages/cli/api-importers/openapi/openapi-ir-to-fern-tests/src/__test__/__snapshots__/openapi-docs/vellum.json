@@ -319,7 +319,7 @@ Executes a deployed Workflow and streams back its results.",
                   "properties": {
                     "external_id": {
                       "docs": "Optionally include a unique identifier for tracking purposes.",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": undefined,
                         "maxLength": undefined,
@@ -330,7 +330,7 @@ Executes a deployed Workflow and streams back its results.",
                     "inputs": "list<WorkflowRequestInputRequest>",
                     "release_tag": {
                       "docs": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": undefined,
                         "maxLength": undefined,
@@ -340,7 +340,7 @@ Executes a deployed Workflow and streams back its results.",
                     },
                     "workflow_deployment_id": {
                       "docs": "The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name.",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": "uuid",
                         "maxLength": undefined,
@@ -350,7 +350,7 @@ Executes a deployed Workflow and streams back its results.",
                     },
                     "workflow_deployment_name": {
                       "docs": "The name of the Workflow Deployment. Must provide either this or workflow_deployment_id.",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": undefined,
                         "maxLength": undefined,
@@ -435,7 +435,7 @@ Generate a completion using a previously defined deployment.
                   "properties": {
                     "deployment_id": {
                       "docs": "The ID of the deployment. Must provide either this or deployment_name.",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": "uuid",
                         "maxLength": undefined,
@@ -445,7 +445,7 @@ Generate a completion using a previously defined deployment.
                     },
                     "deployment_name": {
                       "docs": "The name of the deployment. Must provide either this or deployment_id.",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": undefined,
                         "maxLength": undefined,
@@ -455,7 +455,7 @@ Generate a completion using a previously defined deployment.
                     },
                     "options": {
                       "docs": "Additional configuration that can be used to control what's included in the response.",
-                      "type": "optional<GenerateOptionsRequest>",
+                      "type": "optional<nullable<GenerateOptionsRequest>>",
                     },
                     "requests": {
                       "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
@@ -538,7 +538,7 @@ Generate a stream of completions using a previously defined deployment.
                   "properties": {
                     "deployment_id": {
                       "docs": "The ID of the deployment. Must provide either this or deployment_name.",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": "uuid",
                         "maxLength": undefined,
@@ -548,7 +548,7 @@ Generate a stream of completions using a previously defined deployment.
                     },
                     "deployment_name": {
                       "docs": "The name of the deployment. Must provide either this or deployment_id.",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": undefined,
                         "maxLength": undefined,
@@ -558,7 +558,7 @@ Generate a stream of completions using a previously defined deployment.
                     },
                     "options": {
                       "docs": "Additional configuration that can be used to control what's included in the response.",
-                      "type": "optional<GenerateOptionsRequest>",
+                      "type": "optional<nullable<GenerateOptionsRequest>>",
                     },
                     "requests": {
                       "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
@@ -629,7 +629,7 @@ Perform a search against a document index.
                   "properties": {
                     "index_id": {
                       "docs": "The ID of the index to search against. Must provide either this or index_name.",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": "uuid",
                         "maxLength": undefined,
@@ -639,7 +639,7 @@ Perform a search against a document index.
                     },
                     "index_name": {
                       "docs": "The name of the index to search against. Must provide either this or index_id.",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": undefined,
                         "maxLength": undefined,
@@ -649,7 +649,7 @@ Perform a search against a document index.
                     },
                     "options": {
                       "docs": "Configuration options for the search.",
-                      "type": "optional<SearchRequestOptionsRequest>",
+                      "type": "optional<nullable<SearchRequestOptionsRequest>>",
                     },
                     "query": {
                       "docs": "The query to search for.",
@@ -716,7 +716,7 @@ Used to submit feedback regarding the quality of previously generated completion
                     },
                     "deployment_id": {
                       "docs": "The ID of the deployment. Must provide either this or deployment_name.",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": "uuid",
                         "maxLength": undefined,
@@ -726,7 +726,7 @@ Used to submit feedback regarding the quality of previously generated completion
                     },
                     "deployment_name": {
                       "docs": "The name of the deployment. Must provide either this or deployment_id.",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": undefined,
                         "maxLength": undefined,
@@ -821,7 +821,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "source_handle_id": "optional<string>",
+              "source_handle_id": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -853,9 +853,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "delta": "optional<string>",
+              "delta": "optional<nullable<string>>",
               "output_id": "string",
-              "text": "optional<string>",
+              "text": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -952,7 +952,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "properties": {
               "external_id": {
                 "docs": "The unique ID of the document as represented in an external system and specified when it was originally uploaded.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": undefined,
                   "maxLength": 1000,
@@ -1107,7 +1107,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "properties": {
               "external_id": {
                 "docs": "The external ID that was originally provided along with the generation request, which uniquely identifies this generation in an external system.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "finish_reason": {
                 "docs": "The reason the generation finished.
@@ -1115,7 +1115,7 @@ Used to submit feedback regarding the quality of previously generated completion
 * `LENGTH` - LENGTH
 * `STOP` - STOP
 * `UNKNOWN` - UNKNOWN",
-                "type": "optional<FinishReasonEnum>",
+                "type": "nullable<FinishReasonEnum>",
               },
               "id": {
                 "docs": "The Vellum-generated ID of the completion.",
@@ -1129,7 +1129,7 @@ Used to submit feedback regarding the quality of previously generated completion
               },
               "logprobs": {
                 "docs": "The logprobs of the completion. Only present if specified in the original request options.",
-                "type": "optional<NormalizedLogProbs>",
+                "type": "optional<nullable<NormalizedLogProbs>>",
               },
               "model_version_id": {
                 "docs": "The ID of the model version used to generate this completion.",
@@ -1238,7 +1238,7 @@ Used to submit feedback regarding the quality of previously generated completion
               },
               "external_ids": {
                 "docs": "Optionally include a unique identifier for each generation, as represented outside of Vellum. Note that this should generally be a list of length one.",
-                "type": "optional<list<string>>",
+                "type": "optional<nullable<list<string>>>",
               },
               "input_values": {
                 "docs": "Key/value pairs for each template variable defined in the deployment's prompt.",
@@ -1390,7 +1390,7 @@ Used to submit feedback regarding the quality of previously generated completion
               },
               "sandbox_snapshot": {
                 "docs": "Information about the sandbox snapshot that was used to create this model version, if applicable.",
-                "type": "optional<ModelVersionSandboxSnapshot>",
+                "type": "optional<nullable<ModelVersionSandboxSnapshot>>",
               },
             },
             "source": {
@@ -1462,10 +1462,10 @@ Used to submit feedback regarding the quality of previously generated completion
             "inline": undefined,
             "properties": {
               "frequency_penalty": "double",
-              "logit_bias": "optional<map<string, optional<double>>>",
+              "logit_bias": "optional<nullable<map<string, nullable<double>>>>",
               "max_tokens": "integer",
               "presence_penalty": "double",
-              "stop": "optional<list<string>>",
+              "stop": "optional<nullable<list<string>>>",
               "temperature": "double",
               "top_k": "optional<double>",
               "top_p": "double",
@@ -1589,7 +1589,7 @@ Used to submit feedback regarding the quality of previously generated completion
               },
               "sandbox_id": {
                 "access": "read-only",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
             },
             "source": {
@@ -1600,7 +1600,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "likelihood": "optional<double>",
+              "likelihood": "nullable<double>",
               "tokens": "list<NormalizedTokenLogProbs>",
             },
             "source": {
@@ -1611,10 +1611,10 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "logprob": "optional<double>",
+              "logprob": "nullable<double>",
               "text_offset": "integer",
               "token": "string",
-              "top_logprobs": "optional<map<string, optional<double>>>",
+              "top_logprobs": "nullable<map<string, nullable<double>>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1626,7 +1626,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "properties": {
               "count": "optional<integer>",
               "next": {
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": "uri",
                   "maxLength": undefined,
@@ -1635,7 +1635,7 @@ Used to submit feedback regarding the quality of previously generated completion
                 },
               },
               "previous": {
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": "uri",
                   "maxLength": undefined,
@@ -1683,9 +1683,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "delta": "optional<string>",
+              "delta": "optional<nullable<string>>",
               "output_id": "string",
-              "text": "optional<string>",
+              "text": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1729,17 +1729,17 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "blocks": "optional<list<PromptTemplateBlock>>",
+              "blocks": "optional<nullable<list<PromptTemplateBlock>>>",
               "chat_message_unterminated": {
                 "default": false,
                 "type": "optional<boolean>",
               },
-              "chat_role": "optional<ChatMessageRole>",
-              "function_description": "optional<string>",
-              "function_name": "optional<string>",
-              "function_parameters": "optional<map<string, unknown>>",
-              "template": "optional<string>",
-              "template_type": "optional<ContentType>",
+              "chat_role": "optional<nullable<ChatMessageRole>>",
+              "function_description": "optional<nullable<string>>",
+              "function_name": "optional<nullable<string>>",
+              "function_parameters": "optional<nullable<map<string, unknown>>>",
+              "template": "optional<nullable<string>>",
+              "template_type": "optional<nullable<ContentType>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1749,14 +1749,14 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "blocks": "optional<list<PromptTemplateBlockRequest>>",
+              "blocks": "optional<nullable<list<PromptTemplateBlockRequest>>>",
               "chat_message_unterminated": {
                 "default": false,
                 "type": "optional<boolean>",
               },
-              "chat_role": "optional<ChatMessageRole>",
+              "chat_role": "optional<nullable<ChatMessageRole>>",
               "function_description": {
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": undefined,
                   "maxLength": undefined,
@@ -1765,7 +1765,7 @@ Used to submit feedback regarding the quality of previously generated completion
                 },
               },
               "function_name": {
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": undefined,
                   "maxLength": undefined,
@@ -1773,9 +1773,9 @@ Used to submit feedback regarding the quality of previously generated completion
                   "pattern": undefined,
                 },
               },
-              "function_parameters": "optional<map<string, unknown>>",
-              "template": "optional<string>",
-              "template_type": "optional<ContentType>",
+              "function_parameters": "optional<nullable<map<string, unknown>>>",
+              "template": "optional<nullable<string>>",
+              "template_type": "optional<nullable<ContentType>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1875,10 +1875,10 @@ Used to submit feedback regarding the quality of previously generated completion
             "inline": undefined,
             "properties": {
               "frequency_penalty": "double",
-              "logit_bias": "optional<map<string, optional<double>>>",
+              "logit_bias": "optional<nullable<map<string, nullable<double>>>>",
               "max_tokens": "integer",
               "presence_penalty": "double",
-              "stop": "optional<list<string>>",
+              "stop": "nullable<list<string>>",
               "temperature": "double",
               "top_k": "optional<double>",
               "top_p": "double",
@@ -2023,7 +2023,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "params": "optional<EvaluationParams>",
+              "params": "optional<nullable<EvaluationParams>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2033,7 +2033,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "params": "optional<EvaluationParamsRequest>",
+              "params": "optional<nullable<EvaluationParamsRequest>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2053,9 +2053,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "delta": "optional<string>",
+              "delta": "optional<nullable<string>>",
               "output_id": "string",
-              "text": "optional<string>",
+              "text": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2089,7 +2089,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "properties": {
               "chat_history": "optional<list<ChatMessage>>",
               "key": "string",
-              "type": "optional<ScenarioInputTypeEnum>",
+              "type": "optional<nullable<ScenarioInputTypeEnum>>",
               "value": "optional<string>",
             },
             "source": {
@@ -2110,7 +2110,7 @@ Used to submit feedback regarding the quality of previously generated completion
                   "pattern": undefined,
                 },
               },
-              "type": "optional<ScenarioInputTypeEnum>",
+              "type": "optional<nullable<ScenarioInputTypeEnum>>",
               "value": "optional<string>",
             },
             "source": {
@@ -2148,7 +2148,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "properties": {
               "external_ids": {
                 "docs": "The document external IDs to filter by",
-                "type": "optional<list<string>>",
+                "type": "optional<nullable<list<string>>>",
               },
             },
             "source": {
@@ -2171,8 +2171,8 @@ Used to submit feedback regarding the quality of previously generated completion
             "properties": {
               "results": "list<map<string, unknown>>",
               "results_output_id": "string",
-              "text": "optional<string>",
-              "text_output_id": "optional<string>",
+              "text": "optional<nullable<string>>",
+              "text_output_id": "optional<nullable<string>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2184,19 +2184,19 @@ Used to submit feedback regarding the quality of previously generated completion
             "properties": {
               "filters": {
                 "docs": "The filters to apply to the search.",
-                "type": "optional<SearchFiltersRequest>",
+                "type": "optional<nullable<SearchFiltersRequest>>",
               },
               "limit": {
                 "docs": "The maximum number of results to return.",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "result_merging": {
                 "docs": "The configuration for merging results.",
-                "type": "optional<SearchResultMergingRequest>",
+                "type": "optional<nullable<SearchResultMergingRequest>>",
               },
               "weights": {
                 "docs": "The weights to use for the search. Must add up to 1.0.",
-                "type": "optional<SearchWeightsRequest>",
+                "type": "optional<nullable<SearchWeightsRequest>>",
               },
             },
             "source": {
@@ -2275,7 +2275,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "document_to_document_indexes": "list<DocumentDocumentToDocumentIndex>",
               "external_id": {
                 "docs": "The external ID that was originally provided when uploading the document.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": undefined,
                   "maxLength": 1000,
@@ -2316,7 +2316,7 @@ Used to submit feedback regarding the quality of previously generated completion
                 "docs": "An enum value representing why the document could not be processed. Is null unless processing_state is FAILED.
 
 * `EXCEEDED_CHARACTER_LIMIT` - Exceeded Character Limit",
-                "type": "optional<ProcessingFailureReasonEnum>",
+                "type": "optional<nullable<ProcessingFailureReasonEnum>>",
               },
               "processing_state": {
                 "docs": "An enum value representing where this document is along its processing lifecycle. Note that this is different than its indexing lifecycle.
@@ -2348,7 +2348,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "properties": {
               "external_id": {
                 "docs": "The external ID that was originally provided when generating the completion that you'd now like to submit actuals for. Must provide either this or id.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": undefined,
                   "maxLength": undefined,
@@ -2358,7 +2358,7 @@ Used to submit feedback regarding the quality of previously generated completion
               },
               "id": {
                 "docs": "The Vellum-generated ID of a previously generated completion. Must provide either this or external_id.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
                 "validation": {
                   "format": undefined,
                   "maxLength": undefined,
@@ -2368,7 +2368,7 @@ Used to submit feedback regarding the quality of previously generated completion
               },
               "quality": {
                 "docs": "A number between 0 and 1 representing the quality of the completion. 0 is the worst, 1 is the best.",
-                "type": "optional<double>",
+                "type": "optional<nullable<double>>",
                 "validation": {
                   "exclusiveMax": undefined,
                   "exclusiveMin": undefined,
@@ -2379,11 +2379,11 @@ Used to submit feedback regarding the quality of previously generated completion
               },
               "text": {
                 "docs": "Text representing what the completion _should_ have been.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "timestamp": {
                 "docs": "Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes.",
-                "type": "optional<datetime>",
+                "type": "optional<nullable<datetime>>",
               },
             },
             "source": {
@@ -2491,7 +2491,7 @@ Used to submit feedback regarding the quality of previously generated completion
               },
               "label": {
                 "docs": "A human-friendly label for the test case.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "test_case_id": {
                 "docs": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended.",
@@ -2559,7 +2559,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "inline": undefined,
             "properties": {
               "data": "WorkflowNodeResultEvent",
-              "external_id": "optional<string>",
+              "external_id": "optional<nullable<string>>",
               "run_id": "string",
             },
             "source": {
@@ -2571,7 +2571,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "inline": undefined,
             "properties": {
               "data": "WorkflowResultEvent",
-              "external_id": "optional<string>",
+              "external_id": "optional<nullable<string>>",
               "run_id": "string",
             },
             "source": {
@@ -2600,13 +2600,13 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "data": "optional<WorkflowNodeResultData>",
-              "error": "optional<WorkflowEventError>",
+              "data": "nullable<WorkflowNodeResultData>",
+              "error": "optional<nullable<WorkflowEventError>>",
               "id": "string",
               "node_id": "string",
               "node_result_id": "string",
               "state": "WorkflowNodeResultEventState",
-              "ts": "optional<datetime>",
+              "ts": "optional<nullable<datetime>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2707,9 +2707,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "error": "optional<WorkflowEventError>",
+              "error": "optional<nullable<WorkflowEventError>>",
               "id": "string",
-              "output": "optional<WorkflowResultEventOutputData>",
+              "output": "nullable<WorkflowResultEventOutputData>",
               "state": "WorkflowNodeResultEventState",
               "ts": "datetime",
             },
@@ -2739,12 +2739,12 @@ Used to submit feedback regarding the quality of previously generated completion
               "delta": {
                 "access": "read-only",
                 "docs": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "name": "string",
               "node_id": "string",
               "state": "WorkflowNodeResultEventState",
-              "value": "optional<list<ChatMessage>>",
+              "value": "optional<nullable<list<ChatMessage>>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2757,12 +2757,12 @@ Used to submit feedback regarding the quality of previously generated completion
               "delta": {
                 "access": "read-only",
                 "docs": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "name": "string",
               "node_id": "string",
               "state": "WorkflowNodeResultEventState",
-              "value": "optional<map<string, unknown>>",
+              "value": "nullable<map<string, unknown>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -2774,14 +2774,14 @@ Used to submit feedback regarding the quality of previously generated completion
             "properties": {
               "delta": {
                 "docs": "The newly output string value, meant to be concatenated with all previous. Will be non-null for events of state STREAMING.",
-                "type": "optional<string>",
+                "type": "nullable<string>",
               },
               "name": "string",
               "node_id": "string",
               "state": "WorkflowNodeResultEventState",
               "value": {
                 "docs": "The entire string value. Will be non-null for events of state FULFILLED.",
-                "type": "optional<string>",
+                "type": "nullable<string>",
               },
             },
             "source": {
@@ -2826,21 +2826,21 @@ Used to submit feedback regarding the quality of previously generated completion
         body:
           properties:
             workflow_deployment_id:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: >-
                 The ID of the Workflow Deployment. Must provide either this or
                 workflow_deployment_name.
               validation:
                 format: uuid
             workflow_deployment_name:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: >-
                 The name of the Workflow Deployment. Must provide either this or
                 workflow_deployment_id.
               validation:
                 minLength: 1
             release_tag:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: >-
                 Optionally specify a release tag if you want to pin to a
                 specific release of the Workflow Deployment
@@ -2848,7 +2848,7 @@ Used to submit feedback regarding the quality of previously generated completion
                 minLength: 1
             inputs: list<WorkflowRequestInputRequest>
             external_id:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: Optionally include a unique identifier for tracking purposes.
               validation:
                 minLength: 1
@@ -2904,14 +2904,14 @@ Used to submit feedback regarding the quality of previously generated completion
         body:
           properties:
             deployment_id:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: >-
                 The ID of the deployment. Must provide either this or
                 deployment_name.
               validation:
                 format: uuid
             deployment_name:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: >-
                 The name of the deployment. Must provide either this or
                 deployment_id.
@@ -2923,7 +2923,7 @@ Used to submit feedback regarding the quality of previously generated completion
                 a bulk request to the LLM provided when possible.
               type: list<GenerateRequest>
             options:
-              type: optional<GenerateOptionsRequest>
+              type: optional<nullable<GenerateOptionsRequest>>
               docs: >-
                 Additional configuration that can be used to control what's
                 included in the response.
@@ -2975,14 +2975,14 @@ Used to submit feedback regarding the quality of previously generated completion
         body:
           properties:
             deployment_id:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: >-
                 The ID of the deployment. Must provide either this or
                 deployment_name.
               validation:
                 format: uuid
             deployment_name:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: >-
                 The name of the deployment. Must provide either this or
                 deployment_id.
@@ -2994,7 +2994,7 @@ Used to submit feedback regarding the quality of previously generated completion
                 a bulk request to the LLM provided when possible.
               type: list<GenerateRequest>
             options:
-              type: optional<GenerateOptionsRequest>
+              type: optional<nullable<GenerateOptionsRequest>>
               docs: >-
                 Additional configuration that can be used to control what's
                 included in the response.
@@ -3048,14 +3048,14 @@ Used to submit feedback regarding the quality of previously generated completion
         body:
           properties:
             index_id:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: >-
                 The ID of the index to search against. Must provide either this
                 or index_name.
               validation:
                 format: uuid
             index_name:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: >-
                 The name of the index to search against. Must provide either
                 this or index_id.
@@ -3067,7 +3067,7 @@ Used to submit feedback regarding the quality of previously generated completion
               validation:
                 minLength: 1
             options:
-              type: optional<SearchRequestOptionsRequest>
+              type: optional<nullable<SearchRequestOptionsRequest>>
               docs: Configuration options for the search.
         content-type: application/json
       response:
@@ -3113,14 +3113,14 @@ Used to submit feedback regarding the quality of previously generated completion
         body:
           properties:
             deployment_id:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: >-
                 The ID of the deployment. Must provide either this or
                 deployment_name.
               validation:
                 format: uuid
             deployment_name:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: >-
                 The name of the deployment. Must provide either this or
                 deployment_id.
@@ -3316,7 +3316,7 @@ types:
       openapi: ../openapi.yml
   ConditionalNodeResultData:
     properties:
-      source_handle_id: optional<string>
+      source_handle_id: optional<nullable<string>>
     source:
       openapi: ../openapi.yml
   ContentType:
@@ -3336,8 +3336,8 @@ types:
   DeploymentNodeResultData:
     properties:
       output_id: string
-      text: optional<string>
-      delta: optional<string>
+      text: optional<nullable<string>>
+      delta: optional<nullable<string>>
     source:
       openapi: ../openapi.yml
   DeploymentRead:
@@ -3414,7 +3414,7 @@ types:
         validation:
           maxLength: 1000
       external_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The unique ID of the document as represented in an external system and
           specified when it was originally uploaded.
@@ -3513,7 +3513,7 @@ types:
         validation:
           format: uuid
       external_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The external ID that was originally provided along with the generation
           request, which uniquely identifies this generation in an external
@@ -3522,7 +3522,7 @@ types:
         type: string
         docs: The text generated by the LLM.
       finish_reason:
-        type: optional<FinishReasonEnum>
+        type: nullable<FinishReasonEnum>
         docs: |-
           The reason the generation finished.
 
@@ -3530,7 +3530,7 @@ types:
           * `STOP` - STOP
           * `UNKNOWN` - UNKNOWN
       logprobs:
-        type: optional<NormalizedLogProbs>
+        type: optional<nullable<NormalizedLogProbs>>
         docs: >-
           The logprobs of the completion. Only present if specified in the
           original request options.
@@ -3611,7 +3611,7 @@ types:
           Optionally provide a list of chat messages that'll be used in place of
           the special {$chat_history} variable, if included in the prompt.
       external_ids:
-        type: optional<list<string>>
+        type: optional<nullable<list<string>>>
         docs: >-
           Optionally include a unique identifier for each generation, as
           represented outside of Vellum. Note that this should generally be a
@@ -3714,7 +3714,7 @@ types:
           The name of the base model used to create this model version, as
           identified by the LLM provider.
       sandbox_snapshot:
-        type: optional<ModelVersionSandboxSnapshot>
+        type: optional<nullable<ModelVersionSandboxSnapshot>>
         docs: >-
           Information about the sandbox snapshot that was used to create this
           model version, if applicable.
@@ -3765,8 +3765,8 @@ types:
       top_p: double
       frequency_penalty: double
       presence_penalty: double
-      logit_bias: optional<map<string, optional<double>>>
-      stop: optional<list<string>>
+      logit_bias: optional<nullable<map<string, nullable<double>>>>
+      stop: optional<nullable<list<string>>>
       top_k: optional<double>
     source:
       openapi: ../openapi.yml
@@ -3850,21 +3850,21 @@ types:
         type: optional<string>
         docs: The id of the prompt in the sandbox snapshot.
       sandbox_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         access: read-only
     source:
       openapi: ../openapi.yml
   NormalizedLogProbs:
     properties:
       tokens: list<NormalizedTokenLogProbs>
-      likelihood: optional<double>
+      likelihood: nullable<double>
     source:
       openapi: ../openapi.yml
   NormalizedTokenLogProbs:
     properties:
       token: string
-      logprob: optional<double>
-      top_logprobs: optional<map<string, optional<double>>>
+      logprob: nullable<double>
+      top_logprobs: nullable<map<string, nullable<double>>>
       text_offset: integer
     source:
       openapi: ../openapi.yml
@@ -3872,11 +3872,11 @@ types:
     properties:
       count: optional<integer>
       next:
-        type: optional<string>
+        type: optional<nullable<string>>
         validation:
           format: uri
       previous:
-        type: optional<string>
+        type: optional<nullable<string>>
         validation:
           format: uri
       results: optional<list<SlimDocument>>
@@ -3906,8 +3906,8 @@ types:
   PromptNodeResultData:
     properties:
       output_id: string
-      text: optional<string>
-      delta: optional<string>
+      text: optional<nullable<string>>
+      delta: optional<nullable<string>>
     source:
       openapi: ../openapi.yml
   PromptTemplateBlock:
@@ -3931,36 +3931,36 @@ types:
       openapi: ../openapi.yml
   PromptTemplateBlockProperties:
     properties:
-      chat_role: optional<ChatMessageRole>
+      chat_role: optional<nullable<ChatMessageRole>>
       chat_message_unterminated:
         type: optional<boolean>
         default: false
-      template: optional<string>
-      template_type: optional<ContentType>
-      function_name: optional<string>
-      function_description: optional<string>
-      function_parameters: optional<map<string, unknown>>
-      blocks: optional<list<PromptTemplateBlock>>
+      template: optional<nullable<string>>
+      template_type: optional<nullable<ContentType>>
+      function_name: optional<nullable<string>>
+      function_description: optional<nullable<string>>
+      function_parameters: optional<nullable<map<string, unknown>>>
+      blocks: optional<nullable<list<PromptTemplateBlock>>>
     source:
       openapi: ../openapi.yml
   PromptTemplateBlockPropertiesRequest:
     properties:
-      chat_role: optional<ChatMessageRole>
+      chat_role: optional<nullable<ChatMessageRole>>
       chat_message_unterminated:
         type: optional<boolean>
         default: false
-      template: optional<string>
-      template_type: optional<ContentType>
+      template: optional<nullable<string>>
+      template_type: optional<nullable<ContentType>>
       function_name:
-        type: optional<string>
+        type: optional<nullable<string>>
         validation:
           minLength: 1
       function_description:
-        type: optional<string>
+        type: optional<nullable<string>>
         validation:
           minLength: 1
-      function_parameters: optional<map<string, unknown>>
-      blocks: optional<list<PromptTemplateBlockRequest>>
+      function_parameters: optional<nullable<map<string, unknown>>>
+      blocks: optional<nullable<list<PromptTemplateBlockRequest>>>
     source:
       openapi: ../openapi.yml
   PromptTemplateBlockRequest:
@@ -4021,12 +4021,12 @@ types:
     properties:
       temperature: double
       max_tokens: integer
-      stop: optional<list<string>>
+      stop: nullable<list<string>>
       top_p: double
       top_k: optional<double>
       frequency_penalty: double
       presence_penalty: double
-      logit_bias: optional<map<string, optional<double>>>
+      logit_bias: optional<nullable<map<string, nullable<double>>>>
     source:
       openapi: ../openapi.yml
   RegisterPromptPrompt:
@@ -4111,12 +4111,12 @@ types:
       openapi: ../openapi.yml
   SandboxMetricInputParams:
     properties:
-      params: optional<EvaluationParams>
+      params: optional<nullable<EvaluationParams>>
     source:
       openapi: ../openapi.yml
   SandboxMetricInputParamsRequest:
     properties:
-      params: optional<EvaluationParamsRequest>
+      params: optional<nullable<EvaluationParamsRequest>>
     source:
       openapi: ../openapi.yml
   SandboxNodeResult:
@@ -4127,8 +4127,8 @@ types:
   SandboxNodeResultData:
     properties:
       output_id: string
-      text: optional<string>
-      delta: optional<string>
+      text: optional<nullable<string>>
+      delta: optional<nullable<string>>
     source:
       openapi: ../openapi.yml
   SandboxScenario:
@@ -4148,7 +4148,7 @@ types:
   ScenarioInput:
     properties:
       key: string
-      type: optional<ScenarioInputTypeEnum>
+      type: optional<nullable<ScenarioInputTypeEnum>>
       value: optional<string>
       chat_history: optional<list<ChatMessage>>
     source:
@@ -4159,7 +4159,7 @@ types:
         type: string
         validation:
           minLength: 1
-      type: optional<ScenarioInputTypeEnum>
+      type: optional<nullable<ScenarioInputTypeEnum>>
       value: optional<string>
       chat_history: optional<list<ChatMessageRequest>>
     source:
@@ -4183,7 +4183,7 @@ types:
   SearchFiltersRequest:
     properties:
       external_ids:
-        type: optional<list<string>>
+        type: optional<nullable<list<string>>>
         docs: The document external IDs to filter by
     source:
       openapi: ../openapi.yml
@@ -4196,23 +4196,23 @@ types:
     properties:
       results_output_id: string
       results: list<map<string, unknown>>
-      text_output_id: optional<string>
-      text: optional<string>
+      text_output_id: optional<nullable<string>>
+      text: optional<nullable<string>>
     source:
       openapi: ../openapi.yml
   SearchRequestOptionsRequest:
     properties:
       limit:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: The maximum number of results to return.
       weights:
-        type: optional<SearchWeightsRequest>
+        type: optional<nullable<SearchWeightsRequest>>
         docs: The weights to use for the search. Must add up to 1.0.
       result_merging:
-        type: optional<SearchResultMergingRequest>
+        type: optional<nullable<SearchResultMergingRequest>>
         docs: The configuration for merging results.
       filters:
-        type: optional<SearchFiltersRequest>
+        type: optional<nullable<SearchFiltersRequest>>
         docs: The filters to apply to the search.
     source:
       openapi: ../openapi.yml
@@ -4265,7 +4265,7 @@ types:
           format: uuid
         access: read-only
       external_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The external ID that was originally provided when uploading the
           document.
@@ -4296,7 +4296,7 @@ types:
 
           * `FAILED` - Failed
       processing_failure_reason:
-        type: optional<ProcessingFailureReasonEnum>
+        type: optional<nullable<ProcessingFailureReasonEnum>>
         docs: >-
           An enum value representing why the document could not be processed. Is
           null unless processing_state is FAILED.
@@ -4323,14 +4323,14 @@ types:
   SubmitCompletionActualRequest:
     properties:
       id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The Vellum-generated ID of a previously generated completion. Must
           provide either this or external_id.
         validation:
           minLength: 1
       external_id:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The external ID that was originally provided when generating the
           completion that you'd now like to submit actuals for. Must provide
@@ -4338,10 +4338,10 @@ types:
         validation:
           minLength: 1
       text:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Text representing what the completion _should_ have been.
       quality:
-        type: optional<double>
+        type: optional<nullable<double>>
         docs: >-
           A number between 0 and 1 representing the quality of the completion. 0
           is the worst, 1 is the best.
@@ -4349,7 +4349,7 @@ types:
           min: 0
           max: 1
       timestamp:
-        type: optional<datetime>
+        type: optional<nullable<datetime>>
         docs: >-
           Optionally provide the timestamp representing when this feedback was
           collected. Used for reporting purposes.
@@ -4411,7 +4411,7 @@ types:
           The id of the test case to update. If none is provided, an id will be
           generated and a new test case will be appended.
       label:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: A human-friendly label for the test case.
       input_values:
         type: map<string, unknown>
@@ -4455,14 +4455,14 @@ types:
   WorkflowExecutionNodeResultEvent:
     properties:
       run_id: string
-      external_id: optional<string>
+      external_id: optional<nullable<string>>
       data: WorkflowNodeResultEvent
     source:
       openapi: ../openapi.yml
   WorkflowExecutionWorkflowResultEvent:
     properties:
       run_id: string
-      external_id: optional<string>
+      external_id: optional<nullable<string>>
       data: WorkflowResultEvent
     source:
       openapi: ../openapi.yml
@@ -4484,9 +4484,9 @@ types:
       node_id: string
       node_result_id: string
       state: WorkflowNodeResultEventState
-      ts: optional<datetime>
-      data: optional<WorkflowNodeResultData>
-      error: optional<WorkflowEventError>
+      ts: optional<nullable<datetime>>
+      data: nullable<WorkflowNodeResultData>
+      error: optional<nullable<WorkflowEventError>>
     source:
       openapi: ../openapi.yml
   WorkflowNodeResultEventState:
@@ -4546,8 +4546,8 @@ types:
       id: string
       state: WorkflowNodeResultEventState
       ts: datetime
-      output: optional<WorkflowResultEventOutputData>
-      error: optional<WorkflowEventError>
+      output: nullable<WorkflowResultEventOutputData>
+      error: optional<nullable<WorkflowEventError>>
     source:
       openapi: ../openapi.yml
   WorkflowResultEventOutputData:
@@ -4565,12 +4565,12 @@ types:
       state: WorkflowNodeResultEventState
       node_id: string
       delta:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The newly output string value. Only relevant for string outputs with a
           state of STREAMING.
         access: read-only
-      value: optional<list<ChatMessage>>
+      value: optional<nullable<list<ChatMessage>>>
     source:
       openapi: ../openapi.yml
   WorkflowResultEventOutputDataJson:
@@ -4579,12 +4579,12 @@ types:
       state: WorkflowNodeResultEventState
       node_id: string
       delta:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The newly output string value. Only relevant for string outputs with a
           state of STREAMING.
         access: read-only
-      value: optional<map<string, unknown>>
+      value: nullable<map<string, unknown>>
     source:
       openapi: ../openapi.yml
   WorkflowResultEventOutputDataString:
@@ -4593,12 +4593,12 @@ types:
       state: WorkflowNodeResultEventState
       node_id: string
       delta:
-        type: optional<string>
+        type: nullable<string>
         docs: >-
           The newly output string value, meant to be concatenated with all
           previous. Will be non-null for events of state STREAMING.
       value:
-        type: optional<string>
+        type: nullable<string>
         docs: >-
           The entire string value. Will be non-null for events of state
           FULFILLED.
@@ -4660,10 +4660,13 @@ Used to retrieve a deployment given its ID or name.
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/deployments/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "Either the Deployment's ID or its unique name",
-                  "type": "string",
+              "request": {
+                "name": "DeploymentsRetrieveRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "Either the Deployment's ID or its unique name",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -4701,10 +4704,12 @@ service:
         Used to retrieve a deployment given its ID or name.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: Either the Deployment's ID or its unique name
+      request:
+        name: DeploymentsRetrieveRequest
+        path-parameters:
+          id:
+            type: string
+            docs: Either the Deployment's ID or its unique name
       response:
         docs: ''
         type: root.DeploymentRead
@@ -5099,12 +5104,6 @@ Used to list documents. Optionally filter on supported fields.
 ",
               "examples": [
                 {
-                  "query-parameters": {
-                    "document_index_id": "document_index_id",
-                    "limit": 1,
-                    "offset": 1,
-                    "ordering": "ordering",
-                  },
                   "response": {
                     "body": {
                       "count": 123,
@@ -5206,7 +5205,7 @@ Upload a document to be indexed and used for search.
                   "properties": {
                     "add_to_index_names": {
                       "docs": "Optionally include the names of all indexes that you'd like this document to be included in",
-                      "type": "optional<list<string>>",
+                      "type": "optional<nullable<list<string>>>",
                     },
                     "contents": {
                       "docs": "The file contents of the document.",
@@ -5214,7 +5213,7 @@ Upload a document to be indexed and used for search.
                     },
                     "external_id": {
                       "docs": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                       "validation": {
                         "format": undefined,
                         "maxLength": undefined,
@@ -5224,7 +5223,7 @@ Upload a document to be indexed and used for search.
                     },
                     "keywords": {
                       "docs": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
-                      "type": "optional<list<string>>",
+                      "type": "optional<nullable<list<string>>>",
                     },
                     "label": {
                       "docs": "A human-friendly name for this document. Typically the filename.",
@@ -5305,12 +5304,7 @@ service:
         type: root.PaginatedSlimDocumentList
         status-code: 200
       examples:
-        - query-parameters:
-            document_index_id: document_index_id
-            limit: 1
-            offset: 1
-            ordering: ordering
-          response:
+        - response:
             body:
               count: 123
               next: http://api.example.org/accounts/?offset=400&limit=100
@@ -5348,12 +5342,12 @@ service:
         body:
           properties:
             add_to_index_names:
-              type: optional<list<string>>
+              type: optional<nullable<list<string>>>
               docs: >-
                 Optionally include the names of all indexes that you'd like this
                 document to be included in
             external_id:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: >-
                 Optionally include an external ID for this document. This is
                 useful if you want to re-upload the same document later when its
@@ -5369,7 +5363,7 @@ service:
               type: file
               docs: The file contents of the document.
             keywords:
-              type: optional<list<string>>
+              type: optional<nullable<list<string>>>
               docs: >-
                 Optionally include a list of keywords that'll be associated with
                 this document. Used when performing keyword searches.
@@ -5435,12 +5429,6 @@ Compiles the prompt backing the model version using the provided input values.",
               "method": "POST",
               "pagination": undefined,
               "path": "/v1/model-versions/{id}/compile-prompt",
-              "path-parameters": {
-                "id": {
-                  "docs": "A UUID string identifying this model version.",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -5453,7 +5441,12 @@ Compiles the prompt backing the model version using the provided input values.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "ModelVersionCompilePromptRequestRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": {
+                    "docs": "A UUID string identifying this model version.",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -5536,10 +5529,13 @@ Used to retrieve a model version given its ID.
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/model-versions/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "A UUID string identifying this model version.",
-                  "type": "string",
+              "request": {
+                "name": "ModelVersionsRetrieveRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "A UUID string identifying this model version.",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -5577,10 +5573,12 @@ service:
         Used to retrieve a model version given its ID.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: A UUID string identifying this model version.
+      request:
+        name: ModelVersionsRetrieveRequest
+        path-parameters:
+          id:
+            type: string
+            docs: A UUID string identifying this model version.
       response:
         docs: ''
         type: root.ModelVersionRead
@@ -5638,12 +5636,12 @@ service:
         values.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: A UUID string identifying this model version.
       request:
         name: ModelVersionCompilePromptRequestRequest
+        path-parameters:
+          id:
+            type: string
+            docs: A UUID string identifying this model version.
         body:
           properties:
             input_values:
@@ -5990,14 +5988,17 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v1/sandboxes/{id}/scenarios/{scenario_id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "A UUID string identifying this sandbox.",
-                  "type": "string",
-                },
-                "scenario_id": {
-                  "docs": "An id identifying the scenario that you'd like to delete",
-                  "type": "string",
+              "request": {
+                "name": "DeleteSandboxScenarioRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "A UUID string identifying this sandbox.",
+                    "type": "string",
+                  },
+                  "scenario_id": {
+                    "docs": "An id identifying the scenario that you'd like to delete",
+                    "type": "string",
+                  },
                 },
               },
               "source": {
@@ -6118,12 +6119,6 @@ or overwritten with default values.",
               "method": "POST",
               "pagination": undefined,
               "path": "/v1/sandboxes/{id}/scenarios",
-              "path-parameters": {
-                "id": {
-                  "docs": "A UUID string identifying this sandbox.",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -6151,7 +6146,12 @@ or overwritten with default values.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpsertSandboxScenarioRequestRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": {
+                    "docs": "A UUID string identifying this sandbox.",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -6201,12 +6201,12 @@ service:
         or overwritten with default values.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: A UUID string identifying this sandbox.
       request:
         name: UpsertSandboxScenarioRequestRequest
+        path-parameters:
+          id:
+            type: string
+            docs: A UUID string identifying this sandbox.
         body:
           properties:
             label:
@@ -6296,13 +6296,15 @@ service:
         scenario id.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: A UUID string identifying this sandbox.
-        scenario_id:
-          type: string
-          docs: An id identifying the scenario that you'd like to delete
+      request:
+        name: DeleteSandboxScenarioRequest
+        path-parameters:
+          id:
+            type: string
+            docs: A UUID string identifying this sandbox.
+          scenario_id:
+            type: string
+            docs: An id identifying the scenario that you'd like to delete
       examples:
         - path-parameters:
             id: id
@@ -6341,14 +6343,17 @@ Deletes an existing test case for a test suite, keying off of the test case id."
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v1/test-suites/{id}/test-cases/{test_case_id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "A UUID string identifying this test suite.",
-                  "type": "string",
-                },
-                "test_case_id": {
-                  "docs": "An id identifying the test case that you'd like to delete",
-                  "type": "string",
+              "request": {
+                "name": "DeleteTestSuiteTestCaseRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "A UUID string identifying this test suite.",
+                    "type": "string",
+                  },
+                  "test_case_id": {
+                    "docs": "An id identifying the test case that you'd like to delete",
+                    "type": "string",
+                  },
                 },
               },
               "source": {
@@ -6398,12 +6403,6 @@ or overwritten with default values.",
               "method": "POST",
               "pagination": undefined,
               "path": "/v1/test-suites/{id}/test-cases",
-              "path-parameters": {
-                "id": {
-                  "docs": "A UUID string identifying this test suite.",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -6417,7 +6416,7 @@ or overwritten with default values.",
                     },
                     "label": {
                       "docs": "A human-friendly label for the test case.",
-                      "type": "optional<string>",
+                      "type": "optional<nullable<string>>",
                     },
                     "test_case_id": {
                       "docs": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended.",
@@ -6434,7 +6433,12 @@ or overwritten with default values.",
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "TestSuiteTestCaseRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": {
+                    "docs": "A UUID string identifying this test suite.",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -6484,12 +6488,12 @@ service:
         or overwritten with default values.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: A UUID string identifying this test suite.
       request:
         name: TestSuiteTestCaseRequest
+        path-parameters:
+          id:
+            type: string
+            docs: A UUID string identifying this test suite.
         body:
           properties:
             test_case_id:
@@ -6500,7 +6504,7 @@ service:
               validation:
                 minLength: 1
             label:
-              type: optional<string>
+              type: optional<nullable<string>>
               docs: A human-friendly label for the test case.
             input_values:
               type: map<string, unknown>
@@ -6546,13 +6550,15 @@ service:
         case id.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: A UUID string identifying this test suite.
-        test_case_id:
-          type: string
-          docs: An id identifying the test case that you'd like to delete
+      request:
+        name: DeleteTestSuiteTestCaseRequest
+        path-parameters:
+          id:
+            type: string
+            docs: A UUID string identifying this test suite.
+          test_case_id:
+            type: string
+            docs: An id identifying the test case that you'd like to delete
       examples:
         - path-parameters:
             id: id

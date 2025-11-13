@@ -1527,6 +1527,10 @@ client.problem().createProblem(
                 )
                 .build()
         )
+        .outputType(
+            VariableType.integerType()
+        )
+        .methodName("methodName")
         .files(
             new HashMap<Language, ProblemFiles>() {{
                 put(Language.JAVA, ProblemFiles
@@ -1573,9 +1577,6 @@ client.problem().createProblem(
                     .build()
             )
         )
-        .outputType(
-            VariableType.integerType()
-        )
         .testcases(
             Arrays.asList(
                 TestCaseWithExpectedResult
@@ -1616,7 +1617,6 @@ client.problem().createProblem(
                     .build()
             )
         )
-        .methodName("methodName")
         .build()
 );
 ```
@@ -1688,6 +1688,10 @@ client.problem().updateProblem(
                 )
                 .build()
         )
+        .outputType(
+            VariableType.integerType()
+        )
+        .methodName("methodName")
         .files(
             new HashMap<Language, ProblemFiles>() {{
                 put(Language.JAVA, ProblemFiles
@@ -1734,9 +1738,6 @@ client.problem().updateProblem(
                     .build()
             )
         )
-        .outputType(
-            VariableType.integerType()
-        )
         .testcases(
             Arrays.asList(
                 TestCaseWithExpectedResult
@@ -1777,7 +1778,6 @@ client.problem().updateProblem(
                     .build()
             )
         )
-        .methodName("methodName")
         .build()
 );
 ```
@@ -1898,6 +1898,10 @@ Returns default starter files for problem
 client.problem().getDefaultStarterFiles(
     GetDefaultStarterFilesRequest
         .builder()
+        .outputType(
+            VariableType.integerType()
+        )
+        .methodName("methodName")
         .inputParams(
             Arrays.asList(
                 VariableTypeAndName
@@ -1916,10 +1920,6 @@ client.problem().getDefaultStarterFiles(
                     .build()
             )
         )
-        .outputType(
-            VariableType.integerType()
-        )
-        .methodName("methodName")
         .build()
 );
 ```

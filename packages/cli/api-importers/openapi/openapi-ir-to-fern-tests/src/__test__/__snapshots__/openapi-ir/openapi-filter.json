@@ -152,7 +152,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -437,15 +437,7 @@
           "name": "Successful",
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [
-            {
-              "name": "Intercom-Version",
-              "value": {
-                "value": "1.0",
-                "type": "enum"
-              }
-            }
-          ],
+          "headers": [],
           "request": {
             "properties": {
               "name": {
@@ -728,15 +720,7 @@
           "name": "Bad Request",
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [
-            {
-              "name": "Intercom-Version",
-              "value": {
-                "value": "1.0",
-                "type": "enum"
-              }
-            }
-          ],
+          "headers": [],
           "request": {
             "properties": {},
             "type": "object"
@@ -2044,7 +2028,6 @@
       },
       "admin": {
         "generatedName": "Admin",
-        "nameOverride": "Admin",
         "title": "Admin",
         "description": "Admins are teammate accounts that have access to a workspace.",
         "value": {
@@ -2310,7 +2293,6 @@
           "allOfPropertyConflicts": [],
           "description": "Admins are teammate accounts that have access to a workspace.",
           "generatedName": "Admin",
-          "nameOverride": "Admin",
           "title": "Admin",
           "groupName": [
             "Admins"
@@ -2387,7 +2369,6 @@
         "allOfPropertyConflicts": [],
         "description": "A list of admins associated with a given workspace.",
         "generatedName": "AdminList",
-        "nameOverride": "Admins",
         "title": "Admins",
         "groupName": [],
         "additionalProperties": false,
@@ -2874,7 +2855,6 @@
       },
       "admin_with_app": {
         "generatedName": "AdminWithApp",
-        "nameOverride": "Admin",
         "title": "Admin",
         "description": "Admins are the teammate accounts that have access to a workspace",
         "value": {
@@ -3219,7 +3199,6 @@
           "allOfPropertyConflicts": [],
           "description": "Admins are the teammate accounts that have access to a workspace",
           "generatedName": "AdminWithApp",
-          "nameOverride": "Admin",
           "title": "Admin",
           "groupName": [],
           "additionalProperties": false,
@@ -3496,7 +3475,6 @@
       },
       "app": {
         "generatedName": "App",
-        "nameOverride": "App",
         "title": "App",
         "description": "App is a workspace on Intercom",
         "value": {
@@ -3661,7 +3639,6 @@
           "allOfPropertyConflicts": [],
           "description": "App is a workspace on Intercom",
           "generatedName": "App",
-          "nameOverride": "App",
           "title": "App",
           "groupName": [],
           "additionalProperties": false,
@@ -3716,7 +3693,6 @@
         "allOfPropertyConflicts": [],
         "description": "The Articles API is a central place to gather all information and take actions on your articles. Articles can live within collections and sections, or alternatively they can stand alone.",
         "generatedName": "Article",
-        "nameOverride": "Article",
         "title": "Article",
         "groupName": [
           "Articles"
@@ -4069,7 +4045,6 @@
         "allOfPropertyConflicts": [],
         "description": "This will return a list of articles for the App.",
         "generatedName": "ArticleList",
-        "nameOverride": "Articles",
         "title": "Articles",
         "groupName": [],
         "additionalProperties": false,
@@ -4490,7 +4465,6 @@
         "allOfPropertyConflicts": [],
         "description": "The data returned about your articles when you list them.",
         "generatedName": "ArticleListItem",
-        "nameOverride": "Articles",
         "title": "Articles",
         "groupName": [
           "Articles"
@@ -6387,7 +6361,6 @@
                       ],
                       "allOfPropertyConflicts": [],
                       "generatedName": "AttachContactToConversationRequestCustomerCustomer",
-                      "nameOverride": "Email",
                       "title": "Email",
                       "groupName": [],
                       "additionalProperties": false,
@@ -6833,7 +6806,6 @@
         "allOfPropertyConflicts": [],
         "description": "Collections are top level containers for Articles within the Help Center.",
         "generatedName": "Collection",
-        "nameOverride": "Collection",
         "title": "Collection",
         "groupName": [
           "Help Center"
@@ -6948,7 +6920,6 @@
         "allOfPropertyConflicts": [],
         "description": "This will return a list of Collections for the App.",
         "generatedName": "CollectionList",
-        "nameOverride": "Collections",
         "title": "Collections",
         "groupName": [],
         "additionalProperties": false,
@@ -7563,7 +7534,6 @@
         "allOfPropertyConflicts": [],
         "description": "Companies allow you to represent organizations using your product. Each company will have its own description and be associated with contacts. You can fetch, create, update and list companies.",
         "generatedName": "Company",
-        "nameOverride": "Company",
         "title": "Company",
         "groupName": [
           "Companies"
@@ -7855,7 +7825,6 @@
         "allOfPropertyConflicts": [],
         "description": "This will return a list of companies for the App.",
         "generatedName": "CompanyList",
-        "nameOverride": "Companies",
         "title": "Companies",
         "groupName": [],
         "additionalProperties": false,
@@ -9263,7 +9232,6 @@
         "allOfPropertyConflicts": [],
         "description": "Contact are the objects that represent your leads and users in Intercom.",
         "generatedName": "Contact",
-        "nameOverride": "Contact",
         "title": "Contact",
         "groupName": [
           "Contacts"
@@ -10336,7 +10304,6 @@
         "allOfPropertyConflicts": [],
         "description": "Payload of the request to reply on behalf of a contact using their `email`",
         "generatedName": "ContactReplyEmailRequest",
-        "nameOverride": "Email",
         "title": "Email",
         "groupName": [],
         "additionalProperties": false,
@@ -10446,7 +10413,6 @@
         "allOfPropertyConflicts": [],
         "description": "Payload of the request to reply on behalf of a contact using their `email`",
         "generatedName": "ContactReplyTicketEmailRequest",
-        "nameOverride": "Email",
         "title": "Email",
         "groupName": [],
         "additionalProperties": false,
@@ -10704,7 +10670,6 @@
         "allOfPropertyConflicts": [],
         "description": "A list of segments objects attached to a specific contact.",
         "generatedName": "ContactSegments",
-        "nameOverride": "Segments",
         "title": "Segments",
         "groupName": [],
         "additionalProperties": false,
@@ -11957,7 +11922,6 @@
         "allOfPropertyConflicts": [],
         "description": "Conversations are how you can communicate with users in Intercom. They are created when a contact replies to an outbound message, or when one admin directly sends a message to a single contact.",
         "generatedName": "Conversation",
-        "nameOverride": "Conversation",
         "title": "Conversation",
         "groupName": [
           "Conversations"
@@ -12107,7 +12071,6 @@
         "allOfPropertyConflicts": [],
         "description": "The list of contacts (users or leads) involved in this conversation. This will only contain one customer unless more were added via the group conversation feature.",
         "generatedName": "ConversationContacts",
-        "nameOverride": "Contacts",
         "title": "Contacts",
         "groupName": [],
         "additionalProperties": false,
@@ -15055,7 +15018,6 @@
                       ],
                       "allOfPropertyConflicts": [],
                       "generatedName": "CreateTicketRequestContactsItemId",
-                      "nameOverride": "ID",
                       "title": "ID",
                       "groupName": [],
                       "additionalProperties": false,
@@ -15116,7 +15078,6 @@
                       ],
                       "allOfPropertyConflicts": [],
                       "generatedName": "CreateTicketRequestContactsItemEmail",
-                      "nameOverride": "Email",
                       "title": "Email",
                       "groupName": [],
                       "additionalProperties": false,
@@ -16029,7 +15990,6 @@
                 ],
                 "allOfPropertyConflicts": [],
                 "generatedName": "CustomerRequestEmail",
-                "nameOverride": "Email",
                 "title": "Email",
                 "groupName": [],
                 "additionalProperties": false,
@@ -18354,7 +18314,6 @@
         "allOfPropertyConflicts": [],
         "description": "The API will return an Error List for a failed request, which will contain one or more Error objects.",
         "generatedName": "Error",
-        "nameOverride": "Error",
         "title": "Error",
         "groupName": [],
         "additionalProperties": false,
@@ -18523,7 +18482,6 @@
         "allOfPropertyConflicts": [],
         "description": "The value describing a file upload set for a custom attribute",
         "generatedName": "FileAttribute",
-        "nameOverride": "File",
         "title": "File",
         "groupName": [],
         "additionalProperties": false,
@@ -20426,7 +20384,6 @@
         "allOfPropertyConflicts": [],
         "description": "Message are how you reach out to contacts in Intercom. They are created when an admin sends an outbound message to a contact.",
         "generatedName": "Message",
-        "nameOverride": "Message",
         "title": "Message",
         "groupName": [
           "Messages"
@@ -21202,7 +21159,6 @@
         "allOfPropertyConflicts": [],
         "description": "A newsfeed is a collection of news items, targeted to a specific audience.\n\nNewsfeeds currently cannot be edited through the API, please refer to [this article](https://www.intercom.com/help/en/articles/6362267-getting-started-with-news) to set up your newsfeeds in Intercom.\n",
         "generatedName": "Newsfeed",
-        "nameOverride": "Newsfeed",
         "title": "Newsfeed",
         "groupName": [
           "News"
@@ -21473,7 +21429,6 @@
         "allOfPropertyConflicts": [],
         "description": "Notes allow you to annotate and comment on your contacts.",
         "generatedName": "Note",
-        "nameOverride": "Note",
         "title": "Note",
         "groupName": [
           "Notes"
@@ -22323,7 +22278,6 @@
         "allOfPropertyConflicts": [],
         "description": "reference to another object",
         "generatedName": "Reference",
-        "nameOverride": "Reference",
         "title": "Reference",
         "groupName": [],
         "additionalProperties": false,
@@ -22623,7 +22577,6 @@
         "allOfPropertyConflicts": [],
         "description": "A segment is a group of your contacts defined by the rules that you set.",
         "generatedName": "Segment",
-        "nameOverride": "Segment",
         "title": "Segment",
         "groupName": [
           "Segments"
@@ -23595,7 +23548,6 @@
         "allOfPropertyConflicts": [],
         "description": "A tag allows you to label your contacts, companies, and conversations and list them using that tag.",
         "generatedName": "Tag",
-        "nameOverride": "Tag",
         "title": "Tag",
         "groupName": [
           "Tags"
@@ -23765,7 +23717,6 @@
         "allOfPropertyConflicts": [],
         "description": "A list of tags objects in the workspace.",
         "generatedName": "TagList",
-        "nameOverride": "Tags",
         "title": "Tags",
         "groupName": [],
         "additionalProperties": false,
@@ -23910,7 +23861,6 @@
         "allOfPropertyConflicts": [],
         "description": "A list of tags objects associated with a conversation",
         "generatedName": "Tags",
-        "nameOverride": "Tags",
         "title": "Tags",
         "groupName": [],
         "additionalProperties": false,
@@ -24044,7 +23994,6 @@
         "allOfPropertyConflicts": [],
         "description": "Teams are groups of admins in Intercom.",
         "generatedName": "Team",
-        "nameOverride": "Team",
         "title": "Team",
         "groupName": [
           "Teams"
@@ -24210,7 +24159,6 @@
       },
       "ticket": {
         "generatedName": "Ticket",
-        "nameOverride": "Ticket",
         "title": "Ticket",
         "description": "Tickets are how you track requests from your users.",
         "value": {
@@ -24674,7 +24622,6 @@
           "allOfPropertyConflicts": [],
           "description": "Tickets are how you track requests from your users.",
           "generatedName": "Ticket",
-          "nameOverride": "Ticket",
           "title": "Ticket",
           "groupName": [
             "Tickets"
@@ -24747,7 +24694,6 @@
         "allOfPropertyConflicts": [],
         "description": "The list of contacts affected by a ticket.",
         "generatedName": "TicketContacts",
-        "nameOverride": "Contacts",
         "title": "Contacts",
         "groupName": [
           "Tickets"
@@ -26751,7 +26697,6 @@
         "allOfPropertyConflicts": [],
         "description": "A translation object contains the localised details of a subscription type.",
         "generatedName": "Translation",
-        "nameOverride": "Translation",
         "title": "Translation",
         "groupName": [],
         "additionalProperties": false,
@@ -28330,7 +28275,6 @@
       },
       "visitor": {
         "generatedName": "Visitor",
-        "nameOverride": "Visitor",
         "title": "Visitor",
         "description": "Visitors are useful for representing anonymous people that have not yet been identified. They usually represent website visitors. Visitors are not visible in Intercom platform. The Visitors resource provides methods to fetch, update, convert and delete.",
         "value": {
@@ -29650,7 +29594,6 @@
           "allOfPropertyConflicts": [],
           "description": "Visitors are useful for representing anonymous people that have not yet been identified. They usually represent website visitors. Visitors are not visible in Intercom platform. The Visitors resource provides methods to fetch, update, convert and delete.",
           "generatedName": "Visitor",
-          "nameOverride": "Visitor",
           "title": "Visitor",
           "groupName": [],
           "additionalProperties": false,

@@ -29,9 +29,9 @@
       "operationId": "update-status",
       "tags": [],
       "headers": [],
-      "generatedPayloadName": "StatusUpdatePayload",
+      "generatedPayloadName": "UpdateStatusPayload",
       "payload": {
-        "generatedName": "StatusUpdatePayload",
+        "generatedName": "UpdateStatusPayload",
         "schema": "Update",
         "source": {
           "file": "../openapi.yml",
@@ -72,21 +72,21 @@
       "operationId": "update-status-inlined",
       "tags": [],
       "headers": [],
-      "generatedPayloadName": "StatusUpdateInlinedPayload",
+      "generatedPayloadName": "UpdateInlinedStatusPayload",
       "payload": {
         "allOf": [],
         "properties": [
           {
             "conflict": {},
-            "generatedName": "statusUpdateInlinedPayloadStreamInlined",
+            "generatedName": "updateInlinedStatusPayloadStreamInlined",
             "key": "stream-inlined",
             "schema": {
-              "generatedName": "StatusUpdateInlinedPayloadStreamInlined",
+              "generatedName": "UpdateInlinedStatusPayloadStreamInlined",
               "value": {
                 "schema": {
                   "type": "boolean"
                 },
-                "generatedName": "StatusUpdateInlinedPayloadStreamInlined",
+                "generatedName": "UpdateInlinedStatusPayloadStreamInlined",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -97,15 +97,15 @@
           },
           {
             "conflict": {},
-            "generatedName": "statusUpdateInlinedPayloadMessageInlined",
+            "generatedName": "updateInlinedStatusPayloadMessageInlined",
             "key": "message-inlined",
             "schema": {
-              "generatedName": "StatusUpdateInlinedPayloadMessageInlined",
+              "generatedName": "UpdateInlinedStatusPayloadMessageInlined",
               "value": {
                 "schema": {
                   "type": "string"
                 },
-                "generatedName": "StatusUpdateInlinedPayloadMessageInlined",
+                "generatedName": "UpdateInlinedStatusPayloadMessageInlined",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -116,7 +116,7 @@
           }
         ],
         "allOfPropertyConflicts": [],
-        "generatedName": "StatusUpdateInlinedPayload",
+        "generatedName": "UpdateInlinedStatusPayload",
         "groupName": [],
         "additionalProperties": false,
         "source": {

@@ -22,11 +22,11 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "UserGetRequest",
+      "generatedRequestName": "GetUserRequest",
       "response": {
         "description": "Success",
         "schema": {
-          "generatedName": "UserGetResponse",
+          "generatedName": "GetUserResponse",
           "schema": "User",
           "source": {
             "file": "../openapi.yml",

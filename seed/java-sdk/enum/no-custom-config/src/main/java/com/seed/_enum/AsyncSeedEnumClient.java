@@ -7,6 +7,7 @@ import com.seed._enum.core.ClientOptions;
 import com.seed._enum.core.Suppliers;
 import com.seed._enum.resources.headers.AsyncHeadersClient;
 import com.seed._enum.resources.inlinedrequest.AsyncInlinedRequestClient;
+import com.seed._enum.resources.multipartform.AsyncMultipartFormClient;
 import com.seed._enum.resources.pathparam.AsyncPathParamClient;
 import com.seed._enum.resources.queryparam.AsyncQueryParamClient;
 import java.util.function.Supplier;
@@ -18,6 +19,8 @@ public class AsyncSeedEnumClient {
 
     protected final Supplier<AsyncInlinedRequestClient> inlinedRequestClient;
 
+    protected final Supplier<AsyncMultipartFormClient> multipartFormClient;
+
     protected final Supplier<AsyncPathParamClient> pathParamClient;
 
     protected final Supplier<AsyncQueryParamClient> queryParamClient;
@@ -26,6 +29,7 @@ public class AsyncSeedEnumClient {
         this.clientOptions = clientOptions;
         this.headersClient = Suppliers.memoize(() -> new AsyncHeadersClient(clientOptions));
         this.inlinedRequestClient = Suppliers.memoize(() -> new AsyncInlinedRequestClient(clientOptions));
+        this.multipartFormClient = Suppliers.memoize(() -> new AsyncMultipartFormClient(clientOptions));
         this.pathParamClient = Suppliers.memoize(() -> new AsyncPathParamClient(clientOptions));
         this.queryParamClient = Suppliers.memoize(() -> new AsyncQueryParamClient(clientOptions));
     }
@@ -36,6 +40,10 @@ public class AsyncSeedEnumClient {
 
     public AsyncInlinedRequestClient inlinedRequest() {
         return this.inlinedRequestClient.get();
+    }
+
+    public AsyncMultipartFormClient multipartForm() {
+        return this.multipartFormClient.get();
     }
 
     public AsyncPathParamClient pathParam() {
