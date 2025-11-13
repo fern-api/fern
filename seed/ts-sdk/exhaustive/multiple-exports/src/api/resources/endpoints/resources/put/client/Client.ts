@@ -17,7 +17,7 @@ export class PutClient {
     protected readonly _options: PutClient.Options;
 
     constructor(_options: PutClient.Options) {
-        this._options = normalizeClientOptions(_options, "@fern/exhaustive", "0.0.1");
+        this._options = normalizeClientOptions(_options);
     }
 
     /**

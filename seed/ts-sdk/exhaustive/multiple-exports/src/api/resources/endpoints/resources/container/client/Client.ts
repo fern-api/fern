@@ -17,7 +17,7 @@ export class ContainerClient {
     protected readonly _options: ContainerClient.Options;
 
     constructor(_options: ContainerClient.Options) {
-        this._options = normalizeClientOptions(_options, "@fern/exhaustive", "0.0.1");
+        this._options = normalizeClientOptions(_options);
     }
 
     /**

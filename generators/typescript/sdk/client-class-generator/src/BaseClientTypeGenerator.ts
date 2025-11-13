@@ -30,11 +30,12 @@ export class BaseClientTypeGenerator {
             namedImports: ["mergeHeaders"]
         });
 
+        const sdkName = context.npmPackage?.packageName ?? "unknown";
+        const sdkVersion = context.npmPackage?.version ?? "0.0.0";
+
         const functionCode = `
 export function normalizeClientOptions<T extends BaseClientOptions>(
-    options: T,
-    sdkName: string,
-    sdkVersion: string
+    options: T
 ): T {
     const logging = ${getTextOfTsNode(
         context.coreUtilities.logging.createLogger._invoke(ts.factory.createIdentifier("options?.logging"))
@@ -43,9 +44,9 @@ export function normalizeClientOptions<T extends BaseClientOptions>(
     const headers = mergeHeaders(
         {
             "X-Fern-Language": "JavaScript",
-            "X-Fern-SDK-Name": sdkName,
-            "X-Fern-SDK-Version": sdkVersion,
-            "User-Agent": \`\${sdkName}/\${sdkVersion}\`,
+            "X-Fern-SDK-Name": "${sdkName}",
+            "X-Fern-SDK-Version": "${sdkVersion}",
+            "User-Agent": "${sdkName}/${sdkVersion}",
             "X-Fern-Runtime": ${getTextOfTsNode(context.coreUtilities.runtime.type._getReferenceTo())},
             "X-Fern-Runtime-Version": ${getTextOfTsNode(context.coreUtilities.runtime.version._getReferenceTo())},
         },

@@ -17,7 +17,7 @@ export class ParamsClient {
     protected readonly _options: ParamsClient.Options;
 
     constructor(_options: ParamsClient.Options) {
-        this._options = normalizeClientOptions(_options, "@fern/exhaustive", "0.0.1");
+        this._options = normalizeClientOptions(_options);
     }
 
     /**

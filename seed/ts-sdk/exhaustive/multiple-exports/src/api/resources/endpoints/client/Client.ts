@@ -31,7 +31,7 @@ export class EndpointsClient {
     protected _urls: UrlsClient | undefined;
 
     constructor(_options: EndpointsClient.Options) {
-        this._options = normalizeClientOptions(_options, "@fern/exhaustive", "0.0.1");
+        this._options = normalizeClientOptions(_options);
     }
 
     public get container(): ContainerClient {

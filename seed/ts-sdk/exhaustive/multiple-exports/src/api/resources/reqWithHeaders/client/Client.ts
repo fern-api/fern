@@ -17,7 +17,7 @@ export class ReqWithHeadersClient {
     protected readonly _options: ReqWithHeadersClient.Options;
 
     constructor(_options: ReqWithHeadersClient.Options) {
-        this._options = normalizeClientOptions(_options, "@fern/exhaustive", "0.0.1");
+        this._options = normalizeClientOptions(_options);
     }
 
     /**

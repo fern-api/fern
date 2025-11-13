@@ -17,7 +17,7 @@ export class NoReqBodyClient {
     protected readonly _options: NoReqBodyClient.Options;
 
     constructor(_options: NoReqBodyClient.Options) {
-        this._options = normalizeClientOptions(_options, "@fern/exhaustive", "0.0.1");
+        this._options = normalizeClientOptions(_options);
     }
 
     /**

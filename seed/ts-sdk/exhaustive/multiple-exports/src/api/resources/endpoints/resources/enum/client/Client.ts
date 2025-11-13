@@ -17,7 +17,7 @@ export class EnumClient {
     protected readonly _options: EnumClient.Options;
 
     constructor(_options: EnumClient.Options) {
-        this._options = normalizeClientOptions(_options, "@fern/exhaustive", "0.0.1");
+        this._options = normalizeClientOptions(_options);
     }
 
     /**

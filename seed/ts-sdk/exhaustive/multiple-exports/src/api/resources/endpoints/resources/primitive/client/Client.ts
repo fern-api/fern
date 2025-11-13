@@ -16,7 +16,7 @@ export class PrimitiveClient {
     protected readonly _options: PrimitiveClient.Options;
 
     constructor(_options: PrimitiveClient.Options) {
-        this._options = normalizeClientOptions(_options, "@fern/exhaustive", "0.0.1");
+        this._options = normalizeClientOptions(_options);
     }
 
     /**

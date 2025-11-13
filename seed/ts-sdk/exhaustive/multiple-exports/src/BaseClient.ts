@@ -33,19 +33,15 @@ export interface BaseRequestOptions {
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
 }
 
-export function normalizeClientOptions(
-    options: BaseClientOptions,
-    sdkName: string,
-    sdkVersion: string,
-): BaseClientOptions {
+export function normalizeClientOptions<T extends BaseClientOptions>(options: T): T {
     const logging = core.logging.createLogger(options?.logging);
 
     const headers = mergeHeaders(
         {
             "X-Fern-Language": "JavaScript",
-            "X-Fern-SDK-Name": sdkName,
-            "X-Fern-SDK-Version": sdkVersion,
-            "User-Agent": `${sdkName}/${sdkVersion}`,
+            "X-Fern-SDK-Name": "@fern/exhaustive",
+            "X-Fern-SDK-Version": "0.0.1",
+            "User-Agent": "@fern/exhaustive/0.0.1",
             "X-Fern-Runtime": core.RUNTIME.type,
             "X-Fern-Runtime-Version": core.RUNTIME.version,
         },
@@ -56,5 +52,5 @@ export function normalizeClientOptions(
         ...options,
         logging,
         headers,
-    };
+    } as T;
 }

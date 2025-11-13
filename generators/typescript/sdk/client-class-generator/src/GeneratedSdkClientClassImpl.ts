@@ -1108,7 +1108,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             context.importsManager.addImportFromRoot("BaseClient", {
                 namedImports: ["normalizeClientOptions"]
             });
-            return code`this._options = normalizeClientOptions(_options, "${this.npmPackage.packageName}", "${this.npmPackage.version}");`;
+            return code`this._options = normalizeClientOptions(_options);`;
         }
 
         return code`this._options = _options;`;
