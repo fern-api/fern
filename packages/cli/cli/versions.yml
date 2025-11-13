@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- chanelogEntry:
+- changelogEntry:
     - summary: |
         Match endpoints to AI overrides examples.
       type: feat
