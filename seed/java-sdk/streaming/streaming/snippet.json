@@ -1,0 +1,44 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "d8987107",
+            "id": {
+                "method": "POST",
+                "path": "/generate-stream",
+                "identifier_override": "endpoint_dummy.generate-stream"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.streaming.SeedStreamingClient;\nimport com.seed.streaming.resources.dummy.requests.GenerateStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStreamingClient client = SeedStreamingClient\n            .builder()\n            .build();\n\n        client.dummy().generateStream(\n            GenerateStreamRequest\n                .builder()\n                .numEvents(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.streaming.SeedStreamingClient;\nimport com.seed.streaming.resources.dummy.requests.GenerateStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStreamingClient client = SeedStreamingClient\n            .builder()\n            .build();\n\n        client.dummy().generateStream(\n            GenerateStreamRequest\n                .builder()\n                .numEvents(1)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "Default",
+            "id": {
+                "method": "POST",
+                "path": "/generate",
+                "identifier_override": "endpoint_dummy.generate"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.streaming.SeedStreamingClient;\nimport com.seed.streaming.resources.dummy.requests.Generateequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStreamingClient client = SeedStreamingClient\n            .builder()\n            .build();\n\n        client.dummy().generate(\n            Generateequest\n                .builder()\n                .numEvents(5)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.streaming.SeedStreamingClient;\nimport com.seed.streaming.resources.dummy.requests.Generateequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStreamingClient client = SeedStreamingClient\n            .builder()\n            .build();\n\n        client.dummy().generate(\n            Generateequest\n                .builder()\n                .numEvents(5)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "c7b5621c",
+            "id": {
+                "method": "POST",
+                "path": "/generate",
+                "identifier_override": "endpoint_dummy.generate"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.streaming.SeedStreamingClient;\nimport com.seed.streaming.resources.dummy.requests.Generateequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStreamingClient client = SeedStreamingClient\n            .builder()\n            .build();\n\n        client.dummy().generate(\n            Generateequest\n                .builder()\n                .numEvents(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.streaming.SeedStreamingClient;\nimport com.seed.streaming.resources.dummy.requests.Generateequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedStreamingClient client = SeedStreamingClient\n            .builder()\n            .build();\n\n        client.dummy().generate(\n            Generateequest\n                .builder()\n                .numEvents(1)\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}
