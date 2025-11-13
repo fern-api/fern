@@ -8,7 +8,6 @@ export declare namespace ExecutionEnvironment {
         irPath: AbsoluteFilePath;
         configPath: AbsoluteFilePath;
         outputPath: AbsoluteFilePath;
-        previewGitOutputPath?: AbsoluteFilePath;
         snippetPath?: AbsoluteFilePath;
         snippetTemplatePath?: AbsoluteFilePath;
         licenseFilePath?: AbsoluteFilePath;
