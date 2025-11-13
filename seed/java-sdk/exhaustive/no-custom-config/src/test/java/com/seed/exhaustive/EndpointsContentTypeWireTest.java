@@ -200,7 +200,7 @@ public class EndpointsContentTypeWireTest {
     }
 
     /**
-     * Compares two JsonNodes with numeric equivalence (149 == 149.0).
+     * Compares two JsonNodes with numeric equivalence.
      */
     private boolean jsonEquals(JsonNode a, JsonNode b) {
         if (a.equals(b)) return true;

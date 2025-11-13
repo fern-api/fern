@@ -1,3 +1,11 @@
+- version: 3.14.11
+  changelogEntry:
+    - summary: |
+        Fix jsonEquals helper method not being generated in wire tests. The generator now correctly calls closeTestClass() to emit the jsonEquals helper method that enables numeric equivalence comparison in wire test assertions.
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 61
+
 - version: 3.14.10
   changelogEntry:
     - summary: |
