@@ -1694,9 +1694,6 @@ export class SdkGenerator {
             }
 
             const package_ = this.packageResolver.resolvePackage(packageId);
-            if (!package_.hasEndpointsInTree && (!this.shouldGenerateWebsocketClients || package_.websocket == null)) {
-                continue;
-            }
 
             const segments = package_.fernFilepath.packagePath.map((name) => name.camelCase.safeName);
             const subpackage = package_ as Subpackage;
@@ -1729,9 +1726,6 @@ export class SdkGenerator {
             }
 
             const package_ = this.packageResolver.resolvePackage(packageId);
-            if (!package_.hasEndpointsInTree && (!this.shouldGenerateWebsocketClients || package_.websocket == null)) {
-                continue;
-            }
 
             const clientFilepath = this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId);
             const clientClassName = this.sdkClientClassDeclarationReferencer.getExportedName(packageId);

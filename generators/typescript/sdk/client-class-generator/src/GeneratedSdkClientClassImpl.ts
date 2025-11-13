@@ -1084,35 +1084,28 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const rootHeaders = this.isRoot ? this.getRootHeaders(context) : [];
         const shouldGenerateRootHeaders = this.isRoot && rootHeaders.length > 0;
 
+        context.importsManager.addImportFromRoot("BaseClient", {
+            namedImports: ["normalizeClientOptions"]
+        });
+
         if (shouldGenerateRootHeaders) {
             context.importsManager.addImportFromRoot("core/headers", {
                 namedImports: ["mergeHeaders"]
             });
-            return code`this._options = {
-                    ...options,
-                    logging: ${getTextOfTsNode(
-                        context.coreUtilities.logging.createLogger._invoke(
-                            ts.factory.createIdentifier("options?.logging")
-                        )
-                    )},
+            return code`const normalized = normalizeClientOptions(options);
+                this._options = {
+                    ...normalized,
                     headers: mergeHeaders(${getTextOfTsNode(
                         ts.factory.createObjectLiteralExpression(
                             rootHeaders.map(({ header, value }) =>
                                 ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(header), value)
                             )
                         )
-                    )}, options?.headers),
+                    )}, normalized.headers),
                 };`;
         }
 
-        if (!this.isRoot && this.npmPackage != null) {
-            context.importsManager.addImportFromRoot("BaseClient", {
-                namedImports: ["normalizeClientOptions"]
-            });
-            return code`this._options = normalizeClientOptions(options);`;
-        }
-
-        return code`this._options = options;`;
+        return code`this._options = normalizeClientOptions(options);`;
     }
 
     public shouldGenerateAuthorizationHeaderHelperMethod(): boolean {
@@ -1262,78 +1255,33 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 })
         ];
 
-        const includeFernHeaders = !this.omitFernHeaders;
-        if (includeFernHeaders) {
-            headers.push({
-                header: this.intermediateRepresentation.sdkConfig.platformHeaders.language,
-                value: ts.factory.createStringLiteral("JavaScript")
-            });
+        const generatedVersion = context.versionContext.getGeneratedVersion();
+        if (generatedVersion != null) {
+            const header = generatedVersion.getHeader();
+            const headerName = this.getOptionKeyForHeader(header);
+            const defaultVersion = generatedVersion.getDefaultVersion();
 
-            if (this.npmPackage != null) {
-                headers.push(
-                    {
-                        header: this.intermediateRepresentation.sdkConfig.platformHeaders.sdkName,
-                        value: ts.factory.createStringLiteral(this.npmPackage.packageName)
-                    },
-                    {
-                        header: this.intermediateRepresentation.sdkConfig.platformHeaders.sdkVersion,
-                        value: ts.factory.createStringLiteral(this.npmPackage.version)
-                    }
+            let value: ts.Expression;
+            if (defaultVersion != null) {
+                value = ts.factory.createBinaryExpression(
+                    ts.factory.createPropertyAccessChain(
+                        ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                        ts.factory.createIdentifier(headerName)
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                    ts.factory.createStringLiteral(defaultVersion)
+                );
+            } else {
+                value = ts.factory.createPropertyAccessExpression(
+                    ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME),
+                    ts.factory.createIdentifier(headerName)
                 );
             }
-
-            if (context.ir.sdkConfig.platformHeaders.userAgent != null) {
-                headers.push({
-                    header: context.ir.sdkConfig.platformHeaders.userAgent.header,
-                    value: ts.factory.createStringLiteral(context.ir.sdkConfig.platformHeaders.userAgent.value)
-                });
-            } else if (this.npmPackage != null) {
-                // Fallback: generate User-Agent header from npm package info
-                headers.push({
-                    header: "User-Agent",
-                    value: ts.factory.createStringLiteral(`${this.npmPackage.packageName}/${this.npmPackage.version}`)
-                });
-            }
-
-            const generatedVersion = context.versionContext.getGeneratedVersion();
-            if (generatedVersion != null) {
-                const header = generatedVersion.getHeader();
-                const headerName = this.getOptionKeyForHeader(header);
-                const defaultVersion = generatedVersion.getDefaultVersion();
-
-                let value: ts.Expression;
-                if (defaultVersion != null) {
-                    value = ts.factory.createBinaryExpression(
-                        ts.factory.createPropertyAccessChain(
-                            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME),
-                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                            ts.factory.createIdentifier(headerName)
-                        ),
-                        ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                        ts.factory.createStringLiteral(defaultVersion)
-                    );
-                } else {
-                    value = ts.factory.createPropertyAccessExpression(
-                        ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME),
-                        ts.factory.createIdentifier(headerName)
-                    );
-                }
-                headers.push({
-                    header: header.name.wireValue,
-                    value
-                });
-            }
-
-            headers.push(
-                {
-                    header: "X-Fern-Runtime",
-                    value: context.coreUtilities.runtime.type._getReferenceTo()
-                },
-                {
-                    header: "X-Fern-Runtime-Version",
-                    value: context.coreUtilities.runtime.version._getReferenceTo()
-                }
-            );
+            headers.push({
+                header: header.name.wireValue,
+                value
+            });
         }
 
         return headers;
