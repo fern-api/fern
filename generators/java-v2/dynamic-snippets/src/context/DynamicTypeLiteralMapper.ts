@@ -338,11 +338,15 @@ export class DynamicTypeLiteralMapper {
             parameters: object_.properties,
             values: this.context.getRecord(value) ?? {}
         });
+        const filteredProperties = properties.filter(
+            (property) => !this.context.isDirectLiteral(property.typeReference)
+        );
+        const sortedProperties = this.context.sortTypeInstancesByRequiredFirst(filteredProperties, object_.properties);
         return java.TypeLiteral.builder({
             classReference: this.context.getJavaClassReferenceFromDeclaration({
                 declaration: object_.declaration
             }),
-            parameters: properties.map((property) => {
+            parameters: sortedProperties.map((property) => {
                 this.context.errors.scope(property.name.wireValue);
                 try {
                     return {
