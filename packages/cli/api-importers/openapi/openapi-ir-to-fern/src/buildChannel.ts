@@ -26,7 +26,7 @@ export function buildChannel({
     // - Otherwise, use simple server name for backward compatibility
     const urlId =
         firstServer != null
-            ? context.groupEnvironmentsByHost
+            ? context.options.groupEnvironmentsByHost
                 ? (context.getUrlId(firstServer.url) ?? generateWebsocketUrlId(firstServer.name, firstServer.url, true))
                 : firstServer.name
             : undefined;
