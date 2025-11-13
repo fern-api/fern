@@ -1,6 +1,8 @@
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernOpenAPIExtension, OpenAPIExtension } from "@fern-api/openapi-ir-parser";
 import { TaskContext } from "@fern-api/task-context";
+import { readFile } from "fs/promises";
+import yaml from "js-yaml";
 import { OpenAPI } from "openapi-types";
 
 import { mergeWithOverrides } from "../loaders/mergeWithOverrides";
@@ -45,20 +47,62 @@ export async function loadOpenAPI({
         );
     }
 
+    let result = parsed;
+
     if (overridesFilepath != null) {
-        const merged = await mergeWithOverrides<OpenAPI.Document>({
+        result = await mergeWithOverrides<OpenAPI.Document>({
             absoluteFilePathToOverrides: overridesFilepath,
             context,
-            data: parsed,
+            data: result,
             allowNullKeys: OPENAPI_EXAMPLES_KEYS
         });
-        // Run the merged document through the parser again to ensure that any override
-        // references are resolved.
+    }
+
+    const aiExamplesOverrideFilepath = join(
+        dirname(absolutePathToOpenAPI),
+        RelativeFilePath.of("ai_examples_override.yml")
+    );
+
+    try {
+        const overrideContent = await readFile(aiExamplesOverrideFilepath, "utf-8");
+        const overrideData = yaml.load(overrideContent) as {
+            paths?: Record<string, Record<string, { "x-fern-examples"?: unknown[] }>>;
+        };
+
+        if (overrideData?.paths && result.paths) {
+            for (const [path, methods] of Object.entries(overrideData.paths)) {
+                if (methods && typeof methods === "object") {
+                    for (const [method, methodData] of Object.entries(methods)) {
+                        const lowerMethod = method.toLowerCase();
+                        const pathItem = result.paths[path];
+                        if (pathItem && typeof pathItem === "object") {
+                            const pathItemObj = pathItem as Record<string, unknown>;
+                            const operation = pathItemObj[lowerMethod];
+                            if (operation && typeof operation === "object") {
+                                const operationObj = operation as Record<string, unknown>;
+                                if (!operationObj["x-fern-examples"] && methodData["x-fern-examples"]) {
+                                    operationObj["x-fern-examples"] = methodData["x-fern-examples"];
+                                    context.logger.debug(
+                                        `Added AI examples for ${method.toUpperCase()} ${path} from override file`
+                                    );
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        context.logger.debug(`Processed AI examples from ${aiExamplesOverrideFilepath}`);
+    } catch (error) {
+        context.logger.debug(`No AI examples override file found at ${aiExamplesOverrideFilepath}`);
+    }
+
+    if (overridesFilepath != null || result !== parsed) {
         return await parseOpenAPI({
             absolutePathToOpenAPI,
             absolutePathToOpenAPIOverrides,
-            parsed: merged
+            parsed: result
         });
     }
-    return parsed;
+    return result;
 }

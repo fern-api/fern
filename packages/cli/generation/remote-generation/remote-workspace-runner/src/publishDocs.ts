@@ -13,7 +13,7 @@ type DocsDefinition = DocsV1Write.DocsDefinition;
 
 import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { convertIrToFdrApi } from "@fern-api/register";
+import { AIExampleEnhancerConfig, convertIrToFdrApi, enhanceExamplesWithAI } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import axios from "axios";
@@ -57,6 +57,7 @@ export async function publishDocs({
     isPrivate = false,
     disableTemplates = false,
     skipUpload = false,
+    withAiExamples = false,
     targetAudiences
 }: {
     token: FernToken;
@@ -72,6 +73,7 @@ export async function publishDocs({
     isPrivate: boolean | undefined;
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
+    withAiExamples?: boolean;
     targetAudiences?: string[];
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
@@ -193,7 +195,7 @@ export async function publishDocs({
                     const skippedCount = startDocsRegisterResponse.body.skippedFiles?.length || 0;
                     if (skippedCount > 0) {
                         context.logger.info(
-                            `✓ Skipped ${skippedCount} unchanged file${skippedCount === 1 ? "" : "s"} (already uploaded)`
+                            `Skipped ${skippedCount} unchanged file${skippedCount === 1 ? "" : "s"} (already uploaded)`
                         );
                     }
 
@@ -218,7 +220,7 @@ export async function publishDocs({
                                 UPLOAD_FILE_BATCH_SIZE
                             );
                         } else {
-                            context.logger.info("✓ No files to upload (all up to date)");
+                            context.logger.info("No files to upload (all up to date)");
                         }
                     }
                     return convertToFilePathPairs(
@@ -231,7 +233,23 @@ export async function publishDocs({
             }
         },
         registerApi: async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
-            const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
+            let apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
+
+            const aiEnhancerConfig = getAIEnhancerConfig(withAiExamples);
+            if (aiEnhancerConfig && workspace) {
+                const sources = workspace.getSources();
+                const openApiSource = sources.find((source) => source.type === "openapi");
+                const sourceFilePath = openApiSource?.absoluteFilePath;
+
+                apiDefinition = await enhanceExamplesWithAI(
+                    apiDefinition,
+                    aiEnhancerConfig,
+                    context,
+                    token,
+                    organization,
+                    sourceFilePath
+                );
+            }
 
             // create dynamic IR + metadata for each generator language
             let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
@@ -694,4 +712,17 @@ async function updateAiChatFromDocsDefinition({
             );
         }
     }
+}
+
+function getAIEnhancerConfig(withAiExamples: boolean): AIExampleEnhancerConfig | undefined {
+    if (!withAiExamples) {
+        return undefined;
+    }
+
+    return {
+        enabled: true,
+        model: process.env.FERN_AI_MODEL || "gpt-4o-mini",
+        maxRetries: parseInt(process.env.FERN_AI_MAX_RETRIES || "3"),
+        requestTimeoutMs: parseInt(process.env.FERN_AI_TIMEOUT_MS || "25000")
+    };
 }
