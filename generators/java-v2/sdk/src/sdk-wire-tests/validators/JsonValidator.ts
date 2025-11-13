@@ -39,6 +39,7 @@ export class JsonValidator {
     /**
      * Generates enhanced JSON validation with support for complex types
      * Provides better validation than basic JsonNode.equals() for unions, generics, etc.
+     * Uses numeric equivalence comparison to handle 149.0 vs 149.
      */
     public generateEnhancedJsonValidation(
         writer: Writer,
@@ -48,7 +49,7 @@ export class JsonValidator {
         expectedVarName: string
     ): void {
         writer.writeLine(
-            `Assertions.assertEquals(${expectedVarName}, ${actualVarName}, ` +
+            `Assertions.assertTrue(jsonEquals(${expectedVarName}, ${actualVarName}), ` +
                 `"${context === "request" ? "Request" : "Response"} body structure does not match expected");`
         );
 
@@ -98,7 +99,7 @@ export class JsonValidator {
     /**
      * Generates union type validation assertions
      */
-    private generateUnionTypeValidation(writer: Writer, jsonVarName: string, context: string): void {
+    private generateUnionTypeValidation(writer: Writer, jsonVarName: string, _context: string): void {
         writer.writeLine(
             `if (${jsonVarName}.has("type") || ${jsonVarName}.has("_type") || ${jsonVarName}.has("kind")) {`
         );
@@ -131,7 +132,7 @@ export class JsonValidator {
     /**
      * Generates validation for generic/collection types
      */
-    private generateGenericTypeValidation(writer: Writer, jsonVarName: string, context: string): void {
+    private generateGenericTypeValidation(writer: Writer, jsonVarName: string, _context: string): void {
         writer.writeLine("");
         writer.writeLine(`if (${jsonVarName}.isArray()) {`);
         writer.indent();
