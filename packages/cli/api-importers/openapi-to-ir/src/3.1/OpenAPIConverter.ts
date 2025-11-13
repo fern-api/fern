@@ -4,6 +4,7 @@ import { AbstractSpecConverter, Converters, ServersConverter } from "@fern-api/v
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers";
+import { FernPlaygroundExtension } from "../extensions/x-fern-playground";
 import { convertGlobalHeadersExtension } from "../utils/convertGlobalHeadersExtension";
 import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1";
 import { WebhookConverter } from "./paths/operations/WebhookConverter";
@@ -33,6 +34,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         this.convertSecuritySchemes();
 
         this.convertGlobalHeaders();
+
+        this.convertPlayground();
 
         this.convertSchemas();
 
@@ -68,6 +71,16 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             this.addGlobalHeadersToIr(globalHeaders);
             this.context.setGlobalHeaders(globalHeaders);
         }
+    }
+
+    private convertPlayground(): void {
+        const playgroundExtension = new FernPlaygroundExtension({
+            breadcrumbs: ["x-fern-playground"],
+            document: this.context.spec,
+            context: this.context
+        });
+        const playgroundValue = playgroundExtension.convert();
+        this.ir.apiPlayground = playgroundValue ?? true;
     }
 
     private convertSecuritySchemes(): void {

@@ -77,6 +77,9 @@ types:
       source: optional<HttpEndpointSource>
       audiences: optional<list<audience.AudienceReference>>
       retries: optional<RetriesConfiguration>
+      apiPlayground:
+        type: optional<boolean>
+        docs: Whether this endpoint is shown in the API playground
 
   HttpEndpointSecurityItem:
     type: map<auth.AuthSchemeKey, list<auth.AuthScope>>

@@ -224,7 +224,8 @@ export function convertHttpService({
                 audiences: endpoint.audiences,
                 retries: convertRetries({
                     endpointSchema: endpoint
-                })
+                }),
+                apiPlayground: undefined
             };
             httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
             return httpEndpoint;

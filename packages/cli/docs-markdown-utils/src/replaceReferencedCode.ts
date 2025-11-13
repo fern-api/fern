@@ -8,6 +8,10 @@ async function defaultFileLoader(filepath: AbsoluteFilePath): Promise<string> {
     return file.toString();
 }
 
+function isUrl(src: string): boolean {
+    return src.startsWith("http://") || src.startsWith("https://");
+}
+
 // TODO: add a newline before and after the code block if inline to improve markdown parsing. i.e. <CodeGroup> <Code src="" /> </CodeGroup>
 export async function replaceReferencedCode({
     markdown,
@@ -42,19 +46,47 @@ export async function replaceReferencedCode({
             throw new Error(`Failed to parse regex "${match}" in ${absolutePathToMarkdownFile}`);
         }
 
-        const filepath = resolve(
-            src.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
-            RelativeFilePath.of(src.replace(/^\//, ""))
-        );
-
         try {
-            let replacement = await fileLoader(filepath);
+            let replacement: string;
             let metastring = "";
-            const language = filepath.split(".").pop();
+            let language: string | undefined;
+            let title: string | undefined;
+
+            if (isUrl(src)) {
+                try {
+                    const response = await fetch(src);
+                    if (!response.ok) {
+                        context.logger.warn(
+                            `Failed to fetch code from URL "${src}" (status ${response.status}) referenced in ${absolutePathToMarkdownFile}`
+                        );
+                        break;
+                    }
+                    replacement = await response.text();
+
+                    // Extract language and title from URL pathname
+                    const url = new URL(src);
+                    const pathname = url.pathname;
+                    language = pathname.split(".").pop();
+                    title = pathname.split("/").pop();
+                } catch (e) {
+                    context.logger.warn(
+                        `Failed to fetch code from URL "${src}" referenced in ${absolutePathToMarkdownFile}: ${e}`
+                    );
+                    break;
+                }
+            } else {
+                const filepath = resolve(
+                    src.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
+                    RelativeFilePath.of(src.replace(/^\//, ""))
+                );
+                replacement = await fileLoader(filepath);
+                language = filepath.split(".").pop();
+                title = filepath.split("/").pop();
+            }
+
             if (language != null) {
                 metastring += language;
             }
-            const title = filepath.split("/").pop();
             if (title != null) {
                 metastring += ` title={"${title}"}`;
             }

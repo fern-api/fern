@@ -542,6 +542,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": "Upload a file to the database"
                 }
@@ -848,6 +849,7 @@
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_fileUploadExample": {
             "name": {

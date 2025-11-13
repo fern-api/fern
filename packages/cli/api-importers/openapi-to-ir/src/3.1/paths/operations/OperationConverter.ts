@@ -13,6 +13,7 @@ import { AbstractConverter, Extensions, ServersConverter } from "@fern-api/v3-im
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernExamplesExtension } from "../../../extensions/x-fern-examples";
+import { FernPlaygroundEnabledExtension } from "../../../extensions/x-fern-playground-enabled";
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
 import { ResponseBodyConverter } from "../ResponseBodyConverter";
 import { ResponseErrorConverter } from "../ResponseErrorConverter";
@@ -163,6 +164,13 @@ export class OperationConverter extends AbstractOperationConverter {
                 breadcrumbs: this.breadcrumbs
             }) ?? [];
 
+        const playgroundEnabledExtension = new FernPlaygroundEnabledExtension({
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            operation: this.operation as object
+        });
+        const apiPlayground = playgroundEnabledExtension.convert();
+
         const baseEndpoint: OperationConverter.BaseEndpoint = {
             displayName: this.operation.summary,
             method: httpMethod,
@@ -192,7 +200,8 @@ export class OperationConverter extends AbstractOperationConverter {
             transport: undefined,
             source: HttpEndpointSource.openapi(),
             audiences,
-            retries: undefined
+            retries: undefined,
+            apiPlayground
         };
 
         const endpointGroupParts = this.context.namespace != null ? [this.context.namespace] : [];

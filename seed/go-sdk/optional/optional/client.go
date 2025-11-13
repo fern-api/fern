@@ -4,6 +4,7 @@ package optional
 
 import (
 	context "context"
+	fern "github.com/optional/fern"
 	core "github.com/optional/fern/core"
 	internal "github.com/optional/fern/internal"
 	option "github.com/optional/fern/option"
@@ -43,6 +44,44 @@ func (c *Client) SendOptionalBody(
 	)
 	if err != nil {
 		return "", err
+	}
+	return response.Body, nil
+}
+
+func (c *Client) SendOptionalTypedBody(
+	ctx context.Context,
+	request *fern.SendOptionalBodyRequest,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.SendOptionalTypedBody(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
+}
+
+// Tests optional(nullable(T)) where T has only optional properties.
+// This should not generate wire tests expecting {} when Optional.empty() is passed.
+func (c *Client) SendOptionalNullableWithAllOptionalProperties(
+	ctx context.Context,
+	actionId string,
+	id string,
+	request *fern.DeployParams,
+	opts ...option.RequestOption,
+) (*fern.DeployResponse, error) {
+	response, err := c.WithRawResponse.SendOptionalNullableWithAllOptionalProperties(
+		ctx,
+		actionId,
+		id,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
 	}
 	return response.Body, nil
 }

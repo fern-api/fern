@@ -1,6 +1,87 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add x-fern-playground extension to OpenAPI importer to control API playground visibility. Defaults to true.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-12"
+  version: 0.119.1
+
+- changelogEntry:
+    - summary: |
+        Add global `settings` flag to `generators.yml` configuration.
+        Overrideable by `api.specs[].settings` (which is itself overrideable by `group.generators[].settings` as before).
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-12"
+  version: 0.119.0
+
+- changelogEntry:
+    - summary: |
+        Add support for external URLs in `<Code src="...">` tags in docs markdown. Code snippets can now reference external URLs (e.g., raw.githubusercontent.com) to fetch code content dynamically.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-12"
+  version: 0.118.0
+
+- changelogEntry:
+    - summary: |
+        Add support for hidden versions.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-12"
+  version: 0.117.0
+
+- changelogEntry:
+    - summary: |
+        Retrieve package name from module.path configuration for Go SDK generator to support local generation workflows
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.116.1
+
+- changelogEntry:
+    - summary: |
+        Add support for a minimal footer navigation theme.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.116.0
+
+- changelogEntry:
+    - summary: |
+        Do not upload _snippet-templates.json_ files to FDR.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.115.6
+
+- changelogEntry:
+    - summary: |
+        Fix PyPI credentials to use standard environment variable names (PYPI_USERNAME, PYPI_PASSWORD) and correct package version propagation for local generation
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.115.5
+
+- changelogEntry:
+    - summary: |
+        Improve error message for unknown API definitions in docs.yml.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.115.4
+
+- changelogEntry:
+    - summary: |
+        Fix name deconfliction for subtypes of an undiscriminated union (especially when one is an enum).
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.115.3
+
+- changelogEntry:
+    - summary: |
         Fix gRPC source resolution to log warnings instead of throwing errors when protobuf sources cannot be resolved, matching OpenAPI behavior.
       type: fix
   irVersion: 61
@@ -159,12 +240,20 @@
       type: fix
   irVersion: 61
   createdAt: "2025-11-05"
-  version: 0.107.9
+  version: 0.108.0
 
 - changelogEntry:
     - summary: |
         Improve anyOf/oneOf example generation to prefer variants with examples and use schema-level examples when available. This addresses cases where unions with multiple types were generating fallback examples instead of using provided examples.
       type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.8
+
+- changelogEntry:
+    - summary: |
+        Add support for x-fern-playground-enabled extension in OpenAPI v3 to control whether endpoints are shown in the API playground. The extension value is parsed and stored in the IR's HttpEndpoint.apiPlayground field.
+      type: feat
   irVersion: 61
   createdAt: "2025-11-05"
   version: 0.107.8

@@ -716,6 +716,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 },
@@ -1092,6 +1093,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 },
@@ -1956,6 +1958,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": "Tests optional(nullable(T)) where T has only optional properties.\nThis should not generate wire tests expecting {} when Optional.empty() is passed."
                 }
@@ -2663,6 +2666,7 @@
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_optional": {
             "name": {

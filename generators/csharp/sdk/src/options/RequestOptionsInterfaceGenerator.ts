@@ -2,15 +2,10 @@ import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { BaseOptionsGenerator } from "./BaseOptionsGenerator";
 
-export class RequestOptionsInterfaceGenerator extends FileGenerator<
-    CSharpFile,
-    SdkCustomConfigSchema,
-    SdkGeneratorContext
-> {
+export class RequestOptionsInterfaceGenerator extends FileGenerator<CSharpFile> {
     private baseOptionsGenerator: BaseOptionsGenerator;
 
     constructor(context: SdkGeneratorContext, baseOptionsGenerator: BaseOptionsGenerator) {
@@ -21,7 +16,7 @@ export class RequestOptionsInterfaceGenerator extends FileGenerator<
 
     public doGenerate(): CSharpFile {
         const interace_ = this.csharp.interface_({
-            ...this.types.RequestOptionsInterface,
+            ...this.Types.RequestOptionsInterface,
             access: ast.Access.Internal
         });
         this.baseOptionsGenerator.getRequestOptionInterfaceFields(interace_);
@@ -38,7 +33,7 @@ export class RequestOptionsInterfaceGenerator extends FileGenerator<
     protected getFilepath(): RelativeFilePath {
         return join(
             this.constants.folders.coreFiles,
-            RelativeFilePath.of(`${this.types.RequestOptionsInterface.name}.cs`)
+            RelativeFilePath.of(`${this.Types.RequestOptionsInterface.name}.cs`)
         );
     }
 }

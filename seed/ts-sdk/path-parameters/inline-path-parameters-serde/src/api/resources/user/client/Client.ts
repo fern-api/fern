@@ -46,7 +46,7 @@ export class User {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenantId)}/user/${core.url.encodePathParam(userId)}`,
+                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -123,7 +123,7 @@ export class User {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenantId)}/user/`,
+                `/${core.url.encodePathParam(this._options.tenant_id)}/user/`,
             ),
             method: "POST",
             headers: _headers,
@@ -207,7 +207,7 @@ export class User {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenantId)}/user/${core.url.encodePathParam(userId)}`,
+                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}`,
             ),
             method: "PATCH",
             headers: _headers,
@@ -293,7 +293,7 @@ export class User {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenantId)}/user/${core.url.encodePathParam(userId)}/search`,
+                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}/search`,
             ),
             method: "GET",
             headers: _headers,
@@ -373,7 +373,7 @@ export class User {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenantId)}/user/${core.url.encodePathParam(userId)}/metadata/v${core.url.encodePathParam(version)}`,
+                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}/metadata/v${core.url.encodePathParam(version)}`,
             ),
             method: "GET",
             headers: _headers,

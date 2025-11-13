@@ -2,15 +2,10 @@ import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { BaseOptionsGenerator } from "./BaseOptionsGenerator";
 
-export class IdempotentRequestOptionsInterfaceGenerator extends FileGenerator<
-    CSharpFile,
-    SdkCustomConfigSchema,
-    SdkGeneratorContext
-> {
+export class IdempotentRequestOptionsInterfaceGenerator extends FileGenerator<CSharpFile> {
     private baseOptionsGenerator: BaseOptionsGenerator;
 
     constructor(context: SdkGeneratorContext, baseOptionsGenerator: BaseOptionsGenerator) {
@@ -20,17 +15,17 @@ export class IdempotentRequestOptionsInterfaceGenerator extends FileGenerator<
 
     public doGenerate(): CSharpFile {
         const interface_ = this.csharp.interface_({
-            ...this.types.IdempotentRequestOptionsInterface,
+            ...this.Types.IdempotentRequestOptionsInterface,
             access: ast.Access.Internal,
-            interfaceReferences: [this.types.RequestOptionsInterface]
+            interfaceReferences: [this.Types.RequestOptionsInterface]
         });
-        this.context.common.getIdempotencyFields(interface_, false);
+        this.context.getIdempotencyFields(interface_, false);
 
         interface_.addMethod({
             name: "GetIdempotencyHeaders",
             access: ast.Access.Internal,
             parameters: [],
-            return_: this.csharp.Type.reference(this.types.Headers),
+            return_: this.Types.Headers,
             type: ast.MethodType.INSTANCE,
             noBody: true
         });
@@ -47,7 +42,7 @@ export class IdempotentRequestOptionsInterfaceGenerator extends FileGenerator<
     protected getFilepath(): RelativeFilePath {
         return join(
             this.constants.folders.coreFiles,
-            RelativeFilePath.of(`${this.types.IdempotentRequestOptionsInterface.name}.cs`)
+            RelativeFilePath.of(`${this.Types.IdempotentRequestOptionsInterface.name}.cs`)
         );
     }
 }

@@ -19,6 +19,6 @@ class T(UniversalBaseModel):
             extra = pydantic.Extra.forbid
 
 
-from .tor_u import TorU  # noqa: E402, I001
+from .tor_u import TorU  # noqa: E402, F401, I001
 
 update_forward_refs(T)

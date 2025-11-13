@@ -24,6 +24,7 @@ export * from "./ApiDefinitionList";
 export * from "./ApiDefinitionSchema";
 export * from "./ApiConfigurationSchemaInternal";
 export * from "./ApiConfigurationV2Schema";
+export * from "./ApiConfigurationV2SettingsSchema";
 export * from "./ApiConfigurationV2SpecsSchema";
 export * from "./BaseApiSettingsSchema";
 export * from "./OpenApiSettingsSchema";

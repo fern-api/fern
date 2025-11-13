@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import typing
 
+import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import UniversalBaseModel
 from ..commons.variable_value import VariableValue
 
@@ -23,6 +25,7 @@ class ProblemDescriptionBoard_TestCaseId(UniversalBaseModel):
     type: typing.Literal["testCaseId"] = "testCaseId"
 
 
-ProblemDescriptionBoard = typing.Union[
-    ProblemDescriptionBoard_Html, ProblemDescriptionBoard_Variable, ProblemDescriptionBoard_TestCaseId
+ProblemDescriptionBoard = typing_extensions.Annotated[
+    typing.Union[ProblemDescriptionBoard_Html, ProblemDescriptionBoard_Variable, ProblemDescriptionBoard_TestCaseId],
+    pydantic.Field(discriminator="type"),
 ]

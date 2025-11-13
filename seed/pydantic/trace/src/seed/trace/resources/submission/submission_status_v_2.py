@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from ..commons.problem_id import ProblemId
 from ..v_2.resources.problem.problem_info_v_2 import ProblemInfoV2
@@ -27,6 +28,12 @@ class SubmissionStatusV2_Test(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from ..commons.key_value_pair import KeyValuePair  # noqa: E402, F401, I001
+from ..commons.map_value import MapValue  # noqa: E402, F401, I001
+from ..commons.list_type import ListType  # noqa: E402, F401, I001
+from ..commons.map_type import MapType  # noqa: E402, F401, I001
+
+
 class SubmissionStatusV2_Workspace(UniversalBaseModel):
     type: typing.Literal["workspace"] = "workspace"
     updates: typing.List[WorkspaceSubmissionUpdate]
@@ -39,5 +46,7 @@ class SubmissionStatusV2_Workspace(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-SubmissionStatusV2 = typing.Union[SubmissionStatusV2_Test, SubmissionStatusV2_Workspace]
+SubmissionStatusV2 = typing_extensions.Annotated[
+    typing.Union[SubmissionStatusV2_Test, SubmissionStatusV2_Workspace], pydantic.Field(discriminator="type")
+]
 update_forward_refs(SubmissionStatusV2_Test)

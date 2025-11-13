@@ -2,14 +2,14 @@
 
 import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { BaseCsharpCustomConfigSchema } from "../..";
+import { CsharpConfigSchema } from "../..";
 import { Generation } from "../../context/generation-info";
 import { String_ } from "../code/String_";
 
 const generation = new Generation(
     {} as unknown as IntermediateRepresentation,
     "",
-    {} as BaseCsharpCustomConfigSchema,
+    {} as CsharpConfigSchema,
     {} as FernGeneratorExec.config.GeneratorConfig
 );
 

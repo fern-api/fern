@@ -61,17 +61,6 @@ export class LocalTaskHandler {
                 absolutePathToLocalSnippetJSON: this.absolutePathToLocalSnippetJSON
             });
         }
-
-        if (
-            this.absolutePathToTmpSnippetTemplatesJSON != null &&
-            this.absolutePathToLocalSnippetTemplateJSON != null &&
-            (await doesPathExist(this.absolutePathToTmpSnippetTemplatesJSON))
-        ) {
-            await this.copySnippetJSON({
-                absolutePathToTmpSnippetJSON: this.absolutePathToTmpSnippetTemplatesJSON,
-                absolutePathToLocalSnippetJSON: this.absolutePathToLocalSnippetTemplateJSON
-            });
-        }
     }
 
     private async isFernIgnorePresent(): Promise<boolean> {

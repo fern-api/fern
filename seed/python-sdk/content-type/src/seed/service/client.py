@@ -70,13 +70,13 @@ class ServiceClient:
         name: typing.Optional[str] = OMIT,
         age: typing.Optional[int] = OMIT,
         active: typing.Optional[bool] = OMIT,
-        metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        metadata: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         email: typing.Optional[str] = OMIT,
         nickname: typing.Optional[str] = OMIT,
         bio: typing.Optional[str] = OMIT,
         profile_image_url: typing.Optional[str] = OMIT,
-        settings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        settings: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -95,7 +95,7 @@ class ServiceClient:
 
         active : typing.Optional[bool]
 
-        metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        metadata : typing.Optional[typing.Dict[str, typing.Any]]
 
         tags : typing.Optional[typing.Sequence[str]]
 
@@ -107,7 +107,7 @@ class ServiceClient:
 
         profile_image_url : typing.Optional[str]
 
-        settings : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        settings : typing.Optional[typing.Dict[str, typing.Any]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -375,13 +375,13 @@ class AsyncServiceClient:
         name: typing.Optional[str] = OMIT,
         age: typing.Optional[int] = OMIT,
         active: typing.Optional[bool] = OMIT,
-        metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        metadata: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         email: typing.Optional[str] = OMIT,
         nickname: typing.Optional[str] = OMIT,
         bio: typing.Optional[str] = OMIT,
         profile_image_url: typing.Optional[str] = OMIT,
-        settings: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        settings: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -400,7 +400,7 @@ class AsyncServiceClient:
 
         active : typing.Optional[bool]
 
-        metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        metadata : typing.Optional[typing.Dict[str, typing.Any]]
 
         tags : typing.Optional[typing.Sequence[str]]
 
@@ -412,7 +412,7 @@ class AsyncServiceClient:
 
         profile_image_url : typing.Optional[str]
 
-        settings : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        settings : typing.Optional[typing.Dict[str, typing.Any]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
