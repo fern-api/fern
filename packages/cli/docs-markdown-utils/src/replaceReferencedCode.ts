@@ -48,7 +48,6 @@ export async function replaceReferencedCode({
 
         try {
             let replacement: string;
-            let metastring = "";
             let language: string | undefined;
             let title: string | undefined;
 
@@ -84,6 +83,46 @@ export async function replaceReferencedCode({
                 title = filepath.split("/").pop();
             }
 
+            // Parse all properties from the Code component
+            const allProps = new Map<string, string>();
+            const propsRegex = /(\w+)=(?:{([^}]+)}|"([^"]+)")/g;
+
+            // Extract props before src
+            const beforeSrcProps = matchString?.split("src=")[0]?.trim() ?? "";
+            let propMatch;
+            while ((propMatch = propsRegex.exec(beforeSrcProps)) !== null) {
+                const propName = propMatch[1];
+                const propValue = propMatch[2] || propMatch[3];
+                if (propName && propValue) {
+                    allProps.set(propName, propValue);
+                }
+            }
+
+            // Extract props after src
+            const afterSrcProps = match[3]?.trim() || "";
+            propsRegex.lastIndex = 0; // Reset regex
+            while ((propMatch = propsRegex.exec(afterSrcProps)) !== null) {
+                const propName = propMatch[1];
+                const propValue = propMatch[2] || propMatch[3];
+                if (propName && propValue) {
+                    allProps.set(propName, propValue);
+                }
+            }
+
+            allProps.delete("src");
+
+            if (allProps.has("language")) {
+                language = allProps.get("language");
+                allProps.delete("language");
+            }
+
+            if (allProps.has("title")) {
+                title = allProps.get("title");
+                allProps.delete("title");
+            }
+
+            // Build metastring
+            let metastring = "";
             if (language != null) {
                 metastring += language;
             }
@@ -91,33 +130,9 @@ export async function replaceReferencedCode({
                 metastring += ` title={"${title}"}`;
             }
 
-            // Extract
-            const additionalProps = match[3]?.trim() || "";
-            if (additionalProps) {
-                // Parse and add any additional props to the metastring
-                const propsRegex = /(\w+)=(?:{([^}]+)}|"([^"]+)")/g;
-                let propMatch;
-                while ((propMatch = propsRegex.exec(additionalProps)) !== null) {
-                    const propName = propMatch[1];
-                    const propValue = propMatch[2] || propMatch[3];
-                    if (propName && propValue && propName !== "src") {
-                        metastring += ` ${propName}=${propValue.includes("{") ? propValue : `{${propValue}}`}`;
-                    }
-                }
-            }
-
-            // Extract props before src
-            const beforeSrcProps = matchString?.split("src=")[0]?.trim() ?? "";
-            if (beforeSrcProps) {
-                const beforePropsRegex = /(\w+)=(?:{([^}]+)}|"([^"]+)")/g;
-                let beforePropMatch;
-                while ((beforePropMatch = beforePropsRegex.exec(beforeSrcProps)) !== null) {
-                    const propName = beforePropMatch[1];
-                    const propValue = beforePropMatch[2] || beforePropMatch[3];
-                    if (propName && propValue && propName !== "src") {
-                        metastring += ` ${propName}=${propValue.includes("{") ? propValue : `{${propValue}}`}`;
-                    }
-                }
+            // Add remaining properties as-is to metastring
+            for (const [propName, propValue] of allProps) {
+                metastring += ` ${propName}={${propValue}}`;
             }
 
             // TODO: if the code content includes ```, add more backticks to avoid conflicts
