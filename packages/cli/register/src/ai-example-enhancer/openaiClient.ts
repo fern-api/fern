@@ -133,6 +133,17 @@ export class OpenAIExampleEnhancer {
             parts.push(`**Description**: ${request.operationDescription}`);
         }
 
+        if (request.openApiSpec) {
+            parts.push(
+                "",
+                "**OpenAPI Specification:**",
+                "You can use the provided spec to fill the example schema, paying special attention to things like: descriptions, allowed values, min/max ranges, enum values, etc.",
+                "```",
+                request.openApiSpec,
+                "```"
+            );
+        }
+
         parts.push("", "**Current Examples (auto-generated with generic data):**");
 
         if (request.originalRequestExample) {

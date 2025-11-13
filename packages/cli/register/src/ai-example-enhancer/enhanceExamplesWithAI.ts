@@ -1,6 +1,7 @@
 import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import { readFile } from "fs/promises";
 import { OpenAIExampleEnhancer } from "./openaiClient";
 import { AIExampleEnhancerConfig, ExampleEnhancementRequest } from "./types";
 import {
@@ -51,6 +52,23 @@ export async function enhanceExamplesWithAI(
     const coveredEndpoints =
         sourceFilePath != null ? await loadExistingOverrideCoverage(sourceFilePath, context) : new Set<string>();
 
+    let openApiSpec: string | undefined;
+    if (sourceFilePath != null) {
+        try {
+            const specContent = await readFile(sourceFilePath, "utf-8");
+            if (specContent.length < 1500000) {
+                openApiSpec = specContent;
+                context.logger.debug(`Loaded OpenAPI spec (${specContent.length} characters) for AI enhancement`);
+            } else {
+                context.logger.debug(
+                    `OpenAPI spec too large (${specContent.length} characters), skipping spec context for AI enhancement`
+                );
+            }
+        } catch (error) {
+            context.logger.debug(`Failed to read OpenAPI spec file: ${error}`);
+        }
+    }
+
     const examplesEnhanced = { count: 0, total: 0 };
     const enhancedExampleRecords: EnhancedExampleRecord[] = [];
 
@@ -60,7 +78,8 @@ export async function enhanceExamplesWithAI(
         context,
         examplesEnhanced,
         enhancedExampleRecords,
-        coveredEndpoints
+        coveredEndpoints,
+        openApiSpec
     );
 
     context.logger.info(
@@ -88,7 +107,8 @@ async function enhancePackageExamples(
     context: TaskContext,
     stats: { count: number; total: number },
     enhancedExampleRecords: EnhancedExampleRecord[],
-    coveredEndpoints: Set<string>
+    coveredEndpoints: Set<string>,
+    openApiSpec?: string
 ): Promise<FdrCjsSdk.api.v1.register.ApiDefinition> {
     const enhancedSubpackages: Record<string, FdrCjsSdk.api.v1.register.ApiDefinitionSubpackage> = {};
 
@@ -99,7 +119,8 @@ async function enhancePackageExamples(
             context,
             stats,
             enhancedExampleRecords,
-            coveredEndpoints
+            coveredEndpoints,
+            openApiSpec
         );
         enhancedSubpackages[packageId] =
             enhancedPackage as unknown as FdrCjsSdk.api.v1.register.ApiDefinitionSubpackage;
@@ -111,7 +132,8 @@ async function enhancePackageExamples(
         context,
         stats,
         enhancedExampleRecords,
-        coveredEndpoints
+        coveredEndpoints,
+        openApiSpec
     );
 
     return {
@@ -127,7 +149,8 @@ async function enhancePackageEndpoints(
     context: TaskContext,
     stats: { count: number; total: number },
     enhancedExampleRecords: EnhancedExampleRecord[],
-    coveredEndpoints: Set<string>
+    coveredEndpoints: Set<string>,
+    openApiSpec?: string
 ): Promise<FdrCjsSdk.api.v1.register.ApiDefinitionPackage> {
     const enhancedEndpoints = await Promise.all(
         pkg.endpoints.map(async (endpoint) => {
@@ -137,7 +160,8 @@ async function enhancePackageEndpoints(
                 context,
                 stats,
                 enhancedExampleRecords,
-                coveredEndpoints
+                coveredEndpoints,
+                openApiSpec
             );
         })
     );
@@ -154,7 +178,8 @@ async function enhanceEndpointExamples(
     context: TaskContext,
     stats: { count: number; total: number },
     enhancedExampleRecords: EnhancedExampleRecord[],
-    coveredEndpoints: Set<string>
+    coveredEndpoints: Set<string>,
+    openApiSpec?: string
 ): Promise<EndpointV3> {
     const enhancedExamples = await Promise.all(
         endpoint.examples.map(async (example) => {
@@ -165,7 +190,8 @@ async function enhanceEndpointExamples(
                 context,
                 stats,
                 enhancedExampleRecords,
-                coveredEndpoints
+                coveredEndpoints,
+                openApiSpec
             );
         })
     );
@@ -183,7 +209,8 @@ async function enhanceSingleExample(
     context: TaskContext,
     stats: { count: number; total: number },
     enhancedExampleRecords: EnhancedExampleRecord[],
-    coveredEndpoints: Set<string>
+    coveredEndpoints: Set<string>,
+    openApiSpec?: string
 ): Promise<ExampleV3> {
     stats.total++;
 
@@ -217,7 +244,8 @@ async function enhanceSingleExample(
             operationSummary: endpoint.summary,
             operationDescription: endpoint.description,
             originalRequestExample,
-            originalResponseExample
+            originalResponseExample,
+            openApiSpec
         };
 
         const enhancedResult = await enhancer.enhanceExample(enhancementRequest);
