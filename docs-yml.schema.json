@@ -4285,6 +4285,13 @@
         "sidebar"
       ]
     },
+    "docs.LanguagePlacement": {
+      "type": "string",
+      "enum": [
+        "switcher",
+        "navlink"
+      ]
+    },
     "docs.ContentAlignment": {
       "type": "string",
       "enum": [
@@ -4356,6 +4363,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.TabsPlacement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "language-placement": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.LanguagePlacement"
             },
             {
               "type": "null"
@@ -4584,6 +4601,14 @@
         "minimal"
       ]
     },
+    "docs.LanguageSwitcherThemeConfig": {
+      "type": "string",
+      "enum": [
+        "default",
+        "justFlags",
+        "minimal"
+      ]
+    },
     "docs.ThemeConfig": {
       "type": "object",
       "properties": {
@@ -4631,6 +4656,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.FooterNavThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "language-switcher": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.LanguageSwitcherThemeConfig"
             },
             {
               "type": "null"
