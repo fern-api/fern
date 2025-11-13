@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- chanelogEntry:
+    - summary: |
+        Match endpoints to AI overrides examples.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 0.121.1
+
 - changelogEntry:
     - summary: |
         Add batching support for AI example enhancement. The CLI now processes up to 10 endpoints at once with a single pruned OpenAPI spec, improving performance. Non-OpenAPI specs are automatically skipped.
