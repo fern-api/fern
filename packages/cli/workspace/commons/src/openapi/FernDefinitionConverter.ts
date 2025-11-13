@@ -28,7 +28,7 @@ export class FernDefinitionConverter {
             ir,
             options: getConvertOptions({
                 options: settings,
-                overrides: this.args,
+                overrides: this.args
             }),
             authOverrides:
                 settings?.auth != null

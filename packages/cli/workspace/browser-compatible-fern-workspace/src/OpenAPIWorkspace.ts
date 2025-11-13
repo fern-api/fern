@@ -85,7 +85,7 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             documents: [document],
             options: {
                 ...options,
-                ...this.parseOptions,
+                ...this.parseOptions
             }
         });
     }
