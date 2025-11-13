@@ -79,23 +79,15 @@ export abstract class BaseType extends AstNode {
      * Wraps this type in an Optional type if it's not already optional.
      * If this type is already optional, returns it unchanged.
      */
-    public toOptionalIfNotAlready(): Type {
+    public asOptional(): Type {
         return new Optional(this, this.generation);
-    }
-
-    /**
-     * Gets the underlying type if this is an Optional type, otherwise returns undefined.
-     * For example, Optional<int> would return int.
-     */
-    public underlyingTypeIfOptional(): Type | undefined {
-        return undefined;
     }
 
     /**
      * Returns the underlying type if this is an Optional type, otherwise returns this type unchanged.
      * This is useful for getting the non-nullable version of a type.
      */
-    public unwrapIfOptional(): Type {
+    public asNonOptional(): Type {
         return this;
     }
 
@@ -184,10 +176,6 @@ abstract class ObjectType extends ReferenceType {
     public override get multipartMethodNameForCollection(): string | null {
         return "AddJsonParts";
     }
-
-    public override underlyingTypeIfOptional(): Type | undefined {
-        return undefined;
-    }
 }
 
 /**
@@ -224,15 +212,11 @@ export class Optional extends ReferenceType {
         return this.value.multipartMethodNameForCollection;
     }
 
-    public override toOptionalIfNotAlready(): Type {
+    public override asOptional(): Type {
         return this;
     }
 
-    public override underlyingTypeIfOptional(): Type | undefined {
-        return this.value;
-    }
-
-    public override unwrapIfOptional(): Type {
+    public override asNonOptional(): Type {
         return this.value;
     }
 

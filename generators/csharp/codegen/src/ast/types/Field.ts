@@ -241,7 +241,7 @@ export class Field extends MemberNode {
             writer.write("new ");
         }
         const isOptional = this.type.isOptional;
-        const isCollection = (this.type.underlyingTypeIfOptional() ?? this.type).isCollection;
+        const isCollection = this.type.asNonOptional().isCollection;
         if (this.useRequired && !isOptional && !isCollection && this.initializer == null) {
             writer.write("required ");
         }

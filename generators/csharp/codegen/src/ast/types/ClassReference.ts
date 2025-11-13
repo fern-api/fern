@@ -427,15 +427,11 @@ export class ClassReference extends Node {
         return false;
     }
 
-    public toOptionalIfNotAlready(): Type {
+    public asOptional(): Type {
         return new Optional(this, this.generation);
     }
 
-    public underlyingTypeIfOptional(): Type | undefined {
-        return undefined;
-    }
-
-    public unwrapIfOptional(): Type {
+    public asNonOptional(): Type {
         return this;
     }
     public get defaultValue(): Literal {

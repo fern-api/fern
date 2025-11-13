@@ -254,13 +254,13 @@ export class RawClient extends WithGeneration {
         if (encoding != null) {
             switch (encoding) {
                 case "exploded":
-                    return csharpType.unwrapIfOptional().isCollection
+                    return csharpType.asNonOptional().isCollection
                         ? "AddExplodedFormEncodedParts"
                         : "AddExplodedFormEncodedPart";
                 case "form":
-                    return csharpType.unwrapIfOptional().isCollection ? "AddFormEncodedParts" : "AddFormEncodedPart";
+                    return csharpType.asNonOptional().isCollection ? "AddFormEncodedParts" : "AddFormEncodedPart";
                 case "json":
-                    return csharpType.unwrapIfOptional().isCollection ? "AddJsonParts" : "AddJsonPart";
+                    return csharpType.asNonOptional().isCollection ? "AddJsonParts" : "AddJsonPart";
                 default:
                     assertNever(encoding);
             }

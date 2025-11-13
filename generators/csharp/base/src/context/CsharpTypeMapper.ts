@@ -48,14 +48,10 @@ export class CsharpTypeMapper extends WithGeneration {
     public convertFromFileProperty({ property }: { property: FernIr.FileProperty }): ast.Type {
         switch (property.type) {
             case "file": {
-                return property.isOptional
-                    ? this.Types.FileParameter.toOptionalIfNotAlready()
-                    : this.Types.FileParameter;
+                return property.isOptional ? this.Types.FileParameter.asOptional() : this.Types.FileParameter;
             }
             case "fileArray": {
-                return property.isOptional
-                    ? this.Types.FileParameter.toOptionalIfNotAlready()
-                    : this.Types.FileParameter;
+                return property.isOptional ? this.Types.FileParameter.asOptional() : this.Types.FileParameter;
             }
             default:
                 assertNever(property);
@@ -90,7 +86,7 @@ export class CsharpTypeMapper extends WithGeneration {
                 const value = this.convert({ reference: container.valueType });
                 if (is.Primitive.object(value)) {
                     // object map values should be nullable.
-                    return this.Collection.map(key, value.toOptionalIfNotAlready());
+                    return this.Collection.map(key, value.asOptional());
                 }
                 return this.Collection.map(key, value);
             }
@@ -99,11 +95,11 @@ export class CsharpTypeMapper extends WithGeneration {
             case "optional":
                 return unboxOptionals
                     ? this.convert({ reference: container.optional, unboxOptionals })
-                    : this.convert({ reference: container.optional }).toOptionalIfNotAlready();
+                    : this.convert({ reference: container.optional }).asOptional();
             case "nullable":
                 return unboxOptionals
                     ? this.convert({ reference: container.nullable, unboxOptionals })
-                    : this.convert({ reference: container.nullable }).toOptionalIfNotAlready();
+                    : this.convert({ reference: container.nullable }).asOptional();
             case "literal":
                 return this.convertLiteral({ literal: container.literal });
             default:

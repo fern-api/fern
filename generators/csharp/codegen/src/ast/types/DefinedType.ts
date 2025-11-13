@@ -129,15 +129,11 @@ export abstract class DefinedType extends Node {
         return undefined;
     }
 
-    public toOptionalIfNotAlready(): Type {
+    public asOptional(): Type {
         return new Optional(this, this.generation);
     }
 
-    public underlyingTypeIfOptional(): Type | undefined {
-        return this;
-    }
-
-    public unwrapIfOptional(): Type {
+    public asNonOptional(): Type {
         return this;
     }
 
