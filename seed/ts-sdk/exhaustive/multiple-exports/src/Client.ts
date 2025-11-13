@@ -6,8 +6,7 @@ import { NoAuthClient } from "./api/resources/noAuth/client/Client.js";
 import { NoReqBodyClient } from "./api/resources/noReqBody/client/Client.js";
 import { ReqWithHeadersClient } from "./api/resources/reqWithHeaders/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { mergeHeaders } from "./core/headers.js";
-import * as core from "./core/index.js";
+import { normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedExhaustiveClient {
     export interface Options extends BaseClientOptions {}
@@ -24,21 +23,7 @@ export class SeedExhaustiveClient {
     protected _reqWithHeaders: ReqWithHeadersClient | undefined;
 
     constructor(options: SeedExhaustiveClient.Options) {
-        this._options = {
-            ...options,
-            logging: core.logging.createLogger(options?.logging),
-            headers: mergeHeaders(
-                {
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/exhaustive",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/exhaustive/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                options?.headers,
-            ),
-        };
+        this._options = normalizeClientOptions(options);
     }
 
     public get endpoints(): EndpointsClient {

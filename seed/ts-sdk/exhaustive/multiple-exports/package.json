@@ -200,6 +200,18 @@
             },
             "default": "./dist/cjs/api/resources/reqWithHeaders/exports.js"
         },
+        "./types": {
+            "types": "./dist/cjs/api/resources/types/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/types/exports.d.mts",
+                "default": "./dist/esm/api/resources/types/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/types/exports.d.ts",
+                "default": "./dist/cjs/api/resources/types/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/types/exports.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [
