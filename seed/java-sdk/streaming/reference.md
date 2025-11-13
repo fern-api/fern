@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.generateStream(request) -> Optional&lt;StreamResponse&gt;</code></summary>
+<details><summary><code>client.dummy.generateStream(request) -> Iterable&lt;StreamResponse&gt;</code></summary>
 <dl>
 <dd>
 

@@ -395,7 +395,7 @@ export class Type extends AstNode {
     }
 
     private writeIterable({ writer, iterable }: { writer: Writer; iterable: Iterable }): void {
-        writer.writeNode(OptionalClassReference);
+        writer.writeNode(IterableClassReference);
         writer.write("<");
         iterable.value.write(writer);
         writer.write(">");
@@ -461,4 +461,9 @@ export const UUIDClassReference = new ClassReference({
 export const InputStreamClassReference = new ClassReference({
     name: "InputStream",
     packageName: "java.io"
+});
+
+export const IterableClassReference = new ClassReference({
+    name: "Iterable",
+    packageName: "java.lang"
 });

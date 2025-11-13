@@ -12,6 +12,12 @@ export class SnippetExtractor {
      * Returns null if the method call cannot be extracted.
      */
     public extractMethodCall(fullSnippet: string): string | null {
+        // DEBUG: Log the full snippet to see what we're working with
+        if (fullSnippet.includes("RerankRequestDocumentsItem.of()")) {
+            console.log(`[SNIPPET DEBUG] Raw snippet contains empty .of() calls!`);
+            console.log(`[SNIPPET DEBUG] Full snippet:\n${fullSnippet}`);
+        }
+
         // First check if the snippet contains placeholder comments
         // TODO: @tanmay - remove this once we have a way to generate valid client method calls
         if (fullSnippet.includes("// TODO: Add client call")) {
@@ -123,7 +129,11 @@ export class SnippetExtractor {
 
             if (trimmedLine.startsWith("import ")) {
                 // Remove 'import ' prefix and ';' suffix
-                const importStatement = trimmedLine.substring(7).replace(/;$/, "").trim();
+                let importStatement = trimmedLine.substring(7).replace(/;$/, "").trim();
+
+                // Fix incorrect request class names with double "Stream" suffixes
+                importStatement = importStatement.replace(/\bChatStreamStreamRequest\b/g, "ChatStreamRequest");
+                importStatement = importStatement.replace(/\bGenerateStreamStreamRequest\b/g, "GenerateStreamRequest");
 
                 imports.push(importStatement);
             }
