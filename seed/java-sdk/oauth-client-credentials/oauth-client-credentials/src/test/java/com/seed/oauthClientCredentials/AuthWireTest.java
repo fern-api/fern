@@ -43,8 +43,6 @@ public class AuthWireTest {
                 .getTokenWithClientCredentials(GetTokenRequest.builder()
                         .clientId("my_oauth_app_123")
                         .clientSecret("sk_live_abcdef123456789")
-                        .audience("https://api.example.com")
-                        .grantType("client_credentials")
                         .scope("read:users")
                         .build());
         RecordedRequest request = server.takeRequest();
@@ -62,7 +60,7 @@ public class AuthWireTest {
                 + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
-        Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
         if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
             String discriminator = null;
             if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
@@ -98,8 +96,9 @@ public class AuthWireTest {
                 + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertEquals(
-                expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+        Assertions.assertTrue(
+                jsonEquals(expectedResponseNode, actualResponseNode),
+                "Response body structure does not match expected");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type"))
@@ -136,8 +135,6 @@ public class AuthWireTest {
                         .clientId("my_oauth_app_123")
                         .clientSecret("sk_live_abcdef123456789")
                         .refreshToken("refresh_token")
-                        .audience("https://api.example.com")
-                        .grantType("refresh_token")
                         .scope("read:users")
                         .build());
         RecordedRequest request = server.takeRequest();
@@ -156,7 +153,7 @@ public class AuthWireTest {
                 + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
-        Assertions.assertEquals(expectedJson, actualJson, "Request body structure does not match expected");
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
         if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
             String discriminator = null;
             if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
@@ -192,8 +189,9 @@ public class AuthWireTest {
                 + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertEquals(
-                expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+        Assertions.assertTrue(
+                jsonEquals(expectedResponseNode, actualResponseNode),
+                "Response body structure does not match expected");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type"))
@@ -218,5 +216,30 @@ public class AuthWireTest {
         if (actualResponseNode.isObject()) {
             Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
         }
+    }
+
+    /**
+     * Compares two JsonNodes with numeric equivalence.
+     */
+    private boolean jsonEquals(JsonNode a, JsonNode b) {
+        if (a.equals(b)) return true;
+        if (a.isNumber() && b.isNumber()) return Math.abs(a.doubleValue() - b.doubleValue()) < 1e-10;
+        if (a.isObject() && b.isObject()) {
+            if (a.size() != b.size()) return false;
+            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = a.fields();
+            while (iter.hasNext()) {
+                java.util.Map.Entry<String, JsonNode> entry = iter.next();
+                if (!jsonEquals(entry.getValue(), b.get(entry.getKey()))) return false;
+            }
+            return true;
+        }
+        if (a.isArray() && b.isArray()) {
+            if (a.size() != b.size()) return false;
+            for (int i = 0; i < a.size(); i++) {
+                if (!jsonEquals(a.get(i), b.get(i))) return false;
+            }
+            return true;
+        }
+        return false;
     }
 }

@@ -5,10 +5,9 @@ package com.seed.trace.resources.migration.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
@@ -28,7 +27,7 @@ public final class GetAttemptedMigrationsRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("admin-key-header")
+    @JsonIgnore
     public String getAdminKeyHeader() {
         return adminKeyHeader;
     }
@@ -88,7 +87,6 @@ public final class GetAttemptedMigrationsRequest {
         }
 
         @java.lang.Override
-        @JsonSetter("admin-key-header")
         public _FinalStage adminKeyHeader(@NotNull String adminKeyHeader) {
             this.adminKeyHeader = Objects.requireNonNull(adminKeyHeader, "adminKeyHeader must not be null");
             return this;

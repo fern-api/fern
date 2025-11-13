@@ -56,8 +56,9 @@ public class FileNotificationServiceWireTest {
                 + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertEquals(
-                expectedResponseNode, actualResponseNode, "Response body structure does not match expected");
+        Assertions.assertTrue(
+                jsonEquals(expectedResponseNode, actualResponseNode),
+                "Response body structure does not match expected");
         if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
             String discriminator = null;
             if (actualResponseNode.has("type"))
@@ -82,5 +83,30 @@ public class FileNotificationServiceWireTest {
         if (actualResponseNode.isObject()) {
             Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
         }
+    }
+
+    /**
+     * Compares two JsonNodes with numeric equivalence.
+     */
+    private boolean jsonEquals(JsonNode a, JsonNode b) {
+        if (a.equals(b)) return true;
+        if (a.isNumber() && b.isNumber()) return Math.abs(a.doubleValue() - b.doubleValue()) < 1e-10;
+        if (a.isObject() && b.isObject()) {
+            if (a.size() != b.size()) return false;
+            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = a.fields();
+            while (iter.hasNext()) {
+                java.util.Map.Entry<String, JsonNode> entry = iter.next();
+                if (!jsonEquals(entry.getValue(), b.get(entry.getKey()))) return false;
+            }
+            return true;
+        }
+        if (a.isArray() && b.isArray()) {
+            if (a.size() != b.size()) return false;
+            for (int i = 0; i < a.size(); i++) {
+                if (!jsonEquals(a.get(i), b.get(i))) return false;
+            }
+            return true;
+        }
+        return false;
     }
 }

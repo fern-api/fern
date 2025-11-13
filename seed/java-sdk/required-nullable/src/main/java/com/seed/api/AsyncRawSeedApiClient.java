@@ -15,8 +15,6 @@ import com.seed.api.requests.GetFooRequest;
 import com.seed.api.requests.UpdateFooRequest;
 import com.seed.api.types.Foo;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -112,14 +110,10 @@ public class AsyncRawSeedApiClient {
                 .addPathSegments("foo")
                 .addPathSegment(id)
                 .build();
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("nullable_text", request.getNullableText());
-        properties.put("nullable_number", request.getNullableNumber());
-        properties.put("non_nullable_text", request.getNonNullableText());
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
