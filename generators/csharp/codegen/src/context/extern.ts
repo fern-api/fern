@@ -1,4 +1,4 @@
-import { type Type } from "../ast/types/Type";
+import { type Type } from "../ast/types/IType";
 import { type Generation } from "../context/generation-info";
 import { lazy } from "../utils/lazy";
 

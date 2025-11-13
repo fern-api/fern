@@ -6,9 +6,7 @@ import { Literal } from "../code/Literal";
 import { AstNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
 import { ClassReference } from "./ClassReference";
-import { Interface } from "./Interface";
-
-export type Type = BaseType | ClassReference | Interface;
+import { type Type } from "./IType";
 
 /**
  * Base class for all C# type representations in the AST.

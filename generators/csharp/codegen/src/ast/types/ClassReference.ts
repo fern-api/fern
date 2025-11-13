@@ -7,7 +7,8 @@ import { Literal } from "../code/Literal";
 import { Node } from "../core/AstNode";
 import type { Writer } from "../core/Writer";
 import { type Field } from "./Field";
-import { Optional, Type } from "./Type";
+import { Type } from "./IType";
+import { Optional } from "./Type";
 
 export declare namespace ClassReference {
     interface Identity {
@@ -62,7 +63,7 @@ export declare namespace ClassReference {
     }
 }
 
-export class ClassReference extends Node {
+export class ClassReference extends Node implements Type {
     public readonly name: string;
     public readonly namespace: string;
     public readonly namespaceAlias: string | undefined;

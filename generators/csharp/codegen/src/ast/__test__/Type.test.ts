@@ -3,7 +3,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { CsharpConfigSchema, is } from "../..";
 import { Generation } from "../../context/generation-info";
 
-import { Type } from "../types/Type";
+import { Type } from "../types/IType";
 
 const generation = new Generation(
     {} as unknown as IntermediateRepresentation,
@@ -1007,18 +1007,6 @@ describe("Type support", () => {
             it("set uses default collection AddJsonParts", () => {
                 const set = generation.Collection.set(generation.Primitive.integer);
                 expect(set.multipartMethodNameForCollection).toBe("AddJsonParts");
-            });
-        });
-
-        describe("isAsyncEnumerable property", () => {
-            it("regular types are not async enumerable", () => {
-                expect(generation.Primitive.string.isAsyncEnumerable).toBe(false);
-                expect(generation.Primitive.integer.isAsyncEnumerable).toBe(false);
-            });
-
-            it("collections are not async enumerable by default", () => {
-                const list = generation.Collection.list(generation.Primitive.string);
-                expect(list.isAsyncEnumerable).toBe(false);
             });
         });
 

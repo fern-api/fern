@@ -2,7 +2,8 @@ import { fail } from "node:assert";
 import { Literal } from "../ast/code/Literal";
 import { AstNode } from "../ast/core/AstNode";
 import { ClassReference } from "../ast/types/ClassReference";
-import { BaseType, Collection, Optional, Primitive, Type, Value } from "../ast/types/Type";
+import { Type } from "../ast/types/IType";
+import { BaseType, Collection, Optional, Primitive, Value } from "../ast/types/Type";
 import { type Provenance } from "../context/model-navigator";
 import { is as DynamicIR } from "./dynamic-ir-type-guards";
 import { is as IR } from "./ir-type-guards";
@@ -37,6 +38,9 @@ export const is = {
     Type: (value: unknown): value is BaseType => value instanceof BaseType,
     ClassReference: (value: unknown): value is ClassReference => value instanceof ClassReference,
     Optional: (value: Type): value is Optional => value instanceof Optional,
+    AsyncEnumerable: (value: Type | undefined): value is Type =>
+        value != null &&
+        value.asNonOptional().fullyQualifiedName.startsWith("System.Collections.Generic.IAsyncEnumerable"),
     Record: {
         empty: (value: unknown): value is Record<string, unknown> =>
             value == null || Object.keys(value || {}).length === 0,

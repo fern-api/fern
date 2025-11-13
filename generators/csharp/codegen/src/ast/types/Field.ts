@@ -10,7 +10,7 @@ import { Annotation } from "../language/Annotation";
 import { CodeBlock } from "../language/CodeBlock";
 import { XmlDocBlock } from "../language/XmlDocBlock";
 import { ClassReference } from "./ClassReference";
-import { type Type } from "./Type";
+import { type Type } from "./IType";
 
 export declare namespace Field {
     export type Accessors = {

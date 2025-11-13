@@ -8,8 +8,9 @@ import { Writer } from "../core/Writer";
 import { Access } from "../language/Access";
 import { type ClassReference } from "./ClassReference";
 import { Field, FieldArgsWithName, FieldArgsWithOrigin } from "./Field";
+import { type Type } from "./IType";
 import { Method } from "./Method";
-import { Optional, type Type } from "./Type";
+import { Optional } from "./Type";
 
 export declare namespace DefinedType {
     interface Args extends Node.Args {
@@ -29,7 +30,7 @@ export declare namespace DefinedType {
     }
 }
 
-export abstract class DefinedType extends Node {
+export abstract class DefinedType extends Node implements Type {
     public readonly access: Access;
     public readonly partial: boolean;
     public readonly reference: ClassReference;
@@ -135,11 +136,6 @@ export abstract class DefinedType extends Node {
 
     public asNonOptional(): Type {
         return this;
-    }
-
-    /** returns true if this class reference is the IAsyncEnumerable class */
-    public get isAsyncEnumerable() {
-        return this.name === "IAsyncEnumerable" && this.namespace === "System.Collections.Generic";
     }
 
     public get defaultValue(): Literal {
