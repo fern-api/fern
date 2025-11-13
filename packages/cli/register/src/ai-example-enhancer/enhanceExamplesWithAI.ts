@@ -632,6 +632,7 @@ async function processBatchedWorkItems(
 
 async function processBatchResponse(
     batch: (EndpointWorkItem & { packageId?: string })[],
+    // biome-ignore lint/suspicious/noExplicitAny: batch response structure is dynamic
     batchResponse: any,
     enhancementResults: Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>,
     enhancedExampleRecords: EnhancedExampleRecord[],

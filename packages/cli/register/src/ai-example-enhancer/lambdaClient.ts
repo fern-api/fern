@@ -125,64 +125,57 @@ export class LambdaExampleEnhancer {
             };
         }
 
-        let lastError: Error | undefined;
         // Single attempt only - let adaptive retry strategy in processBatchedWorkItems handle retries
-        for (let attempt = 1; attempt <= 1; attempt++) {
-            try {
-                this.context.logger.debug(`Enhancing batch of ${request.endpoints.length} endpoints via lambda`);
+        try {
+            this.context.logger.debug(`Enhancing batch of ${request.endpoints.length} endpoints via lambda`);
 
-                const requestBody = {
-                    openApiSpec: request.openApiSpec,
-                    endpoints: request.endpoints.map((endpoint) => ({
-                        method: endpoint.method,
-                        endpointPath: endpoint.endpointPath,
-                        organizationId: endpoint.organizationId,
-                        operationSummary: endpoint.operationSummary,
-                        operationDescription: endpoint.operationDescription,
-                        originalRequestExample: endpoint.originalRequestExample,
-                        originalResponseExample: endpoint.originalResponseExample
-                    }))
-                };
+            const requestBody = {
+                openApiSpec: request.openApiSpec,
+                endpoints: request.endpoints.map((endpoint) => ({
+                    method: endpoint.method,
+                    endpointPath: endpoint.endpointPath,
+                    organizationId: endpoint.organizationId,
+                    operationSummary: endpoint.operationSummary,
+                    operationDescription: endpoint.operationDescription,
+                    originalRequestExample: endpoint.originalRequestExample,
+                    originalResponseExample: endpoint.originalResponseExample
+                }))
+            };
 
-                this.context.logger.debug(
-                    `Sending batch to enhanceExamples: ${JSON.stringify(
-                        {
-                            openApiSpec: request.openApiSpec
-                                ? `[OpenAPI spec present: ${request.openApiSpec.length} chars]`
-                                : "[No OpenAPI spec]",
-                            endpoints: `[${request.endpoints.length} endpoints]`
-                        },
-                        null,
-                        2
-                    )}`
-                );
-
-                const response = await fetch(`${this.lambdaOrigin}/v2/registry/ai/enhance-example`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${this.token.value}`
+            this.context.logger.debug(
+                `Sending batch to enhanceExamples: ${JSON.stringify(
+                    {
+                        openApiSpec: request.openApiSpec
+                            ? `[OpenAPI spec present: ${request.openApiSpec.length} chars]`
+                            : "[No OpenAPI spec]",
+                        endpoints: `[${request.endpoints.length} endpoints]`
                     },
-                    body: JSON.stringify(requestBody),
-                    signal: AbortSignal.timeout(this.config.requestTimeoutMs)
-                });
+                    null,
+                    2
+                )}`
+            );
 
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`Lambda returned ${response.status}: ${errorText || response.statusText}`);
-                }
+            const response = await fetch(`${this.lambdaOrigin}/v2/registry/ai/enhance-example`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${this.token.value}`
+                },
+                body: JSON.stringify(requestBody),
+                signal: AbortSignal.timeout(this.config.requestTimeoutMs)
+            });
 
-                const result = await response.json();
-                return result;
-            } catch (error) {
-                lastError = error as Error;
-                this.context.logger.warn(`Batch lambda call failed: ${error}`);
-                // Throw the error to let adaptive retry strategy handle it
-                throw error;
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Lambda returned ${response.status}: ${errorText || response.statusText}`);
             }
-        }
 
-        // This should never be reached since we only do 1 attempt and throw on error
-        throw lastError || new Error("Unknown error in batch enhancement");
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            this.context.logger.warn(`Batch lambda call failed: ${error}`);
+            // Throw the error to let adaptive retry strategy handle it
+            throw error;
+        }
     }
 }

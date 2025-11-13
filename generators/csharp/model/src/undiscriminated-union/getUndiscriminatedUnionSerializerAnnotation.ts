@@ -14,7 +14,6 @@ export function getUndiscriminatedUnionSerializerAnnotation({
     undiscriminatedUnionDeclaration,
     isList
 }: {
-    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     context: GeneratorContext;
     undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration;
     isList: boolean;

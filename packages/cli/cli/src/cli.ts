@@ -568,11 +568,6 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     description: "Skip asset upload step and generate fake links for preview",
                     default: false
-                })
-                .option("with-ai-examples", {
-                    boolean: true,
-                    description: "Enable AI-powered example enhancement for API documentation",
-                    default: false
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -630,8 +625,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     strictBrokenLinks: argv.strictBrokenLinks,
                     disableTemplates: argv.disableSnippets,
                     noPrompt: !argv.prompt,
-                    skipUpload: argv.skipUpload,
-                    withAiExamples: argv.withAiExamples
+                    skipUpload: argv.skipUpload
                 });
             }
             // default to loading api workspace to preserve legacy behavior

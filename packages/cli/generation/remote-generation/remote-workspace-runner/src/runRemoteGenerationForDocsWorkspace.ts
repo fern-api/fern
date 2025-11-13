@@ -16,8 +16,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     instanceUrl,
     preview,
     disableTemplates,
-    skipUpload,
-    withAiExamples
+    skipUpload
 }: {
     organization: string;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
@@ -29,7 +28,6 @@ export async function runRemoteGenerationForDocsWorkspace({
     preview: boolean;
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
-    withAiExamples?: boolean;
 }): Promise<void> {
     const instances = docsWorkspace.config.instances;
 
@@ -92,7 +90,7 @@ export async function runRemoteGenerationForDocsWorkspace({
             isPrivate: maybeInstance.private,
             disableTemplates,
             skipUpload,
-            withAiExamples,
+            withAiExamples: docsWorkspace.config.experimental?.aiExamples,
             targetAudiences: maybeInstance.audiences
                 ? Array.isArray(maybeInstance.audiences)
                     ? maybeInstance.audiences
