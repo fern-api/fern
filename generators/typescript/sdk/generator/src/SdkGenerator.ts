@@ -1684,8 +1684,8 @@ export class SdkGenerator {
         return packagePath + "/" + this.defaultTestDirectory;
     }
 
-    private getSubpackageExportPaths(): string[] {
-        const paths: string[] = [];
+    private getSubpackageExportPaths(): Array<{ key: string; relPath: string }> {
+        const paths: Array<{ key: string; relPath: string }> = [];
 
         for (const packageId of this.getAllPackageIds()) {
             if (packageId.isRoot) {
@@ -1697,13 +1697,24 @@ export class SdkGenerator {
                 continue;
             }
 
+            const segments = package_.fernFilepath.packagePath.map((name) => name.camelCase.safeName);
+            const maybeName = (package_ as any).name;
+            if (maybeName != null) {
+                const packageName = maybeName.camelCase.safeName;
+                if (segments.length === 0 || segments[segments.length - 1] !== packageName) {
+                    segments.push(packageName);
+                }
+            }
+            const fernPackageKey = segments.join("/");
+
             const clientFilepath = this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId);
             const fullPath = this.exportsManager.convertExportedFilePathToFilePath(clientFilepath);
             const relativePath = fullPath
                 .replace(/^\//, "")
                 .replace(/^src\//, "")
                 .replace(/\/client\/Client\.ts$/, "");
-            paths.push(relativePath);
+
+            paths.push({ key: fernPackageKey, relPath: relativePath });
         }
 
         return paths;

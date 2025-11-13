@@ -32,7 +32,7 @@ export declare namespace TypescriptProject {
         formatter: "prettier" | "biome" | "oxfmt";
         linter: "biome" | "oxlint" | "none";
         generateMultipleExports?: boolean;
-        subpackageExportPaths?: string[];
+        subpackageExportPaths?: Array<{ key: string; relPath: string }>;
     }
 }
 
@@ -110,7 +110,7 @@ export abstract class TypescriptProject {
     private readonly formatter: "prettier" | "biome" | "oxfmt";
     private readonly linter: "biome" | "oxlint" | "none";
     protected readonly generateMultipleExports: boolean;
-    protected readonly subpackageExportPaths: string[];
+    protected readonly subpackageExportPaths: Array<{ key: string; relPath: string }>;
 
     private readonly runScripts: boolean;
 
@@ -177,7 +177,7 @@ export abstract class TypescriptProject {
             exports.push("serialization");
         }
         if (this.generateMultipleExports) {
-            exports.push(...this.subpackageExportPaths);
+            exports.push(...this.subpackageExportPaths.map((p) => p.relPath));
         }
         return exports;
     }
