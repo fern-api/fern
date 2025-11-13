@@ -241,7 +241,6 @@ types:
         docs: |
           Configure functional settings for your documentation site such as search behavior, code display preferences, HTTP snippets, and analytics controls.
       theme: optional<ThemeConfig>
-
       # integrations
       integrations: optional<IntegrationsConfig>
 
@@ -766,7 +765,7 @@ types:
           When this feature is enabled, your API must have Cross-Origin Resource Sharing (CORS) enabled to allow requests from the documentation domain.
 
           @default: false
-      disable-analytics: 
+      disable-analytics:
         type: optional<boolean>
         docs: |
           If set to true, all analytics integrations configured in the analytics configuration will be disabled. This includes Google Analytics 4, Google Tag Manager, PostHog, and any other analytics providers you have configured.
@@ -997,7 +996,7 @@ types:
     properties:
       page: string
       path: string
-      slug: 
+      slug:
         type: optional<string>
         docs: |
           The slug of the page. Defaults to the page name. The slug can also be overridden in the frontmatter of the page's Markdown file.
