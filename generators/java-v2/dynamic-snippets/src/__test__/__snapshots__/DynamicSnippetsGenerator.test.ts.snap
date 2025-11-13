@@ -17,10 +17,10 @@ client.service().getMetadata(
     GetMetadataRequest
         .builder()
         .xAPIVersion("0.0.1")
-        .shallow(false)
         .tag(
             Arrays.asList(Optional.of("development"), Optional.of("public"))
         )
+        .shallow(false)
         .build()
 );
 "
@@ -43,10 +43,10 @@ client.service().getMetadata(
     GetMetadataRequest
         .builder()
         .xAPIVersion("0.0.1")
-        .shallow(false)
         .tag(
             Arrays.asList(Optional.of("development"))
         )
+        .shallow(false)
         .build()
 );
 "
@@ -91,7 +91,6 @@ client.service().createBigEntity(
                 .title("Pulp Fiction")
                 .from("Quentin Tarantino")
                 .rating(8.5)
-                .type("movie")
                 .tag("tag-12efs9dv")
                 .revenue(1000000L)
                 .cast(
@@ -170,7 +169,6 @@ client.service().createMovie(
         .title("The Boy and the Heron")
         .from("Hayao Miyazaki")
         .rating(8.0)
-        .type("movie")
         .tag("development")
         .revenue(1000000L)
         .prequel("movie-cv9b914f")

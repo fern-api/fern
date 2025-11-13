@@ -33,8 +33,8 @@
   "dependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/ir-sdk": "^61.7.0",
     "@fern-api/dynamic-ir-sdk": "^61.7.0",
+    "@fern-fern/ir-sdk": "^61.7.0",
     "zod": "^3.22.3"
   },
   "devDependencies": {
@@ -42,6 +42,6 @@
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",
-    "vitest": "^2.1.9"
+    "vitest": "^4.0.8"
   }
 }
