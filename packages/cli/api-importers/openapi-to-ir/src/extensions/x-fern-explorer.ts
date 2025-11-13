@@ -1,16 +1,16 @@
 import { AbstractExtension } from "@fern-api/v3-importer-commons";
 
-export declare namespace FernPlaygroundExtension {
+export declare namespace FernExplorerExtension {
     export interface Args extends AbstractExtension.Args {
         document: object;
     }
 }
 
-export class FernPlaygroundExtension extends AbstractExtension<boolean> {
+export class FernExplorerExtension extends AbstractExtension<boolean> {
     private readonly document: object;
-    public readonly key = "x-fern-playground";
+    public readonly key = "x-fern-explorer";
 
-    constructor({ breadcrumbs, document, context }: FernPlaygroundExtension.Args) {
+    constructor({ breadcrumbs, document, context }: FernExplorerExtension.Args) {
         super({ breadcrumbs, context });
         this.document = document;
     }
@@ -23,7 +23,7 @@ export class FernPlaygroundExtension extends AbstractExtension<boolean> {
 
         if (typeof extensionValue !== "boolean") {
             this.context.errorCollector.collect({
-                message: "Received unexpected non-boolean value for x-fern-playground",
+                message: "Received unexpected non-boolean value for x-fern-explorer",
                 path: this.breadcrumbs
             });
             return undefined;

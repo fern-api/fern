@@ -493,14 +493,14 @@ export const FernOpenAPIExtension = {
     IS_DISCRIMINATED: "x-fern-discriminated",
 
     /**
-     * Used to control whether an endpoint is shown in the API playground.
+     * Used to control whether an endpoint is shown in the API explorer.
      *
      * paths:
      *  /path/to/my/endpoint:
      *    get:
-     *      x-fern-playground-enabled: true  # or false
+     *      x-fern-explorer-enabled: true  # or false
      */
-    PLAYGROUND_ENABLED: "x-fern-playground-enabled"
+    EXPLORER_ENABLED: "x-fern-explorer-enabled"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;
