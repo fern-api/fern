@@ -241,7 +241,7 @@ export class DynamicTypeLiteralMapper {
                         value: this.convert({
                             typeReference: map.value,
                             value,
-                            as: as === "request" ? as : "mapValue"
+                            as: "mapValue"
                         })
                     };
                 } finally {
