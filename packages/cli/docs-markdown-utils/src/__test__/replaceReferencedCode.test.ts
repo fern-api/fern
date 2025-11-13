@@ -187,4 +187,124 @@ describe("replaceReferencedCode", () => {
             globalThis.fetch = originalFetch;
         }
     });
+
+    it("should override language when language property is present", async () => {
+        const markdown = `
+            <Code src="../snippets/test.py" language="python" />
+            <Code language="typescript" src="../snippets/test.ts" />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "test content";
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.ts")) {
+                    return "test2 content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`python title={"test.py"}
+            test content
+            \`\`\`
+
+            \`\`\`typescript title={"test.ts"}
+            test2 content
+            \`\`\`
+
+        `);
+    });
+
+    it("should override title when title property is present", async () => {
+        const markdown = `
+            <Code src="../snippets/test.py" title="Custom Title" />
+            <Code title="Another Title" src="../snippets/test.ts" />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "test content";
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.ts")) {
+                    return "test2 content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`py title={"Custom Title"}
+            test content
+            \`\`\`
+
+            \`\`\`ts title={"Another Title"}
+            test2 content
+            \`\`\`
+
+        `);
+    });
+
+    it("should override both language and title when both properties are present", async () => {
+        const markdown = `
+            <Code src="../snippets/test.py" language="python" title="My Python Code" />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "test content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`python title={"My Python Code"}
+            test content
+            \`\`\`
+
+        `);
+    });
+
+    it("should add other properties as-is to metastring", async () => {
+        const markdown = `
+            <Code src="../snippets/test.py" language="python" title="Example" maxLines={10} showLineNumbers={true} />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "test content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`python title={"Example"} maxLines={10} showLineNumbers={true}
+            test content
+            \`\`\`
+
+        `);
+    });
 });
