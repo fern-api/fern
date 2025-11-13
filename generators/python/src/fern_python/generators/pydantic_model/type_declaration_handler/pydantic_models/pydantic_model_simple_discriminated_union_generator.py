@@ -1,5 +1,7 @@
 from typing import List, Optional, Set, Union
 
+from ordered_set import OrderedSet
+
 from ....context.pydantic_generator_context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig, UnionNamingVersions
 from ..discriminated_union.simple_discriminated_union_generator import (
@@ -102,6 +104,7 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
             self._name, single_union_type.discriminant_value, self._custom_config.union_naming
         )
 
+
     def _generate_no_property_member(
         self, class_name: str, discriminant_field: FernAwarePydanticField
     ) -> LocalClassReference:
@@ -190,6 +193,18 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
                     ),
                 )
 
+        # Add deferred ghost references from self-referential union members
+        # These are added after the type alias to ensure proper import ordering (after the union type alias)
+        for type_id in self._deferred_ghost_references_for_union_members:
+            type_alias_declaration.add_ghost_reference(
+                self._context.get_class_reference_for_type_id(
+                    type_id,
+                    must_import_after_current_declaration=lambda _: True,
+                    as_request=False,
+                )
+            )
+
+
     # Really needed since we're not using a FernAwarePydanticModel for single property members
     #
     # We create objects for single property union members, which means that
@@ -202,12 +217,12 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
         internal_pydantic_model_for_single_union_type: PydanticModel,
         single_union_type: ir_types.SingleUnionType,
     ) -> None:
-        referenced_type_ids: Set[ir_types.TypeId] = single_union_type.shape.visit(
-            same_properties_as_object=lambda _: set(),
-            single_property=lambda single_property: set(
+        referenced_type_ids: OrderedSet[ir_types.TypeId] = single_union_type.shape.visit(
+            same_properties_as_object=lambda _: OrderedSet(),
+            single_property=lambda single_property: OrderedSet(
                 self._context.get_referenced_types_of_type_reference(single_property.type) or []
             ),
-            no_properties=lambda: set(),
+            no_properties=lambda: OrderedSet(),
         )
 
         # Check if any referenced types are self-referencing union members
@@ -223,10 +238,9 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
                     self_ref_members = union_self_referencing_members[self._name.type_id]
                     if referenced_type_id in self_ref_members:
                         ghost_reference_type_ids.append(referenced_type_id)
-                        # Add as ghost reference so it gets imported
-                        internal_pydantic_model_for_single_union_type.add_ghost_reference(
-                            self._context.get_class_reference_for_type_id(referenced_type_id, as_request=False)
-                        )
+                        # Defer adding this ghost reference until after the union type alias is created
+                        if referenced_type_id not in self._deferred_ghost_references_for_union_members:
+                            self._deferred_ghost_references_for_union_members.append(referenced_type_id)
 
         # If we have ghost references, use the special update method; otherwise use regular
         if ghost_reference_type_ids:

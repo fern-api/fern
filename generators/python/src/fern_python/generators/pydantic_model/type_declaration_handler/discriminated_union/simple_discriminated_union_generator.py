@@ -52,6 +52,7 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
         self._should_generate = should_generate
 
         self._all_referenced_types: List[ir_types.TypeReference] = []
+        self._deferred_ghost_references_for_union_members: List[ir_types.TypeId] = []
 
         # Union base class
         self._should_generate_base_class = False
