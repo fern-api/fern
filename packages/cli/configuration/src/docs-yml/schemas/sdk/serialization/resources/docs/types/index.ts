@@ -23,6 +23,8 @@ export * from "./DocsInstance";
 export * from "./CustomDomain";
 export * from "./EditThisPageConfig";
 export * from "./GithubEditThisPageConfig";
+export * from "./GitlabEditThisPageConfig";
+export * from "./BitbucketEditThisPageConfig";
 export * from "./VersionConfig";
 export * from "./Availability";
 export * from "./VersionAvailability";

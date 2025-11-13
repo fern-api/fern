@@ -6,4 +6,6 @@ import * as FernDocsConfig from "../../../index";
 
 export interface EditThisPageConfig {
     github?: FernDocsConfig.GithubEditThisPageConfig;
+    gitlab?: FernDocsConfig.GitlabEditThisPageConfig;
+    bitbucket?: FernDocsConfig.BitbucketEditThisPageConfig;
 }

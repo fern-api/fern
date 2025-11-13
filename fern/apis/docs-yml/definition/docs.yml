@@ -385,6 +385,8 @@ types:
   EditThisPageConfig:
     properties:
       github: optional<GithubEditThisPageConfig>
+      gitlab: optional<GitlabEditThisPageConfig>
+      bitbucket: optional<BitbucketEditThisPageConfig>
 
   GithubEditThisPageConfig:
     properties:
@@ -402,6 +404,32 @@ types:
         type: optional<string>
         docs: |
           The branch of the repository you would like the GitHub editor to open a PR to. Default is `main`.
+
+  GitlabEditThisPageConfig:
+    properties:
+      host:
+        type: optional<string>
+        docs: |
+          @default: `gitlab.com`
+      owner: string
+      repo: string
+      branch:
+        type: optional<string>
+        docs: |
+          @default: `main`
+
+  BitbucketEditThisPageConfig:
+    properties:
+      host:
+        type: optional<string>
+        docs: |
+          @default: `bitbucket.org`
+      owner: string
+      repo: string
+      branch:
+        type: optional<string>
+        docs: |
+          @default: `main`
 
   VersionConfig:
     extends: [WithPermissions, WithFeatureFlags]
