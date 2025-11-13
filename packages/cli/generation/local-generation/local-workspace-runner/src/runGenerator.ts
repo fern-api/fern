@@ -56,7 +56,6 @@ export async function writeFilesToDiskAndRunGenerator({
     workspace,
     generatorInvocation,
     absolutePathToLocalOutput,
-    absolutePathToLocalPreview,
     absolutePathToLocalSnippetJSON,
     absolutePathToLocalSnippetTemplateJSON,
     audiences,
@@ -81,7 +80,6 @@ export async function writeFilesToDiskAndRunGenerator({
     generatorInvocation: generatorsYml.GeneratorInvocation;
     version: string | undefined;
     absolutePathToLocalOutput: AbsoluteFilePath;
-    absolutePathToLocalPreview: AbsoluteFilePath | undefined;
     absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
     absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath | undefined;
     audiences: Audiences;
@@ -125,21 +123,10 @@ export async function writeFilesToDiskAndRunGenerator({
     await writeFile(configJsonFile, "");
     context.logger.debug("Will write config.json to: " + absolutePathToWriteConfigJson);
 
-    // In preview mode, use preview directory for all output (including git operations)
-    // Otherwise, use standard output directory
-    let absolutePathToTmpOutputDirectory: AbsoluteFilePath;
-
-    if (absolutePathToLocalPreview != null) {
-        const tmpPreviewDirectory = join(workspaceTempDir.path, "preview-output");
-        absolutePathToTmpOutputDirectory = AbsoluteFilePath.of(tmpPreviewDirectory);
-        await mkdir(tmpPreviewDirectory, { recursive: true });
-        context.logger.debug("Preview mode enabled. Will write all output (including git) to: " + absolutePathToTmpOutputDirectory);
-    } else {
-        const tmpOutputDirectory = join(workspaceTempDir.path, CODEGEN_OUTPUT_DIRECTORY_NAME);
-        absolutePathToTmpOutputDirectory = AbsoluteFilePath.of(tmpOutputDirectory);
-        await mkdir(tmpOutputDirectory, { recursive: true });
-        context.logger.debug("Will write output to: " + absolutePathToTmpOutputDirectory);
-    }
+    const tmpOutputDirectory = join(workspaceTempDir.path, CODEGEN_OUTPUT_DIRECTORY_NAME);
+    const absolutePathToTmpOutputDirectory = AbsoluteFilePath.of(tmpOutputDirectory);
+    await mkdir(tmpOutputDirectory, { recursive: true });
+    context.logger.debug("Will write output to: " + absolutePathToTmpOutputDirectory);
 
     let absolutePathToTmpSnippetJSON = undefined;
     if (absolutePathToLocalSnippetJSON != null) {
@@ -221,9 +208,6 @@ export async function writeFilesToDiskAndRunGenerator({
         context,
         absolutePathToLocalOutput,
         absolutePathToTmpOutputDirectory,
-        absolutePathToLocalPreview,
-        // In simplified approach, all output (including git) goes to the same temp directory
-        absolutePathToTmpPreviewGitDirectory: absolutePathToTmpOutputDirectory,
         absolutePathToLocalSnippetJSON,
         absolutePathToLocalSnippetTemplateJSON,
         absolutePathToTmpSnippetJSON,

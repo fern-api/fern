@@ -93,7 +93,6 @@ export async function generateWorkspace({
             generatorGroup: group,
             version,
             keepDocker,
-            absolutePathToPreview,
             context,
             runner,
             inspect

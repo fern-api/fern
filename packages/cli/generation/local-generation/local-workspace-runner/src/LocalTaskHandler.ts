@@ -13,8 +13,6 @@ export declare namespace LocalTaskHandler {
         absolutePathToTmpSnippetJSON: AbsoluteFilePath | undefined;
         absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath | undefined;
         absolutePathToLocalOutput: AbsoluteFilePath;
-        absolutePathToLocalPreview: AbsoluteFilePath | undefined;
-        absolutePathToTmpPreviewGitDirectory: AbsoluteFilePath | undefined;
         absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
         absolutePathToTmpSnippetTemplatesJSON: AbsoluteFilePath | undefined;
     }
@@ -27,8 +25,6 @@ export class LocalTaskHandler {
     private absolutePathToTmpSnippetTemplatesJSON: AbsoluteFilePath | undefined;
     private absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath | undefined;
     private absolutePathToLocalOutput: AbsoluteFilePath;
-    private absolutePathToLocalPreview: AbsoluteFilePath | undefined;
-    private absolutePathToTmpPreviewGitDirectory: AbsoluteFilePath | undefined;
     private absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
 
     constructor({
@@ -37,16 +33,12 @@ export class LocalTaskHandler {
         absolutePathToTmpSnippetJSON,
         absolutePathToLocalSnippetTemplateJSON,
         absolutePathToLocalOutput,
-        absolutePathToLocalPreview,
-        absolutePathToTmpPreviewGitDirectory,
         absolutePathToLocalSnippetJSON,
         absolutePathToTmpSnippetTemplatesJSON
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
         this.absolutePathToTmpOutputDirectory = absolutePathToTmpOutputDirectory;
-        this.absolutePathToLocalPreview = absolutePathToLocalPreview;
-        this.absolutePathToTmpPreviewGitDirectory = absolutePathToTmpPreviewGitDirectory;
         this.absolutePathToTmpSnippetJSON = absolutePathToTmpSnippetJSON;
         this.absolutePathToLocalSnippetJSON = absolutePathToLocalSnippetJSON;
         this.absolutePathToLocalSnippetTemplateJSON = absolutePathToLocalSnippetTemplateJSON;
@@ -69,35 +61,6 @@ export class LocalTaskHandler {
                 absolutePathToLocalSnippetJSON: this.absolutePathToLocalSnippetJSON
             });
         }
-
-        // Copy preview git repository if preview mode is enabled
-        if (
-            this.absolutePathToTmpPreviewGitDirectory != null &&
-            this.absolutePathToLocalPreview != null &&
-            (await doesPathExist(this.absolutePathToTmpPreviewGitDirectory))
-        ) {
-            await this.copyPreviewGitRepository();
-        }
-    }
-
-    public getAbsolutePathToLocalOutput(): AbsoluteFilePath {
-        return this.absolutePathToLocalOutput;
-    }
-
-    private async copyPreviewGitRepository(): Promise<void> {
-        if (this.absolutePathToLocalPreview == null || this.absolutePathToTmpPreviewGitDirectory == null) {
-            return;
-        }
-
-        this.context.logger.debug(`Copying preview git repository to ${this.absolutePathToLocalPreview}`);
-
-        // Ensure the parent directory exists
-        await rm(this.absolutePathToLocalPreview, { force: true, recursive: true });
-
-        // Copy the git repository from temp directory to preview location
-        await cp(this.absolutePathToTmpPreviewGitDirectory, this.absolutePathToLocalPreview, { recursive: true });
-
-        this.context.logger.info(`Preview git repository copied to ${this.absolutePathToLocalPreview}`);
     }
 
     private async isFernIgnorePresent(): Promise<boolean> {

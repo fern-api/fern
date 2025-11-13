@@ -162,7 +162,6 @@ export class GenerationRunner {
             workspace,
             generatorInvocation,
             absolutePathToLocalOutput: generatorInvocation.absolutePathToLocalOutput,
-            absolutePathToLocalPreview: undefined,
             absolutePathToLocalSnippetJSON: generatorInvocation.absolutePathToLocalOutput
                 ? AbsoluteFilePath.of(
                       join(generatorInvocation.absolutePathToLocalOutput, RelativeFilePath.of(SNIPPET_JSON_FILENAME))
