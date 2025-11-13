@@ -7,6 +7,8 @@
   createdAt: "2025-11-13"
   version: 1.0.2
 
+- changelogEntry:
+    - summary: |
         Update OpenAPI operation converter to use `x-fern-explorer` extension instead of `x-fern-explorer-enabled` for setting `apiPlayground` property in the IR. Operations now check for the `x-fern-explorer` boolean value to determine API playground availability.
       type: fix
   irVersion: 61
