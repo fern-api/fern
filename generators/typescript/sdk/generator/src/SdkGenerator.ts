@@ -1735,9 +1735,12 @@ export class SdkGenerator {
                     sourceFile.addExportDeclaration({
                         moduleSpecifier: "./client/index.js"
                     });
-                    sourceFile.addExportDeclaration({
-                        moduleSpecifier: "./types/index.js"
-                    });
+
+                    if (package_.subpackages.length > 0) {
+                        sourceFile.addExportDeclaration({
+                            moduleSpecifier: "./resources/index.js"
+                        });
+                    }
                 }
             });
         }
