@@ -1695,6 +1695,14 @@ export class SdkGenerator {
 
             const package_ = this.packageResolver.resolvePackage(packageId);
 
+            const hasClient =
+                package_.hasEndpointsInTree ||
+                (this.shouldGenerateWebsocketClients && package_.websocket != null);
+
+            if (!hasClient && package_.subpackages.length === 0) {
+                continue;
+            }
+
             const segments = package_.fernFilepath.packagePath.map((name) => name.camelCase.safeName);
             const subpackage = package_ as Subpackage;
             if (subpackage.name != null) {
@@ -1727,6 +1735,10 @@ export class SdkGenerator {
 
             const package_ = this.packageResolver.resolvePackage(packageId);
 
+            const hasClient =
+                package_.hasEndpointsInTree ||
+                (this.shouldGenerateWebsocketClients && package_.websocket != null);
+
             const clientFilepath = this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId);
             const clientClassName = this.sdkClientClassDeclarationReferencer.getExportedName(packageId);
             const exportsFilepath: ExportedFilePath = {
@@ -1739,14 +1751,20 @@ export class SdkGenerator {
             this.withSourceFile({
                 filepath: exportsFilepath,
                 run: ({ sourceFile }) => {
-                    sourceFile.addExportDeclaration({
-                        moduleSpecifier: "./client/Client.js",
-                        namedExports: [clientClassName]
-                    });
+                    if (hasClient) {
+                        sourceFile.addExportDeclaration({
+                            moduleSpecifier: "./client/Client.js",
+                            namedExports: [clientClassName]
+                        });
 
-                    sourceFile.addExportDeclaration({
-                        moduleSpecifier: "./client/index.js"
-                    });
+                        sourceFile.addExportDeclaration({
+                            moduleSpecifier: "./client/index.js"
+                        });
+                    } else {
+                        sourceFile.addExportDeclaration({
+                            moduleSpecifier: "./index.js"
+                        });
+                    }
 
                     if (package_.subpackages.length > 0) {
                         sourceFile.addExportDeclaration({
