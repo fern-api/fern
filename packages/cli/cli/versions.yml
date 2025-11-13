@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Display OpenAPI validation warnings when using the --warnings flag with fern check. Previously, warnings were counted but not shown; now they are logged with location details when --warnings is specified.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 0.121.3
+
+- changelogEntry:
+    - summary: |
         Refactor how settings from specs are parsed and applied in the CLI.
       type: chore
   irVersion: 61

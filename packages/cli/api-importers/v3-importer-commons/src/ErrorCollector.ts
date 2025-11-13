@@ -139,6 +139,19 @@ export class ErrorCollector {
                         this.logger.log(LogLevel.Debug, `\t- at location (${locationInfo})`);
                     }
                     break;
+                case APIErrorLevel.WARNING:
+                    this.logger.log(LogLevel.Warn, error.message);
+                    if (error.path && error.path.length > 0) {
+                        const sourceLocation = await this.breadcrumbToLineNumberMapper?.getSourceLocation(error.path);
+                        const locationInfo = sourceLocation
+                            ? `${this.relativeFilepathToSpec}:${sourceLocation.line}:${sourceLocation.column}`
+                            : error.path.join(" -> ");
+                        this.logger.log(LogLevel.Warn, `\t- at location (${locationInfo})`);
+                    }
+                    if (error.resolution) {
+                        this.logger.log(LogLevel.Warn, `\t- resolution: ${error.resolution}`);
+                    }
+                    break;
             }
         }
     }
