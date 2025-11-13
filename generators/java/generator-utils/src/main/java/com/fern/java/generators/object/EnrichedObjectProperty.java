@@ -135,7 +135,9 @@ public interface EnrichedObjectProperty {
         } else {
             getterBuilder.addStatement("return $L", fieldSpec().get().name);
         }
-        if (wireKey().isPresent() && !nullable() && !aliasOfNullable()) {
+        // Headers have empty wireKey to avoid JSON serialization
+        boolean hasWireKey = wireKey().isPresent() && !wireKey().get().isEmpty();
+        if (hasWireKey && !nullable() && !aliasOfNullable()) {
             getterBuilder.addAnnotation(AnnotationSpec.builder(JsonProperty.class)
                     .addMember("value", "$S", wireKey().get())
                     .build());
@@ -153,7 +155,9 @@ public interface EnrichedObjectProperty {
 
     @Value.Lazy
     default Optional<MethodSpec> getterForSerialization() {
-        if (wireKey().isEmpty() || (!nullable() && !aliasOfNullable())) {
+        // Headers have empty wireKey and should not have serialization getter
+        boolean hasWireKey = wireKey().isPresent() && !wireKey().get().isEmpty();
+        if (!hasWireKey || (!nullable() && !aliasOfNullable())) {
             return Optional.empty();
         }
 

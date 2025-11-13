@@ -1,3 +1,11 @@
+- version: 3.14.10
+  changelogEntry:
+    - summary: |
+        Fix wire test failures for numeric type mismatches and header serialization. Wire tests now use numeric equivalence comparison to handle integer vs double type differences from OpenAPI specs. Headers are no longer incorrectly serialized into JSON request bodies - they now use @JsonIgnore and are sent only as HTTP headers.
+      type: fix
+  createdAt: "2025-11-12"
+  irVersion: 61
+
 - version: 3.14.9
   changelogEntry:
     - summary: Fix wire test compilation errors when using staged builders with collections. Builder method calls now correctly order required fields before collections like Lists, Sets, and Maps.
