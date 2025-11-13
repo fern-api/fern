@@ -1,6 +1,12 @@
 import { FernToken } from "@fern-api/auth";
 import { TaskContext } from "@fern-api/task-context";
-import { AIExampleEnhancerConfig, ExampleEnhancementRequest, ExampleEnhancementResponse } from "./types";
+import {
+    AIExampleEnhancerConfig,
+    ExampleEnhancementBatchRequest,
+    ExampleEnhancementBatchResponse,
+    ExampleEnhancementRequest,
+    ExampleEnhancementResponse
+} from "./types";
 
 type AIEnhancerResolvedConfig = Required<Omit<AIExampleEnhancerConfig, "openaiApiKey">> &
     Pick<AIExampleEnhancerConfig, "openaiApiKey">;
@@ -106,6 +112,92 @@ export class LambdaExampleEnhancer {
         return {
             enhancedRequestExample: request.originalRequestExample,
             enhancedResponseExample: request.originalResponseExample
+        };
+    }
+
+    async enhanceExamplesBatch(request: ExampleEnhancementBatchRequest): Promise<ExampleEnhancementBatchResponse> {
+        if (!this.config.enabled) {
+            return {
+                results: request.endpoints.map((endpoint) => ({
+                    enhancedRequestExample: endpoint.originalRequestExample,
+                    enhancedResponseExample: endpoint.originalResponseExample
+                }))
+            };
+        }
+
+        let lastError: Error | undefined;
+        for (let attempt = 1; attempt <= this.config.maxRetries; attempt++) {
+            try {
+                this.context.logger.debug(
+                    `Enhancing batch of ${request.endpoints.length} endpoints via lambda (attempt ${attempt}/${this.config.maxRetries})`
+                );
+
+                const requestBody = {
+                    openApiSpec: request.openApiSpec,
+                    endpoints: request.endpoints.map((endpoint) => ({
+                        method: endpoint.method,
+                        endpointPath: endpoint.endpointPath,
+                        organizationId: endpoint.organizationId,
+                        operationSummary: endpoint.operationSummary,
+                        operationDescription: endpoint.operationDescription,
+                        originalRequestExample: endpoint.originalRequestExample,
+                        originalResponseExample: endpoint.originalResponseExample
+                    }))
+                };
+
+                this.context.logger.debug(
+                    `Sending batch to enhanceExamples: ${JSON.stringify(
+                        {
+                            openApiSpec: request.openApiSpec
+                                ? `[OpenAPI spec present: ${request.openApiSpec.length} chars]`
+                                : "[No OpenAPI spec]",
+                            endpoints: `[${request.endpoints.length} endpoints]`
+                        },
+                        null,
+                        2
+                    )}`
+                );
+
+                const response = await fetch(`${this.lambdaOrigin}/v2/registry/ai/enhance-example`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${this.token.value}`
+                    },
+                    body: JSON.stringify(requestBody),
+                    signal: AbortSignal.timeout(this.config.requestTimeoutMs)
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Lambda returned ${response.status}: ${errorText || response.statusText}`);
+                }
+
+                const result = await response.json();
+                return result;
+            } catch (error) {
+                lastError = error as Error;
+                this.context.logger.warn(`Batch attempt ${attempt} failed: ${error}`);
+
+                if (attempt < this.config.maxRetries) {
+                    // Exponential backoff
+                    const delay = Math.min(1000 * Math.pow(2, attempt - 1), 10000);
+                    await new Promise((resolve) => setTimeout(resolve, delay));
+                }
+            }
+        }
+
+        this.context.logger.error(
+            `Failed to enhance batch after ${this.config.maxRetries} attempts: ${lastError?.message}`
+        );
+
+        // Return original examples if enhancement fails
+        return {
+            results: request.endpoints.map((endpoint) => ({
+                enhancedRequestExample: endpoint.originalRequestExample,
+                enhancedResponseExample: endpoint.originalResponseExample,
+                error: lastError?.message
+            }))
         };
     }
 }

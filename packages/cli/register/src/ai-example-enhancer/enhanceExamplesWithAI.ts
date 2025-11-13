@@ -8,7 +8,7 @@ import * as yaml from "js-yaml";
 import { OpenAPIV3 } from "openapi-types";
 import { join } from "path";
 import { LambdaExampleEnhancer } from "./lambdaClient";
-import { AIExampleEnhancerConfig, ExampleEnhancementRequest } from "./types";
+import { AIExampleEnhancerConfig, ExampleEnhancementBatchRequest } from "./types";
 import {
     EnhancedExampleRecord,
     loadExistingOverrideCoverage,
@@ -40,6 +40,12 @@ interface EndpointV3 {
     examples: ExampleV3[];
 }
 
+interface EndpointWorkItem {
+    endpoint: EndpointV3;
+    example: ExampleV3;
+    endpointKey: string;
+}
+
 function createSafeFilename(method: string, endpointPath: string): string {
     // Convert method and path to safe filename
     const safeMethod = method.toLowerCase();
@@ -49,6 +55,22 @@ function createSafeFilename(method: string, endpointPath: string): string {
         .replace(/^_|_$/g, ""); // Remove leading/trailing underscores
 
     return `${safeMethod}_${safePath}_pruned_spec.yaml`;
+}
+
+function isOpenApiSpec(specContent: string): boolean {
+    try {
+        // Try parsing as JSON first
+        try {
+            const jsonSpec = JSON.parse(specContent);
+            return !!(jsonSpec.openapi || jsonSpec.swagger);
+        } catch {
+            // Fall back to YAML
+            const yamlSpec = yaml.load(specContent) as Record<string, unknown>;
+            return !!(yamlSpec?.openapi || yamlSpec?.swagger);
+        }
+    } catch {
+        return false;
+    }
 }
 
 async function writeSpecToFile(spec: string, filename: string, context: TaskContext): Promise<void> {
@@ -95,10 +117,9 @@ function findMatchingOpenAPIPath(examplePath: string, availablePaths: string[]):
     return undefined;
 }
 
-async function pruneOpenAPISpec(
+async function pruneOpenAPISpecForBatch(
     openApiSpecContent: string,
-    endpointPath: string,
-    method: string,
+    endpointSelectors: Array<{ path: string; method: string }>,
     context: TaskContext
 ): Promise<string | undefined> {
     try {
@@ -120,56 +141,42 @@ async function pruneOpenAPISpec(
 
         const availablePaths = Object.keys(parsedSpec.paths);
         context.logger.debug(`OpenAPI spec contains ${availablePaths.length} paths`);
-        context.logger.debug(`Available paths: ${availablePaths.join(", ")}`);
-        context.logger.debug(`Looking for: ${endpointPath} with method: ${method.toLowerCase()}`);
 
-        // Find the matching OpenAPI path template
-        const matchingPath = findMatchingOpenAPIPath(endpointPath, availablePaths);
+        // Map each endpoint to its OpenAPI path template
+        const mappedSelectors: EndpointSelector[] = [];
+        for (const selector of endpointSelectors) {
+            const matchingPath = findMatchingOpenAPIPath(selector.path, availablePaths);
+            if (matchingPath) {
+                mappedSelectors.push({
+                    path: matchingPath,
+                    method: selector.method.toLowerCase() as HttpMethod
+                });
+                context.logger.debug(`Mapped ${selector.path} to OpenAPI path: ${matchingPath}`);
+            } else {
+                context.logger.debug(`No matching OpenAPI path found for ${selector.path}`);
+            }
+        }
 
-        if (matchingPath) {
-            const pathObj = parsedSpec.paths[matchingPath] as any;
-            context.logger.debug(
-                `Matched ${endpointPath} to OpenAPI path: ${matchingPath} with methods: ${Object.keys(pathObj).join(", ")}`
-            );
-        } else {
-            context.logger.debug(`No matching OpenAPI path found for ${endpointPath}`);
+        if (mappedSelectors.length === 0) {
+            context.logger.debug("No endpoints matched in OpenAPI spec");
             return undefined;
         }
 
-        // Create endpoint selector for pruning using the matched path
-        const endpoints: EndpointSelector[] = [
-            {
-                path: matchingPath,
-                method: method.toLowerCase() as HttpMethod
-            }
-        ];
-
-        // Prune the spec to just this endpoint
+        // Prune the spec to just these endpoints
         const pruner = new OpenAPIPruner({
             document: parsedSpec,
-            endpoints
+            endpoints: mappedSelectors
         });
 
         const result = pruner.prune();
 
         context.logger.debug(
-            `Pruned OpenAPI spec: ${result.statistics.originalEndpoints} → ${result.statistics.prunedEndpoints} endpoints, ` +
+            `Pruned OpenAPI spec for batch: ${result.statistics.originalEndpoints} → ${result.statistics.prunedEndpoints} endpoints, ` +
                 `${result.statistics.originalSchemas} → ${result.statistics.prunedSchemas} schemas`
         );
 
-        // Log what paths are in the pruned result
-        const prunedPaths = Object.keys(result.document.paths || {});
-        context.logger.debug(`Pruned spec contains paths: ${prunedPaths.join(", ")}`);
-        if (prunedPaths.length === 0) {
-            context.logger.warn(`Pruning resulted in empty paths! Original selector: ${JSON.stringify(endpoints)}`);
-        }
-
         // Convert back to JSON string
         const prunedSpecJson = JSON.stringify(result.document, null, 2);
-
-        // Write to file for inspection
-        const filename = createSafeFilename(method, endpointPath);
-        await writeSpecToFile(prunedSpecJson, filename, context);
 
         return prunedSpecJson;
     } catch (error) {
@@ -201,6 +208,13 @@ export async function enhanceExamplesWithAI(
     if (sourceFilePath != null) {
         try {
             const specContent = await readFile(sourceFilePath, "utf-8");
+
+            // Check if it's an OpenAPI spec
+            if (!isOpenApiSpec(specContent)) {
+                context.logger.info("Non-OpenAPI spec detected, skipping AI example enhancement");
+                return apiDefinition;
+            }
+
             if (specContent.length < 1500000) {
                 openApiSpec = specContent;
                 context.logger.debug(`Loaded OpenAPI spec (${specContent.length} characters) for AI enhancement`);
@@ -302,164 +316,164 @@ async function enhancePackageEndpoints(
     coveredEndpoints: Set<string>,
     openApiSpec?: string
 ): Promise<FdrCjsSdk.api.v1.register.ApiDefinitionPackage> {
-    const enhancedEndpoints = await Promise.all(
-        pkg.endpoints.map(async (endpoint) => {
-            return await enhanceEndpointExamples(
-                endpoint as unknown as EndpointV3,
-                enhancer,
-                context,
+    // Collect work items for all endpoints
+    const workItems: EndpointWorkItem[] = [];
+    const endpointMap = new Map<string, EndpointV3>();
+
+    for (const endpoint of pkg.endpoints) {
+        const endpointV3 = endpoint as unknown as EndpointV3;
+
+        for (const example of endpointV3.examples) {
+            const endpointKey = `${endpointV3.method.toLowerCase()}:${example.path}`;
+
+            if (coveredEndpoints.has(endpointKey)) {
+                continue;
+            }
+
+            if (!isExampleAutogenerated(example)) {
+                continue;
+            }
+
+            const originalRequestExample = extractExampleValue(example.requestBodyV3);
+            const originalResponseExample = extractExampleValue(example.responseBodyV3);
+            if (!originalRequestExample && !originalResponseExample) {
+                continue;
+            }
+
+            workItems.push({
+                endpoint: endpointV3,
+                example,
+                endpointKey
+            });
+            endpointMap.set(endpointKey, endpointV3);
+            break; // Only process first autogenerated example per endpoint
+        }
+    }
+
+    stats.total += workItems.length;
+
+    const batchSize = 10;
+    const enhancementResults = new Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>();
+
+    for (let i = 0; i < workItems.length; i += batchSize) {
+        const batch = workItems.slice(i, Math.min(i + batchSize, workItems.length));
+
+        context.logger.debug(`Processing batch ${Math.floor(i / batchSize) + 1} with ${batch.length} endpoints`);
+
+        let prunedOpenApiSpec: string | undefined;
+        if (openApiSpec) {
+            const endpointSelectors = batch.map((item) => ({
+                path: item.example.path,
+                method: item.endpoint.method
+            }));
+            prunedOpenApiSpec = await pruneOpenAPISpecForBatch(openApiSpec, endpointSelectors, context);
+        }
+
+        const batchRequest: ExampleEnhancementBatchRequest = {
+            openApiSpec: prunedOpenApiSpec,
+            endpoints: batch.map((item) => ({
+                endpointPath: item.example.path,
+                method: item.endpoint.method,
                 organizationId,
-                stats,
-                enhancedExampleRecords,
-                coveredEndpoints,
-                openApiSpec
-            );
-        })
-    );
+                operationSummary: item.endpoint.summary,
+                operationDescription: item.endpoint.description,
+                originalRequestExample: extractExampleValue(item.example.requestBodyV3),
+                originalResponseExample: extractExampleValue(item.example.responseBodyV3)
+            }))
+        };
+
+        try {
+            const batchResponse = await enhancer.enhanceExamplesBatch(batchRequest);
+
+            for (let j = 0; j < batch.length; j++) {
+                const item = batch[j];
+                const result = batchResponse.results[j];
+
+                if (result && !result.error) {
+                    enhancementResults.set(item.endpointKey, {
+                        enhancedReq: result.enhancedRequestExample,
+                        enhancedRes: result.enhancedResponseExample
+                    });
+                } else if (result?.error) {
+                    context.logger.warn(
+                        `Failed to enhance ${item.endpoint.method} ${item.example.path}: ${result.error}`
+                    );
+                }
+            }
+        } catch (error) {
+            context.logger.warn(`Batch enhancement failed: ${error}`);
+        }
+    }
+
+    // Apply results to endpoints
+    const enhancedEndpoints = pkg.endpoints.map((endpoint) => {
+        const endpointV3 = endpoint as unknown as EndpointV3;
+
+        const enhancedExamples = endpointV3.examples.map((example) => {
+            const endpointKey = `${endpointV3.method.toLowerCase()}:${example.path}`;
+            const result = enhancementResults.get(endpointKey);
+
+            if (!result) {
+                return example;
+            }
+
+            const originalRequestExample = extractExampleValue(example.requestBodyV3);
+            const originalResponseExample = extractExampleValue(example.responseBodyV3);
+
+            const requestChanged =
+                result.enhancedReq !== undefined && !deepEqual(result.enhancedReq, originalRequestExample);
+            const responseChanged =
+                result.enhancedRes !== undefined && !deepEqual(result.enhancedRes, originalResponseExample);
+
+            if (!requestChanged && !responseChanged) {
+                context.logger.debug(`AI returned no changes for ${endpointV3.method} ${example.path}`);
+                return example;
+            }
+
+            const enhancedExampleRecord: EnhancedExampleRecord = {
+                endpoint: example.path,
+                method: endpointV3.method,
+                pathParameters: example.pathParameters,
+                queryParameters: example.queryParameters,
+                headers: example.headers,
+                requestBody: requestChanged ? result.enhancedReq : undefined,
+                responseBody: responseChanged ? result.enhancedRes : undefined
+            };
+            enhancedExampleRecords.push(enhancedExampleRecord);
+
+            const enhancedExample: ExampleV3 = { ...example };
+
+            if (requestChanged && example.requestBodyV3) {
+                enhancedExample.requestBody = result.enhancedReq;
+                enhancedExample.requestBodyV3 = {
+                    ...example.requestBodyV3,
+                    value: result.enhancedReq
+                };
+            }
+
+            if (responseChanged && example.responseBodyV3) {
+                enhancedExample.responseBody = result.enhancedRes;
+                enhancedExample.responseBodyV3 = {
+                    ...example.responseBodyV3,
+                    value: result.enhancedRes
+                };
+            }
+
+            stats.count++;
+            context.logger.info(`Successfully enhanced example for ${endpointV3.method} ${example.path}`);
+            return enhancedExample;
+        });
+
+        return {
+            ...endpointV3,
+            examples: enhancedExamples
+        };
+    });
 
     return {
         ...pkg,
         endpoints: enhancedEndpoints as unknown as FdrCjsSdk.api.v1.register.EndpointDefinition[]
     };
-}
-
-async function enhanceEndpointExamples(
-    endpoint: EndpointV3,
-    enhancer: LambdaExampleEnhancer,
-    context: TaskContext,
-    organizationId: string,
-    stats: { count: number; total: number },
-    enhancedExampleRecords: EnhancedExampleRecord[],
-    coveredEndpoints: Set<string>,
-    openApiSpec?: string
-): Promise<EndpointV3> {
-    const enhancedExamples = await Promise.all(
-        endpoint.examples.map(async (example) => {
-            return await enhanceSingleExample(
-                example,
-                endpoint,
-                enhancer,
-                context,
-                organizationId,
-                stats,
-                enhancedExampleRecords,
-                coveredEndpoints,
-                openApiSpec
-            );
-        })
-    );
-
-    return {
-        ...endpoint,
-        examples: enhancedExamples
-    };
-}
-
-async function enhanceSingleExample(
-    example: ExampleV3,
-    endpoint: EndpointV3,
-    enhancer: LambdaExampleEnhancer,
-    context: TaskContext,
-    organizationId: string,
-    stats: { count: number; total: number },
-    enhancedExampleRecords: EnhancedExampleRecord[],
-    coveredEndpoints: Set<string>,
-    openApiSpec?: string
-): Promise<ExampleV3> {
-    stats.total++;
-
-    const endpointKey = `${endpoint.method.toLowerCase()}:${example.path}`;
-    if (coveredEndpoints.has(endpointKey)) {
-        context.logger.debug(`Skipping ${endpoint.method} ${example.path} - already in ai_examples_override.yml`);
-        return example;
-    }
-
-    const isAutogenerated = isExampleAutogenerated(example);
-
-    if (!isAutogenerated) {
-        context.logger.debug(`Skipping user-provided example for ${endpoint.method} ${example.path}`);
-        return example;
-    }
-
-    context.logger.debug(`Enhancing autogenerated example for ${endpoint.method} ${example.path}`);
-
-    try {
-        const originalRequestExample = extractExampleValue(example.requestBodyV3);
-        const originalResponseExample = extractExampleValue(example.responseBodyV3);
-
-        if (!originalRequestExample && !originalResponseExample) {
-            context.logger.debug(`No examples to enhance for ${endpoint.method} ${example.path}`);
-            return example;
-        }
-
-        // Prune the OpenAPI spec to just this endpoint if available
-        let prunedOpenApiSpec: string | undefined;
-        if (openApiSpec) {
-            prunedOpenApiSpec = await pruneOpenAPISpec(openApiSpec, example.path, endpoint.method, context);
-        }
-
-        const enhancementRequest: ExampleEnhancementRequest = {
-            endpointPath: example.path,
-            method: endpoint.method,
-            organizationId,
-            operationSummary: endpoint.summary,
-            operationDescription: endpoint.description,
-            originalRequestExample,
-            originalResponseExample,
-            openApiSpec: prunedOpenApiSpec
-        };
-
-        const enhancedResult = await enhancer.enhanceExample(enhancementRequest);
-
-        const enhancedReq = enhancedResult.enhancedRequestExample;
-        const enhancedRes = enhancedResult.enhancedResponseExample;
-
-        const requestChanged = enhancedReq !== undefined && !deepEqual(enhancedReq, originalRequestExample);
-        const responseChanged = enhancedRes !== undefined && !deepEqual(enhancedRes, originalResponseExample);
-
-        if (!requestChanged && !responseChanged) {
-            context.logger.debug(`AI returned no changes for ${endpoint.method} ${example.path}`);
-            return example;
-        }
-
-        const enhancedExampleRecord: EnhancedExampleRecord = {
-            endpoint: example.path,
-            method: endpoint.method,
-            pathParameters: example.pathParameters,
-            queryParameters: example.queryParameters,
-            headers: example.headers,
-            requestBody: requestChanged ? enhancedReq : undefined,
-            responseBody: responseChanged ? enhancedRes : undefined
-        };
-        enhancedExampleRecords.push(enhancedExampleRecord);
-
-        const enhancedExample: ExampleV3 = {
-            ...example
-        };
-
-        if (requestChanged && example.requestBodyV3) {
-            enhancedExample.requestBody = enhancedReq;
-            enhancedExample.requestBodyV3 = {
-                ...example.requestBodyV3,
-                value: enhancedReq
-            };
-        }
-
-        if (responseChanged && example.responseBodyV3) {
-            enhancedExample.responseBody = enhancedRes;
-            enhancedExample.responseBodyV3 = {
-                ...example.responseBodyV3,
-                value: enhancedRes
-            };
-        }
-
-        stats.count++;
-        context.logger.info(`Successfully enhanced example for ${endpoint.method} ${example.path}`);
-        return enhancedExample;
-    } catch (error) {
-        context.logger.warn(`Failed to enhance example for ${endpoint.method} ${example.path}: ${error}`);
-        return example;
-    }
 }
 
 function isExampleAutogenerated(example: ExampleV3): boolean {

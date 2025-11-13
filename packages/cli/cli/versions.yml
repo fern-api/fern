@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add batching support for AI example enhancement. The CLI now processes up to 10 endpoints at once with a single pruned OpenAPI spec, improving performance. Non-OpenAPI specs are automatically skipped.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 0.121.0
+
+- changelogEntry:
+    - summary: |
         Support adding arbitrary metadata to `<Code />` components. Title and language are set by default, but can be overridden with `title` and `language` props.
       type: fix
   irVersion: 61

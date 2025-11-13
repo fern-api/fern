@@ -30,3 +30,20 @@ export interface ExampleEnhancementResponse {
     enhancedRequestExample?: unknown;
     enhancedResponseExample?: unknown;
 }
+
+export interface ExampleEnhancementBatchRequest {
+    openApiSpec?: string;
+    endpoints: ExampleEnhancementRequest[];
+}
+
+export interface ExampleEnhancementBatchResult {
+    enhancedRequestExample?: unknown;
+    enhancedResponseExample?: unknown;
+    error?: string;
+}
+
+export interface ExampleEnhancementBatchResponse {
+    results: ExampleEnhancementBatchResult[];
+    modelUsed?: string;
+    requestId?: string;
+}
