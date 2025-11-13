@@ -27,26 +27,8 @@ export class FernDefinitionConverter {
             taskContext: context,
             ir,
             options: getConvertOptions({
-                overrides: {
-                    ...settings,
-                    respectReadonlySchemas: settings?.respectReadonlySchemas ?? this.args.respectReadonlySchemas,
-                    respectNullableSchemas: settings?.respectNullableSchemas ?? this.args.respectNullableSchemas,
-                    wrapReferencesToNullableInOptional:
-                        settings?.wrapReferencesToNullableInOptional ?? this.args.wrapReferencesToNullableInOptional,
-                    coerceOptionalSchemasToNullable:
-                        settings?.coerceOptionalSchemasToNullable ?? this.args.coerceOptionalSchemasToNullable,
-                    onlyIncludeReferencedSchemas:
-                        settings?.onlyIncludeReferencedSchemas ?? this.args.onlyIncludeReferencedSchemas,
-                    inlinePathParameters: settings?.inlinePathParameters ?? this.args.inlinePathParameters,
-                    objectQueryParameters: settings?.objectQueryParameters ?? this.args.objectQueryParameters,
-                    useBytesForBinaryResponse:
-                        settings?.useBytesForBinaryResponse ?? this.args.useBytesForBinaryResponse,
-                    respectForwardCompatibleEnums:
-                        settings?.respectForwardCompatibleEnums ?? this.args.respectForwardCompatibleEnums,
-                    groupEnvironmentsByHost: settings?.groupEnvironmentsByHost ?? this.args.groupEnvironmentsByHost,
-                    removeDiscriminantsFromSchemas:
-                        settings?.removeDiscriminantsFromSchemas ?? this.args.removeDiscriminantsFromSchemas
-                }
+                options: settings,
+                overrides: this.args
             }),
             authOverrides:
                 settings?.auth != null

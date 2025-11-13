@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Refactor how settings from specs are parsed and applied in the CLI.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 0.121.2
+
+- changelogEntry:
+    - summary: |
         Match endpoints to AI overrides examples.
       type: feat
   irVersion: 61
