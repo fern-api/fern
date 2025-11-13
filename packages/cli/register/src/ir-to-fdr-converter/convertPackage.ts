@@ -171,9 +171,12 @@ function convertService(
         if (
             irEndpoint.displayName == null &&
             irEndpoint.source?.type === "openapi" &&
-            irEndpoint.requestBody?.type === "reference"
+            irEndpoint.requestBody?.type === "reference" &&
+            irEndpoint.requestBody.requestBodyType.type === "named"
         ) {
-            const requestTypeName = irEndpoint.requestBody.requestBodyType.typeId;
+            const typeId = irEndpoint.requestBody.requestBodyType.typeId;
+            const typeDeclaration = ir.types[typeId];
+            const requestTypeName = typeDeclaration?.name.name.originalName;
             if (requestTypeName != null && requestTypeName.endsWith("Request")) {
                 const methodName = requestTypeName.slice(0, -"Request".length);
                 endpointName = startCase(methodName);
