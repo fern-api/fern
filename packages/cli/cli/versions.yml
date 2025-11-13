@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add x-fern-playground extension to OpenAPI importer to control API playground visibility. Defaults to true.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-12"
+  version: 0.119.1
+
+- changelogEntry:
+    - summary: |
         Add global `settings` flag to `generators.yml` configuration.
         Overrideable by `api.specs[].settings` (which is itself overrideable by `group.generators[].settings` as before).
       type: feat

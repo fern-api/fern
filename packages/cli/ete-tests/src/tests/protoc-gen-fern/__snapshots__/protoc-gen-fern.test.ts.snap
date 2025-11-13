@@ -94291,6 +94291,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
     }
   },
   "audiences": [],
-  "generationMetadata": null
+  "generationMetadata": null,
+  "apiPlayground": null
 }"
 `;
