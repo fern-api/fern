@@ -1201,6 +1201,8 @@ export class SdkGenerator {
     }
 
     private generateSnippets() {
+        const startTime = performance.now();
+        let snippetCount = 0;
         const rootPackage: PackageId = { isRoot: true };
         this.forEachService((service, packageId) => {
             if (service.endpoints.length === 0) {
@@ -1250,6 +1252,7 @@ export class SdkGenerator {
                     });
 
                     if (snippet != null) {
+                        snippetCount++;
                         const endpointSnippet: FernGeneratorExec.Endpoint = {
                             id: {
                                 path: FernGeneratorExec.EndpointPath(getFullPathForEndpoint(endpoint)),
@@ -1313,6 +1316,10 @@ export class SdkGenerator {
                             },
                             includeImports: false
                         });
+                        
+                        if (referenceSnippet != null) {
+                            snippetCount++;
+                        }
 
                         let statement = undefined;
                         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -1355,6 +1362,13 @@ export class SdkGenerator {
                 }
             }
         });
+        
+        const endTime = performance.now();
+        const totalTime = endTime - startTime;
+        const avgTime = snippetCount > 0 ? totalTime / snippetCount : 0;
+        this.context.logger.debug(
+            `Snippet generation: ${snippetCount} snippets, ${totalTime.toFixed(2)}ms total, ${avgTime.toFixed(2)}ms avg/snippet`
+        );
     }
 
     private getEndpointFunctionName(endpoint: HttpEndpoint): string {
