@@ -70,6 +70,11 @@ export class WireTestDataExtractor {
 
         if ("jsonExample" in request && request.jsonExample !== undefined) {
             rawBody = request.jsonExample;
+
+            // Check if this is an empty object for an optional request body
+            if (this.isEmptyObjectForOptionalRequest(rawBody, endpoint)) {
+                return undefined;
+            }
         } else {
             // Fallback for inlined request bodies that may not have a direct jsonExample
             rawBody = request._visit({
@@ -90,6 +95,33 @@ export class WireTestDataExtractor {
         }
 
         return this.pruneUnionBaseProperties(rawBody, endpoint);
+    }
+
+    /**
+     * Checks if the body is an empty object ({}) for an optional request body type.
+     * Empty objects for optional request bodies should be treated as undefined to skip validation.
+     */
+    private isEmptyObjectForOptionalRequest(body: unknown, endpoint: HttpEndpoint): boolean {
+        if (typeof body !== "object" || body === null || Array.isArray(body)) {
+            return false;
+        }
+
+        const bodyKeys = Object.keys(body);
+        if (bodyKeys.length !== 0) {
+            return false;
+        }
+
+        const requestBody = endpoint.requestBody;
+        if (!requestBody || requestBody.type !== "reference") {
+            return false;
+        }
+
+        const typeRef = requestBody.requestBodyType;
+        if (typeRef.type !== "container") {
+            return false;
+        }
+
+        return typeRef.container.type === "optional";
     }
 
     /**

@@ -1055,9 +1055,9 @@ public class MultipartFormTests
                 .Value?.Trim('"') ?? throw new global::System.Exception("Boundary not found");
     }
 
-    private static MultipartFormRequest CreateMultipartFormRequest()
+    private static SeedMixedFileDirectory.Core.MultipartFormRequest CreateMultipartFormRequest()
     {
-        return new MultipartFormRequest
+        return new SeedMixedFileDirectory.Core.MultipartFormRequest
         {
             BaseUrl = "https://localhost",
             Method = HttpMethod.Post,

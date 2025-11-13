@@ -63932,15 +63932,15 @@
                 "properties": [
                   {
                     "conflict": {},
-                    "generatedName": "metadataCreateItemName",
+                    "generatedName": "metadataCreateOneItemName",
                     "key": "name",
                     "schema": {
-                      "generatedName": "MetadataCreateItemName",
+                      "generatedName": "MetadataCreateOneItemName",
                       "value": {
                         "schema": {
                           "type": "string"
                         },
-                        "generatedName": "MetadataCreateItemName",
+                        "generatedName": "MetadataCreateOneItemName",
                         "groupName": [],
                         "type": "primitive"
                       },
@@ -63951,20 +63951,20 @@
                   },
                   {
                     "conflict": {},
-                    "generatedName": "metadataCreateItemValue",
+                    "generatedName": "metadataCreateOneItemValue",
                     "key": "value",
                     "schema": {
-                      "generatedName": "MetadataCreateItemValue",
+                      "generatedName": "MetadataCreateOneItemValue",
                       "value": {
                         "value": {
                           "schema": {
                             "type": "string"
                           },
-                          "generatedName": "MetadataCreateItemValueItem",
+                          "generatedName": "MetadataCreateOneItemValueItem",
                           "groupName": [],
                           "type": "primitive"
                         },
-                        "generatedName": "MetadataCreateItemValue",
+                        "generatedName": "MetadataCreateOneItemValue",
                         "groupName": [],
                         "type": "array"
                       },
@@ -63975,7 +63975,7 @@
                   }
                 ],
                 "allOfPropertyConflicts": [],
-                "generatedName": "MetadataCreateItem",
+                "generatedName": "MetadataCreateOneItem",
                 "groupName": [],
                 "additionalProperties": false,
                 "source": {
@@ -63984,7 +63984,7 @@
                 },
                 "type": "object"
               },
-              "generatedName": "MetadataCreate",
+              "generatedName": "MetadataCreateOne",
               "groupName": [],
               "type": "array"
             }
@@ -73646,7 +73646,7 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "GenericObjectRefId",
+                      "generatedName": "GenericObjectRefIdZero",
                       "groupName": [],
                       "type": "primitive"
                     },
@@ -73654,7 +73654,7 @@
                       "schema": {
                         "type": "int"
                       },
-                      "generatedName": "GenericObjectRefId",
+                      "generatedName": "GenericObjectRefIdOne",
                       "groupName": [],
                       "type": "primitive"
                     }

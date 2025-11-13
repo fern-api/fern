@@ -23843,6 +23843,7 @@
       }
     }
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_auth": {
       "fernFilepath": {

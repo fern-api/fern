@@ -900,6 +900,16 @@
               "type": "null"
             }
           ]
+        },
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -3505,6 +3515,16 @@
               "type": "null"
             }
           ]
+        },
+        "ai-examples": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -4557,6 +4577,13 @@
         "toolbar"
       ]
     },
+    "docs.FooterNavThemeConfig": {
+      "type": "string",
+      "enum": [
+        "default",
+        "minimal"
+      ]
+    },
     "docs.ThemeConfig": {
       "type": "object",
       "properties": {
@@ -4594,6 +4621,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.PageActionsThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "footer-nav": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FooterNavThemeConfig"
             },
             {
               "type": "null"

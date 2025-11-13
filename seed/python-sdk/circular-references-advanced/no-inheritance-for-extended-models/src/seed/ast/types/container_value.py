@@ -38,7 +38,7 @@ class ContainerValue_Optional(UniversalBaseModel):
 ContainerValue = typing_extensions.Annotated[
     typing.Union[ContainerValue_List, ContainerValue_Optional], pydantic.Field(discriminator="type")
 ]
-from .field_value import FieldValue  # noqa: E402, I001
+from .field_value import FieldValue  # noqa: E402, F401, I001
 
 update_forward_refs(ContainerValue_List)
 update_forward_refs(ContainerValue_Optional)

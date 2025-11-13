@@ -24,6 +24,23 @@ export interface OptionalServiceMethods {
         },
         next: express.NextFunction,
     ): void | Promise<void>;
+    sendOptionalNullableWithAllOptionalProperties(
+        req: express.Request<
+            {
+                actionId: string;
+                id: string;
+            },
+            SeedObjectsWithImports.DeployResponse,
+            (SeedObjectsWithImports.DeployParams | null) | undefined,
+            never
+        >,
+        res: {
+            send: (responseBody: SeedObjectsWithImports.DeployResponse) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
 }
 
 export class OptionalService {
@@ -117,6 +134,49 @@ export class OptionalService {
                     if (error instanceof errors.SeedObjectsWithImportsError) {
                         console.warn(
                             `Endpoint 'sendOptionalTypedBody' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => `${["request", ...error.path].join(" -> ")}: ${error.message}`,
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.post("/deploy/:actionId/versions/:id", async (req, res, next) => {
+            const request = serializers.optional.sendOptionalNullableWithAllOptionalProperties.Request.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.sendOptionalNullableWithAllOptionalProperties(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.DeployResponse.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    }),
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next,
+                    );
+                    if (!res.writableEnded) {
+                        next();
+                    }
+                } catch (error) {
+                    if (error instanceof errors.SeedObjectsWithImportsError) {
+                        console.warn(
+                            `Endpoint 'sendOptionalNullableWithAllOptionalProperties' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
                         );
                         await error.send(res);
                     } else {

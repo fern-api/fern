@@ -577,6 +577,7 @@ Shiki
 shivammathur
 shouldnt
 shrek
+slnx
 slugified
 Slugified
 sniffio
@@ -617,6 +618,7 @@ trevorblades
 trippable
 trivago
 tsconfg
+tsgolint
 tsup
 ttlock
 TVOS

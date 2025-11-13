@@ -81,19 +81,17 @@ class Client(UniversalBaseModel):
     Allowed grant types
     """
 
-    jwt_configuration: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    jwt_configuration: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     JWT configuration for the client
     """
 
-    signing_keys: typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]] = pydantic.Field(
-        default=None
-    )
+    signing_keys: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = pydantic.Field(default=None)
     """
     Client signing keys
     """
 
-    encryption_key: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    encryption_key: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Encryption key
     """
@@ -143,7 +141,7 @@ class Client(UniversalBaseModel):
     Whether this is a Heroku application
     """
 
-    addons: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    addons: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Addons enabled for this client
     """
@@ -153,12 +151,12 @@ class Client(UniversalBaseModel):
     Requested authentication method for the token endpoint
     """
 
-    client_metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    client_metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Metadata associated with the client
     """
 
-    mobile: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    mobile: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Mobile app settings
     """

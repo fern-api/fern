@@ -37854,6 +37854,7 @@
       }
     }
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_getJobPredictions": {
       "fernFilepath": {

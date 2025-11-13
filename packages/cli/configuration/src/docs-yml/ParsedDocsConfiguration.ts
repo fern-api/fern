@@ -168,6 +168,7 @@ export interface VersionInfo
     version: string;
     availability: VersionAvailability | undefined;
     slug: string | undefined;
+    hidden: boolean | undefined;
 }
 
 export type ProductInfo = InternalProduct | ExternalProduct;

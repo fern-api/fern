@@ -19,7 +19,12 @@ package com.fern.java.client.generators;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.ir.model.ir.ApiVersionScheme;
 import com.fern.ir.model.ir.HeaderApiVersionScheme;
+import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.ir.model.ir.PlatformHeaders;
+import com.fern.ir.model.publish.Filesystem;
+import com.fern.ir.model.publish.GithubPublish;
+import com.fern.ir.model.publish.MavenPublishTarget;
+import com.fern.ir.model.publish.PublishingConfig;
 import com.fern.ir.model.types.EnumValue;
 import com.fern.ir.model.variables.VariableDeclaration;
 import com.fern.ir.model.variables.VariableId;
@@ -92,9 +97,41 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .build();
     }
 
+    private static Optional<MavenPublishTarget> extractMavenTarget(PublishingConfig publishConfig) {
+        // Try github.target
+        if (publishConfig.getGithub().isPresent()) {
+            GithubPublish github = publishConfig.getGithub().get();
+            if (github.getTarget().getMaven().isPresent()) {
+                return github.getTarget().getMaven();
+            }
+        }
+
+        // Try direct.target
+        if (publishConfig.getDirect().isPresent()) {
+            com.fern.ir.model.publish.DirectPublish direct =
+                    publishConfig.getDirect().get();
+            if (direct.getTarget().getMaven().isPresent()) {
+                return direct.getTarget().getMaven();
+            }
+        }
+
+        // Try filesystem.publishTarget
+        if (publishConfig.getFilesystem().isPresent()) {
+            Filesystem filesystem = publishConfig.getFilesystem().get();
+            if (filesystem.getPublishTarget().isPresent()
+                    && filesystem.getPublishTarget().get().getMaven().isPresent()) {
+                return filesystem.getPublishTarget().get().getMaven();
+            }
+        }
+
+        return Optional.empty();
+    }
+
     private static Map<String, String> getPlatformHeadersEntries(
-            PlatformHeaders platformHeaders, GeneratorConfig generatorConfig) {
+            PlatformHeaders platformHeaders, GeneratorConfig generatorConfig, IntermediateRepresentation ir) {
         Map<String, String> entries = new HashMap<>();
+
+        // Try generatorConfig.publish first (remote generation)
         if (generatorConfig.getPublish().isPresent()) {
             entries.put(
                     platformHeaders.getSdkName(),
@@ -108,6 +145,19 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     platformHeaders.getSdkVersion(),
                     generatorConfig.getPublish().get().getVersion());
         }
+        // Fallback to IR publishConfig (local generation)
+        else if (ir.getPublishConfig().isPresent()) {
+            Optional<MavenPublishTarget> mavenTarget =
+                    extractMavenTarget(ir.getPublishConfig().get());
+            if (mavenTarget.isPresent()) {
+                mavenTarget.get().getCoordinate().ifPresent(coord -> entries.put(platformHeaders.getSdkName(), coord));
+                mavenTarget
+                        .get()
+                        .getVersion()
+                        .ifPresent(version -> entries.put(platformHeaders.getSdkVersion(), version));
+            }
+        }
+
         if (platformHeaders.getUserAgent().isPresent()) {
             entries.put(
                     platformHeaders.getUserAgent().get().getHeader(),
@@ -179,7 +229,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
         String platformHeadersPutString = getPlatformHeadersEntries(
                         generatorContext.getIr().getSdkConfig().getPlatformHeaders(),
-                        generatorContext.getGeneratorConfig())
+                        generatorContext.getGeneratorConfig(),
+                        generatorContext.getIr())
                 .entrySet()
                 .stream()
                 .map(val -> CodeBlock.of("put($S, $S);", val.getKey(), val.getValue())

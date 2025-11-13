@@ -32,7 +32,7 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "0.140.0-a411fe32c",
+    "@fern-api/fdr-sdk": "0.140.1-406bdf0e3",
     "@fern-api/venus-api-sdk": "0.17.3-3-gf696595",
     "@fern-fern/fdr-test-sdk": "^0.0.5297",
     "@fern-fern/fiddle-sdk": "0.0.656",

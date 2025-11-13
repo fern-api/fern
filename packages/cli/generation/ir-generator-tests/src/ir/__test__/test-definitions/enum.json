@@ -2599,6 +2599,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 }
@@ -3685,6 +3686,508 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
+                    "availability": null,
+                    "docs": null
+                }
+            ],
+            "audiences": null
+        },
+        "service_multipart-form": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "multipart-form",
+                            "camelCase": {
+                                "unsafeName": "multipartForm",
+                                "safeName": "multipartForm"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "multipart_form",
+                                "safeName": "multipart_form"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MULTIPART_FORM",
+                                "safeName": "MULTIPART_FORM"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "MultipartForm",
+                                "safeName": "MultipartForm"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "multipart-form",
+                        "camelCase": {
+                            "unsafeName": "multipartForm",
+                            "safeName": "multipartForm"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "multipart_form",
+                            "safeName": "multipart_form"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "MULTIPART_FORM",
+                            "safeName": "MULTIPART_FORM"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "MultipartForm",
+                            "safeName": "MultipartForm"
+                        }
+                    }
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
+            "endpoints": [
+                {
+                    "id": "endpoint_multipart-form.multipartForm",
+                    "name": {
+                        "originalName": "multipartForm",
+                        "camelCase": {
+                            "unsafeName": "multipartForm",
+                            "safeName": "multipartForm"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "multipart_form",
+                            "safeName": "multipart_form"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "MULTIPART_FORM",
+                            "safeName": "MULTIPART_FORM"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "MultipartForm",
+                            "safeName": "MultipartForm"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": false,
+                    "security": null,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "POST",
+                    "basePath": null,
+                    "path": {
+                        "head": "/multipart",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "multipart",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "type": "fileUpload",
+                        "name": {
+                            "originalName": "MultipartFormRequest",
+                            "camelCase": {
+                                "unsafeName": "multipartFormRequest",
+                                "safeName": "multipartFormRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "multipart_form_request",
+                                "safeName": "multipart_form_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MULTIPART_FORM_REQUEST",
+                                "safeName": "MULTIPART_FORM_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "MultipartFormRequest",
+                                "safeName": "MultipartFormRequest"
+                            }
+                        },
+                        "properties": [
+                            {
+                                "type": "bodyProperty",
+                                "style": null,
+                                "name": {
+                                    "name": {
+                                        "originalName": "color",
+                                        "camelCase": {
+                                            "unsafeName": "color",
+                                            "safeName": "color"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "color",
+                                            "safeName": "color"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "COLOR",
+                                            "safeName": "COLOR"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Color",
+                                            "safeName": "Color"
+                                        }
+                                    },
+                                    "wireValue": "color"
+                                },
+                                "valueType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "Color",
+                                        "camelCase": {
+                                            "unsafeName": "color",
+                                            "safeName": "color"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "color",
+                                            "safeName": "color"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "COLOR",
+                                            "safeName": "COLOR"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Color",
+                                            "safeName": "Color"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:Color",
+                                    "default": null,
+                                    "inline": null
+                                },
+                                "v2Examples": {
+                                    "userSpecifiedExamples": {},
+                                    "autogeneratedExamples": {}
+                                },
+                                "propertyAccess": null,
+                                "availability": null,
+                                "docs": null,
+                                "contentType": null
+                            },
+                            {
+                                "type": "bodyProperty",
+                                "style": null,
+                                "name": {
+                                    "name": {
+                                        "originalName": "maybeColor",
+                                        "camelCase": {
+                                            "unsafeName": "maybeColor",
+                                            "safeName": "maybeColor"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "maybe_color",
+                                            "safeName": "maybe_color"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MAYBE_COLOR",
+                                            "safeName": "MAYBE_COLOR"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "MaybeColor",
+                                            "safeName": "MaybeColor"
+                                        }
+                                    },
+                                    "wireValue": "maybeColor"
+                                },
+                                "valueType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "optional",
+                                        "optional": {
+                                            "_type": "named",
+                                            "name": {
+                                                "originalName": "Color",
+                                                "camelCase": {
+                                                    "unsafeName": "color",
+                                                    "safeName": "color"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "color",
+                                                    "safeName": "color"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "COLOR",
+                                                    "safeName": "COLOR"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Color",
+                                                    "safeName": "Color"
+                                                }
+                                            },
+                                            "fernFilepath": {
+                                                "allParts": [],
+                                                "packagePath": [],
+                                                "file": null
+                                            },
+                                            "displayName": null,
+                                            "typeId": "type_:Color",
+                                            "default": null,
+                                            "inline": null
+                                        }
+                                    }
+                                },
+                                "v2Examples": {
+                                    "userSpecifiedExamples": {},
+                                    "autogeneratedExamples": {}
+                                },
+                                "propertyAccess": null,
+                                "availability": null,
+                                "docs": null,
+                                "contentType": null
+                            },
+                            {
+                                "type": "bodyProperty",
+                                "style": null,
+                                "name": {
+                                    "name": {
+                                        "originalName": "colorList",
+                                        "camelCase": {
+                                            "unsafeName": "colorList",
+                                            "safeName": "colorList"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "color_list",
+                                            "safeName": "color_list"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "COLOR_LIST",
+                                            "safeName": "COLOR_LIST"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "ColorList",
+                                            "safeName": "ColorList"
+                                        }
+                                    },
+                                    "wireValue": "colorList"
+                                },
+                                "valueType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "list",
+                                        "list": {
+                                            "_type": "named",
+                                            "name": {
+                                                "originalName": "Color",
+                                                "camelCase": {
+                                                    "unsafeName": "color",
+                                                    "safeName": "color"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "color",
+                                                    "safeName": "color"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "COLOR",
+                                                    "safeName": "COLOR"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Color",
+                                                    "safeName": "Color"
+                                                }
+                                            },
+                                            "fernFilepath": {
+                                                "allParts": [],
+                                                "packagePath": [],
+                                                "file": null
+                                            },
+                                            "displayName": null,
+                                            "typeId": "type_:Color",
+                                            "default": null,
+                                            "inline": null
+                                        }
+                                    }
+                                },
+                                "v2Examples": {
+                                    "userSpecifiedExamples": {},
+                                    "autogeneratedExamples": {}
+                                },
+                                "propertyAccess": null,
+                                "availability": null,
+                                "docs": null,
+                                "contentType": null
+                            },
+                            {
+                                "type": "bodyProperty",
+                                "style": null,
+                                "name": {
+                                    "name": {
+                                        "originalName": "maybeColorList",
+                                        "camelCase": {
+                                            "unsafeName": "maybeColorList",
+                                            "safeName": "maybeColorList"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "maybe_color_list",
+                                            "safeName": "maybe_color_list"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MAYBE_COLOR_LIST",
+                                            "safeName": "MAYBE_COLOR_LIST"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "MaybeColorList",
+                                            "safeName": "MaybeColorList"
+                                        }
+                                    },
+                                    "wireValue": "maybeColorList"
+                                },
+                                "valueType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "optional",
+                                        "optional": {
+                                            "_type": "container",
+                                            "container": {
+                                                "_type": "list",
+                                                "list": {
+                                                    "_type": "named",
+                                                    "name": {
+                                                        "originalName": "Color",
+                                                        "camelCase": {
+                                                            "unsafeName": "color",
+                                                            "safeName": "color"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "color",
+                                                            "safeName": "color"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "COLOR",
+                                                            "safeName": "COLOR"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Color",
+                                                            "safeName": "Color"
+                                                        }
+                                                    },
+                                                    "fernFilepath": {
+                                                        "allParts": [],
+                                                        "packagePath": [],
+                                                        "file": null
+                                                    },
+                                                    "displayName": null,
+                                                    "typeId": "type_:Color",
+                                                    "default": null,
+                                                    "inline": null
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "v2Examples": {
+                                    "userSpecifiedExamples": {},
+                                    "autogeneratedExamples": {}
+                                },
+                                "propertyAccess": null,
+                                "availability": null,
+                                "docs": null,
+                                "contentType": null
+                            }
+                        ],
+                        "docs": null,
+                        "v2Examples": null,
+                        "contentType": "multipart/form-data"
+                    },
+                    "v2RequestBodies": null,
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "wrapper",
+                            "wrapperName": {
+                                "originalName": "MultipartFormRequest",
+                                "camelCase": {
+                                    "unsafeName": "multipartFormRequest",
+                                    "safeName": "multipartFormRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "multipart_form_request",
+                                    "safeName": "multipart_form_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "MULTIPART_FORM_REQUEST",
+                                    "safeName": "MULTIPART_FORM_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "MultipartFormRequest",
+                                    "safeName": "MultipartFormRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            },
+                            "includePathParameters": false,
+                            "onlyPathParameters": false
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
+                        "streamParameter": null
+                    },
+                    "response": {
+                        "body": null,
+                        "status-code": null
+                    },
+                    "v2Responses": null,
+                    "errors": [],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 }
@@ -4512,6 +5015,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 }
@@ -5432,6 +5936,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 },
@@ -6052,6 +6557,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 }
@@ -7879,6 +8385,296 @@
                 },
                 "examples": null
             },
+            "endpoint_multipart-form.multipartForm": {
+                "auth": null,
+                "declaration": {
+                    "name": {
+                        "originalName": "multipartForm",
+                        "camelCase": {
+                            "unsafeName": "multipartForm",
+                            "safeName": "multipartForm"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "multipart_form",
+                            "safeName": "multipart_form"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "MULTIPART_FORM",
+                            "safeName": "MULTIPART_FORM"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "MultipartForm",
+                            "safeName": "MultipartForm"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "multipart-form",
+                                "camelCase": {
+                                    "unsafeName": "multipartForm",
+                                    "safeName": "multipartForm"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "multipart_form",
+                                    "safeName": "multipart_form"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "MULTIPART_FORM",
+                                    "safeName": "MULTIPART_FORM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "MultipartForm",
+                                    "safeName": "MultipartForm"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "multipart-form",
+                            "camelCase": {
+                                "unsafeName": "multipartForm",
+                                "safeName": "multipartForm"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "multipart_form",
+                                "safeName": "multipart_form"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MULTIPART_FORM",
+                                "safeName": "MULTIPART_FORM"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "MultipartForm",
+                                "safeName": "MultipartForm"
+                            }
+                        }
+                    }
+                },
+                "location": {
+                    "method": "POST",
+                    "path": "/multipart"
+                },
+                "request": {
+                    "type": "inlined",
+                    "declaration": {
+                        "name": {
+                            "originalName": "MultipartFormRequest",
+                            "camelCase": {
+                                "unsafeName": "multipartFormRequest",
+                                "safeName": "multipartFormRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "multipart_form_request",
+                                "safeName": "multipart_form_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MULTIPART_FORM_REQUEST",
+                                "safeName": "MULTIPART_FORM_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "MultipartFormRequest",
+                                "safeName": "MultipartFormRequest"
+                            }
+                        },
+                        "fernFilepath": {
+                            "allParts": [
+                                {
+                                    "originalName": "multipart-form",
+                                    "camelCase": {
+                                        "unsafeName": "multipartForm",
+                                        "safeName": "multipartForm"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "multipart_form",
+                                        "safeName": "multipart_form"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "MULTIPART_FORM",
+                                        "safeName": "MULTIPART_FORM"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "MultipartForm",
+                                        "safeName": "MultipartForm"
+                                    }
+                                }
+                            ],
+                            "packagePath": [],
+                            "file": {
+                                "originalName": "multipart-form",
+                                "camelCase": {
+                                    "unsafeName": "multipartForm",
+                                    "safeName": "multipartForm"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "multipart_form",
+                                    "safeName": "multipart_form"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "MULTIPART_FORM",
+                                    "safeName": "MULTIPART_FORM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "MultipartForm",
+                                    "safeName": "MultipartForm"
+                                }
+                            }
+                        }
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "body": {
+                        "type": "fileUpload",
+                        "properties": [
+                            {
+                                "type": "bodyProperty",
+                                "name": {
+                                    "name": {
+                                        "originalName": "color",
+                                        "camelCase": {
+                                            "unsafeName": "color",
+                                            "safeName": "color"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "color",
+                                            "safeName": "color"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "COLOR",
+                                            "safeName": "COLOR"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Color",
+                                            "safeName": "Color"
+                                        }
+                                    },
+                                    "wireValue": "color"
+                                },
+                                "typeReference": {
+                                    "type": "named",
+                                    "value": "type_:Color"
+                                },
+                                "propertyAccess": null,
+                                "variable": null
+                            },
+                            {
+                                "type": "bodyProperty",
+                                "name": {
+                                    "name": {
+                                        "originalName": "maybeColor",
+                                        "camelCase": {
+                                            "unsafeName": "maybeColor",
+                                            "safeName": "maybeColor"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "maybe_color",
+                                            "safeName": "maybe_color"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MAYBE_COLOR",
+                                            "safeName": "MAYBE_COLOR"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "MaybeColor",
+                                            "safeName": "MaybeColor"
+                                        }
+                                    },
+                                    "wireValue": "maybeColor"
+                                },
+                                "typeReference": {
+                                    "type": "optional",
+                                    "value": {
+                                        "type": "named",
+                                        "value": "type_:Color"
+                                    }
+                                },
+                                "propertyAccess": null,
+                                "variable": null
+                            },
+                            {
+                                "type": "bodyProperty",
+                                "name": {
+                                    "name": {
+                                        "originalName": "colorList",
+                                        "camelCase": {
+                                            "unsafeName": "colorList",
+                                            "safeName": "colorList"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "color_list",
+                                            "safeName": "color_list"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "COLOR_LIST",
+                                            "safeName": "COLOR_LIST"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "ColorList",
+                                            "safeName": "ColorList"
+                                        }
+                                    },
+                                    "wireValue": "colorList"
+                                },
+                                "typeReference": {
+                                    "type": "list",
+                                    "value": {
+                                        "type": "named",
+                                        "value": "type_:Color"
+                                    }
+                                },
+                                "propertyAccess": null,
+                                "variable": null
+                            },
+                            {
+                                "type": "bodyProperty",
+                                "name": {
+                                    "name": {
+                                        "originalName": "maybeColorList",
+                                        "camelCase": {
+                                            "unsafeName": "maybeColorList",
+                                            "safeName": "maybeColorList"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "maybe_color_list",
+                                            "safeName": "maybe_color_list"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MAYBE_COLOR_LIST",
+                                            "safeName": "MAYBE_COLOR_LIST"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "MaybeColorList",
+                                            "safeName": "MaybeColorList"
+                                        }
+                                    },
+                                    "wireValue": "maybeColorList"
+                                },
+                                "typeReference": {
+                                    "type": "optional",
+                                    "value": {
+                                        "type": "list",
+                                        "value": {
+                                            "type": "named",
+                                            "value": "type_:Color"
+                                        }
+                                    }
+                                },
+                                "propertyAccess": null,
+                                "variable": null
+                            }
+                        ]
+                    },
+                    "metadata": {
+                        "includePathParameters": false,
+                        "onlyPathParameters": false
+                    }
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            },
             "endpoint_path-param.send": {
                 "auth": null,
                 "declaration": {
@@ -8594,6 +9390,7 @@
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_headers": {
             "name": {
@@ -8734,6 +9531,80 @@
                 }
             },
             "service": "service_inlined-request",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        },
+        "subpackage_multipart-form": {
+            "name": {
+                "originalName": "multipart-form",
+                "camelCase": {
+                    "unsafeName": "multipartForm",
+                    "safeName": "multipartForm"
+                },
+                "snakeCase": {
+                    "unsafeName": "multipart_form",
+                    "safeName": "multipart_form"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "MULTIPART_FORM",
+                    "safeName": "MULTIPART_FORM"
+                },
+                "pascalCase": {
+                    "unsafeName": "MultipartForm",
+                    "safeName": "MultipartForm"
+                }
+            },
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "multipart-form",
+                        "camelCase": {
+                            "unsafeName": "multipartForm",
+                            "safeName": "multipartForm"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "multipart_form",
+                            "safeName": "multipart_form"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "MULTIPART_FORM",
+                            "safeName": "MULTIPART_FORM"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "MultipartForm",
+                            "safeName": "MultipartForm"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "multipart-form",
+                    "camelCase": {
+                        "unsafeName": "multipartForm",
+                        "safeName": "multipartForm"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "multipart_form",
+                        "safeName": "multipart_form"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "MULTIPART_FORM",
+                        "safeName": "MULTIPART_FORM"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "MultipartForm",
+                        "safeName": "MultipartForm"
+                    }
+                }
+            },
+            "service": "service_multipart-form",
             "types": [],
             "errors": [],
             "subpackages": [],
@@ -8988,6 +9859,7 @@
         "subpackages": [
             "subpackage_headers",
             "subpackage_inlined-request",
+            "subpackage_multipart-form",
             "subpackage_path-param",
             "subpackage_query-param",
             "subpackage_unknown"

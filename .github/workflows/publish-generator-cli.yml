@@ -84,11 +84,18 @@ jobs:
           GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
         run: pnpm turbo compile test --filter=${{ env.PACKAGE_NAME }}
 
+      - name: Setup Node for npm publish
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+          scope: "@fern-api"
+
       - name: Publish generator-cli
         env:
+          NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
           NEW_VERSION: ${{ needs.check-version.outputs.version }}
         run: |
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           cd packages/generator-cli
           mv package.json package.json.tmp
           version_replace="s/0.0.0/${NEW_VERSION}/"

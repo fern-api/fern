@@ -109,6 +109,12 @@ func run(fn GeneratorFunc) (retErr error) {
 	if err != nil {
 		return err
 	}
+
+	// Normalize the version by adding 'v' prefix if missing (Go convention)
+	if config.Version != "" && !strings.HasPrefix(config.Version, "v") {
+		config.Version = "v" + config.Version
+	}
+
 	coordinator := coordinator.NewClient(config.CoordinatorURL, config.CoordinatorTaskID)
 	if err := coordinator.Init(); err != nil {
 		return err

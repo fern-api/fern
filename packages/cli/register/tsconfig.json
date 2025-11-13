@@ -43,6 +43,9 @@
     },
     {
       "path": "../workspace/commons"
+    },
+    {
+      "path": "../api-importers/openapi-pruner"
     }
   ]
 }

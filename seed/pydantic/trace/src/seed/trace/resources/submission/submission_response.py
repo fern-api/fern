@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..commons.problem_id import ProblemId
 from .code_execution_update import CodeExecutionUpdate
@@ -67,11 +68,14 @@ class SubmissionResponse_Terminated(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-SubmissionResponse = typing.Union[
-    SubmissionResponse_ServerInitialized,
-    SubmissionResponse_ProblemInitialized,
-    SubmissionResponse_WorkspaceInitialized,
-    SubmissionResponse_ServerErrored,
-    SubmissionResponse_CodeExecutionUpdate,
-    SubmissionResponse_Terminated,
+SubmissionResponse = typing_extensions.Annotated[
+    typing.Union[
+        SubmissionResponse_ServerInitialized,
+        SubmissionResponse_ProblemInitialized,
+        SubmissionResponse_WorkspaceInitialized,
+        SubmissionResponse_ServerErrored,
+        SubmissionResponse_CodeExecutionUpdate,
+        SubmissionResponse_Terminated,
+    ],
+    pydantic.Field(discriminator="type"),
 ]

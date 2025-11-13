@@ -29,4 +29,7 @@ class TestSubmissionState(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from ...commons.types.key_value_pair import KeyValuePair  # noqa: E402, F401, I001
+from ...commons.types.map_value import MapValue  # noqa: E402, F401, I001
+
 update_forward_refs(TestSubmissionState)

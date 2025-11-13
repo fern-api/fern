@@ -1,4 +1,5 @@
 import { type Generation } from "../../context/generation-info";
+import { Block } from "../code/Block";
 import { type ClassInstantiation } from "../code/ClassInstantiation";
 import { MethodInvocation } from "../code/MethodInvocation";
 import { AstNode } from "../core/AstNode";
@@ -8,14 +9,14 @@ import { Annotation } from "../language/Annotation";
 import { CodeBlock } from "../language/CodeBlock";
 import { Parameter } from "../language/Parameter";
 import { XmlDocBlock } from "../language/XmlDocBlock";
-import { BaseType } from "./BaseType";
 import { ClassReference } from "./ClassReference";
+import { DefinedType } from "./DefinedType";
 import { Field } from "./Field";
 import { Interface } from "./Interface";
 import { MethodType } from "./Method";
 import { Type } from "./Type";
 
-export class Class extends BaseType {
+export class Class extends DefinedType {
     public static readonly ClassType = {
         Class: "class",
         Record: "record",
@@ -79,12 +80,10 @@ export class Class extends BaseType {
         this.primaryConstructor = primaryConstructor;
     }
 
-    public addConstructors(constructors: Class.Constructor[]): void {
-        constructors.forEach((constructor) => this.addConstructor(constructor));
-    }
-
-    public addConstructor(constructor: Class.Constructor): void {
-        this.constructors.push(constructor);
+    public addConstructor(constructor: Class.Constructor.Args): Class.Constructor {
+        const ctor = new Class.Constructor(constructor, this.generation);
+        this.constructors.push(ctor);
+        return ctor;
     }
 
     public addNestedClass(subClassArgs: Class.Args): Class;
@@ -251,7 +250,7 @@ export class Class extends BaseType {
                 constructor.baseConstructorCall.write(writer);
             }
             writer.pushScope();
-            constructor.body?.write(writer);
+            constructor.body.write(writer);
             writer.popScope();
             writer.newLine();
         });
@@ -346,6 +345,10 @@ export class Class extends BaseType {
         return this.fields;
     }
 
+    public override get isReferenceType(): boolean {
+        return this.type === Class.ClassType.Class || this.type === Class.ClassType.Record;
+    }
+
     private writeOperator({ writer, operator }: { writer: Writer; operator: Class.Operator }): void {
         writer.write("public static ");
         if (operator.type === Class.CastOperator.Type.Explicit || operator.type === Class.CastOperator.Type.Implicit) {
@@ -384,7 +387,7 @@ export class Class extends BaseType {
 
 export namespace Class {
     export type ClassType = (typeof Class.ClassType)[keyof typeof Class.ClassType];
-    export interface Args extends BaseType.Args {
+    export interface Args extends DefinedType.Args {
         /* Defaults to false */
         static_?: boolean;
         /* Defaults to false */
@@ -406,16 +409,52 @@ export namespace Class {
         primaryConstructor?: PrimaryConstructor;
     }
 
-    export interface Constructor {
+    export namespace Constructor {
+        export interface Args {
+            /* The XML doc block for the constructor */
+            doc?: XmlDocBlock.Like;
+            /* The body of the constructor */
+            body?: CodeBlock;
+            /* The parameters of the constructor */
+            parameters?: Parameter[];
+            /* The access of the constructor */
+            access?: Access;
+            /* The base constructor call, ex: public SomeClassName(string message) : base(message) { } */
+            baseConstructorCall?: MethodInvocation;
+        }
+    }
+    export class Constructor {
+        /** The XML doc block for the constructor */
         doc?: XmlDocBlock.Like;
         /* The body of the constructor */
-        body?: CodeBlock;
+        body: Block;
         /* The parameters of the constructor */
         parameters: Parameter[];
         /* The access of the constructor */
         access: Access;
         /* The base constructor call, ex: public SomeClassName(string message) : base(message) { } */
         baseConstructorCall?: MethodInvocation;
+
+        constructor(
+            { doc, body, parameters, access, baseConstructorCall }: Constructor.Args,
+            private readonly generation: Generation
+        ) {
+            this.parameters = parameters ?? [];
+            this.access = access ?? Access.Public;
+            this.doc = doc;
+            this.body = new Block({}, this.generation);
+            if (body != null) {
+                this.body.append(body as CodeBlock);
+            }
+
+            this.baseConstructorCall = baseConstructorCall;
+        }
+
+        addParameter(args: Parameter.Args) {
+            const parameter = new Parameter(args, this.generation);
+            this.parameters.push(parameter);
+            return parameter;
+        }
     }
 
     export interface PrimaryConstructor {

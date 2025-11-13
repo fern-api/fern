@@ -24,4 +24,8 @@ export interface ExperimentalConfig {
      * Enable dynamic snippets in `docs.yml`, then configure them by following the SDK snippets setup instructions.
      */
     dynamicSnippets?: boolean;
+    /**
+     * Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
+     */
+    aiExamples?: boolean;
 }
