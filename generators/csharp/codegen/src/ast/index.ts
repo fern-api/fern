@@ -32,9 +32,7 @@ export { ClassReference } from "./types/ClassReference";
 export { Enum } from "./types/Enum";
 export { Field } from "./types/Field";
 export { Interface } from "./types/Interface";
+export { type Type } from "./types/IType";
 export { Method, MethodType } from "./types/Method";
 export { TestClass } from "./types/TestClass";
-export {
-    convertReadOnlyPrimitiveTypes,
-    type Type
-} from "./types/Type";
+export { convertReadOnlyPrimitiveTypes } from "./types/Type";

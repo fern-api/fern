@@ -142,12 +142,12 @@ public record Data
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Data>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(Data).IsAssignableFrom(typeToConvert);
 
         public override Data Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

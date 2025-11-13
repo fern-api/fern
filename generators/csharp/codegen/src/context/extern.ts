@@ -1,4 +1,4 @@
-import { type Type } from "../ast/types/Type";
+import { type Type } from "../ast/types/IType";
 import { type Generation } from "../context/generation-info";
 import { lazy } from "../utils/lazy";
 
@@ -30,7 +30,10 @@ export class Extern {
             this.csharp.classReference({
                 name: "Action",
                 namespace: "System",
-                generics: typeParameters ? typeParameters : undefined
+                generics: typeParameters ? typeParameters : undefined,
+                multipartMethodName: null, // can not be added to multipart form
+                multipartMethodNameForCollection: null, // can not be added to multipart form
+                isReferenceType: true // is historically a "reference" type
             }),
         /**
          * Creates a reference to System.Func<TArgs..., TResult> delegate.
@@ -49,7 +52,10 @@ export class Extern {
                         : typeParameters
                     : returnType
                       ? [returnType]
-                      : undefined
+                      : undefined,
+                multipartMethodName: null, // can not be added to multipart form
+                multipartMethodNameForCollection: null, // can not be added to multipart form,
+                isReferenceType: true // is historically a "reference" type
             }),
         /**
          * Reference to System.DateOnly class.
@@ -115,6 +121,20 @@ export class Extern {
                 namespace: "System"
             }),
 
+        /**
+         * Reference to System.Type class.
+         *
+         * @returns A ClassReference for System.Type
+         */
+        Type: () =>
+            this.csharp.classReference({
+                name: "Type",
+                namespace: "System",
+                isReferenceType: true,
+                multipartMethodName: null, // can not be added to multipart form
+                multipartMethodNameForCollection: null, // can not be added to multipart form
+                fullyQualified: true
+            }),
         /**
          * Reference to System.TimeSpan class.
          */

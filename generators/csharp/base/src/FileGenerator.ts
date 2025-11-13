@@ -59,9 +59,6 @@ export abstract class FileGenerator<GeneratedFile extends File, Context extends 
     protected get Collection() {
         return this.generation.Collection;
     }
-    protected get Special() {
-        return this.generation.Special;
-    }
 
     public generate(): GeneratedFile {
         if (this.shouldGenerate()) {

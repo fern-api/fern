@@ -79,7 +79,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
         this.accessTokenField = this.cls.addField({
             origin: this.cls.explicit("_accessToken"),
             access: ast.Access.Private,
-            type: this.Primitive.string.toOptionalIfNotAlready()
+            type: this.Primitive.string.asOptional()
         });
 
         this.expiresAtField =
@@ -88,7 +88,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
                 : this.cls.addField({
                       origin: this.cls.explicit("_expiresAt"),
                       access: ast.Access.Private,
-                      type: this.Value.dateTime.toOptionalIfNotAlready()
+                      type: this.Value.dateTime.asOptional()
                   });
 
         this.clientIdField = this.cls.addField({
