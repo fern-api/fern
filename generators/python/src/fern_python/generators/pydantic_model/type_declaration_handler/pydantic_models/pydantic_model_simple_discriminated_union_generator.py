@@ -1,6 +1,4 @@
-from typing import List, Optional, Set, Union
-
-from ordered_set import OrderedSet
+from typing import List, Optional, Union
 
 from ....context.pydantic_generator_context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig, UnionNamingVersions
@@ -19,6 +17,7 @@ from fern_python.generators.pydantic_model.type_declaration_handler.discriminate
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 from fern_python.pydantic_codegen.pydantic_field import FernAwarePydanticField
 from fern_python.snippet import SnippetWriter
+from ordered_set import OrderedSet
 
 import fern.ir.resources as ir_types
 
@@ -103,7 +102,6 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
         return get_single_union_type_class_name(
             self._name, single_union_type.discriminant_value, self._custom_config.union_naming
         )
-
 
     def _generate_no_property_member(
         self, class_name: str, discriminant_field: FernAwarePydanticField
@@ -203,7 +201,6 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
                     as_request=False,
                 )
             )
-
 
     # Really needed since we're not using a FernAwarePydanticModel for single property members
     #
