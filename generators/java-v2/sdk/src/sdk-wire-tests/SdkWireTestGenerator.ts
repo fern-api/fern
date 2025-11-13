@@ -297,8 +297,7 @@ export class SdkWireTestGenerator {
                 }
             }
 
-            writer.dedent();
-            writer.writeLine("}");
+            this.testClassBuilder.closeTestClass(writer);
         });
 
         return {
