@@ -211,6 +211,47 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         }
     }
 
+    public isDirectLiteral(typeReference: FernIr.dynamic.TypeReference): boolean {
+        return typeReference.type === "literal";
+    }
+
+    public sortTypeInstancesByRequiredFirst(
+        instances: Array<{
+            name: FernIr.dynamic.NameAndWireValue;
+            typeReference: FernIr.dynamic.TypeReference;
+            value: unknown;
+        }>,
+        parameters: FernIr.dynamic.NamedParameter[]
+    ): Array<{ name: FernIr.dynamic.NameAndWireValue; typeReference: FernIr.dynamic.TypeReference; value: unknown }> {
+        const indexMap = new Map<string, number>();
+        parameters.forEach((param, index) => {
+            indexMap.set(param.name.wireValue, index);
+        });
+
+        const required: Array<{
+            name: FernIr.dynamic.NameAndWireValue;
+            typeReference: FernIr.dynamic.TypeReference;
+            value: unknown;
+        }> = [];
+        const optional: Array<{
+            name: FernIr.dynamic.NameAndWireValue;
+            typeReference: FernIr.dynamic.TypeReference;
+            value: unknown;
+        }> = [];
+
+        for (const instance of instances) {
+            if (this.isOptional(instance.typeReference)) {
+                optional.push(instance);
+            } else {
+                required.push(instance);
+            }
+        }
+
+        required.sort((a, b) => (indexMap.get(a.name.wireValue) ?? 0) - (indexMap.get(b.name.wireValue) ?? 0));
+
+        return [...required, ...optional];
+    }
+
     public getRootPackageName(): string {
         const tokens = this.getPackagePrefixTokens();
         return this.joinPackageTokens(tokens);
