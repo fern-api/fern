@@ -15,7 +15,7 @@ com.fern.fern:generator-exec-client = 0.0.806
 # testing
 org.junit.jupiter:* = 5.5.0
 org.assertj:* = 3.19.0
-org.mockito:* = 5.14.2
+org.mockito:* = 4.11.0
 io.github.origin-energy:java-snapshot-* = 3.3.2
 
 # jackson
