@@ -388,7 +388,7 @@ describe("test", () => {
             return false;
         }
 
-        if (!this.ir.auth.schemes.find((s) => s.type === "inferred")) {
+        if (!this.ir.auth.schemes.find((s) => s.type === "inferred" || s.type === "oauth")) {
             return false;
         }
 
@@ -403,45 +403,45 @@ describe("test", () => {
             },
             this.relativeTestPath
         );
-        const authScheme = this.ir.auth.schemes.find((s) => s.type === "inferred");
-        if (!authScheme) {
-            return undefined;
-        }
-        const endpointId = authScheme.tokenEndpoint.endpoint.endpointId;
-        const serviceId = authScheme.tokenEndpoint.endpoint.serviceId;
 
-        const service = this.ir.services[serviceId];
-        if (!service) {
-            throw new Error("Service not found");
-        }
+        // Check for inferred auth scheme
+        const inferredAuthScheme = this.ir.auth.schemes.find((s) => s.type === "inferred");
+        if (inferredAuthScheme) {
+            const endpointId = inferredAuthScheme.tokenEndpoint.endpoint.endpointId;
+            const serviceId = inferredAuthScheme.tokenEndpoint.endpoint.serviceId;
 
-        const endpoint = service.endpoints.find((e) => e.id === endpointId);
-        if (!endpoint) {
-            throw new Error("Endpoint not found");
-        }
+            const service = this.ir.services[serviceId];
+            if (!service) {
+                throw new Error("Service not found");
+            }
 
-        const successfulExamples = getExampleEndpointCalls(endpoint).filter(
-            (example) => example.response.type === "ok"
-        );
-        const example = successfulExamples[0];
-        if (!example) {
-            return;
-        }
+            const endpoint = service.endpoints.find((e) => e.id === endpointId);
+            if (!endpoint) {
+                throw new Error("Endpoint not found");
+            }
 
-        if (example.response.type !== "ok") {
-            context.logger.warn("No successful response found to mock auth in wire tests.");
-            return;
-        }
+            const successfulExamples = getExampleEndpointCalls(endpoint).filter(
+                (example) => example.response.type === "ok"
+            );
+            const example = successfulExamples[0];
+            if (!example) {
+                return;
+            }
 
-        const rawRequestBody = this.getRequestExample(example.request);
-        const rawResponseBody = this.getResponseExample(example.response);
-        const responseStatusCode = getExampleResponseStatusCode({
-            response: example.response,
-            ir: this.ir
-        });
-        const mockBodyMethod = this.getMockBodyMethod(endpoint);
+            if (example.response.type !== "ok") {
+                context.logger.warn("No successful response found to mock auth in wire tests.");
+                return;
+            }
 
-        return code`
+            const rawRequestBody = this.getRequestExample(example.request);
+            const rawResponseBody = this.getResponseExample(example.response);
+            const responseStatusCode = getExampleResponseStatusCode({
+                response: example.response,
+                ir: this.ir
+            });
+            const mockBodyMethod = this.getMockBodyMethod(endpoint);
+
+            return code`
 export function mockAuth(server: MockServer) {
     ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
     ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
@@ -467,6 +467,81 @@ export function mockAuth(server: MockServer) {
         }.build();
 }
 `;
+        }
+
+        // Check for OAuth scheme
+        const oauthScheme = this.ir.auth.schemes.find((s) => s.type === "oauth");
+        if (oauthScheme) {
+            const oauthConfig = oauthScheme.configuration;
+            if (oauthConfig.type !== "clientCredentials") {
+                context.logger.warn("Only client credentials OAuth is supported for wire tests.");
+                return;
+            }
+
+            const tokenEndpoint = oauthConfig.tokenEndpoint;
+            const endpointId = tokenEndpoint.endpointReference.endpointId;
+            const serviceId = tokenEndpoint.endpointReference.serviceId;
+
+            const service = this.ir.services[serviceId];
+            if (!service) {
+                throw new Error("Service not found");
+            }
+
+            const endpoint = service.endpoints.find((e) => e.id === endpointId);
+            if (!endpoint) {
+                throw new Error("Endpoint not found");
+            }
+
+            const successfulExamples = getExampleEndpointCalls(endpoint).filter(
+                (example) => example.response.type === "ok"
+            );
+            const example = successfulExamples[0];
+            if (!example) {
+                return;
+            }
+
+            if (example.response.type !== "ok") {
+                context.logger.warn("No successful response found to mock OAuth token endpoint in wire tests.");
+                return;
+            }
+
+            const rawRequestBody = this.getRequestExample(example.request);
+            const rawResponseBody = this.getResponseExample(example.response);
+            const responseStatusCode = getExampleResponseStatusCode({
+                response: example.response,
+                ir: this.ir
+            });
+            const mockBodyMethod = this.getMockBodyMethod(endpoint);
+
+            return code`
+export function mockAuth(server: MockServer) {
+    ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
+    ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
+    server
+        .mockEndpoint()
+        .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders.map((h) => {
+            return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+                `;
+        })}${example.endpointHeaders.map((h) => {
+            return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+                `;
+        })}${
+            rawRequestBody
+                ? code`.${mockBodyMethod}(rawRequestBody)
+            `
+                : ""
+        }.respondWith()
+        .statusCode(${responseStatusCode})${
+            rawResponseBody
+                ? code`.jsonBody(rawResponseBody)
+            `
+                : ""
+        }.build();
+}
+`;
+        }
+
+        return undefined;
     }
 
     private getAuthClientOptions(context: SdkContext): Record<string, Code> {
@@ -1015,9 +1090,9 @@ describe("${serviceName}", () => {
                     case "header":
                         return false; // supported
                     case "inferred":
-                        return false; // TODO: handle inferred auth scheme
+                        return false; // supported
                     case "oauth":
-                        return true; // not supported
+                        return false; // supported
                     default:
                         assertNever(scheme);
                 }
