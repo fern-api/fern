@@ -30,7 +30,6 @@ import {
     Reference
 } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
-import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator";
 import path from "path";
 import { Directory, ts } from "ts-morph";
 import { arrayOf, Code, code, literalOf } from "ts-poet";
@@ -383,16 +382,47 @@ describe("test", () => {
         };
     }
 
+    private canMockOAuth(): boolean {
+        const oauthScheme = this.ir.auth.schemes.find((s) => s.type === "oauth");
+        if (!oauthScheme) {
+            return false;
+        }
+
+        const oauthConfig = oauthScheme.configuration;
+        if (oauthConfig.type !== "clientCredentials") {
+            return false;
+        }
+
+        const tokenEndpoint = oauthConfig.tokenEndpoint;
+        const endpointId = tokenEndpoint.endpointReference.endpointId;
+        const serviceId = tokenEndpoint.endpointReference.serviceId;
+
+        const service = this.ir.services[serviceId];
+        if (!service) {
+            return false;
+        }
+
+        const endpoint = service.endpoints.find((e) => e.id === endpointId);
+        if (!endpoint) {
+            return false;
+        }
+
+        const successfulExamples = getExampleEndpointCalls(endpoint).filter(
+            (example) => example.response.type === "ok"
+        );
+
+        return successfulExamples.length > 0;
+    }
+
     public shouldBuildMockAuthFile({ context }: { context: SdkContext }): boolean {
         if (!this.generateWireTests) {
             return false;
         }
 
-        if (!this.ir.auth.schemes.find((s) => s.type === "inferred" || s.type === "oauth")) {
-            return false;
-        }
+        const hasInferred = this.ir.auth.schemes.find((s) => s.type === "inferred") != null;
+        const hasOAuth = this.canMockOAuth();
 
-        return true;
+        return hasInferred || hasOAuth;
     }
 
     public buildMockAuthFile({ context }: { context: SdkContext }): Code | undefined {
@@ -558,10 +588,73 @@ export function mockAuth(server: MockServer) {
                     authOptions[schema.username.camelCase.unsafeName] = code`"test"`;
                     authOptions[schema.password.camelCase.unsafeName] = code`"test"`;
                 },
-                oauth: () => {
-                    // noop
-                    authOptions[OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME] = code`"test"`;
-                    authOptions[OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME] = code`"test"`;
+                oauth: (oauthScheme) => {
+                    if (!this.canMockOAuth()) {
+                        return;
+                    }
+
+                    const oauthConfig = oauthScheme.configuration;
+                    if (oauthConfig.type !== "clientCredentials") {
+                        return;
+                    }
+
+                    const tokenEndpoint = oauthConfig.tokenEndpoint;
+                    const endpointId = tokenEndpoint.endpointReference.endpointId;
+                    const serviceId = tokenEndpoint.endpointReference.serviceId;
+
+                    const service = this.ir.services[serviceId];
+                    if (!service) {
+                        return;
+                    }
+
+                    const endpoint = service.endpoints.find((e) => e.id === endpointId);
+                    if (!endpoint) {
+                        return;
+                    }
+
+                    const successfulExamples = getExampleEndpointCalls(endpoint).filter(
+                        (example) => example.response.type === "ok"
+                    );
+                    const example = successfulExamples[0];
+                    if (!example) {
+                        return;
+                    }
+
+                    if (example.response.type !== "ok") {
+                        return;
+                    }
+
+                    const requestProperties = oauthConfig.tokenEndpoint.requestProperties;
+                    const clientIdPropertyName = requestProperties.clientId.property.name.name.camelCase.safeName;
+                    const clientSecretPropertyName =
+                        requestProperties.clientSecret.property.name.name.camelCase.safeName;
+
+                    example.request?._visit({
+                        inlinedRequestBody: (value) => {
+                            value.properties.forEach((p) => {
+                                const propertyName = p.name.name.camelCase.safeName;
+                                if (propertyName === clientIdPropertyName) {
+                                    authOptions.clientId = this.createRawJsonExample({
+                                        example: p.value,
+                                        isForRequest: true,
+                                        isForResponse: false
+                                    });
+                                } else if (propertyName === clientSecretPropertyName) {
+                                    authOptions.clientSecret = this.createRawJsonExample({
+                                        example: p.value,
+                                        isForRequest: true,
+                                        isForResponse: false
+                                    });
+                                }
+                            });
+                        },
+                        reference: () => {
+                            // noop
+                        },
+                        _other: () => {
+                            // noop
+                        }
+                    });
                 },
                 inferred: (auth) => {
                     const service = this.ir.services[auth.tokenEndpoint.endpoint.serviceId];
