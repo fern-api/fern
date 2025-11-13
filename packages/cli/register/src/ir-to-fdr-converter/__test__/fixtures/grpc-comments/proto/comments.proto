@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package comments.v1;
+
+option go_package = "github.com/fern-api/fern/comments/v1";
+
+import "google/api/annotations.proto";
+
+service CommentsService {
+  // buf:lint:ignore RPC_REQUEST_STANDARD_NAME
+  // Create a comment on a resource
+  rpc CreateComment(CreateCommentRequest) returns (CreateCommentResponse) {
+    option (google.api.http) = {
+      post: "/comments/v1/comments"
+      response_body: "comment"
+      body: "*"
+    };
+  }
+}
+
+message CreateCommentRequest {
+  string resource_id = 1;
+  string text = 2;
+  string author = 3;
+}
+
+message CreateCommentResponse {
+  Comment comment = 1;
+}
+
+message Comment {
+  string id = 1;
+  string resource_id = 2;
+  string text = 3;
+  string author = 4;
+  int64 created_at = 5;
+}

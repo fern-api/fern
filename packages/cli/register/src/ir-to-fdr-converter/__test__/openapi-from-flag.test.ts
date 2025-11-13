@@ -370,4 +370,65 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         const rootApi = definition.rootApiFile?.contents;
         expect(rootApi).toBeDefined();
     });
+
+    it("should handle gRPC proto with comments service", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/grpc-comments")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "grpc-comments"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for gRPC processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate auth was processed correctly
+        expect(intermediateRepresentation.auth).toBeDefined();
+        expect(fdrApiDefinition.authSchemes).toBeDefined();
+
+        // Validate services and endpoints
+        expect(intermediateRepresentation.services).toBeDefined();
+        expect(fdrApiDefinition.subpackages).toBeDefined();
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/grpc-comments-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/grpc-comments-ir.snap");
+    });
 });
