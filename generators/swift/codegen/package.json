@@ -44,6 +44,6 @@
     "@types/number-to-words": "1.2.3",
     "depcheck": "^1.4.7",
     "typescript": "5.9.2",
-    "vitest": "^2.1.9"
+    "vitest": "^4.0.8"
   }
 }

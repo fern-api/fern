@@ -8,6 +8,37 @@ import { OpenAPI } from "openapi-types";
 import { mergeWithOverrides } from "../loaders/mergeWithOverrides";
 import { parseOpenAPI } from "./parseOpenAPI";
 
+/**
+ * Attempts to find a matching OpenAPI path template for a given example path.
+ * Handles the case where example paths use literal parameter values while
+ * OpenAPI specs use templated parameters in curly braces.
+ *
+ * @param examplePath - Path with literal parameter values (e.g., "/apis/apiId/versions/versionId")
+ * @param availablePaths - OpenAPI path templates (e.g., ["/apis/{apiId}/versions/{versionId}"])
+ * @returns The matching OpenAPI path template, or undefined if no match found
+ */
+function findMatchingOpenAPIPath(examplePath: string, availablePaths: string[]): string | undefined {
+    // First try exact match
+    if (availablePaths.includes(examplePath)) {
+        return examplePath;
+    }
+
+    // Try to match path parameters
+    // Example: /apis/apiId/versions/versionId should match /apis/{apiId}/versions/{versionId}
+    for (const openApiPath of availablePaths) {
+        // Convert OpenAPI path template to regex
+        // /apis/{apiId}/versions/{versionId} -> /apis/([^/]+)/versions/([^/]+)
+        const regexPattern = openApiPath.replace(/\{[^}]+\}/g, "([^/]+)");
+        const regex = new RegExp(`^${regexPattern}$`);
+
+        if (regex.test(examplePath)) {
+            return openApiPath;
+        }
+    }
+
+    return undefined;
+}
+
 // NOTE: This will affect any property that is explicitly named with this. This will preserve null values underneath
 // the key or any descendants. This is an extreme edge case, but if we want to strip these, we will have to change
 // mergeWithOverrides with a more specific grammar.
@@ -74,7 +105,21 @@ export async function loadOpenAPI({
                 if (methods && typeof methods === "object") {
                     for (const [method, methodData] of Object.entries(methods)) {
                         const lowerMethod = method.toLowerCase();
-                        const pathItem = result.paths[path];
+                        // Try exact match first
+                        let pathItem = result.paths[path];
+
+                        // If no exact match, try pattern matching for path parameters
+                        // Example: /apis/apiId/versions/versionId should match /apis/{apiId}/versions/{versionId}
+                        if (!pathItem && result.paths) {
+                            const matchingPath = findMatchingOpenAPIPath(path, Object.keys(result.paths));
+                            if (matchingPath) {
+                                pathItem = result.paths[matchingPath];
+                                context.logger.debug(
+                                    `Matched override path "${path}" to OpenAPI path "${matchingPath}" using pattern matching`
+                                );
+                            }
+                        }
+
                         if (pathItem && typeof pathItem === "object") {
                             const pathItemObj = pathItem as Record<string, unknown>;
                             const operation = pathItemObj[lowerMethod];

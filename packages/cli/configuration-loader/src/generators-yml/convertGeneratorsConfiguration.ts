@@ -143,7 +143,7 @@ export function parseBaseApiDefinitionSettingsSchema(
         ...UNDEFINED_API_DEFINITION_SETTINGS,
         shouldUseTitleAsName: settings?.["title-as-schema-name"],
         shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"],
-        shouldUseOptionalAdditionalProperties: settings?.["optional-additional-properties"] ?? true,
+        shouldUseOptionalAdditionalProperties: settings?.["optional-additional-properties"],
         coerceEnumsToLiterals: settings?.["coerce-enums-to-literals"],
         respectNullableSchemas: settings?.["respect-nullable-schemas"],
         wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"],
