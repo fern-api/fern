@@ -18,6 +18,7 @@ async function main() {
             DEFAULT_FIDDLE_ORIGIN: "https://fiddle-coordinator-dev2.buildwithfern.com",
             DEFAULT_VENUS_ORIGIN: "https://venus-dev2.buildwithfern.com",
             DEFAULT_FDR_ORIGIN: "https://registry-dev2.buildwithfern.com",
+            DEFAULT_FDR_LAMBDA_ORIGIN: "https://registry-v2-dev2.buildwithfern.com",
             VENUS_AUDIENCE: "venus-dev",
             LOCAL_STORAGE_FOLDER: ".fern-dev",
             POSTHOG_API_KEY: null,

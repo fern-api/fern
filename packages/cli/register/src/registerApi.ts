@@ -56,7 +56,14 @@ export async function registerApi({
         const openApiSource = sources.find((source) => source.type === "openapi");
         const sourceFilePath = openApiSource?.absoluteFilePath;
 
-        apiDefinition = await enhanceExamplesWithAI(apiDefinition, aiEnhancerConfig, context, sourceFilePath);
+        apiDefinition = await enhanceExamplesWithAI(
+            apiDefinition,
+            aiEnhancerConfig,
+            context,
+            token,
+            organization,
+            sourceFilePath
+        );
     }
 
     const response = await fdrService.api.v1.register.registerApiDefinition({
