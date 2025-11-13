@@ -44,9 +44,9 @@
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/ir-utils": "workspace:*",
     "@fern-api/lazy-fern-workspace": "workspace:*",
+    "@fern-api/openapi-pruner": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-api/openapi-pruner": "workspace:*",
     "@types/js-yaml": "^4.0.8",
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",
@@ -59,6 +59,6 @@
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",
-    "vitest": "^2.1.9"
+    "vitest": "^4.0.8"
   }
 }

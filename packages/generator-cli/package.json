@@ -22,21 +22,21 @@
     "test:update": "vitest -u --run --passWithNoTests --globals --disable-console-intercept"
   },
   "devDependencies": {
-    "@octokit/rest": "^20.1.2",
-    "es-toolkit": "^1.32.0",
+    "@fern-api/configs": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/github": "workspace:*",
-    "@fern-api/configs": "workspace:*",
+    "@octokit/rest": "^20.1.2",
     "@types/jest": "^29.5.11",
     "@types/node": "^22.0.0",
     "@types/yargs": "^17.0.32",
     "depcheck": "^1.4.7",
-    "esbuild": "^0.24.2",
+    "es-toolkit": "^1.32.0",
+    "esbuild": "^0.25.0",
     "execa": "^9.5.1",
     "tmp-promise": "^3.0.3",
     "tsup": "^8.5.0",
     "typescript": "5.9.3",
-    "vitest": "^2.1.9",
+    "vitest": "^4.0.8",
     "yargs": "^17.4.1"
   }
 }
