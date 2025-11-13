@@ -521,7 +521,11 @@ export class EndpointSnippetGenerator {
                         useOf: true
                     });
                 }
-                return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value, as: "request" });
+                return this.context.dynamicTypeLiteralMapper.convert({
+                    typeReference: body.value,
+                    value,
+                    as: "request"
+                });
             }
             default:
                 assertNever(body);
@@ -798,7 +802,11 @@ export class EndpointSnippetGenerator {
             case "bytes":
                 return this.getBytesBodyRequestArg({ value });
             case "typeReference":
-                return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value, as: "request" });
+                return this.context.dynamicTypeLiteralMapper.convert({
+                    typeReference: body.value,
+                    value,
+                    as: "request"
+                });
             default:
                 assertNever(body);
         }
