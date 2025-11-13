@@ -1696,8 +1696,7 @@ export class SdkGenerator {
             const package_ = this.packageResolver.resolvePackage(packageId);
 
             const hasClient =
-                package_.hasEndpointsInTree ||
-                (this.shouldGenerateWebsocketClients && package_.websocket != null);
+                package_.hasEndpointsInTree || (this.shouldGenerateWebsocketClients && package_.websocket != null);
 
             if (!hasClient && package_.subpackages.length === 0) {
                 continue;
@@ -1736,8 +1735,7 @@ export class SdkGenerator {
             const package_ = this.packageResolver.resolvePackage(packageId);
 
             const hasClient =
-                package_.hasEndpointsInTree ||
-                (this.shouldGenerateWebsocketClients && package_.websocket != null);
+                package_.hasEndpointsInTree || (this.shouldGenerateWebsocketClients && package_.websocket != null);
 
             const clientFilepath = this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId);
             const clientClassName = this.sdkClientClassDeclarationReferencer.getExportedName(packageId);
