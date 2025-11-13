@@ -112,7 +112,7 @@ export class ErrorCollector {
         for (const error of this.errors) {
             if (error.level === APIErrorLevel.ERROR) {
                 numErrors++;
-            } else {
+            } else if (error.level === APIErrorLevel.WARNING || error.level === undefined) {
                 // Count as warning if level is explicitly WARNING or if level is undefined (defaults to warning)
                 numWarnings++;
             }
@@ -125,10 +125,14 @@ export class ErrorCollector {
         this.dedupe();
 
         for (const error of this.errors) {
-            if (error.level === APIErrorLevel.WARNING && !logWarnings) {
+            // Treat undefined level as WARNING (as per interface documentation)
+            const level = error.level ?? APIErrorLevel.WARNING;
+
+            if (level === APIErrorLevel.WARNING && !logWarnings) {
                 continue;
             }
-            switch (error.level) {
+
+            switch (level) {
                 case APIErrorLevel.ERROR:
                     this.logger.log(LogLevel.Debug, error.message);
                     if (error.path && error.path.length > 0) {

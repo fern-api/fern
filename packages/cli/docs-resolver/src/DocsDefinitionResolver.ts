@@ -1105,7 +1105,8 @@ export class DocsDefinitionResolver {
                     context: this.taskContext,
                     audiences: item.audiences,
                     enableUniqueErrorsPerEndpoint: true,
-                    generateV1Examples: false
+                    generateV1Examples: false,
+                    logWarnings: false
                 });
             } catch (error) {
                 // noop

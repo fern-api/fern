@@ -52,7 +52,7 @@ export async function validateWorkspaces({
                         audiences: { type: "all" },
                         enableUniqueErrorsPerEndpoint: false,
                         generateV1Examples: false,
-                        logWarnings
+                        logWarnings: logWarnings
                     });
                     return;
                 }
