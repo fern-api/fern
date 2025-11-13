@@ -837,8 +837,14 @@ jobs:
     needs: [setup, changes, get-all-test-matrices]
     if: >-
       ${{
-        ((needs.changes.outputs.php == 'true' || needs.changes.outputs.seed == 'true') && needs.get-all-test-matrices.outputs.php-model != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+        (
+          (needs.changes.outputs.php == 'true' || needs.changes.outputs.seed == 'true') ||
+          contains((github.head_ref || ''), 'force-php-model') ||
+          contains(github.ref_name, 'force-php-model') ||
+          github.event_name == 'workflow_dispatch'
+        )
+        && needs.get-all-test-matrices.outputs.php-model != ''
+        && (github.event_name != 'pull_request' || github.event.pull_request.draft == false)
       }}
     strategy:
       fail-fast: false # Let all tests run, even if some fail
