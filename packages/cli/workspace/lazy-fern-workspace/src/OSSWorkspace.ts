@@ -147,8 +147,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 specs: openApiSpecs
             }),
             options: {
-                ...this.parseOptions,
-                ...settings
+                ...settings,
+                ...this.parseOptions
             }
         });
     }

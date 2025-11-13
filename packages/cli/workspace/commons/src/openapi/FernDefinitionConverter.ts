@@ -27,8 +27,8 @@ export class FernDefinitionConverter {
             taskContext: context,
             ir,
             options: getConvertOptions({
-                options: this.args,
-                overrides: settings
+                options: settings,
+                overrides: this.args,
             }),
             authOverrides:
                 settings?.auth != null
