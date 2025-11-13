@@ -1,8 +1,12 @@
 import { FernToken } from "@fern-api/auth";
 import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { type EndpointSelector, type HttpMethod, OpenAPIPruner } from "@fern-api/openapi-pruner";
 import { TaskContext } from "@fern-api/task-context";
-import { readFile } from "fs/promises";
+import { readFile, writeFile } from "fs/promises";
+import * as yaml from "js-yaml";
+import { OpenAPIV3 } from "openapi-types";
+import { join } from "path";
 import { LambdaExampleEnhancer } from "./lambdaClient";
 import { AIExampleEnhancerConfig, ExampleEnhancementRequest } from "./types";
 import {
@@ -34,6 +38,144 @@ interface EndpointV3 {
     summary?: string;
     description?: string;
     examples: ExampleV3[];
+}
+
+function createSafeFilename(method: string, endpointPath: string): string {
+    // Convert method and path to safe filename
+    const safeMethod = method.toLowerCase();
+    const safePath = endpointPath
+        .replace(/[^a-zA-Z0-9]/g, "_") // Replace non-alphanumeric with underscore
+        .replace(/_+/g, "_") // Collapse multiple underscores
+        .replace(/^_|_$/g, ""); // Remove leading/trailing underscores
+
+    return `${safeMethod}_${safePath}_pruned_spec.yaml`;
+}
+
+async function writeSpecToFile(spec: string, filename: string, context: TaskContext): Promise<void> {
+    try {
+        const outputDir = process.cwd();
+        const filePath = join(outputDir, filename);
+
+        // Convert JSON back to YAML for easier reading
+        let yamlContent: string;
+        try {
+            const jsonSpec = JSON.parse(spec);
+            yamlContent = yaml.dump(jsonSpec, { indent: 2, lineWidth: -1 });
+        } catch {
+            // If it's already YAML or parsing fails, use as-is
+            yamlContent = spec;
+        }
+
+        await writeFile(filePath, yamlContent, "utf-8");
+        context.logger.debug(`Wrote pruned OpenAPI spec to: ${filePath}`);
+    } catch (error) {
+        context.logger.warn(`Failed to write pruned spec to file: ${error}`);
+    }
+}
+
+function findMatchingOpenAPIPath(examplePath: string, availablePaths: string[]): string | undefined {
+    // First try exact match
+    if (availablePaths.includes(examplePath)) {
+        return examplePath;
+    }
+
+    // Try to match path parameters
+    // Example: /user/username should match /user/{username}
+    for (const openApiPath of availablePaths) {
+        // Convert OpenAPI path template to regex
+        // /user/{username} -> /user/([^/]+)
+        const regexPattern = openApiPath.replace(/\{[^}]+\}/g, "([^/]+)");
+        const regex = new RegExp(`^${regexPattern}$`);
+
+        if (regex.test(examplePath)) {
+            return openApiPath;
+        }
+    }
+
+    return undefined;
+}
+
+async function pruneOpenAPISpec(
+    openApiSpecContent: string,
+    endpointPath: string,
+    method: string,
+    context: TaskContext
+): Promise<string | undefined> {
+    try {
+        // Parse the OpenAPI spec (supports both JSON and YAML)
+        let parsedSpec: OpenAPIV3.Document;
+        try {
+            // Try JSON first
+            parsedSpec = JSON.parse(openApiSpecContent);
+        } catch {
+            // Fall back to YAML
+            parsedSpec = yaml.load(openApiSpecContent) as OpenAPIV3.Document;
+        }
+
+        // Validate it's a valid OpenAPI spec
+        if (!parsedSpec.openapi || !parsedSpec.paths) {
+            context.logger.debug("Invalid OpenAPI spec structure, skipping pruning");
+            return undefined;
+        }
+
+        const availablePaths = Object.keys(parsedSpec.paths);
+        context.logger.debug(`OpenAPI spec contains ${availablePaths.length} paths`);
+        context.logger.debug(`Available paths: ${availablePaths.join(", ")}`);
+        context.logger.debug(`Looking for: ${endpointPath} with method: ${method.toLowerCase()}`);
+
+        // Find the matching OpenAPI path template
+        const matchingPath = findMatchingOpenAPIPath(endpointPath, availablePaths);
+
+        if (matchingPath) {
+            const pathObj = parsedSpec.paths[matchingPath] as any;
+            context.logger.debug(
+                `Matched ${endpointPath} to OpenAPI path: ${matchingPath} with methods: ${Object.keys(pathObj).join(", ")}`
+            );
+        } else {
+            context.logger.debug(`No matching OpenAPI path found for ${endpointPath}`);
+            return undefined;
+        }
+
+        // Create endpoint selector for pruning using the matched path
+        const endpoints: EndpointSelector[] = [
+            {
+                path: matchingPath,
+                method: method.toLowerCase() as HttpMethod
+            }
+        ];
+
+        // Prune the spec to just this endpoint
+        const pruner = new OpenAPIPruner({
+            document: parsedSpec,
+            endpoints
+        });
+
+        const result = pruner.prune();
+
+        context.logger.debug(
+            `Pruned OpenAPI spec: ${result.statistics.originalEndpoints} → ${result.statistics.prunedEndpoints} endpoints, ` +
+                `${result.statistics.originalSchemas} → ${result.statistics.prunedSchemas} schemas`
+        );
+
+        // Log what paths are in the pruned result
+        const prunedPaths = Object.keys(result.document.paths || {});
+        context.logger.debug(`Pruned spec contains paths: ${prunedPaths.join(", ")}`);
+        if (prunedPaths.length === 0) {
+            context.logger.warn(`Pruning resulted in empty paths! Original selector: ${JSON.stringify(endpoints)}`);
+        }
+
+        // Convert back to JSON string
+        const prunedSpecJson = JSON.stringify(result.document, null, 2);
+
+        // Write to file for inspection
+        const filename = createSafeFilename(method, endpointPath);
+        await writeSpecToFile(prunedSpecJson, filename, context);
+
+        return prunedSpecJson;
+    } catch (error) {
+        context.logger.debug(`Failed to prune OpenAPI spec: ${error}. Using original spec.`);
+        return openApiSpecContent;
+    }
 }
 
 export async function enhanceExamplesWithAI(
@@ -250,6 +392,12 @@ async function enhanceSingleExample(
             return example;
         }
 
+        // Prune the OpenAPI spec to just this endpoint if available
+        let prunedOpenApiSpec: string | undefined;
+        if (openApiSpec) {
+            prunedOpenApiSpec = await pruneOpenAPISpec(openApiSpec, example.path, endpoint.method, context);
+        }
+
         const enhancementRequest: ExampleEnhancementRequest = {
             endpointPath: example.path,
             method: endpoint.method,
@@ -258,7 +406,7 @@ async function enhanceSingleExample(
             operationDescription: endpoint.description,
             originalRequestExample,
             originalResponseExample,
-            openApiSpec
+            openApiSpec: prunedOpenApiSpec
         };
 
         const enhancedResult = await enhancer.enhanceExample(enhancementRequest);

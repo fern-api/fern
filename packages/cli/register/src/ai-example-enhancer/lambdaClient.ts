@@ -42,22 +42,37 @@ export class LambdaExampleEnhancer {
                     `Enhancing example for ${request.method} ${request.endpointPath} via lambda (attempt ${attempt}/${this.config.maxRetries})`
                 );
 
+                const requestBody = {
+                    method: request.method,
+                    endpointPath: request.endpointPath,
+                    organizationId: request.organizationId,
+                    operationSummary: request.operationSummary,
+                    operationDescription: request.operationDescription,
+                    originalRequestExample: request.originalRequestExample,
+                    originalResponseExample: request.originalResponseExample,
+                    openApiSpec: request.openApiSpec
+                };
+
+                this.context.logger.debug(
+                    `Sending to enhanceExamples: ${JSON.stringify(
+                        {
+                            ...requestBody,
+                            openApiSpec: request.openApiSpec
+                                ? `[OpenAPI spec present: ${request.openApiSpec.length} chars]`
+                                : "[No OpenAPI spec]"
+                        },
+                        null,
+                        2
+                    )}`
+                );
+
                 const response = await fetch(`${this.lambdaOrigin}/v2/registry/ai/enhance-example`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${this.token.value}`
                     },
-                    body: JSON.stringify({
-                        method: request.method,
-                        endpointPath: request.endpointPath,
-                        organizationId: request.organizationId,
-                        operationSummary: request.operationSummary,
-                        operationDescription: request.operationDescription,
-                        originalRequestExample: request.originalRequestExample,
-                        originalResponseExample: request.originalResponseExample,
-                        openApiSpec: request.openApiSpec
-                    }),
+                    body: JSON.stringify(requestBody),
                     signal: AbortSignal.timeout(this.config.requestTimeoutMs)
                 });
 
