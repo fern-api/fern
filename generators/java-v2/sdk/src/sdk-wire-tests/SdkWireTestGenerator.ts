@@ -490,12 +490,24 @@ export class SdkWireTestGenerator {
         const streamRequestPascal = methodPascal + "StreamRequest";
 
         if (isStreamingEndpoint) {
-            const nonStreamingMethodPattern = new RegExp(`\\.${methodCamel}\\s*\\(`, "g");
-            transformedSnippet = transformedSnippet.replace(nonStreamingMethodPattern, `.${methodCamel}Stream(`);
+            // For streaming endpoints, ensure method name ends with "Stream"
+            // Only add suffix if it doesn't already end with "Stream"
+            if (!methodCamel.endsWith("Stream")) {
+                const nonStreamingMethodPattern = new RegExp(`\\.${methodCamel}\\s*\\(`, "g");
+                transformedSnippet = transformedSnippet.replace(nonStreamingMethodPattern, `.${methodCamel}Stream(`);
+            }
 
-            const nonStreamingRequestPattern = new RegExp(`\\b${requestPascal}\\b`, "g");
-            transformedSnippet = transformedSnippet.replace(nonStreamingRequestPattern, streamRequestPascal);
+            // For request types, only add "Stream" suffix if not already present
+            if (!methodPascal.endsWith("Stream")) {
+                const nonStreamingRequestPattern = new RegExp(`\\b${requestPascal}\\b`, "g");
+                transformedSnippet = transformedSnippet.replace(nonStreamingRequestPattern, streamRequestPascal);
+            }
+
+            // For streaming endpoints, replace Optional<ResponseType> with Iterable<ResponseType>
+            transformedSnippet = transformedSnippet.replace(/Optional</g, "Iterable<");
         } else {
+            // For non-streaming endpoints, ensure method name does NOT end with "Stream"
+            // Remove "Stream" suffix if present
             const streamingMethodPattern = new RegExp(`\\.${methodCamel}Stream\\s*\\(`, "g");
             transformedSnippet = transformedSnippet.replace(streamingMethodPattern, `.${methodCamel}(`);
 
