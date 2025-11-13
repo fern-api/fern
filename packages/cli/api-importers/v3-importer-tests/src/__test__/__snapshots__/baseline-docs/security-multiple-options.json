@@ -919,6 +919,7 @@
       }
     }
   },
+  "apiPlayground": true,
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

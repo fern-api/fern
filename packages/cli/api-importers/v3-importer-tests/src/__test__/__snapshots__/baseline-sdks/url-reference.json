@@ -4544,6 +4544,7 @@
     },
     "pathParameters": []
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_pet": {
       "fernFilepath": {

@@ -260,7 +260,7 @@ function convertService(
                 },
                 _other: () => undefined
             }),
-            includeInApiExplorer: undefined
+            includeInApiExplorer: irEndpoint.apiPlayground
         };
         endpoints.push(endpoint);
     }
