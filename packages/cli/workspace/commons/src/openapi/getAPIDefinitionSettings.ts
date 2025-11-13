@@ -57,7 +57,7 @@ const FIELD_MAPPINGS: Partial<MappableFields> = {
     groupEnvironmentsByHost: "groupEnvironmentsByHost",
     wrapReferencesToNullableInOptional: "wrapReferencesToNullableInOptional",
     coerceOptionalSchemasToNullable: "coerceOptionalSchemasToNullable",
-    removeDiscriminantsFromSchemas: "removeDiscriminantsFromSchemas",
+    removeDiscriminantsFromSchemas: "removeDiscriminantsFromSchemas"
 };
 
 function setIfDefined<K extends keyof OpenAPISettings>(
