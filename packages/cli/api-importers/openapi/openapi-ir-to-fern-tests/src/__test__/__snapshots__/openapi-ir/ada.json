@@ -615,7 +615,7 @@
       "generatedRequestName": "UpdateEndUserByIdRequest",
       "request": {
         "schema": {
-          "generatedName": "UpdateEndUserByIdRequest",
+          "generatedName": "UpdateEndUserByIdRequestBody",
           "schema": "EndUserRequest",
           "source": {
             "file": "../openapi.json",
@@ -1421,7 +1421,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",
@@ -1445,7 +1445,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.json",

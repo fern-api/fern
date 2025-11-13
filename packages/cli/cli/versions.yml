@@ -1,6 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Change defaults for OpenAPI and AsyncAPI parsing settings:
+          - `title-as-schema-name`: `false` (was `true`)
+          - `respect-nullable-schemas`: `true` (was `false`)
+          - `inline-path-parameters`: `true` (was `false`)
+          - `idiomatic-request-names`: `true` (was `false`)
+          - `type-dates-as-strings`: `true` (was `false`)
+          - `wrap-references-to-nullable-in-optional`: `false` (was `true`)
+          - `coerce-optional-schemas-to-nullable`: `false` (was `true`)
+          - `object-query-parameters`: `true` (was `false`)
+        The CLI will automatically upgrade your _generators.yml_ to explicitly set the old defaults to preserve
+        existing behavior. New users will get the new defaults.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-10-13"
+  version: 1.0.0
+
+- changelogEntry:
+    - summary: |
         The `fern docs dev` command now displays a progress bar while downloading the docs bundle.
       type: chore
   irVersion: 61

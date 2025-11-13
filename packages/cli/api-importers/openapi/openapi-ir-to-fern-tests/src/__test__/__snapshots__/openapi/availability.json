@@ -14,23 +14,11 @@
               "docs": undefined,
               "examples": [
                 {
-                  "headers": {
-                    "X-Active-Header": "X-Active-Header",
-                    "X-Deprecated-Header": "X-Deprecated-Header",
-                    "X-Deprecated-Ref-Header": "X-Deprecated-Ref-Header",
-                    "x-fern-availability_header": "x-fern-availability_header",
-                  },
                   "path-parameters": {
                     "active_id": "active_id",
                     "deprecated_ref_id": "deprecated_ref_id",
                     "id": "id",
                     "x-fern-availability_path_param": "x-fern-availability_path_param",
-                  },
-                  "query-parameters": {
-                    "active_lang": "active_lang",
-                    "deprecated_lang": "deprecated_lang",
-                    "deprecated_ref_lang": "deprecated_ref_lang",
-                    "x-fern-availability_query_param": "x-fern-availability_query_param",
                   },
                   "response": {
                     "body": {
@@ -42,23 +30,6 @@
               "method": "GET",
               "pagination": undefined,
               "path": "/collection/{id}/{active_id}/{deprecated_ref_id}/{x-fern-availability_path_param}",
-              "path-parameters": {
-                "active_id": {
-                  "docs": "active header",
-                  "type": "string",
-                },
-                "deprecated_ref_id": "DeprecatedParam",
-                "id": {
-                  "availability": "deprecated",
-                  "docs": "collection id",
-                  "type": "string",
-                },
-                "x-fern-availability_path_param": {
-                  "availability": "pre-release",
-                  "docs": "active beta header",
-                  "type": "string",
-                },
-              },
               "request": {
                 "headers": {
                   "X-Active-Header": {
@@ -84,6 +55,23 @@
                   },
                 },
                 "name": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequest",
+                "path-parameters": {
+                  "active_id": {
+                    "docs": "active header",
+                    "type": "string",
+                  },
+                  "deprecated_ref_id": "DeprecatedParam",
+                  "id": {
+                    "availability": "deprecated",
+                    "docs": "collection id",
+                    "type": "string",
+                  },
+                  "x-fern-availability_path_param": {
+                    "availability": "pre-release",
+                    "docs": "active beta header",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "active_lang": {
                     "docs": "language code",
@@ -309,22 +297,22 @@
       method: GET
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: collection id
-          availability: deprecated
-        active_id:
-          type: string
-          docs: active header
-        deprecated_ref_id: DeprecatedParam
-        x-fern-availability_path_param:
-          type: string
-          docs: active beta header
-          availability: pre-release
       request:
         name: >-
           GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequest
+        path-parameters:
+          id:
+            type: string
+            docs: collection id
+            availability: deprecated
+          active_id:
+            type: string
+            docs: active header
+          deprecated_ref_id: DeprecatedParam
+          x-fern-availability_path_param:
+            type: string
+            docs: active beta header
+            availability: pre-release
         query-parameters:
           deprecated_lang:
             type: optional<string>
@@ -366,16 +354,6 @@
             active_id: active_id
             deprecated_ref_id: deprecated_ref_id
             x-fern-availability_path_param: x-fern-availability_path_param
-          query-parameters:
-            deprecated_lang: deprecated_lang
-            active_lang: active_lang
-            deprecated_ref_lang: deprecated_ref_lang
-            x-fern-availability_query_param: x-fern-availability_query_param
-          headers:
-            X-Deprecated-Header: X-Deprecated-Header
-            X-Active-Header: X-Active-Header
-            X-Deprecated-Ref-Header: X-Deprecated-Ref-Header
-            x-fern-availability_header: x-fern-availability_header
           response:
             body:
               fine_setting: true

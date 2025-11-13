@@ -1634,7 +1634,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1655,7 +1655,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1676,7 +1676,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1891,35 +1891,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "client_id",
-              "value": {
-                "value": {
-                  "value": "client_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "requested_token_type",
-              "value": {
-                "value": "urn:devrev:params:oauth:token-type:aat",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "subject",
-              "value": {
-                "value": {
-                  "value": "subject",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -3018,9 +2990,6 @@
                     "type": "string"
                   },
                   "type": "primitive"
-                },
-                "display_name": {
-                  "type": "null"
                 }
               },
               "type": "discriminated"
@@ -4418,9 +4387,6 @@
                   },
                   "type": "primitive"
                 },
-                "display_name": {
-                  "type": "null"
-                },
                 "id": {
                   "value": {
                     "value": "string",
@@ -4529,7 +4495,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4555,7 +4521,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4576,7 +4542,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4597,7 +4563,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4623,7 +4589,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4650,7 +4616,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4840,35 +4806,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "cursor",
-              "value": {
-                "value": {
-                  "value": "cursor",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "mode",
-              "value": {
-                "value": "after",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -5746,9 +5684,6 @@
                     "type": "string"
                   },
                   "type": "primitive"
-                },
-                "description": {
-                  "type": "null"
                 },
                 "name": {
                   "value": {
@@ -6886,7 +6821,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -6907,7 +6842,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -6928,7 +6863,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -6949,7 +6884,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -6975,7 +6910,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7001,7 +6936,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7028,7 +6963,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7218,35 +7153,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "cursor",
-              "value": {
-                "value": {
-                  "value": "cursor",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "mode",
-              "value": {
-                "value": "after",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -7714,21 +7621,12 @@
                   },
                   "type": "primitive"
                 },
-                "description": {
-                  "type": "null"
-                },
                 "id": {
                   "value": {
                     "value": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                     "type": "string"
                   },
                   "type": "primitive"
-                },
-                "name": {
-                  "type": "null"
-                },
-                "owned_by": {
-                  "type": "null"
                 }
               },
               "type": "discriminated"
@@ -9211,7 +9109,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -9232,7 +9130,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -9253,7 +9151,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -9274,7 +9172,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -9300,7 +9198,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -9321,7 +9219,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -9342,7 +9240,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -9363,7 +9261,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -9384,7 +9282,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -9410,7 +9308,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -9625,75 +9523,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "created_date.after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "created_date.before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "cursor",
-              "value": {
-                "value": {
-                  "value": "cursor",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "mode",
-              "value": {
-                "value": "after",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "modified_date.after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "modified_date.before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -11482,7 +11312,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11503,7 +11333,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11524,7 +11354,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11714,35 +11544,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "cursor",
-              "value": {
-                "value": {
-                  "value": "cursor",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "mode",
-              "value": {
-                "value": "after",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -12566,9 +12368,6 @@
                     "type": "string"
                   },
                   "type": "primitive"
-                },
-                "visibility": {
-                  "type": "null"
                 }
               },
               "type": "discriminated"
@@ -13341,7 +13140,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13362,7 +13161,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13383,7 +13182,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13607,33 +13406,6 @@
                   "type": "string"
                 },
                 "type": "primitive"
-              }
-            },
-            {
-              "name": "cursor",
-              "value": {
-                "value": {
-                  "value": "cursor",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "mode",
-              "value": {
-                "value": "after",
-                "type": "enum"
               }
             }
           ],
@@ -16455,12 +16227,6 @@
                   },
                   "type": "primitive"
                 },
-                "artifacts": {
-                  "type": "null"
-                },
-                "body": {
-                  "type": "null"
-                },
                 "owned_by": {
                   "value": [
                     {
@@ -16472,12 +16238,6 @@
                     }
                   ],
                   "type": "array"
-                },
-                "reported_by": {
-                  "type": "null"
-                },
-                "stage": {
-                  "type": "null"
                 },
                 "tags": {
                   "value": [
@@ -16495,9 +16255,6 @@
                     }
                   ],
                   "type": "array"
-                },
-                "target_close_date": {
-                  "type": "null"
                 },
                 "title": {
                   "value": {
@@ -17184,7 +16941,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17210,7 +16967,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17231,7 +16988,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17258,7 +17015,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17284,7 +17041,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17310,7 +17067,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17336,7 +17093,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17362,7 +17119,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17389,7 +17146,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17416,7 +17173,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17606,18 +17363,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "first",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -18532,7 +18278,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18558,7 +18304,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18579,7 +18325,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18606,7 +18352,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18632,7 +18378,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18653,7 +18399,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18674,7 +18420,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18700,7 +18446,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18726,7 +18472,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18752,7 +18498,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18779,7 +18525,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18806,7 +18552,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18996,35 +18742,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "cursor",
-              "value": {
-                "value": {
-                  "value": "cursor",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "mode",
-              "value": {
-                "value": "after",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -19568,36 +19286,12 @@
                   },
                   "type": "primitive"
                 },
-                "artifacts": {
-                  "type": "null"
-                },
-                "body": {
-                  "type": "null"
-                },
                 "id": {
                   "value": {
                     "value": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
                     "type": "string"
                   },
                   "type": "primitive"
-                },
-                "owned_by": {
-                  "type": "null"
-                },
-                "reported_by": {
-                  "type": "null"
-                },
-                "stage": {
-                  "type": "null"
-                },
-                "tags": {
-                  "type": "null"
-                },
-                "target_close_date": {
-                  "type": "null"
-                },
-                "title": {
-                  "type": "null"
                 }
               },
               "type": "discriminated"
@@ -20384,7 +20078,7 @@
                   "type": "primitive"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -20402,7 +20096,7 @@
                   "type": "primitive"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -22080,7 +21774,7 @@
                   "type": "primitive"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "optional"
               }
             }
           ],
@@ -22371,7 +22065,7 @@
                   "type": "primitive"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -22706,7 +22400,6 @@
         },
         "generatedName": "Empty",
         "title": "empty",
-        "nameOverride": "empty",
         "groupName": [],
         "type": "map"
       },
@@ -22747,7 +22440,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Enhancement",
-        "nameOverride": "enhancement",
         "title": "enhancement",
         "groupName": [],
         "additionalProperties": false,
@@ -24142,7 +23834,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Issue",
-        "nameOverride": "issue",
         "title": "issue",
         "groupName": [],
         "additionalProperties": false,
@@ -24592,7 +24283,6 @@
           "discriminantProperty": "type",
           "generatedName": "Part",
           "title": "part",
-          "nameOverride": "part",
           "schemas": {
             "capability": {
               "generatedName": "ComponentsSchemasCapability",
@@ -24782,7 +24472,7 @@
                   "type": "primitive"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -25218,7 +24908,7 @@
                   "type": "primitive"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -25249,7 +24939,7 @@
                   "type": "primitive"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -25265,7 +24955,7 @@
                   },
                   "type": "reference"
                 },
-                "type": "nullable"
+                "type": "optional"
               }
             }
           ],
@@ -26403,7 +26093,6 @@
         "allOfPropertyConflicts": [],
         "description": "Describes the current stage of a work item.",
         "generatedName": "Stage",
-        "nameOverride": "stage",
         "title": "stage",
         "groupName": [],
         "additionalProperties": false,
@@ -26575,7 +26264,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Tag",
-        "nameOverride": "tag",
         "title": "tag",
         "groupName": [],
         "additionalProperties": false,
@@ -27201,7 +26889,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Ticket",
-        "nameOverride": "ticket",
         "title": "ticket",
         "groupName": [],
         "additionalProperties": false,
@@ -27418,7 +27105,7 @@
                   },
                   "type": "reference"
                 },
-                "type": "nullable"
+                "type": "optional"
               }
             }
           ],
@@ -28405,7 +28092,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Webhook",
-        "nameOverride": "webhook",
         "title": "webhook",
         "groupName": [],
         "additionalProperties": false,
@@ -29612,7 +29298,6 @@
           "discriminantProperty": "type",
           "generatedName": "Work",
           "title": "work",
-          "nameOverride": "work",
           "schemas": {
             "issue": {
               "generatedName": "ComponentsSchemasIssue",
@@ -29699,7 +29384,7 @@
                   "type": "array"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -29717,7 +29402,7 @@
                   "type": "primitive"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -29757,7 +29442,7 @@
                   "type": "array"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -29773,7 +29458,7 @@
                   },
                   "type": "reference"
                 },
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -29797,7 +29482,7 @@
                   "type": "array"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -29815,7 +29500,7 @@
                   "type": "primitive"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -30245,7 +29930,7 @@
                   "type": "primitive"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -30261,7 +29946,7 @@
                   },
                   "type": "reference"
                 },
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -30279,7 +29964,7 @@
                   "type": "primitive"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -30308,7 +29993,7 @@
                   },
                   "type": "reference"
                 },
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -30324,7 +30009,7 @@
                   },
                   "type": "reference"
                 },
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -30340,7 +30025,7 @@
                   },
                   "type": "reference"
                 },
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -30356,7 +30041,7 @@
                   },
                   "type": "reference"
                 },
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -30374,7 +30059,7 @@
                   "type": "primitive"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "optional"
               }
             },
             {
@@ -30392,7 +30077,7 @@
                   "type": "primitive"
                 },
                 "groupName": [],
-                "type": "nullable"
+                "type": "optional"
               }
             }
           ],

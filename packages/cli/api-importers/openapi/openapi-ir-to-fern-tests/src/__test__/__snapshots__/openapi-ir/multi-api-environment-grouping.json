@@ -873,7 +873,7 @@
       "generatedRequestName": "RefundPaymentRequest",
       "request": {
         "schema": {
-          "generatedName": "RefundPaymentRequest",
+          "generatedName": "RefundPaymentRequestBody",
           "schema": "RefundRequest",
           "source": {
             "file": "../payments-api.yml",
