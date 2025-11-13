@@ -9,6 +9,7 @@ import {
     HttpService,
     IntermediateRepresentation,
     OAuthScheme,
+    Subpackage,
     TypeDeclaration,
     TypeId,
     WebSocketChannel
