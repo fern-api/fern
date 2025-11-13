@@ -40,7 +40,7 @@
     "@types/node": "18.15.3",
     "@yarnpkg/esbuild-plugin-pnp": "3.0.0-rc.15",
     "depcheck": "^1.4.7",
-    "esbuild": "^0.24.0",
+    "esbuild": "^0.25.0",
     "typescript": "5.9.3",
     "vitest": "^2.1.9"
   }
