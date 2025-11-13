@@ -483,6 +483,26 @@ export class SdkWireTestGenerator {
     ): string {
         let transformedSnippet = snippet;
 
+        const isStreamingEndpoint = endpoint.response?.body?.type === "streaming";
+        const methodCamel = endpoint.name.camelCase.safeName;
+        const methodPascal = endpoint.name.pascalCase.safeName;
+        const requestPascal = methodPascal + "Request";
+        const streamRequestPascal = methodPascal + "StreamRequest";
+
+        if (isStreamingEndpoint) {
+            const nonStreamingMethodPattern = new RegExp(`\\.${methodCamel}\\s*\\(`, "g");
+            transformedSnippet = transformedSnippet.replace(nonStreamingMethodPattern, `.${methodCamel}Stream(`);
+
+            const nonStreamingRequestPattern = new RegExp(`\\b${requestPascal}\\b`, "g");
+            transformedSnippet = transformedSnippet.replace(nonStreamingRequestPattern, streamRequestPascal);
+        } else {
+            const streamingMethodPattern = new RegExp(`\\.${methodCamel}Stream\\s*\\(`, "g");
+            transformedSnippet = transformedSnippet.replace(streamingMethodPattern, `.${methodCamel}(`);
+
+            const streamingRequestPattern = new RegExp(`\\b${streamRequestPascal}\\b`, "g");
+            transformedSnippet = transformedSnippet.replace(streamingRequestPattern, requestPascal);
+        }
+
         if (endpoint.name.originalName === "listUsernames") {
             transformedSnippet = transformedSnippet.replace(/\.listWithCursorPagination\(/g, ".listUsernames(");
             transformedSnippet = transformedSnippet.replace(
@@ -551,7 +571,6 @@ export class SdkWireTestGenerator {
             responseType === "fileDownload" ||
             responseType === "text" ||
             responseType === "bytes" ||
-            responseType === "streaming" ||
             responseType === "streamParameter"
         ) {
             this.context.logger.debug(
