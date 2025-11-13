@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        The `fern docs dev` command now displays a progress bar while downloading the docs bundle.
-      type: chore
+        Update OpenAPI operation converter to use `x-fern-explorer` extension instead of `x-fern-explorer-enabled` for setting `apiPlayground` property in the IR. Operations now check for the `x-fern-explorer` boolean value to determine API playground availability.
+      type: feat
   irVersion: 61
   createdAt: "2025-11-13"
   version: 0.122.1
