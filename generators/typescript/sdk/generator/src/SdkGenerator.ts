@@ -1316,7 +1316,7 @@ export class SdkGenerator {
                             },
                             includeImports: false
                         });
-                        
+
                         if (referenceSnippet != null) {
                             snippetCount++;
                         }
@@ -1362,7 +1362,7 @@ export class SdkGenerator {
                 }
             }
         });
-        
+
         const endTime = performance.now();
         const totalTime = endTime - startTime;
         const avgTime = snippetCount > 0 ? totalTime / snippetCount : 0;
