@@ -502,7 +502,8 @@ export class EndpointSnippetGenerator {
 
                     const convertedValue = this.context.dynamicTypeLiteralMapper.convert({
                         typeReference: body.value.value,
-                        value
+                        value,
+                        as: "request"
                     });
 
                     // Check if the converted value is already Optional.empty() to avoid double-wrapping
@@ -520,7 +521,11 @@ export class EndpointSnippetGenerator {
                         useOf: true
                     });
                 }
-                return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
+                return this.context.dynamicTypeLiteralMapper.convert({
+                    typeReference: body.value,
+                    value,
+                    as: "request"
+                });
             }
             default:
                 assertNever(body);
@@ -632,9 +637,20 @@ export class EndpointSnippetGenerator {
             parameters: request.queryParameters ?? [],
             values: snippet.queryParameters ?? {}
         });
-        const queryParameterFields = queryParameters.map((queryParameter) => ({
+        const filteredQueryParameters = queryParameters.filter(
+            (queryParameter) => !this.context.isDirectLiteral(queryParameter.typeReference)
+        );
+        const sortedQueryParameters = this.context.sortTypeInstancesByRequiredFirst(
+            filteredQueryParameters,
+            request.queryParameters ?? []
+        );
+        const queryParameterFields = sortedQueryParameters.map((queryParameter) => ({
             name: this.context.getMethodName(queryParameter.name.name),
-            value: this.context.dynamicTypeLiteralMapper.convert(queryParameter)
+            value: this.context.dynamicTypeLiteralMapper.convert({
+                typeReference: queryParameter.typeReference,
+                value: queryParameter.value,
+                as: "request"
+            })
         }));
         this.context.errors.unscope();
 
@@ -643,9 +659,15 @@ export class EndpointSnippetGenerator {
             parameters: request.headers ?? [],
             values: snippet.headers ?? {}
         });
-        const headerFields = headers.map((header) => ({
+        const filteredHeaders = headers.filter((header) => !this.context.isDirectLiteral(header.typeReference));
+        const sortedHeaders = this.context.sortTypeInstancesByRequiredFirst(filteredHeaders, request.headers ?? []);
+        const headerFields = sortedHeaders.map((header) => ({
             name: this.context.getMethodName(header.name.name),
-            value: this.context.dynamicTypeLiteralMapper.convert(header)
+            value: this.context.dynamicTypeLiteralMapper.convert({
+                typeReference: header.typeReference,
+                value: header.value,
+                as: "request"
+            })
         }));
         this.context.errors.unscope();
 
@@ -780,7 +802,11 @@ export class EndpointSnippetGenerator {
             case "bytes":
                 return this.getBytesBodyRequestArg({ value });
             case "typeReference":
-                return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
+                return this.context.dynamicTypeLiteralMapper.convert({
+                    typeReference: body.value,
+                    value,
+                    as: "request"
+                });
             default:
                 assertNever(body);
         }
@@ -793,20 +819,22 @@ export class EndpointSnippetGenerator {
         parameters: FernIr.dynamic.NamedParameter[];
         value: unknown;
     }): java.BuilderParameter[] {
-        const fields: java.BuilderParameter[] = [];
-
         const bodyProperties = this.context.associateByWireValue({
             parameters,
             values: this.context.getRecord(value) ?? {}
         });
-        for (const parameter of bodyProperties) {
-            fields.push({
-                name: this.context.getMethodName(parameter.name.name),
-                value: this.context.dynamicTypeLiteralMapper.convert(parameter)
-            });
-        }
-
-        return fields;
+        const filteredProperties = bodyProperties.filter(
+            (parameter) => !this.context.isDirectLiteral(parameter.typeReference)
+        );
+        const sortedProperties = this.context.sortTypeInstancesByRequiredFirst(filteredProperties, parameters);
+        return sortedProperties.map((parameter) => ({
+            name: this.context.getMethodName(parameter.name.name),
+            value: this.context.dynamicTypeLiteralMapper.convert({
+                typeReference: parameter.typeReference,
+                value: parameter.value,
+                as: "request"
+            })
+        }));
     }
 
     private getPathParameters({
