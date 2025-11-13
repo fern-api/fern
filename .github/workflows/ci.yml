@@ -101,7 +101,7 @@ jobs:
           cache-dependency-path: generators/go/go.sum
 
       - name: Install protoc-gen-openapi
-        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@1aa7fe870834ed27024dc44afd95648a0d63ec57
 
       - name: Run tests
         run: pnpm test
@@ -130,7 +130,7 @@ jobs:
           cache-dependency-path: generators/go/go.sum
 
       - name: Install protoc-gen-openapi
-        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@1aa7fe870834ed27024dc44afd95648a0d63ec57
 
       - name: Run ETE tests
         env:
