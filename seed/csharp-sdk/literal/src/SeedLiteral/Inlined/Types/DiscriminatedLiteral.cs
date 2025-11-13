@@ -241,12 +241,12 @@ public record DiscriminatedLiteral
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<DiscriminatedLiteral>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(DiscriminatedLiteral).IsAssignableFrom(typeToConvert);
 
         public override DiscriminatedLiteral Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

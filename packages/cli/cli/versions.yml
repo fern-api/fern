@@ -1,7 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Improve gRPC endpoint name display in documentation by deriving human-readable names from request type names. Endpoint names like "CreateComment" now display as "Create Comment" instead of "Createcomment" in the FDR output.
+        Add support for custom fern.summary proto option to explicitly set gRPC endpoint display names in proto files.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 0.122.2
+
+- changelogEntry:
+    - summary: |
+        The `fern docs dev` command now displays a progress bar while downloading the docs bundle.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 0.122.1
+
+- changelogEntry:
+    - summary: |
+        The `fern write-overrides` command now generates overrides files with names based on the API spec filename. For a spec named `api-name.yml`, the overrides file will be named `api-name-overrides.yml` and placed in the same directory as the spec. This allows for better organization when working with multiple API specs.
       type: feat
   irVersion: 61
   createdAt: "2025-11-13"
