@@ -9,8 +9,6 @@ public class Example0 {
                 SeedStreamingClient.builder().url("https://api.fern.com").build();
 
         client.dummy()
-                .generateStream(GenerateStreamRequest.builder().stream(true)
-                        .numEvents(1)
-                        .build());
+                .generateStream(GenerateStreamRequest.builder().numEvents(1).build());
     }
 }

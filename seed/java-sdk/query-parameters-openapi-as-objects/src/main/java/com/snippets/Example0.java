@@ -26,6 +26,10 @@ public class Example0 {
                         .name("name")
                         .tags(Optional.of(Arrays.asList("tags", "tags")))
                         .build())
+                .neighborRequired(SearchRequestNeighborRequired.of(User.builder()
+                        .name("name")
+                        .tags(Optional.of(Arrays.asList("tags", "tags")))
+                        .build()))
                 .userList(Arrays.asList(Optional.of(User.builder()
                         .name("name")
                         .tags(Optional.of(Arrays.asList("tags", "tags")))
@@ -35,10 +39,6 @@ public class Example0 {
                         .tags(Optional.of(Arrays.asList("tags", "tags")))
                         .build())))
                 .filter(Arrays.asList(Optional.of("filter")))
-                .neighborRequired(SearchRequestNeighborRequired.of(User.builder()
-                        .name("name")
-                        .tags(Optional.of(Arrays.asList("tags", "tags")))
-                        .build()))
                 .optionalDeadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                 .keyValue(new HashMap<String, Optional<String>>() {
                     {

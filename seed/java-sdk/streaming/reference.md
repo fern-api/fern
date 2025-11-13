@@ -16,7 +16,6 @@
 client.dummy().generateStream(
     GenerateStreamRequest
         .builder()
-        .stream(true)
         .numEvents(1)
         .build()
 );
@@ -70,7 +69,6 @@ client.dummy().generateStream(
 client.dummy().generate(
     Generateequest
         .builder()
-        .stream(false)
         .numEvents(5)
         .build()
 );
