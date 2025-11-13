@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import types.NestedUser;
+import types.SearchRequestNeighbor;
 import types.SearchRequestNeighborRequired;
 import types.SearchResponse;
 import types.User;
@@ -28,12 +29,12 @@ public interface RootService {
       @RequestParam("bytes") String bytes, @RequestParam("user") User user,
       @RequestParam("userList") Optional<User> userList,
       @RequestParam("optionalDeadline") Optional<OffsetDateTime> optionalDeadline,
-      @RequestParam("keyValue") Optional<Map<String, Optional<String>>> keyValue,
+      @RequestParam("keyValue") Optional<Map<String, String>> keyValue,
       @RequestParam("optionalString") Optional<String> optionalString,
       @RequestParam("nestedUser") Optional<NestedUser> nestedUser,
       @RequestParam("optionalUser") Optional<User> optionalUser,
       @RequestParam("excludeUser") Optional<User> excludeUser,
       @RequestParam("filter") Optional<String> filter,
-      @RequestParam("neighbor") Optional<User> neighbor,
+      @RequestParam("neighbor") Optional<SearchRequestNeighbor> neighbor,
       @RequestParam("neighborRequired") SearchRequestNeighborRequired neighborRequired);
 }
