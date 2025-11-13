@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 1.11.3
+  changelogEntry:
+    - summary: Fix import ordering for discriminated union ghost references to ensure imports are always placed after union type definitions, preventing circular import issues.
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 61
+
 - version: 1.11.2
   changelogEntry:
     - summary: Resolve PydanticUserError for mutually recursive models in Pydantic v2.
