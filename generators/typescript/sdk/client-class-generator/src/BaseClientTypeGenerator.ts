@@ -31,11 +31,11 @@ export class BaseClientTypeGenerator {
         });
 
         const functionCode = `
-export function normalizeClientOptions(
-    options: BaseClientOptions,
+export function normalizeClientOptions<T extends BaseClientOptions>(
+    options: T,
     sdkName: string,
     sdkVersion: string
-): BaseClientOptions {
+): T {
     const logging = ${getTextOfTsNode(
         context.coreUtilities.logging.createLogger._invoke(ts.factory.createIdentifier("options?.logging"))
     )};
@@ -56,7 +56,7 @@ export function normalizeClientOptions(
         ...options,
         logging,
         headers,
-    };
+    } as T;
 }`;
 
         context.sourceFile.addStatements(functionCode);
