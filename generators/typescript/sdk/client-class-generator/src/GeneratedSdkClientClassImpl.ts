@@ -1082,6 +1082,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private getCtorOptionsStatements(context: SdkContext): Code {
         const rootHeaders = this.isRoot ? this.getRootHeaders(context) : [];
         const shouldGenerateRootHeaders = this.isRoot && rootHeaders.length > 0;
+
         if (shouldGenerateRootHeaders) {
             context.importsManager.addImportFromRoot("core/headers", {
                 namedImports: ["mergeHeaders"]
@@ -1102,6 +1103,14 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     )}, _options?.headers),
                 };`;
         }
+
+        if (!this.isRoot && this.npmPackage != null) {
+            context.importsManager.addImportFromRoot("BaseClient", {
+                namedImports: ["normalizeClientOptions"]
+            });
+            return code`this._options = normalizeClientOptions(_options, "${this.npmPackage.packageName}", "${this.npmPackage.version}");`;
+        }
+
         return code`this._options = _options;`;
     }
 

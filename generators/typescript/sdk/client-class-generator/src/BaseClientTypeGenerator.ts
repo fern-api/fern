@@ -1,4 +1,6 @@
+import { getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
+import { ts } from "ts-morph";
 
 export declare namespace BaseClientTypeGenerator {
     export interface Init {
@@ -19,5 +21,44 @@ export class BaseClientTypeGenerator {
         if (this.generateIdempotentRequestOptions) {
             context.sourceFile.addInterface(context.baseClient.generateBaseIdempotentRequestOptionsInterface(context));
         }
+
+        this.generateNormalizeClientOptionsFunction(context);
+    }
+
+    private generateNormalizeClientOptionsFunction(context: SdkContext): void {
+        context.importsManager.addImportFromRoot("core/headers", {
+            namedImports: ["mergeHeaders"]
+        });
+
+        const functionCode = `
+export function normalizeClientOptions(
+    options: BaseClientOptions,
+    sdkName: string,
+    sdkVersion: string
+): BaseClientOptions {
+    const logging = ${getTextOfTsNode(
+        context.coreUtilities.logging.createLogger._invoke(ts.factory.createIdentifier("options?.logging"))
+    )};
+
+    const headers = mergeHeaders(
+        {
+            "X-Fern-Language": "JavaScript",
+            "X-Fern-SDK-Name": sdkName,
+            "X-Fern-SDK-Version": sdkVersion,
+            "User-Agent": \`\${sdkName}/\${sdkVersion}\`,
+            "X-Fern-Runtime": ${getTextOfTsNode(context.coreUtilities.runtime.type._getReferenceTo())},
+            "X-Fern-Runtime-Version": ${getTextOfTsNode(context.coreUtilities.runtime.version._getReferenceTo())},
+        },
+        options?.headers
+    );
+
+    return {
+        ...options,
+        logging,
+        headers,
+    };
+}`;
+
+        context.sourceFile.addStatements(functionCode);
     }
 }
