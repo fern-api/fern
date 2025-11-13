@@ -1734,6 +1734,7 @@ export class SdkGenerator {
             }
 
             const clientFilepath = this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId);
+            const clientClassName = this.sdkClientClassDeclarationReferencer.getExportedName(packageId);
             const exportsFilepath: ExportedFilePath = {
                 directories: clientFilepath.directories.slice(0, -1), // Remove the "client" directory
                 file: {
@@ -1744,6 +1745,11 @@ export class SdkGenerator {
             this.withSourceFile({
                 filepath: exportsFilepath,
                 run: ({ sourceFile }) => {
+                    sourceFile.addExportDeclaration({
+                        moduleSpecifier: "./client/Client.js",
+                        namedExports: [clientClassName]
+                    });
+
                     sourceFile.addExportDeclaration({
                         moduleSpecifier: "./client/index.js"
                     });
