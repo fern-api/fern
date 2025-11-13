@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import typing
 
+import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import UniversalBaseModel
 from .bar import Bar
 from .foo import Foo
@@ -19,4 +21,4 @@ class Union_Bar(UniversalBaseModel):
     type: typing.Literal["bar"] = "bar"
 
 
-Union = typing.Union[Union_Foo, Union_Bar]
+Union = typing_extensions.Annotated[typing.Union[Union_Foo, Union_Bar], pydantic.Field(discriminator="type")]

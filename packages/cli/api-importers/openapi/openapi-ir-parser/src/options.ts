@@ -126,6 +126,35 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always
 };
 
+function mergeOptions<T extends object>(params: {
+    defaults: T;
+    options?: Partial<T>;
+    overrides?: Partial<T>;
+    overrideOnly?: Set<keyof T>;
+    undefinedIfAbsent?: Set<keyof T>;
+}): T {
+    const { defaults, options, overrides, overrideOnly = new Set(), undefinedIfAbsent = new Set() } = params;
+    const result = {} as T;
+
+    for (const key of Object.keys(defaults) as (keyof T)[]) {
+        if (overrideOnly.has(key)) {
+            result[key] = (overrides?.[key] !== undefined ? overrides[key] : defaults[key]) as T[typeof key];
+        } else if (undefinedIfAbsent.has(key)) {
+            result[key] = (
+                overrides?.[key] !== undefined
+                    ? overrides[key]
+                    : options?.[key] !== undefined
+                      ? options[key]
+                      : undefined
+            ) as T[typeof key];
+        } else {
+            result[key] = (overrides?.[key] ?? options?.[key] ?? defaults[key]) as T[typeof key];
+        }
+    }
+
+    return result;
+}
+
 export function getParseOptions({
     options,
     overrides
@@ -133,103 +162,14 @@ export function getParseOptions({
     options?: Partial<ParseOpenAPIOptions>;
     overrides?: Partial<ParseOpenAPIOptions>;
 }): ParseOpenAPIOptions {
-    return {
-        disableExamples: overrides?.disableExamples ?? DEFAULT_PARSE_OPENAPI_SETTINGS.disableExamples,
-        discriminatedUnionV2:
-            overrides?.discriminatedUnionV2 ??
-            options?.discriminatedUnionV2 ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.discriminatedUnionV2,
-        useTitlesAsName:
-            overrides?.useTitlesAsName ?? options?.useTitlesAsName ?? DEFAULT_PARSE_OPENAPI_SETTINGS.useTitlesAsName,
-        audiences: overrides?.audiences ?? options?.audiences ?? DEFAULT_PARSE_OPENAPI_SETTINGS.audiences,
-        optionalAdditionalProperties:
-            overrides?.optionalAdditionalProperties ??
-            options?.optionalAdditionalProperties ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.optionalAdditionalProperties,
-        coerceEnumsToLiterals:
-            overrides?.coerceEnumsToLiterals ??
-            options?.coerceEnumsToLiterals ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.coerceEnumsToLiterals,
-        respectReadonlySchemas:
-            overrides?.respectReadonlySchemas ??
-            options?.respectReadonlySchemas ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.respectReadonlySchemas,
-        respectNullableSchemas:
-            overrides?.respectNullableSchemas ??
-            options?.respectNullableSchemas ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.respectNullableSchemas,
-        onlyIncludeReferencedSchemas:
-            overrides?.onlyIncludeReferencedSchemas ??
-            options?.onlyIncludeReferencedSchemas ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.onlyIncludeReferencedSchemas,
-        inlinePathParameters:
-            overrides?.inlinePathParameters ??
-            options?.inlinePathParameters ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.inlinePathParameters,
-        preserveSchemaIds: overrides?.preserveSchemaIds ?? DEFAULT_PARSE_OPENAPI_SETTINGS.preserveSchemaIds,
-        shouldUseUndiscriminatedUnionsWithLiterals:
-            overrides?.shouldUseUndiscriminatedUnionsWithLiterals ??
-            options?.shouldUseUndiscriminatedUnionsWithLiterals ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.shouldUseUndiscriminatedUnionsWithLiterals,
-        shouldUseIdiomaticRequestNames:
-            overrides?.shouldUseIdiomaticRequestNames ??
-            options?.shouldUseIdiomaticRequestNames ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.shouldUseIdiomaticRequestNames,
-        objectQueryParameters:
-            overrides?.objectQueryParameters ??
-            options?.objectQueryParameters ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.objectQueryParameters,
-        filter: overrides?.filter ?? options?.filter ?? DEFAULT_PARSE_OPENAPI_SETTINGS.filter,
-        asyncApiNaming:
-            overrides?.asyncApiNaming ?? options?.asyncApiNaming ?? DEFAULT_PARSE_OPENAPI_SETTINGS.asyncApiNaming,
-        useBytesForBinaryResponse:
-            overrides?.useBytesForBinaryResponse ??
-            options?.useBytesForBinaryResponse ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.useBytesForBinaryResponse,
-        exampleGeneration: overrides?.exampleGeneration ?? options?.exampleGeneration ?? undefined,
-        defaultFormParameterEncoding:
-            overrides?.defaultFormParameterEncoding ?? options?.defaultFormParameterEncoding ?? undefined,
-        respectForwardCompatibleEnums:
-            overrides?.respectForwardCompatibleEnums ??
-            options?.respectForwardCompatibleEnums ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.respectForwardCompatibleEnums,
-        additionalPropertiesDefaultsTo:
-            overrides?.additionalPropertiesDefaultsTo ??
-            options?.additionalPropertiesDefaultsTo ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.additionalPropertiesDefaultsTo,
-        typeDatesAsStrings:
-            overrides?.typeDatesAsStrings ??
-            options?.typeDatesAsStrings ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.typeDatesAsStrings,
-        preserveSingleSchemaOneOf:
-            overrides?.preserveSingleSchemaOneOf ??
-            options?.preserveSingleSchemaOneOf ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.preserveSingleSchemaOneOf,
-        inlineAllOfSchemas:
-            overrides?.inlineAllOfSchemas ??
-            options?.inlineAllOfSchemas ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.inlineAllOfSchemas,
-        resolveAliases:
-            overrides?.resolveAliases ?? options?.resolveAliases ?? DEFAULT_PARSE_OPENAPI_SETTINGS.resolveAliases,
-        groupMultiApiEnvironments:
-            overrides?.groupMultiApiEnvironments ??
-            options?.groupMultiApiEnvironments ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.groupMultiApiEnvironments,
-        groupEnvironmentsByHost:
-            overrides?.groupEnvironmentsByHost ??
-            options?.groupEnvironmentsByHost ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.groupEnvironmentsByHost,
-        wrapReferencesToNullableInOptional:
-            overrides?.wrapReferencesToNullableInOptional ??
-            options?.wrapReferencesToNullableInOptional ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.wrapReferencesToNullableInOptional,
-        coerceOptionalSchemasToNullable:
-            overrides?.coerceOptionalSchemasToNullable ??
-            options?.coerceOptionalSchemasToNullable ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.coerceOptionalSchemasToNullable,
-        removeDiscriminantsFromSchemas:
-            overrides?.removeDiscriminantsFromSchemas ??
-            options?.removeDiscriminantsFromSchemas ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.removeDiscriminantsFromSchemas
-    };
+    const overrideOnly = new Set<keyof ParseOpenAPIOptions>(["disableExamples", "preserveSchemaIds"]);
+    const undefinedIfAbsent = new Set<keyof ParseOpenAPIOptions>(["exampleGeneration", "defaultFormParameterEncoding"]);
+
+    return mergeOptions<ParseOpenAPIOptions>({
+        defaults: DEFAULT_PARSE_OPENAPI_SETTINGS,
+        options,
+        overrides,
+        overrideOnly,
+        undefinedIfAbsent
+    });
 }

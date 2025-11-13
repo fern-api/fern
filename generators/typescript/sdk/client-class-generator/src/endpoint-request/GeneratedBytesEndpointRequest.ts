@@ -31,6 +31,7 @@ export declare namespace GeneratedBytesEndpointRequest {
         requestBody: HttpRequestBody.Bytes;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         retainOriginalCasing: boolean;
+        parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         exportsManager: ExportsManager;
     }
 }
@@ -39,14 +40,15 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     private static readonly BINARY_UPLOAD_REQUEST_VARIABLE_NAME = "_binaryUploadRequest";
     private static readonly UPLOADABLE_PARAMETER_NAME = "uploadable";
 
-    private ir: IntermediateRepresentation;
-    private requestParameter: FileUploadRequestParameter | undefined;
+    private readonly ir: IntermediateRepresentation;
+    private readonly requestParameter: FileUploadRequestParameter | undefined;
     private queryParams: GeneratedQueryParams | undefined;
-    private service: HttpService;
-    private endpoint: HttpEndpoint;
-    private requestBody: HttpRequestBody.Bytes;
-    private generatedSdkClientClass: GeneratedSdkClientClassImpl;
-    private retainOriginalCasing: boolean;
+    private readonly service: HttpService;
+    private readonly endpoint: HttpEndpoint;
+    private readonly requestBody: HttpRequestBody.Bytes;
+    private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
+    private readonly retainOriginalCasing: boolean;
+    private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
 
     constructor({
         ir,
@@ -55,7 +57,8 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         endpoint,
         requestBody,
         generatedSdkClientClass,
-        retainOriginalCasing
+        retainOriginalCasing,
+        parameterNaming
     }: GeneratedBytesEndpointRequest.Init) {
         this.ir = ir;
         this.service = service;
@@ -63,6 +66,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         this.requestBody = requestBody;
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.parameterNaming = parameterNaming;
 
         if (this.endpoint.sdkRequest == null) {
             throw new Error("SdkRequest is not defined for bytes endpoint");
@@ -169,7 +173,8 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
             parameters.push({
                 name: getParameterNameForPositionalPathParameter({
                     pathParameter,
-                    retainOriginalCasing: this.retainOriginalCasing
+                    retainOriginalCasing: this.retainOriginalCasing,
+                    parameterNaming: this.parameterNaming
                 }),
                 type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode)
             });

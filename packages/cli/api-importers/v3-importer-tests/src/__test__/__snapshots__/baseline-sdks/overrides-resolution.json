@@ -2608,6 +2608,7 @@
     },
     "pathParameters": []
   },
+  "apiPlayground": true,
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

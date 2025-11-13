@@ -1979,5 +1979,6 @@
       "sdkVersion": ""
     }
   },
-  "audiences": []
+  "audiences": [],
+  "apiPlayground": true
 }

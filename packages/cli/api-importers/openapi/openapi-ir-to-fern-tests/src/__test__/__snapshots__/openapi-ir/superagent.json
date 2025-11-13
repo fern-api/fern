@@ -4087,7 +4087,7 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "ValidationErrorLocItem",
+                      "generatedName": "ValidationErrorLocItemZero",
                       "groupName": [],
                       "type": "primitive"
                     },
@@ -4095,7 +4095,7 @@
                       "schema": {
                         "type": "int"
                       },
-                      "generatedName": "ValidationErrorLocItem",
+                      "generatedName": "ValidationErrorLocItemOne",
                       "groupName": [],
                       "type": "primitive"
                     }

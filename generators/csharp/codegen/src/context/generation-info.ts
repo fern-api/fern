@@ -1,11 +1,17 @@
+export type Namespace = string;
+
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { FernFilepath, IntermediateRepresentation, TypeId } from "@fern-fern/ir-sdk/api";
 import { join } from "path";
+import { is, text } from "..";
 import * as ast from "../ast";
+import { ClassReference } from "../ast/types/ClassReference";
+import { Collection, Primitive, Special, Type, Value } from "../ast/types/Type";
 import { CSharp } from "../csharp";
-import { type BaseCsharpCustomConfigSchema } from "../custom-config";
+import { type CsharpConfigSchema } from "../custom-config";
 import { lazy } from "../utils/lazy";
 import { camelCase, upperFirst } from "../utils/text";
+
 import { MinimalGeneratorConfig, Support, TAbsoluteFilePath, TRelativeFilePath } from "./common";
 import { Extern } from "./extern";
 import { ModelNavigator } from "./model-navigator";
@@ -52,11 +58,11 @@ export class Generation {
      * @param generatorConfig - Core generator configuration including organization and workspace info
      */
     constructor(
-        private readonly intermediateRepresentation:
+        public readonly intermediateRepresentation:
             | IntermediateRepresentation
             | FernIr.dynamic.DynamicIntermediateRepresentation,
         private readonly apiName: string,
-        private readonly customConfig: BaseCsharpCustomConfigSchema,
+        private readonly customConfig: CsharpConfigSchema,
         private readonly generatorConfig: MinimalGeneratorConfig,
         private readonly support: Support = {
             makeRelativeFilePath: (path) => path as TRelativeFilePath,
@@ -72,7 +78,17 @@ export class Generation {
     ) {
         // Initialize the model navigator to traverse and query the IR
         this.model = new ModelNavigator(intermediateRepresentation, this);
+
+        this.ir = is.IR.IntermediateRepresentation(intermediateRepresentation)
+            ? intermediateRepresentation
+            : ({} as IntermediateRepresentation);
+        this.dir = is.DynamicIR.DynamicIntermediateRepresentation(intermediateRepresentation)
+            ? intermediateRepresentation
+            : ({} as FernIr.dynamic.DynamicIntermediateRepresentation);
     }
+
+    public readonly ir: IntermediateRepresentation;
+    public readonly dir: FernIr.dynamic.DynamicIntermediateRepresentation;
 
     /**
      * Utility for generating C# AST nodes and type references.
@@ -404,19 +420,25 @@ export class Generation {
      *
      * ### Non-Generic Types (cached):
      * ```typescript
-     * const clientType = generation.types.RootClient; // Returns cached ClassReference
+     * const clientType = generation.Types.RootClient; // Returns cached ClassReference
      * ```
      *
      * ### Generic Types (evaluated per call):
      * ```typescript
-     * const pager = generation.types.Pager(itemType); // Returns new ClassReference each time
-     * const asyncApi = generation.types.AsyncApi(messageType);
+     * const pager = generation.Types.Pager(itemType); // Returns new ClassReference each time
+     * const asyncApi = generation.Types.AsyncApi(messageType);
      * ```
      *
      * All type references include proper namespace information and are registered with
      * the NameRegistry to ensure correct imports in generated code.
      */
-    public readonly types = lazy({
+    public readonly Types = lazy({
+        Arbitrary: (name: string) => new Primitive.AribitraryType(name, this),
+        HttpMethodExtensions: () =>
+            this.csharp.classReference({
+                namespace: this.namespaces.core,
+                origin: this.model.staticExplicit("HttpMethodExtensions")
+            }),
         /** Core infrastructure type for building multipart/form-data requests */
         FormRequest: () =>
             this.csharp.classReference({
@@ -729,12 +751,12 @@ export class Generation {
             stepType,
             itemType
         }: {
-            requestType: ast.Type | ast.TypeParameter;
-            requestOptionsType: ast.Type | ast.TypeParameter;
-            responseType: ast.Type | ast.TypeParameter;
-            offsetType: ast.Type | ast.TypeParameter;
-            stepType: ast.Type | ast.TypeParameter;
-            itemType: ast.Type | ast.TypeParameter;
+            requestType: ast.Type;
+            requestOptionsType: ast.Type;
+            responseType: ast.Type;
+            offsetType: ast.Type;
+            stepType: ast.Type;
+            itemType: ast.Type;
         }): ast.ClassReference => {
             return this.csharp.classReference({
                 origin: this.model.staticExplicit("OffsetPager"),
@@ -759,11 +781,11 @@ export class Generation {
             cursorType,
             itemType
         }: {
-            requestType: ast.Type | ast.TypeParameter;
-            requestOptionsType: ast.Type | ast.TypeParameter;
-            responseType: ast.Type | ast.TypeParameter;
-            cursorType: ast.Type | ast.TypeParameter;
-            itemType: ast.Type | ast.TypeParameter;
+            requestType: ast.Type;
+            requestOptionsType: ast.Type;
+            responseType: ast.Type;
+            cursorType: ast.Type;
+            itemType: ast.Type;
         }): ast.ClassReference => {
             return this.csharp.classReference({
                 origin: this.model.staticExplicit("CursorPager"),
@@ -832,6 +854,256 @@ export class Generation {
             });
         }
     });
+    public Primitive = lazy({
+        /**
+         * Creates a string type.
+         *
+         * @returns A Type object representing the C# string type
+         */
+        string: () => {
+            return new Primitive.String(this);
+        },
+        /**
+         * Creates a boolean type.
+         *
+         * @returns A Type object representing the C# bool type
+         */
+        boolean: () => {
+            return new Primitive.Boolean(this);
+        },
+        /**
+         * Creates an integer type.
+         *
+         * @returns A Type object representing the C# int type
+         */
+        integer: () => {
+            return new Primitive.Integer(this);
+        },
+        /**
+         * Creates a long type.
+         *
+         * @returns A Type object representing the C# long type
+         */
+        long: () => {
+            return new Primitive.Long(this);
+        },
+        /**
+         * Creates an unsigned integer type.
+         *
+         * @returns A Type object representing the C# uint type
+         */
+        uint: () => {
+            return new Primitive.Uint(this);
+        },
+        /**
+         * Creates an unsigned long type.
+         *
+         * @returns A Type object representing the C# ulong type
+         */
+        ulong: () => {
+            return new Primitive.ULong(this);
+        },
+        /**
+         * Creates a float type.
+         *
+         * @returns A Type object representing the C# float type
+         */
+        float: () => {
+            return new Primitive.Float(this);
+        },
+        /**
+         * Creates a double type.
+         *
+         * @returns A Type object representing the C# double type
+         */
+        double: () => {
+            return new Primitive.Double(this);
+        },
+        /**
+         * Creates an object type.
+         *
+         * @returns A Type object representing the C# object type
+         */
+        object: () => {
+            return new Primitive.Object(this);
+        }
+    });
+    public Value = lazy({
+        /**
+         * Creates a string type.
+         *
+         * @returns A Type object representing the C# string type
+         */
+        binary: () => {
+            return new Value.Binary(this);
+        },
+        /**
+         * Creates a DateOnly type.
+         *
+         * @returns A Type object representing the C# DateOnly type
+         */
+        dateOnly: () => {
+            return new Value.DateOnly(this);
+        },
+        /**
+         * Creates a DateTime type.
+         *
+         * @returns A Type object representing the C# DateTime type
+         */
+        dateTime: () => {
+            return new Value.DateTime(this);
+        },
+        /**
+         * Creates a Guid type.
+         *
+         * @returns A Type object representing the C# Guid type
+         */
+        uuid: () => {
+            return new Value.Uuid(this);
+        },
+        /**
+         * Creates a string enum type.
+         *
+         * @param value - The class reference for the string enum
+         * @returns A Type object representing the string enum type
+         */
+        stringEnum: (value: ClassReference) => {
+            return new Value.StringEnum(value, this);
+        }
+    });
+    public Collection = lazy({
+        /**
+         * Creates an array type.
+         *
+         * @param value - The element type of the array
+         * @returns A Type object representing the C# array type
+         */
+        array: (value: Type) => {
+            return new Collection.Array(value, this);
+        },
+        /**
+         * Creates a list type.
+         *
+         * @param value - The element type of the list
+         * @returns A Type object representing the C# List<T> type
+         */
+        listType: (value: Type) => {
+            return new Collection.ListType(value, this);
+        },
+        /**
+         * Creates a generic list type.
+         *
+         * @param value - The element type of the list
+         * @returns A Type object representing the C# List<T> type
+         */
+        list: (value: Type) => {
+            return new Collection.List(value, this);
+        },
+        /**
+         * Creates a set type.
+         *
+         * @param value - The element type of the set
+         * @returns A Type object representing the C# HashSet<T> type
+         */
+        set: (value: Type) => {
+            return new Collection.Set(value, this);
+        },
+        /**
+         * Creates a map/dictionary type.
+         *
+         * @param keyType - The key type of the map
+         * @param valueType - The value type of the map
+         * @param options - Optional configuration for the map
+         * @returns A Type object representing the C# Dictionary<TKey, TValue> type
+         */
+        map: (keyType: Type, valueType: Type, options?: { dontSimplify?: boolean }) => {
+            return new Collection.Map(keyType, valueType, this, options);
+        },
+        /**
+         * Creates an IDictionary type.
+         *
+         * @param keyType - The key type of the dictionary
+         * @param valueType - The value type of the dictionary
+         * @param options - Optional configuration for the dictionary
+         * @returns A Type object representing the C# IDictionary<TKey, TValue> type
+         */
+        idictionary: (keyType: Type, valueType: Type, options?: { dontSimplify?: boolean }) => {
+            return new Collection.IDictionary(keyType, valueType, this, options);
+        },
+        /**
+         * Creates a KeyValuePair type.
+         *
+         * @param keyType - The key type of the pair
+         * @param valueType - The value type of the pair
+         * @returns A Type object representing the C# KeyValuePair<TKey, TValue> type
+         */
+        keyValuePair: (keyType: Type, valueType: Type) => {
+            return new Collection.KeyValuePair(keyType, valueType, this);
+        }
+    });
+    public Special = lazy({
+        /**
+         * Creates a OneOf union type.
+         *
+         * @param memberValues - Array of possible types in the union
+         * @returns A Type object representing the OneOf<T1, T2, ...> type
+         */
+        oneOf: (memberValues: Type[]) => {
+            return new Special.OneOf(memberValues, this);
+        },
+        /**
+         * Creates a OneOfBase union type.
+         *
+         * @param memberValues - Array of possible types in the union
+         * @returns A Type object representing the OneOfBase<T1, T2, ...> type
+         */
+        oneOfBase: (memberValues: Type[]) => {
+            return new Special.OneOfBase(memberValues, this);
+        },
+        /**
+         * Creates an Action delegate type.
+         *
+         * @param typeParameters - Array of type parameters for the Action
+         * @returns A Type object representing the C# Action<T1, T2, ...> type
+         */
+        action: ({ typeParameters }: { typeParameters: Type[] }) => {
+            return new Special.Action(typeParameters, this);
+        },
+
+        /**
+         * Creates a Func delegate type.
+         *
+         * @param typeParameters - Array of type parameters for the Func
+         * @param returnType - The return type of the Func
+         * @returns A Type object representing the C# Func<T1, T2, ..., TResult> type
+         */
+        func: ({ typeParameters, returnType }: { typeParameters: Type[]; returnType: Type }) => {
+            return new Special.Func(typeParameters, returnType, this);
+        },
+
+        /**
+         * Creates a generic C# type placeholder.
+         *
+         * @returns A Type object representing a generic C# type
+         */
+        systemType: () => {
+            return new Special.SystemType(this);
+        },
+
+        /**
+         * Creates a file parameter type.
+         *
+         * @param classReference - The class reference for the file parameter
+         * @returns A Type object representing a file parameter type
+         */
+        fileParam: (classReference: ClassReference) => {
+            return new Special.FileParameter(classReference, this);
+        }
+    });
+
+    public readonly format = lazy({
+        private: (name: string) => `_${text.camelCase(name)}`
+    });
 
     /** This is called (once) before any generator actually starts to generate code.
      * It offers a last-chance to validate or modify the generation before certain things are fixed in place.
@@ -851,4 +1123,31 @@ export class Generation {
             return true;
         }
     });
+
+    /** Provides access to .NET System namespace types and utilities */
+    public get System() {
+        return this.extern.System;
+    }
+
+    /** Provides access to NUnit testing framework types */
+    public get NUnit() {
+        return this.extern.NUnit;
+    }
+
+    /** Provides access to OneOf discriminated union library types */
+    public get OneOf() {
+        return this.extern.OneOf;
+    }
+
+    /** Provides access to Google protocol buffer types */
+    public get Google() {
+        return this.extern.Google;
+    }
+    public get Grpc() {
+        return this.extern.Grpc;
+    }
+    /** Provides access to WireMock.Net testing/mocking library types */
+    public get WireMock() {
+        return this.extern.WireMock;
+    }
 }

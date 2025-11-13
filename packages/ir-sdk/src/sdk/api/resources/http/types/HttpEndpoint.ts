@@ -40,4 +40,6 @@ export interface HttpEndpoint extends FernIr.Declaration {
     source: FernIr.HttpEndpointSource | undefined;
     audiences: FernIr.AudienceReference[] | undefined;
     retries: FernIr.RetriesConfiguration | undefined;
+    /** Whether this endpoint is shown in the API playground */
+    apiPlayground: boolean | undefined;
 }

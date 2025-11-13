@@ -15247,6 +15247,7 @@
       }
     }
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_endUsers": {
       "fernFilepath": {

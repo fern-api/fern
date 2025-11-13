@@ -13741,6 +13741,7 @@
       }
     }
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_ignition": {
       "fernFilepath": {

@@ -1206,6 +1206,7 @@
                         "external"
                     ],
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": "Add a movie to the database"
                 }
@@ -1880,6 +1881,7 @@
         "development"
     ],
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_imdb": {
             "name": {

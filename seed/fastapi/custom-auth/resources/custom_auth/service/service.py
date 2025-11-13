@@ -32,7 +32,7 @@ class AbstractCustomAuthService(AbstractFernService):
         ...
 
     @abc.abstractmethod
-    def post_with_custom_auth(self, *, body: typing.Optional[typing.Any] = None, auth: ApiAuth) -> bool:
+    def post_with_custom_auth(self, *, body: typing.Any, auth: ApiAuth) -> bool:
         """
         POST request with custom auth scheme
         """

@@ -2872,10 +2872,10 @@
             "union": [
               "literal<"asc">",
               "literal<"desc">",
-              "list<GetEventBulkRetriesRequestQueryDirItem>",
+              "list<GetEventBulkRetriesRequestQueryDirOneItem>",
             ],
           },
-          "GetEventBulkRetriesRequestQueryDirItem": {
+          "GetEventBulkRetriesRequestQueryDirOneItem": {
             "enum": [
               "asc",
               "desc",
@@ -3030,10 +3030,10 @@
               "literal<"last_attempt_at">",
               "literal<"next_attempt_at">",
               "literal<"created_at">",
-              "list<GetEventBulkRetriesRequestQueryOrderByItem>",
+              "list<GetEventBulkRetriesRequestQueryOrderByOneItem>",
             ],
           },
-          "GetEventBulkRetriesRequestQueryOrderByItem": {
+          "GetEventBulkRetriesRequestQueryOrderByOneItem": {
             "enum": [
               "last_attempt_at",
               "next_attempt_at",
@@ -4160,10 +4160,10 @@
             "union": [
               "literal<"asc">",
               "literal<"desc">",
-              "list<GetRequestBulkRetriesRequestQueryDirItem>",
+              "list<GetRequestBulkRetriesRequestQueryDirOneItem>",
             ],
           },
-          "GetRequestBulkRetriesRequestQueryDirItem": {
+          "GetRequestBulkRetriesRequestQueryDirOneItem": {
             "enum": [
               "asc",
               "desc",
@@ -4420,10 +4420,10 @@
             "union": [
               "literal<"ingested_at">",
               "literal<"created_at">",
-              "list<GetRequestBulkRetriesRequestQueryOrderByItem>",
+              "list<GetRequestBulkRetriesRequestQueryOrderByOneItem>",
             ],
           },
-          "GetRequestBulkRetriesRequestQueryOrderByItem": {
+          "GetRequestBulkRetriesRequestQueryOrderByOneItem": {
             "enum": [
               "ingested_at",
               "created_at",
@@ -7418,7 +7418,7 @@
     source:
       openapi: ../openapi.yml
     inline: true
-  GetEventBulkRetriesRequestQueryOrderByItem:
+  GetEventBulkRetriesRequestQueryOrderByOneItem:
     enum:
       - last_attempt_at
       - next_attempt_at
@@ -7433,11 +7433,11 @@
       - literal<"last_attempt_at">
       - literal<"next_attempt_at">
       - literal<"created_at">
-      - list<GetEventBulkRetriesRequestQueryOrderByItem>
+      - list<GetEventBulkRetriesRequestQueryOrderByOneItem>
     source:
       openapi: ../openapi.yml
     inline: true
-  GetEventBulkRetriesRequestQueryDirItem:
+  GetEventBulkRetriesRequestQueryDirOneItem:
     enum:
       - asc
       - desc
@@ -7450,7 +7450,7 @@
     union:
       - literal<"asc">
       - literal<"desc">
-      - list<GetEventBulkRetriesRequestQueryDirItem>
+      - list<GetEventBulkRetriesRequestQueryDirOneItem>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -8762,7 +8762,7 @@
     source:
       openapi: ../openapi.yml
     inline: true
-  GetRequestBulkRetriesRequestQueryOrderByItem:
+  GetRequestBulkRetriesRequestQueryOrderByOneItem:
     enum:
       - ingested_at
       - created_at
@@ -8775,11 +8775,11 @@
     union:
       - literal<"ingested_at">
       - literal<"created_at">
-      - list<GetRequestBulkRetriesRequestQueryOrderByItem>
+      - list<GetRequestBulkRetriesRequestQueryOrderByOneItem>
     source:
       openapi: ../openapi.yml
     inline: true
-  GetRequestBulkRetriesRequestQueryDirItem:
+  GetRequestBulkRetriesRequestQueryDirOneItem:
     enum:
       - asc
       - desc
@@ -8792,7 +8792,7 @@
     union:
       - literal<"asc">
       - literal<"desc">
-      - list<GetRequestBulkRetriesRequestQueryDirItem>
+      - list<GetRequestBulkRetriesRequestQueryDirOneItem>
     source:
       openapi: ../openapi.yml
     inline: true

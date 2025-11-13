@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-go-sdk",
   "generatorVersion": "latest",
   "generatorConfig": {
-    "enableWireTests": true
+    "enableWireTests": true,
+    "packageName": "testPackageName"
   }
 }

@@ -210,12 +210,36 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
             no_properties=lambda: set(),
         )
 
+        # Check if any referenced types are self-referencing union members
+        union_self_referencing_members = self._context.get_union_self_referencing_members_from_types()
+        ghost_reference_type_ids: List[ir_types.TypeId] = []
+
         for referenced_type_id in referenced_type_ids:
             if self._context.does_type_reference_other_type(
                 type_id=referenced_type_id, other_type_id=self._name.type_id
             ):
-                internal_pydantic_model_for_single_union_type.update_forward_refs()
-                break
+                # Check if this is a self-referencing union member
+                if self._name.type_id in union_self_referencing_members:
+                    self_ref_members = union_self_referencing_members[self._name.type_id]
+                    if referenced_type_id in self_ref_members:
+                        ghost_reference_type_ids.append(referenced_type_id)
+                        # Add as ghost reference so it gets imported
+                        internal_pydantic_model_for_single_union_type.add_ghost_reference(
+                            self._context.get_class_reference_for_type_id(referenced_type_id, as_request=False)
+                        )
+
+        # If we have ghost references, use the special update method; otherwise use regular
+        if ghost_reference_type_ids:
+            ghost_references = [
+                self._context.get_class_reference_for_type_id(type_id, as_request=False)
+                for type_id in ghost_reference_type_ids
+            ]
+            internal_pydantic_model_for_single_union_type.update_forward_refs_with_ghost_references(ghost_references)
+        elif any(
+            self._context.does_type_reference_other_type(type_id=ref_id, other_type_id=self._name.type_id)
+            for ref_id in referenced_type_ids
+        ):
+            internal_pydantic_model_for_single_union_type.update_forward_refs()
 
 
 class PydanticModelDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnionSnippetGenerator):

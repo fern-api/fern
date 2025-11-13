@@ -1152,6 +1152,7 @@
     "endpoints": {},
     "pathParameters": []
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_status": {
       "fernFilepath": {

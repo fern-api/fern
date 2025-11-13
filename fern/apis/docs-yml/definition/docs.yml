@@ -418,6 +418,10 @@ types:
         docs: |
           If `availability` is set to `deprecated`, Fern will display a warning banner on the docs site.
       audiences: optional<Audience>
+      hidden:
+        type: optional<boolean>
+        docs: |
+          If true, this version will be hidden from navigation, search, and indexing, but still accessible via direct URL.
 
   Availability:
     enum:
@@ -719,6 +723,12 @@ types:
       body: optional<BodyThemeConfig>
       tabs: optional<TabsThemeConfig>
       page-actions: optional<PageActionsThemeConfig>
+      footer-nav: optional<FooterNavThemeConfig>
+
+  FooterNavThemeConfig:
+    enum:
+      - default
+      - minimal
 
   TabsThemeConfig:
     enum:
@@ -1541,6 +1551,11 @@ types:
           By default, SDK snippets are static code examples that are displayed in your API Reference. Alternatively, you can use dynamic SDK snippets that allow users to modify parameters and see code examples update in real time.
 
           Enable dynamic snippets in `docs.yml`, then configure them by following the SDK snippets setup instructions.
+      ai-examples:
+        type: optional<boolean>
+        availability: pre-release
+        docs: |
+          Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
 
   PlaygroundSettings:
     properties:

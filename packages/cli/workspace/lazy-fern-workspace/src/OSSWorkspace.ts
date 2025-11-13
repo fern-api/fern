@@ -15,7 +15,7 @@ import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } fr
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
-import { parse } from "@fern-api/openapi-ir-parser";
+import { ParseOpenAPIOptions, parse } from "@fern-api/openapi-ir-parser";
 import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-to-ir";
 import { OpenRPCConverter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir";
 import { TaskContext } from "@fern-api/task-context";
@@ -62,6 +62,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     public sources: IdentifiableSource[];
 
     private loader: OpenAPILoader;
+    private readonly parseOptions: Partial<ParseOpenAPIOptions>;
+    private readonly groupMultiApiEnvironments: boolean;
 
     constructor({ allSpecs, specs, ...superArgs }: OSSWorkspace.Args) {
         super({
@@ -107,6 +109,24 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         this.allSpecs = allSpecs;
         this.sources = this.convertSpecsToIdentifiableSources(specs);
         this.loader = new OpenAPILoader(this.absoluteFilePath);
+        this.groupMultiApiEnvironments = this.specs.some((spec) => spec.settings?.groupMultiApiEnvironments);
+        this.parseOptions = {
+            onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas,
+            respectReadonlySchemas: this.respectReadonlySchemas,
+            respectNullableSchemas: this.respectNullableSchemas,
+            wrapReferencesToNullableInOptional: this.wrapReferencesToNullableInOptional,
+            coerceOptionalSchemasToNullable: this.coerceOptionalSchemasToNullable,
+            inlinePathParameters: this.inlinePathParameters,
+            objectQueryParameters: this.objectQueryParameters,
+            exampleGeneration: this.exampleGeneration,
+            useBytesForBinaryResponse: this.useBytesForBinaryResponse,
+            respectForwardCompatibleEnums: this.respectForwardCompatibleEnums,
+            inlineAllOfSchemas: this.inlineAllOfSchemas,
+            resolveAliases: this.resolveAliases,
+            removeDiscriminantsFromSchemas: this.removeDiscriminantsFromSchemas,
+            groupMultiApiEnvironments: this.groupMultiApiEnvironments,
+            groupEnvironmentsByHost: this.groupEnvironmentsByHost
+        };
     }
 
     public async getOpenAPIIr(
@@ -128,24 +148,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             }),
             options: {
                 ...settings,
-                respectReadonlySchemas: settings?.respectReadonlySchemas ?? this.respectReadonlySchemas,
-                respectNullableSchemas: settings?.respectNullableSchemas ?? this.respectNullableSchemas,
-                wrapReferencesToNullableInOptional:
-                    settings?.wrapReferencesToNullableInOptional ?? this.wrapReferencesToNullableInOptional,
-                removeDiscriminantsFromSchemas:
-                    settings?.removeDiscriminantsFromSchemas ?? this.removeDiscriminantsFromSchemas,
-                onlyIncludeReferencedSchemas:
-                    settings?.onlyIncludeReferencedSchemas ?? this.onlyIncludeReferencedSchemas,
-                inlinePathParameters: settings?.inlinePathParameters ?? this.inlinePathParameters,
-                objectQueryParameters: settings?.objectQueryParameters ?? this.objectQueryParameters,
-                exampleGeneration: settings?.exampleGeneration ?? this.exampleGeneration,
-                useBytesForBinaryResponse: settings?.useBytesForBinaryResponse ?? this.useBytesForBinaryResponse,
-                inlineAllOfSchemas: settings?.inlineAllOfSchemas ?? this.inlineAllOfSchemas,
-                resolveAliases: settings?.resolveAliases ?? this.resolveAliases,
-                groupMultiApiEnvironments:
-                    settings?.groupMultiApiEnvironments ??
-                    this.specs.some((spec) => spec.settings?.groupMultiApiEnvironments),
-                groupEnvironmentsByHost: settings?.groupEnvironmentsByHost ?? this.groupEnvironmentsByHost
+                ...this.parseOptions
             }
         });
     }

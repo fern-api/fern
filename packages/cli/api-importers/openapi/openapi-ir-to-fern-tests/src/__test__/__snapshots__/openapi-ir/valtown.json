@@ -3736,7 +3736,7 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "SqliteExecuteRequestStatement",
+                      "generatedName": "SqliteExecuteRequestStatementZero",
                       "groupName": [],
                       "type": "primitive"
                     },
@@ -3770,20 +3770,20 @@
                               "schemas": [
                                 {
                                   "value": {
-                                    "generatedName": "SqliteExecuteRequestStatementArgsArgsItem",
+                                    "generatedName": "SqliteExecuteRequestStatementArgsArgsZeroItem",
                                     "title": "TursoValue",
                                     "description": "A value to be used as a parameter",
                                     "value": {
                                       "value": {
                                         "description": "A value to be used as a parameter",
-                                        "generatedName": "SqliteExecuteRequestStatementArgsArgsItem",
+                                        "generatedName": "SqliteExecuteRequestStatementArgsArgsZeroItem",
                                         "title": "TursoValue",
                                         "schemas": [
                                           {
                                             "schema": {
                                               "type": "string"
                                             },
-                                            "generatedName": "SqliteExecuteRequestStatementArgsArgsItem",
+                                            "generatedName": "SqliteExecuteRequestStatementArgsArgsZeroItemZero",
                                             "groupName": [],
                                             "type": "primitive"
                                           },
@@ -3791,7 +3791,7 @@
                                             "schema": {
                                               "type": "double"
                                             },
-                                            "generatedName": "SqliteExecuteRequestStatementArgsArgsItem",
+                                            "generatedName": "SqliteExecuteRequestStatementArgsArgsZeroItemOne",
                                             "groupName": [],
                                             "type": "primitive"
                                           },
@@ -3799,7 +3799,7 @@
                                             "schema": {
                                               "type": "boolean"
                                             },
-                                            "generatedName": "SqliteExecuteRequestStatementArgsArgsItem",
+                                            "generatedName": "SqliteExecuteRequestStatementArgsArgsZeroItemTwo",
                                             "groupName": [],
                                             "type": "primitive"
                                           }
@@ -3816,7 +3816,7 @@
                                     "groupName": [],
                                     "type": "nullable"
                                   },
-                                  "generatedName": "SqliteExecuteRequestStatementArgsArgs",
+                                  "generatedName": "SqliteExecuteRequestStatementArgsArgsZero",
                                   "groupName": [],
                                   "type": "array"
                                 },
@@ -3843,7 +3843,7 @@
                                             "schema": {
                                               "type": "string"
                                             },
-                                            "generatedName": "SqliteExecuteRequestStatementArgsArgsOneValue",
+                                            "generatedName": "SqliteExecuteRequestStatementArgsArgsOneValueZero",
                                             "groupName": [],
                                             "type": "primitive"
                                           },
@@ -3851,7 +3851,7 @@
                                             "schema": {
                                               "type": "double"
                                             },
-                                            "generatedName": "SqliteExecuteRequestStatementArgsArgsOneValue",
+                                            "generatedName": "SqliteExecuteRequestStatementArgsArgsOneValueOne",
                                             "groupName": [],
                                             "type": "primitive"
                                           },
@@ -3859,7 +3859,7 @@
                                             "schema": {
                                               "type": "boolean"
                                             },
-                                            "generatedName": "SqliteExecuteRequestStatementArgsArgsOneValue",
+                                            "generatedName": "SqliteExecuteRequestStatementArgsArgsOneValueTwo",
                                             "groupName": [],
                                             "type": "primitive"
                                           }
@@ -4228,7 +4228,7 @@
                         "schema": {
                           "type": "string"
                         },
-                        "generatedName": "SqliteBatchRequestStatementsItem",
+                        "generatedName": "SqliteBatchRequestStatementsItemZero",
                         "groupName": [],
                         "type": "primitive"
                       },
@@ -4262,20 +4262,20 @@
                                 "schemas": [
                                   {
                                     "value": {
-                                      "generatedName": "SqliteBatchRequestStatementsItemArgsArgsItem",
+                                      "generatedName": "SqliteBatchRequestStatementsItemArgsArgsZeroItem",
                                       "title": "TursoValue",
                                       "description": "A value to be used as a parameter",
                                       "value": {
                                         "value": {
                                           "description": "A value to be used as a parameter",
-                                          "generatedName": "SqliteBatchRequestStatementsItemArgsArgsItem",
+                                          "generatedName": "SqliteBatchRequestStatementsItemArgsArgsZeroItem",
                                           "title": "TursoValue",
                                           "schemas": [
                                             {
                                               "schema": {
                                                 "type": "string"
                                               },
-                                              "generatedName": "SqliteBatchRequestStatementsItemArgsArgsItem",
+                                              "generatedName": "SqliteBatchRequestStatementsItemArgsArgsZeroItemZero",
                                               "groupName": [],
                                               "type": "primitive"
                                             },
@@ -4283,7 +4283,7 @@
                                               "schema": {
                                                 "type": "double"
                                               },
-                                              "generatedName": "SqliteBatchRequestStatementsItemArgsArgsItem",
+                                              "generatedName": "SqliteBatchRequestStatementsItemArgsArgsZeroItemOne",
                                               "groupName": [],
                                               "type": "primitive"
                                             },
@@ -4291,7 +4291,7 @@
                                               "schema": {
                                                 "type": "boolean"
                                               },
-                                              "generatedName": "SqliteBatchRequestStatementsItemArgsArgsItem",
+                                              "generatedName": "SqliteBatchRequestStatementsItemArgsArgsZeroItemTwo",
                                               "groupName": [],
                                               "type": "primitive"
                                             }
@@ -4308,7 +4308,7 @@
                                       "groupName": [],
                                       "type": "nullable"
                                     },
-                                    "generatedName": "SqliteBatchRequestStatementsItemArgsArgs",
+                                    "generatedName": "SqliteBatchRequestStatementsItemArgsArgsZero",
                                     "groupName": [],
                                     "type": "array"
                                   },
@@ -4335,7 +4335,7 @@
                                               "schema": {
                                                 "type": "string"
                                               },
-                                              "generatedName": "SqliteBatchRequestStatementsItemArgsArgsOneValue",
+                                              "generatedName": "SqliteBatchRequestStatementsItemArgsArgsOneValueZero",
                                               "groupName": [],
                                               "type": "primitive"
                                             },
@@ -4343,7 +4343,7 @@
                                               "schema": {
                                                 "type": "double"
                                               },
-                                              "generatedName": "SqliteBatchRequestStatementsItemArgsArgsOneValue",
+                                              "generatedName": "SqliteBatchRequestStatementsItemArgsArgsOneValueOne",
                                               "groupName": [],
                                               "type": "primitive"
                                             },
@@ -4351,7 +4351,7 @@
                                               "schema": {
                                                 "type": "boolean"
                                               },
-                                              "generatedName": "SqliteBatchRequestStatementsItemArgsArgsOneValue",
+                                              "generatedName": "SqliteBatchRequestStatementsItemArgsArgsOneValueTwo",
                                               "groupName": [],
                                               "type": "primitive"
                                             }
@@ -4744,7 +4744,7 @@
                   "schema": {
                     "type": "string"
                   },
-                  "generatedName": "EvalPostResponse",
+                  "generatedName": "EvalPostResponseZero",
                   "groupName": [],
                   "type": "primitive"
                 },
@@ -4752,7 +4752,7 @@
                   "schema": {
                     "type": "double"
                   },
-                  "generatedName": "EvalPostResponse",
+                  "generatedName": "EvalPostResponseOne",
                   "groupName": [],
                   "type": "primitive"
                 },
@@ -4775,10 +4775,10 @@
                 },
                 {
                   "value": {
-                    "generatedName": "EvalPostResponse",
+                    "generatedName": "EvalPostResponseThree",
                     "type": "unknown"
                   },
-                  "generatedName": "EvalPostResponse",
+                  "generatedName": "EvalPostResponseThree",
                   "groupName": [],
                   "type": "array"
                 },
@@ -4786,7 +4786,7 @@
                   "schema": {
                     "type": "boolean"
                   },
-                  "generatedName": "EvalPostResponse",
+                  "generatedName": "EvalPostResponseFour",
                   "groupName": [],
                   "type": "primitive"
                 }
@@ -5036,7 +5036,7 @@
                   "schema": {
                     "type": "string"
                   },
-                  "generatedName": "EvalGetResponse",
+                  "generatedName": "EvalGetResponseZero",
                   "groupName": [],
                   "type": "primitive"
                 },
@@ -5044,7 +5044,7 @@
                   "schema": {
                     "type": "double"
                   },
-                  "generatedName": "EvalGetResponse",
+                  "generatedName": "EvalGetResponseOne",
                   "groupName": [],
                   "type": "primitive"
                 },
@@ -5067,10 +5067,10 @@
                 },
                 {
                   "value": {
-                    "generatedName": "EvalGetResponse",
+                    "generatedName": "EvalGetResponseThree",
                     "type": "unknown"
                   },
-                  "generatedName": "EvalGetResponse",
+                  "generatedName": "EvalGetResponseThree",
                   "groupName": [],
                   "type": "array"
                 },
@@ -5078,7 +5078,7 @@
                   "schema": {
                     "type": "boolean"
                   },
-                  "generatedName": "EvalGetResponse",
+                  "generatedName": "EvalGetResponseFour",
                   "groupName": [],
                   "type": "primitive"
                 }
@@ -5489,7 +5489,7 @@
                         "schema": {
                           "type": "string"
                         },
-                        "generatedName": "EmailsSendRequestFrom",
+                        "generatedName": "EmailsSendRequestFromZero",
                         "groupName": [],
                         "type": "primitive"
                       },
@@ -5580,7 +5580,7 @@
                               "schema": {
                                 "type": "string"
                               },
-                              "generatedName": "EmailsSendRequestToZero",
+                              "generatedName": "EmailsSendRequestToZeroZero",
                               "groupName": [],
                               "type": "primitive"
                             },
@@ -5646,14 +5646,14 @@
                       {
                         "value": {
                           "value": {
-                            "generatedName": "EmailsSendRequestToItem",
+                            "generatedName": "EmailsSendRequestToOneItem",
                             "title": "EmailData",
                             "schemas": [
                               {
                                 "schema": {
                                   "type": "string"
                                 },
-                                "generatedName": "EmailsSendRequestToItem",
+                                "generatedName": "EmailsSendRequestToOneItemZero",
                                 "groupName": [],
                                 "type": "primitive"
                               },
@@ -5662,15 +5662,15 @@
                                 "properties": [
                                   {
                                     "conflict": {},
-                                    "generatedName": "emailsSendRequestToItemEmailName",
+                                    "generatedName": "emailsSendRequestToOneItemEmailName",
                                     "key": "name",
                                     "schema": {
-                                      "generatedName": "EmailsSendRequestToItemEmailName",
+                                      "generatedName": "EmailsSendRequestToOneItemEmailName",
                                       "value": {
                                         "schema": {
                                           "type": "string"
                                         },
-                                        "generatedName": "EmailsSendRequestToItemEmailName",
+                                        "generatedName": "EmailsSendRequestToOneItemEmailName",
                                         "groupName": [],
                                         "type": "primitive"
                                       },
@@ -5681,13 +5681,13 @@
                                   },
                                   {
                                     "conflict": {},
-                                    "generatedName": "emailsSendRequestToItemEmailEmail",
+                                    "generatedName": "emailsSendRequestToOneItemEmailEmail",
                                     "key": "email",
                                     "schema": {
                                       "schema": {
                                         "type": "string"
                                       },
-                                      "generatedName": "EmailsSendRequestToItemEmailEmail",
+                                      "generatedName": "EmailsSendRequestToOneItemEmailEmail",
                                       "groupName": [],
                                       "type": "primitive"
                                     },
@@ -5696,7 +5696,7 @@
                                 ],
                                 "allOfPropertyConflicts": [],
                                 "description": "An email address and name",
-                                "generatedName": "EmailsSendRequestToItemEmail",
+                                "generatedName": "EmailsSendRequestToOneItemEmail",
                                 "title": "EmailNameAndAddress",
                                 "groupName": [],
                                 "additionalProperties": false,
@@ -5716,7 +5716,7 @@
                           },
                           "type": "oneOf"
                         },
-                        "generatedName": "EmailsSendRequestTo",
+                        "generatedName": "EmailsSendRequestToOne",
                         "title": "EmailDataList",
                         "groupName": [],
                         "type": "array"
@@ -5759,7 +5759,7 @@
                               "schema": {
                                 "type": "string"
                               },
-                              "generatedName": "EmailsSendRequestCcZero",
+                              "generatedName": "EmailsSendRequestCcZeroZero",
                               "groupName": [],
                               "type": "primitive"
                             },
@@ -5825,14 +5825,14 @@
                       {
                         "value": {
                           "value": {
-                            "generatedName": "EmailsSendRequestCcItem",
+                            "generatedName": "EmailsSendRequestCcOneItem",
                             "title": "EmailData",
                             "schemas": [
                               {
                                 "schema": {
                                   "type": "string"
                                 },
-                                "generatedName": "EmailsSendRequestCcItem",
+                                "generatedName": "EmailsSendRequestCcOneItemZero",
                                 "groupName": [],
                                 "type": "primitive"
                               },
@@ -5841,15 +5841,15 @@
                                 "properties": [
                                   {
                                     "conflict": {},
-                                    "generatedName": "emailsSendRequestCcItemEmailName",
+                                    "generatedName": "emailsSendRequestCcOneItemEmailName",
                                     "key": "name",
                                     "schema": {
-                                      "generatedName": "EmailsSendRequestCcItemEmailName",
+                                      "generatedName": "EmailsSendRequestCcOneItemEmailName",
                                       "value": {
                                         "schema": {
                                           "type": "string"
                                         },
-                                        "generatedName": "EmailsSendRequestCcItemEmailName",
+                                        "generatedName": "EmailsSendRequestCcOneItemEmailName",
                                         "groupName": [],
                                         "type": "primitive"
                                       },
@@ -5860,13 +5860,13 @@
                                   },
                                   {
                                     "conflict": {},
-                                    "generatedName": "emailsSendRequestCcItemEmailEmail",
+                                    "generatedName": "emailsSendRequestCcOneItemEmailEmail",
                                     "key": "email",
                                     "schema": {
                                       "schema": {
                                         "type": "string"
                                       },
-                                      "generatedName": "EmailsSendRequestCcItemEmailEmail",
+                                      "generatedName": "EmailsSendRequestCcOneItemEmailEmail",
                                       "groupName": [],
                                       "type": "primitive"
                                     },
@@ -5875,7 +5875,7 @@
                                 ],
                                 "allOfPropertyConflicts": [],
                                 "description": "An email address and name",
-                                "generatedName": "EmailsSendRequestCcItemEmail",
+                                "generatedName": "EmailsSendRequestCcOneItemEmail",
                                 "title": "EmailNameAndAddress",
                                 "groupName": [],
                                 "additionalProperties": false,
@@ -5895,7 +5895,7 @@
                           },
                           "type": "oneOf"
                         },
-                        "generatedName": "EmailsSendRequestCc",
+                        "generatedName": "EmailsSendRequestCcOne",
                         "title": "EmailDataList",
                         "groupName": [],
                         "type": "array"
@@ -5938,7 +5938,7 @@
                               "schema": {
                                 "type": "string"
                               },
-                              "generatedName": "EmailsSendRequestBccZero",
+                              "generatedName": "EmailsSendRequestBccZeroZero",
                               "groupName": [],
                               "type": "primitive"
                             },
@@ -6004,14 +6004,14 @@
                       {
                         "value": {
                           "value": {
-                            "generatedName": "EmailsSendRequestBccItem",
+                            "generatedName": "EmailsSendRequestBccOneItem",
                             "title": "EmailData",
                             "schemas": [
                               {
                                 "schema": {
                                   "type": "string"
                                 },
-                                "generatedName": "EmailsSendRequestBccItem",
+                                "generatedName": "EmailsSendRequestBccOneItemZero",
                                 "groupName": [],
                                 "type": "primitive"
                               },
@@ -6020,15 +6020,15 @@
                                 "properties": [
                                   {
                                     "conflict": {},
-                                    "generatedName": "emailsSendRequestBccItemEmailName",
+                                    "generatedName": "emailsSendRequestBccOneItemEmailName",
                                     "key": "name",
                                     "schema": {
-                                      "generatedName": "EmailsSendRequestBccItemEmailName",
+                                      "generatedName": "EmailsSendRequestBccOneItemEmailName",
                                       "value": {
                                         "schema": {
                                           "type": "string"
                                         },
-                                        "generatedName": "EmailsSendRequestBccItemEmailName",
+                                        "generatedName": "EmailsSendRequestBccOneItemEmailName",
                                         "groupName": [],
                                         "type": "primitive"
                                       },
@@ -6039,13 +6039,13 @@
                                   },
                                   {
                                     "conflict": {},
-                                    "generatedName": "emailsSendRequestBccItemEmailEmail",
+                                    "generatedName": "emailsSendRequestBccOneItemEmailEmail",
                                     "key": "email",
                                     "schema": {
                                       "schema": {
                                         "type": "string"
                                       },
-                                      "generatedName": "EmailsSendRequestBccItemEmailEmail",
+                                      "generatedName": "EmailsSendRequestBccOneItemEmailEmail",
                                       "groupName": [],
                                       "type": "primitive"
                                     },
@@ -6054,7 +6054,7 @@
                                 ],
                                 "allOfPropertyConflicts": [],
                                 "description": "An email address and name",
-                                "generatedName": "EmailsSendRequestBccItemEmail",
+                                "generatedName": "EmailsSendRequestBccOneItemEmail",
                                 "title": "EmailNameAndAddress",
                                 "groupName": [],
                                 "additionalProperties": false,
@@ -6074,7 +6074,7 @@
                           },
                           "type": "oneOf"
                         },
-                        "generatedName": "EmailsSendRequestBcc",
+                        "generatedName": "EmailsSendRequestBccOne",
                         "title": "EmailDataList",
                         "groupName": [],
                         "type": "array"
@@ -6323,15 +6323,15 @@
                           "properties": [
                             {
                               "conflict": {},
-                              "generatedName": "emailsSendRequestReplyToListItemName",
+                              "generatedName": "emailsSendRequestReplyToListOneItemName",
                               "key": "name",
                               "schema": {
-                                "generatedName": "EmailsSendRequestReplyToListItemName",
+                                "generatedName": "EmailsSendRequestReplyToListOneItemName",
                                 "value": {
                                   "schema": {
                                     "type": "string"
                                   },
-                                  "generatedName": "EmailsSendRequestReplyToListItemName",
+                                  "generatedName": "EmailsSendRequestReplyToListOneItemName",
                                   "groupName": [],
                                   "type": "primitive"
                                 },
@@ -6342,13 +6342,13 @@
                             },
                             {
                               "conflict": {},
-                              "generatedName": "emailsSendRequestReplyToListItemEmail",
+                              "generatedName": "emailsSendRequestReplyToListOneItemEmail",
                               "key": "email",
                               "schema": {
                                 "schema": {
                                   "type": "string"
                                 },
-                                "generatedName": "EmailsSendRequestReplyToListItemEmail",
+                                "generatedName": "EmailsSendRequestReplyToListOneItemEmail",
                                 "groupName": [],
                                 "type": "primitive"
                               },
@@ -6357,7 +6357,7 @@
                           ],
                           "allOfPropertyConflicts": [],
                           "description": "An email address and name",
-                          "generatedName": "EmailsSendRequestReplyToListItem",
+                          "generatedName": "EmailsSendRequestReplyToListOneItem",
                           "title": "EmailNameAndAddress",
                           "groupName": [],
                           "additionalProperties": false,
@@ -6367,7 +6367,7 @@
                           },
                           "type": "object"
                         },
-                        "generatedName": "EmailsSendRequestReplyToList",
+                        "generatedName": "EmailsSendRequestReplyToListOne",
                         "title": "EmailList",
                         "groupName": [],
                         "type": "array"
@@ -9201,7 +9201,7 @@
                         "schema": {
                           "type": "string"
                         },
-                        "generatedName": "ResultSetLastInsertRowid",
+                        "generatedName": "ResultSetLastInsertRowidZero",
                         "groupName": [],
                         "type": "primitive"
                       },
@@ -9209,7 +9209,7 @@
                         "schema": {
                           "type": "double"
                         },
-                        "generatedName": "ResultSetLastInsertRowid",
+                        "generatedName": "ResultSetLastInsertRowidOne",
                         "groupName": [],
                         "type": "primitive"
                       }

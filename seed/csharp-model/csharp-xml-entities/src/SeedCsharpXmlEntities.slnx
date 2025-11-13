@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SeedCsharpXmlEntities.Test/SeedCsharpXmlEntities.Test.csproj" />
+  <Project Path="SeedCsharpXmlEntities/SeedCsharpXmlEntities.csproj" />
+</Solution>

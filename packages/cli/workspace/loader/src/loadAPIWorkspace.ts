@@ -1,4 +1,4 @@
-import { OpenAPISpec, ProtobufSpec, Spec } from "@fern-api/api-workspace-commons";
+import { getAPIDefinitionSettings, OpenAPISpec, ProtobufSpec, Spec } from "@fern-api/api-workspace-commons";
 import {
     DEFINITION_DIRECTORY,
     generatorsYml,
@@ -65,6 +65,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                 }
             }
 
+            const apiSettings = getAPIDefinitionSettings(definition.settings);
             specs.push({
                 type: "protobuf",
                 absoluteFilepathToProtobufRoot,
@@ -75,40 +76,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                 generateLocally: definition.schema.localGeneration,
                 fromOpenAPI: definition.schema.fromOpenAPI,
                 settings: {
-                    audiences: definition.audiences ?? [],
-                    useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? false,
-                    shouldUseUndiscriminatedUnionsWithLiterals:
-                        definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
-                    shouldUseIdiomaticRequestNames: definition.settings?.shouldUseIdiomaticRequestNames ?? true,
-                    optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
-                    coerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
-                    objectQueryParameters: definition.settings?.objectQueryParameters ?? true,
-                    respectReadonlySchemas: definition.settings?.respectReadonlySchemas ?? false,
-                    respectNullableSchemas: definition.settings?.respectNullableSchemas ?? true,
-                    onlyIncludeReferencedSchemas: definition.settings?.onlyIncludeReferencedSchemas ?? false,
-                    inlinePathParameters: definition.settings?.inlinePathParameters ?? true,
-                    disableExamples: false,
-                    discriminatedUnionV2: definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
-                    preserveSchemaIds: false,
-                    asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1",
-                    filter: definition.settings?.filter,
-                    exampleGeneration: undefined,
-                    defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding,
-                    useBytesForBinaryResponse: definition.settings?.useBytesForBinaryResponse ?? false,
-                    respectForwardCompatibleEnums: definition.settings?.respectForwardCompatibleEnums ?? false,
-                    additionalPropertiesDefaultsTo: definition.settings?.additionalPropertiesDefaultsTo ?? false,
-                    typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? false,
-                    preserveSingleSchemaOneOf: definition.settings?.preserveSingleSchemaOneOf ?? false,
-                    inlineAllOfSchemas: definition.settings?.inlineAllOfSchemas ?? false,
-                    resolveAliases: definition.settings?.resolveAliases ?? false,
-                    groupMultiApiEnvironments: definition.settings?.groupMultiApiEnvironments ?? false,
-                    wrapReferencesToNullableInOptional:
-                        definition.settings?.wrapReferencesToNullableInOptional ?? false,
-                    coerceOptionalSchemasToNullable: definition.settings?.coerceOptionalSchemasToNullable ?? false,
-                    groupEnvironmentsByHost: definition.settings?.groupEnvironmentsByHost ?? false,
-                    removeDiscriminantsFromSchemas:
-                        definition.settings?.removeDiscriminantsFromSchemas ??
-                        generatorsYml.RemoveDiscriminantsFromSchemas.Always
+                    ...apiSettings,
+                    audiences: definition.audiences ?? []
                 }
             });
             continue;
@@ -151,44 +120,14 @@ export async function loadSingleNamespaceAPIWorkspace({
                 }
             };
         }
+        const apiSettings = getAPIDefinitionSettings(definition.settings);
         specs.push({
             type: "openapi",
             absoluteFilepath,
             absoluteFilepathToOverrides,
             settings: {
-                audiences: definition.audiences ?? [],
-                useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? false,
-                shouldUseUndiscriminatedUnionsWithLiterals:
-                    definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
-                shouldUseIdiomaticRequestNames: definition.settings?.shouldUseIdiomaticRequestNames ?? true,
-                optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
-                coerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
-                objectQueryParameters: definition.settings?.objectQueryParameters ?? true,
-                respectReadonlySchemas: definition.settings?.respectReadonlySchemas ?? false,
-                respectNullableSchemas: definition.settings?.respectNullableSchemas ?? true,
-                onlyIncludeReferencedSchemas: definition.settings?.onlyIncludeReferencedSchemas ?? false,
-                inlinePathParameters: definition.settings?.inlinePathParameters ?? true,
-                disableExamples: false,
-                discriminatedUnionV2: definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
-                preserveSchemaIds: false,
-                asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1",
-                filter: definition.settings?.filter,
-                exampleGeneration: definition.settings?.exampleGeneration,
-                defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding,
-                useBytesForBinaryResponse: definition.settings?.useBytesForBinaryResponse ?? false,
-                respectForwardCompatibleEnums: definition.settings?.respectForwardCompatibleEnums ?? false,
-                additionalPropertiesDefaultsTo: definition.settings?.additionalPropertiesDefaultsTo ?? false,
-                typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? false,
-                preserveSingleSchemaOneOf: definition.settings?.preserveSingleSchemaOneOf ?? false,
-                inlineAllOfSchemas: definition.settings?.inlineAllOfSchemas ?? false,
-                resolveAliases: definition.settings?.resolveAliases ?? false,
-                groupMultiApiEnvironments: definition.settings?.groupMultiApiEnvironments ?? false,
-                wrapReferencesToNullableInOptional: definition.settings?.wrapReferencesToNullableInOptional ?? false,
-                coerceOptionalSchemasToNullable: definition.settings?.coerceOptionalSchemasToNullable ?? false,
-                groupEnvironmentsByHost: definition.settings?.groupEnvironmentsByHost ?? false,
-                removeDiscriminantsFromSchemas:
-                    definition.settings?.removeDiscriminantsFromSchemas ??
-                    generatorsYml.RemoveDiscriminantsFromSchemas.Always
+                ...apiSettings,
+                audiences: definition.audiences ?? []
             },
             source: {
                 type: "openapi",

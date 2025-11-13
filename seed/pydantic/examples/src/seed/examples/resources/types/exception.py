@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
@@ -66,4 +67,6 @@ Exception_Generic(
     exception_stacktrace="<logs>",
 )
 """
-Exception = typing.Union[Exception_Generic, Exception_Timeout]
+Exception = typing_extensions.Annotated[
+    typing.Union[Exception_Generic, Exception_Timeout], pydantic.Field(discriminator="type")
+]

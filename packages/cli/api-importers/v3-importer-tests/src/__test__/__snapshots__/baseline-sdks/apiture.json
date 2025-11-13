@@ -68973,6 +68973,7 @@
       }
     }
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_accounts": {
       "docs": "Banking Accounts",

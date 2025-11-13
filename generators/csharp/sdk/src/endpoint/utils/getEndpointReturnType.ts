@@ -14,7 +14,7 @@ export function getEndpointReturnType({
 }): ast.Type | undefined {
     if (endpoint.response?.body == null) {
         if (endpoint.method === FernIr.HttpMethod.Head) {
-            return context.csharp.Type.reference(context.extern.System.Net.Http.HttpResponseHeaders);
+            return context.System.Net.Http.HttpResponseHeaders;
         }
         return undefined;
     }
@@ -23,23 +23,23 @@ export function getEndpointReturnType({
         json: (jsonChunk: FernIr.JsonStreamChunk) =>
             context.System.Collections.Generic.IAsyncEnumerable(
                 context.csharpTypeMapper.convert({ reference: jsonChunk.payload })
-            ).asTypeRef(),
-        text: () => context.System.Collections.Generic.IAsyncEnumerable(context.csharp.Type.string).asTypeRef(),
+            ),
+        text: () => context.System.Collections.Generic.IAsyncEnumerable(context.generation.Primitive.string),
         sse: (sseChunk: FernIr.SseStreamChunk) =>
             context.System.Collections.Generic.IAsyncEnumerable(
                 context.csharpTypeMapper.convert({ reference: sseChunk.payload })
-            ).asTypeRef(),
+            ),
         _other: () => undefined
     };
 
-    return endpoint.response.body._visit({
+    return endpoint.response.body._visit<ast.Type | undefined>({
         streaming: (reference) => reference._visit(streamResultType),
         // endpoints that are *possibly* streaming will be implemented so they always have a stream-response
         // (this requires that consumers use `for await()` to consume the result, regardless if they are streaming or not)
         streamParameter: (reference) => reference.streamResponse._visit(streamResultType),
-        fileDownload: () => context.System.IO.Stream.asFullyQualified().asTypeRef(),
+        fileDownload: () => context.System.IO.Stream.asFullyQualified(),
         json: (reference) => context.csharpTypeMapper.convert({ reference: reference.responseBodyType }),
-        text: () => context.csharp.Type.string,
+        text: () => context.generation.Primitive.string,
         bytes: () => undefined,
         _other: () => undefined
     });

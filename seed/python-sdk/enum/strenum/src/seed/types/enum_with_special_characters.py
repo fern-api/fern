@@ -2,4 +2,4 @@
 
 import typing
 
-EnumWithSpecialCharacters = typing.Union[typing.Literal["\$bla", "\$yo"], typing.Any]
+EnumWithSpecialCharacters = typing.Union[typing.Literal["\\$bla", "\\$yo"], typing.Any]

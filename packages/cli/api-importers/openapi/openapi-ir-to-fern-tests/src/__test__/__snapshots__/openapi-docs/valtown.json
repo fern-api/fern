@@ -1918,11 +1918,11 @@ docs: Blobs
                 "type": "EmailsSendRequestBccZero",
               },
               {
-                "type": "list<EmailsSendRequestBccItem>",
+                "type": "list<EmailsSendRequestBccOneItem>",
               },
             ],
           },
-          "EmailsSendRequestBccItem": {
+          "EmailsSendRequestBccOneItem": {
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
@@ -1934,11 +1934,11 @@ docs: Blobs
               "string",
               {
                 "docs": "An email address and name",
-                "type": "EmailsSendRequestBccItemEmail",
+                "type": "EmailsSendRequestBccOneItemEmail",
               },
             ],
           },
-          "EmailsSendRequestBccItemEmail": {
+          "EmailsSendRequestBccOneItemEmail": {
             "docs": "An email address and name",
             "inline": true,
             "properties": {
@@ -1990,11 +1990,11 @@ docs: Blobs
                 "type": "EmailsSendRequestCcZero",
               },
               {
-                "type": "list<EmailsSendRequestCcItem>",
+                "type": "list<EmailsSendRequestCcOneItem>",
               },
             ],
           },
-          "EmailsSendRequestCcItem": {
+          "EmailsSendRequestCcOneItem": {
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
@@ -2006,11 +2006,11 @@ docs: Blobs
               "string",
               {
                 "docs": "An email address and name",
-                "type": "EmailsSendRequestCcItemEmail",
+                "type": "EmailsSendRequestCcOneItemEmail",
               },
             ],
           },
-          "EmailsSendRequestCcItemEmail": {
+          "EmailsSendRequestCcOneItemEmail": {
             "docs": "An email address and name",
             "inline": true,
             "properties": {
@@ -2089,7 +2089,7 @@ docs: Blobs
                 "type": "EmailsSendRequestReplyToListEmail",
               },
               {
-                "type": "list<EmailsSendRequestReplyToListItem>",
+                "type": "list<EmailsSendRequestReplyToListOneItem>",
               },
             ],
           },
@@ -2104,7 +2104,7 @@ docs: Blobs
               "openapi": "../openapi.yml",
             },
           },
-          "EmailsSendRequestReplyToListItem": {
+          "EmailsSendRequestReplyToListOneItem": {
             "docs": "An email address and name",
             "inline": true,
             "properties": {
@@ -2129,11 +2129,11 @@ docs: Blobs
                 "type": "EmailsSendRequestToZero",
               },
               {
-                "type": "list<EmailsSendRequestToItem>",
+                "type": "list<EmailsSendRequestToOneItem>",
               },
             ],
           },
-          "EmailsSendRequestToItem": {
+          "EmailsSendRequestToOneItem": {
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
@@ -2145,11 +2145,11 @@ docs: Blobs
               "string",
               {
                 "docs": "An email address and name",
-                "type": "EmailsSendRequestToItemEmail",
+                "type": "EmailsSendRequestToOneItemEmail",
               },
             ],
           },
-          "EmailsSendRequestToItemEmail": {
+          "EmailsSendRequestToOneItemEmail": {
             "docs": "An email address and name",
             "inline": true,
             "properties": {
@@ -2234,7 +2234,7 @@ docs: Blobs
     source:
       openapi: ../openapi.yml
     inline: true
-  EmailsSendRequestToItemEmail:
+  EmailsSendRequestToOneItemEmail:
     docs: An email address and name
     properties:
       name: optional<string>
@@ -2242,11 +2242,11 @@ docs: Blobs
     source:
       openapi: ../openapi.yml
     inline: true
-  EmailsSendRequestToItem:
+  EmailsSendRequestToOneItem:
     discriminated: false
     union:
       - string
-      - type: EmailsSendRequestToItemEmail
+      - type: EmailsSendRequestToOneItemEmail
         docs: An email address and name
     source:
       openapi: ../openapi.yml
@@ -2257,7 +2257,7 @@ docs: Blobs
     union:
       - display-name: EmailData
         type: EmailsSendRequestToZero
-      - type: list<EmailsSendRequestToItem>
+      - type: list<EmailsSendRequestToOneItem>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -2278,7 +2278,7 @@ docs: Blobs
     source:
       openapi: ../openapi.yml
     inline: true
-  EmailsSendRequestCcItemEmail:
+  EmailsSendRequestCcOneItemEmail:
     docs: An email address and name
     properties:
       name: optional<string>
@@ -2286,11 +2286,11 @@ docs: Blobs
     source:
       openapi: ../openapi.yml
     inline: true
-  EmailsSendRequestCcItem:
+  EmailsSendRequestCcOneItem:
     discriminated: false
     union:
       - string
-      - type: EmailsSendRequestCcItemEmail
+      - type: EmailsSendRequestCcOneItemEmail
         docs: An email address and name
     source:
       openapi: ../openapi.yml
@@ -2301,7 +2301,7 @@ docs: Blobs
     union:
       - display-name: EmailData
         type: EmailsSendRequestCcZero
-      - type: list<EmailsSendRequestCcItem>
+      - type: list<EmailsSendRequestCcOneItem>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -2322,7 +2322,7 @@ docs: Blobs
     source:
       openapi: ../openapi.yml
     inline: true
-  EmailsSendRequestBccItemEmail:
+  EmailsSendRequestBccOneItemEmail:
     docs: An email address and name
     properties:
       name: optional<string>
@@ -2330,11 +2330,11 @@ docs: Blobs
     source:
       openapi: ../openapi.yml
     inline: true
-  EmailsSendRequestBccItem:
+  EmailsSendRequestBccOneItem:
     discriminated: false
     union:
       - string
-      - type: EmailsSendRequestBccItemEmail
+      - type: EmailsSendRequestBccOneItemEmail
         docs: An email address and name
     source:
       openapi: ../openapi.yml
@@ -2345,7 +2345,7 @@ docs: Blobs
     union:
       - display-name: EmailData
         type: EmailsSendRequestBccZero
-      - type: list<EmailsSendRequestBccItem>
+      - type: list<EmailsSendRequestBccOneItem>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -2367,7 +2367,7 @@ docs: Blobs
     source:
       openapi: ../openapi.yml
     inline: true
-  EmailsSendRequestReplyToListItem:
+  EmailsSendRequestReplyToListOneItem:
     docs: An email address and name
     properties:
       name: optional<string>
@@ -2381,7 +2381,7 @@ docs: Blobs
     union:
       - type: EmailsSendRequestReplyToListEmail
         docs: An email address and name
-      - type: list<EmailsSendRequestReplyToListItem>
+      - type: list<EmailsSendRequestReplyToListOneItem>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -3959,11 +3959,11 @@ docs: Search
               "openapi": "../openapi.yml",
             },
             "union": [
-              "list<nullable<SqliteBatchRequestStatementsItemArgsArgsItem>>",
+              "list<nullable<SqliteBatchRequestStatementsItemArgsArgsZeroItem>>",
               "map<string, nullable<SqliteBatchRequestStatementsItemArgsArgsOneValue>>",
             ],
           },
-          "SqliteBatchRequestStatementsItemArgsArgsItem": {
+          "SqliteBatchRequestStatementsItemArgsArgsOneValue": {
             "discriminated": false,
             "docs": "A value to be used as a parameter",
             "encoding": undefined,
@@ -3977,7 +3977,7 @@ docs: Search
               "boolean",
             ],
           },
-          "SqliteBatchRequestStatementsItemArgsArgsOneValue": {
+          "SqliteBatchRequestStatementsItemArgsArgsZeroItem": {
             "discriminated": false,
             "docs": "A value to be used as a parameter",
             "encoding": undefined,
@@ -4037,22 +4037,8 @@ docs: Search
               "openapi": "../openapi.yml",
             },
             "union": [
-              "list<nullable<SqliteExecuteRequestStatementArgsArgsItem>>",
+              "list<nullable<SqliteExecuteRequestStatementArgsArgsZeroItem>>",
               "map<string, nullable<SqliteExecuteRequestStatementArgsArgsOneValue>>",
-            ],
-          },
-          "SqliteExecuteRequestStatementArgsArgsItem": {
-            "discriminated": false,
-            "docs": "A value to be used as a parameter",
-            "encoding": undefined,
-            "inline": true,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-            "union": [
-              "string",
-              "double",
-              "boolean",
             ],
           },
           "SqliteExecuteRequestStatementArgsArgsOneValue": {
@@ -4069,10 +4055,24 @@ docs: Search
               "boolean",
             ],
           },
+          "SqliteExecuteRequestStatementArgsArgsZeroItem": {
+            "discriminated": false,
+            "docs": "A value to be used as a parameter",
+            "encoding": undefined,
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "string",
+              "double",
+              "boolean",
+            ],
+          },
         },
       },
       "rawContents": "types:
-  SqliteExecuteRequestStatementArgsArgsItem:
+  SqliteExecuteRequestStatementArgsArgsZeroItem:
     discriminated: false
     docs: A value to be used as a parameter
     union:
@@ -4096,7 +4096,7 @@ docs: Search
     discriminated: false
     docs: List of arguments to be used in the given statement
     union:
-      - list<nullable<SqliteExecuteRequestStatementArgsArgsItem>>
+      - list<nullable<SqliteExecuteRequestStatementArgsArgsZeroItem>>
       - map<string, nullable<SqliteExecuteRequestStatementArgsArgsOneValue>>
     source:
       openapi: ../openapi.yml
@@ -4129,7 +4129,7 @@ docs: Search
     source:
       openapi: ../openapi.yml
     inline: true
-  SqliteBatchRequestStatementsItemArgsArgsItem:
+  SqliteBatchRequestStatementsItemArgsArgsZeroItem:
     discriminated: false
     docs: A value to be used as a parameter
     union:
@@ -4153,7 +4153,7 @@ docs: Search
     discriminated: false
     docs: List of arguments to be used in the given statement
     union:
-      - list<nullable<SqliteBatchRequestStatementsItemArgsArgsItem>>
+      - list<nullable<SqliteBatchRequestStatementsItemArgsArgsZeroItem>>
       - map<string, nullable<SqliteBatchRequestStatementsItemArgsArgsOneValue>>
     source:
       openapi: ../openapi.yml

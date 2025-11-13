@@ -1136,6 +1136,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 },
@@ -1964,6 +1965,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 },
@@ -3147,6 +3149,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 }
@@ -3963,6 +3966,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 },
@@ -5028,6 +5032,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 },
@@ -6180,6 +6185,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 },
@@ -7408,6 +7414,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 },
@@ -8276,6 +8283,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": "Test endpoint with path parameter that has a text prefix (v{version})"
                 }
@@ -10127,6 +10135,7 @@
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_organizations": {
             "name": {

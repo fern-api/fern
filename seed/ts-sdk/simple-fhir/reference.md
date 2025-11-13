@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/Client.ts">getAccount</a>(accountId) -> SeedApi.Account</code></summary>
+<details><summary><code>client.<a href="/src/Client.ts">getAccount</a>(account_id) -> SeedApi.Account</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ await client.getAccount("account_id");
 <dl>
 <dd>
 
-**accountId:** `string` 
+**account_id:** `string` 
     
 </dd>
 </dl>

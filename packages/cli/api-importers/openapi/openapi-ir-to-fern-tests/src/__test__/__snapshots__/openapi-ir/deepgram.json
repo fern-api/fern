@@ -133,7 +133,7 @@
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "ListenRequestCustomTopic",
+                    "generatedName": "ListenRequestCustomTopicZero",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -142,11 +142,11 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "ListenRequestCustomTopicItem",
+                      "generatedName": "ListenRequestCustomTopicOneItem",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "generatedName": "ListenRequestCustomTopic",
+                    "generatedName": "ListenRequestCustomTopicOne",
                     "groupName": [],
                     "type": "array"
                   }
@@ -221,7 +221,7 @@
                       "example": "unsubscribe",
                       "type": "string"
                     },
-                    "generatedName": "ListenRequestCustomIntent",
+                    "generatedName": "ListenRequestCustomIntentZero",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -231,11 +231,11 @@
                         "example": "unsubscribe, account deletion",
                         "type": "string"
                       },
-                      "generatedName": "ListenRequestCustomIntentItem",
+                      "generatedName": "ListenRequestCustomIntentOneItem",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "generatedName": "ListenRequestCustomIntent",
+                    "generatedName": "ListenRequestCustomIntentOne",
                     "groupName": [],
                     "type": "array"
                   }
@@ -333,7 +333,7 @@
                       "example": true,
                       "type": "boolean"
                     },
-                    "generatedName": "ListenRequestDetectLanguage",
+                    "generatedName": "ListenRequestDetectLanguageZero",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -343,11 +343,11 @@
                         "example": "en, fr",
                         "type": "string"
                       },
-                      "generatedName": "ListenRequestDetectLanguageItem",
+                      "generatedName": "ListenRequestDetectLanguageOneItem",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "generatedName": "ListenRequestDetectLanguage",
+                    "generatedName": "ListenRequestDetectLanguageOne",
                     "groupName": [],
                     "type": "array"
                   }
@@ -514,7 +514,7 @@
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "ListenRequestExtra",
+                    "generatedName": "ListenRequestExtraZero",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -523,11 +523,11 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "ListenRequestExtraItem",
+                      "generatedName": "ListenRequestExtraOneItem",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "generatedName": "ListenRequestExtra",
+                    "generatedName": "ListenRequestExtraOne",
                     "groupName": [],
                     "type": "array"
                   }
@@ -632,7 +632,7 @@
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "ListenRequestKeywords",
+                    "generatedName": "ListenRequestKeywordsZero",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -641,11 +641,11 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "ListenRequestKeywordsItem",
+                      "generatedName": "ListenRequestKeywordsOneItem",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "generatedName": "ListenRequestKeywords",
+                    "generatedName": "ListenRequestKeywordsOne",
                     "groupName": [],
                     "type": "array"
                   }
@@ -1237,7 +1237,7 @@
                       "example": "custom-model-123",
                       "type": "string"
                     },
-                    "generatedName": "ListenRequestModel",
+                    "generatedName": "ListenRequestModelOne",
                     "groupName": [],
                     "type": "primitive"
                   }
@@ -1382,13 +1382,13 @@
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "ListenRequestRedact",
+                    "generatedName": "ListenRequestRedactZero",
                     "groupName": [],
                     "type": "primitive"
                   },
                   {
                     "value": {
-                      "generatedName": "ListenRequestRedactItem",
+                      "generatedName": "ListenRequestRedactOneItem",
                       "values": [
                         {
                           "generatedName": "pci",
@@ -1413,7 +1413,7 @@
                       },
                       "type": "enum"
                     },
-                    "generatedName": "ListenRequestRedact",
+                    "generatedName": "ListenRequestRedactOne",
                     "groupName": [],
                     "type": "array"
                   }
@@ -1448,7 +1448,7 @@
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "ListenRequestReplace",
+                    "generatedName": "ListenRequestReplaceZero",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -1457,11 +1457,11 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "ListenRequestReplaceItem",
+                      "generatedName": "ListenRequestReplaceOneItem",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "generatedName": "ListenRequestReplace",
+                    "generatedName": "ListenRequestReplaceOne",
                     "groupName": [],
                     "type": "array"
                   }
@@ -1496,7 +1496,7 @@
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "ListenRequestSearch",
+                    "generatedName": "ListenRequestSearchZero",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -1505,11 +1505,11 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "ListenRequestSearchItem",
+                      "generatedName": "ListenRequestSearchOneItem",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "generatedName": "ListenRequestSearch",
+                    "generatedName": "ListenRequestSearchOne",
                     "groupName": [],
                     "type": "array"
                   }
@@ -1604,7 +1604,7 @@
                     "schema": {
                       "type": "boolean"
                     },
-                    "generatedName": "ListenRequestSummarize",
+                    "generatedName": "ListenRequestSummarizeOne",
                     "title": "Legacy",
                     "groupName": [],
                     "type": "primitive"
@@ -1640,7 +1640,7 @@
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "ListenRequestTag",
+                    "generatedName": "ListenRequestTagZero",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -1649,11 +1649,11 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "ListenRequestTagItem",
+                      "generatedName": "ListenRequestTagOneItem",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "generatedName": "ListenRequestTag",
+                    "generatedName": "ListenRequestTagOne",
                     "groupName": [],
                     "type": "array"
                   }
@@ -1764,7 +1764,7 @@
                       "example": "model-123",
                       "type": "string"
                     },
-                    "generatedName": "ListenRequestVersion",
+                    "generatedName": "ListenRequestVersionOne",
                     "groupName": [],
                     "type": "primitive"
                   }
@@ -2033,7 +2033,7 @@
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "TextReadRequestCustomTopic",
+                    "generatedName": "TextReadRequestCustomTopicZero",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -2042,11 +2042,11 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "TextReadRequestCustomTopicItem",
+                      "generatedName": "TextReadRequestCustomTopicOneItem",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "generatedName": "TextReadRequestCustomTopic",
+                    "generatedName": "TextReadRequestCustomTopicOne",
                     "groupName": [],
                     "type": "array"
                   }
@@ -2556,7 +2556,7 @@
                 "maximum": 192000,
                 "type": "int"
               },
-              "generatedName": "SpeakRequestBitRate",
+              "generatedName": "SpeakRequestBitRateTwo",
               "title": "aac",
               "groupName": [],
               "type": "primitive"
@@ -2793,7 +2793,7 @@
               "schema": {
                 "type": "int"
               },
-              "generatedName": "SpeakRequestSpeakSampleRate",
+              "generatedName": "SpeakRequestSpeakSampleRateFour",
               "title": "opus",
               "groupName": [],
               "type": "primitive"

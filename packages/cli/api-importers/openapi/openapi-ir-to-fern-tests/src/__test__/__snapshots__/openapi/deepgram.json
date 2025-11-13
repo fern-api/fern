@@ -571,10 +571,10 @@
             },
             "union": [
               "string",
-              "list<ListenRequestRedactItem>",
+              "list<ListenRequestRedactOneItem>",
             ],
           },
-          "ListenRequestRedactItem": {
+          "ListenRequestRedactOneItem": {
             "enum": [
               "pci",
               "pii",
@@ -1233,7 +1233,7 @@
       - list<string>
     source:
       openapi: ../openapi.yml
-  ListenRequestRedactItem:
+  ListenRequestRedactOneItem:
     enum:
       - pci
       - pii
@@ -1245,7 +1245,7 @@
     discriminated: false
     union:
       - string
-      - list<ListenRequestRedactItem>
+      - list<ListenRequestRedactOneItem>
     source:
       openapi: ../openapi.yml
   BadRequestErrorBody:

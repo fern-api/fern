@@ -114564,6 +114564,7 @@
       }
     }
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_organizations": {
       "docs": "\nThe Organizations API gives you access to control and manage your Permit organizations.\n\nAn organization represents a **single billable account** (i.e: a company using Permit).\nYou may invite your team members to your Permit account, and thus multiple team members\nmay control an organization simultaniously (each member has access according to his role).",

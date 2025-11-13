@@ -539,7 +539,7 @@ client.service.create_movie(
 <dl>
 <dd>
 
-**metadata:** `typing.Dict[str, typing.Optional[typing.Any]]` 
+**metadata:** `typing.Dict[str, typing.Any]` 
     
 </dd>
 </dl>

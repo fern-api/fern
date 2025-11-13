@@ -11,6 +11,8 @@ import com.seed.objectsWithImports.core.RequestOptions;
 import com.seed.objectsWithImports.core.SeedObjectsWithImportsApiException;
 import com.seed.objectsWithImports.core.SeedObjectsWithImportsException;
 import com.seed.objectsWithImports.core.SeedObjectsWithImportsHttpResponse;
+import com.seed.objectsWithImports.resources.optional.types.DeployParams;
+import com.seed.objectsWithImports.resources.optional.types.DeployResponse;
 import com.seed.objectsWithImports.resources.optional.types.SendOptionalBodyRequest;
 import java.io.IOException;
 import java.util.Map;
@@ -145,6 +147,90 @@ public class AsyncRawOptionalClient {
                     if (response.isSuccessful()) {
                         future.complete(new SeedObjectsWithImportsHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
+                        return;
+                    }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                    future.completeExceptionally(new SeedObjectsWithImportsApiException(
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedObjectsWithImportsException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(
+                        new SeedObjectsWithImportsException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Tests optional(nullable(T)) where T has only optional properties.
+     * This should not generate wire tests expecting {} when Optional.empty() is passed.
+     */
+    public CompletableFuture<SeedObjectsWithImportsHttpResponse<DeployResponse>>
+            sendOptionalNullableWithAllOptionalProperties(String actionId, String id) {
+        return sendOptionalNullableWithAllOptionalProperties(actionId, id, Optional.empty());
+    }
+
+    /**
+     * Tests optional(nullable(T)) where T has only optional properties.
+     * This should not generate wire tests expecting {} when Optional.empty() is passed.
+     */
+    public CompletableFuture<SeedObjectsWithImportsHttpResponse<DeployResponse>>
+            sendOptionalNullableWithAllOptionalProperties(String actionId, String id, Optional<DeployParams> request) {
+        return sendOptionalNullableWithAllOptionalProperties(actionId, id, request, null);
+    }
+
+    /**
+     * Tests optional(nullable(T)) where T has only optional properties.
+     * This should not generate wire tests expecting {} when Optional.empty() is passed.
+     */
+    public CompletableFuture<SeedObjectsWithImportsHttpResponse<DeployResponse>>
+            sendOptionalNullableWithAllOptionalProperties(
+                    String actionId, String id, Optional<DeployParams> request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("deploy")
+                .addPathSegment(actionId)
+                .addPathSegments("versions")
+                .addPathSegment(id)
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create("", null);
+            if (request.isPresent()) {
+                body = RequestBody.create(
+                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+            }
+        } catch (JsonProcessingException e) {
+            throw new SeedObjectsWithImportsException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedObjectsWithImportsHttpResponse<DeployResponse>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedObjectsWithImportsHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, DeployResponse.class),
+                                response));
                         return;
                     }
                     Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);

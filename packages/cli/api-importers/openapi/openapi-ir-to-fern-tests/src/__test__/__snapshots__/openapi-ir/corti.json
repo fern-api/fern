@@ -9350,7 +9350,7 @@
             {
               "description": "Facts",
               "value": {
-                "generatedName": "DocumentContextDataItem",
+                "generatedName": "DocumentContextDataZeroItem",
                 "schema": "FactContext",
                 "source": {
                   "file": "../swagger.json",
@@ -9358,7 +9358,7 @@
                 },
                 "type": "reference"
               },
-              "generatedName": "DocumentContextData",
+              "generatedName": "DocumentContextDataZero",
               "title": "Facts",
               "groupName": [],
               "type": "array"
@@ -9378,7 +9378,7 @@
               "schema": {
                 "type": "string"
               },
-              "generatedName": "DocumentContextData",
+              "generatedName": "DocumentContextDataTwo",
               "title": "Text",
               "groupName": [],
               "type": "primitive"

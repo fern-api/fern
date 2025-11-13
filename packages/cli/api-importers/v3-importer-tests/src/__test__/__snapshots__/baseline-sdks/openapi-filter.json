@@ -7071,6 +7071,7 @@
       }
     }
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_companies": {
       "docs": "Everything about your Companies",
