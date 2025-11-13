@@ -78,20 +78,23 @@ types:
     properties:
       api-key:
         type: string
-        docs: Your PostHog project API key. Defaults to the api-host of "https://us.i.posthog.com".
+        docs: |
+          Your PostHog project API key. Defaults to the api-host of "https://us.i.posthog.com".
       endpoint: optional<string>
 
   GTMConfig:
     properties:
       container-id:
         type: string
-        docs: Your Google Tag Manager container ID. Must start with "GTM-".
+        docs: |
+          Your Google Tag Manager container ID. Must start with "GTM-".
 
   GoogleAnalytics4Config:
     properties:
       measurement-id:
         type: string
-        docs: Your Google Analytics 4 measurement ID. Must start with "G-".
+        docs: |
+          Your Google Analytics 4 measurement ID. Must start with "G-".
 
   # AmplitudeConfig:
   #   properties:
@@ -136,21 +139,28 @@ types:
 
   DocsConfiguration:
     properties:
-      instances: list<DocsInstance>
+      instances:
+        type: list<DocsInstance>
+        docs: |
+          Configure one or more documentation website instances. Each instance represents a distinct docs website that can be published to a unique domain. Use instances to configure staging and production environments.
       title:
         type: optional<string>
-        docs: A string that is used as the tab bar title.
+        docs: |
+          A string that is used as the tab bar title. This appears in the browser tab and bookmarks when users visit your documentation site.
       analytics:
         type: optional<AnalyticsConfig>
         docs: |
-          The `analytics` object allows you to configure analytics for your docs site.
-          Currently, only Segment is supported.
+          Configure analytics tracking for your documentation site. Supports Google Analytics 4, Google Tag Manager, PostHog, and other analytics providers to track user engagement and site performance.
 
-      announcement: optional<AnnouncementConfig>
+      announcement:
+        type: optional<AnnouncementConfig>
+        docs: |
+          Display a prominent announcement banner at the top of your documentation site. Use this to highlight important updates, maintenance notices, or new feature releases.
 
       roles:
-        docs: Global list of roles that can be used to filter the navigation and content based on the user's session.
         type: optional<list<RoleId>>
+        docs: |
+          Global list of roles that can be used to filter the navigation and content based on the user's session.
 
       # navigation
       tabs: optional<map<TabId, TabConfig>>
@@ -158,19 +168,29 @@ types:
       products: optional<list<ProductConfig>>
       landing-page:
         type: optional<PageConfiguration>
-        docs: Creates a landing page for your documentation website.
+        docs: |
+          Creates a landing page for your documentation website.
       navigation:
         type: optional<NavigationConfig>
-        docs: The navigation config is skipped when multiple versions are present.
-      "navbar-links": optional<list<NavbarLink>>
-      "footer-links": optional<FooterLinksConfig>
-      "page-actions": optional<PageActionsConfig>
+        docs: |
+          The navigation config is skipped when multiple versions are present.
+      "navbar-links":
+        type: optional<list<NavbarLink>>
+        docs: |
+          Configure navigation links that appear in the top header of your documentation site. Add call-to-action buttons, external links, or dropdown menus to guide users to important resources.
+      "footer-links":
+        type: optional<FooterLinksConfig>
+        docs: |
+          Add clickable social media and community links to your documentation site footer. Configure links to GitHub, Twitter/X, LinkedIn, Discord, and other platforms to improve discoverability and engagement.
+      "page-actions":
+        type: optional<PageActionsConfig>
+        docs: |
+          Configure the action buttons that appear on documentation pages. Control which page action options are available to users.
       experimental: optional<ExperimentalConfig>
       "default-language":
         type: optional<ProgrammingLanguage>
         docs: |
-          Sets the default language displayed by code snippets in the API Reference.
-          Options include: typescript, python, java, go, ruby, csharp, php, swift, curl
+          Sets the default programming language displayed by code snippets in the API Reference. This determines which language tab is initially selected when users visit API endpoint documentation.
 
       languages: optional<list<Language>>
 
@@ -180,21 +200,46 @@ types:
       "ai-search": optional<AIChatConfig>
 
       # seo
-      metadata: optional<MetadataConfig>
-      redirects: optional<list<RedirectConfig>>
+      metadata:
+        type: optional<MetadataConfig>
+        docs: |
+          Configure SEO metadata for your documentation site. Set Open Graph tags, Twitter Card information, and canonical URLs to optimize how your docs appear in search engines and social media.
+      redirects:
+        type: optional<list<RedirectConfig>>
+        docs: |
+          Configure URL redirects for your documentation site. Redirect old paths to new locations, use regex patterns for bulk redirects, and support both internal paths and external URLs.
 
       # please note: some of the following options represent files provided by the user, which require validation. if someone adds another file record to the spec, please ensure that file is visited in packages/cli/yaml/yaml-schema/src/docsAst/visitDocsConfigFileAst.ts
 
       # branding
-      logo: optional<LogoConfiguration>
+      logo:
+        type: optional<LogoConfiguration>
+        docs: |
+          Configure your company logo that appears in the documentation header. Supports separate images for light and dark themes, custom click destinations, and height customization.
       favicon:
         type: optional<string>
-        docs: Relative filepath to the favicon.
-      background-image: optional<BackgroundImageConfiguration>
-      colors: optional<ColorsConfiguration>
-      typography: optional<DocsTypographyConfig>
-      layout: optional<LayoutConfig>
-      settings: optional<DocsSettingsConfig>
+        docs: |
+          Relative filepath to the favicon. The favicon appears in browser tabs, bookmarks, and browser history. Recommended formats are .ico, .png, or .svg files.
+      background-image:
+        type: optional<BackgroundImageConfiguration>
+        docs: |
+          Set a custom background image that displays behind every page of your documentation site. Supports separate images for light and dark themes.
+      colors:
+        type: optional<ColorsConfiguration>
+        docs: |
+          Customize the color scheme of your documentation site. Configure primary accent colors, background colors, borders, and theme-specific colors for light and dark modes.
+      typography:
+        type: optional<DocsTypographyConfig>
+        docs: |
+          Customize the fonts used throughout your documentation site. Configure separate fonts for headings, body text, and code blocks.
+      layout:
+        type: optional<LayoutConfig>
+        docs: |
+          Customize the layout and dimensions of your documentation site. Control page width, content width, sidebar width, header height, and element placement.
+      settings:
+        type: optional<DocsSettingsConfig>
+        docs: |
+          Configure functional settings for your documentation site such as search behavior, code display preferences, HTTP snippets, and analytics controls.
       theme: optional<ThemeConfig>
 
       # integrations
@@ -211,7 +256,7 @@ types:
       default:
         type: optional<PageActionOption>
         docs: |
-          The default page action to display. Options: copy-page, view-as-markdown, ask-ai, chatgpt, claude, cursor, vscode.
+          The default page action to display.
       options: optional<PageActionOptions>
 
   PageActionOption:
@@ -340,7 +385,7 @@ types:
 
   ChangelogFolderRelativePath:
     type: string
-    docs: |-
+    docs: |
       The relative path to a folder containing markdown files broken down by date.
 
       Example:
@@ -356,14 +401,17 @@ types:
     properties:
       url:
         type: string
-        docs: The URL where your Fern documentation is deployed. Must contain the suffix `docs.buildwithfern.com`.
+        docs: |
+          The URL where your Fern documentation is deployed. Must contain the suffix `docs.buildwithfern.com`.
       "custom-domain":
         type: optional<CustomDomain>
-        docs: The custom domain where your documentation is hosted. Learn more about setting up a custom domain.
+        docs: |
+          The custom domain where your documentation is hosted.
       private:
         type: optional<boolean>
-        docs: This config option is no longer used. Please reach out to the Fern Team if you want to enable private docs.
         availability: deprecated
+        docs: |
+          This config option is no longer used. Please reach out to the Fern Team if you want to enable private docs.
       "edit-this-page":
         type: optional<EditThisPageConfig>
         docs: |
@@ -394,10 +442,12 @@ types:
           @default: `github.com`
       owner:
         type: string
-        docs: The GitHub organization that owns the documentation repository.
+        docs: |
+          The GitHub organization that owns the documentation repository.
       repo:
         type: string
-        docs: The name of the GitHub repository containing your fern folder.
+        docs: |
+          The name of the GitHub repository containing your fern folder.
       branch:
         type: optional<string>
         docs: |
@@ -409,10 +459,12 @@ types:
       display-name: string
       path:
         type: string
-        docs: The relative path to the version's docs.yml file.
+        docs: |
+          The relative path to the version's docs.yml file.
       slug:
         type: optional<string>
-        docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
+        docs: |
+          The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
       availability:
         type: optional<VersionAvailability>
         docs: |
@@ -541,7 +593,7 @@ types:
         type: optional<FontConfig>
         docs: |
           The font used for headings, titles, and other prominent text elements. Can be the same as your body font
-          if you prefer a unified look. Supports multiple weights for different heading levels.
+          for a unified look. Supports multiple weights for different heading levels.
       bodyFont:
         type: optional<FontConfig>
         docs: |
@@ -643,20 +695,20 @@ types:
         type: optional<boolean>
         availability: generally-available
         docs: |
-          If `disable-header` is set to true, the header will not be rendered. Instead, the logo will be rendered as part of the sidebar,
+          If set to true, the header won't be rendered. Instead, the logo will be rendered as part of the sidebar,
           and a 1px border will separate the sidebar from the content.
 
       hide-nav-links:
         type: optional<boolean>
         availability: in-development
         docs: |
-          If `hide-nav-links` is set to true, the navbar links will not be rendered. This can be overridden for a specific page using the frontmatter.
+          If set to true, the navbar links will not be rendered. This can be overridden for a specific page using the frontmatter.
 
       hide-feedback:
         type: optional<boolean>
         availability: in-development
         docs: |
-          If `hide-feedback` is set to true, the feedback button will not be rendered. This can be overridden for a specific page using the frontmatter.
+          If set to true, the feedback button will not be rendered. This can be overridden for a specific page using the frontmatter.
 
   DocsSettingsConfig:
     properties:
@@ -714,7 +766,12 @@ types:
           When this feature is enabled, your API must have Cross-Origin Resource Sharing (CORS) enabled to allow requests from the documentation domain.
 
           @default: false
-      disable-analytics: optional<boolean>
+      disable-analytics: 
+        type: optional<boolean>
+        docs: |
+          If set to true, all analytics integrations configured in the analytics configuration will be disabled. This includes Google Analytics 4, Google Tag Manager, PostHog, and any other analytics providers you have configured.
+
+          @default: false
       language: optional<Language>
 
   ThemeConfig:
@@ -776,7 +833,7 @@ types:
         name: header_tabs
         docs: |
           The searchbar will be placed in the header, but on the tabs row. If the tabs row is hidden, the searchbar will be placed in the header instead.
-          This is a good option if you want to keep the searchbar visible, but save space in the header for more navbar links.
+          Use this option to keep the searchbar visible, but save space in the header for more navbar links.
       - sidebar
 
   TabsPlacement:
@@ -940,7 +997,10 @@ types:
     properties:
       page: string
       path: string
-      slug: optional<string>
+      slug: 
+        type: optional<string>
+        docs: |
+          The slug of the page. Defaults to the page name. The slug can also be overridden in the frontmatter of the page's Markdown file.
       icon: optional<string>
       hidden: optional<boolean>
       noindex: optional<boolean>
@@ -996,7 +1056,8 @@ types:
       api: string
       "api-name":
         type: optional<string>
-        docs: Name of API that we are referencing
+        docs: |
+          Name of API that we are referencing
       openrpc:
         type: optional<string>
         docs: Path to an openrpc spec.
@@ -1004,14 +1065,17 @@ types:
       audiences: optional<Audience>
       display-errors:
         type: optional<boolean>
-        docs: Defaults to false
+        docs: |
+          Defaults to false
       snippets: optional<SnippetsConfiguration>
       postman:
         type: optional<string>
-        docs: URL to a Postman collection for this API reference
+        docs: |
+          URL to a Postman collection for this API reference
       summary:
         type: optional<string>
-        docs: Relative path to the markdown file
+        docs: |
+          Relative path to the markdown file
       layout:
         type: optional<list<ApiReferenceLayoutItem>>
         docs: |
@@ -1067,7 +1131,8 @@ types:
         docs: This section will inherit the endpoints from the specified subpackage(s). If multiple packages are specified, they will be merged.
       summary:
         type: optional<string>
-        docs: Relative path to the markdown file.
+        docs: |
+          Relative path to the markdown file.
       contents: optional<list<ApiReferenceLayoutItem>>
       slug: optional<string>
       icon: optional<string>
@@ -1269,7 +1334,7 @@ types:
       icon:
         type: optional<string>
         docs: |
-          The icon to be used in the button. This icon will appear to the **left** of the text content.
+          The icon to be used for the link. This icon will appear to the **left** of the text content.
           Icons can be in three formats:
           - **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.
           - **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.
@@ -1277,7 +1342,7 @@ types:
       rightIcon:
         type: optional<string>
         docs: |
-          The icon to be used in the button. This icon will appear to the **right** of the text content.
+          The icon to be used for the link. This icon will appear to the **right** of the text content.
           Icons can be in three formats:
           - **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.
           - **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.
@@ -1286,7 +1351,7 @@ types:
           By default, the `rightIcon` for a `filled` button is set to `arrow-right`.
       rounded:
         type: optional<boolean>
-        docs: When `true`, the border radius of the button will be fully rounded.
+        docs: When `true`, the link will have fully rounded corners.
 
   NavbarGithubConfig:
     discriminated: false
@@ -1306,7 +1371,7 @@ types:
         docs: URL to your GitHub repository or organization.
       twitter:
         type: optional<string>
-        docs: URL to your Twitter profile. Use `footer-links.x` for the new X branding.
+        docs: URL to your Twitter profile. Use `footer-links.x` for X branding.
       x:
         type: optional<string>
         docs: URL to your X (formerly Twitter) profile.
@@ -1504,7 +1569,7 @@ types:
     properties:
       source:
         type: string
-        docs: The path you want to redirect from.
+        docs: The path you want to redirect from. Must be an internal path (`/old-path`).
       destination:
         type: string
         docs: |
@@ -1578,7 +1643,8 @@ types:
     properties:
       message:
         type: string
-        docs: The message to display in the announcement bar. Markdown is supported.
+        docs: |
+          The message to display in the announcement banner. Supports Markdown formatting for links, emphasis, and other basic formatting. Keep messages concise for better readability across devices.
 
   ProductPath:
     discriminated: false
@@ -1592,10 +1658,12 @@ types:
       display-name: string
       path:
         type: string
-        docs: The relative path to the version's docs.yml file.
+        docs: |
+          The relative path to the version's docs.yml file.
       slug:
         type: optional<string>
-        docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
+        docs: |
+          The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
 
   AbsoluteProductPath:
     properties:
@@ -1626,10 +1694,12 @@ types:
     properties:
       path:
         type: string
-        docs: The relative path to the version's docs.yml file.
+        docs: |
+          The relative path to the version's docs.yml file.
       slug:
         type: optional<string>
-        docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
+        docs: |
+          The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
 
   ExternalProduct:
     extends: [ProductConfigBase]
