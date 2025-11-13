@@ -2919,6 +2919,15 @@ func (f *fileWriter) WriteRequestType(
 
 	// Implement the json.Unmarshaler interface.
 	f.P("func (", receiver, " *", typeName, ") UnmarshalJSON(data []byte) error {")
+	f.P("// [jsklan] reference type: ", referenceType)
+	f.P("// [jsklan] reference is pointer: ", referenceIsPointer)
+	f.P("// [jsklan] reference literal: ", referenceLiteral)
+	f.P("// [jsklan] literals: ", literals)
+	f.P("// [jsklan] dates: ", requestBody.dates)
+	f.P("// [jsklan] extra properties: ", requestBody.extraProperties)
+	f.P("// [jsklan] body field: ", bodyField)
+	f.P("// [jsklan] type name: ", typeName)
+	f.P("// [jsklan] receiver: ", receiver)
 	if len(referenceType) > 0 {
 		if referenceIsPointer {
 			f.P("body := new(", referenceType, ")")
