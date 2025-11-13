@@ -14,7 +14,7 @@
         existing behavior. New users will get the new defaults.
       type: feat
   irVersion: 61
-  createdAt: "2025-10-13"
+  createdAt: "2025-11-13"
   version: 1.0.0
 
 - changelogEntry:
