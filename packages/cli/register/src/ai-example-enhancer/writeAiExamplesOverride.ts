@@ -91,9 +91,7 @@ export async function writeAiExamplesOverride({
 
         for (const [method, methodExamples] of examplesByMethod.entries()) {
             const xFernExamples = methodExamples.map((example, index) => {
-                const fernExample: Record<string, unknown> = {
-                    name: `AI Enhanced Example ${index + 1}`
-                };
+                const fernExample: Record<string, unknown> = {};
 
                 if (example.pathParameters && Object.keys(example.pathParameters).length > 0) {
                     fernExample["path-parameters"] = example.pathParameters;

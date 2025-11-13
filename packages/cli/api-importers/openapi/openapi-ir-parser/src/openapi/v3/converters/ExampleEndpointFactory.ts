@@ -171,7 +171,7 @@ export class ExampleEndpointFactory {
 
     public finalize(): void {
         // Write the missing examples report if any examples were missing
-        this.writeMissingExamplesLog();
+        // this.writeMissingExamplesLog(); // Disabled file writing
     }
 
     private convertExampleToJson(example: FernOpenapiIr.FullExample): JsonValue {

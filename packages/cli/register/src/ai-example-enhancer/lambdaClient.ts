@@ -126,11 +126,10 @@ export class LambdaExampleEnhancer {
         }
 
         let lastError: Error | undefined;
-        for (let attempt = 1; attempt <= this.config.maxRetries; attempt++) {
+        // Single attempt only - let adaptive retry strategy in processBatchedWorkItems handle retries
+        for (let attempt = 1; attempt <= 1; attempt++) {
             try {
-                this.context.logger.debug(
-                    `Enhancing batch of ${request.endpoints.length} endpoints via lambda (attempt ${attempt}/${this.config.maxRetries})`
-                );
+                this.context.logger.debug(`Enhancing batch of ${request.endpoints.length} endpoints via lambda`);
 
                 const requestBody = {
                     openApiSpec: request.openApiSpec,
@@ -177,27 +176,13 @@ export class LambdaExampleEnhancer {
                 return result;
             } catch (error) {
                 lastError = error as Error;
-                this.context.logger.warn(`Batch attempt ${attempt} failed: ${error}`);
-
-                if (attempt < this.config.maxRetries) {
-                    // Exponential backoff
-                    const delay = Math.min(1000 * Math.pow(2, attempt - 1), 10000);
-                    await new Promise((resolve) => setTimeout(resolve, delay));
-                }
+                this.context.logger.warn(`Batch lambda call failed: ${error}`);
+                // Throw the error to let adaptive retry strategy handle it
+                throw error;
             }
         }
 
-        this.context.logger.error(
-            `Failed to enhance batch after ${this.config.maxRetries} attempts: ${lastError?.message}`
-        );
-
-        // Return original examples if enhancement fails
-        return {
-            results: request.endpoints.map((endpoint) => ({
-                enhancedRequestExample: endpoint.originalRequestExample,
-                enhancedResponseExample: endpoint.originalResponseExample,
-                error: lastError?.message
-            }))
-        };
+        // This should never be reached since we only do 1 attempt and throw on error
+        throw lastError || new Error("Unknown error in batch enhancement");
     }
 }
