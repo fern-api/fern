@@ -1698,9 +1698,9 @@ export class SdkGenerator {
             }
 
             const segments = package_.fernFilepath.packagePath.map((name) => name.camelCase.safeName);
-            const maybeName = (package_ as any).name;
-            if (maybeName != null) {
-                const packageName = maybeName.camelCase.safeName;
+            const subpackage = package_ as Subpackage;
+            if (subpackage.name != null) {
+                const packageName = subpackage.name.camelCase.safeName;
                 if (segments.length === 0 || segments[segments.length - 1] !== packageName) {
                     segments.push(packageName);
                 }
