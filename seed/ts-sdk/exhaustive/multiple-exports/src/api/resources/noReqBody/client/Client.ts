@@ -6,33 +6,33 @@ import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedExhaustive from "../../../index.js";
 
-export declare namespace NoReqBody {
+export declare namespace NoReqBodyClient {
     export interface Options extends BaseClientOptions {}
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class NoReqBody {
-    protected readonly _options: NoReqBody.Options;
+export class NoReqBodyClient {
+    protected readonly _options: NoReqBodyClient.Options;
 
-    constructor(_options: NoReqBody.Options) {
+    constructor(_options: NoReqBodyClient.Options) {
         this._options = _options;
     }
 
     /**
-     * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {NoReqBodyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.noReqBody.getWithNoRequestBody()
      */
     public getWithNoRequestBody(
-        requestOptions?: NoReqBody.RequestOptions,
+        requestOptions?: NoReqBodyClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
         return core.HttpResponsePromise.fromPromise(this.__getWithNoRequestBody(requestOptions));
     }
 
     private async __getWithNoRequestBody(
-        requestOptions?: NoReqBody.RequestOptions,
+        requestOptions?: NoReqBodyClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -87,17 +87,17 @@ export class NoReqBody {
     }
 
     /**
-     * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {NoReqBodyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.noReqBody.postWithNoRequestBody()
      */
-    public postWithNoRequestBody(requestOptions?: NoReqBody.RequestOptions): core.HttpResponsePromise<string> {
+    public postWithNoRequestBody(requestOptions?: NoReqBodyClient.RequestOptions): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__postWithNoRequestBody(requestOptions));
     }
 
     private async __postWithNoRequestBody(
-        requestOptions?: NoReqBody.RequestOptions,
+        requestOptions?: NoReqBodyClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,

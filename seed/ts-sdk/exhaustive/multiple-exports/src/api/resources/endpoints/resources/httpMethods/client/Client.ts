@@ -6,33 +6,33 @@ import * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
-export declare namespace HttpMethods {
+export declare namespace HttpMethodsClient {
     export interface Options extends BaseClientOptions {}
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class HttpMethods {
-    protected readonly _options: HttpMethods.Options;
+export class HttpMethodsClient {
+    protected readonly _options: HttpMethodsClient.Options;
 
-    constructor(_options: HttpMethods.Options) {
+    constructor(_options: HttpMethodsClient.Options) {
         this._options = _options;
     }
 
     /**
      * @param {string} id
-     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.httpMethods.testGet("id")
      */
-    public testGet(id: string, requestOptions?: HttpMethods.RequestOptions): core.HttpResponsePromise<string> {
+    public testGet(id: string, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__testGet(id, requestOptions));
     }
 
     private async __testGet(
         id: string,
-        requestOptions?: HttpMethods.RequestOptions,
+        requestOptions?: HttpMethodsClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -85,7 +85,7 @@ export class HttpMethods {
 
     /**
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
-     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.httpMethods.testPost({
@@ -94,14 +94,14 @@ export class HttpMethods {
      */
     public testPost(
         request: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: HttpMethods.RequestOptions,
+        requestOptions?: HttpMethodsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
         return core.HttpResponsePromise.fromPromise(this.__testPost(request, requestOptions));
     }
 
     private async __testPost(
         request: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: HttpMethods.RequestOptions,
+        requestOptions?: HttpMethodsClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -161,7 +161,7 @@ export class HttpMethods {
     /**
      * @param {string} id
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
-     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.httpMethods.testPut("id", {
@@ -171,7 +171,7 @@ export class HttpMethods {
     public testPut(
         id: string,
         request: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: HttpMethods.RequestOptions,
+        requestOptions?: HttpMethodsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
         return core.HttpResponsePromise.fromPromise(this.__testPut(id, request, requestOptions));
     }
@@ -179,7 +179,7 @@ export class HttpMethods {
     private async __testPut(
         id: string,
         request: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: HttpMethods.RequestOptions,
+        requestOptions?: HttpMethodsClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -239,7 +239,7 @@ export class HttpMethods {
     /**
      * @param {string} id
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
-     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.httpMethods.testPatch("id", {
@@ -263,7 +263,7 @@ export class HttpMethods {
     public testPatch(
         id: string,
         request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: HttpMethods.RequestOptions,
+        requestOptions?: HttpMethodsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
         return core.HttpResponsePromise.fromPromise(this.__testPatch(id, request, requestOptions));
     }
@@ -271,7 +271,7 @@ export class HttpMethods {
     private async __testPatch(
         id: string,
         request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: HttpMethods.RequestOptions,
+        requestOptions?: HttpMethodsClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -330,18 +330,21 @@ export class HttpMethods {
 
     /**
      * @param {string} id
-     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.httpMethods.testDelete("id")
      */
-    public testDelete(id: string, requestOptions?: HttpMethods.RequestOptions): core.HttpResponsePromise<boolean> {
+    public testDelete(
+        id: string,
+        requestOptions?: HttpMethodsClient.RequestOptions,
+    ): core.HttpResponsePromise<boolean> {
         return core.HttpResponsePromise.fromPromise(this.__testDelete(id, requestOptions));
     }
 
     private async __testDelete(
         id: string,
-        requestOptions?: HttpMethods.RequestOptions,
+        requestOptions?: HttpMethodsClient.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,

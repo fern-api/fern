@@ -6,22 +6,22 @@ import * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
-export declare namespace Put {
+export declare namespace PutClient {
     export interface Options extends BaseClientOptions {}
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class Put {
-    protected readonly _options: Put.Options;
+export class PutClient {
+    protected readonly _options: PutClient.Options;
 
-    constructor(_options: Put.Options) {
+    constructor(_options: PutClient.Options) {
         this._options = _options;
     }
 
     /**
      * @param {SeedExhaustive.endpoints.PutRequest} request
-     * @param {Put.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PutClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.put.add({
@@ -30,14 +30,14 @@ export class Put {
      */
     public add(
         request: SeedExhaustive.endpoints.PutRequest,
-        requestOptions?: Put.RequestOptions,
+        requestOptions?: PutClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.endpoints.PutResponse> {
         return core.HttpResponsePromise.fromPromise(this.__add(request, requestOptions));
     }
 
     private async __add(
         request: SeedExhaustive.endpoints.PutRequest,
-        requestOptions?: Put.RequestOptions,
+        requestOptions?: PutClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.endpoints.PutResponse>> {
         const { id } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(

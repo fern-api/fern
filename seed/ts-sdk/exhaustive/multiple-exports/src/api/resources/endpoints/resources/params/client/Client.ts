@@ -6,16 +6,16 @@ import * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
-export declare namespace Params {
+export declare namespace ParamsClient {
     export interface Options extends BaseClientOptions {}
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class Params {
-    protected readonly _options: Params.Options;
+export class ParamsClient {
+    protected readonly _options: ParamsClient.Options;
 
-    constructor(_options: Params.Options) {
+    constructor(_options: ParamsClient.Options) {
         this._options = _options;
     }
 
@@ -23,18 +23,18 @@ export class Params {
      * GET with path param
      *
      * @param {string} param
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.getWithPath("param")
      */
-    public getWithPath(param: string, requestOptions?: Params.RequestOptions): core.HttpResponsePromise<string> {
+    public getWithPath(param: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__getWithPath(param, requestOptions));
     }
 
     private async __getWithPath(
         param: string,
-        requestOptions?: Params.RequestOptions,
+        requestOptions?: ParamsClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -89,7 +89,7 @@ export class Params {
      * GET with path param
      *
      * @param {SeedExhaustive.endpoints.GetWithInlinePath} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.getWithInlinePath({
@@ -98,14 +98,14 @@ export class Params {
      */
     public getWithInlinePath(
         request: SeedExhaustive.endpoints.GetWithInlinePath,
-        requestOptions?: Params.RequestOptions,
+        requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__getWithInlinePath(request, requestOptions));
     }
 
     private async __getWithInlinePath(
         request: SeedExhaustive.endpoints.GetWithInlinePath,
-        requestOptions?: Params.RequestOptions,
+        requestOptions?: ParamsClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const { param } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -161,7 +161,7 @@ export class Params {
      * GET with query param
      *
      * @param {SeedExhaustive.endpoints.GetWithQuery} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.getWithQuery({
@@ -171,14 +171,14 @@ export class Params {
      */
     public getWithQuery(
         request: SeedExhaustive.endpoints.GetWithQuery,
-        requestOptions?: Params.RequestOptions,
+        requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__getWithQuery(request, requestOptions));
     }
 
     private async __getWithQuery(
         request: SeedExhaustive.endpoints.GetWithQuery,
-        requestOptions?: Params.RequestOptions,
+        requestOptions?: ParamsClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { query, number: number_ } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
@@ -237,7 +237,7 @@ export class Params {
      * GET with multiple of same query param
      *
      * @param {SeedExhaustive.endpoints.GetWithMultipleQuery} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.getWithAllowMultipleQuery({
@@ -247,14 +247,14 @@ export class Params {
      */
     public getWithAllowMultipleQuery(
         request: SeedExhaustive.endpoints.GetWithMultipleQuery,
-        requestOptions?: Params.RequestOptions,
+        requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__getWithAllowMultipleQuery(request, requestOptions));
     }
 
     private async __getWithAllowMultipleQuery(
         request: SeedExhaustive.endpoints.GetWithMultipleQuery,
-        requestOptions?: Params.RequestOptions,
+        requestOptions?: ParamsClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { query, number: number_ } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
@@ -324,7 +324,7 @@ export class Params {
      *
      * @param {string} param
      * @param {SeedExhaustive.endpoints.GetWithPathAndQuery} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.getWithPathAndQuery("param", {
@@ -334,7 +334,7 @@ export class Params {
     public getWithPathAndQuery(
         param: string,
         request: SeedExhaustive.endpoints.GetWithPathAndQuery,
-        requestOptions?: Params.RequestOptions,
+        requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__getWithPathAndQuery(param, request, requestOptions));
     }
@@ -342,7 +342,7 @@ export class Params {
     private async __getWithPathAndQuery(
         param: string,
         request: SeedExhaustive.endpoints.GetWithPathAndQuery,
-        requestOptions?: Params.RequestOptions,
+        requestOptions?: ParamsClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { query } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
@@ -402,7 +402,7 @@ export class Params {
      * GET with path and query params
      *
      * @param {SeedExhaustive.endpoints.GetWithInlinePathAndQuery} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.getWithInlinePathAndQuery({
@@ -412,14 +412,14 @@ export class Params {
      */
     public getWithInlinePathAndQuery(
         request: SeedExhaustive.endpoints.GetWithInlinePathAndQuery,
-        requestOptions?: Params.RequestOptions,
+        requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__getWithInlinePathAndQuery(request, requestOptions));
     }
 
     private async __getWithInlinePathAndQuery(
         request: SeedExhaustive.endpoints.GetWithInlinePathAndQuery,
-        requestOptions?: Params.RequestOptions,
+        requestOptions?: ParamsClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { param, query } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
@@ -480,7 +480,7 @@ export class Params {
      *
      * @param {string} param
      * @param {string} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.modifyWithPath("param", "string")
@@ -488,7 +488,7 @@ export class Params {
     public modifyWithPath(
         param: string,
         request: string,
-        requestOptions?: Params.RequestOptions,
+        requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__modifyWithPath(param, request, requestOptions));
     }
@@ -496,7 +496,7 @@ export class Params {
     private async __modifyWithPath(
         param: string,
         request: string,
-        requestOptions?: Params.RequestOptions,
+        requestOptions?: ParamsClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -554,7 +554,7 @@ export class Params {
      * PUT to update with path param
      *
      * @param {SeedExhaustive.endpoints.ModifyResourceAtInlinedPath} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.modifyWithInlinePath({
@@ -564,14 +564,14 @@ export class Params {
      */
     public modifyWithInlinePath(
         request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath,
-        requestOptions?: Params.RequestOptions,
+        requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__modifyWithInlinePath(request, requestOptions));
     }
 
     private async __modifyWithInlinePath(
         request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath,
-        requestOptions?: Params.RequestOptions,
+        requestOptions?: ParamsClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const { param, body: _body } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(

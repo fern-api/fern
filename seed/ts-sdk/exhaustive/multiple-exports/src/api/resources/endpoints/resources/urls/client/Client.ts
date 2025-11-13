@@ -5,30 +5,30 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/he
 import * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
 
-export declare namespace Urls {
+export declare namespace UrlsClient {
     export interface Options extends BaseClientOptions {}
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class Urls {
-    protected readonly _options: Urls.Options;
+export class UrlsClient {
+    protected readonly _options: UrlsClient.Options;
 
-    constructor(_options: Urls.Options) {
+    constructor(_options: UrlsClient.Options) {
         this._options = _options;
     }
 
     /**
-     * @param {Urls.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.urls.withMixedCase()
      */
-    public withMixedCase(requestOptions?: Urls.RequestOptions): core.HttpResponsePromise<string> {
+    public withMixedCase(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__withMixedCase(requestOptions));
     }
 
-    private async __withMixedCase(requestOptions?: Urls.RequestOptions): Promise<core.WithRawResponse<string>> {
+    private async __withMixedCase(requestOptions?: UrlsClient.RequestOptions): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
@@ -79,16 +79,16 @@ export class Urls {
     }
 
     /**
-     * @param {Urls.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.urls.noEndingSlash()
      */
-    public noEndingSlash(requestOptions?: Urls.RequestOptions): core.HttpResponsePromise<string> {
+    public noEndingSlash(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__noEndingSlash(requestOptions));
     }
 
-    private async __noEndingSlash(requestOptions?: Urls.RequestOptions): Promise<core.WithRawResponse<string>> {
+    private async __noEndingSlash(requestOptions?: UrlsClient.RequestOptions): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
@@ -139,16 +139,16 @@ export class Urls {
     }
 
     /**
-     * @param {Urls.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.urls.withEndingSlash()
      */
-    public withEndingSlash(requestOptions?: Urls.RequestOptions): core.HttpResponsePromise<string> {
+    public withEndingSlash(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__withEndingSlash(requestOptions));
     }
 
-    private async __withEndingSlash(requestOptions?: Urls.RequestOptions): Promise<core.WithRawResponse<string>> {
+    private async __withEndingSlash(requestOptions?: UrlsClient.RequestOptions): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
@@ -201,16 +201,16 @@ export class Urls {
     }
 
     /**
-     * @param {Urls.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.urls.withUnderscores()
      */
-    public withUnderscores(requestOptions?: Urls.RequestOptions): core.HttpResponsePromise<string> {
+    public withUnderscores(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__withUnderscores(requestOptions));
     }
 
-    private async __withUnderscores(requestOptions?: Urls.RequestOptions): Promise<core.WithRawResponse<string>> {
+    private async __withUnderscores(requestOptions?: UrlsClient.RequestOptions): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),

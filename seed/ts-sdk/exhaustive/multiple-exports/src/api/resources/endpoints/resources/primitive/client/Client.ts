@@ -5,36 +5,36 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/he
 import * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
 
-export declare namespace Primitive {
+export declare namespace PrimitiveClient {
     export interface Options extends BaseClientOptions {}
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class Primitive {
-    protected readonly _options: Primitive.Options;
+export class PrimitiveClient {
+    protected readonly _options: PrimitiveClient.Options;
 
-    constructor(_options: Primitive.Options) {
+    constructor(_options: PrimitiveClient.Options) {
         this._options = _options;
     }
 
     /**
      * @param {string} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnString("string")
      */
     public getAndReturnString(
         request: string,
-        requestOptions?: Primitive.RequestOptions,
+        requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnString(request, requestOptions));
     }
 
     private async __getAndReturnString(
         request: string,
-        requestOptions?: Primitive.RequestOptions,
+        requestOptions?: PrimitiveClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -90,21 +90,21 @@ export class Primitive {
 
     /**
      * @param {number} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnInt(1)
      */
     public getAndReturnInt(
         request: number,
-        requestOptions?: Primitive.RequestOptions,
+        requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<number> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnInt(request, requestOptions));
     }
 
     private async __getAndReturnInt(
         request: number,
-        requestOptions?: Primitive.RequestOptions,
+        requestOptions?: PrimitiveClient.RequestOptions,
     ): Promise<core.WithRawResponse<number>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -160,21 +160,21 @@ export class Primitive {
 
     /**
      * @param {number} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnLong(1000000)
      */
     public getAndReturnLong(
         request: number,
-        requestOptions?: Primitive.RequestOptions,
+        requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<number> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnLong(request, requestOptions));
     }
 
     private async __getAndReturnLong(
         request: number,
-        requestOptions?: Primitive.RequestOptions,
+        requestOptions?: PrimitiveClient.RequestOptions,
     ): Promise<core.WithRawResponse<number>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -230,21 +230,21 @@ export class Primitive {
 
     /**
      * @param {number} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnDouble(1.1)
      */
     public getAndReturnDouble(
         request: number,
-        requestOptions?: Primitive.RequestOptions,
+        requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<number> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnDouble(request, requestOptions));
     }
 
     private async __getAndReturnDouble(
         request: number,
-        requestOptions?: Primitive.RequestOptions,
+        requestOptions?: PrimitiveClient.RequestOptions,
     ): Promise<core.WithRawResponse<number>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -300,21 +300,21 @@ export class Primitive {
 
     /**
      * @param {boolean} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnBool(true)
      */
     public getAndReturnBool(
         request: boolean,
-        requestOptions?: Primitive.RequestOptions,
+        requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnBool(request, requestOptions));
     }
 
     private async __getAndReturnBool(
         request: boolean,
-        requestOptions?: Primitive.RequestOptions,
+        requestOptions?: PrimitiveClient.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -370,21 +370,21 @@ export class Primitive {
 
     /**
      * @param {string} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z")
      */
     public getAndReturnDatetime(
         request: string,
-        requestOptions?: Primitive.RequestOptions,
+        requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnDatetime(request, requestOptions));
     }
 
     private async __getAndReturnDatetime(
         request: string,
-        requestOptions?: Primitive.RequestOptions,
+        requestOptions?: PrimitiveClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -440,21 +440,21 @@ export class Primitive {
 
     /**
      * @param {string} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnDate("2023-01-15")
      */
     public getAndReturnDate(
         request: string,
-        requestOptions?: Primitive.RequestOptions,
+        requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnDate(request, requestOptions));
     }
 
     private async __getAndReturnDate(
         request: string,
-        requestOptions?: Primitive.RequestOptions,
+        requestOptions?: PrimitiveClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -510,21 +510,21 @@ export class Primitive {
 
     /**
      * @param {string} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
      */
     public getAndReturnUuid(
         request: string,
-        requestOptions?: Primitive.RequestOptions,
+        requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnUuid(request, requestOptions));
     }
 
     private async __getAndReturnUuid(
         request: string,
-        requestOptions?: Primitive.RequestOptions,
+        requestOptions?: PrimitiveClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -580,21 +580,21 @@ export class Primitive {
 
     /**
      * @param {string} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh")
      */
     public getAndReturnBase64(
         request: string,
-        requestOptions?: Primitive.RequestOptions,
+        requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnBase64(request, requestOptions));
     }
 
     private async __getAndReturnBase64(
         request: string,
-        requestOptions?: Primitive.RequestOptions,
+        requestOptions?: PrimitiveClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,

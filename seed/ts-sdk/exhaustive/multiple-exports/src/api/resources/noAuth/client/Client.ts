@@ -6,16 +6,16 @@ import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
 import * as SeedExhaustive from "../../../index.js";
 
-export declare namespace NoAuth {
+export declare namespace NoAuthClient {
     export interface Options extends BaseClientOptions {}
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class NoAuth {
-    protected readonly _options: NoAuth.Options;
+export class NoAuthClient {
+    protected readonly _options: NoAuthClient.Options;
 
-    constructor(_options: NoAuth.Options) {
+    constructor(_options: NoAuthClient.Options) {
         this._options = _options;
     }
 
@@ -23,7 +23,7 @@ export class NoAuth {
      * POST request with no auth
      *
      * @param {unknown} request
-     * @param {NoAuth.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {NoAuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link SeedExhaustive.BadRequestBody}
      *
@@ -34,14 +34,14 @@ export class NoAuth {
      */
     public postWithNoAuth(
         request?: unknown,
-        requestOptions?: NoAuth.RequestOptions,
+        requestOptions?: NoAuthClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
         return core.HttpResponsePromise.fromPromise(this.__postWithNoAuth(request, requestOptions));
     }
 
     private async __postWithNoAuth(
         request?: unknown,
-        requestOptions?: NoAuth.RequestOptions,
+        requestOptions?: NoAuthClient.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,

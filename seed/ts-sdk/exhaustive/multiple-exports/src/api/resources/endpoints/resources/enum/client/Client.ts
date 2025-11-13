@@ -6,36 +6,36 @@ import * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
-export declare namespace Enum {
+export declare namespace EnumClient {
     export interface Options extends BaseClientOptions {}
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class Enum {
-    protected readonly _options: Enum.Options;
+export class EnumClient {
+    protected readonly _options: EnumClient.Options;
 
-    constructor(_options: Enum.Options) {
+    constructor(_options: EnumClient.Options) {
         this._options = _options;
     }
 
     /**
      * @param {SeedExhaustive.types.WeatherReport} request
-     * @param {Enum.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {EnumClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.enum.getAndReturnEnum("SUNNY")
      */
     public getAndReturnEnum(
         request: SeedExhaustive.types.WeatherReport,
-        requestOptions?: Enum.RequestOptions,
+        requestOptions?: EnumClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.WeatherReport> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnEnum(request, requestOptions));
     }
 
     private async __getAndReturnEnum(
         request: SeedExhaustive.types.WeatherReport,
-        requestOptions?: Enum.RequestOptions,
+        requestOptions?: EnumClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.WeatherReport>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,

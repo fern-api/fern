@@ -6,16 +6,16 @@ import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
 import * as SeedExhaustive from "../../../index.js";
 
-export declare namespace InlinedRequests {
+export declare namespace InlinedRequestsClient {
     export interface Options extends BaseClientOptions {}
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class InlinedRequests {
-    protected readonly _options: InlinedRequests.Options;
+export class InlinedRequestsClient {
+    protected readonly _options: InlinedRequestsClient.Options;
 
-    constructor(_options: InlinedRequests.Options) {
+    constructor(_options: InlinedRequestsClient.Options) {
         this._options = _options;
     }
 
@@ -23,7 +23,7 @@ export class InlinedRequests {
      * POST with custom object in request body, response is an object
      *
      * @param {SeedExhaustive.PostWithObjectBody} request
-     * @param {InlinedRequests.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {InlinedRequestsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link SeedExhaustive.BadRequestBody}
      *
@@ -52,14 +52,14 @@ export class InlinedRequests {
      */
     public postWithObjectBodyandResponse(
         request: SeedExhaustive.PostWithObjectBody,
-        requestOptions?: InlinedRequests.RequestOptions,
+        requestOptions?: InlinedRequestsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
         return core.HttpResponsePromise.fromPromise(this.__postWithObjectBodyandResponse(request, requestOptions));
     }
 
     private async __postWithObjectBodyandResponse(
         request: SeedExhaustive.PostWithObjectBody,
-        requestOptions?: InlinedRequests.RequestOptions,
+        requestOptions?: InlinedRequestsClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,

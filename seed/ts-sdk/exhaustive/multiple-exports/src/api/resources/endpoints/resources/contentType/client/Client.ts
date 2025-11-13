@@ -6,22 +6,22 @@ import * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
-export declare namespace ContentType {
+export declare namespace ContentTypeClient {
     export interface Options extends BaseClientOptions {}
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class ContentType {
-    protected readonly _options: ContentType.Options;
+export class ContentTypeClient {
+    protected readonly _options: ContentTypeClient.Options;
 
-    constructor(_options: ContentType.Options) {
+    constructor(_options: ContentTypeClient.Options) {
         this._options = _options;
     }
 
     /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
-     * @param {ContentType.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.contentType.postJsonPatchContentType({
@@ -44,14 +44,14 @@ export class ContentType {
      */
     public postJsonPatchContentType(
         request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: ContentType.RequestOptions,
+        requestOptions?: ContentTypeClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__postJsonPatchContentType(request, requestOptions));
     }
 
     private async __postJsonPatchContentType(
         request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: ContentType.RequestOptions,
+        requestOptions?: ContentTypeClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -107,7 +107,7 @@ export class ContentType {
 
     /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
-     * @param {ContentType.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
@@ -130,7 +130,7 @@ export class ContentType {
      */
     public postJsonPatchContentWithCharsetType(
         request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: ContentType.RequestOptions,
+        requestOptions?: ContentTypeClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(
             this.__postJsonPatchContentWithCharsetType(request, requestOptions),
@@ -139,7 +139,7 @@ export class ContentType {
 
     private async __postJsonPatchContentWithCharsetType(
         request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: ContentType.RequestOptions,
+        requestOptions?: ContentTypeClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,

@@ -6,22 +6,22 @@ import * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
-export declare namespace Union {
+export declare namespace UnionClient {
     export interface Options extends BaseClientOptions {}
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class Union {
-    protected readonly _options: Union.Options;
+export class UnionClient {
+    protected readonly _options: UnionClient.Options;
 
-    constructor(_options: Union.Options) {
+    constructor(_options: UnionClient.Options) {
         this._options = _options;
     }
 
     /**
      * @param {SeedExhaustive.types.Animal} request
-     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.union.getAndReturnUnion({
@@ -32,14 +32,14 @@ export class Union {
      */
     public getAndReturnUnion(
         request: SeedExhaustive.types.Animal,
-        requestOptions?: Union.RequestOptions,
+        requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.Animal> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnUnion(request, requestOptions));
     }
 
     private async __getAndReturnUnion(
         request: SeedExhaustive.types.Animal,
-        requestOptions?: Union.RequestOptions,
+        requestOptions?: UnionClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.Animal>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
