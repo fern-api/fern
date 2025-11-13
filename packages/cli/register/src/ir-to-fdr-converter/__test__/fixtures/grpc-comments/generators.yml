@@ -1,16 +1,16 @@
-auth-schemes: 
-  Bearer:                     
+auth-schemes:
+  Bearer:
     scheme: bearer
-api: 
+api:
   auth: Bearer
   default-environment: Production
-  environments: 
+  environments:
     Production: https://test.com/api
-  specs: 
+  specs:
     - proto:
         root: proto
         local-generation: true
-        from-openapi: true 
+        from-openapi: true
         dependencies:
           - buf.build/googleapis/googleapis
           - buf.build/bufbuild/protovalidate
