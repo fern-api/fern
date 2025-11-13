@@ -1,16 +1,16 @@
 import { AbstractExtension } from "@fern-api/v3-importer-commons";
 
-export declare namespace FernPlaygroundEnabledExtension {
+export declare namespace FernExplorerEnabledExtension {
     export interface Args extends AbstractExtension.Args {
         operation: object;
     }
 }
 
-export class FernPlaygroundEnabledExtension extends AbstractExtension<boolean> {
+export class FernExplorerEnabledExtension extends AbstractExtension<boolean> {
     private readonly operation: object;
-    public readonly key = "x-fern-playground-enabled";
+    public readonly key = "x-fern-explorer-enabled";
 
-    constructor({ breadcrumbs, operation, context }: FernPlaygroundEnabledExtension.Args) {
+    constructor({ breadcrumbs, operation, context }: FernExplorerEnabledExtension.Args) {
         super({ breadcrumbs, context });
         this.operation = operation;
     }
@@ -23,7 +23,7 @@ export class FernPlaygroundEnabledExtension extends AbstractExtension<boolean> {
 
         if (typeof extensionValue !== "boolean") {
             this.context.errorCollector.collect({
-                message: "Received unexpected non-boolean value for x-fern-playground-enabled",
+                message: "Received unexpected non-boolean value for x-fern-explorer-enabled",
                 path: this.breadcrumbs
             });
             return undefined;
