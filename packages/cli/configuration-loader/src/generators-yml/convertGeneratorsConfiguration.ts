@@ -35,7 +35,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     groupEnvironmentsByHost: undefined,
     wrapReferencesToNullableInOptional: undefined,
     coerceOptionalSchemasToNullable: undefined,
-    removeDiscriminantsFromSchemas: undefined
+    removeDiscriminantsFromSchemas: undefined,
+    pathParameterOrder: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -151,7 +152,8 @@ export function parseBaseApiDefinitionSettingsSchema(
         groupEnvironmentsByHost: settings?.["group-environments-by-host"],
         removeDiscriminantsFromSchemas: parseRemoveDiscriminantsFromSchemas(
             settings?.["remove-discriminants-from-schemas"]
-        )
+        ),
+        pathParameterOrder: settings?.["path-parameter-order"]
     };
 }
 

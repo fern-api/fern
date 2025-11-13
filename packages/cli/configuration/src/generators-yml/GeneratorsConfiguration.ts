@@ -83,6 +83,7 @@ export interface APIDefinitionSettings {
     wrapReferencesToNullableInOptional: boolean | undefined;
     coerceOptionalSchemasToNullable: boolean | undefined;
     removeDiscriminantsFromSchemas: RemoveDiscriminantsFromSchemas | undefined;
+    pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
 }
 
 export interface APIDefinitionLocation {

@@ -23,9 +23,15 @@ export function getAPIDefinitionSettingsDefaults(): APIDefinitionSettings {
  * Mapping table from generators.yml field names to internal OpenAPISettings field names.
  * This eliminates the need for manual field-by-field mapping.
  * Some fields map to multiple internal fields (e.g., shouldUseUndiscriminatedUnionsWithLiterals).
+ *
+ * Note: Only includes fields that map to OpenAPISettings. Fields like pathParameterOrder
+ * that don't have corresponding OpenAPISettings properties are automatically excluded.
  */
 type MappingValue = keyof OpenAPISettings | readonly (keyof OpenAPISettings)[];
-const FIELD_MAPPINGS: Record<keyof generatorsYml.APIDefinitionSettings, MappingValue> = {
+type MappableFields = {
+    [K in keyof generatorsYml.APIDefinitionSettings]: MappingValue;
+};
+const FIELD_MAPPINGS: Partial<MappableFields> = {
     shouldUseTitleAsName: "useTitlesAsName",
     shouldUseUndiscriminatedUnionsWithLiterals: ["shouldUseUndiscriminatedUnionsWithLiterals", "discriminatedUnionV2"],
     shouldUseIdiomaticRequestNames: "shouldUseIdiomaticRequestNames",
@@ -51,7 +57,7 @@ const FIELD_MAPPINGS: Record<keyof generatorsYml.APIDefinitionSettings, MappingV
     groupEnvironmentsByHost: "groupEnvironmentsByHost",
     wrapReferencesToNullableInOptional: "wrapReferencesToNullableInOptional",
     coerceOptionalSchemasToNullable: "coerceOptionalSchemasToNullable",
-    removeDiscriminantsFromSchemas: "removeDiscriminantsFromSchemas"
+    removeDiscriminantsFromSchemas: "removeDiscriminantsFromSchemas",
 };
 
 function setIfDefined<K extends keyof OpenAPISettings>(

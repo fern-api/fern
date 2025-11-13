@@ -51,6 +51,7 @@ import { TypeResolverImpl } from "./resolvers/TypeResolver";
 import { VariableResolverImpl } from "./resolvers/VariableResolver";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { getAudienceForEnvironment } from "./utils/getEnvironmentsByAudience";
+import { getIrGenerationSettings } from "./utils/getApiSettingsWithDefaults";
 import { parseErrorName } from "./utils/parseErrorName";
 
 export declare namespace generateIntermediateRepresentation {
@@ -96,7 +97,7 @@ export function generateIntermediateRepresentation({
     dynamicGeneratorConfig,
     generationMetadata
 }: generateIntermediateRepresentation.Args): IntermediateRepresentation {
-    const apiSettings = workspace.generatorsConfiguration?.api?.settings;
+    const irSettings = getIrGenerationSettings({ workspace });
 
     const casingsGenerator = constructCasingsGenerator({ generationLanguage, keywords, smartCasing });
 
@@ -300,7 +301,8 @@ export function generateIntermediateRepresentation({
                     globalErrors,
                     variableResolver,
                     workspace,
-                    auth: intermediateRepresentation.auth
+                    auth: intermediateRepresentation.auth,
+                    irSettings: irSettings
                 });
 
                 const serviceId = IdGenerator.generateServiceId(convertedHttpService.name);
