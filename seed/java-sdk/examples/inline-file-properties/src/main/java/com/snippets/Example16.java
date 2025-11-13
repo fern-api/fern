@@ -17,8 +17,10 @@ public class Example16 {
                         .title("title")
                         .from("from")
                         .rating(1.1)
-                        .type("movie")
                         .tag("tag")
+                        .revenue(1000000L)
+                        .prequel("prequel")
+                        .book("book")
                         .metadata(new HashMap<String, Object>() {
                             {
                                 put("metadata", new HashMap<String, Object>() {
@@ -28,9 +30,6 @@ public class Example16 {
                                 });
                             }
                         })
-                        .revenue(1000000L)
-                        .prequel("prequel")
-                        .book("book")
                         .build());
     }
 }

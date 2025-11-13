@@ -7,6 +7,23 @@
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
+## Table of Contents
+
+- [Documentation](#documentation)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Reference](#reference)
+- [Base Readme Custom Section](#base-readme-custom-section)
+- [Override Section](#override-section)
+- [Generator Invocation Custom Section](#generator-invocation-custom-section)
+- [Usage](#usage)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Forward Compatible Enums](#forward-compatible-enums)
+- [Contributing](#contributing)
+
 ## Documentation
 
 API reference documentation is available [here](https://www.docs.fernapi.com).

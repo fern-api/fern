@@ -1061,7 +1061,7 @@
           "schema": {
             "type": "string"
           },
-          "generatedName": "UpdateApiKeyRequest",
+          "generatedName": "UpdateApiKeyRequestBody",
           "groupName": [],
           "type": "primitive"
         },

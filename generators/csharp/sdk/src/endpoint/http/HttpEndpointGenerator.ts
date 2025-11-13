@@ -340,7 +340,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         return;
                     }
 
-                    writer.writeStatement(payloadType.toOptionalIfNotAlready(), `result`);
+                    writer.writeStatement(payloadType.asOptional(), `result`);
                     writer.writeLine("try");
                     writer.pushScope();
 
@@ -934,7 +934,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         { property, propertyPath }: RequestProperty | ResponseProperty,
         allowOptional: boolean = true
     ): { code: string; enclosingType: ast.ClassReference } {
-        encType = encType.unwrapIfOptional();
+        encType = encType.asNonOptional();
         let enclosingType = is.ClassReference(encType)
             ? encType
             : fail(`Expected ClassReference, got ${encType.fullyQualifiedName}`);
@@ -953,7 +953,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     // get the type of the current property
                     let typeOfValue = this.context.csharpTypeMapper.convert({ reference: val.type });
                     optional = allowOptional && is.Optional(typeOfValue) ? "?" : "";
-                    typeOfValue = typeOfValue.unwrapIfOptional();
+                    typeOfValue = typeOfValue.asNonOptional();
 
                     // find the classRef for that type
                     if (is.ClassReference(typeOfValue)) {
@@ -973,7 +973,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         property: RequestProperty | ResponseProperty,
         allowOptional: boolean = true
     ): string {
-        encType = encType.unwrapIfOptional();
+        encType = encType.asNonOptional();
         let enclosingType = is.ClassReference(encType)
             ? encType
             : fail(`Expected ClassReference, got ${encType.fullyQualifiedName}`);
@@ -1128,13 +1128,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const name = this.getRequestOptionsParamNameForEndpoint({ endpoint });
         if (endpoint.idempotent) {
             return this.csharp.parameter({
-                type: this.Types.IdempotentRequestOptions.toOptionalIfNotAlready(),
+                type: this.Types.IdempotentRequestOptions.asOptional(),
                 name,
                 initializer: "null"
             });
         } else {
             return this.csharp.parameter({
-                type: this.Types.RequestOptions.toOptionalIfNotAlready(),
+                type: this.Types.RequestOptions.asOptional(),
                 name,
                 initializer: "null"
             });

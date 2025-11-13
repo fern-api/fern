@@ -31,6 +31,19 @@ client.search(
                 )
                 .build()
         )
+        .neighborRequired(
+            SearchRequestNeighborRequired.of(
+                User
+                    .builder()
+                    .name("name")
+                    .tags(
+                        Optional.of(
+                            Arrays.asList("tags", "tags")
+                        )
+                    )
+                    .build()
+            )
+        )
         .userList(
             Arrays.asList(
                 Optional.of(
@@ -63,19 +76,6 @@ client.search(
         )
         .filter(
             Arrays.asList(Optional.of("filter"))
-        )
-        .neighborRequired(
-            SearchRequestNeighborRequired.of(
-                User
-                    .builder()
-                    .name("name")
-                    .tags(
-                        Optional.of(
-                            Arrays.asList("tags", "tags")
-                        )
-                    )
-                    .build()
-            )
         )
         .optionalDeadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
         .keyValue(

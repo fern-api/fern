@@ -317,7 +317,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
                 "docs": "The language of your audio file. Possible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).
 The default value is 'en_us'.
 ",
-                "type": "optional<TranscriptLanguageCode>",
+                "type": "optional<nullable<TranscriptLanguageCode>>",
               },
               "language_detection": {
                 "docs": "Whether [Automatic language detection](https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection) was enabled in the transcription request, either true or false.",
@@ -346,7 +346,7 @@ The default value is 'en_us'.
               },
               "redact_pii_sub": {
                 "docs": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
-                "type": "optional<SubstitutionPolicy>",
+                "type": "optional<nullable<SubstitutionPolicy>>",
               },
               "sentiment_analysis": {
                 "docs": "Enable [Sentiment Analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis), can be true or false",
@@ -358,13 +358,13 @@ The default value is 'en_us'.
               },
               "speakers_expected": {
                 "docs": "Tells the speaker label model how many speakers it should attempt to identify, up to 10. See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more details.",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "speech_threshold": {
                 "docs": "Reject audio files that contain less than this fraction of speech.
 Valid values are in the range [0, 1] inclusive.
 ",
-                "type": "optional<float>",
+                "type": "optional<nullable<float>>",
               },
               "summarization": {
                 "docs": "Enable [Summarization](https://www.assemblyai.com/docs/Models/summarization), can be true or false",
@@ -384,11 +384,11 @@ Valid values are in the range [0, 1] inclusive.
               },
               "webhook_auth_header_name": {
                 "docs": "The header name which should be sent back with webhook calls, if provided in the transcription request.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "webhook_auth_header_value": {
                 "docs": "Defaults to null. Optionally allows a user to specify a header name and value to send back with a webhook call for added security.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "webhook_url": {
                 "docs": "The URL to which we send webhooks upon trancription completion, if provided in the transcription request.",
@@ -801,7 +801,7 @@ Can be any value between 0.0 and 1.0 inclusive.
             "properties": {
               "current_url": "string",
               "limit": "integer",
-              "next_url": "optional<string>",
+              "next_url": "optional<nullable<string>>",
               "prev_url": "string",
               "result_count": "integer",
             },
@@ -1097,7 +1097,7 @@ Can be any value between 0.0 and 1.0 inclusive.
               },
               "speaker": {
                 "docs": "The speaker of the sentence if Speaker Diarization is enabled, else null",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "start": {
                 "docs": "The starting time, in milliseconds, of the sentence",
@@ -1318,15 +1318,15 @@ Can be any value between 0.0 and 1.0 inclusive.
               },
               "audio_duration": {
                 "docs": "The duration of this transcript object's media file, in seconds",
-                "type": "optional<float>",
+                "type": "optional<nullable<float>>",
               },
               "audio_end_at": {
                 "docs": "The point in time, in milliseconds, in the file at which the transcription was terminated, if provided in the transcription request",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "audio_start_from": {
                 "docs": "The point in time, in milliseconds, in the file at which the transcription was started, if provided in the transcription request",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "audio_url": {
                 "docs": "The URL of the media that was transcribed",
@@ -1334,7 +1334,7 @@ Can be any value between 0.0 and 1.0 inclusive.
               },
               "auto_chapters": {
                 "docs": "Enable [Auto Chapters](https://www.assemblyai.com/docs/Models/auto_chapters), can be true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "auto_highlights": {
                 "docs": "Whether Key Phrases was enabled in the transcription request, either true or false",
@@ -1344,19 +1344,19 @@ Can be any value between 0.0 and 1.0 inclusive.
                 "docs": "An array of results for the Key Phrases model, if it was enabled during the transcription request.
 See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.
 ",
-                "type": "optional<AutoHighlightsResult>",
+                "type": "optional<nullable<AutoHighlightsResult>>",
               },
               "boost_param": {
                 "docs": "The word boost parameter value, if provided in the transcription request",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "chapters": {
                 "docs": "An array of temporally sequential chapters for the audio file",
-                "type": "optional<list<Chapter>>",
+                "type": "optional<nullable<list<Chapter>>>",
               },
               "confidence": {
                 "docs": "The confidence score for the transcript, between 0.0 (low confidence) and 1.0 (high confidence)",
-                "type": "optional<double>",
+                "type": "optional<nullable<double>>",
                 "validation": {
                   "exclusiveMax": undefined,
                   "exclusiveMin": undefined,
@@ -1367,39 +1367,39 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
               },
               "content_safety": {
                 "docs": "Enable [Content Moderation](https://www.assemblyai.com/docs/Models/content_moderation), can be true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "content_safety_labels": {
                 "docs": "An array of results for the Content Moderation model, if it was enabled during the transcription request.
 See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderation) for more information.
 ",
-                "type": "optional<TranscriptContentSafetyLabels>",
+                "type": "optional<nullable<TranscriptContentSafetyLabels>>",
               },
               "custom_spelling": {
                 "docs": "Customize how words are spelled and formatted using to and from values",
-                "type": "optional<list<TranscriptCustomSpelling>>",
+                "type": "optional<nullable<list<TranscriptCustomSpelling>>>",
               },
               "custom_topics": {
                 "docs": "Whether custom topics was enabled in the transcription request, either true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "disfluencies": {
                 "docs": "Transcribe Filler Words, like "umm", in your media file; can be true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "dual_channel": {
                 "docs": "Whether [Dual channel transcription](https://www.assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription) was enabled in the transcription request, either true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "entities": {
                 "docs": "An array of results for the Entity Detection model, if it was enabled during the transcription request.
 See [Entity detection](https://www.assemblyai.com/docs/Models/entity_detection) for more information.
 ",
-                "type": "optional<list<Entity>>",
+                "type": "optional<nullable<list<Entity>>>",
               },
               "entity_detection": {
                 "docs": "Enable [Entity Detection](https://www.assemblyai.com/docs/Models/entity_detection), can be true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "error": {
                 "docs": "Error message of why the transcript failed",
@@ -1407,21 +1407,21 @@ See [Entity detection](https://www.assemblyai.com/docs/Models/entity_detection) 
               },
               "filter_profanity": {
                 "docs": "Whether [Profanity Filtering](https://www.assemblyai.com/docs/Models/speech_recognition#profanity-filtering) was enabled in the transcription request, either true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "format_text": {
                 "docs": "Whether Text Formatting was enabled in the transcription request, either true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "iab_categories": {
                 "docs": "Enable [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification), can be true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "iab_categories_result": {
                 "docs": "An array of results for the Topic Detection model, if it was enabled during the transcription request.
 See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification) for more information.
 ",
-                "type": "optional<TranscriptIabCategoriesResult>",
+                "type": "optional<nullable<TranscriptIabCategoriesResult>>",
               },
               "id": {
                 "docs": "The unique identifier of your transcription",
@@ -1432,11 +1432,11 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
 Possible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).
 The default value is 'en_us'.
 ",
-                "type": "optional<TranscriptLanguageCode>",
+                "type": "optional<nullable<TranscriptLanguageCode>>",
               },
               "language_detection": {
                 "docs": "Whether [Automatic language detection](https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection) was enabled in the transcription request, either true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "language_model": {
                 "availability": "deprecated",
@@ -1445,7 +1445,7 @@ The default value is 'en_us'.
               },
               "punctuate": {
                 "docs": "Whether Automatic Punctuation was enabled in the transcription request, either true or false.",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "redact_pii": {
                 "docs": "Whether [PII Redaction](https://www.assemblyai.com/docs/Models/pii_redaction) was enabled in the transcription request, either true or false",
@@ -1455,52 +1455,52 @@ The default value is 'en_us'.
                 "docs": "Whether a redacted version of the audio file was generated (enabled or disabled in the transcription request),
 either true or false. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
 ",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "redact_pii_audio_quality": {
                 "docs": "The audio quality of the PII-redacted audio file, if enabled in the transcription request.
 See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
 ",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "redact_pii_policies": {
                 "docs": "The list of PII Redaction policies that were enabled, if PII Redaction is enabled.
 See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
 ",
-                "type": "optional<list<PiiPolicy>>",
+                "type": "optional<nullable<list<PiiPolicy>>>",
               },
               "redact_pii_sub": {
                 "docs": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
-                "type": "optional<SubstitutionPolicy>",
+                "type": "optional<nullable<SubstitutionPolicy>>",
               },
               "sentiment_analysis": {
                 "docs": "Enable [Sentiment Analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis), can be true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "sentiment_analysis_results": {
                 "docs": "An array of results for the Sentiment Analysis model, if it was enabled during the transcription request.
 See [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis) for more information.
 ",
-                "type": "optional<list<SentimentAnalysisResult>>",
+                "type": "optional<nullable<list<SentimentAnalysisResult>>>",
               },
               "speaker_labels": {
                 "docs": "Enable [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization), can be true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "speakers_expected": {
                 "docs": "Defaults to null. Tells the speaker label model how many speakers it should attempt to identify, up to 10. See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more details.",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "speech_threshold": {
                 "docs": "Defaults to null. Reject audio files that contain less than this fraction of speech.
 Valid values are in the range [0, 1] inclusive.
 ",
-                "type": "optional<float>",
+                "type": "optional<nullable<float>>",
               },
               "speed_boost": {
                 "availability": "deprecated",
                 "docs": "Whether speed boost was enabled in the transcription request",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "status": {
                 "docs": "The status of your transcription. Possible values are queued, processing, completed, or error.",
@@ -1512,25 +1512,25 @@ Valid values are in the range [0, 1] inclusive.
               },
               "summary": {
                 "docs": "The generated summary of the media file, if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "summary_model": {
                 "docs": "The Summarization model used to generate the summary,
 if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request
 ",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "summary_type": {
                 "docs": "The type of summary generated, if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "text": {
                 "docs": "The textual transcript of your media file",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "throttled": {
                 "docs": "True while a request is throttled and false when a request is no longer throttled",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "topics": {
                 "docs": "The list of custom topics provided if custom topics was enabled in the transcription request",
@@ -1540,7 +1540,7 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
                 "docs": "When dual_channel or speaker_labels is enabled, a list of turn-by-turn utterance objects.
 See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more information.
 ",
-                "type": "optional<list<TranscriptUtterance>>",
+                "type": "optional<nullable<list<TranscriptUtterance>>>",
               },
               "webhook_auth": {
                 "docs": "Whether webhook authentication details were provided in the transcription request",
@@ -1548,15 +1548,15 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
               },
               "webhook_auth_header_name": {
                 "docs": "The header name which should be sent back with webhook calls, if provided in the transcription request",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "webhook_status_code": {
                 "docs": "The status code we received from your server when delivering your webhook, if a webhook URL was provided in the transcription request",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "webhook_url": {
                 "docs": "The URL to which we send webhooks upon trancription completion, if provided in the transcription request",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "word_boost": {
                 "docs": "The list of custom vocabulary to boost transcription probability for, if provided in the transcription request",
@@ -1566,7 +1566,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
                 "docs": "An array of temporally-sequential word objects, one for each word in the transcript.
 See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recognition) for more information.
 ",
-                "type": "optional<list<TranscriptWord>>",
+                "type": "optional<nullable<list<TranscriptWord>>>",
               },
             },
             "source": {
@@ -1713,13 +1713,7 @@ The default value is 'en_us'.
               },
               "created_on": {
                 "docs": "Only get transcripts created on this date",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "limit": {
                 "default": 10,
@@ -1849,7 +1843,7 @@ The default value is 'en_us'.
                 },
               },
               "end": "integer",
-              "speaker": "optional<string>",
+              "speaker": "optional<nullable<string>>",
               "start": "integer",
               "text": "string",
             },
@@ -2072,7 +2066,7 @@ types:
     docs: The parameters for creating a transcript
     properties:
       language_code:
-        type: optional<TranscriptLanguageCode>
+        type: optional<nullable<TranscriptLanguageCode>>
         docs: >
           The language of your audio file. Possible values are found in
           [Supported
@@ -2097,12 +2091,12 @@ types:
           The URL to which we send webhooks upon trancription completion, if
           provided in the transcription request.
       webhook_auth_header_name:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The header name which should be sent back with webhook calls, if
           provided in the transcription request.
       webhook_auth_header_value:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Defaults to null. Optionally allows a user to specify a header name
           and value to send back with a webhook call for added security.
@@ -2161,7 +2155,7 @@ types:
           redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for
           more details.
       redact_pii_sub:
-        type: optional<SubstitutionPolicy>
+        type: optional<nullable<SubstitutionPolicy>>
         docs: >-
           The replacement logic for detected PII, can be "entity_type" or
           "hash". See [PII
@@ -2174,7 +2168,7 @@ types:
           diarization](https://www.assemblyai.com/docs/Models/speaker_diarization),
           can be true or false
       speakers_expected:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: >-
           Tells the speaker label model how many speakers it should attempt to
           identify, up to 10. See [Speaker
@@ -2225,7 +2219,7 @@ types:
           Detection](https://www.assemblyai.com/docs/Models/entity_detection),
           can be true or false
       speech_threshold:
-        type: optional<float>
+        type: optional<nullable<float>>
         docs: |
           Reject audio files that contain less than this fraction of speech.
           Valid values are in the range [0, 1] inclusive.
@@ -2455,7 +2449,7 @@ types:
           The status of your transcription. Possible values are queued,
           processing, completed, or error.
       language_code:
-        type: optional<TranscriptLanguageCode>
+        type: optional<nullable<TranscriptLanguageCode>>
         docs: >
           The language of your audio file.
 
@@ -2467,10 +2461,10 @@ types:
         type: string
         docs: The URL of the media that was transcribed
       text:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The textual transcript of your media file
       words:
-        type: optional<list<TranscriptWord>>
+        type: optional<nullable<list<TranscriptWord>>>
         docs: >
           An array of temporally-sequential word objects, one for each word in
           the transcript.
@@ -2479,7 +2473,7 @@ types:
           recognition](https://www.assemblyai.com/docs/Models/speech_recognition)
           for more information.
       utterances:
-        type: optional<list<TranscriptUtterance>>
+        type: optional<nullable<list<TranscriptUtterance>>>
         docs: >
           When dual_channel or speaker_labels is enabled, a list of turn-by-turn
           utterance objects.
@@ -2488,7 +2482,7 @@ types:
           diarization](https://www.assemblyai.com/docs/Models/speaker_diarization)
           for more information.
       confidence:
-        type: optional<double>
+        type: optional<nullable<double>>
         docs: >-
           The confidence score for the transcript, between 0.0 (low confidence)
           and 1.0 (high confidence)
@@ -2496,31 +2490,31 @@ types:
           min: 0
           max: 1
       audio_duration:
-        type: optional<float>
+        type: optional<nullable<float>>
         docs: The duration of this transcript object's media file, in seconds
       punctuate:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Whether Automatic Punctuation was enabled in the transcription
           request, either true or false.
       format_text:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Whether Text Formatting was enabled in the transcription request,
           either true or false
       dual_channel:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Whether [Dual channel
           transcription](https://www.assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription)
           was enabled in the transcription request, either true or false
       webhook_url:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The URL to which we send webhooks upon trancription completion, if
           provided in the transcription request
       webhook_status_code:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: >-
           The status code we received from your server when delivering your
           webhook, if a webhook URL was provided in the transcription request
@@ -2530,12 +2524,12 @@ types:
           Whether webhook authentication details were provided in the
           transcription request
       webhook_auth_header_name:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The header name which should be sent back with webhook calls, if
           provided in the transcription request
       speed_boost:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: Whether speed boost was enabled in the transcription request
         availability: deprecated
       auto_highlights:
@@ -2544,7 +2538,7 @@ types:
           Whether Key Phrases was enabled in the transcription request, either
           true or false
       auto_highlights_result:
-        type: optional<AutoHighlightsResult>
+        type: optional<nullable<AutoHighlightsResult>>
         docs: >
           An array of results for the Key Phrases model, if it was enabled
           during the transcription request.
@@ -2552,12 +2546,12 @@ types:
           See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases)
           for more information.
       audio_start_from:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: >-
           The point in time, in milliseconds, in the file at which the
           transcription was started, if provided in the transcription request
       audio_end_at:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: >-
           The point in time, in milliseconds, in the file at which the
           transcription was terminated, if provided in the transcription request
@@ -2567,12 +2561,12 @@ types:
           The list of custom vocabulary to boost transcription probability for,
           if provided in the transcription request
       boost_param:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The word boost parameter value, if provided in the transcription
           request
       filter_profanity:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Whether [Profanity
           Filtering](https://www.assemblyai.com/docs/Models/speech_recognition#profanity-filtering)
@@ -2584,7 +2578,7 @@ types:
           Redaction](https://www.assemblyai.com/docs/Models/pii_redaction) was
           enabled in the transcription request, either true or false
       redact_pii_audio:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >
           Whether a redacted version of the audio file was generated (enabled or
           disabled in the transcription request),
@@ -2593,7 +2587,7 @@ types:
           redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for
           more information.
       redact_pii_audio_quality:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >
           The audio quality of the PII-redacted audio file, if enabled in the
           transcription request.
@@ -2602,7 +2596,7 @@ types:
           redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for
           more information.
       redact_pii_policies:
-        type: optional<list<PiiPolicy>>
+        type: optional<nullable<list<PiiPolicy>>>
         docs: >
           The list of PII Redaction policies that were enabled, if PII Redaction
           is enabled.
@@ -2611,33 +2605,33 @@ types:
           redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for
           more information.
       redact_pii_sub:
-        type: optional<SubstitutionPolicy>
+        type: optional<nullable<SubstitutionPolicy>>
         docs: >-
           The replacement logic for detected PII, can be "entity_type" or
           "hash". See [PII
           redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for
           more details.
       speaker_labels:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Enable [Speaker
           diarization](https://www.assemblyai.com/docs/Models/speaker_diarization),
           can be true or false
       speakers_expected:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: >-
           Defaults to null. Tells the speaker label model how many speakers it
           should attempt to identify, up to 10. See [Speaker
           diarization](https://www.assemblyai.com/docs/Models/speaker_diarization)
           for more details.
       content_safety:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Enable [Content
           Moderation](https://www.assemblyai.com/docs/Models/content_moderation),
           can be true or false
       content_safety_labels:
-        type: optional<TranscriptContentSafetyLabels>
+        type: optional<nullable<TranscriptContentSafetyLabels>>
         docs: >
           An array of results for the Content Moderation model, if it was
           enabled during the transcription request.
@@ -2646,13 +2640,13 @@ types:
           moderation](https://www.assemblyai.com/docs/Models/content_moderation)
           for more information.
       iab_categories:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Enable [Topic
           Detection](https://www.assemblyai.com/docs/Models/iab_classification),
           can be true or false
       iab_categories_result:
-        type: optional<TranscriptIabCategoriesResult>
+        type: optional<nullable<TranscriptIabCategoriesResult>>
         docs: >
           An array of results for the Topic Detection model, if it was enabled
           during the transcription request.
@@ -2661,22 +2655,22 @@ types:
           Detection](https://www.assemblyai.com/docs/Models/iab_classification)
           for more information.
       language_detection:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Whether [Automatic language
           detection](https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection)
           was enabled in the transcription request, either true or false
       custom_spelling:
-        type: optional<list<TranscriptCustomSpelling>>
+        type: optional<nullable<list<TranscriptCustomSpelling>>>
         docs: Customize how words are spelled and formatted using to and from values
       auto_chapters:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Enable [Auto
           Chapters](https://www.assemblyai.com/docs/Models/auto_chapters), can
           be true or false
       chapters:
-        type: optional<list<Chapter>>
+        type: optional<nullable<list<Chapter>>>
         docs: An array of temporally sequential chapters for the audio file
       summarization:
         type: boolean
@@ -2685,13 +2679,13 @@ types:
           [Summarization](https://www.assemblyai.com/docs/Models/summarization)
           was enabled in the transcription request, either true or false
       summary_type:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The type of summary generated, if
           [Summarization](https://www.assemblyai.com/docs/Models/summarization)
           was enabled in the transcription request
       summary_model:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >
           The Summarization model used to generate the summary,
 
@@ -2699,13 +2693,13 @@ types:
           [Summarization](https://www.assemblyai.com/docs/Models/summarization)
           was enabled in the transcription request
       summary:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The generated summary of the media file, if
           [Summarization](https://www.assemblyai.com/docs/Models/summarization)
           was enabled in the transcription request
       custom_topics:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Whether custom topics was enabled in the transcription request, either
           true or false
@@ -2715,18 +2709,18 @@ types:
           The list of custom topics provided if custom topics was enabled in the
           transcription request
       disfluencies:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Transcribe Filler Words, like "umm", in your media file; can be true
           or false
       sentiment_analysis:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Enable [Sentiment
           Analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis),
           can be true or false
       sentiment_analysis_results:
-        type: optional<list<SentimentAnalysisResult>>
+        type: optional<nullable<list<SentimentAnalysisResult>>>
         docs: >
           An array of results for the Sentiment Analysis model, if it was
           enabled during the transcription request.
@@ -2735,13 +2729,13 @@ types:
           analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis)
           for more information.
       entity_detection:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Enable [Entity
           Detection](https://www.assemblyai.com/docs/Models/entity_detection),
           can be true or false
       entities:
-        type: optional<list<Entity>>
+        type: optional<nullable<list<Entity>>>
         docs: >
           An array of results for the Entity Detection model, if it was enabled
           during the transcription request.
@@ -2750,14 +2744,14 @@ types:
           detection](https://www.assemblyai.com/docs/Models/entity_detection)
           for more information.
       speech_threshold:
-        type: optional<float>
+        type: optional<nullable<float>>
         docs: >
           Defaults to null. Reject audio files that contain less than this
           fraction of speech.
 
           Valid values are in the range [0, 1] inclusive.
       throttled:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           True while a request is throttled and false when a request is no
           longer throttled
@@ -2915,7 +2909,7 @@ types:
           min: 0
           max: 1
       speaker:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The speaker of the sentence if Speaker Diarization is enabled, else
           null
@@ -3064,7 +3058,7 @@ types:
       start: integer
       end: integer
       text: string
-      speaker: optional<string>
+      speaker: optional<nullable<string>>
     source:
       openapi: ../openapi.yml
   TranscriptSentence:
@@ -3123,7 +3117,7 @@ types:
       result_count: integer
       current_url: string
       prev_url: string
-      next_url: optional<string>
+      next_url: optional<nullable<string>>
     source:
       openapi: ../openapi.yml
   TranscriptListParameters:
@@ -3136,10 +3130,8 @@ types:
         type: optional<TranscriptStatus>
         docs: Filter by transcript status
       created_on:
-        type: optional<string>
+        type: optional<date>
         docs: Only get transcripts created on this date
-        validation:
-          format: date
       before_id:
         type: optional<string>
         docs: Get transcripts that were created before this transcript ID
@@ -3675,10 +3667,13 @@ The LLM response data, as well as any context provided in the original request w
               "method": "DELETE",
               "pagination": undefined,
               "path": "/lemur/v3/{request_id}",
-              "path-parameters": {
-                "request_id": {
-                  "docs": "The ID of the LeMUR request whose data you want to delete. This would be found in the response of the original request.",
-                  "type": "string",
+              "request": {
+                "name": "PurgeRequestDataLemurRequest",
+                "path-parameters": {
+                  "request_id": {
+                    "docs": "The ID of the LeMUR request whose data you want to delete. This would be found in the response of the original request.",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -4059,13 +4054,15 @@ service:
         request will be removed.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        request_id:
-          type: string
-          docs: >-
-            The ID of the LeMUR request whose data you want to delete. This
-            would be found in the response of the original request.
       display-name: Delete the data for a previously submitted LeMUR request.
+      request:
+        name: PurgeRequestDataLemurRequest
+        path-parameters:
+          request_id:
+            type: string
+            docs: >-
+              The ID of the LeMUR request whose data you want to delete. This
+              would be found in the response of the original request.
       response:
         docs: LeMUR request data deleted.
         type: root.PurgeLemurRequestDataResponse
@@ -4647,10 +4644,13 @@ docs: Real-time transcription
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v2/transcript/{transcript_id}",
-              "path-parameters": {
-                "transcript_id": {
-                  "docs": "ID of the transcript",
-                  "type": "string",
+              "request": {
+                "name": "DeleteTranscriptRequest",
+                "path-parameters": {
+                  "transcript_id": {
+                    "docs": "ID of the transcript",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -4858,10 +4858,13 @@ docs: Real-time transcription
               "method": "GET",
               "pagination": undefined,
               "path": "/v2/transcript/{transcript_id}",
-              "path-parameters": {
-                "transcript_id": {
-                  "docs": "ID of the transcript",
-                  "type": "string",
+              "request": {
+                "name": "GetTranscriptRequest",
+                "path-parameters": {
+                  "transcript_id": {
+                    "docs": "ID of the transcript",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -4919,10 +4922,13 @@ docs: Real-time transcription
               "method": "GET",
               "pagination": undefined,
               "path": "/v2/transcript/{transcript_id}/paragraphs",
-              "path-parameters": {
-                "transcript_id": {
-                  "docs": "ID of the transcript",
-                  "type": "string",
+              "request": {
+                "name": "GetParagraphsTranscriptRequest",
+                "path-parameters": {
+                  "transcript_id": {
+                    "docs": "ID of the transcript",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -4963,10 +4969,13 @@ docs: Real-time transcription
               "method": "GET",
               "pagination": undefined,
               "path": "/v2/transcript/{transcript_id}/redacted-audio",
-              "path-parameters": {
-                "transcript_id": {
-                  "docs": "ID of the transcript",
-                  "type": "string",
+              "request": {
+                "name": "GetRedactedAudioTranscriptRequest",
+                "path-parameters": {
+                  "transcript_id": {
+                    "docs": "ID of the transcript",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -5024,10 +5033,13 @@ docs: Real-time transcription
               "method": "GET",
               "pagination": undefined,
               "path": "/v2/transcript/{transcript_id}/sentences",
-              "path-parameters": {
-                "transcript_id": {
-                  "docs": "ID of the transcript",
-                  "type": "string",
+              "request": {
+                "name": "GetSentencesTranscriptRequest",
+                "path-parameters": {
+                  "transcript_id": {
+                    "docs": "ID of the transcript",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -5055,18 +5067,18 @@ docs: Real-time transcription
               "method": "GET",
               "pagination": undefined,
               "path": "/v2/transcript/{transcript_id}/{subtitle_format}",
-              "path-parameters": {
-                "subtitle_format": {
-                  "docs": "The format of the captions.",
-                  "type": "root.SubtitleFormat",
-                },
-                "transcript_id": {
-                  "docs": "ID of the transcript",
-                  "type": "string",
-                },
-              },
               "request": {
-                "name": "TranscriptGetSubtitlesRequest",
+                "name": "GetSubtitlesTranscriptRequest",
+                "path-parameters": {
+                  "subtitle_format": {
+                    "docs": "The format of the captions.",
+                    "type": "root.SubtitleFormat",
+                  },
+                  "transcript_id": {
+                    "docs": "ID of the transcript",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "chars_per_caption": {
                     "docs": "The maximum number of characters per caption",
@@ -5098,14 +5110,6 @@ docs: Real-time transcription
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "after_id": "after_id",
-                    "before_id": "before_id",
-                    "created_on": "created_on",
-                    "limit": 1000000,
-                    "status": "queued",
-                    "throttled_only": true,
-                  },
                   "response": {
                     "body": {
                       "page_details": {
@@ -5133,7 +5137,7 @@ docs: Real-time transcription
               "pagination": undefined,
               "path": "/v2/transcript",
               "request": {
-                "name": "TranscriptListRequest",
+                "name": "ListTranscriptRequest",
                 "query-parameters": {
                   "after_id": {
                     "docs": "Get transcripts that were created after this transcript ID",
@@ -5145,13 +5149,7 @@ docs: Real-time transcription
                   },
                   "created_on": {
                     "docs": "Only get transcripts created on this date",
-                    "type": "optional<string>",
-                    "validation": {
-                      "format": "date",
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
-                    },
+                    "type": "optional<date>",
                   },
                   "limit": {
                     "default": 10,
@@ -5160,7 +5158,7 @@ docs: Real-time transcription
                   },
                   "status": {
                     "docs": "Filter by transcript status",
-                    "type": "optional<TranscriptListRequestStatus>",
+                    "type": "optional<ListTranscriptRequestStatus>",
                   },
                   "throttled_only": {
                     "docs": "Only get throttled transcripts, overrides the status filter",
@@ -5193,14 +5191,14 @@ docs: Real-time transcription
               "method": "GET",
               "pagination": undefined,
               "path": "/v2/transcript/{transcript_id}/word-search",
-              "path-parameters": {
-                "transcript_id": {
-                  "docs": "ID of the transcript",
-                  "type": "string",
-                },
-              },
               "request": {
-                "name": "TranscriptWordSearchRequest",
+                "name": "WordSearchTranscriptRequest",
+                "path-parameters": {
+                  "transcript_id": {
+                    "docs": "ID of the transcript",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "words": {
                     "allow-multiple": true,
@@ -5224,7 +5222,7 @@ docs: Real-time transcription
           },
         },
         "types": {
-          "TranscriptListRequestStatus": {
+          "ListTranscriptRequestStatus": {
             "docs": "The status of your transcription. Possible values are queued, processing, completed, or error.",
             "enum": [
               {
@@ -5252,7 +5250,7 @@ docs: Real-time transcription
         },
       },
       "rawContents": "types:
-  TranscriptListRequestStatus:
+  ListTranscriptRequestStatus:
     enum:
       - value: queued
         docs: The audio file is in the queue to be processed by the API.
@@ -5281,20 +5279,18 @@ service:
         openapi: ../openapi.yml
       display-name: List transcripts
       request:
-        name: TranscriptListRequest
+        name: ListTranscriptRequest
         query-parameters:
           limit:
             type: optional<long>
             default: 10
             docs: Maximum amount of transcripts to retrieve
           status:
-            type: optional<TranscriptListRequestStatus>
+            type: optional<ListTranscriptRequestStatus>
             docs: Filter by transcript status
           created_on:
-            type: optional<string>
+            type: optional<date>
             docs: Only get transcripts created on this date
-            validation:
-              format: date
           before_id:
             type: optional<string>
             docs: Get transcripts that were created before this transcript ID
@@ -5317,14 +5313,7 @@ service:
         - root.ServiceUnavailableError
         - root.GatewayTimeoutError
       examples:
-        - query-parameters:
-            limit: 1000000
-            status: queued
-            created_on: created_on
-            before_id: before_id
-            after_id: after_id
-            throttled_only: true
-          response:
+        - response:
             body:
               page_details:
                 limit: 1
@@ -5504,11 +5493,13 @@ service:
         is "completed".
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        transcript_id:
-          type: string
-          docs: ID of the transcript
       display-name: Get the transcript
+      request:
+        name: GetTranscriptRequest
+        path-parameters:
+          transcript_id:
+            type: string
+            docs: ID of the transcript
       response:
         docs: The transcript resource
         type: root.Transcript
@@ -5653,11 +5644,13 @@ service:
       docs: Delete the transcript
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        transcript_id:
-          type: string
-          docs: ID of the transcript
       display-name: Delete the transcript
+      request:
+        name: DeleteTranscriptRequest
+        path-parameters:
+          transcript_id:
+            type: string
+            docs: ID of the transcript
       response:
         docs: The deleted transcript response.
         type: root.Transcript
@@ -5804,16 +5797,16 @@ service:
         player for subtitles and closed captions.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        transcript_id:
-          type: string
-          docs: ID of the transcript
-        subtitle_format:
-          type: root.SubtitleFormat
-          docs: The format of the captions.
       display-name: Export transcript as SRT or VTT captions.
       request:
-        name: TranscriptGetSubtitlesRequest
+        name: GetSubtitlesTranscriptRequest
+        path-parameters:
+          transcript_id:
+            type: string
+            docs: ID of the transcript
+          subtitle_format:
+            type: root.SubtitleFormat
+            docs: The format of the captions.
         query-parameters:
           chars_per_caption:
             type: optional<integer>
@@ -5839,11 +5832,13 @@ service:
         reader-friendly transcripts.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        transcript_id:
-          type: string
-          docs: ID of the transcript
       display-name: Get the transcript split by sentences
+      request:
+        name: GetSentencesTranscriptRequest
+        path-parameters:
+          transcript_id:
+            type: string
+            docs: ID of the transcript
       response:
         docs: Exported sentences
         type: root.SentencesResponse
@@ -5883,11 +5878,13 @@ service:
         reader-friendly transcripts.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        transcript_id:
-          type: string
-          docs: ID of the transcript
       display-name: Get the transcript split by paragraphs
+      request:
+        name: GetParagraphsTranscriptRequest
+        path-parameters:
+          transcript_id:
+            type: string
+            docs: ID of the transcript
       response:
         docs: Exported paragraphs
         type: root.ParagraphsResponse
@@ -5927,13 +5924,13 @@ service:
         words or numbers.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        transcript_id:
-          type: string
-          docs: ID of the transcript
       display-name: Search the given transcript for words, numbers, or phrases
       request:
-        name: TranscriptWordSearchRequest
+        name: WordSearchTranscriptRequest
+        path-parameters:
+          transcript_id:
+            type: string
+            docs: ID of the transcript
         query-parameters:
           words:
             type: optional<string>
@@ -5959,13 +5956,15 @@ service:
         redacted audio.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        transcript_id:
-          type: string
-          docs: ID of the transcript
       display-name: >-
         Retrieves the redacted audio object containing the status and URL to the
         redacted audio.
+      request:
+        name: GetRedactedAudioTranscriptRequest
+        path-parameters:
+          transcript_id:
+            type: string
+            docs: ID of the transcript
       response:
         docs: >-
           The redacted audio object containing the status and URL to the
@@ -6000,9 +5999,6 @@ docs: Transcript related operations
           "auth": false,
           "examples": [
             {
-              "headers": {
-                "Authentication": "Authentication",
-              },
               "messages": [
                 {
                   "body": {
@@ -6018,11 +6014,6 @@ docs: Transcript related operations
                   "type": "publish",
                 },
               ],
-              "query-parameters": {
-                "sample_rate": 1,
-                "token": "token",
-                "word_boost": "word_boost",
-              },
             },
           ],
           "headers": {
@@ -6155,12 +6146,6 @@ The parameter should map to a JSON encoded list of strings.
           body:
             message_type: SessionBegins
             terminate_session: true
-      query-parameters:
-        sample_rate: 1
-        word_boost: word_boost
-        token: token
-      headers:
-        Authentication: Authentication
 imports:
   root: __package__.yml
 types:

@@ -1328,12 +1328,12 @@ public record BigUnion
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<BigUnion>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(BigUnion).IsAssignableFrom(typeToConvert);
 
         public override BigUnion Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { type Generation } from "../../context/generation-info";
+import { is } from "../../utils/type-guards";
 import { MemberNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
 import { Access } from "../language/Access";
@@ -8,7 +9,7 @@ import { CodeBlock } from "../language/CodeBlock";
 import { Parameter } from "../language/Parameter";
 import { XmlDocBlock } from "../language/XmlDocBlock";
 import { ClassReference } from "./ClassReference";
-import { Type } from "./Type";
+import { Type } from "./IType";
 
 export enum MethodType {
     INSTANCE,
@@ -79,7 +80,7 @@ export class Method extends MemberNode {
     }
 
     public get isAsyncEnumerable(): boolean {
-        return this.return?.isAsyncEnumerable ?? false;
+        return is.AsyncEnumerable(this.return);
     }
 
     public addParameter(parameterArgs: Parameter.Args): Parameter;

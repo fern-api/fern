@@ -1334,7 +1334,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -1367,7 +1367,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -1432,7 +1432,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -1465,7 +1465,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -1952,7 +1952,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -1985,7 +1985,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -2074,7 +2074,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -2107,7 +2107,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -2671,13 +2671,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -2716,19 +2722,25 @@
               "container": {
                 "optional": {
                   "container": {
-                    "keyType": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "type": "string"
-                        }
+                    "nullable": {
+                      "container": {
+                        "keyType": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "valueType": {
+                          "type": "unknown"
+                        },
+                        "type": "map"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "valueType": {
-                      "type": "unknown"
-                    },
-                    "type": "map"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -2846,7 +2858,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -2879,7 +2891,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -2913,7 +2925,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -2946,7 +2958,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -3035,7 +3047,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -3068,7 +3080,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -3144,7 +3156,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -3177,7 +3189,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -3211,7 +3223,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -3244,7 +3256,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -3333,7 +3345,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -3366,7 +3378,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -3700,7 +3712,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -3733,7 +3745,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -3822,7 +3834,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -3855,7 +3867,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -4356,7 +4368,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "primitive": {
@@ -4371,7 +4383,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -4549,7 +4561,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -4582,7 +4594,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -4671,7 +4683,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -4704,7 +4716,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -4932,7 +4944,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -4965,7 +4977,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -5054,7 +5066,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -5087,7 +5099,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -5552,16 +5564,22 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "type": "string"
-                        }
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "list"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -5825,16 +5843,22 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "type": "string"
-                        }
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "list"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -6603,7 +6627,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -6636,7 +6660,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -6725,7 +6749,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -6758,7 +6782,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -6891,7 +6915,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -6924,7 +6948,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -7055,7 +7079,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -7088,7 +7112,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -7177,7 +7201,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -7210,7 +7234,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -7846,7 +7870,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -7879,7 +7903,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -7968,7 +7992,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "name": {
@@ -8001,7 +8025,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -9263,6 +9287,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "ExtensionsGetByIdRequest",
+                "camelCase": {
+                  "unsafeName": "extensionsGetByIDRequest",
+                  "safeName": "extensionsGetByIDRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "extensions_get_by_id_request",
+                  "safeName": "extensions_get_by_id_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EXTENSIONS_GET_BY_ID_REQUEST",
+                  "safeName": "EXTENSIONS_GET_BY_ID_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "ExtensionsGetByIDRequest",
+                  "safeName": "ExtensionsGetByIDRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -9562,19 +9650,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "type": "string"
-                      }
+                    "container": {
+                      "nullable": {
+                        "container": {
+                          "list": {
+                            "primitive": {
+                              "v1": "STRING",
+                              "v2": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "primitive"
+                          },
+                          "type": "list"
+                        },
+                        "type": "container"
+                      },
+                      "type": "nullable"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
                   "type": "optional"
                 },
                 "type": "container"
               },
-              "allowMultiple": true,
+              "allowMultiple": false,
               "v2Examples": {
                 "userSpecifiedExamples": {},
                 "autogeneratedExamples": {}
@@ -9820,16 +9920,22 @@
                   "container": {
                     "optional": {
                       "container": {
-                        "list": {
-                          "primitive": {
-                            "v1": "STRING",
-                            "v2": {
-                              "type": "string"
-                            }
+                        "nullable": {
+                          "container": {
+                            "list": {
+                              "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "primitive"
+                            },
+                            "type": "list"
                           },
-                          "type": "primitive"
+                          "type": "container"
                         },
-                        "type": "list"
+                        "type": "nullable"
                       },
                       "type": "container"
                     },
@@ -10064,19 +10170,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "type": "string"
-                      }
+                    "container": {
+                      "nullable": {
+                        "container": {
+                          "list": {
+                            "primitive": {
+                              "v1": "STRING",
+                              "v2": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "primitive"
+                          },
+                          "type": "list"
+                        },
+                        "type": "container"
+                      },
+                      "type": "nullable"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
                   "type": "optional"
                 },
                 "type": "container"
               },
-              "allowMultiple": true,
+              "allowMultiple": false,
               "v2Examples": {
                 "userSpecifiedExamples": {},
                 "autogeneratedExamples": {}
@@ -10278,6 +10396,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "ProfilesGetByIdRequest",
+                "camelCase": {
+                  "unsafeName": "profilesGetByIDRequest",
+                  "safeName": "profilesGetByIDRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "profiles_get_by_id_request",
+                  "safeName": "profiles_get_by_id_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PROFILES_GET_BY_ID_REQUEST",
+                  "safeName": "PROFILES_GET_BY_ID_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "ProfilesGetByIDRequest",
+                  "safeName": "ProfilesGetByIDRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -10532,19 +10714,31 @@
               "valueType": {
                 "container": {
                   "optional": {
-                    "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "type": "string"
-                      }
+                    "container": {
+                      "nullable": {
+                        "container": {
+                          "list": {
+                            "primitive": {
+                              "v1": "STRING",
+                              "v2": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "primitive"
+                          },
+                          "type": "list"
+                        },
+                        "type": "container"
+                      },
+                      "type": "nullable"
                     },
-                    "type": "primitive"
+                    "type": "container"
                   },
                   "type": "optional"
                 },
                 "type": "container"
               },
-              "allowMultiple": true,
+              "allowMultiple": false,
               "v2Examples": {
                 "userSpecifiedExamples": {},
                 "autogeneratedExamples": {}
@@ -11296,6 +11490,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "SessionsGetInfoRequest",
+                "camelCase": {
+                  "unsafeName": "sessionsGetInfoRequest",
+                  "safeName": "sessionsGetInfoRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "sessions_get_info_request",
+                  "safeName": "sessions_get_info_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SESSIONS_GET_INFO_REQUEST",
+                  "safeName": "SESSIONS_GET_INFO_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "SessionsGetInfoRequest",
+                  "safeName": "SessionsGetInfoRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -11547,6 +11805,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "SessionsTerminateRequest",
+                "camelCase": {
+                  "unsafeName": "sessionsTerminateRequest",
+                  "safeName": "sessionsTerminateRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "sessions_terminate_request",
+                  "safeName": "sessions_terminate_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SESSIONS_TERMINATE_REQUEST",
+                  "safeName": "SESSIONS_TERMINATE_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "SessionsTerminateRequest",
+                  "safeName": "SessionsTerminateRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {},
           "errors": [],
           "userSpecifiedExamples": [],
@@ -11677,6 +11999,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "SessionsEventsRequest",
+                "camelCase": {
+                  "unsafeName": "sessionsEventsRequest",
+                  "safeName": "sessionsEventsRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "sessions_events_request",
+                  "safeName": "sessions_events_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SESSIONS_EVENTS_REQUEST",
+                  "safeName": "SESSIONS_EVENTS_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "SessionsEventsRequest",
+                  "safeName": "SessionsEventsRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -12282,7 +12668,7 @@
                   "safeName": "Body"
                 }
               },
-              "includePathParameters": false,
+              "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
@@ -12828,7 +13214,7 @@
                   "safeName": "Body"
                 }
               },
-              "includePathParameters": false,
+              "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
@@ -13097,6 +13483,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "ScrapeContentRequest",
+                "camelCase": {
+                  "unsafeName": "scrapeContentRequest",
+                  "safeName": "scrapeContentRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "scrape_content_request",
+                  "safeName": "scrape_content_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SCRAPE_CONTENT_REQUEST",
+                  "safeName": "SCRAPE_CONTENT_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "ScrapeContentRequest",
+                  "safeName": "ScrapeContentRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -13580,7 +14030,7 @@
                   "safeName": "Body"
                 }
               },
-              "includePathParameters": false,
+              "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
@@ -14684,7 +15134,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -14745,7 +15195,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -15099,7 +15549,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -15161,7 +15611,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -15552,8 +16002,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -15583,14 +16036,17 @@
             },
             "typeReference": {
               "value": {
-                "key": {
-                  "value": "STRING",
-                  "type": "primitive"
-                },
                 "value": {
-                  "type": "unknown"
+                  "key": {
+                    "value": "STRING",
+                    "type": "primitive"
+                  },
+                  "value": {
+                    "type": "unknown"
+                  },
+                  "type": "map"
                 },
-                "type": "map"
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -15685,7 +16141,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -15719,7 +16175,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -15781,7 +16237,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -15846,7 +16302,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -15880,7 +16336,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -15942,7 +16398,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -16184,7 +16640,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -16246,7 +16702,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -16625,7 +17081,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -16749,7 +17205,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -16811,7 +17267,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -16963,7 +17419,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -17025,7 +17481,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -17352,10 +17808,13 @@
             "typeReference": {
               "value": {
                 "value": {
-                  "value": "STRING",
-                  "type": "primitive"
+                  "value": {
+                    "value": "STRING",
+                    "type": "primitive"
+                  },
+                  "type": "list"
                 },
-                "type": "list"
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -17541,10 +18000,13 @@
             "typeReference": {
               "value": {
                 "value": {
-                  "value": "STRING",
-                  "type": "primitive"
+                  "value": {
+                    "value": "STRING",
+                    "type": "primitive"
+                  },
+                  "type": "list"
                 },
-                "type": "list"
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -18064,7 +18526,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -18126,7 +18588,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -18219,7 +18681,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -18312,7 +18774,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -18374,7 +18836,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -18843,7 +19305,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -18905,7 +19367,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -19852,6 +20314,70 @@
           "path": "/extensions/{id}"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "ExtensionsGetByIdRequest",
+              "camelCase": {
+                "unsafeName": "extensionsGetByIDRequest",
+                "safeName": "extensionsGetByIDRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "extensions_get_by_id_request",
+                "safeName": "extensions_get_by_id_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "EXTENSIONS_GET_BY_ID_REQUEST",
+                "safeName": "EXTENSIONS_GET_BY_ID_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "ExtensionsGetByIDRequest",
+                "safeName": "ExtensionsGetByIDRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "extensions",
+                  "camelCase": {
+                    "unsafeName": "extensions",
+                    "safeName": "extensions"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "extensions",
+                    "safeName": "extensions"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "EXTENSIONS",
+                    "safeName": "EXTENSIONS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Extensions",
+                    "safeName": "Extensions"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "extensions",
+                "camelCase": {
+                  "unsafeName": "extensions",
+                  "safeName": "extensions"
+                },
+                "snakeCase": {
+                  "unsafeName": "extensions",
+                  "safeName": "extensions"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EXTENSIONS",
+                  "safeName": "EXTENSIONS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Extensions",
+                  "safeName": "Extensions"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -19882,7 +20408,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -20105,12 +20637,15 @@
               "typeReference": {
                 "value": {
                   "value": {
-                    "value": "STRING",
-                    "type": "primitive"
+                    "value": {
+                      "value": "STRING",
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "optional"
+                  "type": "nullable"
                 },
-                "type": "list"
+                "type": "optional"
               }
             }
           ],
@@ -20342,10 +20877,13 @@
                 "typeReference": {
                   "value": {
                     "value": {
-                      "value": "STRING",
-                      "type": "primitive"
+                      "value": {
+                        "value": "STRING",
+                        "type": "primitive"
+                      },
+                      "type": "list"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "optional"
                 }
@@ -20580,12 +21118,15 @@
               "typeReference": {
                 "value": {
                   "value": {
-                    "value": "STRING",
-                    "type": "primitive"
+                    "value": {
+                      "value": "STRING",
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "optional"
+                  "type": "nullable"
                 },
-                "type": "list"
+                "type": "optional"
               }
             }
           ],
@@ -20694,6 +21235,70 @@
           "path": "/profiles/{id}"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "ProfilesGetByIdRequest",
+              "camelCase": {
+                "unsafeName": "profilesGetByIDRequest",
+                "safeName": "profilesGetByIDRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "profiles_get_by_id_request",
+                "safeName": "profiles_get_by_id_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "PROFILES_GET_BY_ID_REQUEST",
+                "safeName": "PROFILES_GET_BY_ID_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "ProfilesGetByIDRequest",
+                "safeName": "ProfilesGetByIDRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "profiles",
+                  "camelCase": {
+                    "unsafeName": "profiles",
+                    "safeName": "profiles"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "profiles",
+                    "safeName": "profiles"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PROFILES",
+                    "safeName": "PROFILES"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Profiles",
+                    "safeName": "Profiles"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "profiles",
+                "camelCase": {
+                  "unsafeName": "profiles",
+                  "safeName": "profiles"
+                },
+                "snakeCase": {
+                  "unsafeName": "profiles",
+                  "safeName": "profiles"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PROFILES",
+                  "safeName": "PROFILES"
+                },
+                "pascalCase": {
+                  "unsafeName": "Profiles",
+                  "safeName": "Profiles"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -20724,7 +21329,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -20916,12 +21527,15 @@
               "typeReference": {
                 "value": {
                   "value": {
-                    "value": "STRING",
-                    "type": "primitive"
+                    "value": {
+                      "value": "STRING",
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "optional"
+                  "type": "nullable"
                 },
-                "type": "list"
+                "type": "optional"
               }
             },
             {
@@ -21330,6 +21944,70 @@
           "path": "/sessions/{id}"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "SessionsGetInfoRequest",
+              "camelCase": {
+                "unsafeName": "sessionsGetInfoRequest",
+                "safeName": "sessionsGetInfoRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "sessions_get_info_request",
+                "safeName": "sessions_get_info_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SESSIONS_GET_INFO_REQUEST",
+                "safeName": "SESSIONS_GET_INFO_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "SessionsGetInfoRequest",
+                "safeName": "SessionsGetInfoRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "sessions",
+                  "camelCase": {
+                    "unsafeName": "sessions",
+                    "safeName": "sessions"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "sessions",
+                    "safeName": "sessions"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SESSIONS",
+                    "safeName": "SESSIONS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Sessions",
+                    "safeName": "Sessions"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "sessions",
+                "camelCase": {
+                  "unsafeName": "sessions",
+                  "safeName": "sessions"
+                },
+                "snakeCase": {
+                  "unsafeName": "sessions",
+                  "safeName": "sessions"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SESSIONS",
+                  "safeName": "SESSIONS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Sessions",
+                  "safeName": "Sessions"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -21360,7 +22038,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -21460,6 +22144,70 @@
           "path": "/sessions/{id}"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "SessionsTerminateRequest",
+              "camelCase": {
+                "unsafeName": "sessionsTerminateRequest",
+                "safeName": "sessionsTerminateRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "sessions_terminate_request",
+                "safeName": "sessions_terminate_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SESSIONS_TERMINATE_REQUEST",
+                "safeName": "SESSIONS_TERMINATE_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "SessionsTerminateRequest",
+                "safeName": "SessionsTerminateRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "sessions",
+                  "camelCase": {
+                    "unsafeName": "sessions",
+                    "safeName": "sessions"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "sessions",
+                    "safeName": "sessions"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SESSIONS",
+                    "safeName": "SESSIONS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Sessions",
+                    "safeName": "Sessions"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "sessions",
+                "camelCase": {
+                  "unsafeName": "sessions",
+                  "safeName": "sessions"
+                },
+                "snakeCase": {
+                  "unsafeName": "sessions",
+                  "safeName": "sessions"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SESSIONS",
+                  "safeName": "SESSIONS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Sessions",
+                  "safeName": "Sessions"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -21490,7 +22238,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -21590,6 +22344,70 @@
           "path": "/sessions/{id}/events"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "SessionsEventsRequest",
+              "camelCase": {
+                "unsafeName": "sessionsEventsRequest",
+                "safeName": "sessionsEventsRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "sessions_events_request",
+                "safeName": "sessions_events_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SESSIONS_EVENTS_REQUEST",
+                "safeName": "SESSIONS_EVENTS_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "SessionsEventsRequest",
+                "safeName": "SessionsEventsRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "sessions",
+                  "camelCase": {
+                    "unsafeName": "sessions",
+                    "safeName": "sessions"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "sessions",
+                    "safeName": "sessions"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SESSIONS",
+                    "safeName": "SESSIONS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Sessions",
+                    "safeName": "Sessions"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "sessions",
+                "camelCase": {
+                  "unsafeName": "sessions",
+                  "safeName": "sessions"
+                },
+                "snakeCase": {
+                  "unsafeName": "sessions",
+                  "safeName": "sessions"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SESSIONS",
+                  "safeName": "SESSIONS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Sessions",
+                  "safeName": "Sessions"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -21620,7 +22438,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "streaming"
@@ -21939,7 +22763,7 @@
           ],
           "headers": [],
           "metadata": {
-            "includePathParameters": false,
+            "includePathParameters": true,
             "onlyPathParameters": false
           },
           "type": "inlined"
@@ -22324,7 +23148,7 @@
             "type": "properties"
           },
           "metadata": {
-            "includePathParameters": false,
+            "includePathParameters": true,
             "onlyPathParameters": false
           },
           "type": "inlined"
@@ -22427,6 +23251,70 @@
           "path": "/sessions/{sessionId}/windows/{windowId}/scrape-content"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "ScrapeContentRequest",
+              "camelCase": {
+                "unsafeName": "scrapeContentRequest",
+                "safeName": "scrapeContentRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "scrape_content_request",
+                "safeName": "scrape_content_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SCRAPE_CONTENT_REQUEST",
+                "safeName": "SCRAPE_CONTENT_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "ScrapeContentRequest",
+                "safeName": "ScrapeContentRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "windows",
+                  "camelCase": {
+                    "unsafeName": "windows",
+                    "safeName": "windows"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "windows",
+                    "safeName": "windows"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "WINDOWS",
+                    "safeName": "WINDOWS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Windows",
+                    "safeName": "Windows"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "windows",
+                "camelCase": {
+                  "unsafeName": "windows",
+                  "safeName": "windows"
+                },
+                "snakeCase": {
+                  "unsafeName": "windows",
+                  "safeName": "windows"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "WINDOWS",
+                  "safeName": "WINDOWS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Windows",
+                  "safeName": "Windows"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -22485,7 +23373,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -22839,7 +23733,7 @@
             "type": "properties"
           },
           "metadata": {
-            "includePathParameters": false,
+            "includePathParameters": true,
             "onlyPathParameters": false
           },
           "type": "inlined"

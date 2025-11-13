@@ -141,7 +141,7 @@ export class WellKnownProtoValueGenerator extends FileGenerator<CSharpFile, Mode
                     type: this.Google.Protobuf.WellKnownTypes.Value
                 })
             ],
-            return_: this.classReference.toOptionalIfNotAlready(),
+            return_: this.classReference.asOptional(),
             body: this.csharp.codeblock((writer) => {
                 writer.write("return ");
                 writer.writeNodeStatement(
@@ -203,7 +203,7 @@ export class WellKnownProtoValueGenerator extends FileGenerator<CSharpFile, Mode
             this.Primitive.string,
             this.Primitive.double,
             this.Primitive.boolean,
-            this.Collection.list(this.classReference.toOptionalIfNotAlready()),
+            this.Collection.list(this.classReference.asOptional()),
             this.protoStructClassReference
         ];
     }
@@ -227,11 +227,11 @@ export class WellKnownProtoValueGenerator extends FileGenerator<CSharpFile, Mode
                 body: this.newValue()
             },
             {
-                parameterType: this.Collection.array(this.classReference.toOptionalIfNotAlready()),
+                parameterType: this.Collection.array(this.classReference.asOptional()),
                 body: this.newValue()
             },
             {
-                parameterType: this.Collection.listType(this.classReference.toOptionalIfNotAlready()),
+                parameterType: this.Collection.listType(this.classReference.asOptional()),
                 body: this.newValue()
             },
             {
@@ -244,7 +244,7 @@ export class WellKnownProtoValueGenerator extends FileGenerator<CSharpFile, Mode
                 body: this.linqMap(this.instantiateProtoValue())
             },
             {
-                parameterType: this.Collection.array(this.Primitive.double.toOptionalIfNotAlready()),
+                parameterType: this.Collection.array(this.Primitive.double.asOptional()),
                 body: this.linqMap(this.wrapTernary(this.instantiateProtoValueWithOptional()))
             },
             {
@@ -252,7 +252,7 @@ export class WellKnownProtoValueGenerator extends FileGenerator<CSharpFile, Mode
                 body: this.linqMap(this.instantiateProtoValue())
             },
             {
-                parameterType: this.Collection.array(this.Primitive.boolean.toOptionalIfNotAlready()),
+                parameterType: this.Collection.array(this.Primitive.boolean.asOptional()),
                 body: this.linqMap(this.wrapTernary(this.instantiateProtoValueWithOptional()))
             },
             {
@@ -264,7 +264,7 @@ export class WellKnownProtoValueGenerator extends FileGenerator<CSharpFile, Mode
                 body: this.linqMap(this.instantiateProtoValue())
             },
             {
-                parameterType: this.Collection.listType(this.Primitive.double.toOptionalIfNotAlready()),
+                parameterType: this.Collection.listType(this.Primitive.double.asOptional()),
                 body: this.linqMap(this.wrapTernary(this.instantiateProtoValueWithOptional()))
             },
             {
@@ -272,7 +272,7 @@ export class WellKnownProtoValueGenerator extends FileGenerator<CSharpFile, Mode
                 body: this.linqMap(this.instantiateProtoValue())
             },
             {
-                parameterType: this.Collection.listType(this.Primitive.boolean.toOptionalIfNotAlready()),
+                parameterType: this.Collection.listType(this.Primitive.boolean.asOptional()),
                 body: this.linqMap(this.wrapTernary(this.instantiateProtoValueWithOptional()))
             }
         ];

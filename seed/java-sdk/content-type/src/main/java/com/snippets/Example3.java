@@ -11,10 +11,10 @@ public class Example3 {
         client.service()
                 .optionalMergePatchTest(OptionalMergePatchRequest.builder()
                         .requiredField("requiredField")
+                        .nullableString("nullableString")
                         .optionalString("optionalString")
                         .optionalInteger(1)
                         .optionalBoolean(true)
-                        .nullableString("nullableString")
                         .build());
     }
 }

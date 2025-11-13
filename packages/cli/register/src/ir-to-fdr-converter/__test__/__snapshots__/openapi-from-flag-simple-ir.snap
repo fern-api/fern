@@ -2091,17 +2091,10 @@
             "valueType": {
               "_visit": [Function],
               "primitive": {
-                "v1": "STRING",
+                "v1": "DATE_TIME",
                 "v2": {
                   "_visit": [Function],
-                  "default": undefined,
-                  "type": "string",
-                  "validation": {
-                    "format": "date-time",
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "pattern": undefined,
-                  },
+                  "type": "dateTime",
                 },
               },
               "type": "primitive",
@@ -2582,17 +2575,10 @@
             "valueType": {
               "_visit": [Function],
               "primitive": {
-                "v1": "STRING",
+                "v1": "DATE_TIME",
                 "v2": {
                   "_visit": [Function],
-                  "default": undefined,
-                  "type": "string",
-                  "validation": {
-                    "format": "date-time",
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "pattern": undefined,
-                  },
+                  "type": "dateTime",
                 },
               },
               "type": "primitive",

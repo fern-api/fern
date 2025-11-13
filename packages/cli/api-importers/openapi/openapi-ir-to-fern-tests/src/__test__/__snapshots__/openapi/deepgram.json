@@ -324,6 +324,43 @@
               "openapi": "../openapi.yml",
             },
           },
+          "GetProjectUsageBreakdownRequestUsageBreakdownFilters": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "accessor": {
+                "docs": "Filter results by specific accessor ID",
+                "type": "optional<string>",
+              },
+              "deployment": {
+                "docs": "Filter results by specific deployment type",
+                "type": "optional<string>",
+              },
+              "endpoint": {
+                "docs": "Filter results by specific endpoint",
+                "type": "optional<string>",
+              },
+              "feature_set": {
+                "docs": "Filter results by specific feature set",
+                "type": "optional<string>",
+              },
+              "method": {
+                "docs": "Filter results by specific processing method",
+                "type": "optional<string>",
+              },
+              "model": {
+                "docs": "Filter results by specific model ID",
+                "type": "optional<string>",
+              },
+              "tags": {
+                "docs": "Filter results by specific tags",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "Intents": {
             "docs": "Output whenever `intents=true` is used",
             "inline": undefined,
@@ -498,6 +535,22 @@
               "openapi": "../openapi.yml",
             },
           },
+          "ListenRequestDetectLanguage": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              {
+                "default": false,
+                "type": "boolean",
+              },
+              "list<string>",
+            ],
+          },
           "ListenRequestFile": {
             "docs": "Binary audio file to transcribe",
             "type": "string",
@@ -506,6 +559,30 @@
               "maxLength": undefined,
               "minLength": undefined,
               "pattern": undefined,
+            },
+          },
+          "ListenRequestRedact": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "string",
+              "list<ListenRequestRedactOneItem>",
+            ],
+          },
+          "ListenRequestRedactOneItem": {
+            "enum": [
+              "pci",
+              "pii",
+              "numbers",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
             },
           },
           "Metadata": {
@@ -1148,6 +1225,29 @@
         },
       },
       "rawContents": "types:
+  ListenRequestDetectLanguage:
+    discriminated: false
+    union:
+      - type: boolean
+        default: false
+      - list<string>
+    source:
+      openapi: ../openapi.yml
+  ListenRequestRedactOneItem:
+    enum:
+      - pci
+      - pii
+      - numbers
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  ListenRequestRedact:
+    discriminated: false
+    union:
+      - string
+      - list<ListenRequestRedactOneItem>
+    source:
+      openapi: ../openapi.yml
   BadRequestErrorBody:
     properties:
       category:
@@ -1220,6 +1320,31 @@
       request_id:
         type: optional<string>
         docs: The unique identifier of the request
+    source:
+      openapi: ../openapi.yml
+  GetProjectUsageBreakdownRequestUsageBreakdownFilters:
+    properties:
+      accessor:
+        type: optional<string>
+        docs: Filter results by specific accessor ID
+      deployment:
+        type: optional<string>
+        docs: Filter results by specific deployment type
+      endpoint:
+        type: optional<string>
+        docs: Filter results by specific endpoint
+      feature_set:
+        type: optional<string>
+        docs: Filter results by specific feature set
+      model:
+        type: optional<string>
+        docs: Filter results by specific model ID
+      method:
+        type: optional<string>
+        docs: Filter results by specific processing method
+      tags:
+        type: optional<string>
+        docs: Filter results by specific tags
     source:
       openapi: ../openapi.yml
   ListenRequest:
@@ -2246,9 +2371,9 @@ errors:
               "agent": "SettingsConfigurationAgent",
               "audio": {
                 "docs": "Optional audio configuration settings",
-                "type": "optional<SettingsConfigurationAudio>",
+                "type": "nullable<SettingsConfigurationAudio>",
               },
-              "context": "optional<SettingsConfigurationContext>",
+              "context": "optional<nullable<SettingsConfigurationContext>>",
               "type": "literal<"SettingsConfiguration">",
             },
             "source": {
@@ -2260,7 +2385,7 @@ errors:
             "inline": true,
             "properties": {
               "listen": "optional<SettingsConfigurationAgentListen>",
-              "speak": "optional<SettingsConfigurationAgentSpeak>",
+              "speak": "optional<nullable<SettingsConfigurationAgentSpeak>>",
               "think": "optional<SettingsConfigurationAgentThink>",
             },
             "source": {
@@ -2322,10 +2447,10 @@ errors:
             "docs": undefined,
             "inline": true,
             "properties": {
-              "functions": "optional<list<SettingsConfigurationAgentThinkFunctionsItem>>",
+              "functions": "optional<nullable<list<SettingsConfigurationAgentThinkFunctionsItem>>>",
               "instructions": {
                 "docs": "LLM System prompt",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "model": {
                 "docs": "LLM model to use",
@@ -2418,11 +2543,11 @@ errors:
             "properties": {
               "input": {
                 "docs": "Optional audio input configuration settings",
-                "type": "optional<SettingsConfigurationAudioInput>",
+                "type": "optional<nullable<SettingsConfigurationAudioInput>>",
               },
               "output": {
                 "docs": "Audio output configuration settings",
-                "type": "optional<SettingsConfigurationAudioOutput>",
+                "type": "optional<nullable<SettingsConfigurationAudioOutput>>",
               },
             },
             "source": {
@@ -2859,10 +2984,10 @@ types:
     docs: Optional audio configuration settings
     properties:
       input:
-        type: optional<SettingsConfigurationAudioInput>
+        type: optional<nullable<SettingsConfigurationAudioInput>>
         docs: Optional audio input configuration settings
       output:
-        type: optional<SettingsConfigurationAudioOutput>
+        type: optional<nullable<SettingsConfigurationAudioOutput>>
         docs: Audio output configuration settings
     source:
       openapi: ../asyncapi.yml
@@ -2938,9 +3063,9 @@ types:
         type: optional<string>
         docs: LLM model to use
       instructions:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: LLM System prompt
-      functions: optional<list<SettingsConfigurationAgentThinkFunctionsItem>>
+      functions: optional<nullable<list<SettingsConfigurationAgentThinkFunctionsItem>>>
     source:
       openapi: ../asyncapi.yml
     inline: true
@@ -2971,7 +3096,7 @@ types:
     properties:
       listen: optional<SettingsConfigurationAgentListen>
       think: optional<SettingsConfigurationAgentThink>
-      speak: optional<SettingsConfigurationAgentSpeak>
+      speak: optional<nullable<SettingsConfigurationAgentSpeak>>
     source:
       openapi: ../asyncapi.yml
     inline: true
@@ -2992,10 +3117,10 @@ types:
     properties:
       type: literal<"SettingsConfiguration">
       audio:
-        type: optional<SettingsConfigurationAudio>
+        type: nullable<SettingsConfigurationAudio>
         docs: Optional audio configuration settings
       agent: SettingsConfigurationAgent
-      context: optional<SettingsConfigurationContext>
+      context: optional<nullable<SettingsConfigurationContext>>
     source:
       openapi: ../asyncapi.yml
   UpdateInstructions:
@@ -3128,7 +3253,7 @@ types:
             "callback_method": {
               "default": "POST",
               "docs": "HTTP method by which the callback request will be made",
-              "type": "ListenCallbackMethod",
+              "type": "CallbackMethod",
             },
             "channels": {
               "default": "1",
@@ -3138,7 +3263,7 @@ types:
             "diarize": {
               "default": "false",
               "docs": "Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0",
-              "type": "ListenDiarize",
+              "type": "Diarize",
             },
             "diarize_version": {
               "default": "v2",
@@ -3148,11 +3273,11 @@ types:
             "dictation": {
               "default": "false",
               "docs": "Identify and extract key entities from content in submitted audio",
-              "type": "ListenDictation",
+              "type": "Dictation",
             },
             "encoding": {
               "docs": "Specify the expected encoding of your submitted audio",
-              "type": "ListenEncoding",
+              "type": "Encoding",
             },
             "endpointing": {
               "default": "10",
@@ -3166,12 +3291,12 @@ types:
             "filler_words": {
               "default": "false",
               "docs": "Filler Words can help transcribe interruptions in your audio, like "uh" and "um"",
-              "type": "ListenFillerWords",
+              "type": "FillerWords",
             },
             "interim_results": {
               "default": "false",
               "docs": "Specifies whether the streaming endpoint should provide ongoing transcription updates as more audio is received. When set to true, the endpoint sends continuous updates, meaning transcription results may evolve over time",
-              "type": "ListenInterimResults",
+              "type": "InterimResults",
             },
             "keyterm": {
               "docs": "Key term prompting can boost or suppress specialized terminology and brands. Only compatible with Nova-3",
@@ -3184,36 +3309,36 @@ types:
             "language": {
               "default": "en",
               "docs": "The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model you choose only certain languages are available",
-              "type": "ListenLanguage",
+              "type": "Language",
             },
             "model": {
               "docs": "AI model to use for the transcription",
-              "type": "ListenModel",
+              "type": "Model",
             },
             "multichannel": {
               "default": "false",
               "docs": "Transcribe each audio channel independently",
-              "type": "ListenMultichannel",
+              "type": "Multichannel",
             },
             "numerals": {
               "default": "false",
               "docs": "Convert numbers from written format to numerical format",
-              "type": "ListenNumerals",
+              "type": "Numerals",
             },
             "profanity_filter": {
               "default": "false",
               "docs": "Profanity Filter looks for recognized profanity and converts it to the nearest recognized non-profane word or removes it from the transcript completely",
-              "type": "ListenProfanityFilter",
+              "type": "ProfanityFilter",
             },
             "punctuate": {
               "default": "false",
               "docs": "Add punctuation and capitalization to the transcript",
-              "type": "ListenPunctuate",
+              "type": "Punctuate",
             },
             "redact": {
               "default": "false",
               "docs": "Redaction removes sensitive information from your transcripts",
-              "type": "ListenRedact",
+              "type": "Redact",
             },
             "replace": {
               "docs": "Search for terms or phrases in submitted audio and replaces them",
@@ -3230,7 +3355,7 @@ types:
             "smart_format": {
               "default": "false",
               "docs": "Apply formatting to transcript output. When set to true, additional formatting will be applied to transcripts to improve readability",
-              "type": "ListenSmartFormat",
+              "type": "SmartFormat",
             },
             "tag": {
               "docs": "Label your requests for the purpose of identification during usage reporting",
@@ -3243,7 +3368,7 @@ types:
             "vad_events": {
               "default": "false",
               "docs": "Indicates that speech has started. You'll begin receiving Speech Started messages upon speech starting",
-              "type": "ListenVadEvents",
+              "type": "VadEvents",
             },
             "version": {
               "default": "latest",
@@ -3254,6 +3379,20 @@ types:
           "url": "public",
         },
         "types": {
+          "CallbackMethod": {
+            "default": "POST",
+            "docs": "HTTP method by which the callback request will be made",
+            "enum": [
+              "POST",
+              "GET",
+              "PUT",
+              "DELETE",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
           "ControlMessageResponse": {
             "discriminated": false,
             "docs": undefined,
@@ -3395,100 +3534,7 @@ types:
               "openapi": "../asyncapi.yml",
             },
           },
-          "ListenCallbackMethod": {
-            "default": "POST",
-            "docs": "HTTP method by which the callback request will be made",
-            "enum": [
-              "POST",
-              "GET",
-              "PUT",
-              "DELETE",
-            ],
-            "inline": undefined,
-            "source": {
-              "openapi": "../asyncapi.yml",
-            },
-          },
-          "ListenCloseFrame": {
-            "docs": "When Deepgram encounters an error during streaming speech to text, a WebSocket Close frame is sent. The frame contains a status code and UTF-8-encoded payload describing the error reason
-",
-            "inline": undefined,
-            "properties": {
-              "code": {
-                "docs": "WebSocket close status code",
-                "type": "integer",
-              },
-              "payload": {
-                "docs": "Error reason code",
-                "type": "ListenCloseFramePayload",
-              },
-            },
-            "source": {
-              "openapi": "../asyncapi.yml",
-            },
-          },
-          "ListenCloseFramePayload": {
-            "docs": "Error reason code",
-            "enum": [
-              "None",
-              {
-                "name": "Data0000",
-                "value": "DATA-0000",
-              },
-              {
-                "name": "Net0000",
-                "value": "NET-0000",
-              },
-              {
-                "name": "Net0001",
-                "value": "NET-0001",
-              },
-            ],
-            "inline": true,
-            "source": {
-              "openapi": "../asyncapi.yml",
-            },
-          },
-          "ListenControlMessagesRequest": {
-            "availability": undefined,
-            "base-properties": {},
-            "discriminant": "type",
-            "docs": undefined,
-            "encoding": undefined,
-            "source": {
-              "openapi": "../asyncapi.yml",
-            },
-            "union": {
-              "CloseStream": "ListenControlMessagesRequestCloseStream",
-              "Finalize": "ListenControlMessagesRequestFinalize",
-              "KeepAlive": "ListenControlMessagesRequestKeepAlive",
-            },
-          },
-          "ListenControlMessagesRequestCloseStream": {
-            "docs": undefined,
-            "inline": true,
-            "properties": {},
-            "source": {
-              "openapi": "../asyncapi.yml",
-            },
-          },
-          "ListenControlMessagesRequestFinalize": {
-            "docs": undefined,
-            "inline": true,
-            "properties": {},
-            "source": {
-              "openapi": "../asyncapi.yml",
-            },
-          },
-          "ListenControlMessagesRequestKeepAlive": {
-            "docs": undefined,
-            "inline": true,
-            "properties": {},
-            "source": {
-              "openapi": "../asyncapi.yml",
-            },
-          },
-          "ListenDiarize": {
+          "Diarize": {
             "default": "false",
             "docs": "Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0",
             "enum": [
@@ -3500,7 +3546,7 @@ types:
               "openapi": "../asyncapi.yml",
             },
           },
-          "ListenDictation": {
+          "Dictation": {
             "default": "false",
             "docs": "Identify and extract key entities from content in submitted audio",
             "enum": [
@@ -3512,7 +3558,7 @@ types:
               "openapi": "../asyncapi.yml",
             },
           },
-          "ListenEncoding": {
+          "Encoding": {
             "docs": "Specify the expected encoding of your submitted audio",
             "enum": [
               "linear16",
@@ -3535,7 +3581,7 @@ types:
               "openapi": "../asyncapi.yml",
             },
           },
-          "ListenFillerWords": {
+          "FillerWords": {
             "default": "false",
             "docs": "Filler Words can help transcribe interruptions in your audio, like "uh" and "um"",
             "enum": [
@@ -3547,7 +3593,7 @@ types:
               "openapi": "../asyncapi.yml",
             },
           },
-          "ListenInterimResults": {
+          "InterimResults": {
             "default": "false",
             "docs": "Specifies whether the streaming endpoint should provide ongoing transcription updates as more audio is received. When set to true, the endpoint sends continuous updates, meaning transcription results may evolve over time",
             "enum": [
@@ -3559,7 +3605,7 @@ types:
               "openapi": "../asyncapi.yml",
             },
           },
-          "ListenLanguage": {
+          "Language": {
             "default": "en",
             "docs": "The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model you choose only certain languages are available",
             "enum": [
@@ -3691,7 +3737,86 @@ types:
               "openapi": "../asyncapi.yml",
             },
           },
-          "ListenModel": {
+          "ListenCloseFrame": {
+            "docs": "When Deepgram encounters an error during streaming speech to text, a WebSocket Close frame is sent. The frame contains a status code and UTF-8-encoded payload describing the error reason
+",
+            "inline": undefined,
+            "properties": {
+              "code": {
+                "docs": "WebSocket close status code",
+                "type": "integer",
+              },
+              "payload": {
+                "docs": "Error reason code",
+                "type": "ListenCloseFramePayload",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenCloseFramePayload": {
+            "docs": "Error reason code",
+            "enum": [
+              "None",
+              {
+                "name": "Data0000",
+                "value": "DATA-0000",
+              },
+              {
+                "name": "Net0000",
+                "value": "NET-0000",
+              },
+              {
+                "name": "Net0001",
+                "value": "NET-0001",
+              },
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenControlMessagesRequest": {
+            "availability": undefined,
+            "base-properties": {},
+            "discriminant": "type",
+            "docs": undefined,
+            "encoding": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+            "union": {
+              "CloseStream": "ListenControlMessagesRequestCloseStream",
+              "Finalize": "ListenControlMessagesRequestFinalize",
+              "KeepAlive": "ListenControlMessagesRequestKeepAlive",
+            },
+          },
+          "ListenControlMessagesRequestCloseStream": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenControlMessagesRequestFinalize": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ListenControlMessagesRequestKeepAlive": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {},
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "Model": {
             "docs": "AI model to use for the transcription",
             "enum": [
               {
@@ -3790,7 +3915,7 @@ types:
               "openapi": "../asyncapi.yml",
             },
           },
-          "ListenMultichannel": {
+          "Multichannel": {
             "default": "false",
             "docs": "Transcribe each audio channel independently",
             "enum": [
@@ -3802,7 +3927,7 @@ types:
               "openapi": "../asyncapi.yml",
             },
           },
-          "ListenNumerals": {
+          "Numerals": {
             "default": "false",
             "docs": "Convert numbers from written format to numerical format",
             "enum": [
@@ -3814,7 +3939,7 @@ types:
               "openapi": "../asyncapi.yml",
             },
           },
-          "ListenProfanityFilter": {
+          "ProfanityFilter": {
             "default": "false",
             "docs": "Profanity Filter looks for recognized profanity and converts it to the nearest recognized non-profane word or removes it from the transcript completely",
             "enum": [
@@ -3826,7 +3951,7 @@ types:
               "openapi": "../asyncapi.yml",
             },
           },
-          "ListenPunctuate": {
+          "Punctuate": {
             "default": "false",
             "docs": "Add punctuation and capitalization to the transcript",
             "enum": [
@@ -3838,7 +3963,7 @@ types:
               "openapi": "../asyncapi.yml",
             },
           },
-          "ListenRedact": {
+          "Redact": {
             "default": "false",
             "docs": "Redaction removes sensitive information from your transcripts",
             "enum": [
@@ -3854,21 +3979,9 @@ types:
               "openapi": "../asyncapi.yml",
             },
           },
-          "ListenSmartFormat": {
+          "SmartFormat": {
             "default": "false",
             "docs": "Apply formatting to transcript output. When set to true, additional formatting will be applied to transcripts to improve readability",
-            "enum": [
-              "true",
-              "false",
-            ],
-            "inline": undefined,
-            "source": {
-              "openapi": "../asyncapi.yml",
-            },
-          },
-          "ListenVadEvents": {
-            "default": "false",
-            "docs": "Indicates that speech has started. You'll begin receiving Speech Started messages upon speech starting",
             "enum": [
               "true",
               "false",
@@ -3978,10 +4091,22 @@ types:
               "openapi": "../asyncapi.yml",
             },
           },
+          "VadEvents": {
+            "default": "false",
+            "docs": "Indicates that speech has started. You'll begin receiving Speech Started messages upon speech starting",
+            "enum": [
+              "true",
+              "false",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
         },
       },
       "rawContents": "types:
-  ListenCallbackMethod:
+  CallbackMethod:
     enum:
       - POST
       - GET
@@ -3991,7 +4116,7 @@ types:
     default: POST
     source:
       openapi: ../asyncapi.yml
-  ListenDiarize:
+  Diarize:
     enum:
       - 'true'
       - 'false'
@@ -4001,7 +4126,7 @@ types:
     default: 'false'
     source:
       openapi: ../asyncapi.yml
-  ListenDictation:
+  Dictation:
     enum:
       - 'true'
       - 'false'
@@ -4009,7 +4134,7 @@ types:
     default: 'false'
     source:
       openapi: ../asyncapi.yml
-  ListenEncoding:
+  Encoding:
     enum:
       - linear16
       - flac
@@ -4024,7 +4149,7 @@ types:
     docs: Specify the expected encoding of your submitted audio
     source:
       openapi: ../asyncapi.yml
-  ListenFillerWords:
+  FillerWords:
     enum:
       - 'true'
       - 'false'
@@ -4034,7 +4159,7 @@ types:
     default: 'false'
     source:
       openapi: ../asyncapi.yml
-  ListenInterimResults:
+  InterimResults:
     enum:
       - 'true'
       - 'false'
@@ -4046,7 +4171,7 @@ types:
     default: 'false'
     source:
       openapi: ../asyncapi.yml
-  ListenLanguage:
+  Language:
     enum:
       - bg
       - ca
@@ -4133,7 +4258,7 @@ types:
     default: en
     source:
       openapi: ../asyncapi.yml
-  ListenModel:
+  Model:
     enum:
       - value: nova-3
         name: Nova3
@@ -4188,7 +4313,7 @@ types:
     docs: AI model to use for the transcription
     source:
       openapi: ../asyncapi.yml
-  ListenMultichannel:
+  Multichannel:
     enum:
       - 'true'
       - 'false'
@@ -4196,7 +4321,7 @@ types:
     default: 'false'
     source:
       openapi: ../asyncapi.yml
-  ListenNumerals:
+  Numerals:
     enum:
       - 'true'
       - 'false'
@@ -4204,7 +4329,7 @@ types:
     default: 'false'
     source:
       openapi: ../asyncapi.yml
-  ListenProfanityFilter:
+  ProfanityFilter:
     enum:
       - 'true'
       - 'false'
@@ -4215,7 +4340,7 @@ types:
     default: 'false'
     source:
       openapi: ../asyncapi.yml
-  ListenPunctuate:
+  Punctuate:
     enum:
       - 'true'
       - 'false'
@@ -4223,7 +4348,7 @@ types:
     default: 'false'
     source:
       openapi: ../asyncapi.yml
-  ListenRedact:
+  Redact:
     enum:
       - 'true'
       - 'false'
@@ -4235,7 +4360,7 @@ types:
     default: 'false'
     source:
       openapi: ../asyncapi.yml
-  ListenSmartFormat:
+  SmartFormat:
     enum:
       - 'true'
       - 'false'
@@ -4245,7 +4370,7 @@ types:
     default: 'false'
     source:
       openapi: ../asyncapi.yml
-  ListenVadEvents:
+  VadEvents:
     enum:
       - 'true'
       - 'false'
@@ -4458,7 +4583,7 @@ channel:
       type: string
       docs: URL to which we'll make the callback request
     callback_method:
-      type: ListenCallbackMethod
+      type: CallbackMethod
       default: POST
       docs: HTTP method by which the callback request will be made
     channels:
@@ -4466,7 +4591,7 @@ channel:
       default: '1'
       docs: The number of channels in the submitted audio
     diarize:
-      type: ListenDiarize
+      type: Diarize
       default: 'false'
       docs: >-
         Recognize speaker changes. Each word in the transcript will be assigned
@@ -4478,11 +4603,11 @@ channel:
         Version of the diarization feature to use. Only used when the
         diarization feature is enabled (`diarize=true` is passed to the API)
     dictation:
-      type: ListenDictation
+      type: Dictation
       default: 'false'
       docs: Identify and extract key entities from content in submitted audio
     encoding:
-      type: ListenEncoding
+      type: Encoding
       docs: Specify the expected encoding of your submitted audio
     endpointing:
       type: string
@@ -4500,13 +4625,13 @@ channel:
         Arbitrary key-value pairs that are attached to the API response for
         usage in downstream processing
     filler_words:
-      type: ListenFillerWords
+      type: FillerWords
       default: 'false'
       docs: >-
         Filler Words can help transcribe interruptions in your audio, like "uh"
         and "um"
     interim_results:
-      type: ListenInterimResults
+      type: InterimResults
       default: 'false'
       docs: >-
         Specifies whether the streaming endpoint should provide ongoing
@@ -4522,36 +4647,36 @@ channel:
       type: string
       docs: Keywords can boost or suppress specialized terminology and brands
     language:
-      type: ListenLanguage
+      type: Language
       default: en
       docs: >-
         The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints
         at the primary spoken language. Depending on the Model you choose only
         certain languages are available
     model:
-      type: ListenModel
+      type: Model
       docs: AI model to use for the transcription
     multichannel:
-      type: ListenMultichannel
+      type: Multichannel
       default: 'false'
       docs: Transcribe each audio channel independently
     numerals:
-      type: ListenNumerals
+      type: Numerals
       default: 'false'
       docs: Convert numbers from written format to numerical format
     profanity_filter:
-      type: ListenProfanityFilter
+      type: ProfanityFilter
       default: 'false'
       docs: >-
         Profanity Filter looks for recognized profanity and converts it to the
         nearest recognized non-profane word or removes it from the transcript
         completely
     punctuate:
-      type: ListenPunctuate
+      type: Punctuate
       default: 'false'
       docs: Add punctuation and capitalization to the transcript
     redact:
-      type: ListenRedact
+      type: Redact
       default: 'false'
       docs: Redaction removes sensitive information from your transcripts
     replace:
@@ -4566,7 +4691,7 @@ channel:
       type: string
       docs: Search for terms or phrases in submitted audio
     smart_format:
-      type: ListenSmartFormat
+      type: SmartFormat
       default: 'false'
       docs: >-
         Apply formatting to transcript output. When set to true, additional
@@ -4582,7 +4707,7 @@ channel:
         Indicates how long Deepgram will wait to send an UtteranceEnd message
         after a word has been transcribed. Use with interim_results
     vad_events:
-      type: ListenVadEvents
+      type: VadEvents
       default: 'false'
       docs: >-
         Indicates that speech has started. You'll begin receiving Speech Started
@@ -4676,12 +4801,6 @@ channel:
               "method": "POST",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/invites",
-              "path-parameters": {
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -4698,7 +4817,12 @@ channel:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateProjectInvite",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -4748,15 +4872,16 @@ channel:
               "method": "POST",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/keys",
-              "path-parameters": {
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": "root.Keys",
                 "content-type": "application/json",
+                "name": "CreateProjectKeyRequest",
+                "path-parameters": {
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
+                },
               },
               "response": {
                 "docs": "API key created successfully",
@@ -4778,12 +4903,6 @@ channel:
               "method": "POST",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/self-hosted/distribution/credentials",
-              "path-parameters": {
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -4797,7 +4916,12 @@ channel:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "CreateDistributionCreds",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "comment": {
                     "docs": "Optional comment about the credentials",
@@ -4846,10 +4970,13 @@ channel:
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}",
-              "path-parameters": {
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
+              "request": {
+                "name": "DeleteProjectRequest",
+                "path-parameters": {
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -4891,14 +5018,17 @@ channel:
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/invites/{email}",
-              "path-parameters": {
-                "email": {
-                  "docs": "The email address of the member",
-                  "type": "string",
-                },
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
+              "request": {
+                "name": "DeleteProjectInviteRequest",
+                "path-parameters": {
+                  "email": {
+                    "docs": "The email address of the member",
+                    "type": "string",
+                  },
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -4938,14 +5068,17 @@ channel:
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/keys/{key_id}",
-              "path-parameters": {
-                "key_id": {
-                  "docs": "The unique identifier of the API key",
-                  "type": "string",
-                },
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
+              "request": {
+                "name": "DeleteProjectKeyRequest",
+                "path-parameters": {
+                  "key_id": {
+                    "docs": "The unique identifier of the API key",
+                    "type": "string",
+                  },
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -4986,10 +5119,13 @@ channel:
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/leave",
-              "path-parameters": {
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
+              "request": {
+                "name": "DeleteProjectLeaveRequest",
+                "path-parameters": {
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -5029,14 +5165,17 @@ channel:
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/members/{member_id}",
-              "path-parameters": {
-                "member_id": {
-                  "docs": "The unique identifier of the Member",
-                  "type": "string",
-                },
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
+              "request": {
+                "name": "DeleteProjectMemberRequest",
+                "path-parameters": {
+                  "member_id": {
+                    "docs": "The unique identifier of the Member",
+                    "type": "string",
+                  },
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -5089,14 +5228,17 @@ channel:
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/self-hosted/distribution/credentials/{distribution_credentials_id}",
-              "path-parameters": {
-                "distribution_credentials_id": {
-                  "docs": "The UUID of the distribution credentials",
-                  "type": "string",
-                },
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
+              "request": {
+                "name": "DeleteSelfHostedDistCredsRequest",
+                "path-parameters": {
+                  "distribution_credentials_id": {
+                    "docs": "The UUID of the distribution credentials",
+                    "type": "string",
+                  },
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -5145,10 +5287,13 @@ channel:
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/models/{model_id}",
-              "path-parameters": {
-                "model_id": {
-                  "docs": "The specific UUID of the model",
-                  "type": "string",
+              "request": {
+                "name": "GetModelRequest",
+                "path-parameters": {
+                  "model_id": {
+                    "docs": "The specific UUID of the model",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -5180,8 +5325,6 @@ channel:
                   },
                   "query-parameters": {
                     "end": "2024-07-31T00:00:00Z",
-                    "limit": 1,
-                    "page": 1,
                     "start": "2024-07-01T00:00:00Z",
                   },
                   "response": {
@@ -5195,14 +5338,14 @@ channel:
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}",
-              "path-parameters": {
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
-                },
-              },
               "request": {
                 "name": "GetProjectRequest",
+                "path-parameters": {
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "end": {
                     "docs": "End date of the requested date range. Formats accepted are YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM",
@@ -5271,14 +5414,17 @@ channel:
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/balances/{balance_id}",
-              "path-parameters": {
-                "balance_id": {
-                  "docs": "The unique identifier of the balance",
-                  "type": "string",
-                },
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
+              "request": {
+                "name": "GetProjectBalanceRequest",
+                "path-parameters": {
+                  "balance_id": {
+                    "docs": "The unique identifier of the balance",
+                    "type": "string",
+                  },
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -5325,10 +5471,13 @@ channel:
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/balances",
-              "path-parameters": {
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
+              "request": {
+                "name": "GetProjectBalancesRequest",
+                "path-parameters": {
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -5383,14 +5532,17 @@ channel:
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/keys/{key_id}",
-              "path-parameters": {
-                "key_id": {
-                  "docs": "The unique identifier of the API key",
-                  "type": "string",
-                },
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
+              "request": {
+                "name": "GetProjectKeyRequest",
+                "path-parameters": {
+                  "key_id": {
+                    "docs": "The unique identifier of the API key",
+                    "type": "string",
+                  },
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -5442,14 +5594,17 @@ channel:
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/models/{model_id}",
-              "path-parameters": {
-                "model_id": {
-                  "docs": "The specific UUID of the model",
-                  "type": "string",
-                },
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
+              "request": {
+                "name": "GetProjectModelRequest",
+                "path-parameters": {
+                  "model_id": {
+                    "docs": "The specific UUID of the model",
+                    "type": "string",
+                  },
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -5497,14 +5652,17 @@ channel:
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/requests/{request_id}",
-              "path-parameters": {
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
-                },
-                "request_id": {
-                  "docs": "The unique identifier of the request",
-                  "type": "string",
+              "request": {
+                "name": "GetProjectRequestRequest",
+                "path-parameters": {
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
+                  "request_id": {
+                    "docs": "The unique identifier of the request",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -5537,7 +5695,6 @@ channel:
                   },
                   "query-parameters": {
                     "end": "2024-07-31T00:00:00Z",
-                    "project_filters": "alternatives.yml",
                     "start": "2024-07-01T00:00:00Z",
                   },
                   "response": {
@@ -5555,14 +5712,14 @@ channel:
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/usage",
-              "path-parameters": {
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
-                },
-              },
               "request": {
                 "name": "GetProjectUsageRequest",
+                "path-parameters": {
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "end": {
                     "docs": "End date of the requested date range. Formats accepted are YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM",
@@ -5615,7 +5772,6 @@ channel:
                   },
                   "query-parameters": {
                     "end": "2024-07-31T00:00:00Z",
-                    "project_filters": "alternatives.yml",
                     "start": "2024-07-01T00:00:00Z",
                   },
                   "response": {
@@ -5655,14 +5811,14 @@ channel:
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/usage/breakdown",
-              "path-parameters": {
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
-                },
-              },
               "request": {
                 "name": "GetProjectUsageBreakdownRequest",
+                "path-parameters": {
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "end": {
                     "docs": "End date of the requested date range. Formats accepted are YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM",
@@ -5675,6 +5831,12 @@ channel:
                   "start": {
                     "docs": "Start date of the requested date range. Formats accepted are YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM",
                     "type": "optional<datetime>",
+                  },
+                  "usage_breakdown_filters": {
+                    "docs": "Filter options for usage breakdown. Multiple filters can be used with '&' prefix.
+Example: &model={model_id}&tags={tag}&accessor={accessor_id}
+",
+                    "type": "optional<root.GetProjectUsageBreakdownRequestUsageBreakdownFilters>",
                   },
                 },
               },
@@ -5728,14 +5890,17 @@ channel:
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/self-hosted/distribution/credentials/{distribution_credentials_id}",
-              "path-parameters": {
-                "distribution_credentials_id": {
-                  "docs": "The UUID of the distribution credentials",
-                  "type": "string",
-                },
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
+              "request": {
+                "name": "GetSelfHostedCredentialsRequest",
+                "path-parameters": {
+                  "distribution_credentials_id": {
+                    "docs": "The UUID of the distribution credentials",
+                    "type": "string",
+                  },
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -5856,10 +6021,13 @@ channel:
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/invites",
-              "path-parameters": {
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
+              "request": {
+                "name": "ListProjectInvitesRequest",
+                "path-parameters": {
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -5902,10 +6070,13 @@ channel:
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/keys",
-              "path-parameters": {
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
+              "request": {
+                "name": "ListProjectKeysRequest",
+                "path-parameters": {
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -5947,14 +6118,17 @@ channel:
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/members/{member_id}/scopes",
-              "path-parameters": {
-                "member_id": {
-                  "docs": "The unique identifier of the Member",
-                  "type": "string",
-                },
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
+              "request": {
+                "name": "ListProjectMemberScopesRequest",
+                "path-parameters": {
+                  "member_id": {
+                    "docs": "The unique identifier of the Member",
+                    "type": "string",
+                  },
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -5997,10 +6171,13 @@ channel:
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/members",
-              "path-parameters": {
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
+              "request": {
+                "name": "ListProjectMembersRequest",
+                "path-parameters": {
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -6073,14 +6250,14 @@ channel:
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/models",
-              "path-parameters": {
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
-                },
-              },
               "request": {
                 "name": "ListProjectModelsRequest",
+                "path-parameters": {
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "include_outdated": {
                     "docs": "returns non-latest versions of models",
@@ -6114,7 +6291,6 @@ channel:
                     "project_id": "123456-7890-1234-5678-901234",
                   },
                   "query-parameters": {
-                    "limit": 1,
                     "start": "2024-07-01T00:00:00Z",
                   },
                   "response": {
@@ -6136,14 +6312,14 @@ channel:
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/purchases",
-              "path-parameters": {
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
-                },
-              },
               "request": {
                 "name": "ListProjectPurchasesRequest",
+                "path-parameters": {
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "limit": {
                     "default": 10,
@@ -6192,8 +6368,6 @@ channel:
                   },
                   "query-parameters": {
                     "end": "2024-07-31T00:00:00Z",
-                    "limit": 1,
-                    "page": 1,
                     "start": "2024-07-01T00:00:00Z",
                   },
                   "response": {
@@ -6222,14 +6396,14 @@ channel:
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/requests",
-              "path-parameters": {
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
-                },
-              },
               "request": {
                 "name": "ListProjectRequestsRequest",
+                "path-parameters": {
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "end": {
                     "docs": "End date of the requested date range. Formats accepted are YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM",
@@ -6319,14 +6493,14 @@ channel:
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/usage/fields",
-              "path-parameters": {
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
-                },
-              },
               "request": {
                 "name": "ListProjectUsageFieldsRequest",
+                "path-parameters": {
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "end": {
                     "docs": "End date of the requested date range. Formats accepted are YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM",
@@ -6428,10 +6602,13 @@ channel:
               "method": "GET",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/self-hosted/distribution/credentials",
-              "path-parameters": {
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
+              "request": {
+                "name": "ListSelfHostedDistCredsRequest",
+                "path-parameters": {
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -6474,12 +6651,6 @@ channel:
               "method": "PATCH",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}",
-              "path-parameters": {
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -6492,7 +6663,12 @@ channel:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateProjects",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -6535,16 +6711,6 @@ channel:
               "method": "PUT",
               "pagination": undefined,
               "path": "/v1/projects/{project_id}/members/{member_id}/scopes",
-              "path-parameters": {
-                "member_id": {
-                  "docs": "The unique identifier of the Member",
-                  "type": "string",
-                },
-                "project_id": {
-                  "docs": "The unique identifier of the project",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -6557,7 +6723,16 @@ channel:
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "UpdateMemberScope",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "member_id": {
+                    "docs": "The unique identifier of the Member",
+                    "type": "string",
+                  },
+                  "project_id": {
+                    "docs": "The unique identifier of the project",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -7143,25 +7318,13 @@ channel:
             "properties": {
               "end": {
                 "docs": "End date of the usage period",
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "date",
               },
               "resolution": "GetProjectUsageBreakdownResponseResolution",
               "results": "list<GetProjectUsageBreakdownResponseResultsItem>",
               "start": {
                 "docs": "Start date of the usage period",
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "date",
               },
             },
             "source": {
@@ -7229,51 +7392,39 @@ channel:
             "properties": {
               "accessor": {
                 "docs": "Optional accessor identifier",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "deployment": {
                 "docs": "Optional deployment identifier",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "end": {
                 "docs": "End date for this group",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "endpoint": {
                 "docs": "Optional endpoint identifier",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "feature_set": {
                 "docs": "Optional feature set identifier",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "method": {
                 "docs": "Optional method identifier",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "models": {
                 "docs": "Optional models identifier",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "start": {
                 "docs": "Start date for this group",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "tags": {
                 "docs": "Optional tags",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
             },
             "source": {
@@ -7448,25 +7599,9 @@ channel:
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "end": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
+              "end": "optional<date>",
               "resolution": "optional<GetProjectUsageResponseResolution>",
-              "start": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
+              "start": "optional<date>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -8266,14 +8401,8 @@ channel:
     inline: true
   GetProjectUsageResponse:
     properties:
-      start:
-        type: optional<string>
-        validation:
-          format: date
-      end:
-        type: optional<string>
-        validation:
-          format: date
+      start: optional<date>
+      end: optional<date>
       resolution: optional<GetProjectUsageResponseResolution>
     source:
       openapi: ../openapi.yml
@@ -8408,35 +8537,31 @@ channel:
   GetProjectUsageBreakdownResponseResultsItemGrouping:
     properties:
       start:
-        type: optional<string>
+        type: optional<date>
         docs: Start date for this group
-        validation:
-          format: date
       end:
-        type: optional<string>
+        type: optional<date>
         docs: End date for this group
-        validation:
-          format: date
       accessor:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Optional accessor identifier
       endpoint:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Optional endpoint identifier
       feature_set:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Optional feature set identifier
       models:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Optional models identifier
       method:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Optional method identifier
       tags:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Optional tags
       deployment:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Optional deployment identifier
     source:
       openapi: ../openapi.yml
@@ -8471,15 +8596,11 @@ channel:
   GetProjectUsageBreakdownResponse:
     properties:
       start:
-        type: string
+        type: date
         docs: Start date of the usage period
-        validation:
-          format: date
       end:
-        type: string
+        type: date
         docs: End date of the usage period
-        validation:
-          format: date
       resolution: GetProjectUsageBreakdownResponseResolution
       results: list<GetProjectUsageBreakdownResponseResultsItem>
     source:
@@ -8808,13 +8929,13 @@ service:
       docs: Retrieves information about the specified project
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
       display-name: Get a Project
       request:
         name: GetProjectRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
         query-parameters:
           limit:
             type: optional<integer>
@@ -8850,10 +8971,8 @@ service:
         - path-parameters:
             project_id: 123456-7890-1234-5678-901234
           query-parameters:
-            limit: 1
             start: '2024-07-01T00:00:00Z'
             end: '2024-07-31T00:00:00Z'
-            page: 1
           response:
             body:
               project_id: project_id
@@ -8866,11 +8985,13 @@ service:
       docs: Deletes the specified project
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
       display-name: Delete a Project
+      request:
+        name: DeleteProjectRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
       response:
         docs: A project
         type: DeleteProjectResponse
@@ -8893,13 +9014,13 @@ service:
       docs: Updates the name or other properties of an existing project
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
       display-name: Update a Project
       request:
         name: UpdateProjects
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
         body:
           properties:
             name:
@@ -8930,11 +9051,13 @@ service:
       docs: Generates a list of outstanding balances for the specified project
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
       display-name: Get Project Balances
+      request:
+        name: GetProjectBalancesRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
       response:
         docs: A list of outstanding balances
         type: GetProjectBalancesResponse
@@ -8961,14 +9084,16 @@ service:
       docs: Retrieves details about the specified balance
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
-        balance_id:
-          type: string
-          docs: The unique identifier of the balance
       display-name: Get a Project Balance
+      request:
+        name: GetProjectBalanceRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
+          balance_id:
+            type: string
+            docs: The unique identifier of the balance
       response:
         docs: A specific balance
         type: GetProjectBalanceResponse
@@ -8997,13 +9122,13 @@ service:
         access to, including non-public models
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
       display-name: Returns metadata on all the latest models
       request:
         name: ListProjectModelsRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
         query-parameters:
           include_outdated:
             type: boolean
@@ -9050,14 +9175,16 @@ service:
       docs: Returns metadata for a specific model
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
-        model_id:
-          type: string
-          docs: The specific UUID of the model
       display-name: Get a Project Model
+      request:
+        name: GetProjectModelRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
+          model_id:
+            type: string
+            docs: The specific UUID of the model
       response:
         docs: A specific model
         type: GetProjectModelResponse
@@ -9089,11 +9216,13 @@ service:
       docs: Retrieves all API keys associated with the specified project
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
       display-name: List Project Keys
+      request:
+        name: ListProjectKeysRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
       response:
         docs: A list of API keys
         type: ListProjectKeysResponse
@@ -9116,13 +9245,14 @@ service:
       docs: Creates a new API key with specified settings for the project
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
       display-name: Create a Project Key
       request:
         body: root.Keys
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
+        name: CreateProjectKeyRequest
         content-type: application/json
       response:
         docs: API key created successfully
@@ -9153,14 +9283,16 @@ service:
       docs: Retrieves information about a specified API key
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
-        key_id:
-          type: string
-          docs: The unique identifier of the API key
       display-name: Get a Project Key
+      request:
+        name: GetProjectKeyRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
+          key_id:
+            type: string
+            docs: The unique identifier of the API key
       response:
         docs: A specific API key
         type: GetProjectKeyResponse
@@ -9194,14 +9326,16 @@ service:
       docs: Deletes an API key for a specific project
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
-        key_id:
-          type: string
-          docs: The unique identifier of the API key
       display-name: Deletes an API key for a specific project
+      request:
+        name: DeleteProjectKeyRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
+          key_id:
+            type: string
+            docs: The unique identifier of the API key
       response:
         docs: API key deleted
         type: DeleteProjectKeyResponse
@@ -9224,11 +9358,13 @@ service:
       docs: Retrieves a list of account objects for a specific project
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
       display-name: List Project Members
+      request:
+        name: ListProjectMembersRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
       response:
         docs: A list of account objects
         type: ListProjectMembersResponse
@@ -9251,14 +9387,16 @@ service:
       docs: Removes a member from the project using their unique member ID
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
-        member_id:
-          type: string
-          docs: The unique identifier of the Member
       display-name: Delete a Project Member
+      request:
+        name: DeleteProjectMemberRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
+          member_id:
+            type: string
+            docs: The unique identifier of the Member
       response:
         docs: Delete the specific member from the project
         type: DeleteProjectMemberResponse
@@ -9281,14 +9419,16 @@ service:
       docs: Retrieves a list of scopes for a specific member
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
-        member_id:
-          type: string
-          docs: The unique identifier of the Member
       display-name: List Project Member Scopes
+      request:
+        name: ListProjectMemberScopesRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
+          member_id:
+            type: string
+            docs: The unique identifier of the Member
       response:
         docs: A list of scopes for a specific member
         type: ListProjectMemberScopesResponse
@@ -9312,16 +9452,16 @@ service:
       docs: Updates the scopes for a specific member
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
-        member_id:
-          type: string
-          docs: The unique identifier of the Member
       display-name: Update Project Member Scopes
       request:
         name: UpdateMemberScope
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
+          member_id:
+            type: string
+            docs: The unique identifier of the Member
         body:
           properties:
             scope:
@@ -9352,11 +9492,13 @@ service:
       docs: Generates a list of invites for a specific project
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
       display-name: List Project Invites
+      request:
+        name: ListProjectInvitesRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
       response:
         docs: A list of invites for a specific project
         type: ListProjectInvitesResponse
@@ -9377,13 +9519,13 @@ service:
       docs: Generates an invite for a specific project
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
       display-name: Create a Project Invite
       request:
         name: CreateProjectInvite
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
         body:
           properties:
             email:
@@ -9419,14 +9561,16 @@ service:
       docs: Deletes an invite for a specific project
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
-        email:
-          type: string
-          docs: The email address of the member
       display-name: Delete a Project Invite
+      request:
+        name: DeleteProjectInviteRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
+          email:
+            type: string
+            docs: The email address of the member
       response:
         docs: The invite was successfully deleted
         type: DeleteProjectInviteResponse
@@ -9451,11 +9595,13 @@ service:
       docs: Removes the authenticated account from the specific project
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
       display-name: Leave a Project
+      request:
+        name: DeleteProjectLeaveRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
       response:
         docs: Successfully removed account from project
         type: DeleteProjectLeaveResponse
@@ -9479,13 +9625,13 @@ service:
       docs: Generates a list of requests for a specific project
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
       display-name: List Project Requests
       request:
         name: ListProjectRequestsRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
         query-parameters:
           start:
             type: optional<datetime>
@@ -9523,8 +9669,6 @@ service:
           query-parameters:
             start: '2024-07-01T00:00:00Z'
             end: '2024-07-31T00:00:00Z'
-            limit: 1
-            page: 1
           response:
             body:
               page: 1
@@ -9548,14 +9692,16 @@ service:
       docs: Retrieves a specific request for a specific project
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
-        request_id:
-          type: string
-          docs: The unique identifier of the request
       display-name: Get a Project Request
+      request:
+        name: GetProjectRequestRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
+          request_id:
+            type: string
+            docs: The unique identifier of the request
       response:
         docs: A specific request for a specific project
         type: GetProjectRequestResponse
@@ -9585,13 +9731,13 @@ service:
       docs: Retrieves the usage for a specific project
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
       display-name: Get Project Usage
       request:
         name: GetProjectUsageRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
         query-parameters:
           start:
             type: optional<datetime>
@@ -9621,7 +9767,6 @@ service:
           query-parameters:
             start: '2024-07-01T00:00:00Z'
             end: '2024-07-31T00:00:00Z'
-            project_filters: alternatives.yml
           response:
             body:
               start: '2024-10-16'
@@ -9639,13 +9784,13 @@ service:
         for requests in the specified project
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
       display-name: List Project Usage Fields
       request:
         name: ListProjectUsageFieldsRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
         query-parameters:
           start:
             type: optional<datetime>
@@ -9713,13 +9858,13 @@ service:
         - &tags={tag} - Any tags used
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
       display-name: Get Project Usage Breakdown
       request:
         name: GetProjectUsageBreakdownRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
         query-parameters:
           start:
             type: optional<datetime>
@@ -9734,6 +9879,14 @@ service:
           project_filters:
             type: optional<GetProjectUsageBreakdownRequestProjectFilters>
             docs: Common filter parameters
+          usage_breakdown_filters:
+            type: >-
+              optional<root.GetProjectUsageBreakdownRequestUsageBreakdownFilters>
+            docs: >
+              Filter options for usage breakdown. Multiple filters can be used
+              with '&' prefix.
+
+              Example: &model={model_id}&tags={tag}&accessor={accessor_id}
       response:
         docs: Usage breakdown response
         type: GetProjectUsageBreakdownResponse
@@ -9748,7 +9901,6 @@ service:
           query-parameters:
             start: '2024-07-01T00:00:00Z'
             end: '2024-07-31T00:00:00Z'
-            project_filters: alternatives.yml
           response:
             body:
               start: '2025-01-16'
@@ -9782,13 +9934,13 @@ service:
       docs: Returns the original purchased amount on an order transaction
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
       display-name: List Project Purchases
       request:
         name: ListProjectPurchasesRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
         query-parameters:
           start:
             type: optional<datetime>
@@ -9813,7 +9965,6 @@ service:
             project_id: 123456-7890-1234-5678-901234
           query-parameters:
             start: '2024-07-01T00:00:00Z'
-            limit: 1
           response:
             body:
               orders:
@@ -9885,11 +10036,13 @@ service:
       docs: Returns metadata for a specific model
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        model_id:
-          type: string
-          docs: The specific UUID of the model
       display-name: Returns metadata for a specific model
+      request:
+        name: GetModelRequest
+        path-parameters:
+          model_id:
+            type: string
+            docs: The specific UUID of the model
       response:
         docs: A model object that can be either STT or TTS
         type: GetModelResponse
@@ -9920,11 +10073,13 @@ service:
       docs: Lists sets of distribution credentials for the specified project
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
       display-name: List Project Self-Hosted Distribution Credentials
+      request:
+        name: ListSelfHostedDistCredsRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
       response:
         docs: List of distribution credentials
         type: ListSelfHostedDistCredsResponse
@@ -9957,13 +10112,13 @@ service:
       docs: Creates a set of distribution credentials for the specified project
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
       display-name: Create a Project Self-Hosted Distribution Credential
       request:
         name: CreateDistributionCreds
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
         query-parameters:
           comment:
             type: optional<string>
@@ -9991,14 +10146,16 @@ service:
       docs: Returns a set of distribution credentials for the specified project
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
-        distribution_credentials_id:
-          type: string
-          docs: The UUID of the distribution credentials
       display-name: Get a Project Self-Hosted Distribution Credential
+      request:
+        name: GetSelfHostedCredentialsRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
+          distribution_credentials_id:
+            type: string
+            docs: The UUID of the distribution credentials
       response:
         docs: Single distribution credential
         type: GetSelfHostedCredentialsResponse
@@ -10032,14 +10189,16 @@ service:
       docs: Deletes a set of distribution credentials for the specified project
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        project_id:
-          type: string
-          docs: The unique identifier of the project
-        distribution_credentials_id:
-          type: string
-          docs: The UUID of the distribution credentials
       display-name: Delete a Project Self-Hosted Distribution Credential
+      request:
+        name: DeleteSelfHostedDistCredsRequest
+        path-parameters:
+          project_id:
+            type: string
+            docs: The unique identifier of the project
+          distribution_credentials_id:
+            type: string
+            docs: The UUID of the distribution credentials
       response:
         docs: Single distribution credential
         type: DeleteSelfHostedDistCredsResponse
@@ -10140,17 +10299,17 @@ docs: Manage your projects
             "encoding": {
               "default": "mp3",
               "docs": "Encoding allows you to specify the expected encoding of your audio output",
-              "type": "SpeakEncoding",
+              "type": "Encoding",
             },
             "model": {
               "default": "aura-asteria-en",
               "docs": "AI model used to process submitted text",
-              "type": "SpeakModel",
+              "type": "Model",
             },
             "sample_rate": {
               "default": "24000",
               "docs": "Sample Rate specifies the sample rate for the output audio. Based on encoding 8000 or 24000 are possible defaults. For some encodings sample rate is not configurable.",
-              "type": "SpeakSampleRate",
+              "type": "SampleRate",
             },
           },
           "url": "public",
@@ -10181,6 +10340,111 @@ docs: Manage your projects
               "close",
             ],
             "inline": true,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "Encoding": {
+            "default": "mp3",
+            "docs": "Encoding allows you to specify the expected encoding of your audio output",
+            "enum": [
+              "linear16",
+              "mulaw",
+              "alaw",
+              "opus",
+              "mp3",
+              "flac",
+              "aac",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "Model": {
+            "default": "aura-asteria-en",
+            "docs": "AI model used to process submitted text",
+            "enum": [
+              {
+                "name": "AuraAsteriaEn",
+                "value": "aura-asteria-en",
+              },
+              {
+                "name": "AuraLunaEn",
+                "value": "aura-luna-en",
+              },
+              {
+                "name": "AuraStellaEn",
+                "value": "aura-stella-en",
+              },
+              {
+                "name": "AuraAthenaEn",
+                "value": "aura-athena-en",
+              },
+              {
+                "name": "AuraHeraEn",
+                "value": "aura-hera-en",
+              },
+              {
+                "name": "AuraOrionEn",
+                "value": "aura-orion-en",
+              },
+              {
+                "name": "AuraArcasEn",
+                "value": "aura-arcas-en",
+              },
+              {
+                "name": "AuraPerseusEn",
+                "value": "aura-perseus-en",
+              },
+              {
+                "name": "AuraAngusEn",
+                "value": "aura-angus-en",
+              },
+              {
+                "name": "AuraOrpheusEn",
+                "value": "aura-orpheus-en",
+              },
+              {
+                "name": "AuraHeliosEn",
+                "value": "aura-helios-en",
+              },
+              {
+                "name": "AuraZeusEn",
+                "value": "aura-zeus-en",
+              },
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SampleRate": {
+            "default": "24000",
+            "docs": "Sample Rate specifies the sample rate for the output audio. Based on encoding 8000 or 24000 are possible defaults. For some encodings sample rate is not configurable.",
+            "enum": [
+              {
+                "name": "EightThousand",
+                "value": "8000",
+              },
+              {
+                "name": "SixteenThousand",
+                "value": "16000",
+              },
+              {
+                "name": "TwentyFourThousand",
+                "value": "24000",
+              },
+              {
+                "name": "FortyFourThousandOneHundred",
+                "value": "44100",
+              },
+              {
+                "name": "FortyEightThousand",
+                "value": "48000",
+              },
+            ],
+            "inline": undefined,
             "source": {
               "openapi": "../asyncapi.yml",
             },
@@ -10266,111 +10530,6 @@ docs: Manage your projects
               "openapi": "../asyncapi.yml",
             },
           },
-          "SpeakEncoding": {
-            "default": "mp3",
-            "docs": "Encoding allows you to specify the expected encoding of your audio output",
-            "enum": [
-              "linear16",
-              "mulaw",
-              "alaw",
-              "opus",
-              "mp3",
-              "flac",
-              "aac",
-            ],
-            "inline": undefined,
-            "source": {
-              "openapi": "../asyncapi.yml",
-            },
-          },
-          "SpeakModel": {
-            "default": "aura-asteria-en",
-            "docs": "AI model used to process submitted text",
-            "enum": [
-              {
-                "name": "AuraAsteriaEn",
-                "value": "aura-asteria-en",
-              },
-              {
-                "name": "AuraLunaEn",
-                "value": "aura-luna-en",
-              },
-              {
-                "name": "AuraStellaEn",
-                "value": "aura-stella-en",
-              },
-              {
-                "name": "AuraAthenaEn",
-                "value": "aura-athena-en",
-              },
-              {
-                "name": "AuraHeraEn",
-                "value": "aura-hera-en",
-              },
-              {
-                "name": "AuraOrionEn",
-                "value": "aura-orion-en",
-              },
-              {
-                "name": "AuraArcasEn",
-                "value": "aura-arcas-en",
-              },
-              {
-                "name": "AuraPerseusEn",
-                "value": "aura-perseus-en",
-              },
-              {
-                "name": "AuraAngusEn",
-                "value": "aura-angus-en",
-              },
-              {
-                "name": "AuraOrpheusEn",
-                "value": "aura-orpheus-en",
-              },
-              {
-                "name": "AuraHeliosEn",
-                "value": "aura-helios-en",
-              },
-              {
-                "name": "AuraZeusEn",
-                "value": "aura-zeus-en",
-              },
-            ],
-            "inline": undefined,
-            "source": {
-              "openapi": "../asyncapi.yml",
-            },
-          },
-          "SpeakSampleRate": {
-            "default": "24000",
-            "docs": "Sample Rate specifies the sample rate for the output audio. Based on encoding 8000 or 24000 are possible defaults. For some encodings sample rate is not configurable.",
-            "enum": [
-              {
-                "name": "EightThousand",
-                "value": "8000",
-              },
-              {
-                "name": "SixteenThousand",
-                "value": "16000",
-              },
-              {
-                "name": "TwentyFourThousand",
-                "value": "24000",
-              },
-              {
-                "name": "FortyFourThousandOneHundred",
-                "value": "44100",
-              },
-              {
-                "name": "FortyEightThousand",
-                "value": "48000",
-              },
-            ],
-            "inline": undefined,
-            "source": {
-              "openapi": "../asyncapi.yml",
-            },
-          },
           "TextToSpeechRequest": {
             "docs": undefined,
             "inline": undefined,
@@ -10391,7 +10550,7 @@ docs: Manage your projects
         },
       },
       "rawContents": "types:
-  SpeakEncoding:
+  Encoding:
     enum:
       - linear16
       - mulaw
@@ -10404,7 +10563,7 @@ docs: Manage your projects
     default: mp3
     source:
       openapi: ../asyncapi.yml
-  SpeakModel:
+  Model:
     enum:
       - value: aura-asteria-en
         name: AuraAsteriaEn
@@ -10434,7 +10593,7 @@ docs: Manage your projects
     default: aura-asteria-en
     source:
       openapi: ../asyncapi.yml
-  SpeakSampleRate:
+  SampleRate:
     enum:
       - value: '8000'
         name: EightThousand
@@ -10539,17 +10698,17 @@ channel:
   docs: Deepgram Text to Speech WebSocket
   query-parameters:
     encoding:
-      type: SpeakEncoding
+      type: Encoding
       default: mp3
       docs: >-
         Encoding allows you to specify the expected encoding of your audio
         output
     model:
-      type: SpeakModel
+      type: Model
       default: aura-asteria-en
       docs: AI model used to process submitted text
     sample_rate:
-      type: SpeakSampleRate
+      type: SampleRate
       default: '24000'
       docs: >-
         Sample Rate specifies the sample rate for the output audio. Based on
@@ -10662,9 +10821,8 @@ channel:
                     "type": "optional<boolean>",
                   },
                   "detect_language": {
-                    "default": false,
                     "docs": "Identifies the dominant language spoken in submitted audio",
-                    "type": "optional<boolean>",
+                    "type": "optional<root.ListenRequestDetectLanguage>",
                   },
                   "diarize": {
                     "default": false,
@@ -10751,7 +10909,7 @@ channel:
                   },
                   "redact": {
                     "docs": "Redaction removes sensitive information from your transcripts",
-                    "type": "optional<string>",
+                    "type": "optional<root.ListenRequestRedact>",
                   },
                   "replace": {
                     "allow-multiple": true,
@@ -11376,8 +11534,7 @@ service:
               Identifies and extracts key entities from content in submitted
               audio
           detect_language:
-            type: optional<boolean>
-            default: false
+            type: optional<root.ListenRequestDetectLanguage>
             docs: Identifies the dominant language spoken in submitted audio
           diarize_version:
             type: optional<string>
@@ -11465,7 +11622,7 @@ service:
             default: false
             docs: Add punctuation and capitalization to the transcript
           redact:
-            type: optional<string>
+            type: optional<root.ListenRequestRedact>
             docs: Redaction removes sensitive information from your transcripts
           replace:
             type: optional<string>
@@ -11553,14 +11710,6 @@ docs: Power your apps with world-class speech recognition
                 {
                   "query-parameters": {
                     "callback": "https://example.com",
-                    "callback_method": "POST",
-                    "custom_topic": "custom_topic",
-                    "custom_topic_mode": "extended",
-                    "intents": true,
-                    "read_language": "en",
-                    "read_summarize": true,
-                    "sentiment": true,
-                    "topics": true,
                   },
                   "request": {
                     "url": "url",
@@ -11774,14 +11923,6 @@ service:
       examples:
         - query-parameters:
             callback: https://example.com
-            callback_method: POST
-            custom_topic: custom_topic
-            custom_topic_mode: extended
-            intents: true
-            read_language: en
-            sentiment: true
-            read_summarize: true
-            topics: true
           request:
             url: url
           response:
