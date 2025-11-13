@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- version: 3.29.1
+  changelogEntry:
+    - summary: Improve SDK generation performance.
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 61
+
 - version: 3.29.0
   changelogEntry:
     - summary: |
