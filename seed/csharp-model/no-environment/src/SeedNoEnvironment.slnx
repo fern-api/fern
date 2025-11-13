@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SeedNoEnvironment.Test/SeedNoEnvironment.Test.csproj" />
+  <Project Path="SeedNoEnvironment/SeedNoEnvironment.csproj" />
+</Solution>

@@ -36,6 +36,14 @@ export class TestMethodBuilder {
             const testMethodName = `test${this.toJavaMethodName(endpoint.name.pascalCase.safeName)}`;
             const methodCall = this.snippetExtractor.extractMethodCall(snippet);
 
+            // If we can't extract a method call, this endpoint should have been filtered out upstream
+            if (methodCall === null) {
+                throw new Error(
+                    `INTERNAL ERROR: Null method call reached TestMethodBuilder for endpoint ${endpoint.id}. ` +
+                        `This should have been caught upstream in SdkWireTestGenerator.`
+                );
+            }
+
             writer.writeLine("@Test");
             writer.writeLine(`public void ${testMethodName}() throws Exception {`);
             writer.indent();

@@ -39,7 +39,7 @@ pnpm --filter @fern-api/fern-csharp-model compile
 
 ### Configuration Options
 
-You can find the configuration options for `generators.yml` in _generators/csharp/codegen/src/custom-config/BaseCsharpCustomConfigSchema.ts_:
+You can find the configuration options for `generators.yml` in _generators/csharp/codegen/src/custom-config/CsharpConfigSchema.ts_:
 
 ## Testing
 ```bash

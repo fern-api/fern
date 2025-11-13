@@ -1,5 +1,9 @@
 export { addGenerator } from "./addGenerator";
-export { isGithubSelfhosted } from "./convertGeneratorsConfiguration";
+export {
+    isGithubSelfhosted,
+    mergeSettings,
+    parseBaseApiDefinitionSettingsSchema
+} from "./convertGeneratorsConfiguration";
 export { GeneratorName } from "./GeneratorName";
 export { GENERATOR_INVOCATIONS } from "./generatorInvocations";
 export { getGeneratorNameOrThrow } from "./getGeneratorName";

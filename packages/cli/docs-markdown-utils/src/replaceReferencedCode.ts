@@ -8,6 +8,10 @@ async function defaultFileLoader(filepath: AbsoluteFilePath): Promise<string> {
     return file.toString();
 }
 
+function isUrl(src: string): boolean {
+    return src.startsWith("http://") || src.startsWith("https://");
+}
+
 // TODO: add a newline before and after the code block if inline to improve markdown parsing. i.e. <CodeGroup> <Code src="" /> </CodeGroup>
 export async function replaceReferencedCode({
     markdown,
@@ -42,50 +46,93 @@ export async function replaceReferencedCode({
             throw new Error(`Failed to parse regex "${match}" in ${absolutePathToMarkdownFile}`);
         }
 
-        const filepath = resolve(
-            src.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
-            RelativeFilePath.of(src.replace(/^\//, ""))
-        );
-
         try {
-            let replacement = await fileLoader(filepath);
+            let replacement: string;
+            let language: string | undefined;
+            let title: string | undefined;
+
+            if (isUrl(src)) {
+                try {
+                    const response = await fetch(src);
+                    if (!response.ok) {
+                        context.logger.warn(
+                            `Failed to fetch code from URL "${src}" (status ${response.status}) referenced in ${absolutePathToMarkdownFile}`
+                        );
+                        break;
+                    }
+                    replacement = await response.text();
+
+                    // Extract language and title from URL pathname
+                    const url = new URL(src);
+                    const pathname = url.pathname;
+                    language = pathname.split(".").pop();
+                    title = pathname.split("/").pop();
+                } catch (e) {
+                    context.logger.warn(
+                        `Failed to fetch code from URL "${src}" referenced in ${absolutePathToMarkdownFile}: ${e}`
+                    );
+                    break;
+                }
+            } else {
+                const filepath = resolve(
+                    src.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
+                    RelativeFilePath.of(src.replace(/^\//, ""))
+                );
+                replacement = await fileLoader(filepath);
+                language = filepath.split(".").pop();
+                title = filepath.split("/").pop();
+            }
+
+            // Parse all properties from the Code component
+            const allProps = new Map<string, string>();
+            const propsRegex = /(\w+)=(?:{([^}]+)}|"([^"]+)")/g;
+
+            // Extract props before src
+            const beforeSrcProps = matchString?.split("src=")[0]?.trim() ?? "";
+            let propMatch;
+            while ((propMatch = propsRegex.exec(beforeSrcProps)) !== null) {
+                const propName = propMatch[1];
+                const propValue = propMatch[2] || propMatch[3];
+                if (propName && propValue) {
+                    allProps.set(propName, propValue);
+                }
+            }
+
+            // Extract props after src
+            const afterSrcProps = match[3]?.trim() || "";
+            propsRegex.lastIndex = 0; // Reset regex
+            while ((propMatch = propsRegex.exec(afterSrcProps)) !== null) {
+                const propName = propMatch[1];
+                const propValue = propMatch[2] || propMatch[3];
+                if (propName && propValue) {
+                    allProps.set(propName, propValue);
+                }
+            }
+
+            allProps.delete("src");
+
+            if (allProps.has("language")) {
+                language = allProps.get("language");
+                allProps.delete("language");
+            }
+
+            if (allProps.has("title")) {
+                title = allProps.get("title");
+                allProps.delete("title");
+            }
+
+            // Build metastring
             let metastring = "";
-            const language = filepath.split(".").pop();
             if (language != null) {
                 metastring += language;
             }
-            const title = filepath.split("/").pop();
             if (title != null) {
                 metastring += ` title={"${title}"}`;
             }
 
-            // Extract
-            const additionalProps = match[3]?.trim() || "";
-            if (additionalProps) {
-                // Parse and add any additional props to the metastring
-                const propsRegex = /(\w+)=(?:{([^}]+)}|"([^"]+)")/g;
-                let propMatch;
-                while ((propMatch = propsRegex.exec(additionalProps)) !== null) {
-                    const propName = propMatch[1];
-                    const propValue = propMatch[2] || propMatch[3];
-                    if (propName && propValue && propName !== "src") {
-                        metastring += ` ${propName}=${propValue.includes("{") ? propValue : `{${propValue}}`}`;
-                    }
-                }
-            }
-
-            // Extract props before src
-            const beforeSrcProps = matchString?.split("src=")[0]?.trim() ?? "";
-            if (beforeSrcProps) {
-                const beforePropsRegex = /(\w+)=(?:{([^}]+)}|"([^"]+)")/g;
-                let beforePropMatch;
-                while ((beforePropMatch = beforePropsRegex.exec(beforeSrcProps)) !== null) {
-                    const propName = beforePropMatch[1];
-                    const propValue = beforePropMatch[2] || beforePropMatch[3];
-                    if (propName && propValue && propName !== "src") {
-                        metastring += ` ${propName}=${propValue.includes("{") ? propValue : `{${propValue}}`}`;
-                    }
-                }
+            // Add remaining properties as-is to metastring
+            for (const [propName, propValue] of allProps) {
+                metastring += ` ${propName}={${propValue}}`;
             }
 
             // TODO: if the code content includes ```, add more backticks to avoid conflicts

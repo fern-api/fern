@@ -29647,6 +29647,7 @@
       }
     }
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_petsV1": {
       "fernFilepath": {

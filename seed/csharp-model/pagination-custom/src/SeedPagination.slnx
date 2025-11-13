@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SeedPagination.Test/SeedPagination.Test.csproj" />
+  <Project Path="SeedPagination/SeedPagination.csproj" />
+</Solution>

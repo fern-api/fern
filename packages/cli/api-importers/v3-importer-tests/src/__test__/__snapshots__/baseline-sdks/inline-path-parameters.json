@@ -2285,6 +2285,7 @@
     },
     "pathParameters": []
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_organizations": {
       "fernFilepath": {

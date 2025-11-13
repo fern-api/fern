@@ -17008,6 +17008,7 @@
       }
     }
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_audio": {
       "fernFilepath": {

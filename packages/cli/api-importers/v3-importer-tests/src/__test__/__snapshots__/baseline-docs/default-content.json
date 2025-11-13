@@ -604,6 +604,7 @@
       }
     }
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_generativelanguage": {
       "fernFilepath": {

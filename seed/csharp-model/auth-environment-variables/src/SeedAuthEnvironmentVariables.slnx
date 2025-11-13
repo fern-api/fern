@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SeedAuthEnvironmentVariables.Test/SeedAuthEnvironmentVariables.Test.csproj" />
+  <Project Path="SeedAuthEnvironmentVariables/SeedAuthEnvironmentVariables.csproj" />
+</Solution>

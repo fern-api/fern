@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SeedValidation.Test/SeedValidation.Test.csproj" />
+  <Project Path="SeedValidation/SeedValidation.csproj" />
+</Solution>

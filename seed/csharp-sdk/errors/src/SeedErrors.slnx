@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SeedErrors.Test/SeedErrors.Test.csproj" />
+  <Project Path="SeedErrors/SeedErrors.csproj" />
+</Solution>

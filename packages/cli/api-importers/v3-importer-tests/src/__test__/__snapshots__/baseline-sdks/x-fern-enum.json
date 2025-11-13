@@ -270,6 +270,7 @@
     "endpoints": {},
     "pathParameters": []
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_transcripts": {
       "fernFilepath": {

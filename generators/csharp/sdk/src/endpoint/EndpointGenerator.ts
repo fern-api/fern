@@ -1,4 +1,5 @@
-import { ast, GrpcClientInfo } from "@fern-api/csharp-codegen";
+import { GrpcClientInfo } from "@fern-api/csharp-base";
+import { ast } from "@fern-api/csharp-codegen";
 import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "./AbstractEndpointGenerator";

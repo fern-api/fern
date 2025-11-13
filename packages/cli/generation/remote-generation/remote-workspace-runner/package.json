@@ -39,7 +39,7 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-resolver": "workspace:*",
     "@fern-api/fai-sdk": "0.0.6-2ee1b7e28",
-    "@fern-api/fdr-sdk": "0.140.1-ec53d68c0",
+    "@fern-api/fdr-sdk": "0.140.1-406bdf0e3",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-migrations": "workspace:*",

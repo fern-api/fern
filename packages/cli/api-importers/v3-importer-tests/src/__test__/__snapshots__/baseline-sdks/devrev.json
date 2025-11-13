@@ -94606,6 +94606,7 @@
       }
     }
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_artifacts": {
       "docs": "Artifact (file) management APIs.",
