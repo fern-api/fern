@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Improve gRPC endpoint name display in documentation by deriving human-readable names from request type names. Endpoint names like "CreateComment" now display as "Create Comment" instead of "Createcomment" in the FDR output.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 0.122.0
+
+- changelogEntry:
+    - summary: |
         Refactor how settings from specs are parsed and applied in the CLI.
       type: chore
   irVersion: 61

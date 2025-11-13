@@ -167,6 +167,19 @@ function convertService(
                 }
             }
         }
+        let endpointName = irEndpoint.displayName ?? startCase(irEndpoint.name.originalName);
+        if (
+            irEndpoint.displayName == null &&
+            irEndpoint.source?.type === "openapi" &&
+            irEndpoint.requestBody?.type === "reference"
+        ) {
+            const requestTypeName = irEndpoint.requestBody.requestBodyType.typeId;
+            if (requestTypeName != null && requestTypeName.endsWith("Request")) {
+                const methodName = requestTypeName.slice(0, -"Request".length);
+                endpointName = startCase(methodName);
+            }
+        }
+
         const endpoint: FdrCjsSdk.api.v1.register.EndpointDefinition = {
             slug: undefined,
             availability: convertIrAvailability(irEndpoint.availability ?? irService.availability),
@@ -185,7 +198,7 @@ function convertService(
                     : undefined,
             id: FdrCjsSdk.EndpointId(irEndpoint.name.originalName),
             originalEndpointId: irEndpoint.id,
-            name: irEndpoint.displayName ?? startCase(irEndpoint.name.originalName),
+            name: endpointName,
             path:
                 irEndpoint.basePath != null
                     ? {
