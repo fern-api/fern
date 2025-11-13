@@ -619,6 +619,13 @@ types:
 
           Note: this setting is ignored when `disable-header` is set to true.
 
+      language-placement:
+        type: optional<LanguagePlacement>
+        docs: |
+          Set the placement of the language selector
+
+          @default: `switcher`
+
       content-alignment:
         type: optional<ContentAlignment>
         docs: |
@@ -724,6 +731,20 @@ types:
       tabs: optional<TabsThemeConfig>
       page-actions: optional<PageActionsThemeConfig>
       footer-nav: optional<FooterNavThemeConfig>
+      language-switcher: optional<LanguageSwitcherThemeConfig>
+
+  LanguageSwitcherThemeConfig:
+    enum:
+      - value: default
+        docs: |
+          Display language switcher with both flags and text labels.
+      - value: justFlags
+        name: just_flags
+        docs: |
+          Display language switcher with only flags, no text labels.
+      - value: minimal
+        docs: |
+          Display language switcher with no flags, only text labels.
 
   FooterNavThemeConfig:
     enum:
@@ -783,6 +804,17 @@ types:
     enum:
       - header
       - sidebar
+
+  LanguagePlacement:
+    enum:
+      - value: switcher
+        name: SWITCHER
+        docs: |
+          The language selector will appear with the rest of the product and version switchers.
+      - value: navlink
+        name: NAVLINK
+        docs: |
+          The language selector will appear with the rest of the navbar links.
 
   ContentAlignment:
     enum:
