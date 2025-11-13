@@ -28,6 +28,7 @@ export async function runLocalGenerationForWorkspace({
     generatorGroup,
     version,
     keepDocker,
+    absolutePathToPreview,
     inspect,
     context,
     runner
@@ -38,6 +39,7 @@ export async function runLocalGenerationForWorkspace({
     generatorGroup: generatorsYml.GeneratorGroup;
     version: string | undefined;
     keepDocker: boolean;
+    absolutePathToPreview: AbsoluteFilePath | undefined;
     context: TaskContext;
     runner: ContainerRunner | undefined;
     inspect: boolean;
@@ -141,6 +143,22 @@ export async function runLocalGenerationForWorkspace({
                         RelativeFilePath.of(generatorInvocation.language ?? generatorInvocation.name)
                     );
 
+                // Calculate preview directory for this generator if preview mode is enabled
+                const absolutePathToLocalPreview =
+                    absolutePathToPreview != null
+                        ? join(
+                              absolutePathToPreview,
+                              RelativeFilePath.of(generatorInvocation.language ?? generatorInvocation.name),
+                              RelativeFilePath.of("git-repo")
+                          )
+                        : undefined;
+
+                if (absolutePathToLocalPreview != null) {
+                    interactiveTaskContext.logger.info(
+                        `Preview mode enabled. Git repository will be written to ${absolutePathToLocalPreview}`
+                    );
+                }
+
                 let absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined = undefined;
                 if (generatorInvocation.raw?.snippets?.path != null) {
                     absolutePathToLocalSnippetJSON = AbsoluteFilePath.of(
@@ -162,6 +180,7 @@ export async function runLocalGenerationForWorkspace({
                     workspace: fernWorkspace,
                     generatorInvocation,
                     absolutePathToLocalOutput,
+                    absolutePathToLocalPreview,
                     absolutePathToLocalSnippetJSON,
                     absolutePathToLocalSnippetTemplateJSON: undefined,
                     version,

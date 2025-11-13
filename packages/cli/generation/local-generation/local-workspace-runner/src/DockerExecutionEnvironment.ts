@@ -2,6 +2,7 @@ import { runDocker } from "@fern-api/docker-utils";
 import {
     DEFAULT_NODE_DEBUG_PORT,
     DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+    DOCKER_GIT_OUTPUT_DIRECTORY,
     DOCKER_GENERATOR_CONFIG_PATH,
     DOCKER_PATH_TO_IR,
     DOCKER_PATH_TO_SNIPPET,
@@ -23,6 +24,7 @@ export class DockerExecutionEnvironment implements ExecutionEnvironment {
         irPath,
         configPath,
         outputPath,
+        previewGitOutputPath,
         snippetPath,
         snippetTemplatePath,
         licenseFilePath,
@@ -37,6 +39,11 @@ export class DockerExecutionEnvironment implements ExecutionEnvironment {
             `${irPath}:${DOCKER_PATH_TO_IR}:ro`,
             `${outputPath}:${DOCKER_CODEGEN_OUTPUT_DIRECTORY}`
         ];
+
+        if (previewGitOutputPath) {
+            binds.push(`${previewGitOutputPath}:${DOCKER_GIT_OUTPUT_DIRECTORY}`);
+            context.logger.debug(`Mounting preview git output directory: ${previewGitOutputPath} -> ${DOCKER_GIT_OUTPUT_DIRECTORY}`);
+        }
 
         if (snippetPath) {
             binds.push(`${snippetPath}:${DOCKER_PATH_TO_SNIPPET}`);

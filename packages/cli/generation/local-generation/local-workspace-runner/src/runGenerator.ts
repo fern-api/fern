@@ -56,6 +56,7 @@ export async function writeFilesToDiskAndRunGenerator({
     workspace,
     generatorInvocation,
     absolutePathToLocalOutput,
+    absolutePathToLocalPreview,
     absolutePathToLocalSnippetJSON,
     absolutePathToLocalSnippetTemplateJSON,
     audiences,
@@ -80,6 +81,7 @@ export async function writeFilesToDiskAndRunGenerator({
     generatorInvocation: generatorsYml.GeneratorInvocation;
     version: string | undefined;
     absolutePathToLocalOutput: AbsoluteFilePath;
+    absolutePathToLocalPreview: AbsoluteFilePath | undefined;
     absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
     absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath | undefined;
     audiences: Audiences;
@@ -127,6 +129,15 @@ export async function writeFilesToDiskAndRunGenerator({
     const absolutePathToTmpOutputDirectory = AbsoluteFilePath.of(tmpOutputDirectory);
     await mkdir(tmpOutputDirectory, { recursive: true });
     context.logger.debug("Will write output to: " + absolutePathToTmpOutputDirectory);
+
+    // Create temporary directory for preview git output if preview mode is enabled
+    let absolutePathToTmpPreviewGitDirectory: AbsoluteFilePath | undefined = undefined;
+    if (absolutePathToLocalPreview != null) {
+        const tmpPreviewGitDirectory = join(workspaceTempDir.path, "preview-git-output");
+        absolutePathToTmpPreviewGitDirectory = AbsoluteFilePath.of(tmpPreviewGitDirectory);
+        await mkdir(tmpPreviewGitDirectory, { recursive: true });
+        context.logger.debug("Will write preview git output to: " + absolutePathToTmpPreviewGitDirectory);
+    }
 
     let absolutePathToTmpSnippetJSON = undefined;
     if (absolutePathToLocalSnippetJSON != null) {
@@ -196,6 +207,7 @@ export async function writeFilesToDiskAndRunGenerator({
         irPath: absolutePathToIr,
         configPath: absolutePathToWriteConfigJson,
         outputPath: absolutePathToTmpOutputDirectory,
+        previewGitOutputPath: absolutePathToTmpPreviewGitDirectory,
         snippetPath: absolutePathToTmpSnippetJSON,
         snippetTemplatePath: absolutePathToTmpSnippetTemplatesJSON,
         licenseFilePath: absolutePathToLicenseFile,
@@ -208,6 +220,8 @@ export async function writeFilesToDiskAndRunGenerator({
         context,
         absolutePathToLocalOutput,
         absolutePathToTmpOutputDirectory,
+        absolutePathToLocalPreview,
+        absolutePathToTmpPreviewGitDirectory,
         absolutePathToLocalSnippetJSON,
         absolutePathToLocalSnippetTemplateJSON,
         absolutePathToTmpSnippetJSON,
