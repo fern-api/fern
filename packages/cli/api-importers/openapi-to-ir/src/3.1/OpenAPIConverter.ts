@@ -2,9 +2,8 @@ import { AuthScheme, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk
 import { convertApiAuth, convertEnvironments } from "@fern-api/ir-utils";
 import { AbstractSpecConverter, Converters, ServersConverter } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
-
+import { FernExplorerExtension } from "../extensions/x-fern-explorer";
 import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers";
-import { FernPlaygroundExtension } from "../extensions/x-fern-playground";
 import { convertGlobalHeadersExtension } from "../utils/convertGlobalHeadersExtension";
 import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1";
 import { WebhookConverter } from "./paths/operations/WebhookConverter";
@@ -74,13 +73,13 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
     }
 
     private convertPlayground(): void {
-        const playgroundExtension = new FernPlaygroundExtension({
-            breadcrumbs: ["x-fern-playground"],
+        const explorerExtension = new FernExplorerExtension({
+            breadcrumbs: ["x-fern-explorer"],
             document: this.context.spec,
             context: this.context
         });
-        const playgroundValue = playgroundExtension.convert();
-        this.ir.apiPlayground = playgroundValue ?? true;
+        const explorerValue = explorerExtension.convert();
+        this.ir.apiPlayground = explorerValue ?? true;
     }
 
     private convertSecuritySchemes(): void {
