@@ -1,3 +1,11 @@
+- version: 3.14.13
+  changelogEntry:
+    - summary: |
+        Revert unchecked operations warning fix in StreamTest generator due to type inference compilation errors. The previous fix (3.14.0) caused "incompatible types: inference variable T has incompatible equality constraints Map<String,?>,Map" errors when compiling generated StreamTest.java files. Restores the original implementation using raw types.
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 61
+
 - version: 3.14.12
   changelogEntry:
     - summary: |
