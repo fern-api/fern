@@ -20,7 +20,7 @@
       "unsafeName": "",
     },
   },
-  "apiPlayground": true,
+  "apiPlayground": undefined,
   "apiVersion": undefined,
   "audiences": undefined,
   "auth": {
