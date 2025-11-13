@@ -104,6 +104,35 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always
 };
 
+function mergeOptions<T extends object>(params: {
+    defaults: T;
+    options?: Partial<T>;
+    overrides?: Partial<T>;
+    overrideOnly?: Set<keyof T>;
+    undefinedIfAbsent?: Set<keyof T>;
+}): T {
+    const { defaults, options, overrides, overrideOnly = new Set(), undefinedIfAbsent = new Set() } = params;
+    const result = {} as T;
+
+    for (const key of Object.keys(defaults) as (keyof T)[]) {
+        if (overrideOnly.has(key)) {
+            result[key] = (overrides?.[key] !== undefined ? overrides[key] : defaults[key]) as T[typeof key];
+        } else if (undefinedIfAbsent.has(key)) {
+            result[key] = (
+                overrides?.[key] !== undefined
+                    ? overrides[key]
+                    : options?.[key] !== undefined
+                      ? options[key]
+                      : undefined
+            ) as T[typeof key];
+        } else {
+            result[key] = (overrides?.[key] ?? options?.[key] ?? defaults[key]) as T[typeof key];
+        }
+    }
+
+    return result;
+}
+
 export function getConvertOptions({
     options,
     overrides
@@ -111,58 +140,9 @@ export function getConvertOptions({
     options?: Partial<ConvertOpenAPIOptions>;
     overrides?: Partial<ConvertOpenAPIOptions>;
 }): ConvertOpenAPIOptions {
-    return {
-        enableUniqueErrorsPerEndpoint:
-            overrides?.enableUniqueErrorsPerEndpoint ??
-            options?.enableUniqueErrorsPerEndpoint ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.enableUniqueErrorsPerEndpoint,
-        detectGlobalHeaders:
-            overrides?.detectGlobalHeaders ??
-            options?.detectGlobalHeaders ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.detectGlobalHeaders,
-        objectQueryParameters:
-            overrides?.objectQueryParameters ??
-            options?.objectQueryParameters ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.objectQueryParameters,
-        respectReadonlySchemas:
-            overrides?.respectReadonlySchemas ??
-            options?.respectReadonlySchemas ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.respectReadonlySchemas,
-        respectNullableSchemas:
-            overrides?.respectNullableSchemas ??
-            options?.respectNullableSchemas ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.respectNullableSchemas,
-        onlyIncludeReferencedSchemas:
-            overrides?.onlyIncludeReferencedSchemas ??
-            options?.onlyIncludeReferencedSchemas ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.onlyIncludeReferencedSchemas,
-        inlinePathParameters:
-            overrides?.inlinePathParameters ??
-            options?.inlinePathParameters ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.inlinePathParameters,
-        useBytesForBinaryResponse:
-            overrides?.useBytesForBinaryResponse ??
-            options?.useBytesForBinaryResponse ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.useBytesForBinaryResponse,
-        respectForwardCompatibleEnums:
-            overrides?.respectForwardCompatibleEnums ??
-            options?.respectForwardCompatibleEnums ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.respectForwardCompatibleEnums,
-        wrapReferencesToNullableInOptional:
-            overrides?.wrapReferencesToNullableInOptional ??
-            options?.wrapReferencesToNullableInOptional ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.wrapReferencesToNullableInOptional,
-        coerceOptionalSchemasToNullable:
-            overrides?.coerceOptionalSchemasToNullable ??
-            options?.coerceOptionalSchemasToNullable ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.coerceOptionalSchemasToNullable,
-        groupEnvironmentsByHost:
-            overrides?.groupEnvironmentsByHost ??
-            options?.groupEnvironmentsByHost ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.groupEnvironmentsByHost,
-        removeDiscriminantsFromSchemas:
-            overrides?.removeDiscriminantsFromSchemas ??
-            options?.removeDiscriminantsFromSchemas ??
-            DEFAULT_CONVERT_OPENAPI_OPTIONS.removeDiscriminantsFromSchemas
-    };
+    return mergeOptions<ConvertOpenAPIOptions>({
+        defaults: DEFAULT_CONVERT_OPENAPI_OPTIONS,
+        options,
+        overrides
+    });
 }

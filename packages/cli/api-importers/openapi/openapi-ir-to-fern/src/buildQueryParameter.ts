@@ -151,7 +151,7 @@ function getQueryParameterTypeReference({
                     name: schema.generatedName,
                     schema: { enum: potentialEnumValues }
                 });
-                if (foundPrimitiveString && context.respectForwardCompatibleEnums) {
+                if (foundPrimitiveString && context.options.respectForwardCompatibleEnums) {
                     context.builder.addType(fileContainingReference, {
                         name: `${schema.generatedName}OrString`,
                         schema: {
@@ -243,7 +243,7 @@ function getQueryParameterTypeReference({
                     namespace
                 });
             }
-        } else if (context.objectQueryParameters) {
+        } else if (context.options.objectQueryParameters) {
             return {
                 value: buildTypeReference({
                     schema,
@@ -286,7 +286,7 @@ function getQueryParameterTypeReference({
                     }),
                     allowMultiple: true
                 };
-            } else if (context.objectQueryParameters) {
+            } else if (context.options.objectQueryParameters) {
                 return {
                     value: buildTypeReference({
                         schema,
@@ -346,7 +346,7 @@ function getQueryParameterTypeReference({
                     name: schema.generatedName,
                     schema: { enum: potentialEnumValues }
                 });
-                if (foundPrimitiveString && context.respectForwardCompatibleEnums) {
+                if (foundPrimitiveString && context.options.respectForwardCompatibleEnums) {
                     context.builder.addType(fileContainingReference, {
                         name: `${schema.generatedName}OrString`,
                         schema: {
@@ -431,7 +431,7 @@ function getQueryParameterTypeReference({
 
             // TODO: (jsklan) currently this is hidden behind the objectQueryParameters flag,
             // But eventually we should probably enable this by default
-            if (context.objectQueryParameters) {
+            if (context.options.objectQueryParameters) {
                 return {
                     value: buildTypeReference({
                         schema,
@@ -465,7 +465,7 @@ function getQueryParameterTypeReference({
                 });
             }
         } else if (schema.value.type === "object") {
-            if (context.objectQueryParameters) {
+            if (context.options.objectQueryParameters) {
                 return {
                     value: buildTypeReference({
                         schema,
