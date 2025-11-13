@@ -27,6 +27,6 @@ class TraceResponse(UniversalBaseModel):
             extra = pydantic.Extra.forbid
 
 
-from ...commons.types.debug_variable_value import DebugVariableValue  # noqa: E402, F401, I001
+from ...commons.types.debug_variable_value import DebugVariableValue  # noqa: E402, I001
 
 update_forward_refs(TraceResponse)

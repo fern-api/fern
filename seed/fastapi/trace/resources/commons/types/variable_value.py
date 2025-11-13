@@ -245,8 +245,7 @@ class VariableValue(UniversalRootModel):
             return null_value()
 
 
-from .map_value import MapValue as resources_commons_types_map_value_MapValue  # noqa: E402, F401, I001
-from .key_value_pair import KeyValuePair  # noqa: E402, F401, I001
+from .map_value import MapValue as resources_commons_types_map_value_MapValue  # noqa: E402, I001
 
 
 class _VariableValue:

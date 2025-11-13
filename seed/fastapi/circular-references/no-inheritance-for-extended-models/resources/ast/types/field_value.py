@@ -80,7 +80,7 @@ class FieldValue(UniversalRootModel):
             return container_value(unioned_value.value)
 
 
-from .container_value import ContainerValue as resources_ast_types_container_value_ContainerValue  # noqa: E402, F401, I001
+from .container_value import ContainerValue as resources_ast_types_container_value_ContainerValue  # noqa: E402, I001
 
 
 class _FieldValue:
