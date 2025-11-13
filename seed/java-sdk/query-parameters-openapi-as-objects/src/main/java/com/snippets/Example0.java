@@ -19,7 +19,7 @@ public class Example0 {
         client.search(SearchRequest.builder()
                 .limit(1)
                 .id("id")
-                .date("date")
+                .date("2023-01-15")
                 .deadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                 .bytes("bytes")
                 .user(User.builder()
@@ -40,9 +40,9 @@ public class Example0 {
                         .build())))
                 .filter(Arrays.asList(Optional.of("filter")))
                 .optionalDeadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                .keyValue(new HashMap<String, Optional<String>>() {
+                .keyValue(new HashMap<String, String>() {
                     {
-                        put("keyValue", Optional.of("keyValue"));
+                        put("keyValue", "keyValue");
                     }
                 })
                 .optionalString("optionalString")
