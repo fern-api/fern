@@ -23,11 +23,7 @@ const IR_GENERATION_DEFAULTS: IRGenerationSettings = {
  * @param workspace - The Fern workspace containing the generators configuration
  * @returns Complete IR generation settings with all defaults applied
  */
-export function getIrGenerationSettings({
-    workspace,
-}: {
-    workspace: FernWorkspace;
-}): IRGenerationSettings {
+export function getIrGenerationSettings({ workspace }: { workspace: FernWorkspace }): IRGenerationSettings {
     const apiSettings = workspace.generatorsConfiguration?.api?.settings;
     const result = { ...IR_GENERATION_DEFAULTS };
 

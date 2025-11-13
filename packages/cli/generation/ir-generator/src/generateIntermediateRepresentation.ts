@@ -51,7 +51,7 @@ import { TypeResolverImpl } from "./resolvers/TypeResolver";
 import { VariableResolverImpl } from "./resolvers/VariableResolver";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { getAudienceForEnvironment } from "./utils/getEnvironmentsByAudience";
-import { getIrGenerationSettings } from "./utils/getApiSettingsWithDefaults";
+import { getIrGenerationSettings } from "./utils/getIrGenerationSettings";
 import { parseErrorName } from "./utils/parseErrorName";
 
 export declare namespace generateIntermediateRepresentation {

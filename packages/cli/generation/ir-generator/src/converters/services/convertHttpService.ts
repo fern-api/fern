@@ -2,7 +2,6 @@ import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { isVariablePathParameter, RawSchemas } from "@fern-api/fern-definition-schema";
-import { IRGenerationSettings } from "../../utils/getApiSettingsWithDefaults";
 import {
     ApiAuth,
     AuthSchemesRequirement,
@@ -20,7 +19,6 @@ import {
 import { constructHttpPath, IdGenerator } from "@fern-api/ir-utils";
 import { SourceResolver } from "@fern-api/source-resolver";
 import urlJoin from "url-join";
-
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
@@ -28,6 +26,8 @@ import { PropertyResolver } from "../../resolvers/PropertyResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { VariableResolver } from "../../resolvers/VariableResolver";
 import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
+import { IRGenerationSettings } from "../../utils/getIrGenerationSettings";
+import { orderPathParametersByUrl } from "../../utils/orderPathParametersByUrl";
 import { convertAvailability, convertDeclaration } from "../convertDeclaration";
 import { convertCodeSample } from "./convertCodeSamples";
 import { convertExampleEndpointCall } from "./convertExampleEndpointCall";
@@ -39,7 +39,6 @@ import { convertQueryParameter } from "./convertQueryParameter";
 import { convertResponseErrors } from "./convertResponseErrors";
 import { convertRetries } from "./convertRetries";
 import { getTransportForEndpoint, getTransportForService } from "./convertTransport";
-import { orderPathParametersByUrl } from "../../utils/orderPathParametersByUrl";
 
 export function convertHttpService({
     rootDefaultUrl,
