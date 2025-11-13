@@ -76,9 +76,6 @@ export class TestClassBuilder {
         };
     }
 
-    /**
-     * Writes the closing brace for the test class and any helper methods
-     */
     public closeTestClass(writer: Writer): void {
         // Generate compact helper method for numeric equivalence comparison
         this.generateJsonEqualsHelper(writer);
@@ -88,13 +85,13 @@ export class TestClassBuilder {
 
     /**
      * Generates a compact helper for JSON comparison with numeric equivalence.
-     * Treats 149 and 149.0 as equal, which handles the common case where
-     * OpenAPI specs have integer examples but Java types are Double.
+     * Treats integers and doubles as numerically equal, which handles the common
+     * case where OpenAPI specs have integer examples but Java types are Double.
      */
     private generateJsonEqualsHelper(writer: Writer): void {
         writer.writeLine("");
         writer.writeLine("/**");
-        writer.writeLine(" * Compares two JsonNodes with numeric equivalence (149 == 149.0).");
+        writer.writeLine(" * Compares two JsonNodes with numeric equivalence.");
         writer.writeLine(" */");
         writer.writeLine("private boolean jsonEquals(JsonNode a, JsonNode b) {");
         writer.indent();

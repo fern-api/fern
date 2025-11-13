@@ -136,7 +136,6 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             } else if (generatedWrappedRequest.requestBodyGetter().get() instanceof InlinedRequestBodyGetters) {
                 InlinedRequestBodyGetters inlinedRequestBodyGetter = ((InlinedRequestBodyGetters)
                         generatedWrappedRequest.requestBodyGetter().get());
-                // Serialize the request object directly instead of manually building a properties map.
                 initializeRequestBody(
                         generatedObjectMapper,
                         requestParameterName,
@@ -192,8 +191,6 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         requestBodyCodeBlock.add(";\n");
         requestBodyCodeBlock.unindent();
         for (EnrichedObjectProperty header : generatedWrappedRequest.headerParams()) {
-            // Use the original header name from the Name object
-            // The wireValue is empty to trigger @JsonIgnore, so we get the name from Name.getOriginalName()
             String headerName = header.objectProperty().getName().getName().getOriginalName();
             if (typeNameIsOptional(header.poetTypeName())) {
                 requestBodyCodeBlock

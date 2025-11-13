@@ -111,8 +111,6 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
             if (defaultValueExtractor.hasDefaultValue(valueType)) {
                 valueType = TypeReference.container(ContainerType.optional(valueType));
             }
-            // Create header property with modified name that has NO wire value
-            // This ensures the property gets @JsonIgnore instead of @JsonProperty
             // Headers should only be sent as HTTP headers, not in JSON body
             NameAndWireValue nameWithoutWire = NameAndWireValue.builder()
                     .wireValue("") // Empty wire value → @JsonIgnore
@@ -129,8 +127,6 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
             if (defaultValueExtractor.hasDefaultValue(valueType)) {
                 valueType = TypeReference.container(ContainerType.optional(valueType));
             }
-            // Create header property with modified name that has NO wire value
-            // This ensures the property gets @JsonIgnore instead of @JsonProperty
             // Headers should only be sent as HTTP headers, not in JSON body
             NameAndWireValue nameWithoutWire = NameAndWireValue.builder()
                     .wireValue("") // Empty wire value → @JsonIgnore
