@@ -7,7 +7,8 @@ import { Literal } from "../code/Literal";
 import { Node } from "../core/AstNode";
 import type { Writer } from "../core/Writer";
 import { type Field } from "./Field";
-import { Optional, Type } from "./Type";
+import { Type } from "./IType";
+import { Optional } from "./Type";
 
 export declare namespace ClassReference {
     interface Identity {
@@ -30,6 +31,30 @@ export declare namespace ClassReference {
         global?: boolean;
         /* Whether or not the class reference is a collection */
         isCollection?: boolean;
+
+        /**
+         * The multipart form method name used when this type is added to a multipart/form-data request.
+         * For example, primitives use "AddStringPart", while objects use "AddJsonPart".
+         *
+         * If this is null, then the type does not support adding to a multipart form.
+         * If this is undefined, then the type supports adding to a multipart form, and the default method name is used.
+         */
+        multipartMethodName?: string | null;
+        /**
+         * The multipart form method name used when a collection of this type is added to a multipart/form-data request.
+         * For example, primitives use "AddStringParts", while objects use "AddJsonParts".
+         *
+         * If this is null, then the type does not support adding to a multipart form.
+         * If this is undefined, then the type supports adding to a multipart form, and the default method name is used.
+         */
+        multipartMethodNameForCollection?: string | null;
+
+        /**
+         * Whether or not the class reference is a reference type.
+         * If this is undefined, then the type is indeterminate.
+         * (interpreted as false, in a lot of cases, but sometimes it's used to see if it's a class reference)
+         */
+        isReferenceType?: boolean;
     }
 
     interface CreationArgs extends Args {
@@ -38,7 +63,7 @@ export declare namespace ClassReference {
     }
 }
 
-export class ClassReference extends Node {
+export class ClassReference extends Node implements Type {
     public readonly name: string;
     public readonly namespace: string;
     public readonly namespaceAlias: string | undefined;
@@ -49,6 +74,9 @@ export class ClassReference extends Node {
     public readonly fullyQualifiedName: string;
     public readonly isCollection: boolean;
     private readonly namespaceSegments: string[];
+    public readonly isReferenceType: boolean | undefined;
+    public readonly multipartMethodName: string | null;
+    public readonly multipartMethodNameForCollection: string | null;
 
     constructor(
         {
@@ -61,7 +89,10 @@ export class ClassReference extends Node {
             global,
             fullyQualifiedName,
             origin,
-            isCollection
+            isCollection,
+            multipartMethodName,
+            multipartMethodNameForCollection,
+            isReferenceType
         }: ClassReference.CreationArgs,
         readonly scope: TypeScope,
         generation: Generation
@@ -83,6 +114,10 @@ export class ClassReference extends Node {
         } else {
             this.fullyQualifiedName = fullyQualifiedName ? fullyQualifiedName : name;
         }
+        this.multipartMethodName = multipartMethodName === undefined ? "AddJsonPart" : multipartMethodName;
+        this.multipartMethodNameForCollection =
+            multipartMethodNameForCollection === undefined ? "AddJsonParts" : multipartMethodNameForCollection;
+        this.isReferenceType = isReferenceType;
     }
 
     public write(writer: Writer): void {
@@ -389,31 +424,15 @@ export class ClassReference extends Node {
         return name;
     }
 
-    public get multipartMethodName(): string {
-        return "AddJsonPart";
-    }
-
-    public get multipartMethodNameForCollection(): string {
-        return "AddJsonParts";
-    }
-
     public get isOptional(): boolean {
         return false;
     }
 
-    public get isReferenceType(): boolean | undefined {
-        return undefined;
-    }
-
-    public toOptionalIfNotAlready(): Type {
+    public asOptional(): Type {
         return new Optional(this, this.generation);
     }
 
-    public underlyingTypeIfOptional(): Type | undefined {
-        return undefined;
-    }
-
-    public unwrapIfOptional(): Type {
+    public asNonOptional(): Type {
         return this;
     }
     public get defaultValue(): Literal {

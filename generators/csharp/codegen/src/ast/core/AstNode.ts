@@ -77,9 +77,7 @@ export abstract class AstNode extends AbstractAstNode {
     protected get Collection() {
         return this.generation.Collection;
     }
-    protected get Special() {
-        return this.generation.Special;
-    }
+
     /**
      * Writes the node to a string.
      */
