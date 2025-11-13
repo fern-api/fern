@@ -1,6 +1,6 @@
 export interface AIExampleEnhancerConfig {
     enabled: boolean;
-    openaiApiKey: string;
+    openaiApiKey?: string; // Optional - only needed for legacy direct OpenAI calls
     model?: string; // Default: "gpt-4o-mini"
     maxRetries?: number; // Default: 3
     requestTimeoutMs?: number; // Default: 30000
@@ -16,6 +16,7 @@ export interface EnhancedExample {
 export interface ExampleEnhancementRequest {
     endpointPath: string;
     method: string;
+    organizationId: string;
     operationSummary?: string;
     operationDescription?: string;
     requestSchema?: unknown;

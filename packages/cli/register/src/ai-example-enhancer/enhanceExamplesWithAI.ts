@@ -1,8 +1,9 @@
+import { FernToken } from "@fern-api/auth";
 import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
-import { OpenAIExampleEnhancer } from "./openaiClient";
+import { LambdaExampleEnhancer } from "./lambdaClient";
 import { AIExampleEnhancerConfig, ExampleEnhancementRequest } from "./types";
 import {
     EnhancedExampleRecord,
@@ -39,6 +40,8 @@ export async function enhanceExamplesWithAI(
     apiDefinition: FdrCjsSdk.api.v1.register.ApiDefinition,
     config: AIExampleEnhancerConfig,
     context: TaskContext,
+    token: FernToken,
+    organizationId: string,
     sourceFilePath?: AbsoluteFilePath
 ): Promise<FdrCjsSdk.api.v1.register.ApiDefinition> {
     if (!config.enabled) {
@@ -47,7 +50,7 @@ export async function enhanceExamplesWithAI(
     }
 
     context.logger.info("Starting AI-powered example enhancement...");
-    const enhancer = new OpenAIExampleEnhancer(config, context);
+    const enhancer = new LambdaExampleEnhancer(config, context, token);
 
     const coveredEndpoints =
         sourceFilePath != null ? await loadExistingOverrideCoverage(sourceFilePath, context) : new Set<string>();
@@ -76,6 +79,7 @@ export async function enhanceExamplesWithAI(
         apiDefinition,
         enhancer,
         context,
+        organizationId,
         examplesEnhanced,
         enhancedExampleRecords,
         coveredEndpoints,
@@ -103,8 +107,9 @@ export async function enhanceExamplesWithAI(
 
 async function enhancePackageExamples(
     apiDefinition: FdrCjsSdk.api.v1.register.ApiDefinition,
-    enhancer: OpenAIExampleEnhancer,
+    enhancer: LambdaExampleEnhancer,
     context: TaskContext,
+    organizationId: string,
     stats: { count: number; total: number },
     enhancedExampleRecords: EnhancedExampleRecord[],
     coveredEndpoints: Set<string>,
@@ -117,6 +122,7 @@ async function enhancePackageExamples(
             subpackage as unknown as FdrCjsSdk.api.v1.register.ApiDefinitionPackage,
             enhancer,
             context,
+            organizationId,
             stats,
             enhancedExampleRecords,
             coveredEndpoints,
@@ -130,6 +136,7 @@ async function enhancePackageExamples(
         apiDefinition.rootPackage,
         enhancer,
         context,
+        organizationId,
         stats,
         enhancedExampleRecords,
         coveredEndpoints,
@@ -145,8 +152,9 @@ async function enhancePackageExamples(
 
 async function enhancePackageEndpoints(
     pkg: FdrCjsSdk.api.v1.register.ApiDefinitionPackage,
-    enhancer: OpenAIExampleEnhancer,
+    enhancer: LambdaExampleEnhancer,
     context: TaskContext,
+    organizationId: string,
     stats: { count: number; total: number },
     enhancedExampleRecords: EnhancedExampleRecord[],
     coveredEndpoints: Set<string>,
@@ -158,6 +166,7 @@ async function enhancePackageEndpoints(
                 endpoint as unknown as EndpointV3,
                 enhancer,
                 context,
+                organizationId,
                 stats,
                 enhancedExampleRecords,
                 coveredEndpoints,
@@ -174,8 +183,9 @@ async function enhancePackageEndpoints(
 
 async function enhanceEndpointExamples(
     endpoint: EndpointV3,
-    enhancer: OpenAIExampleEnhancer,
+    enhancer: LambdaExampleEnhancer,
     context: TaskContext,
+    organizationId: string,
     stats: { count: number; total: number },
     enhancedExampleRecords: EnhancedExampleRecord[],
     coveredEndpoints: Set<string>,
@@ -188,6 +198,7 @@ async function enhanceEndpointExamples(
                 endpoint,
                 enhancer,
                 context,
+                organizationId,
                 stats,
                 enhancedExampleRecords,
                 coveredEndpoints,
@@ -205,8 +216,9 @@ async function enhanceEndpointExamples(
 async function enhanceSingleExample(
     example: ExampleV3,
     endpoint: EndpointV3,
-    enhancer: OpenAIExampleEnhancer,
+    enhancer: LambdaExampleEnhancer,
     context: TaskContext,
+    organizationId: string,
     stats: { count: number; total: number },
     enhancedExampleRecords: EnhancedExampleRecord[],
     coveredEndpoints: Set<string>,
@@ -241,6 +253,7 @@ async function enhanceSingleExample(
         const enhancementRequest: ExampleEnhancementRequest = {
             endpointPath: example.path,
             method: endpoint.method,
+            organizationId,
             operationSummary: endpoint.summary,
             operationDescription: endpoint.description,
             originalRequestExample,
@@ -250,14 +263,25 @@ async function enhanceSingleExample(
 
         const enhancedResult = await enhancer.enhanceExample(enhancementRequest);
 
+        const enhancedReq = enhancedResult.enhancedRequestExample;
+        const enhancedRes = enhancedResult.enhancedResponseExample;
+
+        const requestChanged = enhancedReq !== undefined && !deepEqual(enhancedReq, originalRequestExample);
+        const responseChanged = enhancedRes !== undefined && !deepEqual(enhancedRes, originalResponseExample);
+
+        if (!requestChanged && !responseChanged) {
+            context.logger.debug(`AI returned no changes for ${endpoint.method} ${example.path}`);
+            return example;
+        }
+
         const enhancedExampleRecord: EnhancedExampleRecord = {
             endpoint: example.path,
             method: endpoint.method,
             pathParameters: example.pathParameters,
             queryParameters: example.queryParameters,
             headers: example.headers,
-            requestBody: enhancedResult.enhancedRequestExample,
-            responseBody: enhancedResult.enhancedResponseExample
+            requestBody: requestChanged ? enhancedReq : undefined,
+            responseBody: responseChanged ? enhancedRes : undefined
         };
         enhancedExampleRecords.push(enhancedExampleRecord);
 
@@ -265,24 +289,24 @@ async function enhanceSingleExample(
             ...example
         };
 
-        if (enhancedResult.enhancedRequestExample && example.requestBodyV3) {
-            enhancedExample.requestBody = enhancedResult.enhancedRequestExample;
+        if (requestChanged && example.requestBodyV3) {
+            enhancedExample.requestBody = enhancedReq;
             enhancedExample.requestBodyV3 = {
                 ...example.requestBodyV3,
-                value: enhancedResult.enhancedRequestExample
+                value: enhancedReq
             };
         }
 
-        if (enhancedResult.enhancedResponseExample && example.responseBodyV3) {
-            enhancedExample.responseBody = enhancedResult.enhancedResponseExample;
+        if (responseChanged && example.responseBodyV3) {
+            enhancedExample.responseBody = enhancedRes;
             enhancedExample.responseBodyV3 = {
                 ...example.responseBodyV3,
-                value: enhancedResult.enhancedResponseExample
+                value: enhancedRes
             };
         }
 
         stats.count++;
-        context.logger.info(`✨ Successfully enhanced example for ${endpoint.method} ${example.path}`);
+        context.logger.info(`Successfully enhanced example for ${endpoint.method} ${example.path}`);
         return enhancedExample;
     } catch (error) {
         context.logger.warn(`Failed to enhance example for ${endpoint.method} ${example.path}: ${error}`);
@@ -339,4 +363,49 @@ function extractExampleValue(bodyV3: BodyV3 | undefined): unknown {
         default:
             return bodyV3.value;
     }
+}
+
+function deepEqual(a: unknown, b: unknown): boolean {
+    if (Object.is(a, b)) {
+        return true;
+    }
+
+    if (a === null || b === null || a === undefined || b === undefined) {
+        return a === b;
+    }
+
+    if (typeof a !== typeof b) {
+        return false;
+    }
+
+    if (typeof a !== "object") {
+        return false;
+    }
+
+    if (Array.isArray(a) && Array.isArray(b)) {
+        if (a.length !== b.length) {
+            return false;
+        }
+        return a.every((item, index) => deepEqual(item, b[index]));
+    }
+
+    if (Array.isArray(a) || Array.isArray(b)) {
+        return false;
+    }
+
+    const aObj = a as Record<string, unknown>;
+    const bObj = b as Record<string, unknown>;
+
+    const aKeys = Object.keys(aObj).sort();
+    const bKeys = Object.keys(bObj).sort();
+
+    if (aKeys.length !== bKeys.length) {
+        return false;
+    }
+
+    if (!aKeys.every((key, index) => key === bKeys[index])) {
+        return false;
+    }
+
+    return aKeys.every((key) => deepEqual(aObj[key], bObj[key]));
 }

@@ -57,6 +57,7 @@ export async function publishDocs({
     isPrivate = false,
     disableTemplates = false,
     skipUpload = false,
+    withAiExamples = false,
     targetAudiences
 }: {
     token: FernToken;
@@ -72,6 +73,7 @@ export async function publishDocs({
     isPrivate: boolean | undefined;
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
+    withAiExamples?: boolean;
     targetAudiences?: string[];
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
@@ -193,7 +195,7 @@ export async function publishDocs({
                     const skippedCount = startDocsRegisterResponse.body.skippedFiles?.length || 0;
                     if (skippedCount > 0) {
                         context.logger.info(
-                            `✓ Skipped ${skippedCount} unchanged file${skippedCount === 1 ? "" : "s"} (already uploaded)`
+                            `Skipped ${skippedCount} unchanged file${skippedCount === 1 ? "" : "s"} (already uploaded)`
                         );
                     }
 
@@ -218,7 +220,7 @@ export async function publishDocs({
                                 UPLOAD_FILE_BATCH_SIZE
                             );
                         } else {
-                            context.logger.info("✓ No files to upload (all up to date)");
+                            context.logger.info("No files to upload (all up to date)");
                         }
                     }
                     return convertToFilePathPairs(
@@ -233,13 +235,20 @@ export async function publishDocs({
         registerApi: async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
             let apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
 
-            const aiEnhancerConfig = getAIEnhancerConfig();
+            const aiEnhancerConfig = getAIEnhancerConfig(withAiExamples);
             if (aiEnhancerConfig && workspace) {
                 const sources = workspace.getSources();
                 const openApiSource = sources.find((source) => source.type === "openapi");
                 const sourceFilePath = openApiSource?.absoluteFilePath;
 
-                apiDefinition = await enhanceExamplesWithAI(apiDefinition, aiEnhancerConfig, context, sourceFilePath);
+                apiDefinition = await enhanceExamplesWithAI(
+                    apiDefinition,
+                    aiEnhancerConfig,
+                    context,
+                    token,
+                    organization,
+                    sourceFilePath
+                );
             }
 
             // create dynamic IR + metadata for each generator language
@@ -705,19 +714,15 @@ async function updateAiChatFromDocsDefinition({
     }
 }
 
-function getAIEnhancerConfig(): AIExampleEnhancerConfig | undefined {
-    const openaiApiKey = process.env.OPENAI_API_KEY;
-
-    // Only enable if the API key is present
-    if (!openaiApiKey) {
+function getAIEnhancerConfig(withAiExamples: boolean): AIExampleEnhancerConfig | undefined {
+    if (!withAiExamples) {
         return undefined;
     }
 
     return {
         enabled: true,
-        openaiApiKey,
         model: process.env.FERN_AI_MODEL || "gpt-4o-mini",
         maxRetries: parseInt(process.env.FERN_AI_MAX_RETRIES || "3"),
-        requestTimeoutMs: parseInt(process.env.FERN_AI_TIMEOUT_MS || "30000")
+        requestTimeoutMs: parseInt(process.env.FERN_AI_TIMEOUT_MS || "25000")
     };
 }
