@@ -148,12 +148,12 @@ public record CreateProblemResponse
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<CreateProblemResponse>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(CreateProblemResponse).IsAssignableFrom(typeToConvert);
 
         public override CreateProblemResponse Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -13,8 +13,8 @@ import { ClassReference } from "./ClassReference";
 import { DefinedType } from "./DefinedType";
 import { Field } from "./Field";
 import { Interface } from "./Interface";
+import { Type } from "./IType";
 import { MethodType } from "./Method";
-import { Type } from "./Type";
 
 export class Class extends DefinedType {
     public static readonly ClassType = {

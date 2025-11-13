@@ -142,12 +142,12 @@ public record Exception
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Exception>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(Exception).IsAssignableFrom(typeToConvert);
 
         public override Exception Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
