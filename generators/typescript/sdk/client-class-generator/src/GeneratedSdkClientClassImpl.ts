@@ -1222,7 +1222,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                         ts.factory.createBinaryExpression(
                                             ts.factory.createPropertyAccessChain(
                                                 ts.factory.createIdentifier(
-                                                    GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
+                                                    GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME
                                                 ),
                                                 ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
                                                 ts.factory.createIdentifier(headerName)
@@ -1239,7 +1239,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         } else {
                             value = ts.factory.createBinaryExpression(
                                 ts.factory.createPropertyAccessChain(
-                                    ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER),
+                                    ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME),
                                     ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
                                     ts.factory.createIdentifier(headerName)
                                 ),
@@ -1249,7 +1249,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         }
                     } else {
                         value = ts.factory.createPropertyAccessChain(
-                            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER),
+                            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME),
                             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
                             ts.factory.createIdentifier(this.getOptionKeyForHeader(header))
                         );
@@ -1305,7 +1305,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 if (defaultVersion != null) {
                     value = ts.factory.createBinaryExpression(
                         ts.factory.createPropertyAccessChain(
-                            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER),
+                            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME),
                             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
                             ts.factory.createIdentifier(headerName)
                         ),
@@ -1314,7 +1314,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     );
                 } else {
                     value = ts.factory.createPropertyAccessExpression(
-                        ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER),
+                        ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME),
                         ts.factory.createIdentifier(headerName)
                     );
                 }
