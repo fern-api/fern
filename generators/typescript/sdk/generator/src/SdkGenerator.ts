@@ -176,6 +176,7 @@ export class SdkGenerator {
     private endpointSnippets: FernGeneratorExec.Endpoint[] = [];
 
     private project: Project;
+    private snippetProject: Project | undefined;
     private rootDirectory: Directory;
     private exportsManager: ExportsManager;
     private readonly publicExportsManager: PublicExportsManager;
@@ -1451,10 +1452,15 @@ export class SdkGenerator {
         run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => ts.Node[] | undefined;
         includeImports: boolean;
     }): string | undefined {
-        const project = new Project({
-            useInMemoryFileSystem: true
+        if (this.snippetProject == null) {
+            this.snippetProject = new Project({
+                useInMemoryFileSystem: true
+            });
+        }
+
+        const sourceFile = this.snippetProject.createSourceFile("snippet-" + Date.now(), undefined, {
+            overwrite: false
         });
-        const sourceFile = project.createSourceFile("snippet");
         const importsManager = new ImportsManager({
             packagePath: this.relativePackagePath
         });
@@ -1464,8 +1470,12 @@ export class SdkGenerator {
             if (includeImports) {
                 importsManager.writeImportsToSourceFile(sourceFile);
             }
-            return sourceFile.getText();
+            const text = sourceFile.getText();
+            sourceFile.delete();
+            return text;
         }
+        // Clean up the source file even if no statements were generated
+        sourceFile.delete();
         return undefined;
     }
 
