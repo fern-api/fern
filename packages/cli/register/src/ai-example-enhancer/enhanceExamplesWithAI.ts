@@ -211,7 +211,8 @@ export async function enhanceExamplesWithAI(
     context: TaskContext,
     token: FernToken,
     organizationId: string,
-    sourceFilePath?: AbsoluteFilePath
+    sourceFilePath?: AbsoluteFilePath,
+    apiName?: string
 ): Promise<FdrCjsSdk.api.v1.register.ApiDefinition> {
     if (!config.enabled) {
         context.logger.debug("AI example enhancement is disabled");
@@ -254,7 +255,8 @@ export async function enhanceExamplesWithAI(
         enhancedExampleRecords,
         coveredEndpoints,
         openApiSpec,
-        sourceFilePath
+        sourceFilePath,
+        apiName
     );
 
     if (enhancedExampleRecords.length > 0 && sourceFilePath != null) {
@@ -281,7 +283,8 @@ async function enhancePackageExamples(
     enhancedExampleRecords: EnhancedExampleRecord[],
     coveredEndpoints: Set<string>,
     openApiSpec?: string,
-    sourceFilePath?: AbsoluteFilePath
+    sourceFilePath?: AbsoluteFilePath,
+    apiName?: string
 ): Promise<FdrCjsSdk.api.v1.register.ApiDefinition> {
     // Collect all work items from all packages first
     const allWorkItems: (EndpointWorkItem & { packageId?: string })[] = [];
@@ -302,9 +305,8 @@ async function enhancePackageExamples(
     stats.total += allWorkItems.length;
     context.logger.debug(`Collected ${allWorkItems.length} work items across all packages`);
 
-    const progressTracker = new ProgressTracker(context, allWorkItems.length);
+    const progressTracker = new ProgressTracker(context, allWorkItems.length, apiName || "AI Examples");
 
-    // Process all work items in batches (up to 10 per batch)
     const enhancementResults = await processBatchedWorkItems(
         allWorkItems,
         enhancer,
