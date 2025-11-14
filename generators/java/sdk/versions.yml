@@ -1,3 +1,11 @@
+- version: 3.16.0
+  changelogEntry:
+    - summary: |
+        Add opt-in use-local-date-for-dates config flag to generate java.time.LocalDate instead of String for Fern date types.
+      type: feat
+  createdAt: "2025-11-14"
+  irVersion: 61
+
 - version: 3.15.1
   changelogEntry:
     - summary: |

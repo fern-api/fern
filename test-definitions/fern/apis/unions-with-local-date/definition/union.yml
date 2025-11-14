@@ -1,0 +1,57 @@
+types:
+  GetShapeRequest:
+    properties:
+      id: string
+    examples:
+      - value:
+          id: example
+
+  WithName:
+    properties:
+      name: string
+
+  Shape:
+    extends: WithName
+    base-properties:
+      id: string
+    union:
+      circle: Circle
+      square: Square
+    examples:
+      - name: circle
+        value:
+          type: circle
+          id: example
+          radius: 5.0
+          name: circle
+      - name: square
+        value:
+          type: square
+          id: example
+          length: 5.0
+          name: square
+
+  Circle:
+    properties:
+      radius: double
+
+  Square:
+    properties:
+      length: double
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    get:
+      path: /{id}
+      method: GET
+      path-parameters:
+        id: string
+      response: Shape
+
+    update:
+      path: ""
+      method: PATCH
+      request: Shape
+      response: boolean
