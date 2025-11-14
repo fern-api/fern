@@ -116,8 +116,8 @@ importers:
         specifier: ^0.1.5
         version: 0.1.5
       js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.1.1
+        version: 4.1.1
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -878,8 +878,8 @@ importers:
         specifier: ^1.4.7
         version: 1.4.7
       js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.1.1
+        version: 4.1.1
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -4097,8 +4097,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons
       js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.1.1
+        version: 4.1.1
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -4362,8 +4362,8 @@ importers:
         specifier: workspace:*
         version: link:../../../workspace/loader
       js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.1.1
+        version: 4.1.1
       openapi-types:
         specifier: ^12.1.3
         version: 12.1.3
@@ -4454,11 +4454,11 @@ importers:
         specifier: workspace:*
         version: link:../../logger
       js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.1.1
+        version: 4.1.1
       js-yaml-source-map:
         specifier: ^0.2.2
-        version: 0.2.2(js-yaml@4.1.0)
+        version: 0.2.2(js-yaml@4.1.1)
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -4781,8 +4781,8 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1
       js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.1.1
+        version: 4.1.1
       latest-version:
         specifier: ^9.0.0
         version: 9.0.0
@@ -4887,8 +4887,8 @@ importers:
         specifier: ^9.2.23
         version: 9.3.8(@types/node@18.15.3)
       js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.1.1
+        version: 4.1.1
       yaml:
         specifier: 2.3.3
         version: 2.3.3
@@ -5046,8 +5046,8 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3
       js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.1.1
+        version: 4.1.1
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -5110,8 +5110,8 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.1.1
+        version: 4.1.1
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -5563,8 +5563,8 @@ importers:
         specifier: ^4.21.2
         version: 4.21.2
       js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.1.1
+        version: 4.1.1
       node-fetch:
         specifier: 2.7.0
         version: 2.7.0
@@ -6427,8 +6427,8 @@ importers:
         specifier: ^1.2.1
         version: 1.2.1
       js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.1.1
+        version: 4.1.1
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -6552,8 +6552,8 @@ importers:
         specifier: ^11.1.1
         version: 11.3.2
       js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.1.1
+        version: 4.1.1
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -6837,8 +6837,8 @@ importers:
         specifier: ^4.0.8
         version: 4.0.9
       js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.1.1
+        version: 4.1.1
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -6982,8 +6982,8 @@ importers:
         specifier: ^1.4.1
         version: 1.34.5
       js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.1.1
+        version: 4.1.1
       latest-version:
         specifier: ^9.0.0
         version: 9.0.0
@@ -7109,8 +7109,8 @@ importers:
         specifier: ^5.3.0
         version: 5.6.2
       js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.1.1
+        version: 4.1.1
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -7200,8 +7200,8 @@ importers:
         specifier: ^5.3.0
         version: 5.6.2
       js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.1.1
+        version: 4.1.1
       zod:
         specifier: ^3.22.3
         version: 3.25.76
@@ -7328,8 +7328,8 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3
       js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.1.1
+        version: 4.1.1
       mdast-util-to-hast:
         specifier: ^13.2.0
         version: 13.2.0
@@ -8026,8 +8026,8 @@ importers:
         specifier: ^6.3.0
         version: 6.3.0
       js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.1.1
+        version: 4.1.1
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -11340,8 +11340,8 @@ packages:
   '@types/yargs@17.0.33':
     resolution: {integrity: sha512-WpxBCKWPLr4xSsHgz511rFJAM+wS28w2zEO1QDNY5zM/S8ok70NNfztH0xwhqKyaK0OHCbN98LDAZuy1ctxDkA==}
 
-  '@types/yargs@17.0.34':
-    resolution: {integrity: sha512-KExbHVa92aJpw9WDQvzBaGVE2/Pz+pLZQloT2hjL8IqsZnV62rlPOYvNnLmf/L2dyllfVUOVBj64M0z/46eR2A==}
+  '@types/yargs@17.0.35':
+    resolution: {integrity: sha512-qUHkeCyQFxMXg79wQfTtfndEC+N9ZZg76HJftDJp+qH2tV7Gj4OJi7l+PiWwJ+pWtW8GwSmqsDj/oymhrTWXjg==}
 
   '@types/yauzl@2.10.3':
     resolution: {integrity: sha512-oJoftv0LSuaDZE3Le4DbKX+KS9G36NzOeSap90UIK0yMA/NhKJhqlSGtNDORNRaIbQfzjXDrQa0ytJ6mNRGz/Q==}
@@ -12189,8 +12189,8 @@ packages:
     resolution: {integrity: sha512-OytmFH+13/QXONJcC75QNdMtKpceNk3u8ThBjyyYjkEcy/ekBwR1mMAuNvi3gdBPW3N5TlCzQ0WZw8H0lN/bDw==}
     engines: {node: '>=20'}
 
-  csstype@3.1.3:
-    resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
+  csstype@3.2.0:
+    resolution: {integrity: sha512-si++xzRAY9iPp60roQiFta7OFbhrgvcthrhlNAGeQptSY25uJjkfUV8OArC3KLocB8JT8ohz+qgxWCmz8RhjIg==}
 
   data-uri-to-buffer@6.0.2:
     resolution: {integrity: sha512-7hvf7/GW8e86rW0ptuwS3OcBGDjIi6SZva7hCyWC0yYry2cOPmLIjXAUHI6DK2HsnwJd9ifmt57i8eV2n4YNpw==}
@@ -13642,10 +13642,6 @@ packages:
 
   js-yaml@3.14.1:
     resolution: {integrity: sha512-okMH7OXXJ7YrN9Ok3/SXrnu4iX9yOk+25nqX4imS2npuvTYDmo/QEZoqwZkYaIDk3jVvBOTOIEgEhaLOynBS9g==}
-    hasBin: true
-
-  js-yaml@4.1.0:
-    resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
     hasBin: true
 
   js-yaml@4.1.1:
@@ -17706,7 +17702,7 @@ snapshots:
       globals: 13.24.0
       ignore: 5.3.2
       import-fresh: 3.3.1
-      js-yaml: 4.1.0
+      js-yaml: 4.1.1
       minimatch: 3.1.2
       strip-json-comments: 3.1.1
     transitivePeerDependencies:
@@ -18534,7 +18530,7 @@ snapshots:
       '@types/istanbul-lib-coverage': 2.0.6
       '@types/istanbul-reports': 3.0.4
       '@types/node': 18.19.130
-      '@types/yargs': 17.0.34
+      '@types/yargs': 17.0.35
       chalk: 4.1.2
     optional: true
 
@@ -19215,7 +19211,7 @@ snapshots:
       colorette: 1.4.0
       https-proxy-agent: 7.0.6
       js-levenshtein: 1.1.6
-      js-yaml: 4.1.0
+      js-yaml: 4.1.1
       minimatch: 5.1.6
       pluralize: 8.0.0
       yaml-ast-parser: 0.0.43
@@ -19618,7 +19614,7 @@ snapshots:
 
   '@types/react@19.2.2':
     dependencies:
-      csstype: 3.1.3
+      csstype: 3.2.0
 
   '@types/readable-stream@4.0.22':
     dependencies:
@@ -19703,7 +19699,7 @@ snapshots:
     dependencies:
       '@types/yargs-parser': 21.0.3
 
-  '@types/yargs@17.0.34':
+  '@types/yargs@17.0.35':
     dependencies:
       '@types/yargs-parser': 21.0.3
     optional: true
@@ -20567,7 +20563,7 @@ snapshots:
     dependencies:
       env-paths: 2.2.1
       import-fresh: 3.3.1
-      js-yaml: 4.1.0
+      js-yaml: 4.1.1
       parse-json: 5.2.0
     optionalDependencies:
       typescript: 5.9.3
@@ -20700,7 +20696,7 @@ snapshots:
       css-tree: 3.1.0
     optional: true
 
-  csstype@3.1.3: {}
+  csstype@3.2.0: {}
 
   data-uri-to-buffer@6.0.2: {}
 
@@ -21144,7 +21140,7 @@ snapshots:
       imurmurhash: 0.1.4
       is-glob: 4.0.3
       is-path-inside: 3.0.3
-      js-yaml: 4.1.0
+      js-yaml: 4.1.1
       json-stable-stringify-without-jsonify: 1.0.1
       levn: 0.4.1
       lodash.merge: 4.6.2
@@ -22632,18 +22628,14 @@ snapshots:
 
   js-tokens@4.0.0: {}
 
-  js-yaml-source-map@0.2.2(js-yaml@4.1.0):
+  js-yaml-source-map@0.2.2(js-yaml@4.1.1):
     dependencies:
-      js-yaml: 4.1.0
+      js-yaml: 4.1.1
 
   js-yaml@3.14.1:
     dependencies:
       argparse: 1.0.10
       esprima: 4.0.1
-
-  js-yaml@4.1.0:
-    dependencies:
-      argparse: 2.0.1
 
   js-yaml@4.1.1:
     dependencies:
