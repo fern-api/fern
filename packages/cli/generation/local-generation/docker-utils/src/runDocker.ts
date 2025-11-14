@@ -95,7 +95,7 @@ async function tryRunDocker({
     // This filters out any falsy values (empty strings, null, undefined) from the dockerArgs array
     // In this case, it removes empty strings that may be present when removeAfterCompletion is false
 
-    const { stdout, stderr, exitCode } = await loggingExeca(logger, runner ?? "podman", dockerArgs, {
+    const { stdout, stderr, exitCode } = await loggingExeca(logger, runner ?? "docker", dockerArgs, {
         reject: false,
         all: true,
         doNotPipeOutput: true
@@ -115,7 +115,7 @@ async function tryRunDocker({
 }
 
 async function pullImage(imageName: string, runner?: ContainerRunner): Promise<void> {
-    await loggingExeca(undefined, runner ?? "podman", ["pull", imageName], {
+    await loggingExeca(undefined, runner ?? "docker", ["pull", imageName], {
         all: true,
         doNotPipeOutput: true
     });

@@ -1,3 +1,4 @@
+import { ContainerRunner } from "@fern-api/core-utils";
 import { runDocker } from "@fern-api/docker-utils";
 import {
     DEFAULT_NODE_DEBUG_PORT,
@@ -12,10 +13,20 @@ import { ExecutionEnvironment } from "./ExecutionEnvironment";
 export class DockerExecutionEnvironment implements ExecutionEnvironment {
     private readonly dockerImage: string;
     private readonly keepDocker: boolean;
+    private readonly runner?: ContainerRunner;
 
-    constructor({ dockerImage, keepDocker }: { dockerImage: string; keepDocker: boolean }) {
+    constructor({
+        dockerImage,
+        keepDocker,
+        runner
+    }: {
+        dockerImage: string;
+        keepDocker: boolean;
+        runner?: ContainerRunner;
+    }) {
         this.dockerImage = dockerImage;
         this.keepDocker = keepDocker;
+        this.runner = runner;
     }
 
     public async execute({
@@ -64,7 +75,7 @@ export class DockerExecutionEnvironment implements ExecutionEnvironment {
             envVars,
             ports,
             removeAfterCompletion: !this.keepDocker,
-            runner
+            runner: this.runner ?? runner
         });
     }
 }

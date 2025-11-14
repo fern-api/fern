@@ -10,7 +10,8 @@ export async function runContainerizedGenerationForSeed(
 ): Promise<void> {
     const executionEnv = new DockerExecutionEnvironment({
         dockerImage: args.dockerImage,
-        keepDocker: args.keepDocker
+        keepDocker: args.keepDocker,
+        runner: "podman"
     });
     const runner = new GenerationRunner(executionEnv);
     await runner.run(args);
