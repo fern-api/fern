@@ -544,7 +544,7 @@ export function mockAuth(server: MockServer) {
 
             return code`
 export function mockAuth(server: MockServer) {
-    ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
+    ${rawResponseBody ? code`const rawResponseBody = { ...${rawResponseBody}, expires_in: 3600 };` : ""}
     server
         .mockEndpoint()
         .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders.map((h) => {
@@ -1091,6 +1091,28 @@ describe("${serviceName}", () => {
 
         const isHeadersResponse = endpoint.response?.body === undefined && endpoint.method === HttpMethod.Head;
 
+        const matchesOAuthTokenEndpoint = this.ir.auth.schemes.some((scheme) => {
+            if (scheme.type === "oauth" && scheme.configuration.type === "clientCredentials") {
+                const tokenEndpointRef = scheme.configuration.tokenEndpoint.endpointReference;
+
+                const service = this.ir.services[tokenEndpointRef.serviceId];
+                if (service == null) {
+                    return false;
+                }
+
+                const tokenEndpoint = service.endpoints.find((ep) => ep.id === tokenEndpointRef.endpointId);
+                if (tokenEndpoint == null) {
+                    return false;
+                }
+
+                return (
+                    endpoint.method === tokenEndpoint.method &&
+                    JSON.stringify(endpoint.path) === JSON.stringify(tokenEndpoint.path)
+                );
+            }
+            return false;
+        });
+
         let mockAuthSnippet: Code | undefined;
         if (this.shouldBuildMockAuthFile({ context })) {
             mockAuthSnippet = code`mockAuth(server);\n`;
@@ -1101,6 +1123,12 @@ describe("${serviceName}", () => {
                 },
                 this.relativeTestPath
             );
+        }
+
+        let warmUpSnippet: Code | undefined;
+        if (matchesOAuthTokenEndpoint && mockAuthSnippet) {
+            warmUpSnippet = code`await ${getTextOfTsNode(generatedExample.endpointInvocation)};
+        `;
         }
 
         const expectedName =
@@ -1151,6 +1179,7 @@ describe("${serviceName}", () => {
     test("${testName}", async () => {
         const server = mockServerPool.createServer();${mockAuthSnippet ? mockAuthSnippet : ""}
         const client = new ${getTextOfTsNode(importStatement.getEntityName())}(${literalOf(options)});
+        ${warmUpSnippet ? warmUpSnippet : ""}
         ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
         ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
         server
