@@ -238,8 +238,22 @@ export async function publishDocs({
             const aiEnhancerConfig = getAIEnhancerConfig(withAiExamples);
             if (aiEnhancerConfig && workspace) {
                 const sources = workspace.getSources();
-                const openApiSource = sources.find((source) => source.type === "openapi");
+                const openApiSources = sources.filter((source) => source.type === "openapi");
+
+                if (openApiSources.length > 1) {
+                    context.logger.warn(
+                        `Multiple OpenAPI sources found for API "${apiName}". Using the first one: ${openApiSources[0]?.absoluteFilePath}`
+                    );
+                }
+
+                const openApiSource = openApiSources[0];
                 const sourceFilePath = openApiSource?.absoluteFilePath;
+
+                if (sourceFilePath) {
+                    context.logger.debug(
+                        `Processing AI examples for API "${apiName}" with OpenAPI source: ${sourceFilePath}`
+                    );
+                }
 
                 apiDefinition = await enhanceExamplesWithAI(
                     apiDefinition,

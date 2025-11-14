@@ -191,7 +191,13 @@ export async function writeAiExamplesOverride({
         });
 
         await writeFile(overrideFilePath, yamlContent, "utf-8");
-        context.logger.info(`AI enhanced examples written to: ${overrideFilePath}`);
+
+        const pathParts = sourceFilePath.split("/");
+        const apisFolderIndex = pathParts.lastIndexOf("apis");
+        const apiName =
+            apisFolderIndex >= 0 && apisFolderIndex < pathParts.length - 1 ? pathParts[apisFolderIndex + 1] : "unknown";
+
+        context.logger.info(`AI enhanced examples written to: ${overrideFilePath} (API: ${apiName})`);
     } catch (error) {
         context.logger.warn(`Failed to write AI examples override file: ${error}`);
         throw error;
