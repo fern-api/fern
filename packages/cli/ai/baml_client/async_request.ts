@@ -23,7 +23,7 @@ import type { BamlRuntime, BamlCtxManager, ClientRegistry, Image, Audio, Pdf, Vi
 import { toBamlError, HTTPRequest } from "@boundaryml/baml"
 import type { Checked, Check } from "./types"
 import type * as types from "./types"
-import type {DiffAnalysisResult, VersionBump} from "./types"
+import type {AnalyzeCommitDiffRequest, AnalyzeCommitDiffResponse, VersionBump} from "./types"
 import type TypeBuilder from "./type_builder"
 import type * as events from "./events"
 
@@ -42,7 +42,7 @@ env?: Record<string, string | undefined>
 
   
   async AnalyzeSdkDiff(
-  git_diff: string,
+  request: types.AnalyzeCommitDiffRequest,
   __baml_options__?: BamlCallOptions<never>
   ): Promise<HTTPRequest> {
     try {
@@ -53,7 +53,7 @@ env?: Record<string, string | undefined>
       return await this.runtime.buildRequest(
       "AnalyzeSdkDiff",
       {
-      "git_diff": git_diff
+      "request": request
       },
       this.ctxManager.cloneContext(),
       __baml_options__?.tb?.__tb(),
@@ -73,7 +73,7 @@ env?: Record<string, string | undefined>
 
       
       async AnalyzeSdkDiff(
-      git_diff: string,
+      request: types.AnalyzeCommitDiffRequest,
       __baml_options__?: BamlCallOptions<never>
       ): Promise<HTTPRequest> {
         try {
@@ -84,7 +84,7 @@ env?: Record<string, string | undefined>
           return await this.runtime.buildRequest(
           "AnalyzeSdkDiff",
           {
-          "git_diff": git_diff
+          "request": request
           },
           this.ctxManager.cloneContext(),
           __baml_options__?.tb?.__tb(),

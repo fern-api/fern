@@ -22,7 +22,7 @@ import type { BamlRuntime, BamlCtxManager, ClientRegistry, Image, Audio, Pdf, Vi
 import { toBamlError, HTTPRequest } from "@boundaryml/baml"
 import type { Checked, Check } from "./types"
 import type * as types from "./types"
-import type {DiffAnalysisResult, VersionBump} from "./types"
+import type {AnalyzeCommitDiffRequest, AnalyzeCommitDiffResponse, VersionBump} from "./types"
 import type TypeBuilder from "./type_builder"
 import type * as events from "./events"
 
@@ -38,7 +38,7 @@ export class HttpRequest {
 
   
   AnalyzeSdkDiff(
-      git_diff: string,
+      request: types.AnalyzeCommitDiffRequest,
       __baml_options__?: BamlCallOptions<never>
   ): HTTPRequest {
     try {
@@ -49,7 +49,7 @@ export class HttpRequest {
       return this.runtime.buildRequestSync(
         "AnalyzeSdkDiff",
         {
-          "git_diff": git_diff
+          "request": request
         },
         this.ctxManager.cloneContext(),
         __baml_options__?.tb?.__tb(),
@@ -69,7 +69,7 @@ export class HttpStreamRequest {
 
   
   AnalyzeSdkDiff(
-      git_diff: string,
+      request: types.AnalyzeCommitDiffRequest,
       __baml_options__?: BamlCallOptions<never>
   ): HTTPRequest {
     try {
@@ -80,7 +80,7 @@ export class HttpStreamRequest {
       return this.runtime.buildRequestSync(
         "AnalyzeSdkDiff",
         {
-          "git_diff": git_diff
+          "request": request
         },
         this.ctxManager.cloneContext(),
         __baml_options__?.tb?.__tb(),

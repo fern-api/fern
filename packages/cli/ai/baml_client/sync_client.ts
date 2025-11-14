@@ -22,7 +22,7 @@ import type { BamlRuntime, FunctionResult, BamlCtxManager, Image, Audio, Pdf, Vi
 import { toBamlError, BamlAbortError, type HTTPRequest } from "@boundaryml/baml"
 import type { Checked, Check, RecursivePartialNull as MovedRecursivePartialNull } from "./types"
 import type * as types from "./types"
-import type {DiffAnalysisResult, VersionBump} from "./types"
+import type {AnalyzeCommitDiffRequest, AnalyzeCommitDiffResponse, VersionBump} from "./types"
 import type TypeBuilder from "./type_builder"
 import { HttpRequest, HttpStreamRequest } from "./sync_request"
 import { LlmResponseParser, LlmStreamParser } from "./parser"
@@ -97,9 +97,9 @@ export class BamlSyncClient {
 
   
   AnalyzeSdkDiff(
-      git_diff: string,
+      request: types.AnalyzeCommitDiffRequest,
       __baml_options__?: BamlCallOptions<never>
-  ): types.DiffAnalysisResult {
+  ): types.AnalyzeCommitDiffResponse {
     try {
       const options = { ...this.bamlOptions, ...(__baml_options__ || {}) }
       const signal = options.signal;
@@ -121,7 +121,7 @@ export class BamlSyncClient {
       const raw = this.runtime.callFunctionSync(
         "AnalyzeSdkDiff",
         {
-          "git_diff": git_diff
+          "request": request
         },
         this.ctxManager.cloneContext(),
         options.tb?.__tb(),
@@ -132,7 +132,7 @@ export class BamlSyncClient {
         signal,
         options.events,
       )
-      return raw.parsed(false) as types.DiffAnalysisResult
+      return raw.parsed(false) as types.AnalyzeCommitDiffResponse
     } catch (error: any) {
       throw toBamlError(error);
     }

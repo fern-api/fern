@@ -24,7 +24,7 @@ import { toBamlError, BamlStream, BamlAbortError, Collector } from "@boundaryml/
 import type { Checked, Check, RecursivePartialNull as MovedRecursivePartialNull } from "./types"
 import type { partial_types } from "./partial_types"
 import type * as types from "./types"
-import type {DiffAnalysisResult, VersionBump} from "./types"
+import type {AnalyzeCommitDiffRequest, AnalyzeCommitDiffResponse, VersionBump} from "./types"
 import type TypeBuilder from "./type_builder"
 import { AsyncHttpRequest, AsyncHttpStreamRequest } from "./async_request"
 import { LlmResponseParser, LlmStreamParser } from "./parser"
@@ -97,9 +97,9 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
 
         
         async AnalyzeSdkDiff(
-        git_diff: string,
+        request: types.AnalyzeCommitDiffRequest,
         __baml_options__?: BamlCallOptions<never>
-        ): Promise<types.DiffAnalysisResult> {
+        ): Promise<types.AnalyzeCommitDiffResponse> {
           try {
           const options = { ...this.bamlOptions, ...(__baml_options__ || {}) }
           const signal = options.signal;
@@ -111,7 +111,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
           // Check if onTick is provided - route through streaming if so
           if (options.onTick) {
           const stream = this.stream.AnalyzeSdkDiff(
-          git_diff,
+          request,
           __baml_options__
           );
 
@@ -127,7 +127,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
             const raw = await this.runtime.callFunction(
             "AnalyzeSdkDiff",
             {
-            "git_diff": git_diff
+            "request": request
             },
             this.ctxManager.cloneContext(),
             options.tb?.__tb(),
@@ -138,7 +138,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
             signal,
             options.events,
             )
-            return raw.parsed(false) as types.DiffAnalysisResult
+            return raw.parsed(false) as types.AnalyzeCommitDiffResponse
             } catch (error) {
             throw toBamlError(error);
             }
@@ -159,9 +159,9 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
 
             
             AnalyzeSdkDiff(
-            git_diff: string,
+            request: types.AnalyzeCommitDiffRequest,
             __baml_options__?: BamlCallOptions<never>
-            ): BamlStream<partial_types.DiffAnalysisResult, types.DiffAnalysisResult>
+            ): BamlStream<partial_types.AnalyzeCommitDiffResponse, types.AnalyzeCommitDiffResponse>
               {
               try {
               const options = { ...this.bamlOptions, ...(__baml_options__ || {}) }
@@ -200,7 +200,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
                 const raw = this.runtime.streamFunction(
                 "AnalyzeSdkDiff",
                 {
-                "git_diff": git_diff
+                "request": request
                 },
                 undefined,
                 this.ctxManager.cloneContext(),
@@ -212,10 +212,10 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
                 signal,
                 onTickWrapper,
                 )
-                return new BamlStream<partial_types.DiffAnalysisResult, types.DiffAnalysisResult>(
+                return new BamlStream<partial_types.AnalyzeCommitDiffResponse, types.AnalyzeCommitDiffResponse>(
                   raw,
-                  (a): partial_types.DiffAnalysisResult => a,
-                  (a): types.DiffAnalysisResult => a,
+                  (a): partial_types.AnalyzeCommitDiffResponse => a,
+                  (a): types.AnalyzeCommitDiffResponse => a,
                   this.ctxManager.cloneContext(),
                   options.signal,
                   )

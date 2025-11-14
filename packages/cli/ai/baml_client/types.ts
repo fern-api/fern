@@ -54,10 +54,13 @@ export enum VersionBump {
   NO_CHANGE = "NO_CHANGE",
 }
 
-export interface DiffAnalysisResult {
-  headline: string
-  description: string
+export interface AnalyzeCommitDiffRequest {
+  diff: string
+  
+}
+
+export interface AnalyzeCommitDiffResponse {
+  message: string
   version_bump: VersionBump
-  breaking_changes: string[]
   
 }

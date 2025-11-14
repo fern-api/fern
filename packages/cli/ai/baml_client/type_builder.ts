@@ -27,7 +27,9 @@ export { FieldType, EnumBuilder, ClassBuilder }
 export default class TypeBuilder {
     private tb: _TypeBuilder;
     
-    DiffAnalysisResult: ClassViewer<'DiffAnalysisResult', "headline" | "description" | "version_bump" | "breaking_changes">;
+    AnalyzeCommitDiffRequest: ClassViewer<'AnalyzeCommitDiffRequest', "diff">;
+    
+    AnalyzeCommitDiffResponse: ClassViewer<'AnalyzeCommitDiffResponse', "message" | "version_bump">;
     
     
     VersionBump: EnumViewer<'VersionBump', "MAJOR" | "MINOR" | "PATCH" | "NO_CHANGE">;
@@ -36,7 +38,7 @@ export default class TypeBuilder {
     constructor() {
         this.tb = new _TypeBuilder({
           classes: new Set([
-            "DiffAnalysisResult",
+            "AnalyzeCommitDiffRequest","AnalyzeCommitDiffResponse",
           ]),
           enums: new Set([
             "VersionBump",
@@ -44,8 +46,12 @@ export default class TypeBuilder {
           runtime: DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME
         });
         
-        this.DiffAnalysisResult = this.tb.classViewer("DiffAnalysisResult", [
-          "headline","description","version_bump","breaking_changes",
+        this.AnalyzeCommitDiffRequest = this.tb.classViewer("AnalyzeCommitDiffRequest", [
+          "diff",
+        ]);
+        
+        this.AnalyzeCommitDiffResponse = this.tb.classViewer("AnalyzeCommitDiffResponse", [
+          "message","version_bump",
         ]);
         
         
