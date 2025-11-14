@@ -1,6 +1,7 @@
 import { ExampleEndpointCall, HttpHeader, InlinedRequestBodyProperty, QueryParameter } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, SdkContext } from "@fern-typescript/contexts";
+import esutils from "esutils";
 import { ts } from "ts-morph";
 
 import { AbstractRequestParameter } from "./AbstractRequestParameter";
@@ -111,6 +112,12 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
     }
 
     private getReferenceToProperty(propertyName: string): ts.Expression {
+        if (!esutils.keyword.isIdentifierNameES6(propertyName)) {
+            return ts.factory.createElementAccessExpression(
+                ts.factory.createIdentifier(this.getRequestParameterName()),
+                ts.factory.createStringLiteral(propertyName)
+            );
+        }
         return ts.factory.createPropertyAccessExpression(
             ts.factory.createIdentifier(this.getRequestParameterName()),
             propertyName
