@@ -15,6 +15,7 @@ import {
     HttpService,
     IntermediateRepresentation,
     Name,
+    OAuthTokenEndpoint,
     ObjectPropertyAccess
 } from "@fern-fern/ir-sdk/api";
 import {
@@ -535,17 +536,14 @@ export function mockAuth(server: MockServer) {
                 return;
             }
 
-            const rawRequestBody = this.getRequestExample(example.request);
             const rawResponseBody = this.getResponseExample(example.response);
             const responseStatusCode = getExampleResponseStatusCode({
                 response: example.response,
                 ir: this.ir
             });
-            const mockBodyMethod = this.getMockBodyMethod(endpoint);
 
             return code`
 export function mockAuth(server: MockServer) {
-    ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
     ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
     server
         .mockEndpoint()
@@ -555,12 +553,7 @@ export function mockAuth(server: MockServer) {
         })}${example.endpointHeaders.map((h) => {
             return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
                 `;
-        })}${
-            rawRequestBody
-                ? code`.${mockBodyMethod}(rawRequestBody)
-            `
-                : ""
-        }.respondWith()
+        })}.respondWith()
         .statusCode(${responseStatusCode})${
             rawResponseBody
                 ? code`.jsonBody(rawResponseBody)
@@ -753,6 +746,49 @@ export function mockAuth(server: MockServer) {
             context.authProvider.getPropertiesForAuthTokenParams(auth).map((p) => p.name)
         );
         return Object.fromEntries(Object.entries(result).filter(([key]) => authProviderParams.has(key)));
+    }
+
+    private getMinimalOAuthRequestBody({
+        example,
+        tokenEndpoint,
+        context
+    }: {
+        example: ExampleRequestBody | undefined;
+        tokenEndpoint: OAuthTokenEndpoint;
+        context: SdkContext;
+    }): Code | undefined {
+        if (!example) {
+            return undefined;
+        }
+
+        const requestProperties = tokenEndpoint.requestProperties;
+        const clientIdPropertyName = requestProperties.clientId.property.name.wireValue;
+        const clientSecretPropertyName = requestProperties.clientSecret.property.name.wireValue;
+
+        return example._visit({
+            inlinedRequestBody: (value) => {
+                const minimalProperties: Record<string, Code> = {};
+
+                value.properties.forEach((p) => {
+                    const wireValue = p.name.wireValue;
+                    if (wireValue === clientIdPropertyName || wireValue === clientSecretPropertyName) {
+                        minimalProperties[wireValue] = this.createRawJsonExample({
+                            example: p.value,
+                            isForRequest: true,
+                            isForResponse: false
+                        });
+                    }
+                });
+
+                return code`${literalOf(minimalProperties)}`;
+            },
+            reference: () => {
+                return undefined;
+            },
+            _other: () => {
+                return undefined;
+            }
+        });
     }
 
     private getAuthRequestParameters({ shape }: ExampleTypeReference): Record<string, Code> {
@@ -1055,8 +1091,16 @@ describe("${serviceName}", () => {
 
         const isHeadersResponse = endpoint.response?.body === undefined && endpoint.method === HttpMethod.Head;
 
+        const isOAuthTokenEndpoint = this.ir.auth.schemes.some((scheme) => {
+            if (scheme.type === "oauth" && scheme.configuration.type === "clientCredentials") {
+                const tokenEndpoint = scheme.configuration.tokenEndpoint.endpointReference;
+                return tokenEndpoint.endpointId === endpoint.id;
+            }
+            return false;
+        });
+
         let mockAuthSnippet: Code | undefined;
-        if (this.shouldBuildMockAuthFile({ context }) && endpoint.auth) {
+        if (this.shouldBuildMockAuthFile({ context }) && !isOAuthTokenEndpoint) {
             mockAuthSnippet = code`mockAuth(server);\n`;
             context.importsManager.addImportFromRoot(
                 "wire/mockAuth",
