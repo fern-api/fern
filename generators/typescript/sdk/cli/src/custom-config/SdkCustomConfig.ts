@@ -57,4 +57,5 @@ export interface SdkCustomConfig {
     linter: "biome" | "oxlint" | "none";
     formatter: "prettier" | "biome" | "oxfmt";
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+    offsetSemantics: "item-index" | "page-index";
 }

@@ -52,6 +52,7 @@ export declare namespace GeneratedThrowingEndpointResponse {
         clientClass: GeneratedSdkClientClassImpl;
         streamType: "wrapper" | "web";
         fileResponseType: "stream" | "binary-response";
+        offsetSemantics: "item-index" | "page-index";
     }
 }
 
@@ -73,6 +74,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     private clientClass: GeneratedSdkClientClassImpl;
     private streamType: "wrapper" | "web";
     private readonly fileResponseType: "stream" | "binary-response";
+    private readonly offsetSemantics: "item-index" | "page-index";
 
     constructor({
         packageId,
@@ -83,7 +85,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         includeContentHeadersOnResponse,
         clientClass,
         streamType,
-        fileResponseType
+        fileResponseType,
+        offsetSemantics
     }: GeneratedThrowingEndpointResponse.Init) {
         this.packageId = packageId;
         this.endpoint = endpoint;
@@ -94,6 +97,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         this.clientClass = clientClass;
         this.streamType = streamType;
         this.fileResponseType = fileResponseType;
+        this.offsetSemantics = offsetSemantics;
     }
 
     private getItemTypeFromListOrOptionalList(typeReference: TypeReference): TypeReference | undefined {
@@ -395,7 +399,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
         // loadPage
         const incrementOffset =
-            offset.step != null
+            offset.step != null && this.offsetSemantics === "item-index"
                 ? ts.factory.createExpressionStatement(
                       ts.factory.createBinaryExpression(
                           ts.factory.createIdentifier("_offset"),
@@ -435,7 +439,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         const loadPage = [incrementOffset, callEndpoint];
 
         return {
-            type: offset.step != null ? "offset-step" : "offset",
+            type: offset.step != null && this.offsetSemantics === "item-index" ? "offset-step" : "offset",
             initializeOffset,
             itemType: itemType,
             responseType: successReturnType,
