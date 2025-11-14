@@ -1,0 +1,2207 @@
+{
+    "selfHosted": false,
+    "fdrApiDefinitionId": null,
+    "apiVersion": null,
+    "apiName": {
+        "originalName": "alias-object-pointer",
+        "camelCase": {
+            "unsafeName": "aliasObjectPointer",
+            "safeName": "aliasObjectPointer"
+        },
+        "snakeCase": {
+            "unsafeName": "alias_object_pointer",
+            "safeName": "alias_object_pointer"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "ALIAS_OBJECT_POINTER",
+            "safeName": "ALIAS_OBJECT_POINTER"
+        },
+        "pascalCase": {
+            "unsafeName": "AliasObjectPointer",
+            "safeName": "AliasObjectPointer"
+        }
+    },
+    "apiDisplayName": null,
+    "apiDocs": null,
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [],
+        "docs": null
+    },
+    "headers": [],
+    "idempotencyHeaders": [],
+    "types": {
+        "type_:StringMap": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "StringMap",
+                    "camelCase": {
+                        "unsafeName": "stringMap",
+                        "safeName": "stringMap"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "string_map",
+                        "safeName": "string_map"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STRING_MAP",
+                        "safeName": "STRING_MAP"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StringMap",
+                        "safeName": "StringMap"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "displayName": null,
+                "typeId": "type_:StringMap"
+            },
+            "shape": {
+                "_type": "alias",
+                "aliasOf": {
+                    "_type": "container",
+                    "container": {
+                        "_type": "map",
+                        "keyType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        }
+                    }
+                },
+                "resolvedType": {
+                    "_type": "container",
+                    "container": {
+                        "_type": "map",
+                        "keyType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [
+                {
+                    "name": {
+                        "originalName": "Example",
+                        "camelCase": {
+                            "unsafeName": "example",
+                            "safeName": "example"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "example",
+                            "safeName": "example"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "EXAMPLE",
+                            "safeName": "EXAMPLE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Example",
+                            "safeName": "Example"
+                        }
+                    },
+                    "shape": {
+                        "type": "alias",
+                        "value": {
+                            "shape": {
+                                "type": "container",
+                                "container": {
+                                    "type": "map",
+                                    "map": [
+                                        {
+                                            "key": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "key1"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "key1"
+                                            },
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "value1"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "value1"
+                                            }
+                                        },
+                                        {
+                                            "key": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "key2"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "key2"
+                                            },
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "value2"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "value2"
+                                            }
+                                        }
+                                    ],
+                                    "keyType": {
+                                        "_type": "primitive",
+                                        "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                                "type": "string",
+                                                "default": null,
+                                                "validation": null
+                                            }
+                                        }
+                                    },
+                                    "valueType": {
+                                        "_type": "primitive",
+                                        "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                                "type": "string",
+                                                "default": null,
+                                                "validation": null
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "jsonExample": {
+                                "key1": "value1",
+                                "key2": "value2"
+                            }
+                        }
+                    },
+                    "jsonExample": {
+                        "key1": "value1",
+                        "key2": "value2"
+                    },
+                    "docs": null
+                }
+            ],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": "An alias to a map type (nilable)."
+        },
+        "type_:StringList": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "StringList",
+                    "camelCase": {
+                        "unsafeName": "stringList",
+                        "safeName": "stringList"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "string_list",
+                        "safeName": "string_list"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STRING_LIST",
+                        "safeName": "STRING_LIST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StringList",
+                        "safeName": "StringList"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "displayName": null,
+                "typeId": "type_:StringList"
+            },
+            "shape": {
+                "_type": "alias",
+                "aliasOf": {
+                    "_type": "container",
+                    "container": {
+                        "_type": "list",
+                        "list": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        }
+                    }
+                },
+                "resolvedType": {
+                    "_type": "container",
+                    "container": {
+                        "_type": "list",
+                        "list": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [
+                {
+                    "name": {
+                        "originalName": "Example",
+                        "camelCase": {
+                            "unsafeName": "example",
+                            "safeName": "example"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "example",
+                            "safeName": "example"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "EXAMPLE",
+                            "safeName": "EXAMPLE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Example",
+                            "safeName": "Example"
+                        }
+                    },
+                    "shape": {
+                        "type": "alias",
+                        "value": {
+                            "shape": {
+                                "type": "container",
+                                "container": {
+                                    "type": "list",
+                                    "list": [
+                                        {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "item1"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "item1"
+                                        },
+                                        {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "item2"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "item2"
+                                        }
+                                    ],
+                                    "itemType": {
+                                        "_type": "primitive",
+                                        "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                                "type": "string",
+                                                "default": null,
+                                                "validation": null
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "jsonExample": [
+                                "item1",
+                                "item2"
+                            ]
+                        }
+                    },
+                    "jsonExample": [
+                        "item1",
+                        "item2"
+                    ],
+                    "docs": null
+                }
+            ],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": "An alias to a list type (nilable)."
+        },
+        "type_:CreateRequest": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "CreateRequest",
+                    "camelCase": {
+                        "unsafeName": "createRequest",
+                        "safeName": "createRequest"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_request",
+                        "safeName": "create_request"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_REQUEST",
+                        "safeName": "CREATE_REQUEST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreateRequest",
+                        "safeName": "CreateRequest"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "displayName": null,
+                "typeId": "type_:CreateRequest"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "mapField",
+                                "camelCase": {
+                                    "unsafeName": "mapField",
+                                    "safeName": "mapField"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "map_field",
+                                    "safeName": "map_field"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "MAP_FIELD",
+                                    "safeName": "MAP_FIELD"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "MapField",
+                                    "safeName": "MapField"
+                                }
+                            },
+                            "wireValue": "mapField"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "StringMap",
+                                        "camelCase": {
+                                            "unsafeName": "stringMap",
+                                            "safeName": "stringMap"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "string_map",
+                                            "safeName": "string_map"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "STRING_MAP",
+                                            "safeName": "STRING_MAP"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "StringMap",
+                                            "safeName": "StringMap"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:StringMap",
+                                    "default": null,
+                                    "inline": null
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "listField",
+                                "camelCase": {
+                                    "unsafeName": "listField",
+                                    "safeName": "listField"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "list_field",
+                                    "safeName": "list_field"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "LIST_FIELD",
+                                    "safeName": "LIST_FIELD"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ListField",
+                                    "safeName": "ListField"
+                                }
+                            },
+                            "wireValue": "listField"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "StringList",
+                                        "camelCase": {
+                                            "unsafeName": "stringList",
+                                            "safeName": "stringList"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "string_list",
+                                            "safeName": "string_list"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "STRING_LIST",
+                                            "safeName": "STRING_LIST"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "StringList",
+                                            "safeName": "StringList"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:StringList",
+                                    "default": null,
+                                    "inline": null
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
+            },
+            "referencedTypes": [
+                "type_:StringMap",
+                "type_:StringList"
+            ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [
+                {
+                    "name": {
+                        "originalName": "Example",
+                        "camelCase": {
+                            "unsafeName": "example",
+                            "safeName": "example"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "example",
+                            "safeName": "example"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "EXAMPLE",
+                            "safeName": "EXAMPLE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Example",
+                            "safeName": "Example"
+                        }
+                    },
+                    "shape": {
+                        "type": "object",
+                        "properties": [
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "mapField",
+                                        "camelCase": {
+                                            "unsafeName": "mapField",
+                                            "safeName": "mapField"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "map_field",
+                                            "safeName": "map_field"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MAP_FIELD",
+                                            "safeName": "MAP_FIELD"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "MapField",
+                                            "safeName": "MapField"
+                                        }
+                                    },
+                                    "wireValue": "mapField"
+                                },
+                                "value": {
+                                    "shape": {
+                                        "type": "container",
+                                        "container": {
+                                            "type": "optional",
+                                            "optional": {
+                                                "shape": {
+                                                    "type": "named",
+                                                    "typeName": {
+                                                        "typeId": "type_:StringMap",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "name": {
+                                                            "originalName": "StringMap",
+                                                            "camelCase": {
+                                                                "unsafeName": "stringMap",
+                                                                "safeName": "stringMap"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "string_map",
+                                                                "safeName": "string_map"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "STRING_MAP",
+                                                                "safeName": "STRING_MAP"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "StringMap",
+                                                                "safeName": "StringMap"
+                                                            }
+                                                        },
+                                                        "displayName": null
+                                                    },
+                                                    "shape": {
+                                                        "type": "alias",
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "map",
+                                                                    "map": [
+                                                                        {
+                                                                            "key": {
+                                                                                "shape": {
+                                                                                    "type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "type": "string",
+                                                                                        "string": {
+                                                                                            "original": "foo"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": "foo"
+                                                                            },
+                                                                            "value": {
+                                                                                "shape": {
+                                                                                    "type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "type": "string",
+                                                                                        "string": {
+                                                                                            "original": "bar"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": "bar"
+                                                                            }
+                                                                        }
+                                                                    ],
+                                                                    "keyType": {
+                                                                        "_type": "primitive",
+                                                                        "primitive": {
+                                                                            "v1": "STRING",
+                                                                            "v2": {
+                                                                                "type": "string",
+                                                                                "default": null,
+                                                                                "validation": null
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "valueType": {
+                                                                        "_type": "primitive",
+                                                                        "primitive": {
+                                                                            "v1": "STRING",
+                                                                            "v2": {
+                                                                                "type": "string",
+                                                                                "default": null,
+                                                                                "validation": null
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": {
+                                                                "foo": "bar"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": {
+                                                    "foo": "bar"
+                                                }
+                                            },
+                                            "valueType": {
+                                                "_type": "named",
+                                                "name": {
+                                                    "originalName": "StringMap",
+                                                    "camelCase": {
+                                                        "unsafeName": "stringMap",
+                                                        "safeName": "stringMap"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "string_map",
+                                                        "safeName": "string_map"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "STRING_MAP",
+                                                        "safeName": "STRING_MAP"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "StringMap",
+                                                        "safeName": "StringMap"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_:StringMap",
+                                                "default": null,
+                                                "inline": null
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "foo": "bar"
+                                    }
+                                },
+                                "originalTypeDeclaration": {
+                                    "name": {
+                                        "originalName": "CreateRequest",
+                                        "camelCase": {
+                                            "unsafeName": "createRequest",
+                                            "safeName": "createRequest"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "create_request",
+                                            "safeName": "create_request"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "CREATE_REQUEST",
+                                            "safeName": "CREATE_REQUEST"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "CreateRequest",
+                                            "safeName": "CreateRequest"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:CreateRequest"
+                                },
+                                "propertyAccess": null
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "listField",
+                                        "camelCase": {
+                                            "unsafeName": "listField",
+                                            "safeName": "listField"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "list_field",
+                                            "safeName": "list_field"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "LIST_FIELD",
+                                            "safeName": "LIST_FIELD"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "ListField",
+                                            "safeName": "ListField"
+                                        }
+                                    },
+                                    "wireValue": "listField"
+                                },
+                                "value": {
+                                    "shape": {
+                                        "type": "container",
+                                        "container": {
+                                            "type": "optional",
+                                            "optional": {
+                                                "shape": {
+                                                    "type": "named",
+                                                    "typeName": {
+                                                        "typeId": "type_:StringList",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "name": {
+                                                            "originalName": "StringList",
+                                                            "camelCase": {
+                                                                "unsafeName": "stringList",
+                                                                "safeName": "stringList"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "string_list",
+                                                                "safeName": "string_list"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "STRING_LIST",
+                                                                "safeName": "STRING_LIST"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "StringList",
+                                                                "safeName": "StringList"
+                                                            }
+                                                        },
+                                                        "displayName": null
+                                                    },
+                                                    "shape": {
+                                                        "type": "alias",
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "list",
+                                                                    "list": [
+                                                                        {
+                                                                            "shape": {
+                                                                                "type": "primitive",
+                                                                                "primitive": {
+                                                                                    "type": "string",
+                                                                                    "string": {
+                                                                                        "original": "hello"
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            "jsonExample": "hello"
+                                                                        },
+                                                                        {
+                                                                            "shape": {
+                                                                                "type": "primitive",
+                                                                                "primitive": {
+                                                                                    "type": "string",
+                                                                                    "string": {
+                                                                                        "original": "world"
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            "jsonExample": "world"
+                                                                        }
+                                                                    ],
+                                                                    "itemType": {
+                                                                        "_type": "primitive",
+                                                                        "primitive": {
+                                                                            "v1": "STRING",
+                                                                            "v2": {
+                                                                                "type": "string",
+                                                                                "default": null,
+                                                                                "validation": null
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": [
+                                                                "hello",
+                                                                "world"
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": [
+                                                    "hello",
+                                                    "world"
+                                                ]
+                                            },
+                                            "valueType": {
+                                                "_type": "named",
+                                                "name": {
+                                                    "originalName": "StringList",
+                                                    "camelCase": {
+                                                        "unsafeName": "stringList",
+                                                        "safeName": "stringList"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "string_list",
+                                                        "safeName": "string_list"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "STRING_LIST",
+                                                        "safeName": "STRING_LIST"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "StringList",
+                                                        "safeName": "StringList"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_:StringList",
+                                                "default": null,
+                                                "inline": null
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": [
+                                        "hello",
+                                        "world"
+                                    ]
+                                },
+                                "originalTypeDeclaration": {
+                                    "name": {
+                                        "originalName": "CreateRequest",
+                                        "camelCase": {
+                                            "unsafeName": "createRequest",
+                                            "safeName": "createRequest"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "create_request",
+                                            "safeName": "create_request"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "CREATE_REQUEST",
+                                            "safeName": "CREATE_REQUEST"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "CreateRequest",
+                                            "safeName": "CreateRequest"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:CreateRequest"
+                                },
+                                "propertyAccess": null
+                            }
+                        ],
+                        "extraProperties": null
+                    },
+                    "jsonExample": {
+                        "mapField": {
+                            "foo": "bar"
+                        },
+                        "listField": [
+                            "hello",
+                            "world"
+                        ]
+                    },
+                    "docs": null
+                }
+            ],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": "A request type with alias fields."
+        }
+    },
+    "errors": {},
+    "services": {
+        "service_": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "/",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
+            "endpoints": [
+                {
+                    "id": "endpoint_.create",
+                    "name": {
+                        "originalName": "create",
+                        "camelCase": {
+                            "unsafeName": "create",
+                            "safeName": "create"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "create",
+                            "safeName": "create"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CREATE",
+                            "safeName": "CREATE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Create",
+                            "safeName": "Create"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": false,
+                    "security": null,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "POST",
+                    "basePath": null,
+                    "path": {
+                        "head": "/create",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/create",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "type": "reference",
+                        "requestBodyType": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "CreateRequest",
+                                "camelCase": {
+                                    "unsafeName": "createRequest",
+                                    "safeName": "createRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "create_request",
+                                    "safeName": "create_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CREATE_REQUEST",
+                                    "safeName": "CREATE_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "CreateRequest",
+                                    "safeName": "CreateRequest"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": [],
+                                "file": null
+                            },
+                            "displayName": null,
+                            "typeId": "type_:CreateRequest",
+                            "default": null,
+                            "inline": null
+                        },
+                        "docs": null,
+                        "contentType": null,
+                        "v2Examples": null
+                    },
+                    "v2RequestBodies": null,
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "justRequestBody",
+                            "value": {
+                                "type": "typeReference",
+                                "requestBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "CreateRequest",
+                                        "camelCase": {
+                                            "unsafeName": "createRequest",
+                                            "safeName": "createRequest"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "create_request",
+                                            "safeName": "create_request"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "CREATE_REQUEST",
+                                            "safeName": "CREATE_REQUEST"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "CreateRequest",
+                                            "safeName": "CreateRequest"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:CreateRequest",
+                                    "default": null,
+                                    "inline": null
+                                },
+                                "docs": null,
+                                "contentType": null,
+                                "v2Examples": null
+                            }
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
+                        "streamParameter": null
+                    },
+                    "response": {
+                        "body": null,
+                        "status-code": null
+                    },
+                    "v2Responses": null,
+                    "errors": [],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": "692a7d66",
+                                "name": null,
+                                "url": "/create",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "named",
+                                        "typeName": {
+                                            "typeId": "type_:CreateRequest",
+                                            "fernFilepath": {
+                                                "allParts": [],
+                                                "packagePath": [],
+                                                "file": null
+                                            },
+                                            "name": {
+                                                "originalName": "CreateRequest",
+                                                "camelCase": {
+                                                    "unsafeName": "createRequest",
+                                                    "safeName": "createRequest"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "create_request",
+                                                    "safeName": "create_request"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "CREATE_REQUEST",
+                                                    "safeName": "CREATE_REQUEST"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "CreateRequest",
+                                                    "safeName": "CreateRequest"
+                                                }
+                                            },
+                                            "displayName": null
+                                        },
+                                        "shape": {
+                                            "type": "object",
+                                            "properties": [
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "mapField",
+                                                            "camelCase": {
+                                                                "unsafeName": "mapField",
+                                                                "safeName": "mapField"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "map_field",
+                                                                "safeName": "map_field"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "MAP_FIELD",
+                                                                "safeName": "MAP_FIELD"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "MapField",
+                                                                "safeName": "MapField"
+                                                            }
+                                                        },
+                                                        "wireValue": "mapField"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "container",
+                                                            "container": {
+                                                                "type": "optional",
+                                                                "optional": {
+                                                                    "shape": {
+                                                                        "type": "named",
+                                                                        "typeName": {
+                                                                            "typeId": "type_:StringMap",
+                                                                            "fernFilepath": {
+                                                                                "allParts": [],
+                                                                                "packagePath": [],
+                                                                                "file": null
+                                                                            },
+                                                                            "name": {
+                                                                                "originalName": "StringMap",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "stringMap",
+                                                                                    "safeName": "stringMap"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "string_map",
+                                                                                    "safeName": "string_map"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "STRING_MAP",
+                                                                                    "safeName": "STRING_MAP"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "StringMap",
+                                                                                    "safeName": "StringMap"
+                                                                                }
+                                                                            },
+                                                                            "displayName": null
+                                                                        },
+                                                                        "shape": {
+                                                                            "type": "alias",
+                                                                            "value": {
+                                                                                "shape": {
+                                                                                    "type": "container",
+                                                                                    "container": {
+                                                                                        "type": "map",
+                                                                                        "map": [
+                                                                                            {
+                                                                                                "key": {
+                                                                                                    "shape": {
+                                                                                                        "type": "primitive",
+                                                                                                        "primitive": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "key"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "key"
+                                                                                                },
+                                                                                                "value": {
+                                                                                                    "shape": {
+                                                                                                        "type": "primitive",
+                                                                                                        "primitive": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "value"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "value"
+                                                                                                }
+                                                                                            }
+                                                                                        ],
+                                                                                        "keyType": {
+                                                                                            "_type": "primitive",
+                                                                                            "primitive": {
+                                                                                                "v1": "STRING",
+                                                                                                "v2": {
+                                                                                                    "type": "string",
+                                                                                                    "default": null,
+                                                                                                    "validation": null
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        "valueType": {
+                                                                                            "_type": "primitive",
+                                                                                            "primitive": {
+                                                                                                "v1": "STRING",
+                                                                                                "v2": {
+                                                                                                    "type": "string",
+                                                                                                    "default": null,
+                                                                                                    "validation": null
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": {
+                                                                                    "key": "value"
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "jsonExample": {
+                                                                        "key": "value"
+                                                                    }
+                                                                },
+                                                                "valueType": {
+                                                                    "_type": "named",
+                                                                    "name": {
+                                                                        "originalName": "StringMap",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "stringMap",
+                                                                            "safeName": "stringMap"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "string_map",
+                                                                            "safeName": "string_map"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "STRING_MAP",
+                                                                            "safeName": "STRING_MAP"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "StringMap",
+                                                                            "safeName": "StringMap"
+                                                                        }
+                                                                    },
+                                                                    "fernFilepath": {
+                                                                        "allParts": [],
+                                                                        "packagePath": [],
+                                                                        "file": null
+                                                                    },
+                                                                    "displayName": null,
+                                                                    "typeId": "type_:StringMap",
+                                                                    "default": null,
+                                                                    "inline": null
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": {
+                                                            "key": "value"
+                                                        }
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "typeId": "type_:CreateRequest",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "name": {
+                                                            "originalName": "CreateRequest",
+                                                            "camelCase": {
+                                                                "unsafeName": "createRequest",
+                                                                "safeName": "createRequest"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "create_request",
+                                                                "safeName": "create_request"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "CREATE_REQUEST",
+                                                                "safeName": "CREATE_REQUEST"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "CreateRequest",
+                                                                "safeName": "CreateRequest"
+                                                            }
+                                                        },
+                                                        "displayName": null
+                                                    },
+                                                    "propertyAccess": null
+                                                },
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "listField",
+                                                            "camelCase": {
+                                                                "unsafeName": "listField",
+                                                                "safeName": "listField"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "list_field",
+                                                                "safeName": "list_field"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "LIST_FIELD",
+                                                                "safeName": "LIST_FIELD"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "ListField",
+                                                                "safeName": "ListField"
+                                                            }
+                                                        },
+                                                        "wireValue": "listField"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "container",
+                                                            "container": {
+                                                                "type": "optional",
+                                                                "optional": {
+                                                                    "shape": {
+                                                                        "type": "named",
+                                                                        "typeName": {
+                                                                            "typeId": "type_:StringList",
+                                                                            "fernFilepath": {
+                                                                                "allParts": [],
+                                                                                "packagePath": [],
+                                                                                "file": null
+                                                                            },
+                                                                            "name": {
+                                                                                "originalName": "StringList",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "stringList",
+                                                                                    "safeName": "stringList"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "string_list",
+                                                                                    "safeName": "string_list"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "STRING_LIST",
+                                                                                    "safeName": "STRING_LIST"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "StringList",
+                                                                                    "safeName": "StringList"
+                                                                                }
+                                                                            },
+                                                                            "displayName": null
+                                                                        },
+                                                                        "shape": {
+                                                                            "type": "alias",
+                                                                            "value": {
+                                                                                "shape": {
+                                                                                    "type": "container",
+                                                                                    "container": {
+                                                                                        "type": "list",
+                                                                                        "list": [
+                                                                                            {
+                                                                                                "shape": {
+                                                                                                    "type": "primitive",
+                                                                                                    "primitive": {
+                                                                                                        "type": "string",
+                                                                                                        "string": {
+                                                                                                            "original": "test"
+                                                                                                        }
+                                                                                                    }
+                                                                                                },
+                                                                                                "jsonExample": "test"
+                                                                                            }
+                                                                                        ],
+                                                                                        "itemType": {
+                                                                                            "_type": "primitive",
+                                                                                            "primitive": {
+                                                                                                "v1": "STRING",
+                                                                                                "v2": {
+                                                                                                    "type": "string",
+                                                                                                    "default": null,
+                                                                                                    "validation": null
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": [
+                                                                                    "test"
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "jsonExample": [
+                                                                        "test"
+                                                                    ]
+                                                                },
+                                                                "valueType": {
+                                                                    "_type": "named",
+                                                                    "name": {
+                                                                        "originalName": "StringList",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "stringList",
+                                                                            "safeName": "stringList"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "string_list",
+                                                                            "safeName": "string_list"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "STRING_LIST",
+                                                                            "safeName": "STRING_LIST"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "StringList",
+                                                                            "safeName": "StringList"
+                                                                        }
+                                                                    },
+                                                                    "fernFilepath": {
+                                                                        "allParts": [],
+                                                                        "packagePath": [],
+                                                                        "file": null
+                                                                    },
+                                                                    "displayName": null,
+                                                                    "typeId": "type_:StringList",
+                                                                    "default": null,
+                                                                    "inline": null
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": [
+                                                            "test"
+                                                        ]
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "typeId": "type_:CreateRequest",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "name": {
+                                                            "originalName": "CreateRequest",
+                                                            "camelCase": {
+                                                                "unsafeName": "createRequest",
+                                                                "safeName": "createRequest"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "create_request",
+                                                                "safeName": "create_request"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "CREATE_REQUEST",
+                                                                "safeName": "CREATE_REQUEST"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "CreateRequest",
+                                                                "safeName": "CreateRequest"
+                                                            }
+                                                        },
+                                                        "displayName": null
+                                                    },
+                                                    "propertyAccess": null
+                                                }
+                                            ],
+                                            "extraProperties": null
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "mapField": {
+                                            "key": "value"
+                                        },
+                                        "listField": [
+                                            "test"
+                                        ]
+                                    }
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": null
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "75542b08",
+                                "url": "/create",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "named",
+                                        "shape": {
+                                            "type": "object",
+                                            "properties": [
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "mapField",
+                                                            "camelCase": {
+                                                                "unsafeName": "mapField",
+                                                                "safeName": "mapField"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "map_field",
+                                                                "safeName": "map_field"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "MAP_FIELD",
+                                                                "safeName": "MAP_FIELD"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "MapField",
+                                                                "safeName": "MapField"
+                                                            }
+                                                        },
+                                                        "wireValue": "mapField"
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "name": {
+                                                            "originalName": "CreateRequest",
+                                                            "camelCase": {
+                                                                "unsafeName": "createRequest",
+                                                                "safeName": "createRequest"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "create_request",
+                                                                "safeName": "create_request"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "CREATE_REQUEST",
+                                                                "safeName": "CREATE_REQUEST"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "CreateRequest",
+                                                                "safeName": "CreateRequest"
+                                                            }
+                                                        },
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "displayName": null,
+                                                        "typeId": "type_:CreateRequest"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "container",
+                                                            "container": {
+                                                                "type": "optional",
+                                                                "optional": null,
+                                                                "valueType": {
+                                                                    "_type": "named",
+                                                                    "name": {
+                                                                        "originalName": "StringMap",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "stringMap",
+                                                                            "safeName": "stringMap"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "string_map",
+                                                                            "safeName": "string_map"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "STRING_MAP",
+                                                                            "safeName": "STRING_MAP"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "StringMap",
+                                                                            "safeName": "StringMap"
+                                                                        }
+                                                                    },
+                                                                    "fernFilepath": {
+                                                                        "allParts": [],
+                                                                        "packagePath": [],
+                                                                        "file": null
+                                                                    },
+                                                                    "displayName": null,
+                                                                    "typeId": "type_:StringMap",
+                                                                    "default": null,
+                                                                    "inline": null
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "propertyAccess": null
+                                                },
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "listField",
+                                                            "camelCase": {
+                                                                "unsafeName": "listField",
+                                                                "safeName": "listField"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "list_field",
+                                                                "safeName": "list_field"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "LIST_FIELD",
+                                                                "safeName": "LIST_FIELD"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "ListField",
+                                                                "safeName": "ListField"
+                                                            }
+                                                        },
+                                                        "wireValue": "listField"
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "name": {
+                                                            "originalName": "CreateRequest",
+                                                            "camelCase": {
+                                                                "unsafeName": "createRequest",
+                                                                "safeName": "createRequest"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "create_request",
+                                                                "safeName": "create_request"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "CREATE_REQUEST",
+                                                                "safeName": "CREATE_REQUEST"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "CreateRequest",
+                                                                "safeName": "CreateRequest"
+                                                            }
+                                                        },
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "displayName": null,
+                                                        "typeId": "type_:CreateRequest"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "container",
+                                                            "container": {
+                                                                "type": "optional",
+                                                                "optional": null,
+                                                                "valueType": {
+                                                                    "_type": "named",
+                                                                    "name": {
+                                                                        "originalName": "StringList",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "stringList",
+                                                                            "safeName": "stringList"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "string_list",
+                                                                            "safeName": "string_list"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "STRING_LIST",
+                                                                            "safeName": "STRING_LIST"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "StringList",
+                                                                            "safeName": "StringList"
+                                                                        }
+                                                                    },
+                                                                    "fernFilepath": {
+                                                                        "allParts": [],
+                                                                        "packagePath": [],
+                                                                        "file": null
+                                                                    },
+                                                                    "displayName": null,
+                                                                    "typeId": "type_:StringList",
+                                                                    "default": null,
+                                                                    "inline": null
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "propertyAccess": null
+                                                }
+                                            ],
+                                            "extraProperties": null
+                                        },
+                                        "typeName": {
+                                            "name": {
+                                                "originalName": "CreateRequest",
+                                                "camelCase": {
+                                                    "unsafeName": "createRequest",
+                                                    "safeName": "createRequest"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "create_request",
+                                                    "safeName": "create_request"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "CREATE_REQUEST",
+                                                    "safeName": "CREATE_REQUEST"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "CreateRequest",
+                                                    "safeName": "CreateRequest"
+                                                }
+                                            },
+                                            "fernFilepath": {
+                                                "allParts": [],
+                                                "packagePath": [],
+                                                "file": null
+                                            },
+                                            "displayName": null,
+                                            "typeId": "type_:CreateRequest"
+                                        }
+                                    },
+                                    "jsonExample": {}
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": null
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "retries": null,
+                    "availability": null,
+                    "docs": "Creates a resource with alias-typed fields."
+                }
+            ],
+            "audiences": null
+        }
+    },
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "environments": null,
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "basePath": null,
+    "pathParameters": [],
+    "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {
+            "service_": [
+                "type_:StringMap",
+                "type_:StringList",
+                "type_:CreateRequest"
+            ]
+        },
+        "sharedTypes": []
+    },
+    "webhookGroups": {},
+    "websocketChannels": {},
+    "readmeConfig": null,
+    "sourceConfig": null,
+    "publishConfig": null,
+    "dynamic": {
+        "version": "1.0.0",
+        "types": {
+            "type_:StringMap": {
+                "type": "alias",
+                "declaration": {
+                    "name": {
+                        "originalName": "StringMap",
+                        "camelCase": {
+                            "unsafeName": "stringMap",
+                            "safeName": "stringMap"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "string_map",
+                            "safeName": "string_map"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STRING_MAP",
+                            "safeName": "STRING_MAP"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "StringMap",
+                            "safeName": "StringMap"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "typeReference": {
+                    "type": "map",
+                    "key": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "value": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    }
+                }
+            },
+            "type_:StringList": {
+                "type": "alias",
+                "declaration": {
+                    "name": {
+                        "originalName": "StringList",
+                        "camelCase": {
+                            "unsafeName": "stringList",
+                            "safeName": "stringList"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "string_list",
+                            "safeName": "string_list"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STRING_LIST",
+                            "safeName": "STRING_LIST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "StringList",
+                            "safeName": "StringList"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "typeReference": {
+                    "type": "list",
+                    "value": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    }
+                }
+            },
+            "type_:CreateRequest": {
+                "type": "object",
+                "declaration": {
+                    "name": {
+                        "originalName": "CreateRequest",
+                        "camelCase": {
+                            "unsafeName": "createRequest",
+                            "safeName": "createRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "create_request",
+                            "safeName": "create_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CREATE_REQUEST",
+                            "safeName": "CREATE_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "CreateRequest",
+                            "safeName": "CreateRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "mapField",
+                                "camelCase": {
+                                    "unsafeName": "mapField",
+                                    "safeName": "mapField"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "map_field",
+                                    "safeName": "map_field"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "MAP_FIELD",
+                                    "safeName": "MAP_FIELD"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "MapField",
+                                    "safeName": "MapField"
+                                }
+                            },
+                            "wireValue": "mapField"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:StringMap"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "listField",
+                                "camelCase": {
+                                    "unsafeName": "listField",
+                                    "safeName": "listField"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "list_field",
+                                    "safeName": "list_field"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "LIST_FIELD",
+                                    "safeName": "LIST_FIELD"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ListField",
+                                    "safeName": "ListField"
+                                }
+                            },
+                            "wireValue": "listField"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:StringList"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "additionalProperties": false
+            }
+        },
+        "headers": [],
+        "endpoints": {
+            "endpoint_.create": {
+                "auth": null,
+                "declaration": {
+                    "name": {
+                        "originalName": "create",
+                        "camelCase": {
+                            "unsafeName": "create",
+                            "safeName": "create"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "create",
+                            "safeName": "create"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CREATE",
+                            "safeName": "CREATE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Create",
+                            "safeName": "Create"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "location": {
+                    "method": "POST",
+                    "path": "/create"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [],
+                    "body": {
+                        "type": "typeReference",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:CreateRequest"
+                        }
+                    }
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            }
+        },
+        "pathParameters": [],
+        "environments": null,
+        "variables": null,
+        "generatorConfig": null
+    },
+    "audiences": null,
+    "generationMetadata": null,
+    "subpackages": {},
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": [],
+            "file": null
+        },
+        "websocket": null,
+        "service": "service_",
+        "types": [
+            "type_:StringMap",
+            "type_:StringList",
+            "type_:CreateRequest"
+        ],
+        "errors": [],
+        "subpackages": [],
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "docs": null
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
+        "hasFileDownloadEndpoints": false,
+        "platformHeaders": {
+            "language": "X-Fern-Language",
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
+        }
+    }
+}

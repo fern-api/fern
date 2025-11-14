@@ -1,0 +1,234 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:StringMap": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "StringMap",
+                    "camelCase": {
+                        "unsafeName": "stringMap",
+                        "safeName": "stringMap"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "string_map",
+                        "safeName": "string_map"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STRING_MAP",
+                        "safeName": "STRING_MAP"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StringMap",
+                        "safeName": "StringMap"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "map",
+                "key": {
+                    "type": "primitive",
+                    "value": "STRING"
+                },
+                "value": {
+                    "type": "primitive",
+                    "value": "STRING"
+                }
+            }
+        },
+        "type_:StringList": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "StringList",
+                    "camelCase": {
+                        "unsafeName": "stringList",
+                        "safeName": "stringList"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "string_list",
+                        "safeName": "string_list"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STRING_LIST",
+                        "safeName": "STRING_LIST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StringList",
+                        "safeName": "StringList"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "list",
+                "value": {
+                    "type": "primitive",
+                    "value": "STRING"
+                }
+            }
+        },
+        "type_:CreateRequest": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "CreateRequest",
+                    "camelCase": {
+                        "unsafeName": "createRequest",
+                        "safeName": "createRequest"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_request",
+                        "safeName": "create_request"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_REQUEST",
+                        "safeName": "CREATE_REQUEST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreateRequest",
+                        "safeName": "CreateRequest"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "mapField",
+                            "camelCase": {
+                                "unsafeName": "mapField",
+                                "safeName": "mapField"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "map_field",
+                                "safeName": "map_field"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MAP_FIELD",
+                                "safeName": "MAP_FIELD"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "MapField",
+                                "safeName": "MapField"
+                            }
+                        },
+                        "wireValue": "mapField"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:StringMap"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "listField",
+                            "camelCase": {
+                                "unsafeName": "listField",
+                                "safeName": "listField"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "list_field",
+                                "safeName": "list_field"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LIST_FIELD",
+                                "safeName": "LIST_FIELD"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ListField",
+                                "safeName": "ListField"
+                            }
+                        },
+                        "wireValue": "listField"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:StringList"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_.create": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "create",
+                    "camelCase": {
+                        "unsafeName": "create",
+                        "safeName": "create"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create",
+                        "safeName": "create"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE",
+                        "safeName": "CREATE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Create",
+                        "safeName": "Create"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/create"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:CreateRequest"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}

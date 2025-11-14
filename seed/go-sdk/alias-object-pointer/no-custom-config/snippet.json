@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/create",
+                "method": "POST",
+                "identifier_override": "endpoint_.create"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/alias-object-pointer/fern\"\n\tfernclient \"github.com/alias-object-pointer/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Create(\n\tcontext.TODO(),\n\t\u0026fern.CreateRequest{\n\t\tMapField: map[string]string{\n\t\t\t\"key\": \"value\",\n\t\t},\n\t\tListField: []string{\n\t\t\t\"test\",\n\t\t},\n\t},\n)\n"
+            }
+        }
+    ]
+}

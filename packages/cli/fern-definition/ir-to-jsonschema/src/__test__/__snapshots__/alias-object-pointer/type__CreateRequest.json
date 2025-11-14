@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "mapField": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/StringMap"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "listField": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/StringList"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "StringMap": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "StringList": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

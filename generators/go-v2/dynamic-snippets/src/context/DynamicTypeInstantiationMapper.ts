@@ -53,10 +53,34 @@ export class DynamicTypeInstantiationMapper {
                 return go.TypeInstantiation.optional(
                     this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as })
                 );
-            case "optional":
+            case "optional": {
+                const innerTypeReference = args.typeReference.value;
+                if (innerTypeReference.type === "named") {
+                    const underlyingTypeReference = this.resolveUnderlyingTypeReference(innerTypeReference);
+                    if (underlyingTypeReference != null && this.isNilableType(underlyingTypeReference)) {
+                        const named = this.context.resolveNamedType({ typeId: innerTypeReference.value });
+                        if (named?.type === "alias") {
+                            const aliasTypeRef = go.typeReference({
+                                name: this.context.getTypeName(named.declaration.name),
+                                importPath: this.context.getImportPath(named.declaration.fernFilepath)
+                            });
+                            const innerLiteral = this.convert({
+                                typeReference: underlyingTypeReference,
+                                value: args.value,
+                                as: args.as
+                            });
+                            const aliasConversion = go.invokeFunc({
+                                func: aliasTypeRef,
+                                arguments_: [innerLiteral]
+                            });
+                            return go.TypeInstantiation.reference(new PointerIIFE({ aliasTypeRef, aliasConversion }));
+                        }
+                    }
+                }
                 return go.TypeInstantiation.optional(
-                    this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as })
+                    this.convert({ typeReference: innerTypeReference, value: args.value, as: args.as })
                 );
+            }
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
             case "set":
@@ -187,9 +211,99 @@ export class DynamicTypeInstantiationMapper {
                         arguments_: [this.convertLiteralValue(aliasType.typeReference.value)]
                     })
                 );
+            case "list":
+            case "map":
+            case "set":
+                return go.TypeInstantiation.reference(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: this.context.getTypeName(aliasType.declaration.name),
+                            importPath: this.context.getImportPath(aliasType.declaration.fernFilepath)
+                        }),
+                        arguments_: [this.convert({ typeReference: aliasType.typeReference, value, as })]
+                    })
+                );
+            case "named": {
+                const underlyingTypeReference = this.resolveUnderlyingTypeReference(aliasType.typeReference);
+                if (underlyingTypeReference != null && this.isNilableType(underlyingTypeReference)) {
+                    return go.TypeInstantiation.reference(
+                        go.invokeFunc({
+                            func: go.typeReference({
+                                name: this.context.getTypeName(aliasType.declaration.name),
+                                importPath: this.context.getImportPath(aliasType.declaration.fernFilepath)
+                            }),
+                            arguments_: [this.convert({ typeReference: underlyingTypeReference, value, as })]
+                        })
+                    );
+                }
+                const underlyingNamed = this.resolveUnderlyingNamedType(aliasType.typeReference);
+                if (underlyingNamed?.type === "object") {
+                    return this.convertObject({
+                        object_: underlyingNamed,
+                        value
+                    });
+                }
+                return this.convert({ typeReference: aliasType.typeReference, value, as });
+            }
             default:
                 return this.convert({ typeReference: aliasType.typeReference, value, as });
         }
+    }
+
+    private isNilableType(typeReference: FernIr.dynamic.TypeReference): boolean {
+        return typeReference.type === "list" || typeReference.type === "map" || typeReference.type === "set";
+    }
+
+    private resolveUnderlyingTypeReference(
+        typeReference: FernIr.dynamic.TypeReference
+    ): FernIr.dynamic.TypeReference | undefined {
+        let currentTypeReference = typeReference;
+
+        for (let i = 0; i < 2; i++) {
+            if (currentTypeReference.type !== "named") {
+                return currentTypeReference;
+            }
+
+            const named = this.context.resolveNamedType({ typeId: currentTypeReference.value });
+            if (named == null) {
+                return undefined;
+            }
+
+            if (named.type === "alias") {
+                currentTypeReference = named.typeReference;
+                continue;
+            }
+
+            return currentTypeReference;
+        }
+
+        return currentTypeReference;
+    }
+
+    private resolveUnderlyingNamedType(
+        typeReference: FernIr.dynamic.TypeReference
+    ): FernIr.dynamic.NamedType | undefined {
+        let currentTypeReference = typeReference;
+
+        for (let i = 0; i < 2; i++) {
+            if (currentTypeReference.type !== "named") {
+                return undefined;
+            }
+
+            const named = this.context.resolveNamedType({ typeId: currentTypeReference.value });
+            if (named == null) {
+                return undefined;
+            }
+
+            if (named.type === "alias") {
+                currentTypeReference = named.typeReference;
+                continue;
+            }
+
+            return named;
+        }
+
+        return undefined;
     }
 
     private convertLiteralValue(literal: FernIr.dynamic.LiteralType): go.TypeInstantiation {
@@ -674,5 +788,27 @@ export class DynamicTypeInstantiationMapper {
         const bool =
             as === "key" ? (typeof value === "string" ? value === "true" : value === "false" ? false : value) : value;
         return this.context.getValueAsBoolean({ value: bool });
+    }
+}
+
+class PointerIIFE extends go.AstNode {
+    private aliasTypeRef: go.TypeReference;
+    private aliasConversion: go.FuncInvocation;
+
+    constructor({
+        aliasTypeRef,
+        aliasConversion
+    }: { aliasTypeRef: go.TypeReference; aliasConversion: go.FuncInvocation }) {
+        super();
+        this.aliasTypeRef = aliasTypeRef;
+        this.aliasConversion = aliasConversion;
+    }
+
+    public write(writer: go.Writer): void {
+        writer.write("func() *");
+        writer.writeNode(this.aliasTypeRef);
+        writer.write(" { v := ");
+        writer.writeNode(this.aliasConversion);
+        writer.write("; return &v }()");
     }
 }
