@@ -5,6 +5,23 @@
       type: feat
   irVersion: 61
   createdAt: "2025-11-14"
+  version: 1.2.0
+
+- changelogEntry:
+    - summary: |
+        Add `path-parameter-order`, which configures how path parameters are ordered in generated code.
+        If set to `url-order` (the default), path parameters are ordered in the same order as they appear in the URL.
+        If set to `spec-order`, path parameters are ordered in the same order as they are listed in the spec.
+
+        Can be configured as follows in `generators.yml`:
+        ```yaml
+        api:
+          settings:
+            path-parameter-order: url-order
+        ```
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-13"
   version: 1.1.0
 
 - changelogEntry:
