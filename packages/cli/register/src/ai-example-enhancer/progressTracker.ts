@@ -23,10 +23,9 @@ class ProgressManager {
 
     private constructor() {
         const disableProgress = process.env.FERN_NO_PROGRESS === "1" || process.env.FERN_DISABLE_PROGRESS === "1";
-        const summaryOnly = process.env.FERN_PROGRESS_SUMMARY_ONLY === "1" || process.env.FERN_EXTERNAL_SPINNER === "1";
-        const isDocsPreview = this.detectDocsPreviewMode();
-        
-        this.isTTY = !disableProgress && !summaryOnly && !isDocsPreview && (process.stderr.isTTY ?? false);
+        const summaryOnly = process.env.FERN_PROGRESS_SUMMARY_ONLY === "1";
+
+        this.isTTY = !disableProgress && !summaryOnly && (process.stderr.isTTY ?? false);
         this.stream = process.stderr;
 
         process.on("exit", () => this.cleanup());
@@ -34,11 +33,6 @@ class ProgressManager {
             this.cleanup();
             process.exit(130);
         });
-    }
-
-    private detectDocsPreviewMode(): boolean {
-        const args = process.argv.join(" ");
-        return args.includes("generate") && args.includes("--docs") && args.includes("--preview");
     }
 
     public static getInstance(): ProgressManager {
@@ -51,6 +45,10 @@ class ProgressManager {
     public createBar(label: string, total: number, context: TaskContext): ProgressBar {
         const id = `${label}-${Date.now()}-${Math.random()}`;
         this.bars.set(id, { label, completed: 0, total, context });
+
+        if (this.bars.size === 1) {
+            process.env.FERN_EXTERNAL_SPINNER = "1";
+        }
 
         if (!this.renderInterval) {
             this.startRenderLoop();
@@ -78,6 +76,7 @@ class ProgressManager {
 
         if (this.bars.size === 0) {
             this.stopRenderLoop();
+            delete process.env.FERN_EXTERNAL_SPINNER;
         }
     }
 
@@ -94,6 +93,7 @@ class ProgressManager {
             this.renderInterval = undefined;
         }
         this.clearDisplay();
+        this.restoreCursor();
     }
 
     private render(): void {
@@ -124,7 +124,10 @@ class ProgressManager {
             const remaining = bar.total - bar.completed;
 
             const labelWidth = 30;
-            const truncatedLabel = bar.label.length > labelWidth ? bar.label.substring(0, labelWidth - 3) + "..." : bar.label.padEnd(labelWidth);
+            const truncatedLabel =
+                bar.label.length > labelWidth
+                    ? bar.label.substring(0, labelWidth - 3) + "..."
+                    : bar.label.padEnd(labelWidth);
 
             const metadataText = ` ${percentage}% (${bar.completed}/${bar.total}, ${remaining} remaining)`;
             const availableBarWidth = Math.max(10, terminalWidth - labelWidth - metadataText.length - 4);
@@ -175,6 +178,10 @@ class ProgressManager {
 
     private cleanup(): void {
         this.stopRenderLoop();
+        this.restoreCursor();
+    }
+
+    private restoreCursor(): void {
         if (this.cursorHidden) {
             this.stream.write("\x1b[?25h");
             this.cursorHidden = false;

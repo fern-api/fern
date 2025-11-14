@@ -113,6 +113,10 @@ export class TtyAwareLogger {
     }
 
     private paint(): string {
+        if (process.env.FERN_EXTERNAL_SPINNER === "1") {
+            return "";
+        }
+
         const spinnerFrame = this.spinner.frame();
 
         const taskLines = [];
