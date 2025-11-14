@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { Target } from "./Target";
 import { WithViewers } from "./WithViewers";
 
 export const NavbarGithubConfigWithOptions: core.serialization.ObjectSchema<
@@ -13,11 +14,13 @@ export const NavbarGithubConfigWithOptions: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         url: core.serialization.string(),
+        target: Target.optional(),
     })
     .extend(WithViewers);
 
 export declare namespace NavbarGithubConfigWithOptions {
     export interface Raw extends WithViewers.Raw {
         url: string;
+        target?: Target.Raw | null;
     }
 }

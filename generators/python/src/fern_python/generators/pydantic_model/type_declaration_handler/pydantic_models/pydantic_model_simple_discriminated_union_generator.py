@@ -1,4 +1,4 @@
-from typing import List, Optional, Set, Union
+from typing import List, Optional, Union
 
 from ....context.pydantic_generator_context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig, UnionNamingVersions
@@ -17,6 +17,7 @@ from fern_python.generators.pydantic_model.type_declaration_handler.discriminate
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 from fern_python.pydantic_codegen.pydantic_field import FernAwarePydanticField
 from fern_python.snippet import SnippetWriter
+from ordered_set import OrderedSet
 
 import fern.ir.resources as ir_types
 
@@ -202,12 +203,12 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
         internal_pydantic_model_for_single_union_type: PydanticModel,
         single_union_type: ir_types.SingleUnionType,
     ) -> None:
-        referenced_type_ids: Set[ir_types.TypeId] = single_union_type.shape.visit(
-            same_properties_as_object=lambda _: set(),
-            single_property=lambda single_property: set(
+        referenced_type_ids: OrderedSet[ir_types.TypeId] = single_union_type.shape.visit(
+            same_properties_as_object=lambda _: OrderedSet(),
+            single_property=lambda single_property: OrderedSet(
                 self._context.get_referenced_types_of_type_reference(single_property.type) or []
             ),
-            no_properties=lambda: set(),
+            no_properties=lambda: OrderedSet(),
         )
 
         # Check if any referenced types are self-referencing union members

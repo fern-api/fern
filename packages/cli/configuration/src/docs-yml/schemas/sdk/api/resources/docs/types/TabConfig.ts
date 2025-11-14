@@ -16,5 +16,6 @@ export interface TabConfig extends FernDocsConfig.WithPermissions, FernDocsConfi
      * Tabs with `href` must not have children in the navigation config.
      */
     href?: string;
+    target?: FernDocsConfig.Target;
     changelog?: FernDocsConfig.ChangelogFolderRelativePath;
 }
