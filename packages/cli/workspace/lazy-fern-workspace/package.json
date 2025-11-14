@@ -73,7 +73,7 @@
     "@fern-api/configs": "workspace:*",
     "@types/js-yaml": "^4.0.8",
     "@types/lodash-es": "^4.17.12",
-    "@types/node": "18.15.3",
+    "@types/node": "20.19.0",
     "@types/object-hash": "^3.0.6",
     "@types/swagger2openapi": "^7.0.4",
     "@types/tar": "^6.1.11",

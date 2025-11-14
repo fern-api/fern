@@ -43,7 +43,7 @@
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/source-resolver": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@types/node": "18.15.3",
+    "@types/node": "20.19.0",
     "depcheck": "^1.4.7",
     "openapi-types": "^12.1.3",
     "tsup": "^8.5.0",

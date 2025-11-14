@@ -42,7 +42,7 @@
     "@fern-api/configs": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
-    "@types/node": "18.15.3",
+    "@types/node": "20.19.0",
     "@types/stream-json": "^1.7.7",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",

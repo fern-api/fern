@@ -51,7 +51,7 @@
     "@fern-api/configs": "workspace:*",
     "@types/inquirer": "^9.0.7",
     "@types/js-yaml": "^4.0.8",
-    "@types/node": "18.15.3",
+    "@types/node": "20.19.0",
     "depcheck": "^1.4.7",
     "tmp-promise": "^3.0.3",
     "typescript": "5.9.3",

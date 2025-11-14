@@ -51,7 +51,7 @@
         "ts-loader": "^9.5.1",
         "vitest": "^3.2.4",
         "msw": "2.11.2",
-        "@types/node": "^18.19.70",
+        "@types/node": "^20.19.0",
         "typescript": "~5.7.2",
         "@biomejs/biome": "2.3.1"
     },

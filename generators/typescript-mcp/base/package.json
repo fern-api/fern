@@ -39,7 +39,7 @@
     "@fern-api/typescript-formatter": "workspace:*",
     "@fern-fern/ir-sdk": "^58.2.0",
     "@types/lodash-es": "^4.17.12",
-    "@types/node": "18.15.3",
+    "@types/node": "20.19.0",
     "depcheck": "^1.4.7",
     "lodash-es": "^4.17.21",
     "typescript": "5.9.3",

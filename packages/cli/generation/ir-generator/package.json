@@ -44,7 +44,7 @@
     "@fern-api/source-resolver": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@types/lodash-es": "^4.17.12",
-    "@types/node": "18.15.3",
+    "@types/node": "20.19.0",
     "@types/url-join": "4.0.1",
     "@types/uuid": "^9.0.8",
     "depcheck": "^1.4.7",

@@ -31,7 +31,7 @@
         "@types/jest": "^29.5.14",
         "ts-jest": "^29.1.1",
         "jest-environment-jsdom": "^29.7.0",
-        "@types/node": "^18.19.70",
+        "@types/node": "^20.19.0",
         "prettier": "^3.4.2",
         "typescript": "~5.7.2"
     },

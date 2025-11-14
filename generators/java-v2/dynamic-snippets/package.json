@@ -41,7 +41,7 @@
     "@fern-api/java-ast": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
     "@types/lodash-es": "^4.17.12",
-    "@types/node": "18.15.3",
+    "@types/node": "20.19.0",
     "depcheck": "^1.4.7",
     "lodash-es": "^4.17.21",
     "tsup": "^8.5.0",

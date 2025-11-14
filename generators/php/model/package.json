@@ -44,7 +44,7 @@
     "@fern-api/php-base": "workspace:*",
     "@fern-api/php-codegen": "workspace:*",
     "@fern-fern/ir-sdk": "^61.7.0",
-    "@types/node": "18.15.3",
+    "@types/node": "20.19.0",
     "depcheck": "^1.4.7",
     "tsup": "^8.5.0",
     "typescript": "5.9.3",

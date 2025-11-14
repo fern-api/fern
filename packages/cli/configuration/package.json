@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/node": "18.15.3",
+    "@types/node": "20.19.0",
     "@types/node-fetch": "2",
     "@types/qs": "6.9.15",
     "@types/readable-stream": "^4.0.22",

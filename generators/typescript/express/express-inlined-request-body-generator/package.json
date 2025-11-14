@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/node": "18.15.3",
+    "@types/node": "20.19.0",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"

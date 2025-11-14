@@ -44,7 +44,7 @@
     "@fern-api/java-ast": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
     "@fern-fern/ir-sdk": "^61.7.0",
-    "@types/node": "18.15.3",
+    "@types/node": "20.19.0",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"

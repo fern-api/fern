@@ -41,7 +41,7 @@
     "@fern-api/path-utils": "workspace:*",
     "@fern-api/typescript-ast": "workspace:*",
     "@fern-api/typescript-browser-compatible-base": "workspace:*",
-    "@types/node": "18.15.3",
+    "@types/node": "20.19.0",
     "depcheck": "^1.4.7",
     "tsup": "^8.5.0",
     "typescript": "5.9.3",

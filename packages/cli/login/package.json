@@ -47,7 +47,7 @@
     "@fern-api/configs": "workspace:*",
     "@types/boxen": "^3.0.1",
     "@types/inquirer": "^9.0.7",
-    "@types/node": "18.15.3",
+    "@types/node": "20.19.0",
     "@types/qs": "6.9.15",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",

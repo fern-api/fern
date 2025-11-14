@@ -33,7 +33,7 @@
   "devDependencies": {
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
-    "@types/node": "18.15.3",
+    "@types/node": "20.19.0",
     "@wasm-fmt/ruff_fmt": "^0.6.1",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",

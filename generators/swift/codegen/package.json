@@ -40,7 +40,7 @@
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@types/lodash-es": "^4.17.12",
-    "@types/node": "18.15.3",
+    "@types/node": "20.19.0",
     "@types/number-to-words": "1.2.3",
     "depcheck": "^1.4.7",
     "typescript": "5.9.2",

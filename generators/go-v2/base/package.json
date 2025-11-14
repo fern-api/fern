@@ -47,7 +47,7 @@
     "@fern-api/logging-execa": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.1167",
     "@fern-fern/ir-sdk": "^61.7.0",
-    "@types/node": "18.15.3",
+    "@types/node": "20.19.0",
     "dedent": "^1.5.1",
     "depcheck": "^1.4.7",
     "tsup": "^8.5.0",

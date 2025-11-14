@@ -46,7 +46,7 @@
     "@fern-api/swift-codegen": "workspace:*",
     "@fern-api/test-utils": "workspace:*",
     "@types/lodash-es": "^4.17.12",
-    "@types/node": "18.15.3",
+    "@types/node": "20.19.0",
     "depcheck": "^1.4.7",
     "tsup": "^8.5.0",
     "typescript": "5.9.2",

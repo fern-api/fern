@@ -51,7 +51,7 @@
     "@types/decompress": "^4.2.7",
     "@types/esutils": "^2.0.0",
     "@types/lodash-es": "^4.17.12",
-    "@types/node": "18.15.3",
+    "@types/node": "20.19.0",
     "@types/url-join": "4.0.1",
     "depcheck": "^1.4.7",
     "memfs": "^3.4.1",
