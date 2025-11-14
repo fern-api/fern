@@ -7,6 +7,7 @@ describe("SeedPropertyAccessClient", () => {
     test("createUser", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedPropertyAccessClient({ environment: server.baseUrl });
+
         const rawRequestBody = {
             id: "id",
             email: "email",

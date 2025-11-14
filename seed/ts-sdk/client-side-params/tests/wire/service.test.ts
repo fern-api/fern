@@ -106,6 +106,7 @@ describe("Service", () => {
     test("searchResources", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
+
         const rawRequestBody = { query: "query", filters: { filters: { key: "value" } } };
         const rawResponseBody = {
             results: [
@@ -493,6 +494,7 @@ describe("Service", () => {
     test("createUser", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
+
         const rawRequestBody = {
             email: "email",
             email_verified: true,
@@ -625,6 +627,7 @@ describe("Service", () => {
     test("updateUser", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
+
         const rawRequestBody = {
             email: "email",
             email_verified: true,

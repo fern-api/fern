@@ -8,6 +8,7 @@ describe("Playlist", () => {
     test("createPlaylist", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+
         const rawRequestBody = { name: "name", problems: ["problems", "problems"] };
         const rawResponseBody = {
             playlist_id: "playlist_id",
@@ -118,6 +119,7 @@ describe("Playlist", () => {
     test("updatePlaylist", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+
         const rawRequestBody = { name: "name", problems: ["problems", "problems"] };
         const rawResponseBody = {
             playlist_id: "playlist_id",

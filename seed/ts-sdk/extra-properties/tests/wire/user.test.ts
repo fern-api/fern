@@ -7,6 +7,7 @@ describe("User", () => {
     test("createUser", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExtraPropertiesClient({ environment: server.baseUrl });
+
         const rawRequestBody = {
             age: 30,
             location: "Wonderland",

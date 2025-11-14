@@ -7,6 +7,7 @@ describe("ContentType", () => {
     test("postJsonPatchContentType", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+
         const rawRequestBody = {
             string: "string",
             integer: 1,
@@ -53,6 +54,7 @@ describe("ContentType", () => {
     test("postJsonPatchContentWithCharsetType", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+
         const rawRequestBody = {
             string: "string",
             integer: 1,

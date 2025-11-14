@@ -7,6 +7,7 @@ describe("Service", () => {
     test("getMovie", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedResponsePropertyClient({ environment: server.baseUrl });
+
         const rawRequestBody = "string";
         const rawResponseBody = { data: { id: "id", name: "name" }, metadata: { metadata: "metadata" }, docs: "docs" };
         server
@@ -34,6 +35,7 @@ describe("Service", () => {
     test("getMovieDocs", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedResponsePropertyClient({ environment: server.baseUrl });
+
         const rawRequestBody = "string";
         const rawResponseBody = { data: { id: "id", name: "name" }, metadata: { metadata: "metadata" }, docs: "docs" };
         server
@@ -61,6 +63,7 @@ describe("Service", () => {
     test("getMovieName", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedResponsePropertyClient({ environment: server.baseUrl });
+
         const rawRequestBody = "string";
         const rawResponseBody = { data: "data" };
         server
@@ -81,6 +84,7 @@ describe("Service", () => {
     test("getMovieMetadata", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedResponsePropertyClient({ environment: server.baseUrl });
+
         const rawRequestBody = "string";
         const rawResponseBody = { data: { id: "id", name: "name" }, metadata: { metadata: "metadata" }, docs: "docs" };
         server
@@ -108,6 +112,7 @@ describe("Service", () => {
     test("getOptionalMovie", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedResponsePropertyClient({ environment: server.baseUrl });
+
         const rawRequestBody = "string";
         const rawResponseBody = { data: { id: "id", name: "name" }, metadata: { metadata: "metadata" }, docs: "docs" };
         server
@@ -135,6 +140,7 @@ describe("Service", () => {
     test("getOptionalMovieDocs", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedResponsePropertyClient({ environment: server.baseUrl });
+
         const rawRequestBody = "string";
         const rawResponseBody = { docs: "docs" };
         server
@@ -155,6 +161,7 @@ describe("Service", () => {
     test("getOptionalMovieName", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedResponsePropertyClient({ environment: server.baseUrl });
+
         const rawRequestBody = "string";
         const rawResponseBody = { data: "data" };
         server

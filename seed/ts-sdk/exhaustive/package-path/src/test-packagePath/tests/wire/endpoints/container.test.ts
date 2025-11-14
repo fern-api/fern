@@ -7,6 +7,7 @@ describe("Container", () => {
     test("getAndReturnListOfPrimitives", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+
         const rawRequestBody = ["string", "string"];
         const rawResponseBody = ["string", "string"];
         server
@@ -25,6 +26,7 @@ describe("Container", () => {
     test("getAndReturnListOfObjects", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+
         const rawRequestBody = [{ string: "string" }, { string: "string" }];
         const rawResponseBody = [{ string: "string" }, { string: "string" }];
         server
@@ -57,6 +59,7 @@ describe("Container", () => {
     test("getAndReturnSetOfPrimitives", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+
         const rawRequestBody = ["string"];
         const rawResponseBody = ["string"];
         server
@@ -75,6 +78,7 @@ describe("Container", () => {
     test("getAndReturnSetOfObjects", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+
         const rawRequestBody = [{ string: "string" }];
         const rawResponseBody = [{ string: "string" }];
         server
@@ -101,6 +105,7 @@ describe("Container", () => {
     test("getAndReturnMapPrimToPrim", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+
         const rawRequestBody = { string: "string" };
         const rawResponseBody = { string: "string" };
         server
@@ -123,6 +128,7 @@ describe("Container", () => {
     test("getAndReturnMapOfPrimToObject", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+
         const rawRequestBody = { string: { string: "string" } };
         const rawResponseBody = { string: { string: "string" } };
         server
@@ -149,6 +155,7 @@ describe("Container", () => {
     test("getAndReturnOptional", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+
         const rawRequestBody = { string: "string" };
         const rawResponseBody = { string: "string" };
         server

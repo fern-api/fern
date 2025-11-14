@@ -7,6 +7,7 @@ describe("Dummy", () => {
     test("generate", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedStreamingClient({ environment: server.baseUrl });
+
         const rawRequestBody = { stream: false, num_events: 5 };
         const rawResponseBody = { id: "id", name: "name" };
         server

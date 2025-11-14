@@ -23,6 +23,7 @@ describe("Union", () => {
     test("update", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedUnionsClient({ environment: server.baseUrl });
+
         const rawRequestBody = { type: "circle", id: "id", name: "name", radius: 1.1 };
         const rawResponseBody = true;
         server

@@ -50,6 +50,7 @@ describe("NullableOptional", () => {
     test("createUser", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+
         const rawRequestBody = {
             username: "username",
             email: "email",
@@ -126,6 +127,7 @@ describe("NullableOptional", () => {
     test("updateUser", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+
         const rawRequestBody = {
             username: "username",
             email: "email",
@@ -374,6 +376,7 @@ describe("NullableOptional", () => {
     test("createComplexProfile", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+
         const rawRequestBody = {
             id: "id",
             nullableRole: "ADMIN",
@@ -937,6 +940,7 @@ describe("NullableOptional", () => {
     test("updateComplexProfile", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+
         const rawRequestBody = {
             nullableRole: "ADMIN",
             nullableStatus: "active",
@@ -1187,6 +1191,7 @@ describe("NullableOptional", () => {
     test("testDeserialization", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+
         const rawRequestBody = {
             requiredString: "requiredString",
             nullableString: "nullableString",
@@ -1513,6 +1518,7 @@ describe("NullableOptional", () => {
     test("updateTags", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+
         const rawRequestBody = {
             tags: ["tags", "tags"],
             categories: ["categories", "categories"],
@@ -1539,6 +1545,7 @@ describe("NullableOptional", () => {
     test("getSearchResults", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+
         const rawRequestBody = {
             query: "query",
             filters: { filters: "filters" },

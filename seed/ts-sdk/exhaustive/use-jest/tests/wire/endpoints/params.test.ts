@@ -82,6 +82,7 @@ describe("Params", () => {
     test("modifyWithPath", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+
         const rawRequestBody = "string";
         const rawResponseBody = "string";
         server
@@ -100,6 +101,7 @@ describe("Params", () => {
     test("modifyWithInlinePath", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+
         const rawRequestBody = "string";
         const rawResponseBody = "string";
         server

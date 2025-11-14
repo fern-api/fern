@@ -31,6 +31,7 @@ describe("SeedApiClient", () => {
     test("updateFoo", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ environment: server.baseUrl });
+
         const rawRequestBody = {
             nullable_text: "nullable_text",
             nullable_number: 1.1,

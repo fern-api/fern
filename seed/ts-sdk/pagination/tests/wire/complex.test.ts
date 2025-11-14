@@ -7,6 +7,7 @@ describe("Complex", () => {
     test("search", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
+
         const rawRequestBody = {
             pagination: { per_page: 1, starting_after: "starting_after" },
             query: { field: "field", operator: "=", value: "value" },

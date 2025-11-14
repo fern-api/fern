@@ -110,6 +110,7 @@ describe("Nullable", () => {
     test("createUser", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedNullableClient({ environment: server.baseUrl });
+
         const rawRequestBody = {
             username: "username",
             tags: ["tags", "tags"],
@@ -196,6 +197,7 @@ describe("Nullable", () => {
     test("deleteUser", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedNullableClient({ environment: server.baseUrl });
+
         const rawRequestBody = { username: "xy" };
         const rawResponseBody = true;
         server

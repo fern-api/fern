@@ -29,6 +29,7 @@ describe("User", () => {
     test("createUser", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedPathParametersClient({ tenantId: "tenant_id", environment: server.baseUrl });
+
         const rawRequestBody = { name: "name", tags: ["tags", "tags"] };
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
         server
@@ -53,6 +54,7 @@ describe("User", () => {
     test("updateUser", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedPathParametersClient({ tenantId: "tenant_id", environment: server.baseUrl });
+
         const rawRequestBody = { name: "name", tags: ["tags", "tags"] };
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
         server

@@ -30,6 +30,7 @@ describe("Bigunion", () => {
     test("update", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedUnionsClient({ environment: server.baseUrl });
+
         const rawRequestBody = {
             type: "normalSweet",
             id: "id",
@@ -60,6 +61,7 @@ describe("Bigunion", () => {
     test("update-many", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedUnionsClient({ environment: server.baseUrl });
+
         const rawRequestBody = [
             {
                 type: "normalSweet",

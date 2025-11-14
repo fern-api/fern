@@ -9,6 +9,7 @@ describe("User", () => {
         const server = mockServerPool.createServer();
         const client = new SeedSimpleApiClient({ "token" : "test" , "environment" : server.baseUrl });
         
+        
         const rawResponseBody = { "id" : "id" , "name" : "name" , "email" : "email" };
         server
             .mockEndpoint()

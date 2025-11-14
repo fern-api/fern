@@ -7,6 +7,7 @@ describe("SeedApiClient", () => {
     test("uploadJsonDocument", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ token: "test", environment: server.baseUrl });
+
         const rawRequestBody = {};
         const rawResponseBody = { author: "author", id: 1, tags: [{ key: "value" }], title: "title" };
         server

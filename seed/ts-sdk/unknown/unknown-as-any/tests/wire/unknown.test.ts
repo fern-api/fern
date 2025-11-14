@@ -7,6 +7,7 @@ describe("Unknown", () => {
     test("post", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedUnknownAsAnyClient({ environment: server.baseUrl });
+
         const rawRequestBody = { key: "value" };
         const rawResponseBody = [{ key: "value" }, { key: "value" }];
         server
@@ -34,6 +35,7 @@ describe("Unknown", () => {
     test("postObject", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedUnknownAsAnyClient({ environment: server.baseUrl });
+
         const rawRequestBody = { unknown: { key: "value" } };
         const rawResponseBody = [{ key: "value" }, { key: "value" }];
         server

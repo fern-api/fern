@@ -10,6 +10,7 @@ describe("Ec2", () => {
             token: "test",
             environment: { ec2: server.baseUrl, s3: server.baseUrl },
         });
+
         const rawRequestBody = { size: "size" };
 
         server.mockEndpoint().post("/ec2/boot").jsonBody(rawRequestBody).respondWith().statusCode(200).build();

@@ -17,6 +17,7 @@ describe("User", () => {
     test("createUser", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedMultiLineDocsClient({ environment: server.baseUrl });
+
         const rawRequestBody = { name: "name", age: 1 };
         const rawResponseBody = { id: "id", name: "name", age: 1 };
         server

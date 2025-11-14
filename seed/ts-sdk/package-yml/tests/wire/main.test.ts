@@ -7,6 +7,7 @@ describe("SeedPackageYmlClient", () => {
     test("echo", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedPackageYmlClient({ id: "id-ksfd9c1", environment: server.baseUrl });
+
         const rawRequestBody = { name: "Hello world!", size: 20 };
         const rawResponseBody = "Hello world!";
         server

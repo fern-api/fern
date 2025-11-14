@@ -2,10 +2,13 @@
 
 import { SeedWebsocketAuthClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
+import { mockAuth } from "./mockAuth";
 
 describe("Auth", () => {
     test("getTokenWithClientCredentials", async () => {
         const server = mockServerPool.createServer();
+        mockAuth(server);
+
         const client = new SeedWebsocketAuthClient({
             xApiKey: "X-Api-Key",
             clientId: "client_id",
@@ -13,6 +16,7 @@ describe("Auth", () => {
             scope: "scope",
             environment: server.baseUrl,
         });
+
         const rawRequestBody = {
             client_id: "client_id",
             client_secret: "client_secret",
@@ -45,6 +49,8 @@ describe("Auth", () => {
 
     test("refreshToken", async () => {
         const server = mockServerPool.createServer();
+        mockAuth(server);
+
         const client = new SeedWebsocketAuthClient({
             xApiKey: "X-Api-Key",
             clientId: "client_id",
@@ -52,6 +58,7 @@ describe("Auth", () => {
             scope: "scope",
             environment: server.baseUrl,
         });
+
         const rawRequestBody = {
             client_id: "client_id",
             client_secret: "client_secret",

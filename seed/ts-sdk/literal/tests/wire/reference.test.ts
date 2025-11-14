@@ -7,6 +7,7 @@ describe("Reference", () => {
     test("send", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedLiteralClient({ environment: server.baseUrl });
+
         const rawRequestBody = {
             prompt: "You are a helpful assistant",
             stream: false,

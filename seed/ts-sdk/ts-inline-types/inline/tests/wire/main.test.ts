@@ -7,6 +7,7 @@ describe("SeedObjectClient", () => {
     test("getRoot", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedObjectClient({ environment: server.baseUrl });
+
         const rawRequestBody = { bar: { foo: "foo" }, foo: "foo" };
         const rawResponseBody = {
             foo: "foo",
@@ -93,6 +94,7 @@ describe("SeedObjectClient", () => {
     test("getDiscriminatedUnion", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedObjectClient({ environment: server.baseUrl });
+
         const rawRequestBody = {
             bar: { type: "type1", foo: "foo", bar: { foo: "foo", ref: { foo: "foo" } }, ref: { foo: "foo" } },
             foo: "foo",
@@ -128,6 +130,7 @@ describe("SeedObjectClient", () => {
     test("getUndiscriminatedUnion", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedObjectClient({ environment: server.baseUrl });
+
         const rawRequestBody = {
             bar: { foo: "foo", bar: { foo: "foo", ref: { foo: "foo" } }, ref: { foo: "foo" } },
             foo: "foo",

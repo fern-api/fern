@@ -7,6 +7,7 @@ describe("Headers", () => {
     test("send", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedLiteralClient({ environment: server.baseUrl });
+
         const rawRequestBody = { query: "What is the weather today" };
         const rawResponseBody = { message: "The weather is sunny", status: 200, success: true };
         server
