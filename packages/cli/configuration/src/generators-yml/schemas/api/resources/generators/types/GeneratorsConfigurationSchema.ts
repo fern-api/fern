@@ -13,6 +13,7 @@ export interface GeneratorsConfigurationSchema {
     "default-group"?: string;
     groups?: Record<string, FernDefinition.GeneratorGroupSchema>;
     reviewers?: FernDefinition.ReviewersSchema;
+    "ai-services"?: FernDefinition.AiServicesSchema;
     /** Deprecated, use the `api` key instead */
     openapi?: FernDefinition.GeneratorsOpenApiSchema;
     /** Deprecated, use the `api` key instead */

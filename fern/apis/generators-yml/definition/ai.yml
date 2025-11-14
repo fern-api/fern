@@ -1,0 +1,22 @@
+types:
+  AIServicesSchema:
+    properties:
+      auto-versioning: optional<AutoVersioningSchema>
+
+  AIServiceBaseSchema:
+    properties:
+      provider: ModelProvider
+      model: ModelName
+
+  ModelProvider:
+    enum:
+      - openai
+      - anthropic
+      - bedrock
+
+  ModelName: string
+
+  AutoVersioningSchema:
+    extends: AIServiceBaseSchema
+    properties:
+      max-diff-size: optional<integer>

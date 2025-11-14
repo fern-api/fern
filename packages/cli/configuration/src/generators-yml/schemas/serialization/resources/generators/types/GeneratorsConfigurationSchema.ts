@@ -12,6 +12,7 @@ import { OutputMetadataSchema } from "./OutputMetadataSchema";
 import { ReadmeSchema } from "./ReadmeSchema";
 import { GeneratorGroupSchema } from "../../group/types/GeneratorGroupSchema";
 import { ReviewersSchema } from "../../reviewers/types/ReviewersSchema";
+import { AiServicesSchema } from "../../ai/types/AiServicesSchema";
 import { GeneratorsOpenApiSchema } from "./GeneratorsOpenApiSchema";
 import { ApiDefinitionSettingsSchema } from "./ApiDefinitionSettingsSchema";
 
@@ -27,6 +28,7 @@ export const GeneratorsConfigurationSchema: core.serialization.ObjectSchema<
     "default-group": core.serialization.string().optional(),
     groups: core.serialization.record(core.serialization.string(), GeneratorGroupSchema).optional(),
     reviewers: ReviewersSchema.optional(),
+    "ai-services": AiServicesSchema.optional(),
     openapi: GeneratorsOpenApiSchema.optional(),
     "openapi-overrides": core.serialization.string().optional(),
     "spec-origin": core.serialization.string().optional(),
@@ -44,6 +46,7 @@ export declare namespace GeneratorsConfigurationSchema {
         "default-group"?: string | null;
         groups?: Record<string, GeneratorGroupSchema.Raw> | null;
         reviewers?: ReviewersSchema.Raw | null;
+        "ai-services"?: AiServicesSchema.Raw | null;
         openapi?: GeneratorsOpenApiSchema.Raw | null;
         "openapi-overrides"?: string | null;
         "spec-origin"?: string | null;
