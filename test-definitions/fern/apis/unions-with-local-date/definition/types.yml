@@ -1,0 +1,317 @@
+types:
+  Union:
+    docs: This is a simple union.
+    union:
+      foo:
+        type: Foo
+        key: foo
+      bar:
+        type: Bar
+        key: bar
+    # examples:
+    # - name: foo
+    #   value:
+    #     type: foo
+    #     foo:
+    #       name: example1
+    # - name: bar
+    #   value:
+    #     type: bar
+    #     bar:
+    #       name: example2
+
+  UnionWithDiscriminant:
+    discriminant:
+      value: _type
+      name: type
+    union:
+      foo:
+        docs: This is a Foo field.
+        type: Foo
+        key: foo
+      bar:
+        type: Bar
+        key: bar
+    # examples:
+    # - name: foo
+    #   value:
+    #     _type: foo
+    #     name: example1
+    # - name: bar
+    #   value:
+    #     _type: bar
+    #     name: example2
+
+  UnionWithPrimitive:
+    union:
+      integer: integer
+      string: string
+    examples:
+      - name: integer
+        value:
+          type: integer
+          value: 9
+      - name: string
+        value:
+          type: string
+          value: bar
+
+  UnionWithDuplicatePrimitive:
+    union:
+      integer1: integer
+      integer2: integer
+      string1: string
+      string2: string
+    examples:
+      - name: integer1
+        value:
+          type: integer1
+          value: 9
+      - name: integer2
+        value:
+          type: integer2
+          value: 5
+      - name: string1
+        value:
+          type: string1
+          value: bar1
+      - name: string2
+        value:
+          type: string1
+          value: bar2
+
+  UnionWithoutKey:
+    union:
+      foo: Foo
+      bar:
+        docs: This is a bar field.
+        type: Bar
+    examples:
+      - name: foo
+        value:
+          type: foo
+          name: example1
+      - name: bar
+        value:
+          type: bar
+          name: example1
+
+  UnionWithNoProperties:
+    union:
+      foo: Foo
+      empty: {}
+    examples:
+      - name: foo
+        value:
+          type: foo
+          name: example
+      - name: empty
+        value:
+          type: empty
+
+  UnionWithMultipleNoProperties:
+    union:
+      foo: Foo
+      empty1: {}
+      empty2: {}
+    examples:
+      - name: foo
+        value:
+          type: foo
+          name: example
+      - name: empty1
+        value:
+          type: empty1
+      - name: empty2
+        value:
+          type: empty2
+
+  UnionWithLiteral:
+    base-properties:
+      base: literal<"base">
+    union:
+      fern: literal<"fern">
+    examples:
+      - name: fern
+        value:
+          base: base
+          type: fern
+          fern: fern
+
+  UnionWithBaseProperties:
+    base-properties:
+      id: string
+    union:
+      integer: integer
+      string: string
+      foo: Foo
+    examples:
+      - name: integer
+        value:
+          type: integer
+          id: id
+          value: 5
+      - name: string
+        value:
+          type: string
+          id: id
+          value: string
+      - name: foo
+        value:
+          type: foo
+          id: id
+          name: name
+
+  UnionWithTime:
+    union:
+      value: integer
+      date: date
+      datetime: datetime
+    examples:
+      - name: value
+        value:
+          type: value
+          value: 5
+      - name: date
+        value:
+          type: date
+          value: 1994-01-01
+      - name: datetime
+        value:
+          type: datetime
+          value: 1994-01-01T01:01:01Z
+
+  UnionWithOptionalTime:
+    union:
+      date: optional<date>
+      datetime: optional<datetime>
+    examples:
+      - name: date
+        value:
+          type: date
+          value: 1994-01-01
+      - name: datetime
+        value:
+          type: datetime
+          value: 1994-01-01T01:01:01Z
+      - name: empty-date
+        value:
+          type: date
+          value: null
+      - name: empty-datetime
+        value:
+          type: datetime
+          value: null
+
+  UnionWithSingleElement:
+    union:
+      foo: Foo
+    examples:
+      - name: foo
+        value:
+          type: foo
+          name: example1
+
+  UnionWithDuplicateTypes:
+    union:
+      foo1: Foo
+      foo2: Foo
+    examples:
+      - name: foo1
+        value:
+          type: foo1
+          name: example1
+      - name: foo2
+        value:
+          type: foo2
+          name: example2
+
+  UnionWithSubTypes:
+    union:
+      foo: Foo
+      fooExtended: FooExtended
+    examples:
+      - name: foo
+        value:
+          type: foo
+          name: example1
+      - name: fooExtended
+        value:
+          type: fooExtended
+          name: example2
+          age: 5
+
+  Foo:
+    properties:
+      name: string
+    examples:
+      - name: One
+        value:
+          name: example1
+      - name: Two
+        value:
+          name: example2
+
+  FooExtended:
+    extends: Foo
+    properties:
+      age: integer
+    examples:
+      - name: One
+        value:
+          name: example1
+          age: 5
+      - name: Two
+        value:
+          name: example2
+          age: 10
+
+  Bar:
+    properties:
+      name: string
+    examples:
+      - name: One
+        value:
+          name: example1
+      - name: Two
+        value:
+          name: example2
+
+  # Test cases for unions with identical underlying types
+  UnionWithSameStringTypes:
+    union:
+      customFormat: string
+      regularString: string
+      patternString: string
+    examples:
+      - name: customFormat
+        value:
+          type: customFormat
+          value: custom-123
+      - name: regularString
+        value:
+          type: regularString
+          value: regular text
+      - name: patternString
+        value:
+          type: patternString
+          value: PATTERN123
+
+  UnionWithSameNumberTypes:
+    union:
+      positiveInt: integer
+      negativeInt: integer
+      anyNumber: double
+    examples:
+      - name: positiveInt
+        value:
+          type: positiveInt
+          value: 100
+      - name: negativeInt
+        value:
+          type: negativeInt
+          value: -50
+      - name: anyNumber
+        value:
+          type: anyNumber
+          value: 3.14159

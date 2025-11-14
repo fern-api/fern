@@ -8,6 +8,7 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import java.math.BigInteger;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
@@ -96,10 +97,9 @@ public final class PoetTypeNameMapper {
 
         @Override
         public TypeName visitPrimitive(PrimitiveType primitiveType) {
-            if (primitiveAllowed) {
-                return primitiveType.getV1().visit(PrimitiveToTypeNameConverter.PRIMITIVE_ALLOWED_CONVERTER);
-            }
-            return primitiveType.getV1().visit(PrimitiveToTypeNameConverter.PRIMITIVE_DISALLOWED_CONVERTER);
+            return primitiveType
+                    .getV1()
+                    .visit(new PrimitiveToTypeNameConverter(primitiveAllowed, customConfig.useLocalDateForDates()));
         }
 
         @Override
@@ -123,15 +123,12 @@ public final class PoetTypeNameMapper {
 
     private static final class PrimitiveToTypeNameConverter implements PrimitiveTypeV1.Visitor<TypeName> {
 
-        private static final PrimitiveToTypeNameConverter PRIMITIVE_ALLOWED_CONVERTER =
-                new PrimitiveToTypeNameConverter(true);
-        private static final PrimitiveToTypeNameConverter PRIMITIVE_DISALLOWED_CONVERTER =
-                new PrimitiveToTypeNameConverter(false);
-
         private final boolean primitiveAllowed;
+        private final boolean useLocalDateForDates;
 
-        private PrimitiveToTypeNameConverter(boolean primitiveAllowed) {
+        private PrimitiveToTypeNameConverter(boolean primitiveAllowed, boolean useLocalDateForDates) {
             this.primitiveAllowed = primitiveAllowed;
+            this.useLocalDateForDates = useLocalDateForDates;
         }
 
         @Override
@@ -189,6 +186,9 @@ public final class PoetTypeNameMapper {
 
         @Override
         public TypeName visitDate() {
+            if (useLocalDateForDates) {
+                return ClassName.get(LocalDate.class);
+            }
             return ClassName.get(String.class);
         }
 
