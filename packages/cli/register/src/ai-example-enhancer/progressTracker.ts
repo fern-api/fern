@@ -23,7 +23,10 @@ class ProgressManager {
 
     private constructor() {
         const disableProgress = process.env.FERN_NO_PROGRESS === "1" || process.env.FERN_DISABLE_PROGRESS === "1";
-        this.isTTY = !disableProgress && (process.stderr.isTTY ?? false);
+        const summaryOnly = process.env.FERN_PROGRESS_SUMMARY_ONLY === "1" || process.env.FERN_EXTERNAL_SPINNER === "1";
+        const isDocsPreview = this.detectDocsPreviewMode();
+        
+        this.isTTY = !disableProgress && !summaryOnly && !isDocsPreview && (process.stderr.isTTY ?? false);
         this.stream = process.stderr;
 
         process.on("exit", () => this.cleanup());
@@ -31,6 +34,11 @@ class ProgressManager {
             this.cleanup();
             process.exit(130);
         });
+    }
+
+    private detectDocsPreviewMode(): boolean {
+        const args = process.argv.join(" ");
+        return args.includes("generate") && args.includes("--docs") && args.includes("--preview");
     }
 
     public static getInstance(): ProgressManager {
