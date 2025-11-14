@@ -200,6 +200,10 @@ fixtures:
     - outputFolder: default-values
       customConfig:
         useDefaultRequestParameterValues: true
+  nullable-request-body:
+    - outputFolder: disable-wire-tests
+      customConfig:
+        enableWireTests: false
 scripts:
   - docker: fernapi/go-seed:1.0.0
     commands:
