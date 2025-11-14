@@ -6,11 +6,6 @@ on:
       - main
   workflow_dispatch:
 
-# Cancel previous workflows on previous push
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 permissions:
   pull-requests: write
   contents: write
@@ -323,6 +318,9 @@ jobs:
         (needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.ruby-model != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -355,6 +353,9 @@ jobs:
         (needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.ruby-sdk != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -388,6 +389,9 @@ jobs:
         (needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.ruby-sdk-v2 != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -421,6 +425,9 @@ jobs:
         (needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.pydantic != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -454,6 +461,9 @@ jobs:
         (needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.python-sdk != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -487,6 +497,9 @@ jobs:
         (needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.fastapi != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -520,6 +533,9 @@ jobs:
         (needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.openapi != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -550,9 +566,12 @@ jobs:
     if: >-
       ${{ 
         always() && !cancelled() &&
-        (needs.changes.outputs.psotman == 'true' ||  needs.changes.outputs.seed == 'true') &&
+        (needs.changes.outputs.postman == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.postman != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -586,6 +605,9 @@ jobs:
         (needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.java-sdk != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -619,6 +641,9 @@ jobs:
         (needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.java-model != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -652,6 +677,9 @@ jobs:
         (needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.java-spring != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -685,6 +713,9 @@ jobs:
         (needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.ts-sdk != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -718,6 +749,9 @@ jobs:
         (needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.ts-express != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -751,6 +785,9 @@ jobs:
         (needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.go-fiber != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -784,6 +821,9 @@ jobs:
         (needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.go-model != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -817,6 +857,9 @@ jobs:
         (needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.go-sdk != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -850,6 +893,9 @@ jobs:
         (needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.csharp-model != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -883,6 +929,9 @@ jobs:
         (needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.csharp-sdk != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -916,6 +965,9 @@ jobs:
         (needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.php-model != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -949,6 +1001,9 @@ jobs:
         (needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.php-sdk != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -982,6 +1037,9 @@ jobs:
         (needs.changes.outputs.swift == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.swift-sdk != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -1015,6 +1073,9 @@ jobs:
         (needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.rust-model != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -1048,6 +1109,9 @@ jobs:
         (needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.rust-sdk != ''
       }}
+    concurrency:
+      group: update-seed/${{ github.ref }}/${{ github.job }}/${{ strategy.job-index }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 15 # Limit the number of runners for this job
@@ -1076,8 +1140,7 @@ jobs:
   commit-seed-changes-by-push:
     if: >-
       ${{
-        always() && !cancelled() && needs.setup.outputs.update-by-push == 'true' &&
-        !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
+        always() && !cancelled() && needs.setup.outputs.update-by-push == 'true'
       }}
     needs:
       [
@@ -1119,6 +1182,41 @@ jobs:
           echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
           echo $branch
 
+      # Build list of allowed generators based on successful jobs
+      - name: Build allowed generators list
+        id: build-allowed
+        shell: bash
+        run: |
+          ALLOWED=""
+          [ "${{ needs.ruby-model-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}ruby-model,"
+          [ "${{ needs.ruby-sdk-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}ruby-sdk,"
+          [ "${{ needs.ruby-sdk-v2-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}ruby-sdk-v2,"
+          [ "${{ needs.pydantic-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}pydantic,"
+          [ "${{ needs.python-sdk-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}python-sdk,"
+          [ "${{ needs.fastapi-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}fastapi,"
+          [ "${{ needs.openapi-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}openapi,"
+          [ "${{ needs.postman-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}postman,"
+          [ "${{ needs.java-sdk-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}java-sdk,"
+          [ "${{ needs.java-model-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}java-model,"
+          [ "${{ needs.java-spring-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}java-spring,"
+          [ "${{ needs.typescript-sdk-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}ts-sdk,"
+          [ "${{ needs.typescript-express-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}ts-express,"
+          [ "${{ needs.go-fiber-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}go-fiber,"
+          [ "${{ needs.go-model-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}go-model,"
+          [ "${{ needs.go-sdk-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}go-sdk,"
+          [ "${{ needs.csharp-model-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}csharp-model,"
+          [ "${{ needs.csharp-sdk-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}csharp-sdk,"
+          [ "${{ needs.php-model-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}php-model,"
+          [ "${{ needs.php-sdk-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}php-sdk,"
+          [ "${{ needs.swift-sdk-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}swift-sdk,"
+          [ "${{ needs.rust-model-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}rust-model,"
+          [ "${{ needs.rust-sdk-seed-update.result }}" = "success" ] && ALLOWED="${ALLOWED}rust-sdk,"
+
+          # Remove trailing comma
+          ALLOWED="${ALLOWED%,}"
+          echo "allowed=$ALLOWED" >> $GITHUB_OUTPUT
+          echo "Allowed generators: $ALLOWED"
+
       # Get action file specific to the running branch
       - name: Checkout Action File
         uses: actions/checkout@v4
@@ -1127,16 +1225,16 @@ jobs:
           sparse-checkout: |
             .github/
 
-      # Match to all patch files, since we are committing all generator changes at once
-      # Checkout the branch directly to avoid detaching the head so we can commit back changes
+      # Apply patches using the enhanced action with selective download
       - name: Apply Patches
         id: apply-patches
         uses: ./.github/actions/apply-update-seed-patches
         with:
           patch-pattern: seed-*.patch
           checkout-ref: ${{ steps.extract-branch.outputs.branch }}
+          allowed-generators: ${{ steps.build-allowed.outputs.allowed }}
 
-      # Commit all applied patches back to branch (will be checked out in apply-patches step)
+      # Commit all applied patches back to branch
       - name: Add and Commit Changes
         id: commit-changes
         uses: EndBug/add-and-commit@v9
@@ -1153,9 +1251,7 @@ jobs:
       ${{
         always() && !cancelled() &&
         github.ref == 'refs/heads/main' &&
-        needs.setup.outputs.update-by-pr == 'true' &&
-        !contains(needs.*.result, 'failure') && 
-        !contains(needs.*.result, 'cancelled')
+        needs.setup.outputs.update-by-pr == 'true'
       }}
     needs:
       [
@@ -1273,13 +1369,37 @@ jobs:
       # Only match to patches with this matrix name, since we are PR'ing per generator
       - name: Apply Patches
         id: apply-patches
+        if: |
+          (matrix.sdk-name == 'ruby-model'        && needs.ruby-model-seed-update.result == 'success') ||
+          (matrix.sdk-name == 'ruby-sdk'          && needs.ruby-sdk-seed-update.result == 'success') ||
+          (matrix.sdk-name == 'ruby-sdk-v2'       && needs.ruby-sdk-v2-seed-update.result == 'success') ||
+          (matrix.sdk-name == 'pydantic'          && needs.pydantic-seed-update.result == 'success') ||
+          (matrix.sdk-name == 'python-sdk'        && needs.python-sdk-seed-update.result == 'success') ||
+          (matrix.sdk-name == 'fastapi'           && needs.fastapi-seed-update.result == 'success') ||
+          (matrix.sdk-name == 'openapi'           && needs.openapi-seed-update.result == 'success') ||
+          (matrix.sdk-name == 'postman'           && needs.postman-seed-update.result == 'success') ||
+          (matrix.sdk-name == 'java-sdk'          && needs.java-sdk-seed-update.result == 'success') ||
+          (matrix.sdk-name == 'java-model'        && needs.java-model-seed-update.result == 'success') ||
+          (matrix.sdk-name == 'java-spring'       && needs.java-spring-seed-update.result == 'success') ||
+          (matrix.sdk-name == 'ts-sdk'            && needs.typescript-sdk-seed-update.result == 'success') ||
+          (matrix.sdk-name == 'ts-express'        && needs.typescript-express-seed-update.result == 'success') ||
+          (matrix.sdk-name == 'go-fiber'          && needs.go-fiber-seed-update.result == 'success') ||
+          (matrix.sdk-name == 'go-model'          && needs.go-model-seed-update.result == 'success') ||
+          (matrix.sdk-name == 'go-sdk'            && needs.go-sdk-seed-update.result == 'success') ||
+          (matrix.sdk-name == 'csharp-model'      && needs.csharp-model-seed-update.result == 'success') ||
+          (matrix.sdk-name == 'csharp-sdk'        && needs.csharp-sdk-seed-update.result == 'success') ||
+          (matrix.sdk-name == 'php-model'         && needs.php-model-seed-update.result == 'success') ||
+          (matrix.sdk-name == 'php-sdk'           && needs.php-sdk-seed-update.result == 'success') ||
+          (matrix.sdk-name == 'swift-sdk'         && needs.swift-sdk-seed-update.result == 'success') ||
+          (matrix.sdk-name == 'rust-model'        && needs.rust-model-seed-update.result == 'success') ||
+          (matrix.sdk-name == 'rust-sdk'          && needs.rust-sdk-seed-update.result == 'success')
         uses: ./.github/actions/apply-update-seed-patches
         with:
           patch-pattern: seed-${{ matrix.sdk-name }}-*.patch
 
       # Create PR, approve and set to merge per generator
       - name: Create Pull Request
-        if: steps.apply-patches.outputs.has-patches == 'true'
+        if: steps.apply-patches.outputs.has-patches == 'true' && steps.apply-patches.conclusion == 'success'
         id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
@@ -1308,7 +1428,7 @@ jobs:
           echo "PR Created: ${{ steps.cpr.outputs.pull-request-url }}"
 
       - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
+        if: steps.cpr.outputs.pull-request-operation == 'created' && steps.apply-patches.conclusion == 'success'
         uses: peter-evans/enable-pull-request-automerge@v3
         with:
           token: ${{ secrets.ACTIONS_PAT }}
@@ -1316,7 +1436,7 @@ jobs:
           merge-method: squash
 
       - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
+        if: steps.cpr.outputs.pull-request-operation == 'created' && steps.apply-patches.conclusion == 'success'
         uses: ./.github/actions/auto-approve
         with:
           approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
