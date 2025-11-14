@@ -24,6 +24,23 @@ service:
             alias_object: MyAliasObject
             list_of_alias_object: list<MyAliasObject>
             alias_list_of_object: MyCollectionAliasObject
+      examples:
+        - name: UploadMultipleFiles
+          request:
+            maybe_string: "hello"
+            integer: 42
+            file: { filename: "document.pdf", contentType: "application/pdf" }
+            file_list:
+              - "image1.png"
+              - { filename: "image2.jpg", contentType: "image/jpeg" }
+            list_of_objects:
+              - foo: "bar"
+            alias_object:
+              foo: "baz"
+            list_of_alias_object:
+              - foo: "qux"
+            alias_list_of_object:
+              - foo: "quux"
 
     justFile:
       path: /just-file
@@ -34,7 +51,9 @@ service:
           properties:
             file: file
       examples:
-        - request: {}
+        - name: UploadSingleFile
+          request:
+            file: avatar.png
 
     justFileWithQueryParams:
       path: /just-file-with-query-params

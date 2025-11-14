@@ -4,7 +4,10 @@
 
 import * as FernIr from "../../../index";
 
-export type ExampleRequestBody = FernIr.ExampleRequestBody.InlinedRequestBody | FernIr.ExampleRequestBody.Reference;
+export type ExampleRequestBody =
+    | FernIr.ExampleRequestBody.InlinedRequestBody
+    | FernIr.ExampleRequestBody.Reference
+    | FernIr.ExampleRequestBody.FileUpload;
 
 export namespace ExampleRequestBody {
     export interface InlinedRequestBody extends FernIr.ExampleInlinedRequestBody, _Utils {
@@ -15,6 +18,10 @@ export namespace ExampleRequestBody {
         type: "reference";
     }
 
+    export interface FileUpload extends FernIr.ExampleFileUploadRequestBody, _Utils {
+        type: "fileUpload";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.ExampleRequestBody._Visitor<_Result>) => _Result;
     }
@@ -22,6 +29,7 @@ export namespace ExampleRequestBody {
     export interface _Visitor<_Result> {
         inlinedRequestBody: (value: FernIr.ExampleInlinedRequestBody) => _Result;
         reference: (value: FernIr.ExampleTypeReference) => _Result;
+        fileUpload: (value: FernIr.ExampleFileUploadRequestBody) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -53,6 +61,19 @@ export const ExampleRequestBody = {
         };
     },
 
+    fileUpload: (value: FernIr.ExampleFileUploadRequestBody): FernIr.ExampleRequestBody.FileUpload => {
+        return {
+            ...value,
+            type: "fileUpload",
+            _visit: function <_Result>(
+                this: FernIr.ExampleRequestBody.FileUpload,
+                visitor: FernIr.ExampleRequestBody._Visitor<_Result>,
+            ) {
+                return FernIr.ExampleRequestBody._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(
         value: FernIr.ExampleRequestBody,
         visitor: FernIr.ExampleRequestBody._Visitor<_Result>,
@@ -62,6 +83,8 @@ export const ExampleRequestBody = {
                 return visitor.inlinedRequestBody(value);
             case "reference":
                 return visitor.reference(value);
+            case "fileUpload":
+                return visitor.fileUpload(value);
             default:
                 return visitor._other(value as any);
         }

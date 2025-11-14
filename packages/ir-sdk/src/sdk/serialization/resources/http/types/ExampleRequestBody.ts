@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { ExampleInlinedRequestBody } from "./ExampleInlinedRequestBody";
+import { ExampleFileUploadRequestBody } from "./ExampleFileUploadRequestBody";
 
 export const ExampleRequestBody: core.serialization.Schema<
     serializers.ExampleRequestBody.Raw,
@@ -14,6 +15,7 @@ export const ExampleRequestBody: core.serialization.Schema<
     .union("type", {
         inlinedRequestBody: ExampleInlinedRequestBody,
         reference: core.serialization.lazyObject(() => serializers.ExampleTypeReference),
+        fileUpload: ExampleFileUploadRequestBody,
     })
     .transform<FernIr.ExampleRequestBody>({
         transform: (value) => {
@@ -22,6 +24,8 @@ export const ExampleRequestBody: core.serialization.Schema<
                     return FernIr.ExampleRequestBody.inlinedRequestBody(value);
                 case "reference":
                     return FernIr.ExampleRequestBody.reference(value);
+                case "fileUpload":
+                    return FernIr.ExampleRequestBody.fileUpload(value);
                 default:
                     return value as FernIr.ExampleRequestBody;
             }
@@ -30,7 +34,10 @@ export const ExampleRequestBody: core.serialization.Schema<
     });
 
 export declare namespace ExampleRequestBody {
-    export type Raw = ExampleRequestBody.InlinedRequestBody | ExampleRequestBody.Reference;
+    export type Raw =
+        | ExampleRequestBody.InlinedRequestBody
+        | ExampleRequestBody.Reference
+        | ExampleRequestBody.FileUpload;
 
     export interface InlinedRequestBody extends ExampleInlinedRequestBody.Raw {
         type: "inlinedRequestBody";
@@ -38,5 +45,9 @@ export declare namespace ExampleRequestBody {
 
     export interface Reference extends serializers.ExampleTypeReference.Raw {
         type: "reference";
+    }
+
+    export interface FileUpload extends ExampleFileUploadRequestBody.Raw {
+        type: "fileUpload";
     }
 }
