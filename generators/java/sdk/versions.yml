@@ -1,3 +1,19 @@
+- version: 3.16.0
+  changelogEntry:
+    - summary: |
+        Add opt-in use-local-date-for-dates config flag to generate java.time.LocalDate instead of String for Fern date types.
+      type: feat
+  createdAt: "2025-11-14"
+  irVersion: 61
+
+- version: 3.15.1
+  changelogEntry:
+    - summary: |
+        Fix SDK generation failures for endpoints with custom pagination. Endpoints using `x-fern-pagination: type: custom` now generate successfully, returning the raw response type without automatic pagination wrappers.
+      type: fix
+  createdAt: "2025-11-14"
+  irVersion: 61
+
 - version: 3.15.0
   changelogEntry:
     - summary: |

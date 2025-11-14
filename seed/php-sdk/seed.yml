@@ -176,6 +176,8 @@ allowedFailures:
   # Fix union dynamic snippets (i.e. BigUnion).
   - unions:no-custom-config
   - unions:property-accessors
+  # Java-specific fixture for LocalDate support
+  - unions-with-local-date
   # unknown
   - file-upload
   - http-head

@@ -151,6 +151,8 @@ allowedFailures:
   - trace
   - undiscriminated-unions
   - unions
+  # Java-specific fixture for LocalDate support
+  - unions-with-local-date
   - variables
   - websocket-inferred-auth
   # Intermediate failures
