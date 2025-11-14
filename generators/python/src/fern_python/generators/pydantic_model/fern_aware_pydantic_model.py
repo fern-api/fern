@@ -168,8 +168,7 @@ class FernAwarePydanticModel:
                 # Force must_import_after_current_declaration=True for union dependencies
                 # so their imports appear at bottom before update_forward_refs call
                 ghost_ref = dataclasses.replace(
-                    self.get_class_reference_for_type_id(dependency),
-                    must_import_after_current_declaration=True
+                    self.get_class_reference_for_type_id(dependency), must_import_after_current_declaration=True
                 )
                 self._pydantic_model.add_ghost_reference(ghost_ref)
                 self._self_referential_union_member_dependencies.add(dependency)
@@ -310,8 +309,7 @@ class FernAwarePydanticModel:
             # go into _import_to_statements_that_must_precede_it and appear at bottom
             ghost_references = [
                 dataclasses.replace(
-                    self.get_class_reference_for_type_id(dependency_type_id),
-                    must_import_after_current_declaration=True
+                    self.get_class_reference_for_type_id(dependency_type_id), must_import_after_current_declaration=True
                 )
                 for dependency_type_id in self._self_referential_union_member_dependencies
             ]
