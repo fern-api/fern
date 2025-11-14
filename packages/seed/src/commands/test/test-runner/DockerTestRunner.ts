@@ -14,7 +14,11 @@ export class DockerTestRunner extends TestRunner {
 
     constructor(args: TestRunner.Args & { runner?: ContainerRunner }) {
         super(args);
-        this.runner = args.runner ?? "podman";
+        if (args.runner != null) {
+            this.runner = args.runner;
+        } else {
+            this.runner = args.generator.workspaceConfig.test.podman != null ? "podman" : "docker";
+        }
     }
 
     public async build(): Promise<void> {
