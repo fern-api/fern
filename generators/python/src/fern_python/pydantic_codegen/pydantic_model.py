@@ -448,8 +448,8 @@ class PydanticModel:
         # 2. Kwarg refs with must_import_after_current_declaration=False so they resolve correctly
         import dataclasses
 
-        constraint_refs = []  # For adding footer constraint
-        kwarg_refs = []  # For actual function call
+        constraint_refs: list[AST.Reference] = []  # For adding footer constraint
+        kwarg_refs: list[AST.Reference] = []  # For actual function call
 
         for ghost_ref in filtered_ghost_refs:
             # Constraint ref: keeps import in dict until write_remaining_imports
