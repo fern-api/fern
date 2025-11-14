@@ -119,7 +119,8 @@ async function tryRunContainer({
         ...args
     ].filter(Boolean);
 
-    const { stdout, stderr, exitCode } = await loggingExeca(logger, runner ?? "docker", containerArgs, {
+    const containerRunner = runner ?? "docker";
+    const { stdout, stderr, exitCode } = await loggingExeca(logger, containerRunner, containerArgs, {
         reject: false,
         all: true,
         doNotPipeOutput: true
@@ -131,6 +132,15 @@ async function tryRunContainer({
         const tmpFile = await tmp.file();
         await writeFile(tmpFile.path, logs);
         logger.info(`Generator logs here: ${tmpFile.path}`);
+    }
+
+    if (exitCode == null) {
+        throw new Error(
+            `Container runtime '${containerRunner}' is not installed or not found on PATH.\n` +
+                `${containerRunner === "podman" ? "Seed tests default to Podman. " : ""}` +
+                `Install ${containerRunner}: ${containerRunner === "podman" ? "https://podman.io/docs/installation" : "https://docs.docker.com/get-docker/"}\n` +
+                `Error details: ${stderr || stdout || "No output"}`
+        );
     }
 
     if (exitCode !== 0) {
