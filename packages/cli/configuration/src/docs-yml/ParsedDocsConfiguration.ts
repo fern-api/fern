@@ -327,6 +327,7 @@ export declare namespace DocsNavigationItem {
         text: string;
         url: string;
         icon: string | AbsoluteFilePath | undefined;
+        target: Target | undefined;
     }
 
     export interface Changelog

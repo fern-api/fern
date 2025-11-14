@@ -1015,7 +1015,8 @@ async function convertNavigationItem({
             type: "link",
             text: rawConfig.link,
             url: rawConfig.href,
-            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig)
+            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
+            target: rawConfig.target
         };
     }
     if (isRawChangelogConfig(rawConfig)) {
@@ -1088,7 +1089,8 @@ function parseApiReferenceLayoutItem(
                 type: "link",
                 text: item.link,
                 url: item.href,
-                icon: resolveIconPath(item.icon, absolutePathToConfig)
+                icon: resolveIconPath(item.icon, absolutePathToConfig),
+                target: item.target
             }
         ];
     } else if (isRawApiRefSectionConfiguration(item)) {
