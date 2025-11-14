@@ -12,6 +12,18 @@ webhooks:
     examples:
       - payload: $WebhookWithLegacyExamplesPayload.JohnExample
       - payload: $WebhookWithLegacyExamplesPayload.JaneExample
+  
+  webhookWithDollarSignInName:
+    docs: Test webhook with $ in example name
+    method: POST
+    payload: SimplePayload
+    examples:
+      - name: "price: $10"
+        payload:
+          message: "Item costs $10"
+      - name: "$basic"
+        payload:
+          message: "Basic example"
 
 types:
   Person:
@@ -28,3 +40,7 @@ types:
         value: { person: { firstName: "John", middleInitial: "Q", lastName: "Sample" } }
       - name: JaneExample
         value: { person: { firstName: "Jane", middleInitial: "Q", lastName: "Sample" } }
+  
+  SimplePayload:
+    properties:
+      message: string

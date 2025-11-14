@@ -46,7 +46,10 @@ function convertWebhookGroup(webhookGroup: Ir.webhooks.WebhookGroup): FdrCjsSdk.
             // webhookExamples.push(...(webhook.examples ?? []));
             webhookExamples.push(
                 ...(webhook.examples?.map((example) => {
-                    return { payload: example.payload.jsonExample };
+                    return {
+                        payload: example.payload.jsonExample,
+                        ...(example.name != null && { name: example.name.originalName })
+                    };
                 }) ?? [])
             );
         }
