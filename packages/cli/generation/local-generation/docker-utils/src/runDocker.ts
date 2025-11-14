@@ -4,7 +4,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
-export declare namespace runDocker {
+export declare namespace runContainer {
     export interface Args {
         logger: Logger;
         imageName: string;
@@ -22,7 +22,7 @@ export declare namespace runDocker {
     }
 }
 
-export async function runDocker({
+export async function runContainer({
     logger,
     imageName,
     args = [],
@@ -32,9 +32,9 @@ export async function runDocker({
     writeLogsToFile = true,
     removeAfterCompletion = false,
     runner
-}: runDocker.Args): Promise<void> {
+}: runContainer.Args): Promise<void> {
     const tryRun = () =>
-        tryRunDocker({
+        tryRunContainer({
             logger,
             imageName,
             args,
@@ -57,7 +57,33 @@ export async function runDocker({
     }
 }
 
-async function tryRunDocker({
+/**
+ * @deprecated Use runContainer instead. This function is maintained for backward compatibility.
+ */
+export declare namespace runDocker {
+    export interface Args {
+        logger: Logger;
+        imageName: string;
+        args?: string[];
+        binds?: string[];
+        envVars?: Record<string, string>;
+        ports?: Record<string, string>;
+        writeLogsToFile?: boolean;
+        removeAfterCompletion?: boolean;
+        runner?: ContainerRunner;
+    }
+
+    export interface Result {
+        logs: string;
+    }
+}
+
+/**
+ * @deprecated Use runContainer instead. This function is maintained for backward compatibility.
+ */
+export const runDocker = runContainer;
+
+async function tryRunContainer({
     logger,
     imageName,
     args,
@@ -81,7 +107,7 @@ async function tryRunDocker({
     if (process.env["FERN_STACK_TRACK"]) {
         envVars["FERN_STACK_TRACK"] = process.env["FERN_STACK_TRACK"];
     }
-    const dockerArgs = [
+    const containerArgs = [
         "run",
         "--user",
         "root",
@@ -92,10 +118,8 @@ async function tryRunDocker({
         imageName,
         ...args
     ].filter(Boolean);
-    // This filters out any falsy values (empty strings, null, undefined) from the dockerArgs array
-    // In this case, it removes empty strings that may be present when removeAfterCompletion is false
 
-    const { stdout, stderr, exitCode } = await loggingExeca(logger, runner ?? "docker", dockerArgs, {
+    const { stdout, stderr, exitCode } = await loggingExeca(logger, runner ?? "docker", containerArgs, {
         reject: false,
         all: true,
         doNotPipeOutput: true
@@ -110,7 +134,7 @@ async function tryRunDocker({
     }
 
     if (exitCode !== 0) {
-        throw new Error(`Docker exited with code ${exitCode}.\n${stdout}\n${stderr}`);
+        throw new Error(`Container exited with code ${exitCode}.\n${stdout}\n${stderr}`);
     }
 }
 

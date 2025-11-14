@@ -1,4 +1,4 @@
-import { DockerExecutionEnvironment } from "./DockerExecutionEnvironment";
+import { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment";
 import { GenerationRunner } from "./GenerationRunner";
 import { NativeExecutionEnvironment } from "./NativeExecutionEnvironment";
 
@@ -8,9 +8,9 @@ export async function runContainerizedGenerationForSeed(
         dockerImage: string;
     }
 ): Promise<void> {
-    const executionEnv = new DockerExecutionEnvironment({
-        dockerImage: args.dockerImage,
-        keepDocker: args.keepDocker,
+    const executionEnv = new ContainerExecutionEnvironment({
+        containerImage: args.dockerImage,
+        keepContainer: args.keepDocker,
         runner: "podman"
     });
     const runner = new GenerationRunner(executionEnv);

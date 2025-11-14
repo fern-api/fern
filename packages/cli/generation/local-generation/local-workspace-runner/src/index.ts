@@ -1,3 +1,5 @@
+export * from "./ContainerExecutionEnvironment";
+export { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment";
 export * from "./DockerExecutionEnvironment";
 export { DockerExecutionEnvironment } from "./DockerExecutionEnvironment";
 export * from "./ExecutionEnvironment";
