@@ -11,6 +11,7 @@ import { doesVersionOfCliExist } from "../../cli-context/upgrade-utils/doesVersi
 import { rerunFernCliAtVersion } from "../../rerunFernCliAtVersion";
 
 export const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
+export const TARGET_VERSION_ENV_VAR = "FERN_POST_UPGRADE_VERSION";
 
 function ensureFinalNewline(content: string): string {
     return content.endsWith("\n") ? content : content + "\n";
@@ -51,11 +52,12 @@ export async function upgrade({
     targetVersion: string | undefined;
 }): Promise<void> {
     const previousVersion = process.env[PREVIOUS_VERSION_ENV_VAR];
-    if (previousVersion != null) {
+    const targetVersionFromEnv = process.env[TARGET_VERSION_ENV_VAR];
+    if (previousVersion != null && targetVersionFromEnv != null) {
         await runPostUpgradeSteps({
             cliContext,
             previousVersion,
-            newVersion: cliContext.environment.packageVersion
+            newVersion: targetVersionFromEnv
         });
         return;
     }
@@ -143,7 +145,8 @@ export async function upgrade({
                 version: fernCliUpgradeInfo.targetVersion,
                 cliContext,
                 env: {
-                    [PREVIOUS_VERSION_ENV_VAR]: previousVersionBeforeUpgrade
+                    [PREVIOUS_VERSION_ENV_VAR]: previousVersionBeforeUpgrade,
+                    [TARGET_VERSION_ENV_VAR]: fernCliUpgradeInfo.targetVersion
                 }
             });
         }
