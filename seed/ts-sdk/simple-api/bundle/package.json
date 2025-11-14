@@ -43,7 +43,7 @@
         "@types/node": "^18.19.70",
         "typescript": "~5.7.2",
         "@biomejs/biome": "2.3.1",
-        "esbuild": "~0.25.0"
+        "esbuild": "~0.24.2"
     },
     "browser": {
         "fs": false,

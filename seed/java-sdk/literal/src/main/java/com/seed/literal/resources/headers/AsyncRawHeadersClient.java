@@ -13,8 +13,6 @@ import com.seed.literal.core.SeedLiteralHttpResponse;
 import com.seed.literal.resources.headers.requests.SendLiteralsInHeadersRequest;
 import com.seed.literal.types.SendResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -44,12 +42,10 @@ public class AsyncRawHeadersClient {
                 .newBuilder()
                 .addPathSegments("headers")
                 .build();
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("query", request.getQuery());
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -59,8 +55,8 @@ public class AsyncRawHeadersClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
-        _requestBuilder.addHeader("X-Endpoint-Version", request.getEndpointVersion());
-        _requestBuilder.addHeader("X-Async", request.getAsync().toString());
+        _requestBuilder.addHeader("endpointVersion", request.getEndpointVersion());
+        _requestBuilder.addHeader("async", request.getAsync().toString());
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

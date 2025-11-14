@@ -19,10 +19,10 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "ChatCompletionsCreateRequest",
+      "generatedRequestName": "CreateChatCompletionsRequest",
       "request": {
         "schema": {
-          "generatedName": "ChatCompletionsCreateRequest",
+          "generatedName": "CreateChatCompletionsRequest",
           "schema": "CreateCompletionRequest",
           "source": {
             "file": "../openapi.yml",
@@ -43,7 +43,7 @@
         "description": "Success!",
         "fullExamples": [],
         "schema": {
-          "generatedName": "ChatCompletionsCreateResponse",
+          "generatedName": "CreateChatCompletionsResponse",
           "schema": {
             "type": "string"
           },

@@ -7,7 +7,7 @@ import type * as SeedApi from "../../index.js";
  *     {
  *         limit: 1,
  *         id: "id",
- *         date: "date",
+ *         date: "2023-01-15",
  *         deadline: "2024-01-15T09:30:00Z",
  *         bytes: "bytes",
  *         user: {
@@ -58,7 +58,7 @@ export interface SearchRequest {
     user: SeedApi.User;
     userList?: SeedApi.User | SeedApi.User[];
     optionalDeadline?: string;
-    keyValue?: Record<string, string | undefined>;
+    keyValue?: Record<string, string>;
     optionalString?: string;
     nestedUser?: SeedApi.NestedUser;
     optionalUser?: SeedApi.User;

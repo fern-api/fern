@@ -182,13 +182,14 @@ service:
               status: succeeded
       method: POST
       path: /bookings/{bookingId}/payment
-      path-parameters:
-        bookingId:
-          docs: The ID of the booking to pay for.
-          type: string
       request:
         body: trainsRoot.BookingPayment
         content-type: application/json
+        name: CreateBookingPaymentRequest
+        path-parameters:
+          bookingId:
+            docs: The ID of the booking to pay for.
+            type: string
       response:
         docs: Payment successful
         status-code: 200

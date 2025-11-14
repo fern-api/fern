@@ -116,13 +116,10 @@
             "shape": {
               "type": "reference",
               "value": {
-                "type": "optional",
+                "type": "nullable",
                 "itemType": {
-                  "type": "nullable",
-                  "itemType": {
-                    "type": "id",
-                    "value": "type_:NullableObject"
-                  }
+                  "type": "id",
+                  "value": "type_:NullableObject"
                 }
               }
             }

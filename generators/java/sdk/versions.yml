@@ -1,3 +1,11 @@
+- version: 3.14.14
+  changelogEntry:
+    - summary: |
+        Fix streaming method names and request types in wire tests. Wire tests now correctly normalize streaming endpoints to use `.methodStream()` naming pattern and `MethodStreamRequest` types, while non-streaming endpoints use `.method()` and `MethodRequest`. This eliminates "incompatible types" compilation errors where streaming method calls were paired with non-streaming response types.
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 61
+
 - version: 3.14.13
   changelogEntry:
     - summary: |

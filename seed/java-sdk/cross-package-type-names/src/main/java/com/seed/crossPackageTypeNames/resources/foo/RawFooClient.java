@@ -14,8 +14,6 @@ import com.seed.crossPackageTypeNames.core.SeedCrossPackageTypeNamesHttpResponse
 import com.seed.crossPackageTypeNames.resources.foo.requests.FindRequest;
 import com.seed.crossPackageTypeNames.resources.foo.types.ImportingType;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -44,13 +42,10 @@ public class RawFooClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "optionalString", request.getOptionalString().get(), false);
         }
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("publicProperty", request.getPublicProperty());
-        properties.put("privateProperty", request.getPrivateProperty());
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

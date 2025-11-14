@@ -8,7 +8,6 @@ public class Example1 {
         SeedStreamingClient client =
                 SeedStreamingClient.builder().url("https://api.fern.com").build();
 
-        client.dummy()
-                .generate(Generateequest.builder().stream(false).numEvents(5).build());
+        client.dummy().generate(Generateequest.builder().numEvents(5).build());
     }
 }

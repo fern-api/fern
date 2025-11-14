@@ -5,6 +5,21 @@
 
 The Seed Java library provides convenient access to the Seed APIs from Java.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Base Url](#base-url)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Custom Client](#custom-client)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Headers](#custom-headers)
+  - [Access Raw Response Data](#access-raw-response-data)
+- [Contributing](#contributing)
+
 ## Installation
 
 ### Gradle
@@ -76,6 +91,19 @@ public class Example {
                         )
                         .build()
                 )
+                .neighborRequired(
+                    SearchRequestNeighborRequired.of(
+                        User
+                            .builder()
+                            .name("name")
+                            .tags(
+                                Optional.of(
+                                    Arrays.asList("tags", "tags")
+                                )
+                            )
+                            .build()
+                    )
+                )
                 .userList(
                     Arrays.asList(
                         Optional.of(
@@ -108,19 +136,6 @@ public class Example {
                 )
                 .filter(
                     Arrays.asList(Optional.of("filter"))
-                )
-                .neighborRequired(
-                    SearchRequestNeighborRequired.of(
-                        User
-                            .builder()
-                            .name("name")
-                            .tags(
-                                Optional.of(
-                                    Arrays.asList("tags", "tags")
-                                )
-                            )
-                            .build()
-                    )
                 )
                 .optionalDeadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                 .keyValue(

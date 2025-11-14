@@ -32,9 +32,7 @@ import com.seed.clientSideParams.resources.types.types.SearchResponse;
 import com.seed.clientSideParams.resources.types.types.UpdateUserRequest;
 import com.seed.clientSideParams.resources.types.types.User;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -172,13 +170,10 @@ public class RawServiceClient {
         QueryStringMapper.addQueryParameter(httpUrl, "limit", request.getLimit().orElse(100), false);
         QueryStringMapper.addQueryParameter(
                 httpUrl, "offset", request.getOffset().orElse(0), false);
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("query", request.getQuery());
-        properties.put("filters", request.getFilters());
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

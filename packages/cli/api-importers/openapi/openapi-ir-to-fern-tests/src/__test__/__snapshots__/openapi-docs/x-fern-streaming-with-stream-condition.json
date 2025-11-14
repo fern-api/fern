@@ -16,8 +16,8 @@
               "examples": [
                 {
                   "headers": {
-                    "Request-Timeout": 1,
-                    "Request-Timeout-Millis": 1,
+                    "Request-Timeout": "[object Object]",
+                    "Request-Timeout-Millis": "[object Object]",
                   },
                   "request": {
                     "query": "How can I use the Vectara platform?",
@@ -70,8 +70,8 @@
               "examples": [
                 {
                   "headers": {
-                    "Request-Timeout": 1,
-                    "Request-Timeout-Millis": 1,
+                    "Request-Timeout": "[object Object]",
+                    "Request-Timeout-Millis": "[object Object]",
                   },
                   "request": {
                     "query": "How can I use the Vectara platform?",
@@ -189,8 +189,8 @@
         format: json
       examples:
         - headers:
-            Request-Timeout: 1
-            Request-Timeout-Millis: 1
+            Request-Timeout: '[object Object]'
+            Request-Timeout-Millis: '[object Object]'
           request:
             query: How can I use the Vectara platform?
             stream_response: true
@@ -223,8 +223,8 @@
         status-code: 200
       examples:
         - headers:
-            Request-Timeout: 1
-            Request-Timeout-Millis: 1
+            Request-Timeout: '[object Object]'
+            Request-Timeout-Millis: '[object Object]'
           request:
             query: How can I use the Vectara platform?
             stream_response: false

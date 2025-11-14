@@ -34,7 +34,8 @@ describe("openapi-v2-docs", async () => {
                     context,
                     audiences: { type: "all" },
                     enableUniqueErrorsPerEndpoint: true,
-                    generateV1Examples: false
+                    generateV1Examples: false,
+                    logWarnings: false
                 });
                 await expect(JSON.stringify(intermediateRepresentation, undefined, 2)).toMatchFileSnapshot(
                     `./__snapshots__/v3-docs/${fixture.name}.json`

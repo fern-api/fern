@@ -5,10 +5,9 @@ package com.seed.authEnvironmentVariables.resources.service.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.authEnvironmentVariables.core.ObjectMappers;
 import java.util.HashMap;
@@ -31,7 +30,7 @@ public final class HeaderAuthRequest {
     /**
      * @return Specifies the endpoint key.
      */
-    @JsonProperty("X-Endpoint-Header")
+    @JsonIgnore
     public String getXEndpointHeader() {
         return xEndpointHeader;
     }
@@ -99,7 +98,6 @@ public final class HeaderAuthRequest {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        @JsonSetter("X-Endpoint-Header")
         public _FinalStage xEndpointHeader(@NotNull String xEndpointHeader) {
             this.xEndpointHeader = Objects.requireNonNull(xEndpointHeader, "xEndpointHeader must not be null");
             return this;

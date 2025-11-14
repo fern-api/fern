@@ -2072,7 +2072,7 @@
                                     "safeName": "Body"
                                 }
                             },
-                            "includePathParameters": false,
+                            "includePathParameters": true,
                             "onlyPathParameters": false
                         },
                         "requestParameterName": {
@@ -3940,7 +3940,7 @@
                         ]
                     },
                     "metadata": {
-                        "includePathParameters": false,
+                        "includePathParameters": true,
                         "onlyPathParameters": false
                     }
                 },

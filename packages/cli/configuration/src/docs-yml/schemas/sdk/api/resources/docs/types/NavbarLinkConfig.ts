@@ -10,6 +10,7 @@ export interface NavbarLinkConfig extends FernDocsConfig.WithViewers {
      * Example: https://buildwithfern.com/contact
      */
     href?: string;
+    target?: FernDocsConfig.Target;
     /** Use `href` instead. */
     url?: string;
     /** Text inside the button. */

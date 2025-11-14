@@ -20,7 +20,7 @@
       "unsafeName": "",
     },
   },
-  "apiPlayground": true,
+  "apiPlayground": undefined,
   "apiVersion": undefined,
   "audiences": undefined,
   "auth": {
@@ -2568,17 +2568,10 @@
                 "optional": {
                   "_visit": [Function],
                   "primitive": {
-                    "v1": "STRING",
+                    "v1": "DATE_TIME",
                     "v2": {
                       "_visit": [Function],
-                      "default": undefined,
-                      "type": "string",
-                      "validation": {
-                        "format": "date-time",
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "pattern": undefined,
-                      },
+                      "type": "dateTime",
                     },
                   },
                   "type": "primitive",

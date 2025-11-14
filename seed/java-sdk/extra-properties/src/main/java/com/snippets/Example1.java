@@ -8,11 +8,6 @@ public class Example1 {
         SeedExtraPropertiesClient client =
                 SeedExtraPropertiesClient.builder().url("https://api.fern.com").build();
 
-        client.user()
-                .createUser(CreateUserRequest.builder()
-                        .type("CreateUserRequest")
-                        .version("v1")
-                        .name("name")
-                        .build());
+        client.user().createUser(CreateUserRequest.builder().name("name").build());
     }
 }

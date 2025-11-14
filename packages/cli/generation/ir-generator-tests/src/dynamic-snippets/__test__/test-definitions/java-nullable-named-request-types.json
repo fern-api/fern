@@ -318,13 +318,10 @@
                     "bodyType": {
                         "type": "typeReference",
                         "value": {
-                            "type": "optional",
+                            "type": "nullable",
                             "value": {
-                                "type": "nullable",
-                                "value": {
-                                    "type": "named",
-                                    "value": "type_:NullableObject"
-                                }
+                                "type": "named",
+                                "value": "type_:NullableObject"
                             }
                         }
                     }
