@@ -10,6 +10,7 @@ import {
     ExperimentalConfig,
     Language,
     PlaygroundSettings,
+    Target,
     ThemeConfig,
     VersionAvailability
 } from "./schemas";
@@ -195,6 +196,7 @@ export interface ExternalProduct
     href: string | undefined;
     icon: string | AbsoluteFilePath;
     image: AbsoluteFilePath | undefined;
+    target: Target | undefined;
 }
 
 export type DocsNavigationConfiguration =
@@ -232,6 +234,7 @@ export declare namespace TabbedNavigationChild {
     export interface Link {
         type: "link";
         href: string;
+        target: Target | undefined;
     }
 
     export interface Changelog {
@@ -324,6 +327,7 @@ export declare namespace DocsNavigationItem {
         text: string;
         url: string;
         icon: string | AbsoluteFilePath | undefined;
+        target: Target | undefined;
     }
 
     export interface Changelog

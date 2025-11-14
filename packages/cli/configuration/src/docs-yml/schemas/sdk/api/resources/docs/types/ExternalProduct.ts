@@ -7,4 +7,6 @@ import * as FernDocsConfig from "../../../index";
 export interface ExternalProduct extends FernDocsConfig.ProductConfigBase {
     /** The absolute URL to the product. */
     href: string;
+    /** The target of the URL */
+    target?: FernDocsConfig.Target;
 }
