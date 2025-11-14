@@ -1,7 +1,7 @@
 - version: 3.16.0
   changelogEntry:
     - summary: |
-        Add opt-in use-local-date-for-dates config flag to generate java.time.LocalDate instead of String for Fern date types. The PrimitiveToTypeNameConverter was refactored from a static inner class to a non-static inner class to properly access customConfig, enabling LocalDate generation when the flag is enabled.
+        Add opt-in use-local-date-for-dates config flag to generate java.time.LocalDate instead of String for Fern date types.
       type: feat
   createdAt: "2025-11-14"
   irVersion: 61
