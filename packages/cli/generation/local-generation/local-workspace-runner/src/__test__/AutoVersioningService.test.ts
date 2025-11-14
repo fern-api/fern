@@ -18,6 +18,18 @@ const mockLogger = {
     },
     debug: () => {
         // No-op for tests
+    },
+    disable: () => {
+        // No-op for tests
+    },
+    enable: () => {
+        // No-op for tests
+    },
+    trace: () => {
+        // No-op for tests
+    },
+    log: () => {
+        // No-op for tests
     }
 };
 
