@@ -308,6 +308,8 @@ async function enhancePackageExamples(
     const coordinator = SpinnerStatusCoordinator.getInstance();
     const statusId = coordinator.create(apiName || "API", allWorkItems.length);
 
+    const apiStats = { count: 0, total: allWorkItems.length };
+
     const enhancementResults = await processBatchedWorkItems(
         allWorkItems,
         enhancer,
@@ -317,7 +319,8 @@ async function enhancePackageExamples(
         enhancedExampleRecords,
         openApiSpec,
         sourceFilePath,
-        statusId
+        statusId,
+        apiStats
     );
 
     coordinator.finish(statusId);
@@ -396,7 +399,8 @@ async function processBatchedWorkItems(
     enhancedExampleRecords: EnhancedExampleRecord[],
     openApiSpec?: string,
     sourceFilePath?: AbsoluteFilePath,
-    statusId?: string
+    statusId?: string,
+    apiStats?: { count: number; total: number }
 ): Promise<Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>> {
     const enhancementResults = new Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>();
 
@@ -487,7 +491,8 @@ async function processBatchedWorkItems(
                                 enhancedExampleRecords,
                                 stats,
                                 context,
-                                statusId
+                                statusId,
+                                apiStats
                             );
 
                             // Save results incrementally after successful reduced batch
@@ -547,7 +552,8 @@ async function processBatchedWorkItems(
                             enhancedExampleRecords,
                             stats,
                             context,
-                            statusId
+                            statusId,
+                            apiStats
                         );
 
                         // Save results incrementally after successful single batch
@@ -581,7 +587,8 @@ async function processBatchedWorkItems(
                     enhancedExampleRecords,
                     stats,
                     context,
-                    statusId
+                    statusId,
+                    apiStats
                 );
                 batchSuccess = true;
 
@@ -646,7 +653,8 @@ async function processBatchResponse(
     enhancedExampleRecords: EnhancedExampleRecord[],
     stats: { count: number; total: number },
     context: TaskContext,
-    statusId?: string
+    statusId?: string,
+    apiStats?: { count: number; total: number }
 ): Promise<void> {
     const coordinator = SpinnerStatusCoordinator.getInstance();
 
@@ -683,14 +691,17 @@ async function processBatchResponse(
             if (enhancedExampleRecord.requestBody !== undefined || enhancedExampleRecord.responseBody !== undefined) {
                 enhancedExampleRecords.push(enhancedExampleRecord);
                 stats.count++;
+                if (apiStats) {
+                    apiStats.count++;
+                }
                 context.logger.debug(`Successfully enhanced example for ${item.endpoint.method} ${item.example.path}`);
             }
         } else if (result?.error) {
             context.logger.debug(`Failed to enhance ${item.endpoint.method} ${item.example.path}: ${result.error}`);
         }
 
-        if (statusId) {
-            coordinator.update(statusId, stats.count);
+        if (statusId && apiStats) {
+            coordinator.update(statusId, apiStats.count);
         }
     }
 }

@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Add in-place progress bar for AI example generation that tracks completed vs remaining endpoints without creating terminal noise. The progress display updates on the same lines instead of creating new output for each endpoint.
+        Show AI example generation progress in the spinner line. When generating AI examples, the spinner displays "generating AI examples for {API name} - X/Y" to track progress without creating terminal noise.
       type: feat
   irVersion: 61
   createdAt: "2025-11-14"
