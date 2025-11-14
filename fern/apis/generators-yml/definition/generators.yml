@@ -203,6 +203,13 @@ types:
           If `always`, remove discriminant properties from schemas when generating types, unless the schema is also used outside of a discriminated union.
           If `never`, keep discriminant properties in schemas when generating types.
           Defaults to `always`.
+      path-parameter-order:
+        type: optional<PathParameterOrder>
+        docs: |
+          Controls the order of path parameters in generated method signatures.
+          - `url-order`: Use the order path parameters appear in the URL path (e.g., /users/{userId}/posts/{postId})
+          - `spec-order`: Use the order path parameters are defined in the spec
+          Defaults to `url-order`.
 
   RemoveDiscriminantsFromSchemas:
     docs: |
@@ -210,6 +217,15 @@ types:
     enum:
       - always
       - never
+
+  PathParameterOrder:
+    docs: |
+      Controls the order of path parameters in generated method signatures.
+    enum:
+      - name: urlOrder
+        value: url-order
+      - name: specOrder
+        value: spec-order
 
   UnionSettingsSchema:
     enum:
@@ -345,6 +361,14 @@ types:
           If `always`, remove discriminant properties from schemas when generating types, unless the schema is also used outside of a discriminated union.
           If `never`, keep discriminant properties in schemas when generating types.
           Defaults to `always`.
+      path-parameter-order:
+        type: optional<PathParameterOrder>
+        docs: |
+          Controls the order of path parameters in generated method signatures.
+          - `url-order`: Use the order path parameters appear in the URL path (e.g., /users/{userId}/posts/{postId})
+          - `spec-order`: Use the order path parameters are defined in the spec
+          Defaults to `url-order`.
+        default: url-order
 
   OpenAPISettingsSchema:
     extends:

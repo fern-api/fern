@@ -58,6 +58,7 @@ package com.example.usage;
 import com.seed.api.SeedApiClient;
 import com.seed.api.requests.SearchRequest;
 import com.seed.api.types.NestedUser;
+import com.seed.api.types.SearchRequestNeighbor;
 import com.seed.api.types.SearchRequestNeighborRequired;
 import com.seed.api.types.User;
 import java.time.OffsetDateTime;
@@ -76,7 +77,7 @@ public class Example {
                 .builder()
                 .limit(1)
                 .id("id")
-                .date("date")
+                .date("2023-01-15")
                 .deadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                 .bytes("bytes")
                 .user(
@@ -138,8 +139,8 @@ public class Example {
                 )
                 .optionalDeadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                 .keyValue(
-                    new HashMap<String, Optional<String>>() {{
-                        put("keyValue", Optional.of("keyValue"));
+                    new HashMap<String, String>() {{
+                        put("keyValue", "keyValue");
                     }}
                 )
                 .optionalString("optionalString")
@@ -172,15 +173,17 @@ public class Example {
                         .build()
                 )
                 .neighbor(
-                    User
-                        .builder()
-                        .name("name")
-                        .tags(
-                            Optional.of(
-                                Arrays.asList("tags", "tags")
+                    SearchRequestNeighbor.of(
+                        User
+                            .builder()
+                            .name("name")
+                            .tags(
+                                Optional.of(
+                                    Arrays.asList("tags", "tags")
+                                )
                             )
-                        )
-                        .build()
+                            .build()
+                    )
                 )
                 .build()
         );

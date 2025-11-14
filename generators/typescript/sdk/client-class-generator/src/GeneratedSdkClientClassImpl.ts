@@ -96,6 +96,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         useDefaultRequestParameterValues: boolean;
         generateEndpointMetadata: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+        offsetSemantics: "item-index" | "page-index";
     }
 }
 
@@ -147,6 +148,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly omitFernHeaders: boolean;
     private readonly anyEndpointWithAuth: boolean;
     private readonly generateEndpointMetadata: boolean;
+    private readonly offsetSemantics: "item-index" | "page-index";
 
     constructor({
         isRoot,
@@ -175,7 +177,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         formDataSupport,
         omitFernHeaders,
         generateEndpointMetadata,
-        parameterNaming
+        parameterNaming,
+        offsetSemantics
     }: GeneratedSdkClientClassImpl.Init) {
         this.isRoot = isRoot;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -197,6 +200,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.omitFernHeaders = omitFernHeaders;
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.parameterNaming = parameterNaming;
+        this.offsetSemantics = offsetSemantics;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -255,7 +259,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             includeContentHeadersOnResponse: includeContentHeadersOnFileDownloadResponse,
                             clientClass: this,
                             streamType,
-                            fileResponseType
+                            fileResponseType,
+                            offsetSemantics: this.offsetSemantics
                         });
                     }
                 };

@@ -1,3 +1,5 @@
+export * from "./AutoVersioningService";
+export { AutoVersioningException, AutoVersioningService } from "./AutoVersioningService";
 export * from "./DockerExecutionEnvironment";
 export { DockerExecutionEnvironment } from "./DockerExecutionEnvironment";
 export * from "./ExecutionEnvironment";
@@ -12,3 +14,12 @@ export {
     runNativeGenerationWithCommand
 } from "./runLocalGenerationForSeed";
 export * from "./runLocalGenerationForWorkspace";
+export * from "./VersionUtils";
+export {
+    AUTO_VERSION,
+    extractPreviousVersionFromDiffLine,
+    incrementVersion,
+    isAutoVersion,
+    MAGIC_VERSION,
+    VersionBump
+} from "./VersionUtils";

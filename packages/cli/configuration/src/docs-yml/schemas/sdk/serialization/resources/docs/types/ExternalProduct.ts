@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { Target } from "./Target";
 import { ProductConfigBase } from "./ProductConfigBase";
 
 export const ExternalProduct: core.serialization.ObjectSchema<
@@ -13,11 +14,13 @@ export const ExternalProduct: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         href: core.serialization.string(),
+        target: Target.optional(),
     })
     .extend(ProductConfigBase);
 
 export declare namespace ExternalProduct {
     export interface Raw extends ProductConfigBase.Raw {
         href: string;
+        target?: Target.Raw | null;
     }
 }

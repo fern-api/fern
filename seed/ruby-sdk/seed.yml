@@ -138,6 +138,8 @@ allowedFailures:
   - undiscriminated-unions
   - undiscriminated-union-with-response-property
   - unions
+  # Java-specific fixture for LocalDate support
+  - unions-with-local-date
   - unknown
   - url-form-encoded
   - validation

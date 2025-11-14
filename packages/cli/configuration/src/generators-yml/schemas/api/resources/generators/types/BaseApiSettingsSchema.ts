@@ -40,4 +40,11 @@ export interface BaseApiSettingsSchema {
      * Defaults to `always`.
      */
     "remove-discriminants-from-schemas"?: FernDefinition.RemoveDiscriminantsFromSchemas;
+    /**
+     * Controls the order of path parameters in generated method signatures.
+     * - `url-order`: Use the order path parameters appear in the URL path (e.g., /users/{userId}/posts/{postId})
+     * - `spec-order`: Use the order path parameters are defined in the spec
+     * Defaults to `url-order`.
+     */
+    "path-parameter-order"?: FernDefinition.PathParameterOrder;
 }

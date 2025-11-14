@@ -33,11 +33,6 @@ public class AsyncRawSeedApiClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<SeedApiHttpResponse<ResponseBody>> postWithNullableNamedRequestBodyType(String id) {
-        return postWithNullableNamedRequestBodyType(
-                id, PostWithNullableNamedRequestBodyTypeRequest.builder().build());
-    }
-
     public CompletableFuture<SeedApiHttpResponse<ResponseBody>> postWithNullableNamedRequestBodyType(
             String id, PostWithNullableNamedRequestBodyTypeRequest request) {
         return postWithNullableNamedRequestBodyType(id, request, null);
@@ -52,13 +47,8 @@ public class AsyncRawSeedApiClient {
                 .build();
         RequestBody body;
         try {
-            body = RequestBody.create("", null);
-            if (request.getBody().isPresent()) {
-                body = RequestBody.create(
-                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(
-                                request.getBody().get()),
-                        MediaTypes.APPLICATION_JSON);
-            }
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedApiException("Failed to serialize request", e);
         }

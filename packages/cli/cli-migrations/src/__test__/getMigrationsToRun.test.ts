@@ -1,9 +1,16 @@
 import { getMigrationsToRun } from "../migrations/getMigrationsToRun";
 
 describe("getMigrationsToRun", () => {
-    it("doesn't include to-version", () => {
+    it("doesn't include to-version when no migration exists for it", () => {
         const migrationsToRun = getMigrationsToRun({ fromVersion: "0.0.150", toVersion: "0.0.188" });
         expect(migrationsToRun).toHaveLength(0);
+    });
+
+    it("includes to-version when a migration exists for it", () => {
+        const migrationsToRun = getMigrationsToRun({ fromVersion: "0.0.190", toVersion: "0.0.191" });
+        const allMigrations = migrationsToRun.flatMap(({ migrations }) => migrations);
+        expect(allMigrations).toHaveLength(1);
+        expect(migrationsToRun[0]?.version).toBe("0.0.191");
     });
 
     it("includes from-version", () => {
@@ -28,5 +35,21 @@ describe("getMigrationsToRun", () => {
         });
         const allMigrations = migrationsToRun.flatMap(({ migrations }) => migrations);
         expect(allMigrations).toHaveLength(0);
+    });
+
+    it("includes 1.0.0 migration when upgrading to 1.0.0", () => {
+        const migrationsToRun = getMigrationsToRun({ fromVersion: "0.54.0", toVersion: "1.0.0" });
+        const allMigrations = migrationsToRun.flatMap(({ migrations }) => migrations);
+        expect(allMigrations.length).toBeGreaterThan(0);
+        const has1_0_0Migration = migrationsToRun.some((m) => m.version === "1.0.0");
+        expect(has1_0_0Migration).toBe(true);
+    });
+
+    it("includes 1.0.0 migration when upgrading from 0.122.0 to 1.0.2", () => {
+        const migrationsToRun = getMigrationsToRun({ fromVersion: "0.122.0", toVersion: "1.0.2" });
+        const allMigrations = migrationsToRun.flatMap(({ migrations }) => migrations);
+        expect(allMigrations.length).toBeGreaterThan(0);
+        const has1_0_0Migration = migrationsToRun.some((m) => m.version === "1.0.0");
+        expect(has1_0_0Migration).toBe(true);
     });
 });

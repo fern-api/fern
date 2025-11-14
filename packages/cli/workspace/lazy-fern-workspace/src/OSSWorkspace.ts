@@ -161,12 +161,14 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         context,
         audiences,
         enableUniqueErrorsPerEndpoint,
-        generateV1Examples
+        generateV1Examples,
+        logWarnings
     }: {
         context: TaskContext;
         audiences: Audiences;
         enableUniqueErrorsPerEndpoint: boolean;
         generateV1Examples: boolean;
+        logWarnings: boolean;
     }): Promise<IntermediateRepresentation> {
         const specs = await getAllOpenAPISpecs({ context, specs: this.specs });
         const documents = await this.loader.loadDocuments({ context, specs });
@@ -364,6 +366,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     : "";
 
                 // TODO(kenny): we should do something more useful with the warnings here, or remove.
+
                 if (errorStats.numErrors > 0) {
                     context.logger.log(
                         "error",
@@ -380,7 +383,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
                 context.logger.log("info", "");
 
-                await errorCollector.logErrors({ logWarnings: false });
+                await errorCollector.logErrors({ logWarnings });
             }
         }
 
