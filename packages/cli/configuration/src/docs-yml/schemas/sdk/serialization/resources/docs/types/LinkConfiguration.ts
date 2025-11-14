@@ -13,6 +13,7 @@ export const LinkConfiguration: core.serialization.ObjectSchema<
     link: core.serialization.string(),
     href: core.serialization.string(),
     icon: core.serialization.string().optional(),
+    openInNewTab: core.serialization.boolean().optional(),
 });
 
 export declare namespace LinkConfiguration {
@@ -20,5 +21,6 @@ export declare namespace LinkConfiguration {
         link: string;
         href: string;
         icon?: string | null;
+        openInNewTab?: boolean | null;
     }
 }

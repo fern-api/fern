@@ -1120,6 +1120,12 @@ types:
       link: string
       href: string
       icon: optional<string>
+      openInNewTab:
+        type: optional<boolean>
+        docs: |
+          Controls whether the link opens in a new tab or the current window.
+          
+          @default: true (opens in new tab)
 
   VersionedSnippetLanguageConfiguration:
     properties:
