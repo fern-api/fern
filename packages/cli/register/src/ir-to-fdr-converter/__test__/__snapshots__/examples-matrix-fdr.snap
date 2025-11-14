@@ -161,14 +161,14 @@
             "pathParameters": {},
             "queryParameters": {},
             "requestBody": {
-              "age": {},
+              "age": 1,
               "email": "jane@example.com",
               "name": "Jane Doe",
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
-                "age": {},
+                "age": 1,
                 "email": "jane@example.com",
                 "name": "Jane Doe",
               },
@@ -176,14 +176,14 @@
             "responseBody": {
               "id": "user456",
               "name": "Jane Doe",
-              "nickname": {},
+              "nickname": "string",
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": "user456",
                 "name": "Jane Doe",
-                "nickname": {},
+                "nickname": "string",
               },
             },
             "responseStatusCode": 200,
@@ -305,14 +305,14 @@
             "responseBody": {
               "id": "user789",
               "name": "Bob Smith",
-              "nickname": {},
+              "nickname": "string",
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": "user789",
                 "name": "Bob Smith",
-                "nickname": {},
+                "nickname": "string",
               },
             },
             "responseStatusCode": 200,
@@ -354,14 +354,14 @@
             "pathParameters": {},
             "queryParameters": {},
             "requestBody": {
-              "age": {},
+              "age": 1,
               "email": "bob@example.com",
               "name": "Bob Smith",
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
-                "age": {},
+                "age": 1,
                 "email": "bob@example.com",
                 "name": "Bob Smith",
               },
@@ -369,14 +369,14 @@
             "responseBody": {
               "id": "user789",
               "name": "Bob Smith",
-              "nickname": {},
+              "nickname": "string",
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": "user789",
                 "name": "Bob Smith",
-                "nickname": {},
+                "nickname": "string",
               },
             },
             "responseStatusCode": 200,
@@ -405,14 +405,14 @@
             "responseBody": {
               "id": "user789",
               "name": "Bob Smith",
-              "nickname": {},
+              "nickname": "string",
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
                 "id": "user789",
                 "name": "Bob Smith",
-                "nickname": {},
+                "nickname": "string",
               },
             },
             "responseStatusCode": 200,
