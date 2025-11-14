@@ -34,8 +34,6 @@ export interface BaseRequestOptions {
 }
 
 export function normalizeClientOptions<T extends BaseClientOptions>(options: T): T {
-    const logging = core.logging.createLogger(options?.logging);
-
     const headers = mergeHeaders(
         {
             "X-Fern-Language": "JavaScript",
@@ -50,7 +48,7 @@ export function normalizeClientOptions<T extends BaseClientOptions>(options: T):
 
     return {
         ...options,
-        logging,
+        logging: core.logging.createLogger(options?.logging),
         headers,
     } as T;
 }

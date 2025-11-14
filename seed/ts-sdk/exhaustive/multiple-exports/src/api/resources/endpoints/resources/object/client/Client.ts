@@ -7,22 +7,22 @@ import * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
-export declare namespace Object_Client {
+export declare namespace ObjectClient {
     export interface Options extends BaseClientOptions {}
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class Object_Client {
-    protected readonly _options: Object_Client.Options;
+export class ObjectClient {
+    protected readonly _options: ObjectClient.Options;
 
-    constructor(options: Object_Client.Options) {
+    constructor(options: ObjectClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
     /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
-     * @param {Object_Client.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithOptionalField({
@@ -45,14 +45,14 @@ export class Object_Client {
      */
     public getAndReturnWithOptionalField(
         request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: Object_Client.RequestOptions,
+        requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithOptionalField(request, requestOptions));
     }
 
     private async __getAndReturnWithOptionalField(
         request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: Object_Client.RequestOptions,
+        requestOptions?: ObjectClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -113,7 +113,7 @@ export class Object_Client {
 
     /**
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
-     * @param {Object_Client.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithRequiredField({
@@ -122,14 +122,14 @@ export class Object_Client {
      */
     public getAndReturnWithRequiredField(
         request: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: Object_Client.RequestOptions,
+        requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithRequiredField(request, requestOptions));
     }
 
     private async __getAndReturnWithRequiredField(
         request: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: Object_Client.RequestOptions,
+        requestOptions?: ObjectClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -190,7 +190,7 @@ export class Object_Client {
 
     /**
      * @param {SeedExhaustive.types.ObjectWithMapOfMap} request
-     * @param {Object_Client.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithMapOfMap({
@@ -203,14 +203,14 @@ export class Object_Client {
      */
     public getAndReturnWithMapOfMap(
         request: SeedExhaustive.types.ObjectWithMapOfMap,
-        requestOptions?: Object_Client.RequestOptions,
+        requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithMapOfMap> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithMapOfMap(request, requestOptions));
     }
 
     private async __getAndReturnWithMapOfMap(
         request: SeedExhaustive.types.ObjectWithMapOfMap,
-        requestOptions?: Object_Client.RequestOptions,
+        requestOptions?: ObjectClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithMapOfMap>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -271,7 +271,7 @@ export class Object_Client {
 
     /**
      * @param {SeedExhaustive.types.NestedObjectWithOptionalField} request
-     * @param {Object_Client.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithOptionalField({
@@ -297,7 +297,7 @@ export class Object_Client {
      */
     public getAndReturnNestedWithOptionalField(
         request: SeedExhaustive.types.NestedObjectWithOptionalField,
-        requestOptions?: Object_Client.RequestOptions,
+        requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithOptionalField> {
         return core.HttpResponsePromise.fromPromise(
             this.__getAndReturnNestedWithOptionalField(request, requestOptions),
@@ -306,7 +306,7 @@ export class Object_Client {
 
     private async __getAndReturnNestedWithOptionalField(
         request: SeedExhaustive.types.NestedObjectWithOptionalField,
-        requestOptions?: Object_Client.RequestOptions,
+        requestOptions?: ObjectClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithOptionalField>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -368,7 +368,7 @@ export class Object_Client {
     /**
      * @param {string} string
      * @param {SeedExhaustive.types.NestedObjectWithRequiredField} request
-     * @param {Object_Client.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
@@ -395,7 +395,7 @@ export class Object_Client {
     public getAndReturnNestedWithRequiredField(
         string: string,
         request: SeedExhaustive.types.NestedObjectWithRequiredField,
-        requestOptions?: Object_Client.RequestOptions,
+        requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField> {
         return core.HttpResponsePromise.fromPromise(
             this.__getAndReturnNestedWithRequiredField(string, request, requestOptions),
@@ -405,7 +405,7 @@ export class Object_Client {
     private async __getAndReturnNestedWithRequiredField(
         string: string,
         request: SeedExhaustive.types.NestedObjectWithRequiredField,
-        requestOptions?: Object_Client.RequestOptions,
+        requestOptions?: ObjectClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithRequiredField>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -466,7 +466,7 @@ export class Object_Client {
 
     /**
      * @param {SeedExhaustive.types.NestedObjectWithRequiredField[]} request
-     * @param {Object_Client.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
@@ -511,7 +511,7 @@ export class Object_Client {
      */
     public getAndReturnNestedWithRequiredFieldAsList(
         request: SeedExhaustive.types.NestedObjectWithRequiredField[],
-        requestOptions?: Object_Client.RequestOptions,
+        requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField> {
         return core.HttpResponsePromise.fromPromise(
             this.__getAndReturnNestedWithRequiredFieldAsList(request, requestOptions),
@@ -520,7 +520,7 @@ export class Object_Client {
 
     private async __getAndReturnNestedWithRequiredFieldAsList(
         request: SeedExhaustive.types.NestedObjectWithRequiredField[],
-        requestOptions?: Object_Client.RequestOptions,
+        requestOptions?: ObjectClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithRequiredField>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,

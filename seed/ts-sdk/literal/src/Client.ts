@@ -6,8 +6,7 @@ import { PathClient } from "./api/resources/path/client/Client.js";
 import { QueryClient } from "./api/resources/query/client/Client.js";
 import { ReferenceClient } from "./api/resources/reference/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { mergeHeaders } from "./core/headers.js";
-import * as core from "./core/index.js";
+import { normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedLiteralClient {
     export interface Options extends BaseClientOptions {}
@@ -24,23 +23,7 @@ export class SeedLiteralClient {
     protected _reference: ReferenceClient | undefined;
 
     constructor(options: SeedLiteralClient.Options) {
-        this._options = {
-            ...options,
-            logging: core.logging.createLogger(options?.logging),
-            headers: mergeHeaders(
-                {
-                    "X-API-Version": options?.version ?? "02-02-2024",
-                    "X-API-Enable-Audit-Logging": (options?.auditLogging ?? true).toString(),
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/literal",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/literal/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                options?.headers,
-            ),
-        };
+        this._options = normalizeClientOptions(options);
     }
 
     public get headers(): HeadersClient {

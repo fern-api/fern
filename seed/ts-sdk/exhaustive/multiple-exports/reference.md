@@ -874,7 +874,7 @@ await client.endpoints.object.getAndReturnWithOptionalField({
 <dl>
 <dd>
 
-**requestOptions:** `Object_Client.RequestOptions` 
+**requestOptions:** `ObjectClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -925,7 +925,7 @@ await client.endpoints.object.getAndReturnWithRequiredField({
 <dl>
 <dd>
 
-**requestOptions:** `Object_Client.RequestOptions` 
+**requestOptions:** `ObjectClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -980,7 +980,7 @@ await client.endpoints.object.getAndReturnWithMapOfMap({
 <dl>
 <dd>
 
-**requestOptions:** `Object_Client.RequestOptions` 
+**requestOptions:** `ObjectClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1048,7 +1048,7 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
 <dl>
 <dd>
 
-**requestOptions:** `Object_Client.RequestOptions` 
+**requestOptions:** `ObjectClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1124,7 +1124,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
 <dl>
 <dd>
 
-**requestOptions:** `Object_Client.RequestOptions` 
+**requestOptions:** `ObjectClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1211,7 +1211,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
 <dl>
 <dd>
 
-**requestOptions:** `Object_Client.RequestOptions` 
+**requestOptions:** `ObjectClient.RequestOptions` 
     
 </dd>
 </dl>

@@ -41,8 +41,6 @@ export interface BaseRequestOptions {
 }
 
 export function normalizeClientOptions<T extends BaseClientOptions>(options: T): T {
-    const logging = core.logging.createLogger(options?.logging);
-
     const headers = mergeHeaders(
         {
             "X-Fern-Language": "JavaScript",
@@ -51,13 +49,15 @@ export function normalizeClientOptions<T extends BaseClientOptions>(options: T):
             "User-Agent": "@fern/literal/0.0.1",
             "X-Fern-Runtime": core.RUNTIME.type,
             "X-Fern-Runtime-Version": core.RUNTIME.version,
+            "X-API-Version": options?.version ?? "02-02-2024",
+            "X-API-Enable-Audit-Logging": (options?.auditLogging ?? true).toString(),
         },
         options?.headers,
     );
 
     return {
         ...options,
-        logging,
+        logging: core.logging.createLogger(options?.logging),
         headers,
     } as T;
 }

@@ -55,7 +55,7 @@ await client.imdb.createMovie({
 <dl>
 <dd>
 
-**requestOptions:** `Imdb.RequestOptions` 
+**requestOptions:** `ImdbClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -104,7 +104,7 @@ await client.imdb.getMovie("movie_id");
 <dl>
 <dd>
 
-**requestOptions:** `Imdb.RequestOptions` 
+**requestOptions:** `ImdbClient.RequestOptions` 
     
 </dd>
 </dl>

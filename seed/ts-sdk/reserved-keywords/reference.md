@@ -39,7 +39,7 @@ await client.package.test({
 <dl>
 <dd>
 
-**requestOptions:** `Package.RequestOptions` 
+**requestOptions:** `PackageClient.RequestOptions` 
     
 </dd>
 </dl>

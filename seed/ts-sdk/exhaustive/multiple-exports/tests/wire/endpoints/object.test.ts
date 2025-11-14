@@ -3,7 +3,7 @@
 import { SeedExhaustiveClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
-describe("Object_Client", () => {
+describe("ObjectClient", () => {
     test("getAndReturnWithOptionalField", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });

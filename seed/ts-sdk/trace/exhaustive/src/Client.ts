@@ -9,8 +9,7 @@ import { SubmissionClient } from "./api/resources/submission/client/Client.js";
 import { SyspropClient } from "./api/resources/sysprop/client/Client.js";
 import { V2Client } from "./api/resources/v2/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { mergeHeaders } from "./core/headers.js";
-import * as core from "./core/index.js";
+import { normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedTraceClient {
     export interface Options extends BaseClientOptions {}
@@ -30,22 +29,7 @@ export class SeedTraceClient {
     protected _sysprop: SyspropClient | undefined;
 
     constructor(options: SeedTraceClient.Options = {}) {
-        this._options = {
-            ...options,
-            logging: core.logging.createLogger(options?.logging),
-            headers: mergeHeaders(
-                {
-                    "X-Random-Header": options?.xRandomHeader,
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/trace",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/trace/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                options?.headers,
-            ),
-        };
+        this._options = normalizeClientOptions(options);
     }
 
     public get v2(): V2Client {

@@ -29,7 +29,7 @@ await client.v2.test();
 <dl>
 <dd>
 
-**requestOptions:** `V2.RequestOptions` 
+**requestOptions:** `V2Client.RequestOptions` 
     
 </dd>
 </dl>
@@ -89,7 +89,7 @@ await client.admin.updateTestSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ff
 <dl>
 <dd>
 
-**requestOptions:** `Admin.RequestOptions` 
+**requestOptions:** `AdminClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -152,7 +152,7 @@ await client.admin.sendTestSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc3
 <dl>
 <dd>
 
-**requestOptions:** `Admin.RequestOptions` 
+**requestOptions:** `AdminClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -211,7 +211,7 @@ await client.admin.updateWorkspaceSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd
 <dl>
 <dd>
 
-**requestOptions:** `Admin.RequestOptions` 
+**requestOptions:** `AdminClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -274,7 +274,7 @@ await client.admin.sendWorkspaceSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a
 <dl>
 <dd>
 
-**requestOptions:** `Admin.RequestOptions` 
+**requestOptions:** `AdminClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -426,7 +426,7 @@ await client.admin.storeTracedTestCase("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "
 <dl>
 <dd>
 
-**requestOptions:** `Admin.RequestOptions` 
+**requestOptions:** `AdminClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -567,7 +567,7 @@ await client.admin.storeTracedTestCaseV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 <dl>
 <dd>
 
-**requestOptions:** `Admin.RequestOptions` 
+**requestOptions:** `AdminClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -708,7 +708,7 @@ await client.admin.storeTracedWorkspace("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", 
 <dl>
 <dd>
 
-**requestOptions:** `Admin.RequestOptions` 
+**requestOptions:** `AdminClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -841,7 +841,7 @@ await client.admin.storeTracedWorkspaceV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
 <dl>
 <dd>
 
-**requestOptions:** `Admin.RequestOptions` 
+**requestOptions:** `AdminClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -883,7 +883,7 @@ await client.homepage.getHomepageProblems();
 <dl>
 <dd>
 
-**requestOptions:** `Homepage.RequestOptions` 
+**requestOptions:** `HomepageClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -932,7 +932,7 @@ await client.homepage.setHomepageProblems(["string", "string"]);
 <dl>
 <dd>
 
-**requestOptions:** `Homepage.RequestOptions` 
+**requestOptions:** `HomepageClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -984,7 +984,7 @@ await client.migration.getAttemptedMigrations({
 <dl>
 <dd>
 
-**requestOptions:** `Migration.RequestOptions` 
+**requestOptions:** `MigrationClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1063,7 +1063,7 @@ await client.playlist.createPlaylist(1, {
 <dl>
 <dd>
 
-**requestOptions:** `Playlist.RequestOptions` 
+**requestOptions:** `PlaylistClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1140,7 +1140,7 @@ await client.playlist.getPlaylists(1, {
 <dl>
 <dd>
 
-**requestOptions:** `Playlist.RequestOptions` 
+**requestOptions:** `PlaylistClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1211,7 +1211,7 @@ await client.playlist.getPlaylist(1, "playlistId");
 <dl>
 <dd>
 
-**requestOptions:** `Playlist.RequestOptions` 
+**requestOptions:** `PlaylistClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1293,7 +1293,7 @@ await client.playlist.updatePlaylist(1, "playlistId", {
 <dl>
 <dd>
 
-**requestOptions:** `Playlist.RequestOptions` 
+**requestOptions:** `PlaylistClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1364,7 +1364,7 @@ await client.playlist.deletePlaylist(1, "playlist_id");
 <dl>
 <dd>
 
-**requestOptions:** `Playlist.RequestOptions` 
+**requestOptions:** `PlaylistClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1500,7 +1500,7 @@ await client.problem.createProblem({
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
+**requestOptions:** `ProblemClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1643,7 +1643,7 @@ await client.problem.updateProblem("problemId", {
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
+**requestOptions:** `ProblemClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1706,7 +1706,7 @@ await client.problem.deleteProblem("problemId");
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
+**requestOptions:** `ProblemClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1785,7 +1785,7 @@ await client.problem.getDefaultStarterFiles({
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
+**requestOptions:** `ProblemClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1849,7 +1849,7 @@ await client.submission.createExecutionSession("JAVA");
 <dl>
 <dd>
 
-**requestOptions:** `Submission.RequestOptions` 
+**requestOptions:** `SubmissionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1912,7 +1912,7 @@ await client.submission.getExecutionSession("sessionId");
 <dl>
 <dd>
 
-**requestOptions:** `Submission.RequestOptions` 
+**requestOptions:** `SubmissionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1975,7 +1975,7 @@ await client.submission.stopExecutionSession("sessionId");
 <dl>
 <dd>
 
-**requestOptions:** `Submission.RequestOptions` 
+**requestOptions:** `SubmissionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2016,7 +2016,7 @@ await client.submission.getExecutionSessionsState();
 <dl>
 <dd>
 
-**requestOptions:** `Submission.RequestOptions` 
+**requestOptions:** `SubmissionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2074,7 +2074,7 @@ await client.sysprop.setNumWarmInstances("JAVA", 1);
 <dl>
 <dd>
 
-**requestOptions:** `Sysprop.RequestOptions` 
+**requestOptions:** `SyspropClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2115,7 +2115,7 @@ await client.sysprop.getNumWarmInstances();
 <dl>
 <dd>
 
-**requestOptions:** `Sysprop.RequestOptions` 
+**requestOptions:** `SyspropClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2171,7 +2171,7 @@ await client.v2.problem.getLightweightProblems();
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
+**requestOptions:** `ProblemClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2226,7 +2226,7 @@ await client.v2.problem.getProblems();
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
+**requestOptions:** `ProblemClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2289,7 +2289,7 @@ await client.v2.problem.getLatestProblem("problemId");
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
+**requestOptions:** `ProblemClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2360,7 +2360,7 @@ await client.v2.problem.getProblemVersion("problemId", 1);
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
+**requestOptions:** `ProblemClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2416,7 +2416,7 @@ await client.v2.v3.problem.getLightweightProblems();
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
+**requestOptions:** `ProblemClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2471,7 +2471,7 @@ await client.v2.v3.problem.getProblems();
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
+**requestOptions:** `ProblemClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2534,7 +2534,7 @@ await client.v2.v3.problem.getLatestProblem("problemId");
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
+**requestOptions:** `ProblemClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2605,7 +2605,7 @@ await client.v2.v3.problem.getProblemVersion("problemId", 1);
 <dl>
 <dd>
 
-**requestOptions:** `Problem.RequestOptions` 
+**requestOptions:** `ProblemClient.RequestOptions` 
     
 </dd>
 </dl>
