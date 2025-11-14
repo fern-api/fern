@@ -5,5 +5,6 @@
 import * as FernDefinition from "../../../index";
 
 export interface AiServicesSchema {
-    "auto-versioning"?: FernDefinition.AutoVersioningSchema;
+    provider: FernDefinition.ModelProvider;
+    model: FernDefinition.ModelName;
 }

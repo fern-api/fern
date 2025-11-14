@@ -1,10 +1,6 @@
 types:
   AIServicesSchema:
     properties:
-      auto-versioning: optional<AutoVersioningSchema>
-
-  AIServiceBaseSchema:
-    properties:
       provider: ModelProvider
       model: ModelName
 
@@ -15,8 +11,3 @@ types:
       - bedrock
 
   ModelName: string
-
-  AutoVersioningSchema:
-    extends: AIServiceBaseSchema
-    properties:
-      max-diff-size: optional<integer>

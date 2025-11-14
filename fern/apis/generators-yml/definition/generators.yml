@@ -26,7 +26,7 @@ types:
         type: optional<map<string, group.GeneratorGroupSchema>>
       reviewers:
         type: optional<reviewers.ReviewersSchema>
-      ai-services: optional<ai.AIServicesSchema>
+      ai: optional<ai.AIServicesSchema>
       openapi:
         type: optional<GeneratorsOpenAPISchema>
         availability: deprecated

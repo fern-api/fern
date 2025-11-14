@@ -6,5 +6,5 @@
     "rootDir": "src",
     "types": ["vitest/globals"]
   },
-  "include": ["./generated/**/*", "./src/**/*"]
+  "include": ["./src/**/*"]
 }

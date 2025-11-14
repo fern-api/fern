@@ -5,17 +5,20 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
-import { AutoVersioningSchema } from "./AutoVersioningSchema";
+import { ModelProvider } from "./ModelProvider";
+import { ModelName } from "./ModelName";
 
 export const AiServicesSchema: core.serialization.ObjectSchema<
     serializers.AiServicesSchema.Raw,
     FernDefinition.AiServicesSchema
 > = core.serialization.object({
-    "auto-versioning": AutoVersioningSchema.optional(),
+    provider: ModelProvider,
+    model: ModelName,
 });
 
 export declare namespace AiServicesSchema {
     export interface Raw {
-        "auto-versioning"?: AutoVersioningSchema.Raw | null;
+        provider: ModelProvider.Raw;
+        model: ModelName.Raw;
     }
 }

@@ -51,6 +51,7 @@
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/auth": "workspace:*",
     "@fern-api/casings-generator": "workspace:*",
+    "@fern-api/cli-ai": "workspace:*",
     "@fern-api/cli-logger": "workspace:*",
     "@fern-api/cli-migrations": "workspace:*",
     "@fern-api/cli-source-resolver": "workspace:*",

@@ -4585,6 +4585,9 @@ importers:
       '@fern-api/casings-generator':
         specifier: workspace:*
         version: link:../../commons/casings-generator
+      '@fern-api/cli-ai':
+        specifier: workspace:*
+        version: link:../ai
       '@fern-api/cli-logger':
         specifier: workspace:*
         version: link:../cli-logger
