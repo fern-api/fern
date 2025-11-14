@@ -176,22 +176,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "TestGroupTestMethodNameRequest",
+                        "originalName": "TestMethodNameTestGroupRequest",
                         "camelCase": {
-                            "unsafeName": "testGroupTestMethodNameRequest",
-                            "safeName": "testGroupTestMethodNameRequest"
+                            "unsafeName": "testMethodNameTestGroupRequest",
+                            "safeName": "testMethodNameTestGroupRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "test_group_test_method_name_request",
-                            "safeName": "test_group_test_method_name_request"
+                            "unsafeName": "test_method_name_test_group_request",
+                            "safeName": "test_method_name_test_group_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "TEST_GROUP_TEST_METHOD_NAME_REQUEST",
-                            "safeName": "TEST_GROUP_TEST_METHOD_NAME_REQUEST"
+                            "unsafeName": "TEST_METHOD_NAME_TEST_GROUP_REQUEST",
+                            "safeName": "TEST_METHOD_NAME_TEST_GROUP_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "TestGroupTestMethodNameRequest",
-                            "safeName": "TestGroupTestMethodNameRequest"
+                            "unsafeName": "TestMethodNameTestGroupRequest",
+                            "safeName": "TestMethodNameTestGroupRequest"
                         }
                     },
                     "fernFilepath": {
@@ -297,8 +297,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "named",
-                                "value": "type_:PlainObject"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_:PlainObject"
+                                }
                             }
                         },
                         "propertyAccess": null,
@@ -330,8 +333,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "primitive",
-                                "value": "INTEGER"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "INTEGER"
+                                }
                             }
                         },
                         "propertyAccess": null,
@@ -363,7 +369,7 @@
                     "bodyType": {
                         "type": "typeReference",
                         "value": {
-                            "type": "optional",
+                            "type": "nullable",
                             "value": {
                                 "type": "named",
                                 "value": "type_:PlainObject"
@@ -372,7 +378,7 @@
                     }
                 },
                 "metadata": {
-                    "includePathParameters": false,
+                    "includePathParameters": true,
                     "onlyPathParameters": false
                 }
             },
