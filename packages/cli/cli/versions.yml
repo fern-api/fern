@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix CLI migration selection to include the target version's migrations during `fern upgrade`.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-14"
+  version: 1.0.4
+
+- changelogEntry:
+    - summary: |
         Specify the target of links throughout the docs navigation.
       type: fix
   irVersion: 61
