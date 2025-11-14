@@ -48,7 +48,7 @@ public final class SearchRequest {
 
     private final Optional<OffsetDateTime> optionalDeadline;
 
-    private final Optional<Map<String, Optional<String>>> keyValue;
+    private final Optional<Map<String, String>> keyValue;
 
     private final Optional<String> optionalString;
 
@@ -73,7 +73,7 @@ public final class SearchRequest {
             String bytes,
             User user,
             Optional<OffsetDateTime> optionalDeadline,
-            Optional<Map<String, Optional<String>>> keyValue,
+            Optional<Map<String, String>> keyValue,
             Optional<String> optionalString,
             Optional<NestedUser> nestedUser,
             Optional<User> optionalUser,
@@ -150,7 +150,7 @@ public final class SearchRequest {
     }
 
     @JsonProperty("keyValue")
-    public Optional<Map<String, Optional<String>>> getKeyValue() {
+    public Optional<Map<String, String>> getKeyValue() {
         return keyValue;
     }
 
@@ -294,9 +294,9 @@ public final class SearchRequest {
 
         _FinalStage optionalDeadline(OffsetDateTime optionalDeadline);
 
-        _FinalStage keyValue(Optional<Map<String, Optional<String>>> keyValue);
+        _FinalStage keyValue(Optional<Map<String, String>> keyValue);
 
-        _FinalStage keyValue(Map<String, Optional<String>> keyValue);
+        _FinalStage keyValue(Map<String, String> keyValue);
 
         _FinalStage optionalString(Optional<String> optionalString);
 
@@ -347,7 +347,7 @@ public final class SearchRequest {
 
         private Optional<String> optionalString = Optional.empty();
 
-        private Optional<Map<String, Optional<String>>> keyValue = Optional.empty();
+        private Optional<Map<String, String>> keyValue = Optional.empty();
 
         private Optional<OffsetDateTime> optionalDeadline = Optional.empty();
 
@@ -485,14 +485,14 @@ public final class SearchRequest {
         }
 
         @java.lang.Override
-        public _FinalStage keyValue(Map<String, Optional<String>> keyValue) {
+        public _FinalStage keyValue(Map<String, String> keyValue) {
             this.keyValue = Optional.ofNullable(keyValue);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "keyValue", nulls = Nulls.SKIP)
-        public _FinalStage keyValue(Optional<Map<String, Optional<String>>> keyValue) {
+        public _FinalStage keyValue(Optional<Map<String, String>> keyValue) {
             this.keyValue = keyValue;
             return this;
         }

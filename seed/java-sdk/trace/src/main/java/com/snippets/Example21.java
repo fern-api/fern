@@ -31,6 +31,8 @@ public class Example21 {
                                         .boards(Arrays.asList(
                                                 ProblemDescriptionBoard.html(), ProblemDescriptionBoard.html()))
                                         .build())
+                                .outputType(VariableType.integerType())
+                                .methodName("methodName")
                                 .files(new HashMap<Language, ProblemFiles>() {
                                     {
                                         put(
@@ -61,7 +63,6 @@ public class Example21 {
                                                 .variableType(VariableType.integerType())
                                                 .name("name")
                                                 .build()))
-                                .outputType(VariableType.integerType())
                                 .testcases(Arrays.asList(
                                         TestCaseWithExpectedResult.builder()
                                                 .testCase(TestCase.builder()
@@ -81,7 +82,6 @@ public class Example21 {
                                                         .build())
                                                 .expectedResult(VariableValue.integerValue())
                                                 .build()))
-                                .methodName("methodName")
                                 .build());
     }
 }

@@ -661,7 +661,7 @@ export class Users {
         return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => (response?.data ?? []).length >= (request?.limit ?? 1),
+            hasNextPage: (response) => (response?.data ?? []).length >= Math.floor(request?.limit ?? 1),
             getItems: (response) => response?.data ?? [],
             loadPage: (response) => {
                 _offset += response?.data != null ? response.data.length : 1;
@@ -755,7 +755,8 @@ export class Users {
         return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => response?.hasNextPage ?? (response?.data ?? []).length >= (request?.limit ?? 1),
+            hasNextPage: (response) =>
+                response?.hasNextPage ?? (response?.data ?? []).length >= Math.floor(request?.limit ?? 1),
             getItems: (response) => response?.data ?? [],
             loadPage: (response) => {
                 _offset += response?.data != null ? response.data.length : 1;

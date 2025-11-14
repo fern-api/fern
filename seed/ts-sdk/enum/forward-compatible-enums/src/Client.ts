@@ -2,6 +2,7 @@
 
 import { Headers } from "./api/resources/headers/client/Client.js";
 import { InlinedRequest } from "./api/resources/inlinedRequest/client/Client.js";
+import { MultipartForm } from "./api/resources/multipartForm/client/Client.js";
 import { PathParam } from "./api/resources/pathParam/client/Client.js";
 import { QueryParam } from "./api/resources/queryParam/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
@@ -18,6 +19,7 @@ export class SeedEnumClient {
     protected readonly _options: SeedEnumClient.Options;
     protected _headers: Headers | undefined;
     protected _inlinedRequest: InlinedRequest | undefined;
+    protected _multipartForm: MultipartForm | undefined;
     protected _pathParam: PathParam | undefined;
     protected _queryParam: QueryParam | undefined;
 
@@ -45,6 +47,10 @@ export class SeedEnumClient {
 
     public get inlinedRequest(): InlinedRequest {
         return (this._inlinedRequest ??= new InlinedRequest(this._options));
+    }
+
+    public get multipartForm(): MultipartForm {
+        return (this._multipartForm ??= new MultipartForm(this._options));
     }
 
     public get pathParam(): PathParam {

@@ -333,6 +333,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "GetPlantByIdRequest",
+                "camelCase": {
+                  "unsafeName": "getPlantByIDRequest",
+                  "safeName": "getPlantByIDRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "get_plant_by_id_request",
+                  "safeName": "get_plant_by_id_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GET_PLANT_BY_ID_REQUEST",
+                  "safeName": "GET_PLANT_BY_ID_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "GetPlantByIDRequest",
+                  "safeName": "GetPlantByIDRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -608,6 +672,31 @@
           "path": "/plants/{plantId}"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "GetPlantByIdRequest",
+              "camelCase": {
+                "unsafeName": "getPlantByIDRequest",
+                "safeName": "getPlantByIDRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "get_plant_by_id_request",
+                "safeName": "get_plant_by_id_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "GET_PLANT_BY_ID_REQUEST",
+                "safeName": "GET_PLANT_BY_ID_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "GetPlantByIDRequest",
+                "safeName": "GetPlantByIDRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [],
+              "packagePath": []
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -638,7 +727,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"

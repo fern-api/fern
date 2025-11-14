@@ -94,9 +94,6 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
     protected get Collection() {
         return this.generation.Collection;
     }
-    protected get Special() {
-        return this.generation.Special;
-    }
 
     public addCoreFiles(file: File): void {
         this.coreFiles.push(file);

@@ -10,9 +10,9 @@ public class Example1 {
 
         client.getFoo(GetFooRequest.builder()
                 .requiredBaz("required_baz")
+                .requiredNullableBaz("required_nullable_baz")
                 .optionalBaz("optional_baz")
                 .optionalNullableBaz("optional_nullable_baz")
-                .requiredNullableBaz("required_nullable_baz")
                 .build());
     }
 }

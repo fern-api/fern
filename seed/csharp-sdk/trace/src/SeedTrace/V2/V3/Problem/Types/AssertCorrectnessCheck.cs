@@ -149,12 +149,12 @@ public record AssertCorrectnessCheck
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<AssertCorrectnessCheck>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(AssertCorrectnessCheck).IsAssignableFrom(typeToConvert);
 
         public override AssertCorrectnessCheck Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

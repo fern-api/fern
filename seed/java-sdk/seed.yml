@@ -265,6 +265,10 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: wire-tests
+  streaming:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: streaming
 scripts:
   - docker: fernapi/java-seed
     commands:
@@ -314,7 +318,6 @@ allowedFailures:
   - oauth-client-credentials-nested-root
   - pagination-custom
   - query-parameters
-  - streaming
 
   - java-pagination-deep-cursor-path:wire-tests
 

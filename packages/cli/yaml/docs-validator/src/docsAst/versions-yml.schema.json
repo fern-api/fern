@@ -114,6 +114,15 @@
         }
       ]
     },
+    "docs.Target": {
+      "type": "string",
+      "enum": [
+        "_blank",
+        "_self",
+        "_parent",
+        "_top"
+      ]
+    },
     "docs.ChangelogFolderRelativePath": {
       "type": "string"
     },
@@ -197,6 +206,16 @@
           "oneOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "target": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Target"
             },
             {
               "type": "null"
@@ -1043,6 +1062,16 @@
           "oneOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "target": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Target"
             },
             {
               "type": "null"
