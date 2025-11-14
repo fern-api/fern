@@ -1,21 +1,4 @@
-/*
- * (c) Copyright 2025 Birch Solutions Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 import { AutoVersioningException } from "./AutoVersioningService";
-import * as log from "./log";
 
 export const AUTO_VERSION = "AUTO";
 export const MAGIC_VERSION = "505.503.4455";
@@ -86,7 +69,6 @@ export function incrementVersion(currentVersion: string, versionBump: VersionBum
         }
     }
 
-    log.info(`Incremented version from ${currentVersion} to ${newVersion} (bump type: ${versionBump})`);
     return newVersion;
 }
 

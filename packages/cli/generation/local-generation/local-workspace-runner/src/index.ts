@@ -1,7 +1,5 @@
 export * from "./AutoVersioningService";
 export { AutoVersioningException, AutoVersioningService } from "./AutoVersioningService";
-export * from "./BashUtils";
-export { CommandFailedException, runCommand } from "./BashUtils";
 export * from "./DockerExecutionEnvironment";
 export { DockerExecutionEnvironment } from "./DockerExecutionEnvironment";
 export * from "./ExecutionEnvironment";

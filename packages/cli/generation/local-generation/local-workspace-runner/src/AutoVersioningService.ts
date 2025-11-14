@@ -1,26 +1,7 @@
-/*
- * (c) Copyright 2025 Birch Solutions Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-import { exec } from "child_process";
+import { loggingExeca } from "@fern-api/logging-execa";
+import { TaskContext } from "@fern-api/task-context";
 import * as os from "os";
 import * as path from "path";
-import { promisify } from "util";
-import * as log from "./log";
-
-const execAsync = promisify(exec);
 
 /**
  * Exception thrown when automatic semantic versioning fails due to inability
@@ -44,8 +25,12 @@ interface FileSection {
  * Service for handling automatic semantic versioning operations including
  * git diff generation, version extraction, and version replacement.
  */
-// biome-ignore lint/complexity/noStaticOnlyClass: Preserving Java API structure with static methods
 export class AutoVersioningService {
+    private readonly logger: TaskContext["logger"];
+
+    constructor({ logger }: { logger: TaskContext["logger"] }) {
+        this.logger = logger;
+    }
     /**
      * Generates a git diff from the staged changes and writes it to a temporary file.
      *
@@ -53,14 +38,15 @@ export class AutoVersioningService {
      * @return Path to the temporary diff file
      * @throws Error if file operations fail or git command fails
      */
-    public static async generateDiff(workingDirectory: string): Promise<string> {
+    public async generateDiff(workingDirectory: string): Promise<string> {
         const diffFile = path.join(os.tmpdir(), `git-diff-${Date.now()}.patch`);
 
-        await execAsync(`git diff --cached --output "${diffFile}"`, {
-            cwd: workingDirectory
+        await loggingExeca(this.logger, "git", ["diff", "--cached", "--output", diffFile], {
+            cwd: workingDirectory,
+            doNotPipeOutput: true
         });
 
-        log.info(`Generated git diff to file: ${diffFile}`);
+        this.logger.info(`Generated git diff to file: ${diffFile}`);
         return diffFile;
     }
 
@@ -73,7 +59,7 @@ export class AutoVersioningService {
      * @return The previous version if found
      * @throws AutoVersioningException if no previous version can be extracted from the diff
      */
-    public static extractPreviousVersion(diffContent: string, mappedMagicVersion: string): string {
+    public extractPreviousVersion(diffContent: string, mappedMagicVersion: string): string {
         const lines = diffContent.split("\n");
 
         let currentFile = "unknown";
@@ -92,19 +78,19 @@ export class AutoVersioningService {
             if (line.startsWith("+") && !line.startsWith("+++") && line.includes(mappedMagicVersion)) {
                 magicVersionOccurrences++;
                 const sanitizedPlusLine = line.replace(mappedMagicVersion, "<MAGIC>");
-                log.info(`Found magic version in added line (file: ${currentFile}): ${sanitizedPlusLine}`);
+                this.logger.info(`Found magic version in added line (file: ${currentFile}): ${sanitizedPlusLine}`);
 
                 const matchingMinusLine = this.findMatchingMinusLine(lines, i, mappedMagicVersion);
 
-                if (matchingMinusLine === null) {
-                    log.info(
+                if (matchingMinusLine == undefined) {
+                    this.logger.info(
                         `No matching minus line in hunk; continuing search. file=${currentFile}, plusLine=${sanitizedPlusLine}`
                     );
                     continue;
                 }
 
                 const extracted = this.extractPreviousVersionFromDiffLine(matchingMinusLine);
-                log.info(`Extracted previous version from diff (file: ${currentFile}): ${extracted}`);
+                this.logger.info(`Extracted previous version from diff (file: ${currentFile}): ${extracted}`);
                 return extracted;
             }
         }
@@ -131,14 +117,14 @@ export class AutoVersioningService {
      * @param mappedMagicVersion The magic version to match
      * @return The matching '-' line, or null if not found
      */
-    private static findMatchingMinusLine(
+    private findMatchingMinusLine(
         lines: string[],
         plusLineIndex: number,
         mappedMagicVersion: string
-    ): string | null {
+    ): string | undefined {
         const plusLine = lines[plusLineIndex];
         if (!plusLine) {
-            return null;
+            return undefined;
         }
         let linesScanned = 0;
 
@@ -150,20 +136,20 @@ export class AutoVersioningService {
             linesScanned++;
 
             if (this.shouldStopSearching(line)) {
-                log.info(`Stopped backward scan at hunk boundary after ${linesScanned} lines`);
+                this.logger.info(`Stopped backward scan at hunk boundary after ${linesScanned} lines`);
                 break;
             }
 
             if (this.isDeletionLine(line)) {
                 if (this.isVersionChangePair(line, plusLine, mappedMagicVersion)) {
-                    log.info(`Found matching minus line after scanning ${linesScanned} lines backwards`);
+                    this.logger.info(`Found matching minus line after scanning ${linesScanned} lines backwards`);
                     return line;
                 }
             }
         }
 
-        log.warn(`No matching minus line found after scanning ${linesScanned} lines backwards`);
-        return null;
+        this.logger.warn(`No matching minus line found after scanning ${linesScanned} lines backwards`);
+        return undefined;
     }
 
     /**
@@ -179,7 +165,7 @@ export class AutoVersioningService {
      * @param mappedMagicVersion The magic version after language transformations (e.g., "v505.503.4455" for Go)
      * @return Cleaned diff content
      */
-    public static cleanDiffForAI(diffContent: string, mappedMagicVersion: string): string {
+    public cleanDiffForAI(diffContent: string, mappedMagicVersion: string): string {
         const lines = diffContent.split("\n");
 
         const fileSections = this.parseFileSections(lines);
@@ -187,7 +173,7 @@ export class AutoVersioningService {
         const cleanedSections: FileSection[] = [];
         for (const section of fileSections) {
             const cleaned = this.cleanFileSection(section, mappedMagicVersion);
-            if (cleaned !== null) {
+            if (cleaned != undefined) {
                 cleanedSections.push(cleaned);
             }
         }
@@ -199,7 +185,7 @@ export class AutoVersioningService {
             }
         }
 
-        log.info(
+        this.logger.info(
             `Cleaned diff: removed ${diffContent.length - result.join("\n").length} bytes containing version changes`
         );
         return result.join("\n");
@@ -208,22 +194,22 @@ export class AutoVersioningService {
     /**
      * Parses a diff into file sections, where each section starts with "diff --git".
      */
-    private static parseFileSections(lines: string[]): FileSection[] {
+    private parseFileSections(lines: string[]): FileSection[] {
         const sections: FileSection[] = [];
-        let currentSection: FileSection | null = null;
+        let currentSection: FileSection | undefined = undefined;
 
         for (const line of lines) {
             if (line.startsWith("diff --git")) {
-                if (currentSection !== null) {
+                if (currentSection != undefined) {
                     sections.push(currentSection);
                 }
                 currentSection = { lines: [line] };
-            } else if (currentSection !== null) {
+            } else if (currentSection != undefined) {
                 currentSection.lines.push(line);
             }
         }
 
-        if (currentSection !== null) {
+        if (currentSection != undefined) {
             sections.push(currentSection);
         }
 
@@ -234,7 +220,7 @@ export class AutoVersioningService {
      * Cleans a single file section by removing version-related changes.
      * Returns null if the file section should be completely removed.
      */
-    private static cleanFileSection(section: FileSection, mappedMagicVersion: string): FileSection | null {
+    private cleanFileSection(section: FileSection, mappedMagicVersion: string): FileSection | undefined {
         const headerLines: string[] = [];
         const contentLines: string[] = [];
 
@@ -265,7 +251,7 @@ export class AutoVersioningService {
         }
 
         if (!hasChanges) {
-            return null;
+            return undefined;
         }
 
         const cleaned: FileSection = { lines: [] };
@@ -278,7 +264,7 @@ export class AutoVersioningService {
      * Removes any remaining lines (additions, deletions, or context) that contain the magic version.
      * This is a secondary pass to catch any lines that the pairing logic missed.
      */
-    private static removeRemainingMagicVersionLines(lines: string[], mappedMagicVersion: string): string[] {
+    private removeRemainingMagicVersionLines(lines: string[], mappedMagicVersion: string): string[] {
         const result: string[] = [];
 
         for (const line of lines) {
@@ -294,7 +280,7 @@ export class AutoVersioningService {
     /**
      * Removes paired - and + lines where the only difference is the magic version.
      */
-    private static removeVersionChangePairs(lines: string[], mappedMagicVersion: string): string[] {
+    private removeVersionChangePairs(lines: string[], mappedMagicVersion: string): string[] {
         const result: string[] = [];
         let lineIndex = 0;
 
@@ -323,11 +309,11 @@ export class AutoVersioningService {
         return result;
     }
 
-    private static isDeletionLine(line: string): boolean {
+    private isDeletionLine(line: string): boolean {
         return line.startsWith("-") && !line.startsWith("---");
     }
 
-    private static findMatchingAdditionLine(lines: string[], startIndex: number, mappedMagicVersion: string): number {
+    private findMatchingAdditionLine(lines: string[], startIndex: number, mappedMagicVersion: string): number {
         const startLine = lines[startIndex];
         if (!startLine) {
             return -1;
@@ -352,11 +338,11 @@ export class AutoVersioningService {
         return -1;
     }
 
-    private static isAdditionLine(line: string): boolean {
+    private isAdditionLine(line: string): boolean {
         return line.startsWith("+") && !line.startsWith("+++");
     }
 
-    private static shouldStopSearching(line: string): boolean {
+    private shouldStopSearching(line: string): boolean {
         return (
             line.startsWith("@@") ||
             line.startsWith("diff --git") ||
@@ -369,7 +355,7 @@ export class AutoVersioningService {
     /**
      * Checks if two lines form a version change pair where the only difference is the magic version.
      */
-    private static isVersionChangePair(minusLine: string, plusLine: string, mappedMagicVersion: string): boolean {
+    private isVersionChangePair(minusLine: string, plusLine: string, mappedMagicVersion: string): boolean {
         if (!plusLine.includes(mappedMagicVersion)) {
             return false;
         }
@@ -414,12 +400,12 @@ export class AutoVersioningService {
      * @param finalVersion The final version to use
      * @throws Error if file operations fail or find/sed command fails
      */
-    public static async replaceMagicVersion(
+    public async replaceMagicVersion(
         workingDirectory: string,
         mappedMagicVersion: string,
         finalVersion: string
     ): Promise<void> {
-        log.info(`Replacing magic version ${mappedMagicVersion} with final version: ${finalVersion}`);
+        this.logger.info(`Replacing magic version ${mappedMagicVersion} with final version: ${finalVersion}`);
 
         const sedCommand = `s/${this.escapeForSed(mappedMagicVersion)}/${this.escapeForSed(finalVersion)}/g`;
         const osName = os.platform().toLowerCase();
@@ -432,15 +418,18 @@ export class AutoVersioningService {
             command = `find "${workingDirectory}" -type f -not -path "*/.git/*" -exec sed -i '${sedCommand}' {} +`;
         }
 
-        await execAsync(command, { cwd: workingDirectory });
+        await loggingExeca(this.logger, "bash", ["-c", command], {
+            cwd: workingDirectory,
+            doNotPipeOutput: true
+        });
 
-        log.info("Magic version replaced successfully");
+        this.logger.info("Magic version replaced successfully");
     }
 
     /**
      * Escapes special characters for use in sed command.
      */
-    private static escapeForSed(str: string): string {
+    private escapeForSed(str: string): string {
         return str.replace(/[/&]/g, "\\$&");
     }
 
@@ -452,13 +441,13 @@ export class AutoVersioningService {
      * @return The inferred previous version if found
      * @throws AutoVersioningException if no valid version can be extracted
      */
-    private static extractPreviousVersionFromDiffLine(lineWithMagicVersion: string): string {
+    private extractPreviousVersionFromDiffLine(lineWithMagicVersion: string): string {
         const prevVersionPattern = /[-].*?([v]?\d+\.\d+\.\d+(?:-[\w.-]+)?(?:\+[\w.-]+)?)/;
         const matcher = lineWithMagicVersion.match(prevVersionPattern);
 
         if (matcher && matcher[1]) {
             const version = matcher[1];
-            log.info(`Extracted previous version from diff: ${version}`);
+            this.logger.info(`Extracted previous version from diff: ${version}`);
             return version;
         }
 
