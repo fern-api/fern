@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.36.2
+  changelogEntry:
+    - summary: Fix circular reference issue for recursive types and unions.
+      type: fix
+  createdAt: "2025-11-14"
+  irVersion: 61
+
 - version: 4.36.1
   changelogEntry:
     - summary: Resolve PydanticUserError for mutually recursive models in Pydantic v2.
