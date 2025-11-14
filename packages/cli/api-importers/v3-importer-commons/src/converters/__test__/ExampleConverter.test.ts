@@ -15,7 +15,7 @@ const mockLogger = {
 const mockContext = {
     logger: mockLogger,
     isReferenceObject: vi.fn().mockReturnValue(false),
-    resolveMaybeReference: vi.fn()
+    resolveMaybeReference: vi.fn().mockImplementation((args) => args.schemaOrReference)
 } as unknown as AbstractConverterContext<object>;
 
 describe("ExampleConverter", () => {
@@ -242,6 +242,148 @@ describe("ExampleConverter", () => {
 
             expect(result).toBeGreaterThanOrEqual(0.001);
             expect(result).toBeLessThanOrEqual(0.01);
+        });
+    });
+
+    describe("nullable undefined handling", () => {
+        it("should accept undefined for nullable number fields", () => {
+            const schema = {
+                type: "number",
+                nullable: true
+            } as OpenAPIV3_1.SchemaObject;
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContext,
+                schema,
+                example: undefined
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.coerced).toBe(false);
+            expect(result.usedProvidedExample).toBe(true);
+            expect(result.validExample).toBe(undefined);
+        });
+
+        it("should accept undefined for nullable string fields", () => {
+            const schema = {
+                type: "string",
+                nullable: true
+            } as OpenAPIV3_1.SchemaObject;
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContext,
+                schema,
+                example: undefined
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.coerced).toBe(false);
+            expect(result.usedProvidedExample).toBe(true);
+            expect(result.validExample).toBe(undefined);
+        });
+
+        it("should accept undefined for nullable integer fields", () => {
+            const schema = {
+                type: "integer",
+                nullable: true
+            } as OpenAPIV3_1.SchemaObject;
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContext,
+                schema,
+                example: undefined
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.coerced).toBe(false);
+            expect(result.usedProvidedExample).toBe(true);
+            expect(result.validExample).toBe(undefined);
+        });
+
+        it("should accept null for nullable fields", () => {
+            const schema = {
+                type: "number",
+                nullable: true
+            } as OpenAPIV3_1.SchemaObject;
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContext,
+                schema,
+                example: null
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.coerced).toBe(false);
+            expect(result.usedProvidedExample).toBe(true);
+            expect(result.validExample).toBe(null);
+        });
+
+        it("should accept undefined for nullable array fields", () => {
+            const schema = {
+                type: "array",
+                items: { type: "string" },
+                nullable: true
+            } as OpenAPIV3_1.SchemaObject;
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContext,
+                schema,
+                example: undefined
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.coerced).toBe(false);
+            expect(result.usedProvidedExample).toBe(true);
+            expect(result.validExample).toBe(undefined);
+        });
+
+        it("should accept null for nullable array fields", () => {
+            const schema = {
+                type: "array",
+                items: { type: "string" },
+                nullable: true
+            } as OpenAPIV3_1.SchemaObject;
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContext,
+                schema,
+                example: null
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.coerced).toBe(false);
+            expect(result.usedProvidedExample).toBe(true);
+            expect(result.validExample).toBe(null);
+        });
+
+        it("should reject undefined for non-nullable fields", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "number"
+            };
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContext,
+                schema,
+                example: undefined
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(false);
+            expect(result.errors).toHaveLength(1);
+            expect(result.errors[0]?.message).toContain("Example is not a number");
         });
     });
 });
