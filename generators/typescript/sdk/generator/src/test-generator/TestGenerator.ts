@@ -1091,16 +1091,8 @@ describe("${serviceName}", () => {
 
         const isHeadersResponse = endpoint.response?.body === undefined && endpoint.method === HttpMethod.Head;
 
-        const isOAuthTokenEndpoint = this.ir.auth.schemes.some((scheme) => {
-            if (scheme.type === "oauth" && scheme.configuration.type === "clientCredentials") {
-                const tokenEndpoint = scheme.configuration.tokenEndpoint.endpointReference;
-                return tokenEndpoint.endpointId === endpoint.id;
-            }
-            return false;
-        });
-
         let mockAuthSnippet: Code | undefined;
-        if (this.shouldBuildMockAuthFile({ context }) && !isOAuthTokenEndpoint) {
+        if (this.shouldBuildMockAuthFile({ context })) {
             mockAuthSnippet = code`mockAuth(server);\n`;
             context.importsManager.addImportFromRoot(
                 "wire/mockAuth",
