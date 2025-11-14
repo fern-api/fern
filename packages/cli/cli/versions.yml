@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Ensure 1.0.0 settings migration runs for users upgrading from pre-1.0.0 versions. This addresses a previous off-by-one error in migration selection that could cause the 1.0.0 migration to be skipped.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-14"
+  version: 1.0.5
+
+- changelogEntry:
+    - summary: |
         Fix CLI migration selection to include the target version's migrations during `fern upgrade`.
       type: fix
   irVersion: 61
