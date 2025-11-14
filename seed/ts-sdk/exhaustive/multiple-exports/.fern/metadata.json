@@ -3,6 +3,6 @@
     "generatorName": "fernapi/fern-typescript-sdk",
     "generatorVersion": "latest",
     "generatorConfig": {
-        "generateMultipleExports": true
+        "generateSubpackageExports": true
     }
 }

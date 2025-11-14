@@ -124,7 +124,7 @@ fixtures:
         parameterNaming: snakeCase
     - outputFolder: multiple-exports
       customConfig:
-        generateMultipleExports: true
+        generateSubpackageExports: true
   error-property:
     - outputFolder: no-custom-config
       customConfig: null
