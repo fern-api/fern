@@ -1,0 +1,10 @@
+{
+    "version": "0.1.0",
+    "generators": [
+        {
+            "name": "typescript",
+            "type": "typescript",
+            "output_dir": "../src/baml_client"
+        }
+    ]
+}
