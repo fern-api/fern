@@ -1949,6 +1949,16 @@
               "type": "null"
             }
           ]
+        },
+        "openInNewTab": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
