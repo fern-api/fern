@@ -5,7 +5,6 @@ import { describe, expect, it } from "vitest";
 import { AutoVersioningException, AutoVersioningService } from "../AutoVersioningService";
 import { incrementVersion, VersionBump } from "../VersionUtils";
 
-
 // Mock logger for tests
 const mockLogger = {
     info: () => {
@@ -24,10 +23,9 @@ const mockLogger = {
 
 // Helper function to run git commands in tests
 async function runCommand(args: string[], cwd: string): Promise<void> {
-    const command = args.map(arg => arg.includes(" ") ? `"${arg}"` : arg).join(" ");
+    const command = args.map((arg) => (arg.includes(" ") ? `"${arg}"` : arg)).join(" ");
     execSync(command, { cwd, stdio: "pipe" });
 }
-
 
 describe("AutoVersioningService", () => {
     it("testExtractPreviousVersion_withSimpleVersion", () => {
@@ -44,7 +42,10 @@ describe("AutoVersioningService", () => {
             '   "description": "Test package"\n' +
             " }\n";
 
-        const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "505.503.4455");
+        const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
+            diff,
+            "505.503.4455"
+        );
         expect(previousVersion).toBe("1.2.3");
     });
 
@@ -59,7 +60,10 @@ describe("AutoVersioningService", () => {
             '-const Version = "v2.5.1"\n' +
             '+const Version = "v505.503.4455"\n';
 
-        const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "v505.503.4455");
+        const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
+            diff,
+            "v505.503.4455"
+        );
         expect(previousVersion).toBe("v2.5.1");
     });
 
@@ -77,7 +81,10 @@ describe("AutoVersioningService", () => {
             "     description='Test package'\n" +
             " )\n";
 
-        const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "505.503.4455");
+        const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
+            diff,
+            "505.503.4455"
+        );
         expect(previousVersion).toBe("3.0.0-beta.2");
     });
 
@@ -178,7 +185,10 @@ describe("AutoVersioningService", () => {
             '-const Version = "v1.5.2"\n' +
             '+const Version = "v505.503.4455"\n';
 
-        const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "v505.503.4455");
+        const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
+            diff,
+            "v505.503.4455"
+        );
         expect(previousVersion).toBe("v1.5.2");
     });
 
@@ -229,7 +239,10 @@ describe("AutoVersioningService", () => {
             '+version = "505.503.4455"\n' +
             " \n";
 
-        const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "505.503.4455");
+        const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
+            diff,
+            "505.503.4455"
+        );
         expect(previousVersion).toBe("1.2.3");
     });
 
@@ -254,7 +267,10 @@ describe("AutoVersioningService", () => {
             '   "name": "test"\n' +
             " }\n";
 
-        const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "505.503.4455");
+        const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
+            diff,
+            "505.503.4455"
+        );
         expect(previousVersion).toBe("1.5.0");
     });
 
@@ -496,7 +512,11 @@ describe("AutoVersioningService", () => {
             const originalContent = '{\n  "version": "505.503.4455",\n  "name": "test-package"\n}';
             await fs.writeFile(testFile, originalContent);
 
-            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(tempDir, "505.503.4455", "1.2.3");
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "505.503.4455",
+                "1.2.3"
+            );
 
             const updatedContent = await fs.readFile(testFile, "utf-8");
             expect(updatedContent).not.toContain("505.503.4455");
@@ -514,7 +534,11 @@ describe("AutoVersioningService", () => {
             const originalContent = 'package main\n\nconst Version = "v505.503.4455"\n';
             await fs.writeFile(testFile, originalContent);
 
-            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(tempDir, "v505.503.4455", "v1.2.3");
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "v505.503.4455",
+                "v1.2.3"
+            );
 
             const updatedContent = await fs.readFile(testFile, "utf-8");
             expect(updatedContent).not.toContain("v505.503.4455");
@@ -537,7 +561,11 @@ describe("AutoVersioningService", () => {
             const file3 = path.join(tempDir, "setup.py");
             await fs.writeFile(file3, "version='505.503.4455'");
 
-            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(tempDir, "505.503.4455", "2.0.0");
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "505.503.4455",
+                "2.0.0"
+            );
 
             const content1 = await fs.readFile(file1, "utf-8");
             const content2 = await fs.readFile(file2, "utf-8");
@@ -564,7 +592,11 @@ describe("AutoVersioningService", () => {
                 "version: 505.503.4455\nmin_version: 505.503.4455\ndisplay_name: SDK v505.503.4455\n";
             await fs.writeFile(testFile, originalContent);
 
-            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(tempDir, "505.503.4455", "3.1.4");
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "505.503.4455",
+                "3.1.4"
+            );
 
             const updatedContent = await fs.readFile(testFile, "utf-8");
             expect(updatedContent).not.toContain("505.503.4455");
@@ -586,7 +618,11 @@ describe("AutoVersioningService", () => {
             const file2 = path.join(subDir, "Version.java");
             await fs.writeFile(file2, 'public static final String VERSION = "505.503.4455";');
 
-            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(tempDir, "505.503.4455", "4.5.6");
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "505.503.4455",
+                "4.5.6"
+            );
 
             const content1 = await fs.readFile(file1, "utf-8");
             const content2 = await fs.readFile(file2, "utf-8");
@@ -613,7 +649,11 @@ describe("AutoVersioningService", () => {
             const regularFile = path.join(tempDir, "version.txt");
             await fs.writeFile(regularFile, "version=505.503.4455");
 
-            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(tempDir, "505.503.4455", "1.0.0");
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "505.503.4455",
+                "1.0.0"
+            );
 
             const gitContent = await fs.readFile(gitFile, "utf-8");
             const regularContent = await fs.readFile(regularFile, "utf-8");
@@ -637,7 +677,11 @@ describe("AutoVersioningService", () => {
                 "end\n";
             await fs.writeFile(gemspec, originalContent);
 
-            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(tempDir, "v505.503.4455", "v1.5.2");
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "v505.503.4455",
+                "v1.5.2"
+            );
 
             const updatedContent = await fs.readFile(gemspec, "utf-8");
             expect(updatedContent).not.toContain("v505.503.4455");
@@ -654,7 +698,11 @@ describe("AutoVersioningService", () => {
             const originalContent = "# My Project\n\nVersion: 1.0.0\n";
             await fs.writeFile(testFile, originalContent);
 
-            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(tempDir, "505.503.4455", "2.0.0");
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "505.503.4455",
+                "2.0.0"
+            );
 
             const updatedContent = await fs.readFile(testFile, "utf-8");
             expect(updatedContent).toBe(originalContent);
@@ -689,17 +737,27 @@ describe("AutoVersioningService", () => {
             expect(diffContent).toContain("1.0.0");
             expect(diffContent).toContain(magicVersion);
 
-            const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diffContent, magicVersion);
+            const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
+                diffContent,
+                magicVersion
+            );
             expect(previousVersion).toBe("1.0.0");
 
-            const cleanedDiff = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diffContent, magicVersion);
+            const cleanedDiff = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(
+                diffContent,
+                magicVersion
+            );
             expect(cleanedDiff).not.toContain(magicVersion);
             expect(cleanedDiff).not.toContain("package.json");
 
             const newVersion = incrementVersion(previousVersion, VersionBump.PATCH);
             expect(newVersion).toBe("1.0.1");
 
-            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(tempDir, magicVersion, newVersion);
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                magicVersion,
+                newVersion
+            );
 
             const finalContent = await fs.readFile(packageJson, "utf-8");
             expect(finalContent).not.toContain(magicVersion);
@@ -735,13 +793,20 @@ describe("AutoVersioningService", () => {
             const diffFile = await new AutoVersioningService({ logger: mockLogger }).generateDiff(tempDir);
             const diffContent = await fs.readFile(diffFile, "utf-8");
 
-            const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diffContent, mappedMagicVersion);
+            const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
+                diffContent,
+                mappedMagicVersion
+            );
             expect(previousVersion).toBe("v2.3.1");
 
             const newVersion = incrementVersion(previousVersion, VersionBump.MINOR);
             expect(newVersion).toBe("v2.4.0");
 
-            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(tempDir, mappedMagicVersion, newVersion);
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                mappedMagicVersion,
+                newVersion
+            );
 
             const finalContent = await fs.readFile(versionFile, "utf-8");
             expect(finalContent).not.toContain(mappedMagicVersion);
