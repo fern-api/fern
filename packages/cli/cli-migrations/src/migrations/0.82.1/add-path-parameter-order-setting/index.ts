@@ -1,1 +1,1 @@
-export { migration } from "./migration";
+export { migration as default } from "./migration";

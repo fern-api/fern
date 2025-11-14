@@ -14,7 +14,6 @@ const SINGLE_WORKSPACE_FIXTURES = [
     "specs-format",
     "no-settings",
     "api-settings-only",
-    "api-settings-already-set",
     "exhaustive"
 ].map(RelativeFilePath.of);
 
