@@ -1,4 +1,38 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.31.0
+  changelogEntry:
+    - summary: |
+        Add `generateSubpackageExports` configuration option to enable direct imports of subpackage clients.
+        
+        When enabled, users can import and instantiate subpackage clients directly:
+        ```typescript
+        import { EnumClient } from '@org/sdk/endpoints/enum';
+        
+        const client = new EnumClient({
+            environment: "https://api.example.com",
+            token: "your-token"
+        });
+        ```
+        
+        This feature:
+        - Generates `exports.ts` files in each subpackage folder
+        - Adds subpackage export paths to `package.json` exports field
+        - Implements idempotent `normalizeClientOptions()` function to handle both direct user instantiation and internal parent-to-subclient instantiation
+        - Ensures root headers (custom API headers and version headers) are added for all clients regardless of instantiation path
+        
+        To enable this feature, add the following configuration to your _generators.yml_ file:
+        ```yaml
+        # In generators.yml
+        groups:
+          generators:
+            - name: fernapi/fern-typescript-sdk
+              config:
+                generateSubpackageExports: true
+        ```
+      type: feat
+  createdAt: "2025-11-14"
+  irVersion: 61
+
 - version: 3.30.0
   changelogEntry:
     - summary: |
@@ -23,7 +57,6 @@
       type: fix
   createdAt: "2025-11-13"
   irVersion: 61
-
 - version: 3.29.0
   changelogEntry:
     - summary: |
