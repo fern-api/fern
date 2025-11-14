@@ -44,4 +44,12 @@ describe("getMigrationsToRun", () => {
         const has1_0_0Migration = migrationsToRun.some((m) => m.version === "1.0.0");
         expect(has1_0_0Migration).toBe(true);
     });
+
+    it("includes 1.0.0 migration when upgrading from 0.122.0 to 1.0.2", () => {
+        const migrationsToRun = getMigrationsToRun({ fromVersion: "0.122.0", toVersion: "1.0.2" });
+        const allMigrations = migrationsToRun.flatMap(({ migrations }) => migrations);
+        expect(allMigrations.length).toBeGreaterThan(0);
+        const has1_0_0Migration = migrationsToRun.some((m) => m.version === "1.0.0");
+        expect(has1_0_0Migration).toBe(true);
+    });
 });
