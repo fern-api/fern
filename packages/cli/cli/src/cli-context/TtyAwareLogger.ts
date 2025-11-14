@@ -113,10 +113,6 @@ export class TtyAwareLogger {
     }
 
     private paint(): string {
-        if (process.env.FERN_EXTERNAL_SPINNER === "1") {
-            return "";
-        }
-
         const spinnerFrame = this.spinner.frame();
 
         const taskLines = [];
@@ -129,6 +125,11 @@ export class TtyAwareLogger {
 
         if (taskLines.length === 0) {
             return "";
+        }
+
+        const spinnerStatus = process.env.FERN_SPINNER_STATUS;
+        if (spinnerStatus && taskLines.length > 0) {
+            taskLines[0] = `${taskLines[0]} - ${spinnerStatus}`;
         }
 
         const paint =

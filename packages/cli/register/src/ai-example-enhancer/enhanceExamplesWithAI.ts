@@ -8,7 +8,7 @@ import * as yaml from "js-yaml";
 import { OpenAPIV3 } from "openapi-types";
 import { join } from "path";
 import { LambdaExampleEnhancer } from "./lambdaClient";
-import { ProgressTracker } from "./progressTracker";
+import { SpinnerStatusCoordinator } from "./spinnerStatusCoordinator";
 import { AIExampleEnhancerConfig, ExampleEnhancementBatchRequest } from "./types";
 import {
     EnhancedExampleRecord,
@@ -305,7 +305,8 @@ async function enhancePackageExamples(
     stats.total += allWorkItems.length;
     context.logger.debug(`Collected ${allWorkItems.length} work items across all packages`);
 
-    const progressTracker = new ProgressTracker(context, allWorkItems.length, apiName || "AI Examples");
+    const coordinator = SpinnerStatusCoordinator.getInstance();
+    const statusId = coordinator.create(apiName || "API", allWorkItems.length);
 
     const enhancementResults = await processBatchedWorkItems(
         allWorkItems,
@@ -316,10 +317,10 @@ async function enhancePackageExamples(
         enhancedExampleRecords,
         openApiSpec,
         sourceFilePath,
-        progressTracker
+        statusId
     );
 
-    progressTracker.finish();
+    coordinator.finish(statusId);
 
     // Apply results back to packages
     const enhancedSubpackages: Record<string, FdrCjsSdk.api.v1.register.ApiDefinitionSubpackage> = {};
@@ -395,7 +396,7 @@ async function processBatchedWorkItems(
     enhancedExampleRecords: EnhancedExampleRecord[],
     openApiSpec?: string,
     sourceFilePath?: AbsoluteFilePath,
-    progressTracker?: ProgressTracker
+    statusId?: string
 ): Promise<Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>> {
     const enhancementResults = new Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>();
 
@@ -486,7 +487,7 @@ async function processBatchedWorkItems(
                                 enhancedExampleRecords,
                                 stats,
                                 context,
-                                progressTracker
+                                statusId
                             );
 
                             // Save results incrementally after successful reduced batch
@@ -546,7 +547,7 @@ async function processBatchedWorkItems(
                             enhancedExampleRecords,
                             stats,
                             context,
-                            progressTracker
+                            statusId
                         );
 
                         // Save results incrementally after successful single batch
@@ -580,7 +581,7 @@ async function processBatchedWorkItems(
                     enhancedExampleRecords,
                     stats,
                     context,
-                    progressTracker
+                    statusId
                 );
                 batchSuccess = true;
 
@@ -645,8 +646,10 @@ async function processBatchResponse(
     enhancedExampleRecords: EnhancedExampleRecord[],
     stats: { count: number; total: number },
     context: TaskContext,
-    progressTracker?: ProgressTracker
+    statusId?: string
 ): Promise<void> {
+    const coordinator = SpinnerStatusCoordinator.getInstance();
+
     for (let j = 0; j < batch.length; j++) {
         const item = batch[j];
         const result = batchResponse.results[j];
@@ -686,7 +689,9 @@ async function processBatchResponse(
             context.logger.debug(`Failed to enhance ${item.endpoint.method} ${item.example.path}: ${result.error}`);
         }
 
-        progressTracker?.increment();
+        if (statusId) {
+            coordinator.update(statusId, stats.count);
+        }
     }
 }
 
