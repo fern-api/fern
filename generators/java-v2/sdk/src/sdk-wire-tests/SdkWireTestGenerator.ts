@@ -231,7 +231,7 @@ export class SdkWireTestGenerator {
                 const firstTestExample = testExamples[0];
                 if (firstTestExample) {
                     try {
-                        const rawSnippet = this.generateDefaultSnippet(endpoint, serviceName, firstTestExample);
+                        const rawSnippet = await this.generateDefaultSnippet(endpoint, serviceName, firstTestExample);
                         const fullSnippet = this.applyServiceNameCorrections(rawSnippet, serviceName);
 
                         // Check if method call extraction will fail and skip this endpoint
@@ -321,7 +321,60 @@ export class SdkWireTestGenerator {
         return response.snippet;
     }
 
-    private generateDefaultSnippet(endpoint: HttpEndpoint, serviceName: string, testExample: WireTestExample): string {
+    private async generateDefaultSnippet(
+        endpoint: HttpEndpoint,
+        serviceName: string,
+        testExample: WireTestExample
+    ): Promise<string> {
+        // Convert the test example to a dynamic snippet request
+        const snippetRequest = this.convertTestExampleToSnippetRequest(testExample, endpoint);
+
+        // Use the dynamic IR if available
+        const dynamicIr = this.context.ir.dynamic;
+        if (!dynamicIr) {
+            // Fallback to basic snippet if dynamic IR is not available
+            const serviceNameLower = serviceName.toLowerCase();
+            const methodName = endpoint.name.camelCase.safeName;
+
+            let pathParamsStr = "";
+            if (testExample.request.pathParams && Object.keys(testExample.request.pathParams).length > 0) {
+                const pathValues = Object.values(testExample.request.pathParams);
+                pathParamsStr = pathValues.map((value) => `"${value}"`).join(", ");
+            }
+
+            let methodCall = `client.${serviceNameLower}().${methodName}(`;
+            if (pathParamsStr) {
+                methodCall += pathParamsStr;
+            }
+            methodCall += ")";
+
+            return `${this.context.getRootClientClassName()} client = ${this.context.getRootClientClassName()}
+                .builder()
+                .token("<token>")
+                .url("https://api.fern.com")
+                .build();
+
+            ${methodCall};`;
+        }
+
+        // Generate a proper snippet using the dynamic snippets generator
+        const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
+            ir: dynamicIr,
+            config: this.context.config
+        });
+
+        try {
+            const snippetResult = await dynamicSnippetsGenerator.generate(snippetRequest);
+            if (snippetResult.snippet) {
+                return snippetResult.snippet;
+            }
+        } catch (error) {
+            this.context.logger.debug(
+                `Failed to generate dynamic snippet from test example: ${error instanceof Error ? error.message : String(error)}`
+            );
+        }
+
+        // Fallback to basic snippet
         const serviceNameLower = serviceName.toLowerCase();
         const methodName = endpoint.name.camelCase.safeName;
 
@@ -344,6 +397,42 @@ export class SdkWireTestGenerator {
             .build();
 
         ${methodCall};`;
+    }
+
+    private convertTestExampleToSnippetRequest(
+        testExample: WireTestExample,
+        endpoint: HttpEndpoint
+    ): dynamic.EndpointSnippetRequest {
+        // Create endpoint location from the HttpEndpoint
+        let path = endpoint.fullPath.head;
+        for (const part of endpoint.fullPath.parts) {
+            path += `{${part.pathParameter}}${part.tail}`;
+        }
+
+        const endpointLocation: dynamic.EndpointLocation = {
+            method: endpoint.method,
+            path
+        };
+
+        return {
+            endpoint: endpointLocation,
+            baseUrl: undefined,
+            environment: undefined,
+            auth: undefined,
+            pathParameters:
+                testExample.request.pathParams && Object.keys(testExample.request.pathParams).length > 0
+                    ? testExample.request.pathParams
+                    : undefined,
+            queryParameters:
+                testExample.request.queryParams && Object.keys(testExample.request.queryParams).length > 0
+                    ? testExample.request.queryParams
+                    : undefined,
+            headers:
+                testExample.request.headers && Object.keys(testExample.request.headers).length > 0
+                    ? testExample.request.headers
+                    : undefined,
+            requestBody: testExample.request.body
+        };
     }
 
     private groupEndpointsByService(): Map<string, HttpEndpoint[]> {
@@ -504,7 +593,12 @@ export class SdkWireTestGenerator {
             }
 
             // For streaming endpoints, replace Optional<ResponseType> with Iterable<ResponseType>
-            transformedSnippet = transformedSnippet.replace(/Optional</g, "Iterable<");
+            // Use a more targeted regex to only replace the response variable declaration
+            // Pattern: Optional<SomeResponseType> response = (looking for variable named "response")
+            transformedSnippet = transformedSnippet.replace(
+                /(\s+)(Optional)<([^>]+)>\s+(response)\s*=/g,
+                "$1Iterable<$3> $4 ="
+            );
         } else {
             // For non-streaming endpoints, ensure method name does NOT end with "Stream"
             // Remove "Stream" suffix if present

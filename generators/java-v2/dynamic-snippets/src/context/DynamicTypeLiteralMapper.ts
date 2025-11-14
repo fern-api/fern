@@ -473,12 +473,24 @@ export class DynamicTypeLiteralMapper {
         for (const typeReference of undiscriminatedUnion.types) {
             try {
                 attemptedVariants.push(JSON.stringify(typeReference));
+
+                const originalErrors = this.context.errors.clone();
+
                 const typeInstantiation = this.convert({
                     typeReference,
                     value,
                     inUndiscriminatedUnion: true
                 });
 
+                if (java.TypeLiteral.isNop(typeInstantiation)) {
+                    this.context.errors = originalErrors;
+                    variantErrors.push(
+                        `Type ${JSON.stringify(typeReference)}: conversion returned nop (type mismatch)`
+                    );
+                    continue;
+                }
+
+                this.context.errors = originalErrors;
                 return { valueTypeReference: typeReference, typeInstantiation };
             } catch (e) {
                 variantErrors.push(

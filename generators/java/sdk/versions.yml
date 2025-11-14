@@ -1,3 +1,11 @@
+- version: 3.16.1
+  changelogEntry:
+    - summary: |
+        Fix empty `.of()` calls in wire tests for undiscriminated unions with Map variants.
+      type: fix
+  createdAt: "2025-11-17"
+  irVersion: 61
+
 - version: 3.16.0
   changelogEntry:
     - summary: |
