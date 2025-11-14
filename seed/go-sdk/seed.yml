@@ -201,9 +201,8 @@ fixtures:
       customConfig:
         useDefaultRequestParameterValues: true
   nullable-request-body:
-    - outputFolder: disable-wire-tests
-      customConfig:
-        enableWireTests: false
+    - outputFolder: dynamic-snippets-disabled
+      disableDynamicSnippetTests: true
 scripts:
   - docker: fernapi/go-seed:1.0.0
     commands:
