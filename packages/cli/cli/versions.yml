@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Fix CLI migration selection to include the target version's migrations during `fern upgrade`. Previously, an off-by-one error excluded the target version (e.g., 1.0.0), causing its migration not to run. Users who upgraded to 1.0.0 should upgrade to 1.0.4 and run `fern upgrade` again to apply the 1.0.0 migration.
+        Fix CLI migration selection to include the target version's migrations during `fern upgrade`.
       type: fix
   irVersion: 61
   createdAt: "2025-11-14"
