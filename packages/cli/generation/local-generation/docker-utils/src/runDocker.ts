@@ -49,7 +49,7 @@ export async function runDocker({
         await tryRun();
     } catch (e) {
         if (e instanceof Error && e.message.includes("No such image")) {
-            await pullImage(imageName);
+            await pullImage(imageName, runner);
             await tryRun();
         } else {
             throw e;
@@ -95,7 +95,7 @@ async function tryRunDocker({
     // This filters out any falsy values (empty strings, null, undefined) from the dockerArgs array
     // In this case, it removes empty strings that may be present when removeAfterCompletion is false
 
-    const { stdout, stderr, exitCode } = await loggingExeca(logger, runner ?? "docker", dockerArgs, {
+    const { stdout, stderr, exitCode } = await loggingExeca(logger, runner ?? "podman", dockerArgs, {
         reject: false,
         all: true,
         doNotPipeOutput: true
@@ -114,8 +114,8 @@ async function tryRunDocker({
     }
 }
 
-async function pullImage(imageName: string): Promise<void> {
-    await loggingExeca(undefined, "docker", ["pull", imageName], {
+async function pullImage(imageName: string, runner?: ContainerRunner): Promise<void> {
+    await loggingExeca(undefined, runner ?? "podman", ["pull", imageName], {
         all: true,
         doNotPipeOutput: true
     });
