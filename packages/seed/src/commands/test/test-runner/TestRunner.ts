@@ -213,7 +213,8 @@ export abstract class TestRunner {
                     keepDocker: this.keepDocker,
                     publishMetadata,
                     readme,
-                    shouldGenerateDynamicSnippetTests: !disableDynamicSnippetTests && workspaceShouldGenerateDynamicSnippetTests(this.generator),
+                    shouldGenerateDynamicSnippetTests:
+                        !disableDynamicSnippetTests && workspaceShouldGenerateDynamicSnippetTests(this.generator),
                     inspect,
                     license
                 });
