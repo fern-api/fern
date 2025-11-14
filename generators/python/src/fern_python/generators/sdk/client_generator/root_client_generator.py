@@ -89,6 +89,17 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         if self._oauth_scheme is not None:
             oauth = self._oauth_scheme.configuration.get_as_union()
             if oauth.type == "clientCredentials":
+                has_api_key = self._oauth_endpoint_has_api_key_parameter(oauth)
+                
+                if has_api_key:
+                    self._root_client_constructor_params.append(
+                        ConstructorParameter(
+                            constructor_parameter_name="api_key",
+                            type_hint=AST.TypeHint.str_(),
+                            private_member_name="api_key",
+                            initializer=AST.Expression('api_key="YOUR_API_KEY"'),
+                        )
+                    )
                 self._root_client_constructor_params.append(
                     ConstructorParameter(
                         constructor_parameter_name="client_id",
@@ -455,6 +466,17 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         if self._oauth_scheme is not None:
             oauth = self._oauth_scheme.configuration.get_as_union()
             if oauth.type == "clientCredentials":
+                has_api_key = self._oauth_endpoint_has_api_key_parameter(oauth)
+                
+                if has_api_key:
+                    parameters.append(
+                        RootClientConstructorParameter(
+                            constructor_parameter_name="api_key",
+                            type_hint=AST.TypeHint.str_(),
+                            initializer=None,
+                        ),
+                    )
+
                 cred_type_hint = AST.TypeHint.str_()
                 add_validation = False
                 if oauth.client_id_env_var is not None:
@@ -656,6 +678,9 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
             use_oauth_token_provider = self._oauth_scheme is not None
             if use_oauth_token_provider:
+                oauth = self._oauth_scheme.configuration.get_as_union()
+                has_api_key = self._oauth_endpoint_has_api_key_parameter(oauth) if oauth.type == "clientCredentials" else False
+                
                 client_wrapper_constructor_kwargs = self._get_client_wrapper_kwargs(
                     client_wrapper_generator=client_wrapper_generator,
                     environments_config=self._environments_config,
@@ -664,31 +689,43 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     ignore_httpx_constructor_parameter=True,
                     exclude_auth=True,
                 )
+                
+                oauth_kwargs = []
+                if has_api_key:
+                    oauth_kwargs.append(
+                        (
+                            "api_key",
+                            AST.Expression("api_key"),
+                        )
+                    )
+                
+                oauth_kwargs.extend([
+                    (
+                        "client_id",
+                        AST.Expression("client_id"),
+                    ),
+                    (
+                        "client_secret",
+                        AST.Expression("client_secret"),
+                    ),
+                    (
+                        "client_wrapper",
+                        AST.Expression(
+                            AST.ClassInstantiation(
+                                class_=self._context.core_utilities.get_reference_to_client_wrapper(
+                                    is_async=False
+                                ),
+                                kwargs=client_wrapper_constructor_kwargs,
+                            ),
+                        ),
+                    ),
+                ])
+                
                 writer.write("oauth_token_provider = ")
                 writer.write_node(
                     AST.ClassInstantiation(
                         class_=self._context.core_utilities.get_oauth_token_provider(),
-                        kwargs=[
-                            (
-                                "client_id",
-                                AST.Expression("client_id"),
-                            ),
-                            (
-                                "client_secret",
-                                AST.Expression("client_secret"),
-                            ),
-                            (
-                                "client_wrapper",
-                                AST.Expression(
-                                    AST.ClassInstantiation(
-                                        class_=self._context.core_utilities.get_reference_to_client_wrapper(
-                                            is_async=False
-                                        ),
-                                        kwargs=client_wrapper_constructor_kwargs,
-                                    ),
-                                ),
-                            ),
-                        ],
+                        kwargs=oauth_kwargs,
                     )
                 )
                 writer.write_newline_if_last_line_not()
@@ -904,6 +941,36 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             if param == "timeout":
                 return "_timeout"
         return "timeout"
+
+    def _oauth_endpoint_has_api_key_parameter(self, oauth: ir_types.OAuthClientCredentials) -> bool:
+        """Check if the OAuth endpoint has an api_key parameter in its request body."""
+        endpoint_id = (
+            oauth.refresh_endpoint.endpoint_reference.endpoint_id
+            if oauth.refresh_endpoint is not None
+            else oauth.token_endpoint.endpoint_reference.endpoint_id
+        )
+        
+        endpoint = self._get_endpoint_for_id(endpoint_id)
+        if endpoint is None or endpoint.request_body is None:
+            return False
+        
+        request_body = endpoint.request_body.get_as_union()
+        if request_body.type != "inlinedRequestBody":
+            return False
+        
+        for property in request_body.properties:
+            if property.name.name.snake_case.safe_name == "api_key":
+                return True
+        
+        return False
+
+    def _get_endpoint_for_id(self, endpoint_id: ir_types.EndpointId) -> typing.Optional[ir_types.HttpEndpoint]:
+        """Get the endpoint for the given endpoint ID."""
+        for service in self._context.ir.services.values():
+            for endpoint in service.endpoints:
+                if endpoint.id == endpoint_id:
+                    return endpoint
+        return None
 
     class GeneratedRootClientBuilder:
         def __init__(
