@@ -245,67 +245,7 @@ describe("ExampleConverter", () => {
         });
     });
 
-    describe("nullable undefined handling", () => {
-        it("should accept undefined for nullable number fields", () => {
-            const schema = {
-                type: "number",
-                nullable: true
-            } as OpenAPIV3_1.SchemaObject;
-            const converter = new ExampleConverter({
-                breadcrumbs: [],
-                context: mockContext,
-                schema,
-                example: undefined
-            });
-
-            const result = converter.convert();
-
-            expect(result.isValid).toBe(true);
-            expect(result.coerced).toBe(false);
-            expect(result.usedProvidedExample).toBe(true);
-            expect(result.validExample).toBe(undefined);
-        });
-
-        it("should accept undefined for nullable string fields", () => {
-            const schema = {
-                type: "string",
-                nullable: true
-            } as OpenAPIV3_1.SchemaObject;
-            const converter = new ExampleConverter({
-                breadcrumbs: [],
-                context: mockContext,
-                schema,
-                example: undefined
-            });
-
-            const result = converter.convert();
-
-            expect(result.isValid).toBe(true);
-            expect(result.coerced).toBe(false);
-            expect(result.usedProvidedExample).toBe(true);
-            expect(result.validExample).toBe(undefined);
-        });
-
-        it("should accept undefined for nullable integer fields", () => {
-            const schema = {
-                type: "integer",
-                nullable: true
-            } as OpenAPIV3_1.SchemaObject;
-            const converter = new ExampleConverter({
-                breadcrumbs: [],
-                context: mockContext,
-                schema,
-                example: undefined
-            });
-
-            const result = converter.convert();
-
-            expect(result.isValid).toBe(true);
-            expect(result.coerced).toBe(false);
-            expect(result.usedProvidedExample).toBe(true);
-            expect(result.validExample).toBe(undefined);
-        });
-
+    describe("nullable null handling", () => {
         it("should accept null for nullable fields", () => {
             const schema = {
                 type: "number",
@@ -324,27 +264,6 @@ describe("ExampleConverter", () => {
             expect(result.coerced).toBe(false);
             expect(result.usedProvidedExample).toBe(true);
             expect(result.validExample).toBe(null);
-        });
-
-        it("should accept undefined for nullable array fields", () => {
-            const schema = {
-                type: "array",
-                items: { type: "string" },
-                nullable: true
-            } as OpenAPIV3_1.SchemaObject;
-            const converter = new ExampleConverter({
-                breadcrumbs: [],
-                context: mockContext,
-                schema,
-                example: undefined
-            });
-
-            const result = converter.convert();
-
-            expect(result.isValid).toBe(true);
-            expect(result.coerced).toBe(false);
-            expect(result.usedProvidedExample).toBe(true);
-            expect(result.validExample).toBe(undefined);
         });
 
         it("should accept null for nullable array fields", () => {
@@ -407,27 +326,6 @@ describe("ExampleConverter", () => {
                 expect(result.isValid).toBe(true);
                 expect(result.usedProvidedExample).toBe(true);
                 expect(result.validExample).toBe(null);
-                expect(result.errors).toEqual([]);
-            });
-
-            it("should accept undefined for nullable string field", () => {
-                const schema: OpenAPIV3_1.SchemaObject & { nullable?: boolean } = {
-                    type: "string",
-                    nullable: true
-                };
-                const converter = new ExampleConverter({
-                    breadcrumbs: [],
-                    context: mockContext,
-                    schema,
-                    example: undefined,
-                    generateOptionalProperties: false
-                });
-
-                const result = converter.convert();
-
-                expect(result.isValid).toBe(true);
-                expect(result.usedProvidedExample).toBe(true);
-                expect(result.validExample).toBe(undefined);
                 expect(result.errors).toEqual([]);
             });
 

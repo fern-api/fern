@@ -289,7 +289,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             resolvedSchema &&
             "nullable" in resolvedSchema &&
             resolvedSchema.nullable === true &&
-            (this.example === null || this.example === undefined)
+            this.example === null
         ) {
             return {
                 isValid: true,
@@ -402,7 +402,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             resolvedSchema &&
             "nullable" in resolvedSchema &&
             resolvedSchema.nullable === true &&
-            (this.example === null || this.example === undefined)
+            this.example === null
         ) {
             return {
                 isValid: true,
@@ -541,7 +541,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             resolvedSchema &&
             "nullable" in resolvedSchema &&
             resolvedSchema.nullable === true &&
-            (this.example === null || this.example === undefined)
+            this.example === null
         ) {
             return {
                 isValid: true,
@@ -622,7 +622,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             resolvedSchema &&
             "nullable" in resolvedSchema &&
             resolvedSchema.nullable === true &&
-            (this.example === null || this.example === undefined)
+            this.example === null
         ) {
             return {
                 isValid: true,
@@ -690,7 +690,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             !this.generateOptionalProperties &&
             "nullable" in resolvedSchema &&
             resolvedSchema.nullable === true &&
-            (this.example === null || this.example === undefined)
+            this.example === null
         ) {
             return {
                 isValid: true,
