@@ -1,8 +1,8 @@
 import { docsYml } from "@fern-api/configuration";
 
-type DocsConfiguration = docsYml.RawSchemas.DocsConfiguration;
-type DocsInstance = docsYml.RawSchemas.DocsInstance;
+type DocsConfiguration = docsYml.RawSchemas.Serializer.DocsConfiguration.Raw;
 type Language = docsYml.RawSchemas.Language;
+type DocsInstance = docsYml.RawSchemas.Serializer.DocsInstance.Raw;
 
 import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -42,9 +42,11 @@ export function addLanguageSuffixToUrl(url: string, language: Language): string 
 
         if (hostname.endsWith(".docs.buildwithfern.com")) {
             const org = hostname.replace(".docs.buildwithfern.com", "");
-            urlObj.hostname = `${org}-${language}.docs.buildwithfern.com/${language}`;
+            urlObj.hostname = `${org}-${language}.docs.buildwithfern.com`;
+            urlObj.pathname = language;
         } else {
-            urlObj.hostname = `${language}.${hostname}/${language}`;
+            urlObj.hostname = `${language}.${hostname}`;
+            urlObj.pathname = language;
         }
 
         let result = urlObj.toString();
@@ -72,9 +74,9 @@ export function addLanguageSuffixToUrl(url: string, language: Language): string 
             let newHostname: string;
             if (hostname.endsWith(".docs.buildwithfern.com")) {
                 const orgPart = hostname.replace(".docs.buildwithfern.com", "");
-                newHostname = `${orgPart}-${language}.docs.buildwithfern.com`;
+                newHostname = `${orgPart}-${language}.docs.buildwithfern.com/${language}`;
             } else {
-                newHostname = `${language}.${hostname}`;
+                newHostname = `${language}.${hostname}/${language}`;
             }
 
             let result = `${protocol}://${newHostname}`;
@@ -100,9 +102,9 @@ export function addLanguageSuffixToUrl(url: string, language: Language): string 
                 let newHostname: string;
                 if (hostname?.endsWith(".docs.buildwithfern.com")) {
                     const orgPart = hostname.replace(".docs.buildwithfern.com", "");
-                    newHostname = `${orgPart}-${language}.docs.buildwithfern.com`;
+                    newHostname = `${orgPart}-${language}.docs.buildwithfern.com/${language}`;
                 } else {
-                    newHostname = `${language}.${hostname}`;
+                    newHostname = `${language}.${hostname}/${language}`;
                 }
 
                 if (pathParts.length > 0 || pathParts.some((p) => p !== "")) {
@@ -115,9 +117,9 @@ export function addLanguageSuffixToUrl(url: string, language: Language): string 
             } else {
                 if (url.endsWith(".docs.buildwithfern.com")) {
                     const orgPart = url.replace(".docs.buildwithfern.com", "");
-                    return `${orgPart}-${language}.docs.buildwithfern.com`;
+                    return `${orgPart}-${language}.docs.buildwithfern.com/${language}`;
                 } else {
-                    return `${language}.${url}`;
+                    return `${language}.${url}/${language}`;
                 }
             }
         }
@@ -159,12 +161,12 @@ function modifyInstanceUrlsForLanguage(docsConfig: DocsConfiguration, language: 
                 modifiedInstance.url = addLanguageSuffixToUrl(modifiedInstance.url, language);
             }
 
-            if (modifiedInstance.customDomain) {
-                const customDomain = modifiedInstance.customDomain;
+            if (modifiedInstance["custom-domain"]) {
+                const customDomain = modifiedInstance["custom-domain"];
                 if (typeof customDomain === "string") {
-                    modifiedInstance.customDomain = addLanguageSuffixToUrl(customDomain, language);
+                    modifiedInstance["custom-domain"] = addLanguageSuffixToUrl(customDomain, language);
                 } else if (Array.isArray(customDomain)) {
-                    modifiedInstance.customDomain = customDomain.map((domain: string) =>
+                    modifiedInstance["custom-domain"] = customDomain.map((domain: string) =>
                         addLanguageSuffixToUrl(domain, language)
                     );
                 }

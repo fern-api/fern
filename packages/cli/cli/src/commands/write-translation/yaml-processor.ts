@@ -134,6 +134,7 @@ export async function translateYamlObject(
     sourceLanguage: string,
     filePath: string,
     cliContext: CliContext,
+    stub: boolean,
     sourceObj?: unknown
 ): Promise<unknown> {
     if (obj === null || obj === undefined) {
@@ -148,7 +149,7 @@ export async function translateYamlObject(
         const sourceArray = Array.isArray(sourceObj) ? sourceObj : undefined;
         return await Promise.all(
             obj.map((item, index) =>
-                translateYamlObject(item, language, sourceLanguage, filePath, cliContext, sourceArray?.[index])
+                translateYamlObject(item, language, sourceLanguage, filePath, cliContext, stub, sourceArray?.[index])
             )
         );
     }
@@ -169,6 +170,11 @@ export async function translateYamlObject(
             }
 
             if (shouldTranslateValue(key, value)) {
+                if (stub) {
+                    result[key] = value;
+                    continue;
+                }
+
                 result[key] = await translateText({ text: value as string, language, sourceLanguage, cliContext });
             } else {
                 result[key] = await translateYamlObject(
@@ -177,6 +183,7 @@ export async function translateYamlObject(
                     sourceLanguage,
                     filePath,
                     cliContext,
+                    stub,
                     sourceRecord?.[key]
                 );
             }
@@ -205,12 +212,6 @@ export async function translateYamlContent(
         return yamlContent;
     }
 
-    // If stub mode is enabled, return content as-is
-    if (stub) {
-        cliContext.logger.debug(`[STUB] Returning YAML content as-is for ${filePath} (stub mode enabled)`);
-        return yamlContent;
-    }
-
     try {
         const parsedYaml = yaml.load(yamlContent);
 
@@ -224,6 +225,7 @@ export async function translateYamlContent(
             sourceLanguage,
             filePath,
             cliContext,
+            stub,
             parsedYaml
         );
 
