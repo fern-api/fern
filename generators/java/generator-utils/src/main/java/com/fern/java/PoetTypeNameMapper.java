@@ -121,7 +121,7 @@ public final class PoetTypeNameMapper {
         }
     }
 
-    private static final class PrimitiveToTypeNameConverter implements PrimitiveTypeV1.Visitor<TypeName> {
+    private final class PrimitiveToTypeNameConverter implements PrimitiveTypeV1.Visitor<TypeName> {
 
         private final boolean primitiveAllowed;
         private final boolean useLocalDateForDates;
