@@ -45,12 +45,17 @@ types:
           just list the fixture name. For configured fixture list {fixture}:{outputFolder}.
       features: optional<features.GeneratorFeatures>
 
-  PublishDockerConfiguration:
+  PublishContainerConfiguration:
     properties:
       context: string
       image: string
       aliases: optional<list<string>>
       file: string
+
+  PublishDockerConfiguration:
+    docs: |
+      @deprecated Use PublishContainerConfiguration instead
+    extends: PublishContainerConfiguration
 
   PublishDocker:
     docs: |
@@ -58,8 +63,8 @@ types:
     properties:
       workingDirectory: optional<string>
       preBuildCommands: optional<DockerCommand>
-      docker: PublishDockerConfiguration
-      podman: optional<PublishDockerConfiguration>
+      docker: PublishContainerConfiguration
+      podman: optional<PublishContainerConfiguration>
 
   PublishCommand:
     docs: |
@@ -80,15 +85,20 @@ types:
       - PublishDocker
       - PublishCommand
 
-  TestDockerConfiguration:
+  TestContainerConfiguration:
     properties:
       image: string
       command: optional<DockerCommand>
 
+  TestDockerConfiguration:
+    docs: |
+      @deprecated Use TestContainerConfiguration instead
+    extends: TestContainerConfiguration
+
   TestConfiguration:
     properties:
-      docker: TestDockerConfiguration
-      podman: optional<TestDockerConfiguration>
+      docker: TestContainerConfiguration
+      podman: optional<TestContainerConfiguration>
       local: optional<LocalBuildInfo>
 
   LocalBuildInfo:
