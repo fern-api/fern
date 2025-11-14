@@ -164,12 +164,21 @@ export class OperationConverter extends AbstractOperationConverter {
                 breadcrumbs: this.breadcrumbs
             }) ?? [];
 
-        const explorerExtension = new FernExplorerExtension({
+        const globalExplorerExtension = new FernExplorerExtension({
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            document: this.context.spec as object
+        });
+        const globalExplorer = globalExplorerExtension.convert();
+
+        const operationExplorerExtension = new FernExplorerExtension({
             context: this.context,
             breadcrumbs: this.breadcrumbs,
             document: this.operation as object
         });
-        const apiPlayground = explorerExtension.convert();
+        const operationExplorer = operationExplorerExtension.convert();
+
+        const apiPlayground = operationExplorer ?? globalExplorer;
 
         const baseEndpoint: OperationConverter.BaseEndpoint = {
             displayName: this.operation.summary,
