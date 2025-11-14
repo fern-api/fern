@@ -77,7 +77,7 @@ public class Example {
                 .builder()
                 .limit(1)
                 .id("id")
-                .date("date")
+                .date("2023-01-15")
                 .deadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                 .bytes("bytes")
                 .user(
@@ -139,8 +139,8 @@ public class Example {
                 )
                 .optionalDeadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                 .keyValue(
-                    new HashMap<String, Optional<String>>() {{
-                        put("keyValue", Optional.of("keyValue"));
+                    new HashMap<String, String>() {{
+                        put("keyValue", "keyValue");
                     }}
                 )
                 .optionalString("optionalString")

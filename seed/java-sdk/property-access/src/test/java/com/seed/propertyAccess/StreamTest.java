@@ -16,16 +16,15 @@ import org.junit.jupiter.api.Test;
 
 public final class StreamTest {
     @Test
-    @SuppressWarnings("unchecked")
     public void testJsonStream() {
-        List<Map<String, String>> messages = List.of(Map.of("message", "hello"), Map.of("message", "world"));
-        List<String> jsonStrings = messages.stream().map(StreamTest::mapToJson).collect(Collectors.toList());
+        List<Map> messages = List.of(Map.of("message", "hello"), Map.of("message", "world"));
+        List jsonStrings = messages.stream().map(StreamTest::mapToJson).collect(Collectors.toList());
         String input = String.join("\n", jsonStrings);
         StringReader jsonInput = new StringReader(input);
-        Stream<Map<String, ?>> jsonStream = Stream.fromJson(Map.class, jsonInput);
+        Stream<Map> jsonStream = Stream.fromJson(Map.class, jsonInput);
         int expectedMessages = 2;
         int actualMessages = 0;
-        for (Map<String, ?> jsonObject : jsonStream) {
+        for (Map jsonObject : jsonStream) {
             actualMessages++;
             assertTrue(jsonObject.containsKey("message"));
         }
@@ -33,16 +32,15 @@ public final class StreamTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void testSseStream() {
-        List<Map<String, String>> events = List.of(Map.of("event", "start"), Map.of("event", "end"));
-        List<String> sseStrings = events.stream().map(StreamTest::mapToSse).collect(Collectors.toList());
+        List<Map> events = List.of(Map.of("event", "start"), Map.of("event", "end"));
+        List sseStrings = events.stream().map(StreamTest::mapToSse).collect(Collectors.toList());
         String input = String.join("\n" + "\n", sseStrings);
         StringReader sseInput = new StringReader(input);
-        Stream<Map<String, ?>> sseStream = Stream.fromSse(Map.class, sseInput);
+        Stream<Map> sseStream = Stream.fromSse(Map.class, sseInput);
         int expectedEvents = 2;
         int actualEvents = 0;
-        for (Map<String, ?> eventData : sseStream) {
+        for (Map eventData : sseStream) {
             actualEvents++;
             assertTrue(eventData.containsKey("event"));
         }
@@ -50,17 +48,16 @@ public final class StreamTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void testSseStreamWithTerminator() {
-        List<Map<String, String>> events = List.of(Map.of("message", "first"), Map.of("message", "second"));
-        List<String> sseStrings = events.stream().map(StreamTest::mapToSse).collect(Collectors.toList());
+        List<Map> events = List.of(Map.of("message", "first"), Map.of("message", "second"));
+        List sseStrings = events.stream().map(StreamTest::mapToSse).collect(Collectors.toList());
         sseStrings.add("data: [DONE]");
         String input = String.join("\n" + "\n", sseStrings);
         StringReader sseInput = new StringReader(input);
-        Stream<Map<String, ?>> sseStream = Stream.fromSse(Map.class, sseInput, "[DONE]");
+        Stream<Map> sseStream = Stream.fromSse(Map.class, sseInput, "[DONE]");
         int expectedEvents = 2;
         int actualEvents = 0;
-        for (Map<String, ?> eventData : sseStream) {
+        for (Map eventData : sseStream) {
             actualEvents++;
             assertTrue(eventData.containsKey("message"));
         }
@@ -68,15 +65,14 @@ public final class StreamTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void testStreamResourceManagement() throws IOException {
         StringReader testInput = new StringReader("{\"test\":\"data\"}");
-        Stream<Map<String, ?>> testStream = Stream.fromJson(Map.class, testInput);
+        Stream<Map> testStream = Stream.fromJson(Map.class, testInput);
         testStream.close();
         assertFalse(testStream.iterator().hasNext());
     }
 
-    private static String mapToJson(Map<String, ?> map) {
+    private static String mapToJson(Map map) {
         try {
             return ObjectMappers.JSON_MAPPER.writeValueAsString(map);
         } catch (Exception e) {
@@ -84,7 +80,7 @@ public final class StreamTest {
         }
     }
 
-    private static String mapToSse(Map<String, ?> map) {
+    private static String mapToSse(Map map) {
         return "data: " + mapToJson(map);
     }
 }
