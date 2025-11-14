@@ -575,6 +575,7 @@ async function getNavigationConfiguration({
                     type: "external",
                     product: product.displayName,
                     href: product.href,
+                    target: product.target,
                     subtitle: product.subtitle,
                     icon: resolveIconPath(product.icon, absolutePathToConfig) || "fa-solid fa-code",
                     image: productImageFile,
@@ -828,7 +829,8 @@ async function convertNavigationTabConfiguration({
             hidden: tab.hidden,
             child: {
                 type: "link",
-                href: tab.href
+                href: tab.href,
+                target: tab.target
             },
             viewers: parseRoles(tab.viewers),
             orphaned: tab.orphaned,
@@ -1280,13 +1282,15 @@ function convertNavbarLinks(
                 return {
                     type: "github",
                     url: CjsFdrSdk.Url(githubValue),
-                    viewers: undefined
+                    viewers: undefined,
+                    target: undefined
                 };
             } else {
                 return {
                     type: "github",
                     url: CjsFdrSdk.Url(githubValue.url),
-                    viewers: convertRoleToRoleIds(githubValue.viewers)
+                    viewers: convertRoleToRoleIds(githubValue.viewers),
+                    target: githubValue.target
                 };
             }
         }
@@ -1304,6 +1308,7 @@ function convertNavbarLinks(
                 links:
                     navbarLink.links?.map((link) => ({
                         href: link.href,
+                        target: link.target,
                         url: CjsFdrSdk.Url(link.url ?? link.href ?? "/"),
                         text: link.text,
                         icon: resolveIconPath(link.icon, absoluteFilepathToDocsConfig),
@@ -1318,6 +1323,7 @@ function convertNavbarLinks(
             type: navbarLink.type,
             text: navbarLink.text,
             url: CjsFdrSdk.Url(navbarLink.href ?? navbarLink.url ?? "/"),
+            target: navbarLink.target,
             icon: resolveIconPath(navbarLink.icon, absoluteFilepathToDocsConfig),
             rightIcon: resolveIconPath(navbarLink.rightIcon, absoluteFilepathToDocsConfig),
             rounded: navbarLink.rounded,

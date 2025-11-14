@@ -11,7 +11,8 @@ import {
     Language,
     PlaygroundSettings,
     ThemeConfig,
-    VersionAvailability
+    VersionAvailability,
+    Target
 } from "./schemas";
 
 export interface ParsedDocsConfiguration {
@@ -195,6 +196,7 @@ export interface ExternalProduct
     href: string | undefined;
     icon: string | AbsoluteFilePath;
     image: AbsoluteFilePath | undefined;
+    target: Target | undefined;
 }
 
 export type DocsNavigationConfiguration =
@@ -232,6 +234,7 @@ export declare namespace TabbedNavigationChild {
     export interface Link {
         type: "link";
         href: string;
+        target: Target | undefined;
     }
 
     export interface Changelog {
