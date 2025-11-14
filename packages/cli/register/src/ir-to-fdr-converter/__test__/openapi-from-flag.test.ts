@@ -398,7 +398,8 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
             context,
             audiences: { type: "all" },
             enableUniqueErrorsPerEndpoint: true,
-            generateV1Examples: false
+            generateV1Examples: false,
+            logWarnings: true
         });
 
         // Convert to FDR format (complete pipeline)

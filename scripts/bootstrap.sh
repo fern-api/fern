@@ -54,7 +54,7 @@ echo "✅ buf installed"
 # Install protoc-gen-openapi.
 if ! command_exists protoc-gen-openapi; then
     echo "Installing protoc-gen-openapi..."
-    go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@1aa7fe870834ed27024dc44afd95648a0d63ec57
+    go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 fi
 echo "✅ protoc-gen-openapi installed"
 
