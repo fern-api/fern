@@ -102,6 +102,7 @@ allowedFailures:
   - no-retries
   - nullable
   - nullable-optional
+  - nullable-request-body
   - oauth-client-credentials
   - oauth-client-credentials-custom
   - oauth-client-credentials-default

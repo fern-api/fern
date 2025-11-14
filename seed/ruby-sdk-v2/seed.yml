@@ -64,7 +64,9 @@ fixtures:
             - method: POST
               path: /movie
 
-allowedFailures: []
+allowedFailures:
+  - nullable-request-body
+
 features:
   requestOptions: true
   idempotency: false

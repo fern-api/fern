@@ -1,0 +1,395 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:PlainObject": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "PlainObject",
+                    "camelCase": {
+                        "unsafeName": "plainObject",
+                        "safeName": "plainObject"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "plain_object",
+                        "safeName": "plain_object"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PLAIN_OBJECT",
+                        "safeName": "PLAIN_OBJECT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PlainObject",
+                        "safeName": "PlainObject"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "id",
+                            "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            }
+                        },
+                        "wireValue": "id"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "name",
+                            "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                            }
+                        },
+                        "wireValue": "name"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_testGroup.test_method_name": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "test_method_name",
+                    "camelCase": {
+                        "unsafeName": "testMethodName",
+                        "safeName": "testMethodName"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "test_method_name",
+                        "safeName": "test_method_name"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TEST_METHOD_NAME",
+                        "safeName": "TEST_METHOD_NAME"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TestMethodName",
+                        "safeName": "TestMethodName"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "testGroup",
+                            "camelCase": {
+                                "unsafeName": "testGroup",
+                                "safeName": "testGroup"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "test_group",
+                                "safeName": "test_group"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TEST_GROUP",
+                                "safeName": "TEST_GROUP"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "TestGroup",
+                                "safeName": "TestGroup"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "testGroup",
+                        "camelCase": {
+                            "unsafeName": "testGroup",
+                            "safeName": "testGroup"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "test_group",
+                            "safeName": "test_group"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TEST_GROUP",
+                            "safeName": "TEST_GROUP"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "TestGroup",
+                            "safeName": "TestGroup"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/optional-request-body/{path_param}"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "TestMethodNameTestGroupRequest",
+                        "camelCase": {
+                            "unsafeName": "testMethodNameTestGroupRequest",
+                            "safeName": "testMethodNameTestGroupRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "test_method_name_test_group_request",
+                            "safeName": "test_method_name_test_group_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TEST_METHOD_NAME_TEST_GROUP_REQUEST",
+                            "safeName": "TEST_METHOD_NAME_TEST_GROUP_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "TestMethodNameTestGroupRequest",
+                            "safeName": "TestMethodNameTestGroupRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "testGroup",
+                                "camelCase": {
+                                    "unsafeName": "testGroup",
+                                    "safeName": "testGroup"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "test_group",
+                                    "safeName": "test_group"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TEST_GROUP",
+                                    "safeName": "TEST_GROUP"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "TestGroup",
+                                    "safeName": "TestGroup"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "testGroup",
+                            "camelCase": {
+                                "unsafeName": "testGroup",
+                                "safeName": "testGroup"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "test_group",
+                                "safeName": "test_group"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TEST_GROUP",
+                                "safeName": "TEST_GROUP"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "TestGroup",
+                                "safeName": "TestGroup"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "path_param",
+                                "camelCase": {
+                                    "unsafeName": "pathParam",
+                                    "safeName": "pathParam"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "path_param",
+                                    "safeName": "path_param"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PATH_PARAM",
+                                    "safeName": "PATH_PARAM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "PathParam",
+                                    "safeName": "PathParam"
+                                }
+                            },
+                            "wireValue": "path_param"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "queryParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "query_param_object",
+                                "camelCase": {
+                                    "unsafeName": "queryParamObject",
+                                    "safeName": "queryParamObject"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "query_param_object",
+                                    "safeName": "query_param_object"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "QUERY_PARAM_OBJECT",
+                                    "safeName": "QUERY_PARAM_OBJECT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "QueryParamObject",
+                                    "safeName": "QueryParamObject"
+                                }
+                            },
+                            "wireValue": "query_param_object"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "nullable",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_:PlainObject"
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "query_param_integer",
+                                "camelCase": {
+                                    "unsafeName": "queryParamInteger",
+                                    "safeName": "queryParamInteger"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "query_param_integer",
+                                    "safeName": "query_param_integer"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "QUERY_PARAM_INTEGER",
+                                    "safeName": "QUERY_PARAM_INTEGER"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "QueryParamInteger",
+                                    "safeName": "QueryParamInteger"
+                                }
+                            },
+                            "wireValue": "query_param_integer"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "INTEGER"
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "headers": [],
+                "body": {
+                    "type": "referenced",
+                    "bodyKey": {
+                        "originalName": "body",
+                        "camelCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "body",
+                            "safeName": "body"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BODY",
+                            "safeName": "BODY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Body",
+                            "safeName": "Body"
+                        }
+                    },
+                    "bodyType": {
+                        "type": "typeReference",
+                        "value": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:PlainObject"
+                            }
+                        }
+                    }
+                },
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}
