@@ -10,9 +10,9 @@ import {
     ExperimentalConfig,
     Language,
     PlaygroundSettings,
+    Target,
     ThemeConfig,
-    VersionAvailability,
-    Target
+    VersionAvailability
 } from "./schemas";
 
 export interface ParsedDocsConfiguration {
