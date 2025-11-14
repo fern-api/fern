@@ -148,6 +148,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                         requestBodyType: convertedSchema.type,
                         v2Examples: this.convertMediaTypeObjectExamples({
                             mediaTypeObject,
+                            generateOptionalProperties: true,
                             exampleGenerationStrategy: "request"
                         })
                     }),

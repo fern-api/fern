@@ -374,4 +374,76 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         const rootApi = definition.rootApiFile?.contents;
         expect(rootApi).toBeDefined();
     });
+
+    it("should handle OpenAPI with x-fern-examples, example, examples (multiple), and nullable fields", async () => {
+        // Test OpenAPI spec with different example types and nullable field handling
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/examples-matrix")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "examples-matrix"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate that examples were processed correctly
+        expect(intermediateRepresentation.services).toBeDefined();
+        const services = Object.values(intermediateRepresentation.services);
+        expect(services.length).toBeGreaterThan(0);
+
+        // Validate that we have 4 endpoints (x-fern-examples, example, examples, no examples)
+        const service = services[0];
+        if (service && typeof service === "object" && "endpoints" in service) {
+            const serviceWithEndpoints = service as { endpoints?: unknown[] };
+            expect(serviceWithEndpoints.endpoints).toBeDefined();
+            expect(serviceWithEndpoints.endpoints?.length).toBe(4);
+        }
+
+        // Validate FDR structure
+        expect(fdrApiDefinition.types).toBeDefined();
+        expect(fdrApiDefinition.subpackages).toBeDefined();
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/examples-matrix-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/examples-matrix-ir.snap");
+    });
 });

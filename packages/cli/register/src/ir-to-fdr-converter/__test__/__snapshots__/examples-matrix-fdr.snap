@@ -1,0 +1,810 @@
+{
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": undefined,
+        "description": undefined,
+        "environments": undefined,
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/endpoint-with-x-fern-examples",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": {
+              "age": null,
+              "email": "test@example.com",
+              "name": "Test User",
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "age": null,
+                "email": "test@example.com",
+                "name": "Test User",
+              },
+            },
+            "responseBody": {
+              "id": "user123",
+              "name": "Test User",
+              "nickname": null,
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "id": "user123",
+                "name": "Test User",
+                "nickname": null,
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "endpointWithXFernExamples",
+        "includeInApiExplorer": undefined,
+        "method": "POST",
+        "multiAuth": undefined,
+        "name": "Endpoint using x-fern-examples",
+        "originalEndpointId": "endpoint_.endpointWithXFernExamples",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/endpoint-with-x-fern-examples",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": {
+          "description": undefined,
+          "type": {
+            "contentType": "application/json",
+            "description": undefined,
+            "shape": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "CreateUserRequest",
+              },
+            },
+            "type": "json",
+          },
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "description": undefined,
+              "type": {
+                "contentType": "application/json",
+                "description": undefined,
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "CreateUserRequest",
+                  },
+                },
+                "type": "json",
+              },
+            },
+          ],
+        },
+        "response": {
+          "description": "Success",
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "UserResponse",
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Success",
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "UserResponse",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": undefined,
+        "description": undefined,
+        "environments": undefined,
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/endpoint-with-example",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": {
+              "age": {},
+              "email": "jane@example.com",
+              "name": "Jane Doe",
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "age": {},
+                "email": "jane@example.com",
+                "name": "Jane Doe",
+              },
+            },
+            "responseBody": {
+              "id": "user456",
+              "name": "Jane Doe",
+              "nickname": {},
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "id": "user456",
+                "name": "Jane Doe",
+                "nickname": {},
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "endpointWithExample",
+        "includeInApiExplorer": undefined,
+        "method": "POST",
+        "multiAuth": undefined,
+        "name": "Endpoint using single example field",
+        "originalEndpointId": "endpoint_.endpointWithExample",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/endpoint-with-example",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": {
+          "description": undefined,
+          "type": {
+            "contentType": "application/json",
+            "description": undefined,
+            "shape": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "CreateUserRequest",
+              },
+            },
+            "type": "json",
+          },
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "description": undefined,
+              "type": {
+                "contentType": "application/json",
+                "description": undefined,
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "CreateUserRequest",
+                  },
+                },
+                "type": "json",
+              },
+            },
+          ],
+        },
+        "response": {
+          "description": "Success",
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "UserResponse",
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Success",
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "UserResponse",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": undefined,
+        "description": undefined,
+        "environments": undefined,
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": "User with null nickname",
+            "path": "/endpoint-with-examples",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": {
+              "type": "json",
+              "value": undefined,
+            },
+            "responseBody": {
+              "id": "user789",
+              "name": "Bob Smith",
+              "nickname": {},
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "id": "user789",
+                "name": "Bob Smith",
+                "nickname": {},
+              },
+            },
+            "responseStatusCode": 200,
+          },
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": "User with nickname",
+            "path": "/endpoint-with-examples",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": {
+              "type": "json",
+              "value": undefined,
+            },
+            "responseBody": {
+              "id": "user790",
+              "name": "Alice Johnson",
+              "nickname": "Ally",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "id": "user790",
+                "name": "Alice Johnson",
+                "nickname": "Ally",
+              },
+            },
+            "responseStatusCode": 200,
+          },
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": "User with null age",
+            "path": "/endpoint-with-examples",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": {
+              "age": {},
+              "email": "bob@example.com",
+              "name": "Bob Smith",
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "age": {},
+                "email": "bob@example.com",
+                "name": "Bob Smith",
+              },
+            },
+            "responseBody": {
+              "id": "user789",
+              "name": "Bob Smith",
+              "nickname": {},
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "id": "user789",
+                "name": "Bob Smith",
+                "nickname": {},
+              },
+            },
+            "responseStatusCode": 200,
+          },
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": "User with age",
+            "path": "/endpoint-with-examples",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": {
+              "age": 30,
+              "email": "alice@example.com",
+              "name": "Alice Johnson",
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "age": 30,
+                "email": "alice@example.com",
+                "name": "Alice Johnson",
+              },
+            },
+            "responseBody": {
+              "id": "user789",
+              "name": "Bob Smith",
+              "nickname": {},
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "id": "user789",
+                "name": "Bob Smith",
+                "nickname": {},
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "endpointWithExamples",
+        "includeInApiExplorer": undefined,
+        "method": "POST",
+        "multiAuth": undefined,
+        "name": "Endpoint using multiple examples",
+        "originalEndpointId": "endpoint_.endpointWithExamples",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/endpoint-with-examples",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": {
+          "description": undefined,
+          "type": {
+            "contentType": "application/json",
+            "description": undefined,
+            "shape": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "CreateUserRequest",
+              },
+            },
+            "type": "json",
+          },
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "description": undefined,
+              "type": {
+                "contentType": "application/json",
+                "description": undefined,
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "CreateUserRequest",
+                  },
+                },
+                "type": "json",
+              },
+            },
+          ],
+        },
+        "response": {
+          "description": "Success",
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "UserResponse",
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Success",
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "UserResponse",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": undefined,
+        "description": undefined,
+        "environments": undefined,
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/endpoint-without-examples",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": {
+              "email": "string",
+              "name": "string",
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "email": "string",
+                "name": "string",
+              },
+            },
+            "responseBody": {
+              "id": "string",
+              "name": "string",
+              "nickname": "string",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "id": "string",
+                "name": "string",
+                "nickname": "string",
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "endpointWithoutExamples",
+        "includeInApiExplorer": undefined,
+        "method": "POST",
+        "multiAuth": undefined,
+        "name": "Endpoint without any examples",
+        "originalEndpointId": "endpoint_.endpointWithoutExamples",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/endpoint-without-examples",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": {
+          "description": undefined,
+          "type": {
+            "contentType": "application/json",
+            "description": undefined,
+            "shape": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "CreateUserRequest",
+              },
+            },
+            "type": "json",
+          },
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "description": undefined,
+              "type": {
+                "contentType": "application/json",
+                "description": undefined,
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "CreateUserRequest",
+                  },
+                },
+                "type": "json",
+              },
+            },
+          ],
+        },
+        "response": {
+          "description": "Success",
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "UserResponse",
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Success",
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "UserResponse",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+    ],
+    "pointsTo": undefined,
+    "subpackages": [],
+    "types": [
+      "CreateUserRequest",
+      "UserResponse",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {},
+  "types": {
+    "CreateUserRequest": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "CreateUserRequest",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "User's full name",
+            "key": "name",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "User's email address",
+            "key": "email",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": "email",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "User's age (nullable)",
+            "key": "age",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "maximum": undefined,
+                    "minimum": undefined,
+                    "type": "integer",
+                  },
+                },
+                "type": "nullable",
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "UserResponse": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "UserResponse",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Unique user identifier",
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "User's full name",
+            "key": "name",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "User's nickname (nullable)",
+            "key": "nickname",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "regex": undefined,
+                    "type": "string",
+                  },
+                },
+                "type": "nullable",
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}
