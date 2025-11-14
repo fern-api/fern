@@ -129,7 +129,7 @@
       "es-toolkit": "^1.39.10",
       "ts-essentials": "^10.1.1",
       "form-data": "^4.0.4",
-      "@types/node@": "^20.19.0"
+      "@types/node": "^20.19.0"
     }
   },
   "catalog": {
