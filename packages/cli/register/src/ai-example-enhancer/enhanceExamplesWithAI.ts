@@ -8,6 +8,7 @@ import * as yaml from "js-yaml";
 import { OpenAPIV3 } from "openapi-types";
 import { join } from "path";
 import { LambdaExampleEnhancer } from "./lambdaClient";
+import { ProgressTracker } from "./progressTracker";
 import { AIExampleEnhancerConfig, ExampleEnhancementBatchRequest } from "./types";
 import {
     EnhancedExampleRecord,
@@ -256,10 +257,6 @@ export async function enhanceExamplesWithAI(
         sourceFilePath
     );
 
-    context.logger.info(
-        `AI example enhancement completed: ${examplesEnhanced.count}/${examplesEnhanced.total} examples enhanced`
-    );
-
     if (enhancedExampleRecords.length > 0 && sourceFilePath != null) {
         try {
             await writeAiExamplesOverride({
@@ -305,6 +302,8 @@ async function enhancePackageExamples(
     stats.total += allWorkItems.length;
     context.logger.debug(`Collected ${allWorkItems.length} work items across all packages`);
 
+    const progressTracker = new ProgressTracker(context, allWorkItems.length);
+
     // Process all work items in batches (up to 10 per batch)
     const enhancementResults = await processBatchedWorkItems(
         allWorkItems,
@@ -314,8 +313,11 @@ async function enhancePackageExamples(
         stats,
         enhancedExampleRecords,
         openApiSpec,
-        sourceFilePath
+        sourceFilePath,
+        progressTracker
     );
+
+    progressTracker.finish();
 
     // Apply results back to packages
     const enhancedSubpackages: Record<string, FdrCjsSdk.api.v1.register.ApiDefinitionSubpackage> = {};
@@ -390,11 +392,11 @@ async function processBatchedWorkItems(
     stats: { count: number; total: number },
     enhancedExampleRecords: EnhancedExampleRecord[],
     openApiSpec?: string,
-    sourceFilePath?: AbsoluteFilePath
+    sourceFilePath?: AbsoluteFilePath,
+    progressTracker?: ProgressTracker
 ): Promise<Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>> {
     const enhancementResults = new Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>();
 
-    // Adaptive retry strategy - starts optimistic, learns from failures
     const retryStrategy: RetryStrategy = {
         optimalBatchSize: 10,
         useOpenApiSpec: !!openApiSpec,
@@ -406,7 +408,7 @@ async function processBatchedWorkItems(
         const currentBatchSize = Math.min(retryStrategy.optimalBatchSize, allWorkItems.length - i);
         const batch = allWorkItems.slice(i, i + currentBatchSize);
 
-        const batchNumber = Math.floor(i / 10) + 1; // Use original batch size for numbering
+        const batchNumber = Math.floor(i / 10) + 1;
         context.logger.debug(
             `Processing batch ${batchNumber} with ${batch.length} endpoints (strategy: size=${retryStrategy.optimalBatchSize}, spec=${retryStrategy.useOpenApiSpec})`
         );
@@ -481,7 +483,8 @@ async function processBatchedWorkItems(
                                 enhancementResults,
                                 enhancedExampleRecords,
                                 stats,
-                                context
+                                context,
+                                progressTracker
                             );
 
                             // Save results incrementally after successful reduced batch
@@ -540,7 +543,8 @@ async function processBatchedWorkItems(
                             enhancementResults,
                             enhancedExampleRecords,
                             stats,
-                            context
+                            context,
+                            progressTracker
                         );
 
                         // Save results incrementally after successful single batch
@@ -573,7 +577,8 @@ async function processBatchedWorkItems(
                     enhancementResults,
                     enhancedExampleRecords,
                     stats,
-                    context
+                    context,
+                    progressTracker
                 );
                 batchSuccess = true;
 
@@ -637,7 +642,8 @@ async function processBatchResponse(
     enhancementResults: Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>,
     enhancedExampleRecords: EnhancedExampleRecord[],
     stats: { count: number; total: number },
-    context: TaskContext
+    context: TaskContext,
+    progressTracker?: ProgressTracker
 ): Promise<void> {
     for (let j = 0; j < batch.length; j++) {
         const item = batch[j];
@@ -653,7 +659,6 @@ async function processBatchResponse(
                 enhancedRes: result.enhancedResponseExample
             });
 
-            // Create enhanced example record
             const enhancedExampleRecord: EnhancedExampleRecord = {
                 endpoint: item.example.path,
                 method: item.endpoint.method,
@@ -673,11 +678,13 @@ async function processBatchResponse(
             if (enhancedExampleRecord.requestBody !== undefined || enhancedExampleRecord.responseBody !== undefined) {
                 enhancedExampleRecords.push(enhancedExampleRecord);
                 stats.count++;
-                context.logger.info(`Successfully enhanced example for ${item.endpoint.method} ${item.example.path}`);
+                context.logger.debug(`Successfully enhanced example for ${item.endpoint.method} ${item.example.path}`);
             }
         } else if (result?.error) {
-            context.logger.warn(`Failed to enhance ${item.endpoint.method} ${item.example.path}: ${result.error}`);
+            context.logger.debug(`Failed to enhance ${item.endpoint.method} ${item.example.path}: ${result.error}`);
         }
+
+        progressTracker?.increment();
     }
 }
 
