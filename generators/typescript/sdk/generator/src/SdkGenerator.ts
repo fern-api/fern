@@ -465,13 +465,14 @@ export class SdkGenerator {
             fileResponseType: config.fileResponseType,
             exportsManager: this.exportsManager,
             formDataSupport: config.formDataSupport,
-            omitFernHeaders: config.omitFernHeaders,
             useDefaultRequestParameterValues: config.useDefaultRequestParameterValues,
             generateEndpointMetadata: config.generateEndpointMetadata,
             parameterNaming: config.parameterNaming
         });
         this.baseClientTypeGenerator = new BaseClientTypeGenerator({
-            generateIdempotentRequestOptions: this.hasIdempotentEndpoints()
+            ir: intermediateRepresentation,
+            generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
+            omitFernHeaders: config.omitFernHeaders
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation,

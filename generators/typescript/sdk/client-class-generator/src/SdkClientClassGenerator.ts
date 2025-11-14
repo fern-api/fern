@@ -29,7 +29,6 @@ export declare namespace SdkClientClassGenerator {
         fileResponseType: "stream" | "binary-response";
         formDataSupport: "Node16" | "Node18";
         exportsManager: ExportsManager;
-        omitFernHeaders: boolean;
         useDefaultRequestParameterValues: boolean;
         generateEndpointMetadata: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
@@ -67,7 +66,6 @@ export class SdkClientClassGenerator {
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly fileResponseType: "stream" | "binary-response";
     private readonly exportsManager: ExportsManager;
-    private readonly omitFernHeaders: boolean;
     private readonly useDefaultRequestParameterValues: boolean;
     private readonly generateEndpointMetadata: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
@@ -94,7 +92,6 @@ export class SdkClientClassGenerator {
         fileResponseType,
         exportsManager,
         formDataSupport,
-        omitFernHeaders,
         useDefaultRequestParameterValues,
         generateEndpointMetadata,
         parameterNaming
@@ -120,7 +117,6 @@ export class SdkClientClassGenerator {
         this.fileResponseType = fileResponseType;
         this.exportsManager = exportsManager;
         this.formDataSupport = formDataSupport;
-        this.omitFernHeaders = omitFernHeaders;
         this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.parameterNaming = parameterNaming;
@@ -158,7 +154,6 @@ export class SdkClientClassGenerator {
             streamType: this.streamType,
             fileResponseType: this.fileResponseType,
             formDataSupport: this.formDataSupport,
-            omitFernHeaders: this.omitFernHeaders,
             useDefaultRequestParameterValues: this.useDefaultRequestParameterValues,
             generateEndpointMetadata: this.generateEndpointMetadata,
             parameterNaming: this.parameterNaming

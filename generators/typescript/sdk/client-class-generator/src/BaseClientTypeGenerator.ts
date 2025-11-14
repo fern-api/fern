@@ -1,18 +1,29 @@
-import { getTextOfTsNode } from "@fern-typescript/commons";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+import { getLiteralValueForHeader } from "./endpoints/utils";
+import { GeneratedHeader } from "./GeneratedHeader";
 
 export declare namespace BaseClientTypeGenerator {
     export interface Init {
         generateIdempotentRequestOptions: boolean;
+        ir: FernIr.IntermediateRepresentation;
+        omitFernHeaders: boolean;
     }
 }
 
+const OPTIONS_PARAMETER_NAME = "options";
+
 export class BaseClientTypeGenerator {
     private readonly generateIdempotentRequestOptions: boolean;
+    private readonly ir: FernIr.IntermediateRepresentation;
+    private readonly omitFernHeaders: boolean;
 
-    constructor({ generateIdempotentRequestOptions }: BaseClientTypeGenerator.Init) {
+    constructor({ generateIdempotentRequestOptions, ir, omitFernHeaders }: BaseClientTypeGenerator.Init) {
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
+        this.ir = ir;
+        this.omitFernHeaders = omitFernHeaders;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -26,40 +37,189 @@ export class BaseClientTypeGenerator {
     }
 
     private generateNormalizeClientOptionsFunction(context: SdkContext): void {
-        context.importsManager.addImportFromRoot("core/headers", {
-            namedImports: ["mergeHeaders"]
-        });
+        const fernHeaderEntries: [string, ts.Expression][] = [];
 
-        const sdkName = context.npmPackage?.packageName ?? "unknown";
-        const sdkVersion = context.npmPackage?.version ?? "0.0.0";
+        if (!this.omitFernHeaders) {
+            // X-Fern-Language header
+            fernHeaderEntries.push([
+                this.ir.sdkConfig.platformHeaders.language,
+                ts.factory.createStringLiteral("JavaScript")
+            ]);
 
-        const functionCode = `
-export function normalizeClientOptions<T extends BaseClientOptions>(
-    options: T
-): T {
-    const logging = ${getTextOfTsNode(
-        context.coreUtilities.logging.createLogger._invoke(ts.factory.createIdentifier("options?.logging"))
-    )};
+            // X-Fern-SDK-Name and X-Fern-SDK-Version headers (only if npmPackage exists)
+            if (context.npmPackage != null) {
+                fernHeaderEntries.push(
+                    [
+                        this.ir.sdkConfig.platformHeaders.sdkName,
+                        ts.factory.createStringLiteral(context.npmPackage.packageName)
+                    ],
+                    [
+                        this.ir.sdkConfig.platformHeaders.sdkVersion,
+                        ts.factory.createStringLiteral(context.npmPackage.version)
+                    ]
+                );
+            }
 
+            // User-Agent header
+            if (this.ir.sdkConfig.platformHeaders.userAgent != null) {
+                fernHeaderEntries.push([
+                    this.ir.sdkConfig.platformHeaders.userAgent.header,
+                    ts.factory.createStringLiteral(this.ir.sdkConfig.platformHeaders.userAgent.value)
+                ]);
+            } else if (context.npmPackage != null) {
+                // Fallback: generate User-Agent header from npm package info
+                fernHeaderEntries.push([
+                    "User-Agent",
+                    ts.factory.createStringLiteral(`${context.npmPackage.packageName}/${context.npmPackage.version}`)
+                ]);
+            }
+
+            // X-Fern-Runtime and X-Fern-Runtime-Version headers
+            fernHeaderEntries.push(
+                ["X-Fern-Runtime", context.coreUtilities.runtime.type._getReferenceTo()],
+                ["X-Fern-Runtime-Version", context.coreUtilities.runtime.version._getReferenceTo()]
+            );
+        }
+
+        const rootHeaders = this.getRootHeaders(context);
+        const hasHeaders = fernHeaderEntries.length > 0 || rootHeaders.length > 0;
+
+        let headersSection = "";
+        let headersReturn = "";
+
+        if (hasHeaders) {
+            context.importsManager.addImportFromRoot("core/headers", {
+                namedImports: ["mergeHeaders"]
+            });
+
+            const headers = ts.factory.createObjectLiteralExpression([
+                ...fernHeaderEntries.map(([key, value]) =>
+                    ts.factory.createPropertyAssignment(getPropertyKey(key), value)
+                ),
+                ...rootHeaders.map(({ header, value }) =>
+                    ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(header), value)
+                )
+            ]);
+
+            headersSection = `
     const headers = mergeHeaders(
-        {
-            "X-Fern-Language": "JavaScript",
-            "X-Fern-SDK-Name": "${sdkName}",
-            "X-Fern-SDK-Version": "${sdkVersion}",
-            "User-Agent": "${sdkName}/${sdkVersion}",
-            "X-Fern-Runtime": ${getTextOfTsNode(context.coreUtilities.runtime.type._getReferenceTo())},
-            "X-Fern-Runtime-Version": ${getTextOfTsNode(context.coreUtilities.runtime.version._getReferenceTo())},
-        },
+        ${getTextOfTsNode(headers)},
         options?.headers
     );
 
-    return {
+`;
+            headersReturn = `
+        headers,`;
+        }
+
+        const functionCode = `
+export function normalizeClientOptions<T extends BaseClientOptions>(
+    ${OPTIONS_PARAMETER_NAME}: T
+): T {${headersSection}    return {
         ...options,
-        logging,
-        headers,
+        logging: ${getTextOfTsNode(
+            context.coreUtilities.logging.createLogger._invoke(ts.factory.createIdentifier("options?.logging"))
+        )},${headersReturn}
     } as T;
 }`;
 
         context.sourceFile.addStatements(functionCode);
+    }
+
+    private getRootHeaders(context: SdkContext): GeneratedHeader[] {
+        const headers: GeneratedHeader[] = [
+            ...this.ir.headers
+                // auth headers are handled separately
+                .filter((header) => !this.isAuthorizationHeader(header))
+                .map((header) => {
+                    const headerName = this.getOptionKeyForHeader(header);
+                    const literalValue = getLiteralValueForHeader(header, context);
+
+                    let value: ts.Expression;
+                    if (literalValue != null) {
+                        if (typeof literalValue === "boolean") {
+                            const booleanLiteral = literalValue ? ts.factory.createTrue() : ts.factory.createFalse();
+                            value = ts.factory.createCallExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createParenthesizedExpression(
+                                        ts.factory.createBinaryExpression(
+                                            ts.factory.createPropertyAccessChain(
+                                                ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
+                                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                ts.factory.createIdentifier(headerName)
+                                            ),
+                                            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                            booleanLiteral
+                                        )
+                                    ),
+                                    ts.factory.createIdentifier("toString")
+                                ),
+                                undefined,
+                                []
+                            );
+                        } else {
+                            value = ts.factory.createBinaryExpression(
+                                ts.factory.createPropertyAccessChain(
+                                    ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
+                                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                    ts.factory.createIdentifier(headerName)
+                                ),
+                                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                ts.factory.createStringLiteral(literalValue.toString())
+                            );
+                        }
+                    } else {
+                        value = ts.factory.createPropertyAccessChain(
+                            ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
+                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                            ts.factory.createIdentifier(this.getOptionKeyForHeader(header))
+                        );
+                    }
+
+                    return {
+                        header: header.name.wireValue,
+                        value
+                    };
+                })
+        ];
+
+        const generatedVersion = context.versionContext.getGeneratedVersion();
+        if (generatedVersion != null) {
+            const header = generatedVersion.getHeader();
+            const headerName = this.getOptionKeyForHeader(header);
+            const defaultVersion = generatedVersion.getDefaultVersion();
+
+            let value: ts.Expression;
+            if (defaultVersion != null) {
+                value = ts.factory.createBinaryExpression(
+                    ts.factory.createPropertyAccessChain(
+                        ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                        ts.factory.createIdentifier(headerName)
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                    ts.factory.createStringLiteral(defaultVersion)
+                );
+            } else {
+                value = ts.factory.createPropertyAccessExpression(
+                    ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
+                    ts.factory.createIdentifier(headerName)
+                );
+            }
+            headers.push({
+                header: header.name.wireValue,
+                value
+            });
+        }
+
+        return headers;
+    }
+
+    private getOptionKeyForHeader(header: FernIr.HttpHeader): string {
+        return header.name.name.camelCase.unsafeName;
+    }
+
+    private isAuthorizationHeader(header: FernIr.HttpHeader | FernIr.HeaderAuthScheme): boolean {
+        return header.name.wireValue.toLowerCase() === "authorization";
     }
 }

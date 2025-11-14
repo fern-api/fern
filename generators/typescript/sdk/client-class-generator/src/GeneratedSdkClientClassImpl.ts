@@ -59,7 +59,7 @@ import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-
 import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation";
 import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation";
 import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation";
-import { getLiteralValueForHeader, isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
+import { isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
 import { GeneratedHeader } from "./GeneratedHeader";
 import { GeneratedWrappedService } from "./GeneratedWrappedService";
 import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
@@ -92,7 +92,6 @@ export declare namespace GeneratedSdkClientClassImpl {
         streamType: "wrapper" | "web";
         fileResponseType: "stream" | "binary-response";
         formDataSupport: "Node16" | "Node18";
-        omitFernHeaders: boolean;
         useDefaultRequestParameterValues: boolean;
         generateEndpointMetadata: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
@@ -145,7 +144,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private inferredAuthScheme: InferredAuthScheme | undefined;
     private authProvider: AuthProviderInstance | undefined;
     private readonly authHeaders: HeaderAuthScheme[];
-    private readonly omitFernHeaders: boolean;
     private readonly anyEndpointWithAuth: boolean;
     private readonly generateEndpointMetadata: boolean;
 
@@ -174,7 +172,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         streamType,
         fileResponseType,
         formDataSupport,
-        omitFernHeaders,
         generateEndpointMetadata,
         parameterNaming
     }: GeneratedSdkClientClassImpl.Init) {
@@ -195,7 +192,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.formDataSupport = formDataSupport;
         this.exportsManager = exportsManager;
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
-        this.omitFernHeaders = omitFernHeaders;
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.parameterNaming = parameterNaming;
 
@@ -1081,29 +1077,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     private getCtorOptionsStatements(context: SdkContext): Code {
-        const rootHeaders = this.getRootHeaders(context);
-        const shouldGenerateRootHeaders = rootHeaders.length > 0;
-
         context.importsManager.addImportFromRoot("BaseClient", {
             namedImports: ["normalizeClientOptions"]
         });
-
-        if (shouldGenerateRootHeaders) {
-            context.importsManager.addImportFromRoot("core/headers", {
-                namedImports: ["mergeHeaders"]
-            });
-            return code`const normalized = normalizeClientOptions(options);
-                this._options = {
-                    ...normalized,
-                    headers: mergeHeaders(${getTextOfTsNode(
-                        ts.factory.createObjectLiteralExpression(
-                            rootHeaders.map(({ header, value }) =>
-                                ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(header), value)
-                            )
-                        )
-                    )}, normalized.headers),
-                };`;
-        }
 
         return code`this._options = normalizeClientOptions(options);`;
     }
@@ -1194,97 +1170,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         } else {
             return undefined;
         }
-    }
-
-    private getRootHeaders(context: SdkContext): GeneratedHeader[] {
-        const headers: GeneratedHeader[] = [
-            ...this.intermediateRepresentation.headers
-                // auth headers are handled separately
-                .filter((header) => !this.isAuthorizationHeader(header))
-                .map((header) => {
-                    const headerName = this.getOptionKeyForHeader(header);
-                    const literalValue = getLiteralValueForHeader(header, context);
-
-                    let value: ts.Expression;
-                    if (literalValue != null) {
-                        if (typeof literalValue === "boolean") {
-                            const booleanLiteral = literalValue ? ts.factory.createTrue() : ts.factory.createFalse();
-                            value = ts.factory.createCallExpression(
-                                ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createParenthesizedExpression(
-                                        ts.factory.createBinaryExpression(
-                                            ts.factory.createPropertyAccessChain(
-                                                ts.factory.createIdentifier(
-                                                    GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME
-                                                ),
-                                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                                ts.factory.createIdentifier(headerName)
-                                            ),
-                                            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                            booleanLiteral
-                                        )
-                                    ),
-                                    ts.factory.createIdentifier("toString")
-                                ),
-                                undefined,
-                                []
-                            );
-                        } else {
-                            value = ts.factory.createBinaryExpression(
-                                ts.factory.createPropertyAccessChain(
-                                    ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME),
-                                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                    ts.factory.createIdentifier(headerName)
-                                ),
-                                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                ts.factory.createStringLiteral(literalValue.toString())
-                            );
-                        }
-                    } else {
-                        value = ts.factory.createPropertyAccessChain(
-                            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME),
-                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                            ts.factory.createIdentifier(this.getOptionKeyForHeader(header))
-                        );
-                    }
-
-                    return {
-                        header: header.name.wireValue,
-                        value
-                    };
-                })
-        ];
-
-        const generatedVersion = context.versionContext.getGeneratedVersion();
-        if (generatedVersion != null) {
-            const header = generatedVersion.getHeader();
-            const headerName = this.getOptionKeyForHeader(header);
-            const defaultVersion = generatedVersion.getDefaultVersion();
-
-            let value: ts.Expression;
-            if (defaultVersion != null) {
-                value = ts.factory.createBinaryExpression(
-                    ts.factory.createPropertyAccessChain(
-                        ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME),
-                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                        ts.factory.createIdentifier(headerName)
-                    ),
-                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                    ts.factory.createStringLiteral(defaultVersion)
-                );
-            } else {
-                value = ts.factory.createPropertyAccessExpression(
-                    ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME),
-                    ts.factory.createIdentifier(headerName)
-                );
-            }
-            headers.push({
-                header: header.name.wireValue,
-                value
-            });
-        }
-
-        return headers;
     }
 
     /*******************
