@@ -197,10 +197,17 @@ export async function translateYamlContent(
     language: string,
     sourceLanguage: string,
     filePath: string,
-    cliContext: CliContext
+    cliContext: CliContext,
+    stub: boolean = false
 ): Promise<string> {
     // preserve the source material
     if (language === sourceLanguage) {
+        return yamlContent;
+    }
+
+    // If stub mode is enabled, return content as-is
+    if (stub) {
+        cliContext.logger.debug(`[STUB] Returning YAML content as-is for ${filePath} (stub mode enabled)`);
         return yamlContent;
     }
 

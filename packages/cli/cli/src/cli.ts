@@ -1428,7 +1428,13 @@ function addWriteTranslationCommand(cli: Argv<GlobalCliOptions>, cliContext: Cli
     cli.command(
         "write-translation",
         "Generate translation directories for each language defined in docs.yml",
-        (yargs) => yargs,
+        (yargs) =>
+            yargs.option("stub", {
+                alias: "s",
+                type: "boolean",
+                default: false,
+                description: "Return content as-is without calling the translation service"
+            }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
                 command: "fern write-translation"
@@ -1439,7 +1445,8 @@ function addWriteTranslationCommand(cli: Argv<GlobalCliOptions>, cliContext: Cli
                     defaultToAllApiWorkspaces: true,
                     commandLineApiWorkspace: undefined
                 }),
-                cliContext
+                cliContext,
+                stub: argv.stub
             });
         }
     );

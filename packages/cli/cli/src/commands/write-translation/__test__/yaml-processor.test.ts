@@ -261,10 +261,12 @@ navigation:
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             expect(
-                ((parsed.navigation as Array<Record<string, unknown>>)[0]?.layout as Array<Record<string, unknown>>)[0]?.slug
+                ((parsed.navigation as Array<Record<string, unknown>>)[0]?.layout as Array<Record<string, unknown>>)[0]
+                    ?.slug
             ).toBe("getting-started");
             expect(
-                ((parsed.navigation as Array<Record<string, unknown>>)[0]?.layout as Array<Record<string, unknown>>)[1]?.slug
+                ((parsed.navigation as Array<Record<string, unknown>>)[0]?.layout as Array<Record<string, unknown>>)[1]
+                    ?.slug
             ).toBe("api-guide");
             expect(
                 (
@@ -489,6 +491,37 @@ navigation:
             const result = await translateYamlContent(sourceYaml, "en", "en", "nav.yml", mockCliContext);
 
             expect(result).toBe(sourceYaml);
+        });
+    });
+
+    describe("Stub Mode", () => {
+        it("should return content as-is when stub mode is enabled", async () => {
+            const sourceYaml = `
+navigation:
+  - page: Hello World
+    path: ./hello.mdx
+`;
+
+            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext, true);
+
+            // In stub mode, content should be returned as-is without translation
+            expect(result).toBe(sourceYaml);
+        });
+
+        it("should not add slugs when stub mode is enabled", async () => {
+            const sourceYaml = `
+navigation:
+  - page: Hello World
+    path: ./hello.mdx
+`;
+
+            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext, true);
+
+            // Parse the result to ensure it's exactly the same as input
+            const parsed = yaml.load(result) as any;
+            const original = yaml.load(sourceYaml) as any;
+
+            expect(parsed).toEqual(original);
         });
     });
 });

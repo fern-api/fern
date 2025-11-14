@@ -7,6 +7,11 @@ import { CliContext } from "../../../cli-context/CliContext";
 import { writeTranslationForProject } from "../writeTranslationForProject";
 import { setupTestProjectFromFixture } from "./test-utils";
 
+// Mock the translation service to avoid real API calls in most tests
+vi.mock("../translation-service", () => ({
+    translateText: vi.fn(({ text }: { text: string }) => Promise.resolve(`[TRANSLATED] ${text}`))
+}));
+
 interface FileStructure {
     type: "file";
     content: string | unknown;
@@ -23,7 +28,7 @@ interface TranslationOutput {
     docConfigs?: Record<string, unknown>;
 }
 
-describe.skip("writeTranslationForProject", () => {
+describe("writeTranslationForProject", () => {
     let mockCliContext: CliContext;
 
     beforeEach(async () => {
@@ -109,14 +114,15 @@ describe.skip("writeTranslationForProject", () => {
         return output;
     }
 
-    it("should create translations folder with correct structure", async () => {
+    it("should create translations folder with correct structure (stub mode)", async () => {
         const { tempDir, fernDir, project } = await setupTestProjectFromFixture("basic-project");
 
         try {
-            // Execute the write-translation command
+            // Execute the write-translation command in stub mode
             await writeTranslationForProject({
                 project,
-                cliContext: mockCliContext
+                cliContext: mockCliContext,
+                stub: true
             });
 
             // Capture the complete output structure
@@ -135,14 +141,15 @@ describe.skip("writeTranslationForProject", () => {
         }
     });
 
-    it("should handle project with no languages configured", async () => {
+    it("should handle project with no languages configured (stub mode)", async () => {
         const { tempDir, fernDir, project } = await setupTestProjectFromFixture("no-languages-project");
 
         try {
-            // Execute the write-translation command
+            // Execute the write-translation command in stub mode
             await writeTranslationForProject({
                 project,
-                cliContext: mockCliContext
+                cliContext: mockCliContext,
+                stub: true
             });
 
             // Capture the complete output structure
@@ -161,7 +168,7 @@ describe.skip("writeTranslationForProject", () => {
         }
     });
 
-    it("should create translations folder with individual language directories", async () => {
+    it("should create translations folder with individual language directories (stub mode)", async () => {
         const { tempDir, fernDir, project } = await setupTestProjectFromFixture("basic-project");
 
         try {
@@ -176,10 +183,11 @@ describe.skip("writeTranslationForProject", () => {
             }
             expect(translationsExists).toBe(false);
 
-            // Execute the write-translation command
+            // Execute the write-translation command in stub mode
             await writeTranslationForProject({
                 project,
-                cliContext: mockCliContext
+                cliContext: mockCliContext,
+                stub: true
             });
 
             // Capture the complete output structure
@@ -194,14 +202,15 @@ describe.skip("writeTranslationForProject", () => {
         }
     });
 
-    it("should be idempotent - no changes when running again without modifications", async () => {
+    it("should be idempotent - no changes when running again without modifications (stub mode)", async () => {
         const { tempDir, fernDir, project } = await setupTestProjectFromFixture("basic-project");
 
         try {
             // First run - should create translations
             await writeTranslationForProject({
                 project,
-                cliContext: mockCliContext
+                cliContext: mockCliContext,
+                stub: true
             });
 
             // Capture first run output
@@ -213,7 +222,8 @@ describe.skip("writeTranslationForProject", () => {
             // Second run - should be idempotent (no changes)
             await writeTranslationForProject({
                 project,
-                cliContext: mockCliContext
+                cliContext: mockCliContext,
+                stub: true
             });
 
             // Capture second run output
@@ -261,7 +271,7 @@ describe.skip("writeTranslationForProject", () => {
         }
     });
 
-    it("should create language-specific docs.yml configs with modified URLs", async () => {
+    it("should create language-specific docs.yml configs with modified URLs (stub mode)", async () => {
         const { tempDir, fernDir, project } = await setupTestProjectFromFixture("basic-project");
 
         try {
@@ -279,10 +289,11 @@ describe.skip("writeTranslationForProject", () => {
             expect(Array.isArray(originalDocsConfig.instances)).toBe(true);
             expect(originalDocsConfig.instances?.length).toBeGreaterThan(0);
 
-            // Execute the write-translation command
+            // Execute the write-translation command in stub mode
             await writeTranslationForProject({
                 project,
-                cliContext: mockCliContext
+                cliContext: mockCliContext,
+                stub: true
             });
 
             // Capture the complete output structure including docs configs
@@ -302,19 +313,56 @@ describe.skip("writeTranslationForProject", () => {
         }
     });
 
-    it("should correctly modify URLs with existing paths", async () => {
+    it("should correctly modify URLs with existing paths (stub mode)", async () => {
         const { tempDir, fernDir, project } = await setupTestProjectFromFixture("path-url-project");
 
         try {
-            // Execute the write-translation command
+            // Execute the write-translation command in stub mode
             await writeTranslationForProject({
                 project,
-                cliContext: mockCliContext
+                cliContext: mockCliContext,
+                stub: true
             });
 
             // Capture the complete output structure including docs configs
             const output = await captureTranslationOutput(fernDir);
             expect(output).toMatchSnapshot();
+        } finally {
+            try {
+                await tempDir.cleanup();
+            } catch {
+                // Ignore cleanup errors
+            }
+        }
+    });
+
+    it("should call translation service when not in stub mode", async () => {
+        const { tempDir, project } = await setupTestProjectFromFixture("basic-project");
+
+        try {
+            // Execute the write-translation command without stub mode (calls actual translation service)
+            await writeTranslationForProject({
+                project,
+                cliContext: mockCliContext,
+                stub: false
+            });
+
+            // Import the translation service mock to verify it was called
+            const { translateText } = await import("../translation-service");
+
+            // Verify that the translation service was called
+            expect(translateText).toHaveBeenCalled();
+
+            // Verify it was called with the expected parameters structure
+            const calls = (translateText as any).mock.calls;
+            expect(calls.length).toBeGreaterThan(0);
+
+            // Check that at least one call has the expected structure
+            const firstCall = calls[0][0];
+            expect(firstCall).toHaveProperty("text");
+            expect(firstCall).toHaveProperty("language");
+            expect(firstCall).toHaveProperty("sourceLanguage");
+            expect(firstCall).toHaveProperty("cliContext");
         } finally {
             try {
                 await tempDir.cleanup();

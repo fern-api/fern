@@ -184,13 +184,15 @@ function modifyInstanceUrlsForLanguage(docsConfig: DocsConfiguration, language: 
  * @param language - The target language
  * @param sourceLanguage - The source language
  * @param context - CLI context for logging
+ * @param stub - If true, returns content as-is without calling translation service
  */
 async function createLanguageSpecificDocsConfig(
     originalDocsConfigPath: AbsoluteFilePath,
     targetDirectory: AbsoluteFilePath,
     language: Language,
     sourceLanguage: Language,
-    context: CliContext
+    context: CliContext,
+    stub: boolean = false
 ): Promise<void> {
     try {
         const originalConfigContent = await readFile(originalDocsConfigPath, "utf-8");
@@ -202,7 +204,7 @@ async function createLanguageSpecificDocsConfig(
             sourceLanguage,
             originalContent: originalConfigContent
         };
-        const translatedContent = await transformContentForLanguage(transformation, context);
+        const translatedContent = await transformContentForLanguage(transformation, context, stub);
 
         // Then parse the translated content and modify URLs
         const translatedConfig = yaml.load(translatedContent) as DocsConfiguration;
@@ -224,10 +226,12 @@ async function createLanguageSpecificDocsConfig(
 
 export async function writeTranslationForProject({
     project,
-    cliContext
+    cliContext,
+    stub = false
 }: {
     project: Project;
     cliContext: CliContext;
+    stub?: boolean;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
@@ -280,7 +284,8 @@ export async function writeTranslationForProject({
                     languageDirectory,
                     language,
                     sourceLanguage,
-                    cliContext
+                    cliContext,
+                    stub
                 );
             }
 
@@ -371,7 +376,7 @@ export async function writeTranslationForProject({
                         originalContent
                     };
 
-                    const transformedContent = await transformContentForLanguage(transformation, cliContext);
+                    const transformedContent = await transformContentForLanguage(transformation, cliContext, stub);
                     await writeFile(destPath, transformedContent, "utf-8");
 
                     const languageStatsForLang = languageStats[language];
