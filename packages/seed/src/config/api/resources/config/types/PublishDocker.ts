@@ -11,4 +11,5 @@ export interface PublishDocker {
     workingDirectory?: string;
     preBuildCommands?: FernSeedConfig.DockerCommand;
     docker: FernSeedConfig.PublishDockerConfiguration;
+    podman?: FernSeedConfig.PublishDockerConfiguration;
 }

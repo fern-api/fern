@@ -6,5 +6,6 @@ import * as FernSeedConfig from "../../../index";
 
 export interface TestConfiguration {
     docker: FernSeedConfig.TestDockerConfiguration;
+    podman?: FernSeedConfig.TestDockerConfiguration;
     local?: FernSeedConfig.LocalBuildInfo;
 }

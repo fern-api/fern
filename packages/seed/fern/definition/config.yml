@@ -59,6 +59,7 @@ types:
       workingDirectory: optional<string>
       preBuildCommands: optional<DockerCommand>
       docker: PublishDockerConfiguration
+      podman: optional<PublishDockerConfiguration>
 
   PublishCommand:
     docs: |
@@ -87,6 +88,7 @@ types:
   TestConfiguration:
     properties:
       docker: TestDockerConfiguration
+      podman: optional<TestDockerConfiguration>
       local: optional<LocalBuildInfo>
 
   LocalBuildInfo:
