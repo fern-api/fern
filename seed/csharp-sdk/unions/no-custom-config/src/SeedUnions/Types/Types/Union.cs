@@ -145,12 +145,12 @@ public record Union
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Union>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(Union).IsAssignableFrom(typeToConvert);
 
         public override Union Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

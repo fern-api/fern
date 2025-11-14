@@ -44,4 +44,17 @@ export class Block extends AstNode {
 
         return this;
     }
+    /*
+    // 
+    var(name: string, type: ClassReference | Type, initialValue?: Expression): Local;
+    var(name: string, initialValue: Expression);
+    var(name: string, typeOrInitialValue: Expression | ClassReference | Type, initialValue?: Expression) {
+        if (type) {
+            this.statements.push([type, " ", name]);
+        }
+    }
+    */
+    if(condition: string, block: Block) {
+        //
+    }
 }

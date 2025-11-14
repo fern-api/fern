@@ -19,30 +19,14 @@ package com.fern.java.client.generators;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
-import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.ParameterizedTypeName;
-import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-import com.squareup.javapoet.WildcardTypeName;
 import javax.lang.model.element.Modifier;
 
 public final class StreamTestGenerator extends AbstractFileGenerator {
     private static final String STREAM_TEST_CLASS_NAME = "StreamTest";
-
-    private static final ClassName LIST = ClassName.get("java.util", "List");
-    private static final ClassName MAP = ClassName.get("java.util", "Map");
-    private static final TypeName STRING = ClassName.get(String.class);
-    private static final TypeName MAP_STRING_STRING = ParameterizedTypeName.get(MAP, STRING, STRING);
-    private static final TypeName LIST_MAP_STRING_STRING = ParameterizedTypeName.get(LIST, MAP_STRING_STRING);
-    private static final TypeName MAP_STRING_WILDCARD =
-            ParameterizedTypeName.get(MAP, STRING, WildcardTypeName.subtypeOf(Object.class));
-    private static final TypeName LIST_STRING = ParameterizedTypeName.get(LIST, STRING);
-    private static final AnnotationSpec SUPPRESS_UNCHECKED = AnnotationSpec.builder(SuppressWarnings.class)
-            .addMember("value", "$S", "unchecked")
-            .build();
 
     public StreamTestGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
         super(
@@ -77,36 +61,40 @@ public final class StreamTestGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec createJsonStreamTest(ClassName streamClassName, ClassName testAnnotation) {
-        TypeName streamMapWildcard = ParameterizedTypeName.get(streamClassName, MAP_STRING_WILDCARD);
         return MethodSpec.methodBuilder("testJsonStream")
                 .addAnnotation(testAnnotation)
-                .addAnnotation(SUPPRESS_UNCHECKED)
                 .addModifiers(Modifier.PUBLIC)
-                .addStatement(
-                        "$T messages = $T.of($T.of($S, $S), $T.of($S, $S))",
-                        LIST_MAP_STRING_STRING,
-                        LIST,
-                        MAP,
-                        "message",
-                        "hello",
-                        MAP,
-                        "message",
-                        "world")
+                .addCode(
+                        "$T<$T> messages = $T.of(\n",
+                        ClassName.get("java.util", "List"),
+                        ClassName.get("java.util", "Map"),
+                        ClassName.get("java.util", "List"))
+                .addCode("        $T.of($S, $S),\n", ClassName.get("java.util", "Map"), "message", "hello")
+                .addCode("        $T.of($S, $S)\n", ClassName.get("java.util", "Map"), "message", "world")
+                .addCode(");\n")
                 .addStatement(
                         "$T jsonStrings = messages.stream().map($T::mapToJson).collect($T.toList())",
-                        LIST_STRING,
+                        ClassName.get("java.util", "List"),
                         ClassName.get(className.packageName(), STREAM_TEST_CLASS_NAME),
                         ClassName.get("java.util.stream", "Collectors"))
-                .addStatement("$T input = $T.join($S, jsonStrings)", STRING, ClassName.get(String.class), "\n")
+                .addStatement(
+                        "$T input = $T.join($S, jsonStrings)",
+                        ClassName.get(String.class),
+                        ClassName.get(String.class),
+                        "\n")
                 .addStatement(
                         "$T jsonInput = new $T(input)",
                         ClassName.get("java.io", "StringReader"),
                         ClassName.get("java.io", "StringReader"))
                 .addStatement(
-                        "$T jsonStream = $T.fromJson($T.class, jsonInput)", streamMapWildcard, streamClassName, MAP)
+                        "$T<$T> jsonStream = $T.fromJson($T.class, jsonInput)",
+                        streamClassName,
+                        ClassName.get("java.util", "Map"),
+                        streamClassName,
+                        ClassName.get("java.util", "Map"))
                 .addStatement("int expectedMessages = 2")
                 .addStatement("int actualMessages = 0")
-                .beginControlFlow("for ($T jsonObject : jsonStream)", MAP_STRING_WILDCARD)
+                .beginControlFlow("for ($T jsonObject : jsonStream)", ClassName.get("java.util", "Map"))
                 .addStatement("actualMessages++")
                 .addStatement("assertTrue(jsonObject.containsKey($S))", "message")
                 .endControlFlow()
@@ -115,35 +103,40 @@ public final class StreamTestGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec createSseStreamTest(ClassName streamClassName, ClassName testAnnotation) {
-        TypeName streamMapWildcard = ParameterizedTypeName.get(streamClassName, MAP_STRING_WILDCARD);
         return MethodSpec.methodBuilder("testSseStream")
                 .addAnnotation(testAnnotation)
-                .addAnnotation(SUPPRESS_UNCHECKED)
                 .addModifiers(Modifier.PUBLIC)
-                .addStatement(
-                        "$T events = $T.of($T.of($S, $S), $T.of($S, $S))",
-                        LIST_MAP_STRING_STRING,
-                        LIST,
-                        MAP,
-                        "event",
-                        "start",
-                        MAP,
-                        "event",
-                        "end")
+                .addCode(
+                        "$T<$T> events = $T.of(\n",
+                        ClassName.get("java.util", "List"),
+                        ClassName.get("java.util", "Map"),
+                        ClassName.get("java.util", "List"))
+                .addCode("        $T.of($S, $S),\n", ClassName.get("java.util", "Map"), "event", "start")
+                .addCode("        $T.of($S, $S)\n", ClassName.get("java.util", "Map"), "event", "end")
+                .addCode(");\n")
                 .addStatement(
                         "$T sseStrings = events.stream().map($T::mapToSse).collect($T.toList())",
-                        LIST_STRING,
+                        ClassName.get("java.util", "List"),
                         ClassName.get(className.packageName(), STREAM_TEST_CLASS_NAME),
                         ClassName.get("java.util.stream", "Collectors"))
-                .addStatement("$T input = $T.join($S, sseStrings)", STRING, ClassName.get(String.class), "\n\n")
+                .addStatement(
+                        "$T input = $T.join($S, sseStrings)",
+                        ClassName.get(String.class),
+                        ClassName.get(String.class),
+                        "\n\n")
                 .addStatement(
                         "$T sseInput = new $T(input)",
                         ClassName.get("java.io", "StringReader"),
                         ClassName.get("java.io", "StringReader"))
-                .addStatement("$T sseStream = $T.fromSse($T.class, sseInput)", streamMapWildcard, streamClassName, MAP)
+                .addStatement(
+                        "$T<$T> sseStream = $T.fromSse($T.class, sseInput)",
+                        streamClassName,
+                        ClassName.get("java.util", "Map"),
+                        streamClassName,
+                        ClassName.get("java.util", "Map"))
                 .addStatement("int expectedEvents = 2")
                 .addStatement("int actualEvents = 0")
-                .beginControlFlow("for ($T eventData : sseStream)", MAP_STRING_WILDCARD)
+                .beginControlFlow("for ($T eventData : sseStream)", ClassName.get("java.util", "Map"))
                 .addStatement("actualEvents++")
                 .addStatement("assertTrue(eventData.containsKey($S))", "event")
                 .endControlFlow()
@@ -152,41 +145,42 @@ public final class StreamTestGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec createSseStreamWithTerminatorTest(ClassName streamClassName, ClassName testAnnotation) {
-        TypeName streamMapWildcard = ParameterizedTypeName.get(streamClassName, MAP_STRING_WILDCARD);
         return MethodSpec.methodBuilder("testSseStreamWithTerminator")
                 .addAnnotation(testAnnotation)
-                .addAnnotation(SUPPRESS_UNCHECKED)
                 .addModifiers(Modifier.PUBLIC)
-                .addStatement(
-                        "$T events = $T.of($T.of($S, $S), $T.of($S, $S))",
-                        LIST_MAP_STRING_STRING,
-                        LIST,
-                        MAP,
-                        "message",
-                        "first",
-                        MAP,
-                        "message",
-                        "second")
+                .addCode(
+                        "$T<$T> events = $T.of(\n",
+                        ClassName.get("java.util", "List"),
+                        ClassName.get("java.util", "Map"),
+                        ClassName.get("java.util", "List"))
+                .addCode("        $T.of($S, $S),\n", ClassName.get("java.util", "Map"), "message", "first")
+                .addCode("        $T.of($S, $S)\n", ClassName.get("java.util", "Map"), "message", "second")
+                .addCode(");\n")
                 .addStatement(
                         "$T sseStrings = events.stream().map($T::mapToSse).collect($T.toList())",
-                        LIST_STRING,
+                        ClassName.get("java.util", "List"),
                         ClassName.get(className.packageName(), STREAM_TEST_CLASS_NAME),
                         ClassName.get("java.util.stream", "Collectors"))
                 .addStatement("sseStrings.add($S)", "data: [DONE]")
-                .addStatement("$T input = $T.join($S, sseStrings)", STRING, ClassName.get(String.class), "\n\n")
+                .addStatement(
+                        "$T input = $T.join($S, sseStrings)",
+                        ClassName.get(String.class),
+                        ClassName.get(String.class),
+                        "\n\n")
                 .addStatement(
                         "$T sseInput = new $T(input)",
                         ClassName.get("java.io", "StringReader"),
                         ClassName.get("java.io", "StringReader"))
                 .addStatement(
-                        "$T sseStream = $T.fromSse($T.class, sseInput, $S)",
-                        streamMapWildcard,
+                        "$T<$T> sseStream = $T.fromSse($T.class, sseInput, $S)",
                         streamClassName,
-                        MAP,
+                        ClassName.get("java.util", "Map"),
+                        streamClassName,
+                        ClassName.get("java.util", "Map"),
                         "[DONE]")
                 .addStatement("int expectedEvents = 2")
                 .addStatement("int actualEvents = 0")
-                .beginControlFlow("for ($T eventData : sseStream)", MAP_STRING_WILDCARD)
+                .beginControlFlow("for ($T eventData : sseStream)", ClassName.get("java.util", "Map"))
                 .addStatement("actualEvents++")
                 .addStatement("assertTrue(eventData.containsKey($S))", "message")
                 .endControlFlow()
@@ -195,10 +189,8 @@ public final class StreamTestGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec createStreamResourceTest(ClassName streamClassName, ClassName testAnnotation) {
-        TypeName streamMapWildcard = ParameterizedTypeName.get(streamClassName, MAP_STRING_WILDCARD);
         return MethodSpec.methodBuilder("testStreamResourceManagement")
                 .addAnnotation(testAnnotation)
-                .addAnnotation(SUPPRESS_UNCHECKED)
                 .addModifiers(Modifier.PUBLIC)
                 .addException(ClassName.get("java.io", "IOException"))
                 .addStatement(
@@ -207,7 +199,11 @@ public final class StreamTestGenerator extends AbstractFileGenerator {
                         ClassName.get("java.io", "StringReader"),
                         "{\"test\":\"data\"}")
                 .addStatement(
-                        "$T testStream = $T.fromJson($T.class, testInput)", streamMapWildcard, streamClassName, MAP)
+                        "$T<$T> testStream = $T.fromJson($T.class, testInput)",
+                        streamClassName,
+                        ClassName.get("java.util", "Map"),
+                        streamClassName,
+                        ClassName.get("java.util", "Map"))
                 .addStatement("testStream.close()")
                 .addStatement("assertFalse(testStream.iterator().hasNext())")
                 .build();
@@ -217,7 +213,7 @@ public final class StreamTestGenerator extends AbstractFileGenerator {
         return MethodSpec.methodBuilder("mapToJson")
                 .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
                 .returns(String.class)
-                .addParameter(MAP_STRING_WILDCARD, "map")
+                .addParameter(ClassName.get("java.util", "Map"), "map")
                 .beginControlFlow("try")
                 .addStatement(
                         "return $T.JSON_MAPPER.writeValueAsString(map)",
@@ -232,7 +228,7 @@ public final class StreamTestGenerator extends AbstractFileGenerator {
         return MethodSpec.methodBuilder("mapToSse")
                 .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
                 .returns(String.class)
-                .addParameter(MAP_STRING_WILDCARD, "map")
+                .addParameter(ClassName.get("java.util", "Map"), "map")
                 .addStatement("return $S + mapToJson(map)", "data: ")
                 .build();
     }

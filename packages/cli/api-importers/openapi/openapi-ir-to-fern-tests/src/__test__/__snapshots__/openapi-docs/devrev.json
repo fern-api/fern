@@ -4354,7 +4354,7 @@ organization.
                 "type": "AuthConnectionOptionsGoogleApps",
               },
               "none": {
-                "type": "empty",
+                "type": "Empty",
               },
               "oidc": {
                 "type": "AuthConnectionOptionsOidc",
@@ -4449,6 +4449,25 @@ sort order. If not set, then no prior elements exist.
             "properties": {
               "dev_user": {
                 "type": "DevUser",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Empty": {
+            "type": "map<string, unknown>",
+          },
+          "Enhancement": {
+            "docs": undefined,
+            "extends": [
+              "PartBase",
+            ],
+            "inline": undefined,
+            "properties": {
+              "target_close_date": {
+                "docs": "Timestamp when the enhancement is expected to be closed.",
+                "type": "optional<datetime>",
               },
             },
             "source": {
@@ -4647,7 +4666,7 @@ sort order. If not set, then no prior elements exist.
             "inline": undefined,
             "properties": {
               "part": {
-                "type": "part",
+                "type": "Part",
               },
             },
             "source": {
@@ -4672,7 +4691,7 @@ sort order. If not set, then no prior elements exist.
             "inline": undefined,
             "properties": {
               "part": {
-                "type": "part",
+                "type": "Part",
               },
             },
             "source": {
@@ -4721,7 +4740,7 @@ sort order. If not set, then no prior elements exist.
             "inline": undefined,
             "properties": {
               "tag": {
-                "type": "tag",
+                "type": "Tag",
               },
             },
             "source": {
@@ -4746,7 +4765,7 @@ sort order. If not set, then no prior elements exist.
             "inline": undefined,
             "properties": {
               "tag": {
-                "type": "tag",
+                "type": "Tag",
               },
             },
             "source": {
@@ -4795,7 +4814,7 @@ sort order. If not set, then no prior elements exist.
             "inline": undefined,
             "properties": {
               "webhook": {
-                "type": "webhook",
+                "type": "Webhook",
               },
             },
             "source": {
@@ -4820,7 +4839,7 @@ sort order. If not set, then no prior elements exist.
             "inline": undefined,
             "properties": {
               "webhook": {
-                "type": "webhook",
+                "type": "Webhook",
               },
             },
             "source": {
@@ -4832,7 +4851,7 @@ sort order. If not set, then no prior elements exist.
             "inline": undefined,
             "properties": {
               "work": {
-                "type": "work",
+                "type": "Work",
               },
             },
             "source": {
@@ -4857,7 +4876,7 @@ sort order. If not set, then no prior elements exist.
             "inline": undefined,
             "properties": {
               "work": {
-                "type": "work",
+                "type": "Work",
               },
             },
             "source": {
@@ -4876,6 +4895,19 @@ sort order. If not set, then no prior elements exist.
           },
           "GroupSummary": {
             "type": "AtomBaseSummary",
+          },
+          "Issue": {
+            "docs": undefined,
+            "extends": [
+              "WorkBase",
+            ],
+            "inline": undefined,
+            "properties": {
+              "priority": "optional<IssuePriority>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "IssuePriority": {
             "docs": "Priority of the work based upon impact and criticality.",
@@ -4965,6 +4997,24 @@ always be returned in the specified sort-by order.
             },
           },
           "OrgType": "literal<"rev_org">",
+          "Part": {
+            "availability": undefined,
+            "base-properties": {},
+            "discriminant": "type",
+            "docs": undefined,
+            "encoding": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": {
+              "capability": "Capability",
+              "enhancement": {
+                "type": "Enhancement",
+              },
+              "feature": "Feature",
+              "product": "Product",
+            },
+          },
           "PartBase": {
             "docs": undefined,
             "extends": [
@@ -5131,7 +5181,7 @@ always be returned in the specified sort-by order.
             "inline": undefined,
             "properties": {
               "part": {
-                "type": "part",
+                "type": "Part",
               },
             },
             "source": {
@@ -5146,7 +5196,7 @@ always be returned in the specified sort-by order.
             "inline": undefined,
             "properties": {
               "part": {
-                "type": "part",
+                "type": "Part",
               },
             },
             "source": {
@@ -5165,7 +5215,7 @@ sort order. If not set, then no later elements exist.
               },
               "parts": {
                 "docs": "The list of parts.",
-                "type": "list<part>",
+                "type": "list<Part>",
               },
               "prev_cursor": {
                 "docs": "The cursor used to iterate preceding results in accordance to the
@@ -5212,7 +5262,7 @@ sort order. If not set, then no prior elements exist.
                 "type": "PartsUpdateRequestFeature",
               },
               "none": {
-                "type": "empty",
+                "type": "Empty",
               },
               "product": {
                 "type": "PartsUpdateRequestProduct",
@@ -5261,7 +5311,7 @@ empty.
             "inline": undefined,
             "properties": {
               "part": {
-                "type": "part",
+                "type": "Part",
               },
             },
             "source": {
@@ -5413,6 +5463,19 @@ the value must be one that's specified in the tag's allowed values.
               "openapi": "../openapi.yml",
             },
           },
+          "Stage": {
+            "docs": "Describes the current stage of a work item.",
+            "inline": undefined,
+            "properties": {
+              "name": {
+                "docs": "Current stage name of the work item.",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "StageInit": {
             "docs": "Sets an object's initial stage.",
             "inline": undefined,
@@ -5442,6 +5505,38 @@ the value must be one that's specified in the tag's allowed values.
           },
           "SysUserSummary": {
             "type": "UserBaseSummary",
+          },
+          "Tag": {
+            "docs": undefined,
+            "extends": [
+              "AtomBase",
+            ],
+            "inline": undefined,
+            "properties": {
+              "allowed_values": {
+                "docs": "The allowed values for the tag, where a value is provided when a
+tag is associated with an object. If empty, then no value should be
+provided when the association is made.
+",
+                "type": "optional<list<string>>",
+              },
+              "description": {
+                "docs": "An informative description for the tag that should provide context
+on the tag's purpose and usage.
+",
+                "type": "optional<string>",
+              },
+              "name": {
+                "docs": "The name of the tag, which denotes the logical concept by which all
+tagged objects will be associated. The name is guaranteed to be
+unique.
+",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "TagSummary": {
             "docs": undefined,
@@ -5483,7 +5578,7 @@ unique.
             "inline": undefined,
             "properties": {
               "tag": {
-                "type": "tag",
+                "type": "Tag",
               },
             },
             "source": {
@@ -5499,7 +5594,7 @@ unique.
             "inline": undefined,
             "properties": {
               "tag": {
-                "type": "tag",
+                "type": "Tag",
               },
             },
             "source": {
@@ -5524,7 +5619,7 @@ sort order. If not set, then no prior elements exist.
               },
               "tags": {
                 "docs": "The list of tags.",
-                "type": "list<tag>",
+                "type": "list<Tag>",
               },
             },
             "source": {
@@ -5549,8 +5644,23 @@ sort order. If not set, then no prior elements exist.
             "inline": undefined,
             "properties": {
               "tag": {
-                "type": "tag",
+                "type": "Tag",
               },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Ticket": {
+            "docs": undefined,
+            "extends": [
+              "WorkBase",
+            ],
+            "inline": undefined,
+            "properties": {
+              "group": "optional<GroupSummary>",
+              "rev_org": "optional<OrgSummary>",
+              "severity": "optional<TicketSeverity>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -5904,6 +6014,37 @@ default visibility.
               "openapi": "../openapi.yml",
             },
           },
+          "Webhook": {
+            "docs": undefined,
+            "extends": [
+              "AtomBase",
+            ],
+            "inline": undefined,
+            "properties": {
+              "event_types": {
+                "docs": "The event types that the webhook will receive.",
+                "type": "optional<list<WebhookEventType>>",
+              },
+              "secret": {
+                "docs": "The secret to use for verifying webhook events.",
+                "type": "string",
+                "validation": {
+                  "format": "byte",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "status": "WebhookStatus",
+              "url": {
+                "docs": "The URL of the webhook endpoint.",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "WebhookEventRequest": {
             "docs": undefined,
             "inline": undefined,
@@ -6034,7 +6175,7 @@ be set for other request types.
             "inline": undefined,
             "properties": {
               "webhook": {
-                "type": "webhook",
+                "type": "Webhook",
               },
             },
             "source": {
@@ -6050,7 +6191,7 @@ be set for other request types.
             "inline": undefined,
             "properties": {
               "webhook": {
-                "type": "webhook",
+                "type": "Webhook",
               },
             },
             "source": {
@@ -6063,7 +6204,7 @@ be set for other request types.
             "properties": {
               "webhooks": {
                 "docs": "The list of webhooks.",
-                "type": "list<webhook>",
+                "type": "list<Webhook>",
               },
             },
             "source": {
@@ -6116,11 +6257,29 @@ event types. Note this is mutually exclusive with 'add' and
             "inline": undefined,
             "properties": {
               "webhook": {
-                "type": "webhook",
+                "type": "Webhook",
               },
             },
             "source": {
               "openapi": "../openapi.yml",
+            },
+          },
+          "Work": {
+            "availability": undefined,
+            "base-properties": {},
+            "discriminant": "type",
+            "docs": undefined,
+            "encoding": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": {
+              "issue": {
+                "type": "Issue",
+              },
+              "ticket": {
+                "type": "Ticket",
+              },
             },
           },
           "WorkBase": {
@@ -6147,7 +6306,7 @@ event types. Note this is mutually exclusive with 'add' and
                 "docs": "Users that reported the work.",
                 "type": "optional<list<UserSummary>>",
               },
-              "stage": "optional<stage>",
+              "stage": "optional<Stage>",
               "tags": {
                 "docs": "Tags associated with the object.",
                 "type": "optional<list<TagWithValue>>",
@@ -6268,7 +6427,7 @@ issues.
             "inline": undefined,
             "properties": {
               "work": {
-                "type": "work",
+                "type": "Work",
               },
             },
             "source": {
@@ -6284,7 +6443,7 @@ issues.
             "properties": {
               "works": {
                 "docs": "The resulting collection of work items.",
-                "type": "list<work>",
+                "type": "list<Work>",
               },
             },
             "source": {
@@ -6296,7 +6455,7 @@ issues.
             "inline": undefined,
             "properties": {
               "work": {
-                "type": "work",
+                "type": "Work",
               },
             },
             "source": {
@@ -6321,7 +6480,7 @@ sort order. If not set, then no prior elements exist.
               },
               "works": {
                 "docs": "The list of works.",
-                "type": "list<work>",
+                "type": "list<Work>",
               },
             },
             "source": {
@@ -6371,7 +6530,7 @@ sort order. If not set, then no prior elements exist.
                 "type": "WorksUpdateRequestIssue",
               },
               "none": {
-                "type": "empty",
+                "type": "Empty",
               },
               "ticket": {
                 "type": "WorksUpdateRequestTicket",
@@ -6398,7 +6557,7 @@ sort order. If not set, then no prior elements exist.
               "priority": "optional<IssuePriority>",
               "sprint": {
                 "docs": "Updates the sprint that the issue belongs to.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
             },
             "source": {
@@ -6458,7 +6617,7 @@ empty.
               "rev_org": {
                 "docs": "Updates the Rev organization that the ticket is associated with.
 ",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "severity": "optional<TicketSeverity>",
             },
@@ -6471,170 +6630,11 @@ empty.
             "inline": undefined,
             "properties": {
               "work": {
-                "type": "work",
+                "type": "Work",
               },
             },
             "source": {
               "openapi": "../openapi.yml",
-            },
-          },
-          "empty": {
-            "type": "map<string, unknown>",
-          },
-          "enhancement": {
-            "docs": undefined,
-            "extends": [
-              "PartBase",
-            ],
-            "inline": undefined,
-            "properties": {
-              "target_close_date": {
-                "docs": "Timestamp when the enhancement is expected to be closed.",
-                "type": "optional<datetime>",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "issue": {
-            "docs": undefined,
-            "extends": [
-              "WorkBase",
-            ],
-            "inline": undefined,
-            "properties": {
-              "priority": "optional<IssuePriority>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "part": {
-            "availability": undefined,
-            "base-properties": {},
-            "discriminant": "type",
-            "docs": undefined,
-            "encoding": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-            "union": {
-              "capability": "Capability",
-              "enhancement": {
-                "type": "enhancement",
-              },
-              "feature": "Feature",
-              "product": "Product",
-            },
-          },
-          "stage": {
-            "docs": "Describes the current stage of a work item.",
-            "inline": undefined,
-            "properties": {
-              "name": {
-                "docs": "Current stage name of the work item.",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "tag": {
-            "docs": undefined,
-            "extends": [
-              "AtomBase",
-            ],
-            "inline": undefined,
-            "properties": {
-              "allowed_values": {
-                "docs": "The allowed values for the tag, where a value is provided when a
-tag is associated with an object. If empty, then no value should be
-provided when the association is made.
-",
-                "type": "optional<list<string>>",
-              },
-              "description": {
-                "docs": "An informative description for the tag that should provide context
-on the tag's purpose and usage.
-",
-                "type": "optional<string>",
-              },
-              "name": {
-                "docs": "The name of the tag, which denotes the logical concept by which all
-tagged objects will be associated. The name is guaranteed to be
-unique.
-",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ticket": {
-            "docs": undefined,
-            "extends": [
-              "WorkBase",
-            ],
-            "inline": undefined,
-            "properties": {
-              "group": "optional<GroupSummary>",
-              "rev_org": "optional<OrgSummary>",
-              "severity": "optional<TicketSeverity>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "webhook": {
-            "docs": undefined,
-            "extends": [
-              "AtomBase",
-            ],
-            "inline": undefined,
-            "properties": {
-              "event_types": {
-                "docs": "The event types that the webhook will receive.",
-                "type": "optional<list<WebhookEventType>>",
-              },
-              "secret": {
-                "docs": "The secret to use for verifying webhook events.",
-                "type": "string",
-                "validation": {
-                  "format": "byte",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
-              "status": "WebhookStatus",
-              "url": {
-                "docs": "The URL of the webhook endpoint.",
-                "type": "string",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "work": {
-            "availability": undefined,
-            "base-properties": {},
-            "discriminant": "type",
-            "docs": undefined,
-            "encoding": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-            "union": {
-              "issue": {
-                "type": "issue",
-              },
-              "ticket": {
-                "type": "ticket",
-              },
             },
           },
         },
@@ -8926,7 +8926,7 @@ types:
       google_apps:
         type: AuthConnectionOptionsGoogleApps
       none:
-        type: empty
+        type: Empty
       oidc:
         type: AuthConnectionOptionsOidc
       samlp:
@@ -8994,9 +8994,9 @@ types:
         type: DevUser
     source:
       openapi: ../openapi.yml
-  empty:
+  Empty:
     type: map<string, unknown>
-  enhancement:
+  Enhancement:
     properties:
       target_close_date:
         type: optional<datetime>
@@ -9141,7 +9141,7 @@ types:
   EventPartCreated:
     properties:
       part:
-        type: part
+        type: Part
     source:
       openapi: ../openapi.yml
   EventPartDeleted:
@@ -9154,7 +9154,7 @@ types:
   EventPartUpdated:
     properties:
       part:
-        type: part
+        type: Part
     source:
       openapi: ../openapi.yml
   EventRevOrgCreated:
@@ -9179,7 +9179,7 @@ types:
   EventTagCreated:
     properties:
       tag:
-        type: tag
+        type: Tag
     source:
       openapi: ../openapi.yml
   EventTagDeleted:
@@ -9192,7 +9192,7 @@ types:
   EventTagUpdated:
     properties:
       tag:
-        type: tag
+        type: Tag
     source:
       openapi: ../openapi.yml
   EventTimelineEntryCreated:
@@ -9217,7 +9217,7 @@ types:
   EventWebhookCreated:
     properties:
       webhook:
-        type: webhook
+        type: Webhook
     source:
       openapi: ../openapi.yml
   EventWebhookDeleted:
@@ -9230,13 +9230,13 @@ types:
   EventWebhookUpdated:
     properties:
       webhook:
-        type: webhook
+        type: Webhook
     source:
       openapi: ../openapi.yml
   EventWorkCreated:
     properties:
       work:
-        type: work
+        type: Work
     source:
       openapi: ../openapi.yml
   EventWorkDeleted:
@@ -9249,7 +9249,7 @@ types:
   EventWorkUpdated:
     properties:
       work:
-        type: work
+        type: Work
     source:
       openapi: ../openapi.yml
   ExternalIdentity:
@@ -9261,7 +9261,7 @@ types:
     type: PartBaseSummary
   GroupSummary:
     type: AtomBaseSummary
-  issue:
+  Issue:
     properties:
       priority: optional<IssuePriority>
     extends:
@@ -9283,7 +9283,7 @@ types:
       reported_by:
         type: optional<list<UserSummary>>
         docs: Users that reported the work.
-      stage: optional<stage>
+      stage: optional<Stage>
       tags:
         type: optional<list<TagWithValue>>
         docs: Tags associated with the object.
@@ -9353,13 +9353,13 @@ types:
     source:
       openapi: ../openapi.yml
   OrgType: literal<"rev_org">
-  part:
+  Part:
     discriminant: type
     base-properties: {}
     union:
       capability: Capability
       enhancement:
-        type: enhancement
+        type: Enhancement
       feature: Feature
       product: Product
     source:
@@ -9445,7 +9445,7 @@ types:
   PartsCreateResponse:
     properties:
       part:
-        type: part
+        type: Part
     source:
       openapi: ../openapi.yml
   PartsDeleteResponse:
@@ -9453,7 +9453,7 @@ types:
   PartsGetResponse:
     properties:
       part:
-        type: part
+        type: Part
     source:
       openapi: ../openapi.yml
   PartsListResponse:
@@ -9465,7 +9465,7 @@ types:
           sort order. If not set, then no later elements exist.
       parts:
         docs: The list of parts.
-        type: list<part>
+        type: list<Part>
       prev_cursor:
         type: optional<string>
         docs: |
@@ -9494,7 +9494,7 @@ types:
       feature:
         type: PartsUpdateRequestFeature
       none:
-        type: empty
+        type: Empty
       product:
         type: PartsUpdateRequestProduct
     source:
@@ -9524,7 +9524,7 @@ types:
   PartsUpdateResponse:
     properties:
       part:
-        type: part
+        type: Part
     source:
       openapi: ../openapi.yml
   Product:
@@ -9641,7 +9641,7 @@ types:
           the value must be one that's specified in the tag's allowed values.
     source:
       openapi: ../openapi.yml
-  stage:
+  Stage:
     docs: Describes the current stage of a work item.
     properties:
       name:
@@ -9668,7 +9668,7 @@ types:
       openapi: ../openapi.yml
   SysUserSummary:
     type: UserBaseSummary
-  tag:
+  Tag:
     properties:
       allowed_values:
         type: optional<list<string>>
@@ -9716,7 +9716,7 @@ types:
     docs: The response to creating a new tag.
     properties:
       tag:
-        type: tag
+        type: Tag
     source:
       openapi: ../openapi.yml
   TagsDeleteResponse:
@@ -9726,7 +9726,7 @@ types:
     docs: The response to getting a tag's information.
     properties:
       tag:
-        type: tag
+        type: Tag
     source:
       openapi: ../openapi.yml
   TagsListResponse:
@@ -9744,7 +9744,7 @@ types:
           sort order. If not set, then no prior elements exist.
       tags:
         docs: The list of tags.
-        type: list<tag>
+        type: list<Tag>
     source:
       openapi: ../openapi.yml
   TagsUpdateAllowedValues:
@@ -9759,10 +9759,10 @@ types:
     docs: The response for updating a tag.
     properties:
       tag:
-        type: tag
+        type: Tag
     source:
       openapi: ../openapi.yml
-  ticket:
+  Ticket:
     properties:
       group: optional<GroupSummary>
       rev_org: optional<OrgSummary>
@@ -9980,7 +9980,7 @@ types:
       - sys_user
     source:
       openapi: ../openapi.yml
-  webhook:
+  Webhook:
     properties:
       event_types:
         type: optional<list<WebhookEventType>>
@@ -10091,7 +10091,7 @@ types:
     docs: The response to creating a new webhook.
     properties:
       webhook:
-        type: webhook
+        type: Webhook
     source:
       openapi: ../openapi.yml
   WebhooksDeleteResponse:
@@ -10101,7 +10101,7 @@ types:
     docs: The response to getting the information for the webhook.
     properties:
       webhook:
-        type: webhook
+        type: Webhook
     source:
       openapi: ../openapi.yml
   WebhooksListResponse:
@@ -10109,7 +10109,7 @@ types:
     properties:
       webhooks:
         docs: The list of webhooks.
-        type: list<webhook>
+        type: list<Webhook>
     source:
       openapi: ../openapi.yml
   WebhooksUpdateAction:
@@ -10145,17 +10145,17 @@ types:
     docs: The response to updating the webhook.
     properties:
       webhook:
-        type: webhook
+        type: Webhook
     source:
       openapi: ../openapi.yml
-  work:
+  Work:
     discriminant: type
     base-properties: {}
     union:
       issue:
-        type: issue
+        type: Issue
       ticket:
-        type: ticket
+        type: Ticket
     source:
       openapi: ../openapi.yml
   WorkType:
@@ -10225,7 +10225,7 @@ types:
   WorksCreateResponse:
     properties:
       work:
-        type: work
+        type: Work
     source:
       openapi: ../openapi.yml
   WorksDeleteResponse:
@@ -10234,13 +10234,13 @@ types:
     properties:
       works:
         docs: The resulting collection of work items.
-        type: list<work>
+        type: list<Work>
     source:
       openapi: ../openapi.yml
   WorksGetResponse:
     properties:
       work:
-        type: work
+        type: Work
     source:
       openapi: ../openapi.yml
   WorksListResponse:
@@ -10257,7 +10257,7 @@ types:
           sort order. If not set, then no prior elements exist.
       works:
         docs: The list of works.
-        type: list<work>
+        type: list<Work>
     source:
       openapi: ../openapi.yml
   WorksUpdateRequest:
@@ -10290,7 +10290,7 @@ types:
       issue:
         type: WorksUpdateRequestIssue
       none:
-        type: empty
+        type: Empty
       ticket:
         type: WorksUpdateRequestTicket
     source:
@@ -10306,7 +10306,7 @@ types:
     properties:
       priority: optional<IssuePriority>
       sprint:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: Updates the sprint that the issue belongs to.
     source:
       openapi: ../openapi.yml
@@ -10340,7 +10340,7 @@ types:
         type: optional<string>
         docs: The group that the ticket is associated with.
       rev_org:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: |
           Updates the Rev organization that the ticket is associated with.
       severity: optional<TicketSeverity>
@@ -10349,7 +10349,7 @@ types:
   WorksUpdateResponse:
     properties:
       work:
-        type: work
+        type: Work
     source:
       openapi: ../openapi.yml
 ",
@@ -10587,7 +10587,6 @@ enterprise connections can be created by an organization.
               "examples": [
                 {
                   "request": {
-                    "display_name": null,
                     "type": "google_apps",
                   },
                   "response": {
@@ -10828,7 +10827,6 @@ disabled.
               "examples": [
                 {
                   "request": {
-                    "display_name": null,
                     "id": "string",
                     "type": "google_apps",
                   },
@@ -10907,7 +10905,6 @@ service:
       examples:
         - request:
             type: google_apps
-            display_name: null
           response:
             body:
               auth_connection:
@@ -11071,7 +11068,6 @@ service:
       examples:
         - request:
             type: google_apps
-            display_name: null
             id: string
           response:
             body:
@@ -11337,11 +11333,6 @@ token type issued for a given subject.
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "client_id": "client_id",
-                    "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                    "subject": "subject",
-                  },
                   "response": {
                     "body": {
                       "tokens": [
@@ -11769,11 +11760,7 @@ service:
         - root.AuthTokensListRequestInternalServerError
         - root.AuthTokensListRequestServiceUnavailableError
       examples:
-        - query-parameters:
-            client_id: client_id
-            requested_token_type: urn:devrev:params:oauth:token-type:aat
-            subject: subject
-          response:
+        - response:
             body:
               tokens:
                 - created_by:
@@ -11923,11 +11910,6 @@ docs: Security token interactions.
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "cursor": "cursor",
-                    "limit": 1,
-                    "mode": "after",
-                  },
                   "response": {
                     "body": {
                       "dev_users": [
@@ -12156,11 +12138,7 @@ service:
         - root.DevUsersListRequestInternalServerError
         - root.DevUsersListRequestServiceUnavailableError
       examples:
-        - query-parameters:
-            cursor: cursor
-            limit: 1
-            mode: after
-          response:
+        - response:
             body:
               dev_users:
                 - created_by:
@@ -12273,7 +12251,6 @@ docs: Dev user interactions.
               "examples": [
                 {
                   "request": {
-                    "description": null,
                     "name": "string",
                     "owned_by": [
                       "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>",
@@ -12521,11 +12498,6 @@ docs: Dev user interactions.
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "cursor": "cursor",
-                    "limit": 1,
-                    "mode": "after",
-                  },
                   "response": {
                     "body": {
                       "next_cursor": "next_cursor",
@@ -12642,11 +12614,8 @@ used.
               "examples": [
                 {
                   "request": {
-                    "description": null,
                     "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                     "key": "value",
-                    "name": null,
-                    "owned_by": null,
                     "type": "capability",
                   },
                   "response": {
@@ -12763,7 +12732,6 @@ service:
             parent_part:
               - don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
             type: capability
-            description: null
             name: string
             owned_by:
               - don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>
@@ -12959,11 +12927,7 @@ service:
         - root.PartsListRequestInternalServerError
         - root.PartsListRequestServiceUnavailableError
       examples:
-        - query-parameters:
-            cursor: cursor
-            limit: 1
-            mode: after
-          response:
+        - response:
             body:
               next_cursor: next_cursor
               parts:
@@ -13017,10 +12981,7 @@ service:
         - request:
             key: value
             type: capability
-            description: null
             id: don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
-            name: null
-            owned_by: null
           response:
             body:
               part:
@@ -13329,15 +13290,6 @@ to access.
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "created_date.after": "2024-01-15T09:30:00Z",
-                    "created_date.before": "2024-01-15T09:30:00Z",
-                    "cursor": "cursor",
-                    "limit": 1,
-                    "mode": "after",
-                    "modified_date.after": "2024-01-15T09:30:00Z",
-                    "modified_date.before": "2024-01-15T09:30:00Z",
-                  },
                   "response": {
                     "body": {
                       "next_cursor": "next_cursor",
@@ -13804,15 +13756,7 @@ service:
         - root.RevOrgsListRequestInternalServerError
         - root.RevOrgsListRequestServiceUnavailableError
       examples:
-        - query-parameters:
-            created_date.after: '2024-01-15T09:30:00Z'
-            created_date.before: '2024-01-15T09:30:00Z'
-            cursor: cursor
-            limit: 1
-            mode: after
-            modified_date.after: '2024-01-15T09:30:00Z'
-            modified_date.before: '2024-01-15T09:30:00Z'
-          response:
+        - response:
             body:
               next_cursor: next_cursor
               prev_cursor: prev_cursor
@@ -14171,11 +14115,6 @@ permitted.
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "cursor": "cursor",
-                    "limit": 1,
-                    "mode": "after",
-                  },
                   "response": {
                     "body": {
                       "next_cursor": "next_cursor",
@@ -14542,11 +14481,7 @@ service:
         - root.TagsListRequestInternalServerError
         - root.TagsListRequestServiceUnavailableError
       examples:
-        - query-parameters:
-            cursor: cursor
-            limit: 1
-            mode: after
-          response:
+        - response:
             body:
               next_cursor: next_cursor
               prev_cursor: prev_cursor
@@ -14668,7 +14603,6 @@ docs: DevRev tag interactions.
                   "request": {
                     "object": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                     "type": "timeline_comment",
-                    "visibility": null,
                   },
                   "response": {
                     "body": {
@@ -14835,9 +14769,6 @@ docs: DevRev tag interactions.
               "examples": [
                 {
                   "query-parameters": {
-                    "cursor": "cursor",
-                    "limit": 1,
-                    "mode": "after",
                     "object": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                   },
                   "response": {
@@ -15033,7 +14964,6 @@ service:
         - request:
             type: timeline_comment
             object: don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
-            visibility: null
           response:
             body:
               timeline_entry:
@@ -15173,9 +15103,6 @@ service:
       examples:
         - query-parameters:
             object: don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
-            cursor: cursor
-            limit: 1
-            mode: after
           response:
             body:
               next_cursor: next_cursor
@@ -16011,19 +15938,14 @@ docs: Webhook event APIs.
                 {
                   "request": {
                     "applies_to_part": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
-                    "artifacts": null,
-                    "body": null,
                     "owned_by": [
                       "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>",
                     ],
-                    "reported_by": null,
-                    "stage": null,
                     "tags": [
                       {
                         "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
                       },
                     ],
-                    "target_close_date": null,
                     "title": "string",
                     "type": "issue",
                   },
@@ -16184,9 +16106,6 @@ docs: Webhook event APIs.
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "first": 1,
-                  },
                   "response": {
                     "body": {
                       "works": [
@@ -16444,11 +16363,6 @@ organizations.
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "cursor": "cursor",
-                    "limit": 1,
-                    "mode": "after",
-                  },
                   "response": {
                     "body": {
                       "next_cursor": "next_cursor",
@@ -16609,15 +16523,7 @@ organizations.
                 {
                   "request": {
                     "applies_to_part": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
-                    "artifacts": null,
-                    "body": null,
                     "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
-                    "owned_by": null,
-                    "reported_by": null,
-                    "stage": null,
-                    "tags": null,
-                    "target_close_date": null,
-                    "title": null,
                     "type": "issue",
                   },
                   "response": {
@@ -16752,15 +16658,10 @@ service:
         - request:
             type: issue
             applies_to_part: don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
-            artifacts: null
-            body: null
             owned_by:
               - don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>
-            reported_by: null
-            stage: null
             tags:
               - id: don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>
-            target_close_date: null
             title: string
           response:
             body:
@@ -16914,9 +16815,7 @@ service:
         - root.WorksExportRequestInternalServerError
         - root.WorksExportRequestServiceUnavailableError
       examples:
-        - query-parameters:
-            first: 1
-          response:
+        - response:
             body:
               works:
                 - created_by:
@@ -17108,11 +17007,7 @@ service:
         - root.WorksListRequestInternalServerError
         - root.WorksListRequestServiceUnavailableError
       examples:
-        - query-parameters:
-            cursor: cursor
-            limit: 1
-            mode: after
-          response:
+        - response:
             body:
               next_cursor: next_cursor
               prev_cursor: prev_cursor
@@ -17176,15 +17071,7 @@ service:
         - request:
             type: issue
             applies_to_part: don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
-            artifacts: null
-            body: null
             id: don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>
-            owned_by: null
-            reported_by: null
-            stage: null
-            tags: null
-            target_close_date: null
-            title: null
           response:
             body:
               work:

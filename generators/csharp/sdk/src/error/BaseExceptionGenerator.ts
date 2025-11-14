@@ -13,7 +13,7 @@ export class BaseExceptionGenerator extends FileGenerator<CSharpFile> {
                     this.csharp.parameter({ name: "message", type: this.Primitive.string }),
                     this.csharp.parameter({
                         name: "innerException",
-                        type: this.System.Exception.toOptionalIfNotAlready(),
+                        type: this.System.Exception.asOptional(),
                         initializer: "null"
                     })
                 ],

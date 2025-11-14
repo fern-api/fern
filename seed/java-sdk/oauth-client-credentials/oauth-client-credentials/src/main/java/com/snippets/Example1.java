@@ -15,8 +15,6 @@ public class Example1 {
                 .getTokenWithClientCredentials(GetTokenRequest.builder()
                         .clientId("client_id")
                         .clientSecret("client_secret")
-                        .audience("https://api.example.com")
-                        .grantType("client_credentials")
                         .scope("scope")
                         .build());
     }

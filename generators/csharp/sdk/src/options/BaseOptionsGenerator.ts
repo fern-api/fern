@@ -30,7 +30,7 @@ export class BaseOptionsGenerator extends WithGeneration {
             origin: classOrInterface.explicit("BaseUrl"),
             get: true,
             init: true,
-            type: this.Primitive.string.toOptionalIfNotAlready(),
+            type: this.Primitive.string.asOptional(),
             summary: this.members.baseUrlSummary
         });
     }
@@ -45,7 +45,7 @@ export class BaseOptionsGenerator extends WithGeneration {
             access: ast.Access.Public,
             get: true,
             init: true,
-            type: optional ? type.toOptionalIfNotAlready() : type,
+            type: optional ? type.asOptional() : type,
             initializer: includeInitializer ? this.System.Net.Http.HttpClient.new() : undefined,
             summary: "The http client used to make requests."
         });
@@ -62,7 +62,7 @@ export class BaseOptionsGenerator extends WithGeneration {
             access: !interfaceReference ? ast.Access.Internal : undefined,
             get: true,
             init: true,
-            type: optional ? headersReference.toOptionalIfNotAlready() : headersReference,
+            type: optional ? headersReference.asOptional() : headersReference,
             initializer: includeInitializer ? this.csharp.codeblock("new()") : undefined,
             summary: "The http headers sent with the request.",
             interfaceReference
@@ -79,7 +79,7 @@ export class BaseOptionsGenerator extends WithGeneration {
             access: ast.Access.Public,
             get: true,
             init: true,
-            type: optional ? type.toOptionalIfNotAlready() : type,
+            type: optional ? type.asOptional() : type,
             initializer: includeInitializer ? this.csharp.codeblock("2") : undefined,
             summary: "The http client used to make requests."
         });
@@ -92,7 +92,7 @@ export class BaseOptionsGenerator extends WithGeneration {
             access: ast.Access.Public,
             get: true,
             init: true,
-            type: optional ? type.toOptionalIfNotAlready() : type,
+            type: optional ? type.asOptional() : type,
             initializer: includeInitializer ? this.csharp.codeblock("TimeSpan.FromSeconds(30)") : undefined,
             summary: "The timeout for the request."
         });
@@ -109,10 +109,7 @@ export class BaseOptionsGenerator extends WithGeneration {
         }
     ) {
         const type = this.System.Collections.Generic.IEnumerable(
-            this.System.Collections.Generic.KeyValuePair(
-                this.Primitive.string,
-                this.Primitive.string.toOptionalIfNotAlready()
-            )
+            this.System.Collections.Generic.KeyValuePair(this.Primitive.string, this.Primitive.string.asOptional())
         );
         classOrInterface.addField({
             origin: classOrInterface.explicit("AdditionalHeaders"),
@@ -210,9 +207,9 @@ export class BaseOptionsGenerator extends WithGeneration {
     private getLiteralRootClientParameterType({ literal }: { literal: Literal }): ast.Type {
         switch (literal.type) {
             case "string":
-                return this.Primitive.string.toOptionalIfNotAlready();
+                return this.Primitive.string.asOptional();
             case "boolean":
-                return this.Primitive.boolean.toOptionalIfNotAlready();
+                return this.Primitive.boolean.asOptional();
             default:
                 assertNever(literal);
         }

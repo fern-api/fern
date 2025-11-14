@@ -156,7 +156,8 @@ export class ApiReferenceNodeConverter {
                         type: "link",
                         title: link.text,
                         icon: this.resolveIconFileId(link.icon),
-                        url: FernNavigation.Url(link.url)
+                        url: FernNavigation.Url(link.url),
+                        target: link.target
                     }),
                     page: (page) => this.#toPageNode(page, parentSlug, parentAvailability),
                     package: (pkg) => this.#convertPackage(pkg, parentSlug, parentAvailability),

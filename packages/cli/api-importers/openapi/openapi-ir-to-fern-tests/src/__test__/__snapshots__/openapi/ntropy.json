@@ -36,7 +36,7 @@
               },
             ],
             "status-code": 422,
-            "type": "HTTPValidationError",
+            "type": "HttpValidationError",
           },
         },
         "types": {
@@ -151,8 +151,28 @@
               "openapi": "../openapi.yml",
             },
           },
+          "Action": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              {
+                "type": "If",
+              },
+              {
+                "type": "ModifyLabels",
+              },
+              {
+                "type": "Setter",
+              },
+            ],
+          },
           "ActionModel": {
-            "type": "action",
+            "type": "Action",
           },
           "Address": {
             "docs": undefined,
@@ -218,13 +238,7 @@
               },
               "end_date": {
                 "docs": "The end date of the statement period.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "is_balance_reconciled": {
                 "docs": "Indicates whether the balance has been reconciled.",
@@ -240,13 +254,7 @@
               },
               "start_date": {
                 "docs": "The start date of the statement period.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "total_incoming": {
                 "docs": "The sum of amounts of all incoming transactions.",
@@ -352,13 +360,7 @@
               },
               "date": {
                 "docs": "The date that the transaction was posted. Uses ISO 8601 format (YYYY-MM-DD)",
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "date",
               },
               "description": {
                 "docs": "The description string of the transaction",
@@ -1099,11 +1101,23 @@ enriched transactions.",
               "openapi": "../openapi.yml",
             },
           },
-          "Filter": {
-            "type": "list<action>",
+          "Expr": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "boolean",
+              "string",
+              "double",
+              "FnCall",
+            ],
           },
           "FilterModel": {
-            "type": "Filter",
+            "type": "Personalization",
           },
           "FnCall": {
             "discriminated": false,
@@ -1184,7 +1198,7 @@ enriched transactions.",
             "inline": true,
             "properties": {
               "!": {
-                "type": "expression",
+                "type": "Expr",
               },
             },
             "source": {
@@ -1195,7 +1209,7 @@ enriched transactions.",
             "docs": undefined,
             "inline": true,
             "properties": {
-              "&&": "list<expression>",
+              "&&": "list<Expr>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1205,7 +1219,7 @@ enriched transactions.",
             "docs": undefined,
             "inline": true,
             "properties": {
-              "*": "list<expression>",
+              "*": "list<Expr>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1215,7 +1229,7 @@ enriched transactions.",
             "docs": undefined,
             "inline": true,
             "properties": {
-              "+": "list<expression>",
+              "+": "list<Expr>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1225,7 +1239,7 @@ enriched transactions.",
             "docs": undefined,
             "inline": true,
             "properties": {
-              "-": "list<expression>",
+              "-": "list<Expr>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1235,7 +1249,7 @@ enriched transactions.",
             "docs": undefined,
             "inline": true,
             "properties": {
-              "/": "list<expression>",
+              "/": "list<Expr>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1245,7 +1259,7 @@ enriched transactions.",
             "docs": undefined,
             "inline": true,
             "properties": {
-              "//": "list<expression>",
+              "//": "list<Expr>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1255,7 +1269,7 @@ enriched transactions.",
             "docs": undefined,
             "inline": true,
             "properties": {
-              "<": "list<expression>",
+              "<": "list<Expr>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1265,7 +1279,7 @@ enriched transactions.",
             "docs": undefined,
             "inline": true,
             "properties": {
-              "<=": "list<expression>",
+              "<=": "list<Expr>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1275,7 +1289,7 @@ enriched transactions.",
             "docs": undefined,
             "inline": true,
             "properties": {
-              "==": "list<expression>",
+              "==": "list<Expr>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1285,7 +1299,7 @@ enriched transactions.",
             "docs": undefined,
             "inline": true,
             "properties": {
-              ">": "list<expression>",
+              ">": "list<Expr>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1295,7 +1309,7 @@ enriched transactions.",
             "docs": undefined,
             "inline": true,
             "properties": {
-              ">=": "list<expression>",
+              ">=": "list<Expr>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1305,7 +1319,7 @@ enriched transactions.",
             "docs": undefined,
             "inline": true,
             "properties": {
-              "ends_with": "list<expression>",
+              "ends_with": "list<Expr>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1316,7 +1330,7 @@ enriched transactions.",
             "inline": true,
             "properties": {
               "get": {
-                "type": "properties",
+                "type": "TxProp",
               },
             },
             "source": {
@@ -1328,7 +1342,7 @@ enriched transactions.",
             "inline": true,
             "properties": {
               "has_label": {
-                "type": "expression",
+                "type": "Expr",
               },
             },
             "source": {
@@ -1340,7 +1354,7 @@ enriched transactions.",
             "inline": true,
             "properties": {
               "has_mcc": {
-                "type": "expression",
+                "type": "Expr",
               },
             },
             "source": {
@@ -1351,7 +1365,7 @@ enriched transactions.",
             "docs": undefined,
             "inline": true,
             "properties": {
-              "is_substring": "list<expression>",
+              "is_substring": "list<Expr>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1361,7 +1375,7 @@ enriched transactions.",
             "docs": undefined,
             "inline": true,
             "properties": {
-              "starts_with": "list<expression>",
+              "starts_with": "list<Expr>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1372,7 +1386,7 @@ enriched transactions.",
             "inline": true,
             "properties": {
               "to_lower": {
-                "type": "expression",
+                "type": "Expr",
               },
             },
             "source": {
@@ -1384,7 +1398,7 @@ enriched transactions.",
             "inline": true,
             "properties": {
               "to_upper": {
-                "type": "expression",
+                "type": "Expr",
               },
             },
             "source": {
@@ -1395,19 +1409,33 @@ enriched transactions.",
             "docs": undefined,
             "inline": true,
             "properties": {
-              "||": "list<expression>",
+              "||": "list<Expr>",
             },
             "source": {
               "openapi": "../openapi.yml",
             },
           },
-          "HTTPValidationError": {
+          "HttpValidationError": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
               "detail": {
                 "type": "optional<list<ValidationError>>",
               },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "If": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "else": "optional<list<Action>>",
+              "if": {
+                "type": "Expr",
+              },
+              "then": "optional<list<Action>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1578,7 +1606,7 @@ under ambiguity.",
             "inline": true,
             "properties": {
               "add_label": {
-                "type": "expression",
+                "type": "Expr",
               },
             },
             "source": {
@@ -1590,7 +1618,7 @@ under ambiguity.",
             "inline": true,
             "properties": {
               "add_mcc": {
-                "type": "expression",
+                "type": "Expr",
               },
             },
             "source": {
@@ -1602,7 +1630,7 @@ under ambiguity.",
             "inline": true,
             "properties": {
               "remove_label": {
-                "type": "expression",
+                "type": "Expr",
               },
             },
             "source": {
@@ -1614,7 +1642,7 @@ under ambiguity.",
             "inline": true,
             "properties": {
               "remove_mcc": {
-                "type": "expression",
+                "type": "Expr",
               },
             },
             "source": {
@@ -1625,7 +1653,7 @@ under ambiguity.",
             "docs": undefined,
             "inline": true,
             "properties": {
-              "set_labels": "list<expression>",
+              "set_labels": "list<Expr>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1635,7 +1663,7 @@ under ambiguity.",
             "docs": undefined,
             "inline": true,
             "properties": {
-              "set_mcc": "list<expression>",
+              "set_mcc": "list<Expr>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1721,6 +1749,9 @@ under ambiguity.",
               "openapi": "../openapi.yml",
             },
           },
+          "Personalization": {
+            "type": "list<Action>",
+          },
           "Recurrence": {
             "docs": "The `Recurrence` object represents the recurrence pattern of a transaction. It provides information about
 whether a transaction is a one-time event or a part of a recurring series.",
@@ -1753,13 +1784,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
               },
               "end_date": {
                 "docs": "The date of the most recent transaction in the group",
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "date",
               },
               "id": {
                 "docs": "A unique UUID identifier for the group",
@@ -1775,13 +1800,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
               },
               "start_date": {
                 "docs": "The date of the oldest transaction in the group",
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "date",
               },
               "total_amount": {
                 "docs": "The sum of all transaction amounts in this group",
@@ -1890,6 +1909,21 @@ whether a transaction is a one-time event or a part of a recurring series.",
               "openapi": "../openapi.yml",
             },
           },
+          "Setter": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "set": {
+                "type": "EditableTxProp",
+              },
+              "to": {
+                "type": "Expr",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "StatementInfo": {
             "docs": undefined,
             "inline": undefined,
@@ -1899,25 +1933,13 @@ whether a transaction is a one-time event or a part of a recurring series.",
                 "type": "optional<list<Account>>",
               },
               "end_date": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "institution": {
                 "type": "optional<string>",
               },
               "start_date": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
             },
             "source": {
@@ -1973,13 +1995,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
               },
               "date": {
                 "docs": "The date that the transaction was posted. Uses ISO 8601 format (YYYY-MM-DD)",
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "date",
               },
               "description": {
                 "docs": "The description string of the transaction",
@@ -2063,13 +2079,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
               },
               "date": {
                 "docs": "The date that the transaction was posted. Uses ISO 8601 format (YYYY-MM-DD)",
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "date",
               },
               "description": {
                 "docs": "The description string of the transaction",
@@ -2097,6 +2107,27 @@ whether a transaction is a one-time event or a part of a recurring series.",
               },
               "location": "optional<LocationInput>",
             },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "TxProp": {
+            "enum": [
+              "logo",
+              "website",
+              "merchant",
+              "description",
+              "merchant_id",
+              "location",
+              "person",
+              "transaction_type",
+              "amount",
+              "entry_type",
+              "account_holder_type",
+              "account_holder_id",
+              "account_holder_name",
+            ],
+            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2209,91 +2240,6 @@ whether a transaction is a one-time event or a part of a recurring series.",
               "openapi": "../openapi.yml",
             },
           },
-          "action": {
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-            "union": [
-              {
-                "type": "if",
-              },
-              {
-                "type": "ModifyLabels",
-              },
-              {
-                "type": "set",
-              },
-            ],
-          },
-          "expression": {
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-            "union": [
-              "boolean",
-              "string",
-              "double",
-              "FnCall",
-            ],
-          },
-          "if": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "else": "optional<list<action>>",
-              "if": {
-                "type": "expression",
-              },
-              "then": "optional<list<action>>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "properties": {
-            "enum": [
-              "logo",
-              "website",
-              "merchant",
-              "description",
-              "merchant_id",
-              "location",
-              "person",
-              "transaction_type",
-              "amount",
-              "entry_type",
-              "account_holder_type",
-              "account_holder_id",
-              "account_holder_name",
-            ],
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "set": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "set": {
-                "type": "EditableTxProp",
-              },
-              "to": {
-                "type": "expression",
-              },
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
         },
       },
       "rawContents": "errors:
@@ -2303,7 +2249,7 @@ whether a transaction is a one-time event or a part of a recurring series.",
     docs: Transaction with the provided id not found.
   UnprocessableEntityError:
     status-code: 422
-    type: HTTPValidationError
+    type: HttpValidationError
     docs: Validation Error
     examples:
       - value: {}
@@ -2387,7 +2333,7 @@ types:
     source:
       openapi: ../openapi.yml
   ActionModel:
-    type: action
+    type: Action
   Address:
     properties:
       street:
@@ -2435,15 +2381,11 @@ types:
         type: optional<double>
         docs: The closing balance of the account for the statement period.
       start_date:
-        type: optional<string>
+        type: optional<date>
         docs: The start date of the statement period.
-        validation:
-          format: date
       end_date:
-        type: optional<string>
+        type: optional<date>
         docs: The end date of the statement period.
-        validation:
-          format: date
       is_balance_reconciled:
         type: optional<boolean>
         docs: Indicates whether the balance has been reconciled.
@@ -2511,12 +2453,10 @@ types:
           minLength: 0
           maxLength: 1024
       date:
-        type: string
+        type: date
         docs: >-
           The date that the transaction was posted. Uses ISO 8601 format
           (YYYY-MM-DD)
-        validation:
-          format: date
       amount:
         type: double
         docs: >-
@@ -3142,8 +3082,8 @@ types:
     source:
       openapi: ../openapi.yml
   FilterModel:
-    type: Filter
-  HTTPValidationError:
+    type: Personalization
+  HttpValidationError:
     properties:
       detail:
         type: optional<list<ValidationError>>
@@ -3304,15 +3244,11 @@ types:
         type: string
         docs: A unique UUID identifier for the group
       start_date:
-        type: string
+        type: date
         docs: The date of the oldest transaction in the group
-        validation:
-          format: date
       end_date:
-        type: string
+        type: date
         docs: The date of the most recent transaction in the group
-        validation:
-          format: date
       total_amount:
         type: double
         docs: The sum of all transaction amounts in this group
@@ -3411,13 +3347,9 @@ types:
       institution:
         type: optional<string>
       start_date:
-        type: optional<string>
-        validation:
-          format: date
+        type: optional<date>
       end_date:
-        type: optional<string>
-        validation:
-          format: date
+        type: optional<date>
       account_holder: optional<AccountHolder>
       accounts:
         type: optional<list<Account>>
@@ -3446,12 +3378,10 @@ types:
           minLength: 0
           maxLength: 1024
       date:
-        type: string
+        type: date
         docs: >-
           The date that the transaction was posted. Uses ISO 8601 format
           (YYYY-MM-DD)
-        validation:
-          format: date
       amount:
         type: double
         docs: >-
@@ -3513,12 +3443,10 @@ types:
           minLength: 0
           maxLength: 1024
       date:
-        type: string
+        type: date
         docs: >-
           The date that the transaction was posted. Uses ISO 8601 format
           (YYYY-MM-DD)
-        validation:
-          format: date
       amount:
         type: double
         docs: >-
@@ -3611,7 +3539,7 @@ types:
         docs: Whether the webhook is enabled or not.
     source:
       openapi: ../openapi.yml
-  expression:
+  Expr:
     discriminated: false
     union:
       - boolean
@@ -3620,7 +3548,7 @@ types:
       - FnCall
     source:
       openapi: ../openapi.yml
-  properties:
+  TxProp:
     enum:
       - logo
       - website
@@ -3639,133 +3567,133 @@ types:
       openapi: ../openapi.yml
   FnCall&&:
     properties:
-      '&&': list<expression>
+      '&&': list<Expr>
     source:
       openapi: ../openapi.yml
     inline: true
   FnCall||:
     properties:
-      '||': list<expression>
+      '||': list<Expr>
     source:
       openapi: ../openapi.yml
     inline: true
   FnCall==:
     properties:
-      '==': list<expression>
+      '==': list<Expr>
     source:
       openapi: ../openapi.yml
     inline: true
   FnCall+:
     properties:
-      +: list<expression>
+      +: list<Expr>
     source:
       openapi: ../openapi.yml
     inline: true
   FnCall-:
     properties:
-      '-': list<expression>
+      '-': list<Expr>
     source:
       openapi: ../openapi.yml
     inline: true
   FnCall*:
     properties:
-      '*': list<expression>
+      '*': list<Expr>
     source:
       openapi: ../openapi.yml
     inline: true
   FnCall/:
     properties:
-      /: list<expression>
+      /: list<Expr>
     source:
       openapi: ../openapi.yml
     inline: true
   FnCall//:
     properties:
-      //: list<expression>
+      //: list<Expr>
     source:
       openapi: ../openapi.yml
     inline: true
   FnCall<:
     properties:
-      <: list<expression>
+      <: list<Expr>
     source:
       openapi: ../openapi.yml
     inline: true
   FnCall<=:
     properties:
-      <=: list<expression>
+      <=: list<Expr>
     source:
       openapi: ../openapi.yml
     inline: true
   FnCall>:
     properties:
-      '>': list<expression>
+      '>': list<Expr>
     source:
       openapi: ../openapi.yml
     inline: true
   FnCall>=:
     properties:
-      '>=': list<expression>
+      '>=': list<Expr>
     source:
       openapi: ../openapi.yml
     inline: true
   FnCall!:
     properties:
       '!':
-        type: expression
+        type: Expr
     source:
       openapi: ../openapi.yml
     inline: true
   FnCallIsSubstring:
     properties:
-      is_substring: list<expression>
+      is_substring: list<Expr>
     source:
       openapi: ../openapi.yml
     inline: true
   FnCallStartsWith:
     properties:
-      starts_with: list<expression>
+      starts_with: list<Expr>
     source:
       openapi: ../openapi.yml
     inline: true
   FnCallEndsWith:
     properties:
-      ends_with: list<expression>
+      ends_with: list<Expr>
     source:
       openapi: ../openapi.yml
     inline: true
   FnCallToLower:
     properties:
       to_lower:
-        type: expression
+        type: Expr
     source:
       openapi: ../openapi.yml
     inline: true
   FnCallToUpper:
     properties:
       to_upper:
-        type: expression
+        type: Expr
     source:
       openapi: ../openapi.yml
     inline: true
   FnCallHasLabel:
     properties:
       has_label:
-        type: expression
+        type: Expr
     source:
       openapi: ../openapi.yml
     inline: true
   FnCallHasMcc:
     properties:
       has_mcc:
-        type: expression
+        type: Expr
     source:
       openapi: ../openapi.yml
     inline: true
   FnCallGet:
     properties:
       get:
-        type: properties
+        type: TxProp
     source:
       openapi: ../openapi.yml
     inline: true
@@ -3795,59 +3723,59 @@ types:
       - type: FnCallGet
     source:
       openapi: ../openapi.yml
-  action:
+  Action:
     discriminated: false
     union:
-      - type: if
+      - type: If
       - type: ModifyLabels
-      - type: set
+      - type: Setter
     source:
       openapi: ../openapi.yml
-  if:
+  If:
     properties:
       if:
-        type: expression
-      then: optional<list<action>>
-      else: optional<list<action>>
+        type: Expr
+      then: optional<list<Action>>
+      else: optional<list<Action>>
     source:
       openapi: ../openapi.yml
   ModifyLabelsAddLabel:
     properties:
       add_label:
-        type: expression
+        type: Expr
     source:
       openapi: ../openapi.yml
     inline: true
   ModifyLabelsRemoveLabel:
     properties:
       remove_label:
-        type: expression
+        type: Expr
     source:
       openapi: ../openapi.yml
     inline: true
   ModifyLabelsSetLabels:
     properties:
-      set_labels: list<expression>
+      set_labels: list<Expr>
     source:
       openapi: ../openapi.yml
     inline: true
   ModifyLabelsAddMcc:
     properties:
       add_mcc:
-        type: expression
+        type: Expr
     source:
       openapi: ../openapi.yml
     inline: true
   ModifyLabelsRemoveMcc:
     properties:
       remove_mcc:
-        type: expression
+        type: Expr
     source:
       openapi: ../openapi.yml
     inline: true
   ModifyLabelsSetMcc:
     properties:
-      set_mcc: list<expression>
+      set_mcc: list<Expr>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -3873,16 +3801,16 @@ types:
       - transaction_type
     source:
       openapi: ../openapi.yml
-  set:
+  Setter:
     properties:
       set:
         type: EditableTxProp
       to:
-        type: expression
+        type: Expr
     source:
       openapi: ../openapi.yml
-  Filter:
-    type: list<action>
+  Personalization:
+    type: list<Action>
 ",
     },
     "accountHolders.yml": {
@@ -4052,8 +3980,11 @@ ah = sdk.account_holders.delete("f35b927b6-6fda-40aa-93b8-95b47c2b2cad") ",
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v3/account_holders/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "DeleteAccountHolderV3AccountHoldersIdDeleteRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -4111,8 +4042,11 @@ ah = sdk.account_holders.get("f35b927b6-6fda-40aa-93b8-95b47c2b2cad") ",
               "method": "GET",
               "pagination": undefined,
               "path": "/v3/account_holders/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetAccountHolderV3AccountHoldersIdGetRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -4158,12 +4092,6 @@ ah = sdk.account_holders.get("f35b927b6-6fda-40aa-93b8-95b47c2b2cad") ",
                       "name": "Python SDK",
                     },
                   ],
-                  "query-parameters": {
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
-                    "cursor": "cursor",
-                    "limit": 1,
-                  },
                   "response": {
                     "body": {
                       "data": [
@@ -4239,9 +4167,11 @@ service:
         - APIKeyHeader: []
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Retrieve an account holder.
+      request:
+        name: GetAccountHolderV3AccountHoldersIdGetRequest
+        path-parameters:
+          id: string
       response:
         docs: Successful Response
         type: root.AccountHolderExternal
@@ -4286,9 +4216,11 @@ service:
         operation is permanent and irreversible
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Deletes an account holder and their transactions
+      request:
+        name: DeleteAccountHolderV3AccountHoldersIdDeleteRequest
+        path-parameters:
+          id: string
       errors:
         - root.NotFoundError
         - root.UnprocessableEntityError
@@ -4347,12 +4279,7 @@ service:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - query-parameters:
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
-            cursor: cursor
-            limit: 1
-          response:
+        - response:
             body:
               next_cursor: XjdHaksD
               data:
@@ -4522,8 +4449,11 @@ Complete guide: [Bank Statements](../../../bank-statements).
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v3/bank_statements/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "DeleteBankStatementV3BankStatementsIdDeleteRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -4589,8 +4519,11 @@ bs = sdk.bank_statements.get("7f8dceac-2848-472d-b5c3-55cdbaf35a9b") ",
               "method": "GET",
               "pagination": undefined,
               "path": "/v3/bank_statements/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetBankStatementV3BankStatementsIdGetRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -4675,8 +4608,11 @@ results = sdk.bank_statements.wait_for_results(
               "method": "GET",
               "pagination": undefined,
               "path": "/v3/bank_statements/{id}/results",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetBankStatementResultV3BankStatementsIdResultsGetRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -4762,8 +4698,11 @@ overview = sdk.bank_statements.overview(
               "method": "POST",
               "pagination": undefined,
               "path": "/v3/bank_statements/{id}/overview",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetBankStatementStatementInfoV3BankStatementsIdOverviewPostRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -4810,13 +4749,6 @@ for bs in sdk.bank_statements.list().auto_paginate():
                       "name": "Python SDK",
                     },
                   ],
-                  "query-parameters": {
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
-                    "cursor": "cursor",
-                    "limit": 1,
-                    "status": "queued",
-                  },
                   "response": {
                     "body": {
                       "data": [
@@ -5019,13 +4951,7 @@ service:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - query-parameters:
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
-            cursor: cursor
-            limit: 1
-            status: queued
-          response:
+        - response:
             body:
               next_cursor: XjdHaksD
               data:
@@ -5116,9 +5042,11 @@ service:
         - APIKeyHeader: []
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Retrieve a bank statement
+      request:
+        name: GetBankStatementV3BankStatementsIdGetRequest
+        path-parameters:
+          id: string
       response:
         docs: Successful Response
         type: root.BankStatement
@@ -5166,9 +5094,11 @@ service:
         - APIKeyHeader: []
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Deletes a bank statement
+      request:
+        name: DeleteBankStatementV3BankStatementsIdDeleteRequest
+        path-parameters:
+          id: string
       errors:
         - root.NotFoundError
         - root.UnprocessableEntityError
@@ -5189,9 +5119,11 @@ service:
         Complete guide: [Overview](../../../bank-statements)
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Quickly extract account holder, institution and first account
+      request:
+        name: GetBankStatementStatementInfoV3BankStatementsIdOverviewPostRequest
+        path-parameters:
+          id: string
       response:
         docs: Successful Response
         type: root.StatementInfo
@@ -5250,9 +5182,11 @@ service:
         statement's status is `completed`.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Retrieve the extraction results
+      request:
+        name: GetBankStatementResultV3BankStatementsIdResultsGetRequest
+        path-parameters:
+          id: string
       response:
         docs: Successful Response
         type: root.BankStatementResults
@@ -5462,8 +5396,11 @@ results = sdk.batches.wait_for_results("f203613d2-83c8-4130-8809-d14206eeec20")
               "method": "GET",
               "pagination": undefined,
               "path": "/v3/batches/{id}/results",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetBatchResultsV3BatchesIdResultsGetRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "Returned batch of transaction enrichment results.",
@@ -5509,13 +5446,6 @@ for batch in sdk.batches.list().auto_paginate():
                       "name": "Python SDK",
                     },
                   ],
-                  "query-parameters": {
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
-                    "cursor": "cursor",
-                    "limit": 1,
-                    "status": "processing",
-                  },
                   "response": {
                     "body": {
                       "data": [
@@ -5632,8 +5562,11 @@ batch = sdk.batches.get("f203613d2-83c8-4130-8809-d14206eeec20") ",
               "method": "GET",
               "pagination": undefined,
               "path": "/v3/batches/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetSingleBatchV3BatchesIdGetRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -5817,13 +5750,7 @@ service:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - query-parameters:
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
-            cursor: cursor
-            limit: 1
-            status: processing
-          response:
+        - response:
             body:
               next_cursor: XjdHaksD
               data:
@@ -5955,9 +5882,11 @@ service:
         - APIKeyHeader: []
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Retrieve a batch
+      request:
+        name: GetSingleBatchV3BatchesIdGetRequest
+        path-parameters:
+          id: string
       response:
         docs: Successful Response
         type: root.Batch
@@ -6005,9 +5934,11 @@ service:
         are available after the batch has finished processing.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Retrieve the results of a batch
+      request:
+        name: GetBatchResultsV3BatchesIdResultsGetRequest
+        path-parameters:
+          id: string
       response:
         docs: Returned batch of transaction enrichment results.
         type: root.BatchResult
@@ -6207,14 +6138,15 @@ sdk.categories.set("consumer", {
               "method": "POST",
               "pagination": undefined,
               "path": "/v3/categories/{account_holder_type}",
-              "path-parameters": {
-                "account_holder_type": "root.AccountHolderType",
-              },
               "request": {
                 "body": {
                   "type": "root.CustomCategorySet",
                 },
                 "content-type": "application/json",
+                "name": "CustomCategoriesPostV3CategoriesAccountHolderTypePostRequest",
+                "path-parameters": {
+                  "account_holder_type": "root.AccountHolderType",
+                },
               },
               "response": {
                 "docs": "Custom categories successfully set.",
@@ -6300,8 +6232,11 @@ sdk.categories.reset("consumer")
               "method": "POST",
               "pagination": undefined,
               "path": "/v3/categories/{account_holder_type}/reset",
-              "path-parameters": {
-                "account_holder_type": "root.AccountHolderType",
+              "request": {
+                "name": "DeleteCustomCategorySetV3CategoriesAccountHolderTypeResetPostRequest",
+                "path-parameters": {
+                  "account_holder_type": "root.AccountHolderType",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -6387,8 +6322,11 @@ sdk.categories.get("consumer")
               "method": "GET",
               "pagination": undefined,
               "path": "/v3/categories/{account_holder_type}",
-              "path-parameters": {
-                "account_holder_type": "root.AccountHolderType",
+              "request": {
+                "name": "GetCategorySetV3CategoriesAccountHolderTypeGetRequest",
+                "path-parameters": {
+                  "account_holder_type": "root.AccountHolderType",
+                },
               },
               "response": {
                 "docs": "Category set for the selected type of account holder",
@@ -6421,9 +6359,11 @@ service:
         holder type.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        account_holder_type: root.AccountHolderType
       display-name: Retrieve category set
+      request:
+        name: GetCategorySetV3CategoriesAccountHolderTypeGetRequest
+        path-parameters:
+          account_holder_type: root.AccountHolderType
       response:
         docs: Category set for the selected type of account holder
         type: root.CategorySet
@@ -6486,12 +6426,13 @@ service:
         whether it is present in the set.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        account_holder_type: root.AccountHolderType
       display-name: Set a custom set of categories
       request:
         body:
           type: root.CustomCategorySet
+        path-parameters:
+          account_holder_type: root.AccountHolderType
+        name: CustomCategoriesPostV3CategoriesAccountHolderTypePostRequest
         content-type: application/json
       response:
         docs: Custom categories successfully set.
@@ -6591,9 +6532,11 @@ service:
         original values.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        account_holder_type: root.AccountHolderType
       display-name: Reset category set to original values
+      request:
+        name: DeleteCustomCategorySetV3CategoriesAccountHolderTypeResetPostRequest
+        path-parameters:
+          account_holder_type: root.AccountHolderType
       response:
         docs: Successful Response
         type: root.CategorySet
@@ -6715,10 +6658,13 @@ sdk.entities.lookup("d4bc3c80-ec1a-3da2-836e-2a4ca4758be5") ",
               "method": "GET",
               "pagination": undefined,
               "path": "/v3/entities/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The unique ID of the entity",
-                  "type": "string",
+              "request": {
+                "name": "GetEntityByIdV3EntitiesIdGetRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The unique ID of the entity",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -6769,11 +6715,6 @@ sdk.entities.lookup(name="Starbucks") ",
                       "name": "Python SDK",
                     },
                   ],
-                  "query-parameters": {
-                    "location": "location",
-                    "name": "name",
-                    "website": "website",
-                  },
                   "response": {
                     "body": {
                       "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
@@ -6862,11 +6803,7 @@ service:
         - root.UnprocessableEntityError
         - root.LockedError
       examples:
-        - query-parameters:
-            name: name
-            website: website
-            location: location
-          response:
+        - response:
             body:
               id: d4bc3c80-ec1a-3da2-836e-2a4ca4758be5
               name: Starbucks
@@ -6897,11 +6834,13 @@ service:
       docs: Retrieve more information about an entity by using its unique ID.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id:
-          type: string
-          docs: The unique ID of the entity
       display-name: Retrieve an entity
+      request:
+        name: GetEntityByIdV3EntitiesIdGetRequest
+        path-parameters:
+          id:
+            type: string
+            docs: The unique ID of the entity
       response:
         docs: Entity
         type: root.Entity
@@ -7012,7 +6951,7 @@ sdk.rules.append({"set": "logo", "to": "http://example.com/favicon.ico"})
               "path": "/v3/rules/append",
               "request": {
                 "body": {
-                  "type": "root.action",
+                  "type": "root.Action",
                 },
                 "content-type": "application/json",
               },
@@ -7075,8 +7014,11 @@ sdk.rules.delete(0)
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v3/rules/{index}",
-              "path-parameters": {
-                "index": "integer",
+              "request": {
+                "name": "FilterDeleteV3RulesIndexDeleteRequest",
+                "path-parameters": {
+                  "index": "integer",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -7140,7 +7082,7 @@ rules = sdk.rules.get()
               "response": {
                 "docs": "Successful Response",
                 "status-code": 200,
-                "type": "root.Filter",
+                "type": "root.Personalization",
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -7202,14 +7144,15 @@ sdk.rules.patch(0, {"set": "logo", "to": "http://example.com/favicon.ico"})
               "method": "PATCH",
               "pagination": undefined,
               "path": "/v3/rules/{index}",
-              "path-parameters": {
-                "index": "integer",
-              },
               "request": {
                 "body": {
-                  "type": "root.action",
+                  "type": "root.Action",
                 },
                 "content-type": "application/json",
+                "name": "FilterPatchV3RulesIndexPatchRequest",
+                "path-parameters": {
+                  "index": "integer",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -7306,7 +7249,7 @@ sdk.rules.set([{
               "path": "/v3/rules",
               "request": {
                 "body": {
-                  "type": "root.Filter",
+                  "type": "root.Personalization",
                 },
                 "content-type": "application/json",
               },
@@ -7342,7 +7285,7 @@ service:
       display-name: Get the current personalization ruleset.
       response:
         docs: Successful Response
-        type: root.Filter
+        type: root.Personalization
         status-code: 200
       errors:
         - root.UnprocessableEntityError
@@ -7377,7 +7320,7 @@ service:
       display-name: Set the personalization ruleset.
       request:
         body:
-          type: root.Filter
+          type: root.Personalization
         content-type: application/json
       response:
         docs: Successful Response
@@ -7448,7 +7391,7 @@ service:
       display-name: Append a rule.
       request:
         body:
-          type: root.action
+          type: root.Action
         content-type: application/json
       response:
         docs: Successful Response
@@ -7492,9 +7435,11 @@ service:
       docs: Delete the rule at the specified index from the personalization ruleset.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        index: integer
       display-name: Delete a rule.
+      request:
+        name: FilterDeleteV3RulesIndexDeleteRequest
+        path-parameters:
+          index: integer
       response:
         docs: Successful Response
         type: unknown
@@ -7531,12 +7476,13 @@ service:
       docs: Modify an existing rule at the specified index on the ruleset.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        index: integer
       display-name: Modify an existing rule.
       request:
         body:
-          type: root.action
+          type: root.Action
+        path-parameters:
+          index: integer
+        name: FilterPatchV3RulesIndexPatchRequest
         content-type: application/json
       response:
         docs: Successful Response
@@ -7684,8 +7630,11 @@ recurring_groups = sdk.account_holders.recurring_groups(
               "method": "POST",
               "pagination": undefined,
               "path": "/v3/account_holders/{id}/recurring_groups",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetAccountHolderRecurringPaymentsV3AccountHoldersIdRecurringGroupsPostRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -7719,9 +7668,12 @@ service:
         subscriptions. These patterns are called recurrence groups.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Find recurring groups in a transaction history
+      request:
+        name: >-
+          GetAccountHolderRecurringPaymentsV3AccountHoldersIdRecurringGroupsPostRequest
+        path-parameters:
+          id: string
       response:
         docs: Successful Response
         type: list<root.RecurrenceGroup>
@@ -7839,8 +7791,11 @@ report either through the API or using [webhooks](#tag/Webhooks).
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v3/reports/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "DeleteReportV3ReportsIdDeleteRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -7904,8 +7859,11 @@ report = sdk.reports.get("a652285d-de1b-4a6f-b6ce-45efa9be7952")
               "method": "GET",
               "pagination": undefined,
               "path": "/v3/reports/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetReportV3ReportsIdGetRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -7952,13 +7910,6 @@ reports = sdk.reports.list()
                       "name": "Python SDK",
                     },
                   ],
-                  "query-parameters": {
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
-                    "cursor": "cursor",
-                    "limit": 1,
-                    "status": "open",
-                  },
                   "response": {
                     "body": {
                       "data": [
@@ -8186,13 +8137,7 @@ service:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - query-parameters:
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
-            cursor: cursor
-            limit: 1
-            status: open
-          response:
+        - response:
             body:
               next_cursor: next_cursor
               data:
@@ -8303,9 +8248,11 @@ service:
       docs: Retrieve a report
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Retrieve a report
+      request:
+        name: GetReportV3ReportsIdGetRequest
+        path-parameters:
+          id: string
       response:
         docs: Successful Response
         type: root.Report
@@ -8350,9 +8297,11 @@ service:
       docs: Delete a report
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Delete a report
+      request:
+        name: DeleteReportV3ReportsIdDeleteRequest
+        path-parameters:
+          id: string
       errors:
         - root.NotFoundError
         - root.UnprocessableEntityError
@@ -8430,8 +8379,11 @@ tx = sdk.transactions.delete("xbx8YP14g565Xk") ",
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v3/transactions/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "DeleteTransactionV3TransactionsIdDeleteRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -8544,8 +8496,11 @@ tx = sdk.transactions.get("xbx8YP14g565Xk") ",
               "method": "GET",
               "pagination": undefined,
               "path": "/v3/transactions/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetTransactionV3TransactionsIdGetRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -8592,13 +8547,6 @@ for tx in sdk.transactions.list().auto_paginate():
                       "name": "Python SDK",
                     },
                   ],
-                  "query-parameters": {
-                    "account_holder_id": "account_holder_id",
-                    "created_after": "2024-01-15T09:30:00Z",
-                    "created_before": "2024-01-15T09:30:00Z",
-                    "cursor": "cursor",
-                    "limit": 1,
-                  },
                   "response": {
                     "body": {
                       "data": [
@@ -8998,9 +8946,6 @@ sdk.transactions.assign(
               "method": "POST",
               "pagination": undefined,
               "path": "/v3/transactions/{id}/assign",
-              "path-parameters": {
-                "id": "string",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -9010,7 +8955,9 @@ sdk.transactions.assign(
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "BodySetTransactionAhV3TransactionsIdAssignPost",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": "string",
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -9041,9 +8988,11 @@ service:
         - APIKeyHeader: []
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Retrieve a transaction
+      request:
+        name: GetTransactionV3TransactionsIdGetRequest
+        path-parameters:
+          id: string
       response:
         docs: Successful Response
         type: root.Transaction
@@ -9129,9 +9078,11 @@ service:
         operation is permanent.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Deletes a transaction
+      request:
+        name: DeleteTransactionV3TransactionsIdDeleteRequest
+        path-parameters:
+          id: string
       errors:
         - root.NotFoundError
         - root.UnprocessableEntityError
@@ -9193,13 +9144,7 @@ service:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - query-parameters:
-            created_after: '2024-01-15T09:30:00Z'
-            created_before: '2024-01-15T09:30:00Z'
-            cursor: cursor
-            limit: 1
-            account_holder_id: account_holder_id
-          response:
+        - response:
             body:
               next_cursor: XjdHaksD
               data:
@@ -9405,11 +9350,11 @@ service:
         new account holder must share the same categories
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Assign a transaction to an account holder
       request:
         name: BodySetTransactionAhV3TransactionsIdAssignPost
+        path-parameters:
+          id: string
         body:
           properties:
             account_holder_id: string
@@ -9577,8 +9522,11 @@ sdk.webhooks.delete("e94a150d-40af-4e96-8aa7-2948a6b4d8d3") ",
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v3/webhooks/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "DeleteWebhookV3WebhooksIdDeleteRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -9641,8 +9589,11 @@ webhook = sdk.webhooks.get("e94a150d-40af-4e96-8aa7-2948a6b4d8d3")
               "method": "GET",
               "pagination": undefined,
               "path": "/v3/webhooks/{id}",
-              "path-parameters": {
-                "id": "string",
+              "request": {
+                "name": "GetWebhookV3WebhooksIdGetRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
               },
               "response": {
                 "docs": "Successful Response",
@@ -9792,9 +9743,6 @@ wh = sdk.webhooks.patch(
               "method": "PATCH",
               "pagination": undefined,
               "path": "/v3/webhooks/{id}",
-              "path-parameters": {
-                "id": "string",
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -9831,7 +9779,9 @@ wh = sdk.webhooks.patch(
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "WebhookPatch",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": "string",
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -10180,9 +10130,11 @@ service:
       docs: Retrieve a webhook
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Retrieve a webhook
+      request:
+        name: GetWebhookV3WebhooksIdGetRequest
+        path-parameters:
+          id: string
       response:
         docs: Successful Response
         type: root.Webhook
@@ -10228,9 +10180,11 @@ service:
       docs: Delete a webhook
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Delete a webhook
+      request:
+        name: DeleteWebhookV3WebhooksIdDeleteRequest
+        path-parameters:
+          id: string
       errors:
         - root.NotFoundError
         - root.UnprocessableEntityError
@@ -10262,11 +10216,11 @@ service:
         unchanged
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        id: string
       display-name: Update a webhook
       request:
         name: WebhookPatch
+        path-parameters:
+          id: string
         body:
           properties:
             url:

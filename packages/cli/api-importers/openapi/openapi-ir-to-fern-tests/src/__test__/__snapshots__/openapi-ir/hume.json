@@ -56,7 +56,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yaml",
@@ -83,7 +83,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yaml",
@@ -106,7 +106,7 @@
               "type": "reference"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yaml",
@@ -128,7 +128,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yaml",
@@ -151,7 +151,7 @@
               "type": "reference"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yaml",
@@ -174,7 +174,7 @@
               "type": "reference"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yaml",
@@ -222,49 +222,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "when",
-              "value": {
-                "value": "created_before",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "timestamp_ms",
-              "value": {
-                "value": {
-                  "value": 1000000,
-                  "type": "int64"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "sort_by",
-              "value": {
-                "value": "created",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "direction",
-              "value": {
-                "value": "asc",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -955,7 +913,7 @@
                 "type": "primitive"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "description": "The unique identifier for an EVI configuration.\n\nInclude this ID in your connection request to equip EVI with the Prompt, Language Model, Voice, and Tools associated with the specified configuration. If omitted, EVI will apply [default configuration settings](/docs/empathic-voice-interface-evi/configuration#default-configuration).\n\nFor help obtaining this ID, see our [Configuration Guide](/docs/empathic-voice-interface-evi/configuration).",
             "source": {
@@ -980,7 +938,7 @@
                 "type": "primitive"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "description": "The version number of the EVI configuration specified by the `config_id`.\n\nConfigs, as well as Prompts and Tools, are versioned. This versioning system supports iterative development, allowing you to progressively refine configurations and revert to previous versions if needed.\n\nInclude this parameter to apply a specific version of an EVI configuration. If omitted, the latest version will be applied.",
             "source": {
@@ -1005,7 +963,7 @@
                 "type": "primitive"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "description": "The unique identifier for a Chat Group. Use this field to preserve context from a previous Chat session.\n\nA Chat represents a single session from opening to closing a WebSocket connection. In contrast, a Chat Group is a series of resumed Chats that collectively represent a single conversation spanning multiple sessions. Each Chat includes a Chat Group ID, which is used to preserve the context of previous Chat sessions when starting a new one.\n\nIncluding the Chat Group ID in the `resumed_chat_group_id` query parameter is useful for seamlessly resuming a Chat after unexpected network disconnections and for picking up conversations exactly where you left off at a later time. This ensures preserved context across multiple sessions.\n\nThere are three ways to obtain the Chat Group ID:\n\n- [Chat Metadata](/reference/empathic-voice-interface-evi/chat/chat#receive.Chat%20Metadata.type): Upon establishing a WebSocket connection with EVI, the user receives a Chat Metadata message. This message contains a `chat_group_id`, which can be used to resume conversations within this chat group in future sessions.\n\n- [List Chats endpoint](/reference/empathic-voice-interface-evi/chats/list-chats): Use the GET `/v0/evi/chats` endpoint to obtain the Chat Group ID of individual Chat sessions. This endpoint lists all available Chat sessions and their associated Chat Group ID.\n\n- [List Chat Groups endpoint](/reference/empathic-voice-interface-evi/chat-groups/list-chat-groups): Use the GET `/v0/evi/chat_groups` endpoint to obtain the Chat Group IDs of all Chat Groups associated with an API key. This endpoint returns a list of all available chat groups.",
             "source": {
@@ -1031,7 +989,7 @@
                 "type": "primitive"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "description": "A flag to enable verbose transcription. Set this query parameter to `\"true\"` to have unfinalized user transcripts be sent to the client as interim `UserMessage` messages.",
             "source": {
@@ -1057,7 +1015,7 @@
                 "type": "primitive"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "description": "Access token used for authenticating the client. If not provided, an `api_key` must be provided to authenticate.\n\nThe access token is generated using both an API key and a Secret key, which provides an additional layer of security compared to using just an API key.\n\nFor more details, refer to the [Authentication Strategies Guide](/docs/introduction/api-key#authentication-strategies).",
             "source": {
@@ -1985,7 +1943,6 @@
           {
             "key": "type",
             "schema": {
-              "nameOverride": "Type",
               "generatedName": "ErrorType",
               "title": "Type",
               "value": {
@@ -2030,7 +1987,6 @@
           {
             "key": "code",
             "schema": {
-              "nameOverride": "Code",
               "generatedName": "ErrorCode",
               "title": "Code",
               "schema": {
@@ -2047,7 +2003,6 @@
           {
             "key": "slug",
             "schema": {
-              "nameOverride": "Slug",
               "generatedName": "ErrorSlug",
               "title": "Slug",
               "schema": {
@@ -2064,7 +2019,6 @@
           {
             "key": "message",
             "schema": {
-              "nameOverride": "Message",
               "generatedName": "ErrorMessage",
               "title": "Message",
               "schema": {
@@ -2079,7 +2033,6 @@
             "generatedName": "errorMessage"
           }
         ],
-        "nameOverride": "Error",
         "generatedName": "Error",
         "title": "Error",
         "allOf": [],
@@ -3236,7 +3189,6 @@
                 "type": "string"
               },
               "generatedName": "LanguagePredictionText",
-              "nameOverride": "Text",
               "title": "Text",
               "groupName": [],
               "type": "primitive"
@@ -3287,7 +3239,6 @@
             "key": "confidence",
             "schema": {
               "generatedName": "LanguagePredictionConfidence",
-              "nameOverride": "Confidence",
               "title": "Confidence",
               "description": "Value between `0.0` and `1.0` that indicates our transcription model’s relative confidence in this text.",
               "value": {
@@ -3296,7 +3247,6 @@
                   "type": "double"
                 },
                 "generatedName": "LanguagePredictionConfidence",
-                "nameOverride": "Confidence",
                 "title": "Confidence",
                 "groupName": [],
                 "type": "primitive"
@@ -3860,7 +3810,6 @@
             "key": "confidence",
             "schema": {
               "generatedName": "NerPredictionConfidence",
-              "nameOverride": "Confidence",
               "title": "Confidence",
               "description": "Value between `0.0` and `1.0` that indicates our transcription model’s relative confidence in this text.",
               "value": {
@@ -3869,7 +3818,6 @@
                   "type": "double"
                 },
                 "generatedName": "NerPredictionConfidence",
-                "nameOverride": "Confidence",
                 "title": "Confidence",
                 "groupName": [],
                 "type": "primitive"
@@ -4011,7 +3959,6 @@
                 "type": "string"
               },
               "generatedName": "PredictionFile",
-              "nameOverride": "File",
               "title": "File",
               "groupName": [],
               "type": "primitive"
@@ -4466,7 +4413,6 @@
             "key": "text",
             "schema": {
               "generatedName": "ProsodyPredictionText",
-              "nameOverride": "Text",
               "title": "Text",
               "description": "A segment of text (like a word or a sentence).",
               "value": {
@@ -4475,7 +4421,6 @@
                   "type": "string"
                 },
                 "generatedName": "ProsodyPredictionText",
-                "nameOverride": "Text",
                 "title": "Text",
                 "groupName": [],
                 "type": "primitive"
@@ -4508,7 +4453,6 @@
             "key": "confidence",
             "schema": {
               "generatedName": "ProsodyPredictionConfidence",
-              "nameOverride": "Confidence",
               "title": "Confidence",
               "description": "Value between `0.0` and `1.0` that indicates our transcription model’s relative confidence in this text.",
               "value": {
@@ -4517,7 +4461,6 @@
                   "type": "double"
                 },
                 "generatedName": "ProsodyPredictionConfidence",
-                "nameOverride": "Confidence",
                 "title": "Confidence",
                 "groupName": [],
                 "type": "primitive"
@@ -5504,7 +5447,6 @@
           {
             "key": "type",
             "schema": {
-              "nameOverride": "Type",
               "generatedName": "AssistantInputType",
               "title": "Type",
               "value": {
@@ -5546,7 +5488,6 @@
           {
             "key": "text",
             "schema": {
-              "nameOverride": "Text",
               "generatedName": "AssistantInputText",
               "title": "Text",
               "schema": {
@@ -5561,7 +5502,6 @@
             "generatedName": "assistantInputText"
           }
         ],
-        "nameOverride": "AssistantInput",
         "generatedName": "AssistantInput",
         "title": "AssistantInput",
         "allOf": [],
@@ -5598,7 +5538,6 @@
           {
             "key": "channels",
             "schema": {
-              "nameOverride": "Channels",
               "generatedName": "AudioConfigurationChannels",
               "title": "Channels",
               "schema": {
@@ -5629,7 +5568,6 @@
             "generatedName": "audioConfigurationSampleRate"
           }
         ],
-        "nameOverride": "AudioConfiguration",
         "generatedName": "AudioConfiguration",
         "title": "AudioConfiguration",
         "allOf": [],
@@ -5649,7 +5587,6 @@
           {
             "key": "type",
             "schema": {
-              "nameOverride": "Type",
               "generatedName": "AudioInputType",
               "title": "Type",
               "value": {
@@ -5694,7 +5631,6 @@
           {
             "key": "data",
             "schema": {
-              "nameOverride": "Data",
               "generatedName": "AudioInputData",
               "title": "Data",
               "schema": {
@@ -5710,7 +5646,6 @@
             "generatedName": "audioInputData"
           }
         ],
-        "nameOverride": "AudioInput",
         "generatedName": "AudioInput",
         "title": "AudioInput",
         "allOf": [],
@@ -5725,7 +5660,6 @@
         "type": "object"
       },
       "BuiltInTool": {
-        "nameOverride": "BuiltInTool",
         "generatedName": "BuiltInTool",
         "title": "BuiltInTool",
         "values": [
@@ -5794,7 +5728,6 @@
             "generatedName": "builtinToolConfigFallbackContent"
           }
         ],
-        "nameOverride": "BuiltinToolConfig",
         "generatedName": "BuiltinToolConfig",
         "title": "BuiltinToolConfig",
         "allOf": [],
@@ -5835,7 +5768,6 @@
           {
             "key": "text",
             "schema": {
-              "nameOverride": "Text",
               "generatedName": "ContextText",
               "title": "Text",
               "schema": {
@@ -5850,7 +5782,6 @@
             "generatedName": "contextText"
           }
         ],
-        "nameOverride": "Context",
         "generatedName": "Context",
         "title": "Context",
         "allOf": [],
@@ -5865,7 +5796,6 @@
         "type": "object"
       },
       "ContextType": {
-        "nameOverride": "ContextType",
         "generatedName": "ContextType",
         "title": "ContextType",
         "values": [
@@ -5893,7 +5823,6 @@
         "type": "enum"
       },
       "Encoding": {
-        "nameOverride": "Encoding",
         "generatedName": "Encoding",
         "title": "Encoding",
         "value": {
@@ -5904,7 +5833,6 @@
         "type": "literal"
       },
       "ErrorLevel": {
-        "nameOverride": "ErrorLevel",
         "generatedName": "ErrorLevel",
         "title": "ErrorLevel",
         "value": {
@@ -5920,11 +5848,9 @@
           {
             "key": "type",
             "schema": {
-              "nameOverride": "Type",
               "generatedName": "PauseAssistantMessageType",
               "title": "Type",
               "value": {
-                "nameOverride": "Type",
                 "generatedName": "PauseAssistantMessageType",
                 "title": "Type",
                 "value": {
@@ -5971,7 +5897,6 @@
             "generatedName": "pauseAssistantMessageCustomSessionId"
           }
         ],
-        "nameOverride": "PauseAssistantMessage",
         "generatedName": "PauseAssistantMessage",
         "title": "PauseAssistantMessage",
         "allOf": [],
@@ -5991,11 +5916,9 @@
           {
             "key": "type",
             "schema": {
-              "nameOverride": "Type",
               "generatedName": "ResumeAssistantMessageType",
               "title": "Type",
               "value": {
-                "nameOverride": "Type",
                 "generatedName": "ResumeAssistantMessageType",
                 "title": "Type",
                 "value": {
@@ -6042,7 +5965,6 @@
             "generatedName": "resumeAssistantMessageCustomSessionId"
           }
         ],
-        "nameOverride": "ResumeAssistantMessage",
         "generatedName": "ResumeAssistantMessage",
         "title": "ResumeAssistantMessage",
         "allOf": [],
@@ -6062,7 +5984,6 @@
           {
             "key": "type",
             "schema": {
-              "nameOverride": "Type",
               "generatedName": "SessionSettingsType",
               "title": "Type",
               "value": {
@@ -6357,7 +6278,6 @@
             "generatedName": "sessionSettingsVariables"
           }
         ],
-        "nameOverride": "SessionSettings",
         "generatedName": "SessionSettings",
         "title": "SessionSettings",
         "allOf": [],
@@ -6394,7 +6314,6 @@
           {
             "key": "name",
             "schema": {
-              "nameOverride": "Name",
               "generatedName": "ToolName",
               "title": "Name",
               "schema": {
@@ -6411,7 +6330,6 @@
           {
             "key": "parameters",
             "schema": {
-              "nameOverride": "Parameters",
               "generatedName": "ToolParameters",
               "title": "Parameters",
               "schema": {
@@ -6480,7 +6398,6 @@
             "generatedName": "toolFallbackContent"
           }
         ],
-        "nameOverride": "Tool",
         "generatedName": "Tool",
         "title": "Tool",
         "allOf": [],
@@ -6500,11 +6417,9 @@
           {
             "key": "type",
             "schema": {
-              "nameOverride": "Type",
               "generatedName": "ToolErrorMessageType",
               "title": "Type",
               "value": {
-                "nameOverride": "Type",
                 "generatedName": "ToolErrorMessageType",
                 "title": "Type",
                 "value": {
@@ -6625,7 +6540,6 @@
           {
             "key": "error",
             "schema": {
-              "nameOverride": "Error",
               "generatedName": "ToolErrorMessageError",
               "title": "Error",
               "schema": {
@@ -6696,7 +6610,6 @@
             "generatedName": "toolErrorMessageLevel"
           }
         ],
-        "nameOverride": "ToolErrorMessage",
         "generatedName": "ToolErrorMessage",
         "title": "ToolErrorMessage",
         "allOf": [],
@@ -6716,11 +6629,9 @@
           {
             "key": "type",
             "schema": {
-              "nameOverride": "Type",
               "generatedName": "ToolResponseMessageType",
               "title": "Type",
               "value": {
-                "nameOverride": "Type",
                 "generatedName": "ToolResponseMessageType",
                 "title": "Type",
                 "value": {
@@ -6785,7 +6696,6 @@
           {
             "key": "content",
             "schema": {
-              "nameOverride": "Content",
               "generatedName": "ToolResponseMessageContent",
               "title": "Content",
               "schema": {
@@ -6850,7 +6760,6 @@
             "generatedName": "toolResponseMessageToolType"
           }
         ],
-        "nameOverride": "ToolResponseMessage",
         "generatedName": "ToolResponseMessage",
         "title": "ToolResponseMessage",
         "allOf": [],
@@ -6865,7 +6774,6 @@
         "type": "object"
       },
       "ToolType": {
-        "nameOverride": "ToolType",
         "generatedName": "ToolType",
         "title": "ToolType",
         "values": [
@@ -6893,7 +6801,6 @@
           {
             "key": "type",
             "schema": {
-              "nameOverride": "Type",
               "generatedName": "UserInputType",
               "title": "Type",
               "value": {
@@ -6938,7 +6845,6 @@
           {
             "key": "text",
             "schema": {
-              "nameOverride": "Text",
               "generatedName": "UserInputText",
               "title": "Text",
               "schema": {
@@ -6953,7 +6859,6 @@
             "generatedName": "userInputText"
           }
         ],
-        "nameOverride": "UserInput",
         "generatedName": "UserInput",
         "title": "UserInput",
         "allOf": [],
@@ -6973,7 +6878,6 @@
           {
             "key": "type",
             "schema": {
-              "nameOverride": "Type",
               "generatedName": "AssistantEndType",
               "title": "Type",
               "value": {
@@ -7016,7 +6920,6 @@
             "generatedName": "assistantEndCustomSessionId"
           }
         ],
-        "nameOverride": "AssistantEnd",
         "generatedName": "AssistantEnd",
         "title": "AssistantEnd",
         "allOf": [],
@@ -7036,7 +6939,6 @@
           {
             "key": "type",
             "schema": {
-              "nameOverride": "Type",
               "generatedName": "AssistantMessageType",
               "title": "Type",
               "value": {
@@ -7081,11 +6983,9 @@
           {
             "key": "id",
             "schema": {
-              "nameOverride": "Id",
               "generatedName": "AssistantMessageId",
               "title": "Id",
               "value": {
-                "nameOverride": "Id",
                 "generatedName": "AssistantMessageId",
                 "title": "Id",
                 "schema": {
@@ -7156,7 +7056,6 @@
             "generatedName": "assistantMessageFromText"
           }
         ],
-        "nameOverride": "AssistantMessage",
         "generatedName": "AssistantMessage",
         "title": "AssistantMessage",
         "allOf": [],
@@ -7176,7 +7075,6 @@
           {
             "key": "type",
             "schema": {
-              "nameOverride": "Type",
               "generatedName": "AudioOutputType",
               "title": "Type",
               "value": {
@@ -7220,7 +7118,6 @@
           {
             "key": "id",
             "schema": {
-              "nameOverride": "Id",
               "generatedName": "AudioOutputId",
               "title": "Id",
               "schema": {
@@ -7237,7 +7134,6 @@
           {
             "key": "index",
             "schema": {
-              "nameOverride": "Index",
               "generatedName": "AudioOutputIndex",
               "title": "Index",
               "schema": {
@@ -7254,7 +7150,6 @@
           {
             "key": "data",
             "schema": {
-              "nameOverride": "Data",
               "generatedName": "AudioOutputData",
               "title": "Data",
               "schema": {
@@ -7286,7 +7181,6 @@
             "generatedName": "audioOutputIsFinalChunk"
           }
         ],
-        "nameOverride": "AudioOutput",
         "generatedName": "AudioOutput",
         "title": "AudioOutput",
         "allOf": [],
@@ -7431,7 +7325,6 @@
             "generatedName": "chatMessageToolResult"
           }
         ],
-        "nameOverride": "ChatMessage",
         "generatedName": "ChatMessage",
         "title": "ChatMessage",
         "allOf": [],
@@ -7451,7 +7344,6 @@
           {
             "key": "type",
             "schema": {
-              "nameOverride": "Type",
               "generatedName": "ChatMetadataType",
               "title": "Type",
               "value": {
@@ -7547,7 +7439,6 @@
             "generatedName": "chatMetadataRequestId"
           }
         ],
-        "nameOverride": "ChatMetadata",
         "generatedName": "ChatMetadata",
         "title": "ChatMetadata",
         "allOf": [],
@@ -7566,7 +7457,6 @@
           {
             "key": "Admiration",
             "schema": {
-              "nameOverride": "Admiration",
               "generatedName": "EmotionScoresAdmiration",
               "title": "Admiration",
               "schema": {
@@ -7582,7 +7472,6 @@
           {
             "key": "Adoration",
             "schema": {
-              "nameOverride": "Adoration",
               "generatedName": "EmotionScoresAdoration",
               "title": "Adoration",
               "schema": {
@@ -7613,7 +7502,6 @@
           {
             "key": "Amusement",
             "schema": {
-              "nameOverride": "Amusement",
               "generatedName": "EmotionScoresAmusement",
               "title": "Amusement",
               "schema": {
@@ -7629,7 +7517,6 @@
           {
             "key": "Anger",
             "schema": {
-              "nameOverride": "Anger",
               "generatedName": "EmotionScoresAnger",
               "title": "Anger",
               "schema": {
@@ -7645,7 +7532,6 @@
           {
             "key": "Anxiety",
             "schema": {
-              "nameOverride": "Anxiety",
               "generatedName": "EmotionScoresAnxiety",
               "title": "Anxiety",
               "schema": {
@@ -7661,7 +7547,6 @@
           {
             "key": "Awe",
             "schema": {
-              "nameOverride": "Awe",
               "generatedName": "EmotionScoresAwe",
               "title": "Awe",
               "schema": {
@@ -7677,7 +7562,6 @@
           {
             "key": "Awkwardness",
             "schema": {
-              "nameOverride": "Awkwardness",
               "generatedName": "EmotionScoresAwkwardness",
               "title": "Awkwardness",
               "schema": {
@@ -7693,7 +7577,6 @@
           {
             "key": "Boredom",
             "schema": {
-              "nameOverride": "Boredom",
               "generatedName": "EmotionScoresBoredom",
               "title": "Boredom",
               "schema": {
@@ -7709,7 +7592,6 @@
           {
             "key": "Calmness",
             "schema": {
-              "nameOverride": "Calmness",
               "generatedName": "EmotionScoresCalmness",
               "title": "Calmness",
               "schema": {
@@ -7725,7 +7607,6 @@
           {
             "key": "Concentration",
             "schema": {
-              "nameOverride": "Concentration",
               "generatedName": "EmotionScoresConcentration",
               "title": "Concentration",
               "schema": {
@@ -7741,7 +7622,6 @@
           {
             "key": "Confusion",
             "schema": {
-              "nameOverride": "Confusion",
               "generatedName": "EmotionScoresConfusion",
               "title": "Confusion",
               "schema": {
@@ -7757,7 +7637,6 @@
           {
             "key": "Contemplation",
             "schema": {
-              "nameOverride": "Contemplation",
               "generatedName": "EmotionScoresContemplation",
               "title": "Contemplation",
               "schema": {
@@ -7773,7 +7652,6 @@
           {
             "key": "Contempt",
             "schema": {
-              "nameOverride": "Contempt",
               "generatedName": "EmotionScoresContempt",
               "title": "Contempt",
               "schema": {
@@ -7789,7 +7667,6 @@
           {
             "key": "Contentment",
             "schema": {
-              "nameOverride": "Contentment",
               "generatedName": "EmotionScoresContentment",
               "title": "Contentment",
               "schema": {
@@ -7805,7 +7682,6 @@
           {
             "key": "Craving",
             "schema": {
-              "nameOverride": "Craving",
               "generatedName": "EmotionScoresCraving",
               "title": "Craving",
               "schema": {
@@ -7821,7 +7697,6 @@
           {
             "key": "Desire",
             "schema": {
-              "nameOverride": "Desire",
               "generatedName": "EmotionScoresDesire",
               "title": "Desire",
               "schema": {
@@ -7837,7 +7712,6 @@
           {
             "key": "Determination",
             "schema": {
-              "nameOverride": "Determination",
               "generatedName": "EmotionScoresDetermination",
               "title": "Determination",
               "schema": {
@@ -7853,7 +7727,6 @@
           {
             "key": "Disappointment",
             "schema": {
-              "nameOverride": "Disappointment",
               "generatedName": "EmotionScoresDisappointment",
               "title": "Disappointment",
               "schema": {
@@ -7869,7 +7742,6 @@
           {
             "key": "Disgust",
             "schema": {
-              "nameOverride": "Disgust",
               "generatedName": "EmotionScoresDisgust",
               "title": "Disgust",
               "schema": {
@@ -7885,7 +7757,6 @@
           {
             "key": "Distress",
             "schema": {
-              "nameOverride": "Distress",
               "generatedName": "EmotionScoresDistress",
               "title": "Distress",
               "schema": {
@@ -7901,7 +7772,6 @@
           {
             "key": "Doubt",
             "schema": {
-              "nameOverride": "Doubt",
               "generatedName": "EmotionScoresDoubt",
               "title": "Doubt",
               "schema": {
@@ -7917,7 +7787,6 @@
           {
             "key": "Ecstasy",
             "schema": {
-              "nameOverride": "Ecstasy",
               "generatedName": "EmotionScoresEcstasy",
               "title": "Ecstasy",
               "schema": {
@@ -7933,7 +7802,6 @@
           {
             "key": "Embarrassment",
             "schema": {
-              "nameOverride": "Embarrassment",
               "generatedName": "EmotionScoresEmbarrassment",
               "title": "Embarrassment",
               "schema": {
@@ -7964,7 +7832,6 @@
           {
             "key": "Entrancement",
             "schema": {
-              "nameOverride": "Entrancement",
               "generatedName": "EmotionScoresEntrancement",
               "title": "Entrancement",
               "schema": {
@@ -7980,7 +7847,6 @@
           {
             "key": "Envy",
             "schema": {
-              "nameOverride": "Envy",
               "generatedName": "EmotionScoresEnvy",
               "title": "Envy",
               "schema": {
@@ -7996,7 +7862,6 @@
           {
             "key": "Excitement",
             "schema": {
-              "nameOverride": "Excitement",
               "generatedName": "EmotionScoresExcitement",
               "title": "Excitement",
               "schema": {
@@ -8012,7 +7877,6 @@
           {
             "key": "Fear",
             "schema": {
-              "nameOverride": "Fear",
               "generatedName": "EmotionScoresFear",
               "title": "Fear",
               "schema": {
@@ -8028,7 +7892,6 @@
           {
             "key": "Guilt",
             "schema": {
-              "nameOverride": "Guilt",
               "generatedName": "EmotionScoresGuilt",
               "title": "Guilt",
               "schema": {
@@ -8044,7 +7907,6 @@
           {
             "key": "Horror",
             "schema": {
-              "nameOverride": "Horror",
               "generatedName": "EmotionScoresHorror",
               "title": "Horror",
               "schema": {
@@ -8060,7 +7922,6 @@
           {
             "key": "Interest",
             "schema": {
-              "nameOverride": "Interest",
               "generatedName": "EmotionScoresInterest",
               "title": "Interest",
               "schema": {
@@ -8076,7 +7937,6 @@
           {
             "key": "Joy",
             "schema": {
-              "nameOverride": "Joy",
               "generatedName": "EmotionScoresJoy",
               "title": "Joy",
               "schema": {
@@ -8092,7 +7952,6 @@
           {
             "key": "Love",
             "schema": {
-              "nameOverride": "Love",
               "generatedName": "EmotionScoresLove",
               "title": "Love",
               "schema": {
@@ -8108,7 +7967,6 @@
           {
             "key": "Nostalgia",
             "schema": {
-              "nameOverride": "Nostalgia",
               "generatedName": "EmotionScoresNostalgia",
               "title": "Nostalgia",
               "schema": {
@@ -8124,7 +7982,6 @@
           {
             "key": "Pain",
             "schema": {
-              "nameOverride": "Pain",
               "generatedName": "EmotionScoresPain",
               "title": "Pain",
               "schema": {
@@ -8140,7 +7997,6 @@
           {
             "key": "Pride",
             "schema": {
-              "nameOverride": "Pride",
               "generatedName": "EmotionScoresPride",
               "title": "Pride",
               "schema": {
@@ -8156,7 +8012,6 @@
           {
             "key": "Realization",
             "schema": {
-              "nameOverride": "Realization",
               "generatedName": "EmotionScoresRealization",
               "title": "Realization",
               "schema": {
@@ -8172,7 +8027,6 @@
           {
             "key": "Relief",
             "schema": {
-              "nameOverride": "Relief",
               "generatedName": "EmotionScoresRelief",
               "title": "Relief",
               "schema": {
@@ -8188,7 +8042,6 @@
           {
             "key": "Romance",
             "schema": {
-              "nameOverride": "Romance",
               "generatedName": "EmotionScoresRomance",
               "title": "Romance",
               "schema": {
@@ -8204,7 +8057,6 @@
           {
             "key": "Sadness",
             "schema": {
-              "nameOverride": "Sadness",
               "generatedName": "EmotionScoresSadness",
               "title": "Sadness",
               "schema": {
@@ -8220,7 +8072,6 @@
           {
             "key": "Satisfaction",
             "schema": {
-              "nameOverride": "Satisfaction",
               "generatedName": "EmotionScoresSatisfaction",
               "title": "Satisfaction",
               "schema": {
@@ -8236,7 +8087,6 @@
           {
             "key": "Shame",
             "schema": {
-              "nameOverride": "Shame",
               "generatedName": "EmotionScoresShame",
               "title": "Shame",
               "schema": {
@@ -8282,7 +8132,6 @@
           {
             "key": "Sympathy",
             "schema": {
-              "nameOverride": "Sympathy",
               "generatedName": "EmotionScoresSympathy",
               "title": "Sympathy",
               "schema": {
@@ -8298,7 +8147,6 @@
           {
             "key": "Tiredness",
             "schema": {
-              "nameOverride": "Tiredness",
               "generatedName": "EmotionScoresTiredness",
               "title": "Tiredness",
               "schema": {
@@ -8314,7 +8162,6 @@
           {
             "key": "Triumph",
             "schema": {
-              "nameOverride": "Triumph",
               "generatedName": "EmotionScoresTriumph",
               "title": "Triumph",
               "schema": {
@@ -8328,7 +8175,6 @@
             "generatedName": "emotionScoresTriumph"
           }
         ],
-        "nameOverride": "EmotionScores",
         "generatedName": "EmotionScores",
         "title": "EmotionScores",
         "allOf": [],
@@ -8368,7 +8214,6 @@
             "generatedName": "inferenceProsody"
           }
         ],
-        "nameOverride": "Inference",
         "generatedName": "Inference",
         "title": "Inference",
         "allOf": [],
@@ -8387,7 +8232,6 @@
           {
             "key": "begin",
             "schema": {
-              "nameOverride": "Begin",
               "generatedName": "MillisecondIntervalBegin",
               "title": "Begin",
               "schema": {
@@ -8404,7 +8248,6 @@
           {
             "key": "end",
             "schema": {
-              "nameOverride": "End",
               "generatedName": "MillisecondIntervalEnd",
               "title": "End",
               "schema": {
@@ -8419,7 +8262,6 @@
             "generatedName": "millisecondIntervalEnd"
           }
         ],
-        "nameOverride": "MillisecondInterval",
         "generatedName": "MillisecondInterval",
         "title": "MillisecondInterval",
         "allOf": [],
@@ -8454,7 +8296,6 @@
             "writeonly": false
           }
         ],
-        "nameOverride": "ProsodyInference",
         "generatedName": "ProsodyInference",
         "title": "ProsodyInference",
         "allOf": [],
@@ -8469,7 +8310,6 @@
         "type": "object"
       },
       "Role": {
-        "nameOverride": "Role",
         "generatedName": "Role",
         "title": "Role",
         "values": [
@@ -8512,7 +8352,6 @@
           {
             "key": "name",
             "schema": {
-              "nameOverride": "Name",
               "generatedName": "ToolCallMessageName",
               "title": "Name",
               "schema": {
@@ -8529,7 +8368,6 @@
           {
             "key": "parameters",
             "schema": {
-              "nameOverride": "Parameters",
               "generatedName": "ToolCallMessageParameters",
               "title": "Parameters",
               "schema": {
@@ -8562,11 +8400,9 @@
           {
             "key": "type",
             "schema": {
-              "nameOverride": "Type",
               "generatedName": "ToolCallMessageType",
               "title": "Type",
               "value": {
-                "nameOverride": "Type",
                 "generatedName": "ToolCallMessageType",
                 "title": "Type",
                 "value": {
@@ -8647,7 +8483,6 @@
             "generatedName": "toolCallMessageResponseRequired"
           }
         ],
-        "nameOverride": "ToolCallMessage",
         "generatedName": "ToolCallMessage",
         "title": "ToolCallMessage",
         "allOf": [],
@@ -8667,7 +8502,6 @@
           {
             "key": "type",
             "schema": {
-              "nameOverride": "Type",
               "generatedName": "UserInterruptionType",
               "title": "Type",
               "value": {
@@ -8712,7 +8546,6 @@
           {
             "key": "time",
             "schema": {
-              "nameOverride": "Time",
               "generatedName": "UserInterruptionTime",
               "title": "Time",
               "schema": {
@@ -8727,7 +8560,6 @@
             "generatedName": "userInterruptionTime"
           }
         ],
-        "nameOverride": "UserInterruption",
         "generatedName": "UserInterruption",
         "title": "UserInterruption",
         "allOf": [],
@@ -8747,7 +8579,6 @@
           {
             "key": "type",
             "schema": {
-              "nameOverride": "Type",
               "generatedName": "UserMessageType",
               "title": "Type",
               "value": {
@@ -8861,7 +8692,6 @@
           {
             "key": "interim",
             "schema": {
-              "nameOverride": "Interim",
               "generatedName": "UserMessageInterim",
               "title": "Interim",
               "schema": {
@@ -8876,7 +8706,6 @@
             "generatedName": "userMessageInterim"
           }
         ],
-        "nameOverride": "UserMessage",
         "generatedName": "UserMessage",
         "title": "UserMessage",
         "allOf": [],

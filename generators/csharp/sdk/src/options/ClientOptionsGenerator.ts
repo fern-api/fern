@@ -175,7 +175,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile> {
             access: ast.Access.Public,
             get: true,
             init: true,
-            type: this.Types.GrpcChannelOptions.toOptionalIfNotAlready(),
+            type: this.Types.GrpcChannelOptions.asOptional(),
             summary: "The options used for gRPC client endpoints."
         });
     }
