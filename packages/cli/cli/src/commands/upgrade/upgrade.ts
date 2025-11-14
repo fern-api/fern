@@ -106,6 +106,8 @@ export async function upgrade({
             ensureFinalNewline(JSON.stringify(newProjectConfig, undefined, 2))
         );
 
+        const previousVersionBeforeUpgrade = projectConfig.version;
+
         cliContext.logger.info(
             `Upgrading from ${chalk.dim(cliContext.environment.packageVersion)} → ${chalk.green(
                 fernCliUpgradeInfo.targetVersion
@@ -117,7 +119,7 @@ export async function upgrade({
         if (cliContext.environment.packageVersion === "0.0.0") {
             await runPostUpgradeSteps({
                 cliContext,
-                previousVersion: projectConfig.version,
+                previousVersion: previousVersionBeforeUpgrade,
                 newVersion: fernCliUpgradeInfo.targetVersion
             });
         } else {
@@ -131,7 +133,7 @@ export async function upgrade({
                 version: fernCliUpgradeInfo.targetVersion,
                 cliContext,
                 env: {
-                    [PREVIOUS_VERSION_ENV_VAR]: cliContext.environment.packageVersion
+                    [PREVIOUS_VERSION_ENV_VAR]: previousVersionBeforeUpgrade
                 }
             });
         }
