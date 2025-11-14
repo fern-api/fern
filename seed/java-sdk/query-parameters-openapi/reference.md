@@ -17,7 +17,7 @@ client.search(
         .builder()
         .limit(1)
         .id("id")
-        .date("date")
+        .date("2023-01-15")
         .deadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
         .bytes("bytes")
         .user(
@@ -79,8 +79,8 @@ client.search(
         )
         .optionalDeadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
         .keyValue(
-            new HashMap<String, Optional<String>>() {{
-                put("keyValue", Optional.of("keyValue"));
+            new HashMap<String, String>() {{
+                put("keyValue", "keyValue");
             }}
         )
         .optionalString("optionalString")
@@ -113,15 +113,17 @@ client.search(
                 .build()
         )
         .neighbor(
-            User
-                .builder()
-                .name("name")
-                .tags(
-                    Optional.of(
-                        Arrays.asList("tags", "tags")
+            SearchRequestNeighbor.of(
+                User
+                    .builder()
+                    .name("name")
+                    .tags(
+                        Optional.of(
+                            Arrays.asList("tags", "tags")
+                        )
                     )
-                )
-                .build()
+                    .build()
+            )
         )
         .build()
 );
@@ -203,7 +205,7 @@ client.search(
 <dl>
 <dd>
 
-**keyValue:** `Optional<Map<String, Optional<String>>>` 
+**keyValue:** `Optional<Map<String, String>>` 
     
 </dd>
 </dl>
@@ -251,7 +253,7 @@ client.search(
 <dl>
 <dd>
 
-**neighbor:** `Optional<User>` 
+**neighbor:** `Optional<SearchRequestNeighbor>` 
     
 </dd>
 </dl>
