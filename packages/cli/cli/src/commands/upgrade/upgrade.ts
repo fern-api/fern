@@ -52,14 +52,26 @@ export async function upgrade({
     targetVersion: string | undefined;
 }): Promise<void> {
     const previousVersion = process.env[PREVIOUS_VERSION_ENV_VAR];
-    const targetVersionFromEnv = process.env[TARGET_VERSION_ENV_VAR];
-    if (previousVersion != null && targetVersionFromEnv != null) {
-        await runPostUpgradeSteps({
-            cliContext,
-            previousVersion,
-            newVersion: targetVersionFromEnv
-        });
-        return;
+    if (previousVersion != null) {
+        let targetVersionForMigration = process.env[TARGET_VERSION_ENV_VAR];
+        if (targetVersionForMigration == null) {
+            const fernDirectory = await getFernDirectory();
+            if (fernDirectory != null) {
+                const projectConfig = await cliContext.runTask((context) =>
+                    loadProjectConfig({ directory: fernDirectory, context })
+                );
+                targetVersionForMigration = projectConfig.version;
+            }
+        }
+
+        if (targetVersionForMigration != null && targetVersionForMigration !== "0.0.0") {
+            await runPostUpgradeSteps({
+                cliContext,
+                previousVersion,
+                newVersion: targetVersionForMigration
+            });
+            return;
+        }
     }
 
     if (targetVersion != null) {
