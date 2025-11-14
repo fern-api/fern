@@ -6,4 +6,10 @@ export interface LinkConfiguration {
     link: string;
     href: string;
     icon?: string;
+    /**
+     * Controls whether the link opens in a new tab or the current window.
+     *
+     * @default: true (opens in new tab)
+     */
+    openInNewTab?: boolean;
 }
