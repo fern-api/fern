@@ -1,7 +1,15 @@
+- version: 3.15.2
+  changelogEntry:
+    - summary: |
+        Add opt-in use-local-date-for-dates config flag to generate java.time.LocalDate instead of String for Fern date types. The PrimitiveToTypeNameConverter was refactored from a static inner class to a non-static inner class to properly access customConfig, enabling LocalDate generation when the flag is enabled.
+      type: feat
+  createdAt: "2025-11-14"
+  irVersion: 61
+
 - version: 3.15.1
   changelogEntry:
     - summary: |
-        Fix PrimitiveToTypeNameConverter to properly access customConfig for use-local-date-for-dates flag. The converter was previously a static inner class with singleton instances, preventing it from accessing the outer class's customConfig. Now it's a non-static inner class that receives useLocalDateForDates as a constructor parameter, enabling proper LocalDate generation when the flag is enabled.
+        Fix SDK generation failures for endpoints with custom pagination. Endpoints using `x-fern-pagination: type: custom` now generate successfully, returning the raw response type without automatic pagination wrappers.
       type: fix
   createdAt: "2025-11-14"
   irVersion: 61
