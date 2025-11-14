@@ -1556,11 +1556,15 @@
                       "id": "string",
                       "name": "string",
                       "email": "string",
+                      "createdAt": "2024-01-15T09:30:00Z",
                       "settings": {
                         "theme": "string",
-                        "notifications": true
+                        "notifications": true,
+                        "lastModified": "2024-01-15T09:30:00Z"
                       },
                       "stats": {
+                        "totalLogins": 1,
+                        "lastLoginTime": "2024-01-15T09:30:00Z",
                         "accountStatus": "active"
                       }
                     }
@@ -1592,11 +1596,15 @@
                       "id": "string",
                       "name": "string",
                       "email": "string",
+                      "createdAt": "2024-01-15T09:30:00Z",
                       "settings": {
                         "theme": "string",
-                        "notifications": true
+                        "notifications": true,
+                        "lastModified": "2024-01-15T09:30:00Z"
                       },
                       "stats": {
+                        "totalLogins": 1,
+                        "lastLoginTime": "2024-01-15T09:30:00Z",
                         "accountStatus": "active"
                       }
                     },
@@ -1649,11 +1657,15 @@
                           "id": "string",
                           "name": "string",
                           "email": "string",
+                          "createdAt": "2024-01-15T09:30:00Z",
                           "settings": {
                             "theme": "string",
-                            "notifications": true
+                            "notifications": true,
+                            "lastModified": "2024-01-15T09:30:00Z"
                           },
                           "stats": {
+                            "totalLogins": 1,
+                            "lastLoginTime": "2024-01-15T09:30:00Z",
                             "accountStatus": "active"
                           }
                         }
@@ -1831,11 +1843,15 @@
                       "id": "string",
                       "name": "string",
                       "email": "string",
+                      "createdAt": "2024-01-15T09:30:00Z",
                       "settings": {
                         "theme": "string",
-                        "notifications": true
+                        "notifications": true,
+                        "lastModified": "2024-01-15T09:30:00Z"
                       },
                       "stats": {
+                        "totalLogins": 1,
+                        "lastLoginTime": "2024-01-15T09:30:00Z",
                         "accountStatus": "active"
                       }
                     }
@@ -1867,11 +1883,15 @@
                       "id": "string",
                       "name": "string",
                       "email": "string",
+                      "createdAt": "2024-01-15T09:30:00Z",
                       "settings": {
                         "theme": "string",
-                        "notifications": true
+                        "notifications": true,
+                        "lastModified": "2024-01-15T09:30:00Z"
                       },
                       "stats": {
+                        "totalLogins": 1,
+                        "lastLoginTime": "2024-01-15T09:30:00Z",
                         "accountStatus": "active"
                       }
                     },
@@ -1924,11 +1944,15 @@
                           "id": "string",
                           "name": "string",
                           "email": "string",
+                          "createdAt": "2024-01-15T09:30:00Z",
                           "settings": {
                             "theme": "string",
-                            "notifications": true
+                            "notifications": true,
+                            "lastModified": "2024-01-15T09:30:00Z"
                           },
                           "stats": {
+                            "totalLogins": 1,
+                            "lastLoginTime": "2024-01-15T09:30:00Z",
                             "accountStatus": "active"
                           }
                         }

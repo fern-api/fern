@@ -68202,6 +68202,8 @@
                         "categories": [
                           "hris"
                         ],
+                        "image": "string",
+                        "square_image": "string",
                         "color": "string",
                         "slug": "string",
                         "is_in_beta": true,
@@ -68242,6 +68244,8 @@
                         "categories": [
                           "hris"
                         ],
+                        "image": "string",
+                        "square_image": "string",
                         "color": "string",
                         "slug": "string",
                         "is_in_beta": true,
@@ -68300,6 +68304,8 @@
                             "categories": [
                               "hris"
                             ],
+                            "image": "string",
+                            "square_image": "string",
                             "color": "string",
                             "slug": "string",
                             "is_in_beta": true,
@@ -68506,6 +68512,8 @@
                         "categories": [
                           "hris"
                         ],
+                        "image": "string",
+                        "square_image": "string",
                         "color": "string",
                         "slug": "string",
                         "is_in_beta": true,
@@ -68564,6 +68572,8 @@
                         "categories": [
                           "hris"
                         ],
+                        "image": "string",
+                        "square_image": "string",
                         "color": "string",
                         "slug": "string",
                         "is_in_beta": true,
@@ -68640,6 +68650,8 @@
                             "categories": [
                               "hris"
                             ],
+                            "image": "string",
+                            "square_image": "string",
                             "color": "string",
                             "slug": "string",
                             "is_in_beta": true,
@@ -71268,6 +71280,7 @@
                           "remote_id": "19202938",
                           "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                           "provider_name": "Blue Shield of California",
+                          "benefit_plan_type": "string",
                           "employee_contribution": 23.65,
                           "company_contribution": 150,
                           "start_date": "2020-11-15 00:59:25.309761+00:00",
@@ -71333,6 +71346,7 @@
                           "remote_id": "19202938",
                           "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                           "provider_name": "Blue Shield of California",
+                          "benefit_plan_type": "string",
                           "employee_contribution": 23.65,
                           "company_contribution": 150,
                           "start_date": "2020-11-15 00:59:25.309761+00:00",
@@ -71412,6 +71426,7 @@
                               "remote_id": "19202938",
                               "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                               "provider_name": "Blue Shield of California",
+                              "benefit_plan_type": "string",
                               "employee_contribution": 23.65,
                               "company_contribution": 150,
                               "start_date": "2020-11-15 00:59:25.309761+00:00",
@@ -71786,6 +71801,7 @@
                       "remote_id": "19202938",
                       "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                       "provider_name": "Blue Shield of California",
+                      "benefit_plan_type": "string",
                       "employee_contribution": 23.65,
                       "company_contribution": 150,
                       "start_date": "2020-11-15 00:59:25.309761+00:00",
@@ -71845,6 +71861,7 @@
                       "remote_id": "19202938",
                       "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                       "provider_name": "Blue Shield of California",
+                      "benefit_plan_type": "string",
                       "employee_contribution": 23.65,
                       "company_contribution": 150,
                       "start_date": "2020-11-15 00:59:25.309761+00:00",
@@ -71918,6 +71935,7 @@
                           "remote_id": "19202938",
                           "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                           "provider_name": "Blue Shield of California",
+                          "benefit_plan_type": "string",
                           "employee_contribution": 23.65,
                           "company_contribution": 150,
                           "start_date": "2020-11-15 00:59:25.309761+00:00",

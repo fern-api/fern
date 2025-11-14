@@ -14991,6 +14991,7 @@
                           "latitude": 55.62013611111111,
                           "longitude": 37.66299166666666
                         },
+                        "datetime_original": "2024-01-15T09:30:00Z",
                         "dpi": [
                           72,
                           72
@@ -15031,6 +15032,7 @@
                             "latitude": 55.62013611111111,
                             "longitude": 37.66299166666666
                           },
+                          "datetime_original": "2024-01-15T09:30:00Z",
                           "dpi": [
                             72,
                             72
@@ -15094,6 +15096,7 @@
                           "latitude": 55.62013611111111,
                           "longitude": 37.66299166666666
                         },
+                        "datetime_original": "2024-01-15T09:30:00Z",
                         "dpi": [
                           72,
                           72
@@ -15134,6 +15137,7 @@
                             "latitude": 55.62013611111111,
                             "longitude": 37.66299166666666
                           },
+                          "datetime_original": "2024-01-15T09:30:00Z",
                           "dpi": [
                             72,
                             72
@@ -15213,6 +15217,7 @@
                               "latitude": 55.62013611111111,
                               "longitude": 37.66299166666666
                             },
+                            "datetime_original": "2024-01-15T09:30:00Z",
                             "dpi": [
                               72,
                               72
@@ -15253,6 +15258,7 @@
                                 "latitude": 55.62013611111111,
                                 "longitude": 37.66299166666666
                               },
+                              "datetime_original": "2024-01-15T09:30:00Z",
                               "dpi": [
                                 72,
                                 72
@@ -17553,6 +17559,7 @@
                           "latitude": 55.62013611111111,
                           "longitude": 37.66299166666666
                         },
+                        "datetime_original": "2024-01-15T09:30:00Z",
                         "dpi": [
                           72,
                           72
@@ -17593,6 +17600,7 @@
                             "latitude": 55.62013611111111,
                             "longitude": 37.66299166666666
                           },
+                          "datetime_original": "2024-01-15T09:30:00Z",
                           "dpi": [
                             72,
                             72
@@ -17655,6 +17663,7 @@
                           "latitude": 55.62013611111111,
                           "longitude": 37.66299166666666
                         },
+                        "datetime_original": "2024-01-15T09:30:00Z",
                         "dpi": [
                           72,
                           72
@@ -17695,6 +17704,7 @@
                             "latitude": 55.62013611111111,
                             "longitude": 37.66299166666666
                           },
+                          "datetime_original": "2024-01-15T09:30:00Z",
                           "dpi": [
                             72,
                             72
@@ -17774,6 +17784,7 @@
                               "latitude": 55.62013611111111,
                               "longitude": 37.66299166666666
                             },
+                            "datetime_original": "2024-01-15T09:30:00Z",
                             "dpi": [
                               72,
                               72
@@ -17814,6 +17825,7 @@
                                 "latitude": 55.62013611111111,
                                 "longitude": 37.66299166666666
                               },
+                              "datetime_original": "2024-01-15T09:30:00Z",
                               "dpi": [
                                 72,
                                 72
@@ -18529,13 +18541,13 @@
                     "groupsCreateFilesGroupExample": {
                       "id": "0d712319-b970-4602-850c-bae1ced521a6~1",
                       "datetime_created": "2018-09-12T10:03:38.686710Z",
+                      "datetime_stored": "2024-01-15T09:30:00Z",
                       "files_count": 1,
                       "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                       "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
                       "files": [
                         "string"
-                      ],
-                      "datetime_stored": {}
+                      ]
                     }
                   }
                 },
@@ -18572,13 +18584,13 @@
                     "value": {
                       "id": "0d712319-b970-4602-850c-bae1ced521a6~1",
                       "datetime_created": "2018-09-12T10:03:38.686710Z",
+                      "datetime_stored": "2024-01-15T09:30:00Z",
                       "files_count": 1,
                       "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                       "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
                       "files": [
                         "string"
-                      ],
-                      "datetime_stored": {}
+                      ]
                     },
                     "type": "json"
                   }
@@ -18628,13 +18640,13 @@
                         "groupsCreateFilesGroupExample": {
                           "id": "0d712319-b970-4602-850c-bae1ced521a6~1",
                           "datetime_created": "2018-09-12T10:03:38.686710Z",
+                          "datetime_stored": "2024-01-15T09:30:00Z",
                           "files_count": 1,
                           "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                           "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
                           "files": [
                             "string"
-                          ],
-                          "datetime_stored": {}
+                          ]
                         }
                       }
                     },
@@ -18833,13 +18845,13 @@
                     "groupsFilesGroupInfoExample": {
                       "id": "0d712319-b970-4602-850c-bae1ced521a6~1",
                       "datetime_created": "2018-09-12T10:03:38.686710Z",
+                      "datetime_stored": "2024-01-15T09:30:00Z",
                       "files_count": 1,
                       "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                       "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
                       "files": [
                         "string"
-                      ],
-                      "datetime_stored": {}
+                      ]
                     }
                   }
                 },
@@ -18872,13 +18884,13 @@
                     "value": {
                       "id": "0d712319-b970-4602-850c-bae1ced521a6~1",
                       "datetime_created": "2018-09-12T10:03:38.686710Z",
+                      "datetime_stored": "2024-01-15T09:30:00Z",
                       "files_count": 1,
                       "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                       "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
                       "files": [
                         "string"
-                      ],
-                      "datetime_stored": {}
+                      ]
                     },
                     "type": "json"
                   }
@@ -18928,13 +18940,13 @@
                         "groupsFilesGroupInfoExample": {
                           "id": "0d712319-b970-4602-850c-bae1ced521a6~1",
                           "datetime_created": "2018-09-12T10:03:38.686710Z",
+                          "datetime_stored": "2024-01-15T09:30:00Z",
                           "files_count": 1,
                           "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                           "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
                           "files": [
                             "string"
-                          ],
-                          "datetime_stored": {}
+                          ]
                         }
                       }
                     },

@@ -159,7 +159,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 ]
             };
         }
-        if ("nullable" in resolvedSchema && resolvedSchema.nullable === true && this.example === null) {
+        if (
+            !this.generateOptionalProperties &&
+            "nullable" in resolvedSchema &&
+            resolvedSchema.nullable === true &&
+            this.example === null
+        ) {
             return {
                 isValid: true,
                 coerced: false,
@@ -272,7 +277,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private convertBoolean(): ExampleConverter.Output {
-        // Handle nullable fields with undefined values
         const resolvedSchema = this.context.isReferenceObject(this.schema)
             ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                   schemaOrReference: this.schema,
@@ -281,6 +285,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             : this.schema;
 
         if (
+            !this.generateOptionalProperties &&
             resolvedSchema &&
             "nullable" in resolvedSchema &&
             resolvedSchema.nullable === true &&
@@ -384,7 +389,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private convertNumber(): ExampleConverter.Output {
-        // Handle nullable fields with undefined values
         const resolvedSchema: OpenAPIV3_1.SchemaObject | undefined = this.context.isReferenceObject(this.schema)
             ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                   schemaOrReference: this.schema,
@@ -394,6 +398,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             : this.schema;
 
         if (
+            !this.generateOptionalProperties &&
             resolvedSchema &&
             "nullable" in resolvedSchema &&
             resolvedSchema.nullable === true &&
@@ -419,7 +424,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         }
 
         const num = Number(this.example);
-        if (!isNaN(num)) {
+        if (!isNaN(num) && this.example != null) {
             return {
                 isValid: true,
                 coerced: true,
@@ -523,7 +528,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private convertString(): ExampleConverter.Output {
-        // Handle nullable fields with undefined values
         const resolvedSchema = this.context.isReferenceObject(this.schema)
             ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                   schemaOrReference: this.schema,
@@ -533,6 +537,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             : this.schema;
 
         if (
+            !this.generateOptionalProperties &&
             resolvedSchema &&
             "nullable" in resolvedSchema &&
             resolvedSchema.nullable === true &&
@@ -604,7 +609,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private convertInteger(): ExampleConverter.Output {
-        // Handle nullable fields with undefined values
         const resolvedSchema = this.context.isReferenceObject(this.schema)
             ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                   schemaOrReference: this.schema,
@@ -614,6 +618,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             : this.schema;
 
         if (
+            !this.generateOptionalProperties &&
             resolvedSchema &&
             "nullable" in resolvedSchema &&
             resolvedSchema.nullable === true &&
@@ -681,8 +686,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return { isValid: false, coerced: false, usedProvidedExample: false, validExample: null, errors: [] };
         }
 
-        // Handle nullable arrays with undefined/null values
         if (
+            !this.generateOptionalProperties &&
             "nullable" in resolvedSchema &&
             resolvedSchema.nullable === true &&
             (this.example === null || this.example === undefined)

@@ -8416,7 +8416,11 @@
                             }
                           ],
                           "complete": {
-                            "completed_at": "2024-01-15T09:30:00Z"
+                            "completed_at": "2024-01-15T09:30:00Z",
+                            "did_win": true,
+                            "hints": 1,
+                            "score": 1,
+                            "completion_time": 1
                           }
                         }
                       ]
@@ -8477,7 +8481,11 @@
                             }
                           ],
                           "complete": {
-                            "completed_at": "2024-01-15T09:30:00Z"
+                            "completed_at": "2024-01-15T09:30:00Z",
+                            "did_win": true,
+                            "hints": 1,
+                            "score": 1,
+                            "completion_time": 1
                           }
                         }
                       ]
@@ -8559,7 +8567,11 @@
                                 }
                               ],
                               "complete": {
-                                "completed_at": "2024-01-15T09:30:00Z"
+                                "completed_at": "2024-01-15T09:30:00Z",
+                                "did_win": true,
+                                "hints": 1,
+                                "score": 1,
+                                "completion_time": 1
                               }
                             }
                           ]
@@ -8964,7 +8976,11 @@
                         }
                       ],
                       "complete": {
-                        "completed_at": "2024-01-15T09:30:00Z"
+                        "completed_at": "2024-01-15T09:30:00Z",
+                        "did_win": true,
+                        "hints": 1,
+                        "score": 1,
+                        "completion_time": 1
                       }
                     }
                   }
@@ -9020,7 +9036,11 @@
                         }
                       ],
                       "complete": {
-                        "completed_at": "2024-01-15T09:30:00Z"
+                        "completed_at": "2024-01-15T09:30:00Z",
+                        "did_win": true,
+                        "hints": 1,
+                        "score": 1,
+                        "completion_time": 1
                       }
                     },
                     "type": "json"
@@ -9095,7 +9115,11 @@
                             }
                           ],
                           "complete": {
-                            "completed_at": "2024-01-15T09:30:00Z"
+                            "completed_at": "2024-01-15T09:30:00Z",
+                            "did_win": true,
+                            "hints": 1,
+                            "score": 1,
+                            "completion_time": 1
                           }
                         }
                       }
@@ -9366,7 +9390,11 @@
                                 }
                               ],
                               "complete": {
-                                "completed_at": "2024-01-15T09:30:00Z"
+                                "completed_at": "2024-01-15T09:30:00Z",
+                                "did_win": true,
+                                "hints": 1,
+                                "score": 1,
+                                "completion_time": 1
                               }
                             }
                           ],
@@ -9459,7 +9487,11 @@
                                 }
                               ],
                               "complete": {
-                                "completed_at": "2024-01-15T09:30:00Z"
+                                "completed_at": "2024-01-15T09:30:00Z",
+                                "did_win": true,
+                                "hints": 1,
+                                "score": 1,
+                                "completion_time": 1
                               }
                             }
                           ],
@@ -9573,7 +9605,11 @@
                                     }
                                   ],
                                   "complete": {
-                                    "completed_at": "2024-01-15T09:30:00Z"
+                                    "completed_at": "2024-01-15T09:30:00Z",
+                                    "did_win": true,
+                                    "hints": 1,
+                                    "score": 1,
+                                    "completion_time": 1
                                   }
                                 }
                               ],
@@ -9914,7 +9950,11 @@
                             }
                           ],
                           "complete": {
-                            "completed_at": "2024-01-15T09:30:00Z"
+                            "completed_at": "2024-01-15T09:30:00Z",
+                            "did_win": true,
+                            "hints": 1,
+                            "score": 1,
+                            "completion_time": 1
                           }
                         }
                       ],
@@ -10002,7 +10042,11 @@
                             }
                           ],
                           "complete": {
-                            "completed_at": "2024-01-15T09:30:00Z"
+                            "completed_at": "2024-01-15T09:30:00Z",
+                            "did_win": true,
+                            "hints": 1,
+                            "score": 1,
+                            "completion_time": 1
                           }
                         }
                       ],
@@ -10109,7 +10153,11 @@
                                 }
                               ],
                               "complete": {
-                                "completed_at": "2024-01-15T09:30:00Z"
+                                "completed_at": "2024-01-15T09:30:00Z",
+                                "did_win": true,
+                                "hints": 1,
+                                "score": 1,
+                                "completion_time": 1
                               }
                             }
                           ],
