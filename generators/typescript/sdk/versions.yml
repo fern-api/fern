@@ -2,24 +2,18 @@
 - version: 3.31.0
   changelogEntry:
     - summary: |
-        Add `generateSubpackageExports` configuration option to enable direct imports of subpackage clients.
-        
-        When enabled, users can import and instantiate subpackage clients directly:
+        Add `generateSubpackageExports` configuration option to enable direct imports of subpackage clients. This allows JavaScript bundlers to tree-shake and include only the imported subpackage code, resulting in much smaller bundle sizes.
+
+        Example:
         ```typescript
-        import { EnumClient } from '@org/sdk/endpoints/enum';
-        
-        const client = new EnumClient({
-            environment: "https://api.example.com",
+        import { FooBarClient } from '@contoso/sdk/foo/bar';
+
+        const client = new FooBarClient({
+            environment: "https://api.contoso.com",
             token: "your-token"
         });
         ```
-        
-        This feature:
-        - Generates `exports.ts` files in each subpackage folder
-        - Adds subpackage export paths to `package.json` exports field
-        - Implements idempotent `normalizeClientOptions()` function to handle both direct user instantiation and internal parent-to-subclient instantiation
-        - Ensures root headers (custom API headers and version headers) are added for all clients regardless of instantiation path
-        
+
         To enable this feature, add the following configuration to your _generators.yml_ file:
         ```yaml
         # In generators.yml
