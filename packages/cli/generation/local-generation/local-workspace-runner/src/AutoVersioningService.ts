@@ -15,10 +15,10 @@
  */
 
 import { exec } from "child_process";
-import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
 import { promisify } from "util";
+import * as log from "./log";
 
 const execAsync = promisify(exec);
 
@@ -44,6 +44,7 @@ interface FileSection {
  * Service for handling automatic semantic versioning operations including
  * git diff generation, version extraction, and version replacement.
  */
+// biome-ignore lint/complexity/noStaticOnlyClass: Preserving Java API structure with static methods
 export class AutoVersioningService {
     /**
      * Generates a git diff from the staged changes and writes it to a temporary file.
@@ -59,7 +60,7 @@ export class AutoVersioningService {
             cwd: workingDirectory
         });
 
-        console.log(`Generated git diff to file: ${diffFile}`);
+        log.info(`Generated git diff to file: ${diffFile}`);
         return diffFile;
     }
 
@@ -91,19 +92,19 @@ export class AutoVersioningService {
             if (line.startsWith("+") && !line.startsWith("+++") && line.includes(mappedMagicVersion)) {
                 magicVersionOccurrences++;
                 const sanitizedPlusLine = line.replace(mappedMagicVersion, "<MAGIC>");
-                console.log(`Found magic version in added line (file: ${currentFile}): ${sanitizedPlusLine}`);
+                log.info(`Found magic version in added line (file: ${currentFile}): ${sanitizedPlusLine}`);
 
                 const matchingMinusLine = this.findMatchingMinusLine(lines, i, mappedMagicVersion);
 
                 if (matchingMinusLine === null) {
-                    console.log(
+                    log.info(
                         `No matching minus line in hunk; continuing search. file=${currentFile}, plusLine=${sanitizedPlusLine}`
                     );
                     continue;
                 }
 
                 const extracted = this.extractPreviousVersionFromDiffLine(matchingMinusLine);
-                console.log(`Extracted previous version from diff (file: ${currentFile}): ${extracted}`);
+                log.info(`Extracted previous version from diff (file: ${currentFile}): ${extracted}`);
                 return extracted;
             }
         }
@@ -149,19 +150,19 @@ export class AutoVersioningService {
             linesScanned++;
 
             if (this.shouldStopSearching(line)) {
-                console.log(`Stopped backward scan at hunk boundary after ${linesScanned} lines`);
+                log.info(`Stopped backward scan at hunk boundary after ${linesScanned} lines`);
                 break;
             }
 
             if (this.isDeletionLine(line)) {
                 if (this.isVersionChangePair(line, plusLine, mappedMagicVersion)) {
-                    console.log(`Found matching minus line after scanning ${linesScanned} lines backwards`);
+                    log.info(`Found matching minus line after scanning ${linesScanned} lines backwards`);
                     return line;
                 }
             }
         }
 
-        console.warn(`No matching minus line found after scanning ${linesScanned} lines backwards`);
+        log.warn(`No matching minus line found after scanning ${linesScanned} lines backwards`);
         return null;
     }
 
@@ -198,7 +199,9 @@ export class AutoVersioningService {
             }
         }
 
-        console.log(`Cleaned diff: removed ${diffContent.length - result.join("\n").length} bytes containing version changes`);
+        log.info(
+            `Cleaned diff: removed ${diffContent.length - result.join("\n").length} bytes containing version changes`
+        );
         return result.join("\n");
     }
 
@@ -416,7 +419,7 @@ export class AutoVersioningService {
         mappedMagicVersion: string,
         finalVersion: string
     ): Promise<void> {
-        console.log(`Replacing magic version ${mappedMagicVersion} with final version: ${finalVersion}`);
+        log.info(`Replacing magic version ${mappedMagicVersion} with final version: ${finalVersion}`);
 
         const sedCommand = `s/${this.escapeForSed(mappedMagicVersion)}/${this.escapeForSed(finalVersion)}/g`;
         const osName = os.platform().toLowerCase();
@@ -431,14 +434,14 @@ export class AutoVersioningService {
 
         await execAsync(command, { cwd: workingDirectory });
 
-        console.log("Magic version replaced successfully");
+        log.info("Magic version replaced successfully");
     }
 
     /**
      * Escapes special characters for use in sed command.
      */
     private static escapeForSed(str: string): string {
-        return str.replace(/[\/&]/g, "\\$&");
+        return str.replace(/[/&]/g, "\\$&");
     }
 
     /**
@@ -455,7 +458,7 @@ export class AutoVersioningService {
 
         if (matcher && matcher[1]) {
             const version = matcher[1];
-            console.log(`Extracted previous version from diff: ${version}`);
+            log.info(`Extracted previous version from diff: ${version}`);
             return version;
         }
 

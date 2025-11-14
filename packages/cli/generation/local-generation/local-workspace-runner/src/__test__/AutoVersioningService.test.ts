@@ -481,7 +481,6 @@ describe("AutoVersioningService", () => {
         expect(cleaned).not.toContain("/505.503.4455");
     });
 
-
     it("testReplaceMagicVersion_simpleFile", async () => {
         const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
         try {
@@ -553,7 +552,8 @@ describe("AutoVersioningService", () => {
         const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
         try {
             const testFile = path.join(tempDir, "config.yaml");
-            const originalContent = "version: 505.503.4455\nmin_version: 505.503.4455\ndisplay_name: SDK v505.503.4455\n";
+            const originalContent =
+                "version: 505.503.4455\nmin_version: 505.503.4455\ndisplay_name: SDK v505.503.4455\n";
             await fs.writeFile(testFile, originalContent);
 
             await AutoVersioningService.replaceMagicVersion(tempDir, "505.503.4455", "3.1.4");
@@ -654,7 +654,6 @@ describe("AutoVersioningService", () => {
             await fs.rm(tempDir, { recursive: true, force: true });
         }
     });
-
 
     it("testAutoVersioningWorkflow_endToEnd", async () => {
         const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));

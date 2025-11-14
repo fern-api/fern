@@ -15,6 +15,7 @@
  */
 
 import { AutoVersioningException } from "./AutoVersioningService";
+import * as log from "./log";
 
 export const AUTO_VERSION = "AUTO";
 export const MAGIC_VERSION = "505.503.4455";
@@ -46,7 +47,6 @@ export function isAutoVersion(version: string): boolean {
 export function incrementVersion(currentVersion: string, versionBump: VersionBump): string {
     const matcher = currentVersion.match(SEMVER_PATTERN);
     if (!matcher) {
-        console.error(`Failed to parse version: ${currentVersion}`);
         throw new AutoVersioningException("Invalid semantic version format: " + currentVersion);
     }
 
@@ -71,7 +71,6 @@ export function incrementVersion(currentVersion: string, versionBump: VersionBum
     } else if (versionBump === VersionBump.NO_CHANGE) {
         preserveMetadata = true;
     } else {
-        console.error(`Unknown version bump type: ${versionBump}`);
         throw new AutoVersioningException("Unknown version bump type: " + versionBump);
     }
 
@@ -87,7 +86,7 @@ export function incrementVersion(currentVersion: string, versionBump: VersionBum
         }
     }
 
-    console.log(`Incremented version from ${currentVersion} to ${newVersion} (bump type: ${versionBump})`);
+    log.info(`Incremented version from ${currentVersion} to ${newVersion} (bump type: ${versionBump})`);
     return newVersion;
 }
 
@@ -105,7 +104,6 @@ export function extractPreviousVersionFromDiffLine(lineWithMagicVersion: string)
 
     if (matcher && matcher[1]) {
         const version = matcher[1];
-        console.log(`Extracted previous version from diff: ${version}`);
         return version;
     }
 

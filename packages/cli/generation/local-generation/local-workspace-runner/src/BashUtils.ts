@@ -16,6 +16,7 @@
 
 import { exec } from "child_process";
 import { promisify } from "util";
+import * as log from "./log";
 
 const execAsync = promisify(exec);
 
@@ -31,30 +32,30 @@ export class CommandFailedException extends Error {
 
 export async function runCommand(command: string[], workingDirectory: string): Promise<void> {
     const commandString = command.join(" ");
-    console.log(`Running command ${commandString}`);
+    log.info(`Running command ${commandString}`);
 
     try {
         const [cmd, ...args] = command;
-        const quotedArgs = args.map(arg => {
+        const quotedArgs = args.map((arg) => {
             if (arg.includes(" ") || arg.includes("'") || arg.includes('"')) {
                 return `"${arg.replace(/"/g, '\\"')}"`;
             }
             return arg;
         });
         const fullCommand = [cmd, ...quotedArgs].join(" ");
-        
+
         const { stdout, stderr } = await execAsync(fullCommand, {
             cwd: workingDirectory
         });
 
         if (stdout) {
-            console.log(stdout);
+            log.info(stdout);
         }
         if (stderr) {
-            console.error(stderr);
+            log.error(stderr);
         }
     } catch (error) {
-        console.error(`Encountered exception while running command ${commandString}`, error);
+        log.error(`Encountered exception while running command ${commandString}`, error);
         throw new CommandFailedException(
             `Encountered exception while running command ${commandString}`,
             error as Error
