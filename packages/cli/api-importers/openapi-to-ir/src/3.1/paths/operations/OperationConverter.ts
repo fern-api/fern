@@ -14,6 +14,7 @@ import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernExamplesExtension } from "../../../extensions/x-fern-examples";
 import { FernExplorerExtension } from "../../../extensions/x-fern-explorer";
+import { FernExplorerEnabledExtension } from "../../../extensions/x-fern-explorer-enabled";
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
 import { ResponseBodyConverter } from "../ResponseBodyConverter";
 import { ResponseErrorConverter } from "../ResponseErrorConverter";
@@ -164,12 +165,21 @@ export class OperationConverter extends AbstractOperationConverter {
                 breadcrumbs: this.breadcrumbs
             }) ?? [];
 
-        const explorerExtension = new FernExplorerExtension({
+        const globalExplorerExtension = new FernExplorerExtension({
             context: this.context,
             breadcrumbs: this.breadcrumbs,
-            document: this.operation as object
+            document: this.context.spec as object
         });
-        const apiPlayground = explorerExtension.convert();
+        const globalExplorer = globalExplorerExtension.convert();
+
+        const operationExplorerExtension = new FernExplorerEnabledExtension({
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            operation: this.operation as object
+        });
+        const operationExplorer = operationExplorerExtension.convert();
+
+        const apiPlayground = operationExplorer ?? globalExplorer;
 
         const baseEndpoint: OperationConverter.BaseEndpoint = {
             displayName: this.operation.summary,
