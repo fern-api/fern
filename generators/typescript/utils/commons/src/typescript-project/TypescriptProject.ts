@@ -31,7 +31,7 @@ export declare namespace TypescriptProject {
         packageManager: "yarn" | "pnpm";
         formatter: "prettier" | "biome" | "oxfmt";
         linter: "biome" | "oxlint" | "none";
-        generateMultipleExports?: boolean;
+        generateSubpackageExports?: boolean;
         subpackageExportPaths?: Array<{ key: string; relPath: string }>;
     }
 }
@@ -109,7 +109,7 @@ export abstract class TypescriptProject {
     protected readonly packageManager: "yarn" | "pnpm";
     private readonly formatter: "prettier" | "biome" | "oxfmt";
     private readonly linter: "biome" | "oxlint" | "none";
-    protected readonly generateMultipleExports: boolean;
+    protected readonly generateSubpackageExports: boolean;
     protected readonly subpackageExportPaths: Array<{ key: string; relPath: string }>;
 
     private readonly runScripts: boolean;
@@ -133,7 +133,7 @@ export abstract class TypescriptProject {
         packageManager,
         formatter,
         linter,
-        generateMultipleExports,
+        generateSubpackageExports,
         subpackageExportPaths
     }: TypescriptProject.Init) {
         this.npmPackage = npmPackage;
@@ -154,7 +154,7 @@ export abstract class TypescriptProject {
         this.packageManager = packageManager;
         this.formatter = formatter;
         this.linter = linter;
-        this.generateMultipleExports = generateMultipleExports ?? false;
+        this.generateSubpackageExports = generateSubpackageExports ?? false;
         this.subpackageExportPaths = subpackageExportPaths ?? [];
     }
 
@@ -176,7 +176,7 @@ export abstract class TypescriptProject {
         if (this.exportSerde) {
             exports.push("serialization");
         }
-        if (this.generateMultipleExports) {
+        if (this.generateSubpackageExports) {
             exports.push(...this.subpackageExportPaths.map((p) => p.relPath));
         }
         return exports;

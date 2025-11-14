@@ -240,7 +240,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                         default: defaultExport
                     },
                     ...this.getFoldersForExports().reduce((acc, folder) => {
-                        const subpackageExport = this.generateMultipleExports
+                        const subpackageExport = this.generateSubpackageExports
                             ? this.subpackageExportPaths.find((p) => p.relPath === folder)
                             : undefined;
                         const isSubpackageExport = subpackageExport !== undefined;
