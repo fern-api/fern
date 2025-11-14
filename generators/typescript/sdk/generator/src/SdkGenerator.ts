@@ -159,6 +159,7 @@ export declare namespace SdkGenerator {
         linter: "biome" | "oxlint" | "none";
         formatter: "prettier" | "biome" | "oxfmt";
         generateMultipleExports: boolean;
+        offsetSemantics: "item-index" | "page-index";
     }
 }
 
@@ -178,6 +179,8 @@ export class SdkGenerator {
     private endpointSnippets: FernGeneratorExec.Endpoint[] = [];
 
     private project: Project;
+    private snippetProject: Project | undefined;
+    private snippetCounter = 0;
     private rootDirectory: Directory;
     private exportsManager: ExportsManager;
     private readonly publicExportsManager: PublicExportsManager;
@@ -467,7 +470,8 @@ export class SdkGenerator {
             formDataSupport: config.formDataSupport,
             useDefaultRequestParameterValues: config.useDefaultRequestParameterValues,
             generateEndpointMetadata: config.generateEndpointMetadata,
-            parameterNaming: config.parameterNaming
+            parameterNaming: config.parameterNaming,
+            offsetSemantics: config.offsetSemantics
         });
         this.baseClientTypeGenerator = new BaseClientTypeGenerator({
             ir: intermediateRepresentation,
@@ -1464,10 +1468,36 @@ export class SdkGenerator {
         run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => ts.Node[] | undefined;
         includeImports: boolean;
     }): string | undefined {
-        const project = new Project({
-            useInMemoryFileSystem: true
+        const useOldBehavior = process.env.FERN_SNIPPET_PROJECT_PER_SNIPPET === "1";
+
+        if (useOldBehavior) {
+            const project = new Project({
+                useInMemoryFileSystem: true
+            });
+            const sourceFile = project.createSourceFile("snippet");
+            const importsManager = new ImportsManager({
+                packagePath: this.relativePackagePath
+            });
+            const statements = run({ sourceFile, importsManager });
+            if (statements != null) {
+                sourceFile.addStatements(statements.map((expression) => getTextOfTsNode(expression)));
+                if (includeImports) {
+                    importsManager.writeImportsToSourceFile(sourceFile);
+                }
+                return sourceFile.getText();
+            }
+            return undefined;
+        }
+
+        if (this.snippetProject == null) {
+            this.snippetProject = new Project({
+                useInMemoryFileSystem: true
+            });
+        }
+
+        const sourceFile = this.snippetProject.createSourceFile(`snippet-${this.snippetCounter++}.ts`, undefined, {
+            overwrite: false
         });
-        const sourceFile = project.createSourceFile("snippet");
         const importsManager = new ImportsManager({
             packagePath: this.relativePackagePath
         });
@@ -1477,8 +1507,12 @@ export class SdkGenerator {
             if (includeImports) {
                 importsManager.writeImportsToSourceFile(sourceFile);
             }
-            return sourceFile.getText();
+            const text = sourceFile.getText();
+            sourceFile.delete();
+            return text;
         }
+        // Clean up the source file even if no statements were generated
+        sourceFile.delete();
         return undefined;
     }
 

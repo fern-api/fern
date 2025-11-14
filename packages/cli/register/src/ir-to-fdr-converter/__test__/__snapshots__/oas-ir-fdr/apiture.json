@@ -1356,8 +1356,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "string",
-                "format": "date"
+                "type": "date"
               }
             }
           },
@@ -1367,8 +1366,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "string",
-                "format": "date"
+                "type": "date"
               }
             }
           }
@@ -1461,8 +1459,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date"
+                  "type": "date"
                 }
               }
             }
@@ -1483,8 +1480,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "string",
-                "format": "date"
+                "type": "date"
               }
             }
           },
@@ -1504,8 +1500,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date"
+                  "type": "date"
                 }
               }
             }
@@ -1518,8 +1513,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date"
+                  "type": "date"
                 }
               }
             }
@@ -1581,8 +1575,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "string",
-                "format": "date"
+                "type": "date"
               }
             },
             "propertyAccess": "READ_ONLY"
@@ -1595,8 +1588,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date"
+                  "type": "date"
                 }
               }
             },
@@ -1611,8 +1603,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date"
+                  "type": "date"
                 }
               }
             },
@@ -2041,8 +2032,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date"
+                  "type": "date"
                 }
               }
             }
@@ -2072,8 +2062,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date"
+                  "type": "date"
                 }
               }
             }
@@ -2124,8 +2113,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date"
+                  "type": "date"
                 }
               }
             },
@@ -2139,8 +2127,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date"
+                  "type": "date"
                 }
               }
             },
@@ -2414,8 +2401,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date-time"
+                  "type": "datetime"
                 }
               }
             },
@@ -2761,10 +2747,7 @@
         "value": {
           "type": "primitive",
           "value": {
-            "type": "string",
-            "format": "date-time",
-            "minLength": 20,
-            "maxLength": 30
+            "type": "datetime"
           }
         }
       }
@@ -2893,8 +2876,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date-time"
+                  "type": "datetime"
                 }
               }
             },
@@ -2908,8 +2890,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date-time"
+                  "type": "datetime"
                 }
               }
             },
@@ -5860,8 +5841,7 @@
               "type": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date"
+                  "type": "date"
                 }
               }
             },
@@ -5873,8 +5853,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "string",
-                    "format": "date"
+                    "type": "date"
                   }
                 }
               }
@@ -6386,8 +6365,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "string",
-                    "format": "date"
+                    "type": "date"
                   }
                 }
               }
@@ -6400,8 +6378,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "string",
-                    "format": "date"
+                    "type": "date"
                   }
                 }
               }

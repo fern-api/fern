@@ -406,7 +406,7 @@ fixtures:
         useLegacyExports: true
     - outputFolder: oidc-token
       publishConfig:
-        type: npm     
+        type: npm
         registryUrl: https://registry.npmjs.org/
         packageName: "@fern-api/dummy"
         token: <USE_OIDC>
@@ -425,6 +425,12 @@ fixtures:
     - outputFolder: serde
       customConfig:
         noSerdeLayer: false
+  pagination:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: page-index-semantics
+      customConfig:
+        offsetSemantics: "page-index"
 scripts:
   - docker: fernapi/ts-seed
     commands:

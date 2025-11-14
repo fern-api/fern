@@ -336,6 +336,7 @@ types:
           If `href` is set, clicking on the tab will redirect to the given URL.
 
           Tabs with `href` must not have children in the navigation config.
+      target: optional<Target>
       changelog: optional<ChangelogFolderRelativePath>
 
   ChangelogFolderRelativePath:
@@ -1120,6 +1121,7 @@ types:
       link: string
       href: string
       icon: optional<string>
+      target: optional<Target>
 
   VersionedSnippetLanguageConfiguration:
     properties:
@@ -1259,6 +1261,7 @@ types:
         docs: |
           The URL once you click on the button.
           Example: https://buildwithfern.com/contact
+      target: optional<Target>
       url:
         type: optional<string>
         availability: deprecated
@@ -1298,6 +1301,7 @@ types:
     extends: [WithViewers]
     properties:
       url: string
+      target: optional<Target>
 
   FooterLinksConfig:
     properties:
@@ -1551,6 +1555,11 @@ types:
           By default, SDK snippets are static code examples that are displayed in your API Reference. Alternatively, you can use dynamic SDK snippets that allow users to modify parameters and see code examples update in real time.
 
           Enable dynamic snippets in `docs.yml`, then configure them by following the SDK snippets setup instructions.
+      ai-examples:
+        type: optional<boolean>
+        availability: pre-release
+        docs: |
+          Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
 
   PlaygroundSettings:
     properties:
@@ -1632,6 +1641,20 @@ types:
       href:
         type: string
         docs: The absolute URL to the product.
+      target:
+        type: optional<Target>
+        docs: The target of the URL
+
+  Target:
+    enum:
+      - name: blank
+        value: _blank
+      - name: self
+        value: _self
+      - name: parent
+        value: _parent
+      - name: top
+        value: _top
 
   ProductFileConfig:
     properties:

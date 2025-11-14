@@ -146,7 +146,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
                                 generics: [responseType],
                                 arguments_: [this.csharp.codeblock("mockResponse")]
                             });
-                            const innerType = responseType.unwrapIfOptional();
+                            const innerType = responseType.asNonOptional();
                             if (is.OneOf.OneOf(innerType) || is.OneOf.OneOfBase(innerType)) {
                                 writer.writeLine(`Assert.That(
                                 response.Value,

@@ -6142,7 +6142,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "ImageInfo",
                     "camelCase": {
@@ -6169,7 +6169,7 @@
                   "typeId": "type_:ImageInfo",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -6203,7 +6203,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "LegacyVideoInfo",
                     "camelCase": {
@@ -6230,7 +6230,7 @@
                   "typeId": "type_:LegacyVideoInfo",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -6264,7 +6264,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "ContentInfo",
                     "camelCase": {
@@ -6291,7 +6291,7 @@
                   "typeId": "type_:ContentInfo",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -6325,7 +6325,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "Metadata",
                     "camelCase": {
@@ -6352,7 +6352,7 @@
                   "typeId": "type_:Metadata",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -6502,13 +6502,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -6720,13 +6726,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -7233,7 +7245,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "ImageInfo",
                     "camelCase": {
@@ -7260,7 +7272,7 @@
                   "typeId": "type_:ImageInfo",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -7294,7 +7306,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "LegacyVideoInfo",
                     "camelCase": {
@@ -7321,7 +7333,7 @@
                   "typeId": "type_:LegacyVideoInfo",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -7355,7 +7367,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "ContentInfo",
                     "camelCase": {
@@ -7382,7 +7394,7 @@
                   "typeId": "type_:ContentInfo",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -7416,7 +7428,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "Metadata",
                     "camelCase": {
@@ -7443,7 +7455,7 @@
                   "typeId": "type_:Metadata",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -7593,13 +7605,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8321,7 +8339,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "ImageInfo",
                     "camelCase": {
@@ -8348,7 +8366,7 @@
                   "typeId": "type_:ImageInfo",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -8382,7 +8400,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "LegacyVideoInfo",
                     "camelCase": {
@@ -8409,7 +8427,7 @@
                   "typeId": "type_:LegacyVideoInfo",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -8443,7 +8461,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "ContentInfo",
                     "camelCase": {
@@ -8470,7 +8488,7 @@
                   "typeId": "type_:ContentInfo",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -8504,7 +8522,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "Metadata",
                     "camelCase": {
@@ -8531,7 +8549,7 @@
                   "typeId": "type_:Metadata",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -8681,13 +8699,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -8988,10 +9012,16 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DATE_TIME"
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DATE_TIME"
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -9168,10 +9198,16 @@
               "container": {
                 "optional": {
                   "container": {
-                    "list": {
-                      "type": "unknown"
+                    "nullable": {
+                      "container": {
+                        "list": {
+                          "type": "unknown"
+                        },
+                        "type": "list"
+                      },
+                      "type": "container"
                     },
-                    "type": "list"
+                    "type": "nullable"
                   },
                   "type": "container"
                 },
@@ -13149,7 +13185,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "primitive": {
                     "v1": "INTEGER",
                     "v2": {
@@ -13162,7 +13198,7 @@
                   },
                   "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -13349,7 +13385,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "ImageInfoGeoLocation",
                     "camelCase": {
@@ -13376,7 +13412,7 @@
                   "typeId": "type_:ImageInfoGeoLocation",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -13411,13 +13447,13 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "primitive": {
                     "v1": "DATE_TIME"
                   },
                   "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -13452,7 +13488,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "primitive": {
@@ -13467,7 +13503,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -13547,13 +13583,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -13591,13 +13633,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -13635,13 +13683,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "type": "double"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -13679,13 +13733,19 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                  "container": {
+                    "nullable": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "nullable"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -14162,31 +14222,37 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "LegacyVideoInfoAudio",
-                    "camelCase": {
-                      "unsafeName": "legacyVideoInfoAudio",
-                      "safeName": "legacyVideoInfoAudio"
+                  "container": {
+                    "nullable": {
+                      "name": {
+                        "originalName": "LegacyVideoInfoAudio",
+                        "camelCase": {
+                          "unsafeName": "legacyVideoInfoAudio",
+                          "safeName": "legacyVideoInfoAudio"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "legacy_video_info_audio",
+                          "safeName": "legacy_video_info_audio"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "LEGACY_VIDEO_INFO_AUDIO",
+                          "safeName": "LEGACY_VIDEO_INFO_AUDIO"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "LegacyVideoInfoAudio",
+                          "safeName": "LegacyVideoInfoAudio"
+                        }
+                      },
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "typeId": "type_:LegacyVideoInfoAudio",
+                      "type": "named"
                     },
-                    "snakeCase": {
-                      "unsafeName": "legacy_video_info_audio",
-                      "safeName": "legacy_video_info_audio"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "LEGACY_VIDEO_INFO_AUDIO",
-                      "safeName": "LEGACY_VIDEO_INFO_AUDIO"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "LegacyVideoInfoAudio",
-                      "safeName": "LegacyVideoInfoAudio"
-                    }
+                    "type": "nullable"
                   },
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                  },
-                  "typeId": "type_:LegacyVideoInfoAudio",
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "optional"
               },
@@ -14809,7 +14875,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "primitive": {
                     "v1": "INTEGER",
                     "v2": {
@@ -14822,7 +14888,7 @@
                   },
                   "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -15009,7 +15075,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "name": {
                     "originalName": "SchemasImageInfoGeoLocation",
                     "camelCase": {
@@ -15036,7 +15102,7 @@
                   "typeId": "type_:SchemasImageInfoGeoLocation",
                   "type": "named"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -15071,13 +15137,13 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "primitive": {
                     "v1": "DATE_TIME"
                   },
                   "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -15112,7 +15178,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "container": {
                     "list": {
                       "primitive": {
@@ -15127,7 +15193,7 @@
                   },
                   "type": "container"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -15206,7 +15272,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "primitive": {
                     "v1": "INTEGER",
                     "v2": {
@@ -15215,7 +15281,7 @@
                   },
                   "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -15250,7 +15316,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "primitive": {
                     "v1": "STRING",
                     "v2": {
@@ -15259,7 +15325,7 @@
                   },
                   "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -15294,7 +15360,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "primitive": {
                     "v1": "INTEGER",
                     "v2": {
@@ -15303,7 +15369,7 @@
                   },
                   "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -15338,7 +15404,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "primitive": {
                     "v1": "INTEGER",
                     "v2": {
@@ -15347,7 +15413,7 @@
                   },
                   "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -15540,7 +15606,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "primitive": {
                     "v1": "INTEGER",
                     "v2": {
@@ -15549,7 +15615,7 @@
                   },
                   "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -15584,7 +15650,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "primitive": {
                     "v1": "STRING",
                     "v2": {
@@ -15593,7 +15659,7 @@
                   },
                   "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -15671,7 +15737,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "primitive": {
                     "v1": "INTEGER",
                     "v2": {
@@ -15680,7 +15746,7 @@
                   },
                   "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -15753,7 +15819,7 @@
             },
             "valueType": {
               "container": {
-                "optional": {
+                "nullable": {
                   "primitive": {
                     "v1": "INTEGER",
                     "v2": {
@@ -15762,7 +15828,7 @@
                   },
                   "type": "primitive"
                 },
-                "type": "optional"
+                "type": "nullable"
               },
               "type": "container"
             },
@@ -16321,7 +16387,7 @@
       "shape": {
         "aliasOf": {
           "container": {
-            "optional": {
+            "nullable": {
               "container": {
                 "keyType": {
                   "primitive": {
@@ -16339,13 +16405,13 @@
               },
               "type": "container"
             },
-            "type": "optional"
+            "type": "nullable"
           },
           "type": "container"
         },
         "resolvedType": {
           "container": {
-            "optional": {
+            "nullable": {
               "container": {
                 "keyType": {
                   "primitive": {
@@ -16363,7 +16429,7 @@
               },
               "type": "container"
             },
-            "type": "optional"
+            "type": "nullable"
           },
           "type": "container"
         },
@@ -38723,7 +38789,7 @@
                 "value": "type_:ImageInfo",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -38754,7 +38820,7 @@
                 "value": "type_:LegacyVideoInfo",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -38785,7 +38851,7 @@
                 "value": "type_:ContentInfo",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -38816,7 +38882,7 @@
                 "value": "type_:Metadata",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -38928,8 +38994,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -39089,8 +39158,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "DOUBLE",
-                "type": "primitive"
+                "value": {
+                  "value": "DOUBLE",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -39409,7 +39481,7 @@
                 "value": "type_:ImageInfo",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -39440,7 +39512,7 @@
                 "value": "type_:LegacyVideoInfo",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -39471,7 +39543,7 @@
                 "value": "type_:ContentInfo",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -39502,7 +39574,7 @@
                 "value": "type_:Metadata",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -39614,8 +39686,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -40129,7 +40204,7 @@
                 "value": "type_:ImageInfo",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -40160,7 +40235,7 @@
                 "value": "type_:LegacyVideoInfo",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -40191,7 +40266,7 @@
                 "value": "type_:ContentInfo",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -40222,7 +40297,7 @@
                 "value": "type_:Metadata",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -40334,8 +40409,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -40588,8 +40666,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "DATE_TIME",
-                "type": "primitive"
+                "value": {
+                  "value": "DATE_TIME",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -40713,9 +40794,12 @@
             "typeReference": {
               "value": {
                 "value": {
-                  "type": "unknown"
+                  "value": {
+                    "type": "unknown"
+                  },
+                  "type": "list"
                 },
-                "type": "list"
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -43150,7 +43234,7 @@
                 "value": "INTEGER",
                 "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -43293,7 +43377,7 @@
                 "value": "type_:ImageInfoGeoLocation",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -43324,7 +43408,7 @@
                 "value": "DATE_TIME",
                 "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -43358,7 +43442,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -43417,8 +43501,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "DOUBLE",
-                "type": "primitive"
+                "value": {
+                  "value": "DOUBLE",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -43448,8 +43535,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -43479,8 +43569,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "DOUBLE",
-                "type": "primitive"
+                "value": {
+                  "value": "DOUBLE",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -43510,8 +43603,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -43851,8 +43947,11 @@
             },
             "typeReference": {
               "value": {
-                "value": "type_:LegacyVideoInfoAudio",
-                "type": "named"
+                "value": {
+                  "value": "type_:LegacyVideoInfoAudio",
+                  "type": "named"
+                },
+                "type": "nullable"
               },
               "type": "optional"
             }
@@ -44334,7 +44433,7 @@
                 "value": "INTEGER",
                 "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -44477,7 +44576,7 @@
                 "value": "type_:SchemasImageInfoGeoLocation",
                 "type": "named"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -44508,7 +44607,7 @@
                 "value": "DATE_TIME",
                 "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -44542,7 +44641,7 @@
                 },
                 "type": "list"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -44604,7 +44703,7 @@
                 "value": "INTEGER",
                 "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -44635,7 +44734,7 @@
                 "value": "STRING",
                 "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -44666,7 +44765,7 @@
                 "value": "INTEGER",
                 "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -44697,7 +44796,7 @@
                 "value": "INTEGER",
                 "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -44843,7 +44942,7 @@
                 "value": "INTEGER",
                 "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -44874,7 +44973,7 @@
                 "value": "STRING",
                 "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           }
         ],
@@ -44936,7 +45035,7 @@
                 "value": "INTEGER",
                 "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -44995,7 +45094,7 @@
                 "value": "INTEGER",
                 "type": "primitive"
               },
-              "type": "optional"
+              "type": "nullable"
             }
           },
           {
@@ -45340,7 +45439,7 @@
             },
             "type": "map"
           },
-          "type": "optional"
+          "type": "nullable"
         },
         "type": "alias"
       }
@@ -47735,6 +47834,7 @@
       }
     }
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_upload": {
       "fernFilepath": {

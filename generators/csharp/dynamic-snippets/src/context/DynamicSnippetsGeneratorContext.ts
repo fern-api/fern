@@ -68,9 +68,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public get Collection() {
         return this.generation.Collection;
     }
-    public get Special() {
-        return this.generation.Special;
-    }
 
     constructor({
         ir,

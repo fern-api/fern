@@ -1,6 +1,104 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix CLI migration selection to include the target version's migrations during `fern upgrade`.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-14"
+  version: 1.0.4
+
+- changelogEntry:
+    - summary: |
+        Specify the target of links throughout the docs navigation.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-14"
+  version: 1.0.3
+
+- changelogEntry:
+    - summary: |
+        Display OpenAPI validation warnings when using the --warnings flag with fern check. Previously, warnings were counted but not shown; now they are logged with location details when --warnings is specified.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 1.0.2
+
+- changelogEntry:
+    - summary: |
+        Update OpenAPI operation converter to use `x-fern-explorer` extension instead of `x-fern-explorer-enabled` for setting `apiPlayground` property in the IR. Operations now check for the `x-fern-explorer` boolean value to determine API playground availability.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 1.0.1
+
+- changelogEntry:
+    - summary: |
+        Change defaults for OpenAPI and AsyncAPI parsing settings:
+          - `title-as-schema-name`: `false` (was `true`)
+          - `respect-nullable-schemas`: `true` (was `false`)
+          - `inline-path-parameters`: `true` (was `false`)
+          - `idiomatic-request-names`: `true` (was `false`)
+          - `type-dates-as-strings`: `true` (was `false`)
+          - `wrap-references-to-nullable-in-optional`: `false` (was `true`)
+          - `coerce-optional-schemas-to-nullable`: `false` (was `true`)
+          - `object-query-parameters`: `true` (was `false`)
+        The CLI will automatically upgrade your _generators.yml_ to explicitly set the old defaults to preserve
+        existing behavior. New users will get the new defaults.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 1.0.0
+
+- changelogEntry:
+    - summary: |
+        Refactor how settings from specs are parsed and applied in the CLI.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 0.121.2
+
+- changelogEntry:
+    - summary: |
+        Match endpoints to AI overrides examples.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 0.121.1
+
+- changelogEntry:
+    - summary: |
+        Add batching support for AI example enhancement. The CLI now processes up to 10 endpoints at once with a single pruned OpenAPI spec, improving performance. Non-OpenAPI specs are automatically skipped.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 0.121.0
+
+- changelogEntry:
+    - summary: |
+        Support adding arbitrary metadata to `<Code />` components. Title and language are set by default, but can be overridden with `title` and `language` props.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-12"
+  version: 0.120.1
+
+- changelogEntry:
+    - summary: |
+        Rename OpenAPI extensions: x-fern-playground → x-fern-explorer and x-fern-playground-enabled → x-fern-explorer-enabled. The old extension keys are no longer recognized.
+      type: break
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 0.120.0
+
+- changelogEntry:
+    - summary: |
+        Add x-fern-playground extension to OpenAPI importer to control API playground visibility. Defaults to true.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-12"
+  version: 0.119.1
+
+- changelogEntry:
+    - summary: |
         Add global `settings` flag to `generators.yml` configuration.
         Overrideable by `api.specs[].settings` (which is itself overrideable by `group.generators[].settings` as before).
       type: feat
@@ -232,12 +330,20 @@
       type: fix
   irVersion: 61
   createdAt: "2025-11-05"
-  version: 0.107.9
+  version: 0.108.0
 
 - changelogEntry:
     - summary: |
         Improve anyOf/oneOf example generation to prefer variants with examples and use schema-level examples when available. This addresses cases where unions with multiple types were generating fallback examples instead of using provided examples.
       type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.8
+
+- changelogEntry:
+    - summary: |
+        Add support for x-fern-playground-enabled extension in OpenAPI v3 to control whether endpoints are shown in the API playground. The extension value is parsed and stored in the IR's HttpEndpoint.apiPlayground field.
+      type: feat
   irVersion: 61
   createdAt: "2025-11-05"
   version: 0.107.8

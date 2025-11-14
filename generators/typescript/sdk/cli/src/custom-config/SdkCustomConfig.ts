@@ -58,4 +58,5 @@ export interface SdkCustomConfig {
     formatter: "prettier" | "biome" | "oxfmt";
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     generateMultipleExports: boolean | undefined;
+    offsetSemantics: "item-index" | "page-index";
 }

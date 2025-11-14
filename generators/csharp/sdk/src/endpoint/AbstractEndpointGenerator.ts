@@ -226,7 +226,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
             on,
             async: true,
             configureAwait: true,
-            isAsyncEnumerable: getEndpointReturnType({ context: this.context, endpoint })?.isAsyncEnumerable,
+            isAsyncEnumerable: is.AsyncEnumerable(getEndpointReturnType({ context: this.context, endpoint })),
             generics: []
         });
     }

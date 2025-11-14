@@ -73,10 +73,10 @@
           "description": "Include only accounts whose `product.type` is in pipe-delimited set. For example, to list only savings, checking, and CD accounts, use <br>`?productType=savings|checking|cd`.",
           "name": "productType",
           "schema": {
-            "generatedName": "AccountsListAccountsRequestProductType",
+            "generatedName": "ListAccountsAccountsRequestProductType",
             "value": {
               "value": {
-                "generatedName": "AccountsListAccountsRequestProductTypeItem",
+                "generatedName": "ListAccountsAccountsRequestProductTypeItem",
                 "schema": "productType",
                 "source": {
                   "file": "../openapi.yml",
@@ -84,12 +84,12 @@
                 },
                 "type": "reference"
               },
-              "generatedName": "AccountsListAccountsRequestProductType",
+              "generatedName": "ListAccountsAccountsRequestProductType",
               "groupName": [],
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -100,9 +100,9 @@
           "description": "Filter accounts to just a subset of `internal` or `external` accounts (per the `location` property on the [`accountItem`](#schema-accountItem) schema).",
           "name": "location",
           "schema": {
-            "generatedName": "AccountsListAccountsRequestLocation",
+            "generatedName": "ListAccountsAccountsRequestLocation",
             "value": {
-              "generatedName": "AccountsListAccountsRequestLocation",
+              "generatedName": "ListAccountsAccountsRequestLocation",
               "values": [
                 {
                   "generatedName": "internal",
@@ -123,7 +123,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -134,10 +134,10 @@
           "description": "Filter the result to accounts that have corresponding `true` values in `account.allows`. For example `?allows=transferTo,transferFrom,view` returns only accounts where `account.allows.transferTo`, `account.allows.transferFrom`, and `account.allows.view` are all `true` for the caller.",
           "name": "allows",
           "schema": {
-            "generatedName": "AccountsListAccountsRequestAllows",
+            "generatedName": "ListAccountsAccountsRequestAllows",
             "value": {
               "value": {
-                "generatedName": "AccountsListAccountsRequestAllowsItem",
+                "generatedName": "ListAccountsAccountsRequestAllowsItem",
                 "schema": "accountAllowsFilter",
                 "source": {
                   "file": "../openapi.yml",
@@ -145,12 +145,12 @@
                 },
                 "type": "reference"
               },
-              "generatedName": "AccountsListAccountsRequestAllows",
+              "generatedName": "ListAccountsAccountsRequestAllows",
               "groupName": [],
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -161,19 +161,19 @@
           "description": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
           "name": "start",
           "schema": {
-            "generatedName": "AccountsListAccountsRequestStart",
+            "generatedName": "ListAccountsAccountsRequestStart",
             "value": {
               "schema": {
                 "default": "",
                 "maxLength": 256,
                 "type": "string"
               },
-              "generatedName": "AccountsListAccountsRequestStart",
+              "generatedName": "ListAccountsAccountsRequestStart",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -184,7 +184,7 @@
           "description": "The maximum number of items to return in this paged response.",
           "name": "limit",
           "schema": {
-            "generatedName": "AccountsListAccountsRequestLimit",
+            "generatedName": "ListAccountsAccountsRequestLimit",
             "value": {
               "schema": {
                 "default": 100,
@@ -192,12 +192,12 @@
                 "maximum": 1000,
                 "type": "int"
               },
-              "generatedName": "AccountsListAccountsRequestLimit",
+              "generatedName": "ListAccountsAccountsRequestLimit",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -206,11 +206,11 @@
         }
       ],
       "headers": [],
-      "generatedRequestName": "AccountsListAccountsRequest",
+      "generatedRequestName": "ListAccountsAccountsRequest",
       "response": {
         "description": "OK. A page from the full list of the customer's accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL.",
         "schema": {
-          "generatedName": "AccountsListAccountsResponse",
+          "generatedName": "ListAccountsAccountsResponse",
           "schema": "accounts",
           "source": {
             "file": "../openapi.yml",
@@ -779,35 +779,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "location",
-              "value": {
-                "value": "internal",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "start",
-              "value": {
-                "value": {
-                  "value": "start",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -1125,7 +1097,7 @@
           "description": "The unique identifier of this account resource. This is an opaque string.",
           "name": "accountId",
           "schema": {
-            "generatedName": "AccountsGetAccountRequestAccountId",
+            "generatedName": "GetAccountAccountsRequestAccountId",
             "schema": "resourceId",
             "source": {
               "file": "../openapi.yml",
@@ -1141,11 +1113,11 @@
       ],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "AccountsGetAccountRequest",
+      "generatedRequestName": "GetAccountAccountsRequest",
       "response": {
         "description": "OK. The response is a representation of the customer's account.",
         "schema": {
-          "generatedName": "AccountsGetAccountResponse",
+          "generatedName": "GetAccountAccountsResponse",
           "schema": "account",
           "source": {
             "file": "../openapi.yml",
@@ -1765,9 +1737,9 @@
           "description": "The unique account identifiers of one or more internal accounts. (Internal accounts are those with `location` value of `internal`.) If omitted, this operation uses the accounts for which the customer has view permissions but is limited to at most 1000 accounts. Note: The account IDs are unrelated to the account number.",
           "name": "accounts",
           "schema": {
-            "generatedName": "AccountsListAccountBalancesRequestAccounts",
+            "generatedName": "ListAccountBalancesAccountsRequestAccounts",
             "value": {
-              "generatedName": "AccountsListAccountBalancesRequestAccounts",
+              "generatedName": "ListAccountBalancesAccountsRequestAccounts",
               "schema": "accountIds",
               "source": {
                 "file": "../openapi.yml",
@@ -1775,7 +1747,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1786,19 +1758,19 @@
           "description": "When retrying the operation, pass the `retryCount` from the `incompleteAccountBalances` response.",
           "name": "retryCount",
           "schema": {
-            "generatedName": "AccountsListAccountBalancesRequestRetryCount",
+            "generatedName": "ListAccountBalancesAccountsRequestRetryCount",
             "value": {
               "schema": {
                 "minimum": 1,
                 "maximum": 10,
                 "type": "int"
               },
-              "generatedName": "AccountsListAccountBalancesRequestRetryCount",
+              "generatedName": "ListAccountBalancesAccountsRequestRetryCount",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1807,11 +1779,11 @@
         }
       ],
       "headers": [],
-      "generatedRequestName": "AccountsListAccountBalancesRequest",
+      "generatedRequestName": "ListAccountBalancesAccountsRequest",
       "response": {
         "description": "OK. The response contains the balances for all the accounts in the `?accounts=` query parameter.",
         "schema": {
-          "generatedName": "AccountsListAccountBalancesResponse",
+          "generatedName": "ListAccountBalancesAccountsResponse",
           "schema": "accountBalances",
           "source": {
             "file": "../openapi.yml",
@@ -2497,18 +2469,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "retryCount",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -2643,7 +2604,7 @@
           "description": "The unique identifier of this account resource. This is an opaque string.",
           "name": "accountId",
           "schema": {
-            "generatedName": "AccountJointOwnersListAccountJointOwnersRequestAccountId",
+            "generatedName": "ListAccountJointOwnersAccountJointOwnersRequestAccountId",
             "schema": "resourceId",
             "source": {
               "file": "../openapi.yml",
@@ -2659,11 +2620,11 @@
       ],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "AccountJointOwnersListAccountJointOwnersRequest",
+      "generatedRequestName": "ListAccountJointOwnersAccountJointOwnersRequest",
       "response": {
         "description": "OK.",
         "schema": {
-          "generatedName": "AccountJointOwnersListAccountJointOwnersResponse",
+          "generatedName": "ListAccountJointOwnersAccountJointOwnersResponse",
           "schema": "accountJointOwners",
           "source": {
             "file": "../openapi.yml",
@@ -3305,7 +3266,7 @@
           "name": "allows",
           "schema": {
             "value": {
-              "generatedName": "AccountsListEligibleAchAccountsRequestAllowsItem",
+              "generatedName": "ListEligibleAchAccountsAccountsRequestAllowsItem",
               "schema": "accountAllowsFilter",
               "source": {
                 "file": "../openapi.yml",
@@ -3313,7 +3274,7 @@
               },
               "type": "reference"
             },
-            "generatedName": "AccountsListEligibleAchAccountsRequestAllows",
+            "generatedName": "ListEligibleAchAccountsAccountsRequestAllows",
             "groupName": [],
             "type": "array"
           },
@@ -3326,7 +3287,7 @@
           "description": "Filter the result to accounts that allow ACH transfers of the given Standard Entry Class (SEC) codes.",
           "name": "secCode",
           "schema": {
-            "generatedName": "AccountsListEligibleAchAccountsRequestSecCode",
+            "generatedName": "ListEligibleAchAccountsAccountsRequestSecCode",
             "schema": "achSecCode",
             "source": {
               "file": "../openapi.yml",
@@ -3343,9 +3304,9 @@
           "description": "The optional identifier of a business customer. This is an opaque string. An agent who is operating on behalf of a business can use this to access the resources of that business customer. The agent must have entitlements to act on behalf of the business; if not, the operation returns a 403 Forbidden response. For other situations, omit this value, else this _must_ match the authenticated caller's customer ID (not their access ID).",
           "name": "customerId",
           "schema": {
-            "generatedName": "AccountsListEligibleAchAccountsRequestCustomerId",
+            "generatedName": "ListEligibleAchAccountsAccountsRequestCustomerId",
             "value": {
-              "generatedName": "AccountsListEligibleAchAccountsRequestCustomerId",
+              "generatedName": "ListEligibleAchAccountsAccountsRequestCustomerId",
               "schema": "resourceId",
               "source": {
                 "file": "../openapi.yml",
@@ -3353,7 +3314,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3364,19 +3325,19 @@
           "description": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
           "name": "start",
           "schema": {
-            "generatedName": "AccountsListEligibleAchAccountsRequestStart",
+            "generatedName": "ListEligibleAchAccountsAccountsRequestStart",
             "value": {
               "schema": {
                 "default": "",
                 "maxLength": 256,
                 "type": "string"
               },
-              "generatedName": "AccountsListEligibleAchAccountsRequestStart",
+              "generatedName": "ListEligibleAchAccountsAccountsRequestStart",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3387,7 +3348,7 @@
           "description": "The maximum number of items to return in this paged response.",
           "name": "limit",
           "schema": {
-            "generatedName": "AccountsListEligibleAchAccountsRequestLimit",
+            "generatedName": "ListEligibleAchAccountsAccountsRequestLimit",
             "value": {
               "schema": {
                 "default": 100,
@@ -3395,12 +3356,12 @@
                 "maximum": 1000,
                 "type": "int"
               },
-              "generatedName": "AccountsListEligibleAchAccountsRequestLimit",
+              "generatedName": "ListEligibleAchAccountsAccountsRequestLimit",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3409,11 +3370,11 @@
         }
       ],
       "headers": [],
-      "generatedRequestName": "AccountsListEligibleAchAccountsRequest",
+      "generatedRequestName": "ListEligibleAchAccountsAccountsRequest",
       "response": {
         "description": "OK. A page from the full list of the customer's ACH-eligible accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL.",
         "schema": {
-          "generatedName": "AccountsListEligibleAchAccountsResponse",
+          "generatedName": "ListEligibleAchAccountsAccountsResponse",
           "schema": "accounts",
           "source": {
             "file": "../openapi.yml",
@@ -4002,7 +3963,7 @@
           "description": "The unique identifier of this account resource. This is an opaque string.",
           "name": "accountId",
           "schema": {
-            "generatedName": "OverdraftProtectionListEligibleOverdraftAccountsRequestAccountId",
+            "generatedName": "ListEligibleOverdraftAccountsOverdraftProtectionRequestAccountId",
             "schema": "resourceId",
             "source": {
               "file": "../openapi.yml",
@@ -4021,19 +3982,19 @@
           "description": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
           "name": "start",
           "schema": {
-            "generatedName": "OverdraftProtectionListEligibleOverdraftAccountsRequestStart",
+            "generatedName": "ListEligibleOverdraftAccountsOverdraftProtectionRequestStart",
             "value": {
               "schema": {
                 "default": "",
                 "maxLength": 256,
                 "type": "string"
               },
-              "generatedName": "OverdraftProtectionListEligibleOverdraftAccountsRequestStart",
+              "generatedName": "ListEligibleOverdraftAccountsOverdraftProtectionRequestStart",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4044,7 +4005,7 @@
           "description": "The maximum number of items to return in this paged response.",
           "name": "limit",
           "schema": {
-            "generatedName": "OverdraftProtectionListEligibleOverdraftAccountsRequestLimit",
+            "generatedName": "ListEligibleOverdraftAccountsOverdraftProtectionRequestLimit",
             "value": {
               "schema": {
                 "default": 100,
@@ -4052,12 +4013,12 @@
                 "maximum": 1000,
                 "type": "int"
               },
-              "generatedName": "OverdraftProtectionListEligibleOverdraftAccountsRequestLimit",
+              "generatedName": "ListEligibleOverdraftAccountsOverdraftProtectionRequestLimit",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4066,11 +4027,11 @@
         }
       ],
       "headers": [],
-      "generatedRequestName": "OverdraftProtectionListEligibleOverdraftAccountsRequest",
+      "generatedRequestName": "ListEligibleOverdraftAccountsOverdraftProtectionRequest",
       "response": {
         "description": "OK. A page from the full list of the customer's eligible overdraft accounts. This list contains only accounts that the customer is entitled to access. While the `nextPage_url` property is present in the response, the client can fetch the next page of accounts by performing a `GET` on that URL.",
         "schema": {
-          "generatedName": "OverdraftProtectionListEligibleOverdraftAccountsResponse",
+          "generatedName": "ListEligibleOverdraftAccountsOverdraftProtectionResponse",
           "schema": "eligibleOverdraftAccounts",
           "source": {
             "file": "../openapi.yml",
@@ -4784,28 +4745,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "start",
-              "value": {
-                "value": {
-                  "value": "start",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -4965,7 +4905,7 @@
           "description": "The unique identifier of this account resource. This is an opaque string.",
           "name": "accountId",
           "schema": {
-            "generatedName": "OverdraftProtectionGetOverdraftProtectionRequestAccountId",
+            "generatedName": "GetOverdraftProtectionOverdraftProtectionRequestAccountId",
             "schema": "resourceId",
             "source": {
               "file": "../openapi.yml",
@@ -4981,11 +4921,11 @@
       ],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "OverdraftProtectionGetOverdraftProtectionRequest",
+      "generatedRequestName": "GetOverdraftProtectionOverdraftProtectionRequest",
       "response": {
         "description": "OK.",
         "schema": {
-          "generatedName": "OverdraftProtectionGetOverdraftProtectionResponse",
+          "generatedName": "GetOverdraftProtectionOverdraftProtectionResponse",
           "schema": "overdraftProtection",
           "source": {
             "file": "../openapi.yml",
@@ -5492,7 +5432,7 @@
           "description": "The unique identifier of this account resource. This is an opaque string.",
           "name": "accountId",
           "schema": {
-            "generatedName": "OverdraftProtectionPatchOverdraftAccountsRequestAccountId",
+            "generatedName": "PatchOverdraftAccountsOverdraftProtectionRequestAccountId",
             "schema": "resourceId",
             "source": {
               "file": "../openapi.yml",
@@ -5508,10 +5448,10 @@
       ],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "OverdraftProtectionPatchOverdraftAccountsRequest",
+      "generatedRequestName": "PatchOverdraftAccountsOverdraftProtectionRequest",
       "request": {
         "schema": {
-          "generatedName": "OverdraftProtectionPatchOverdraftAccountsRequest",
+          "generatedName": "PatchOverdraftAccountsOverdraftProtectionRequestBody",
           "schema": "overdraftProtectionPatch",
           "source": {
             "file": "../openapi.yml",
@@ -5531,7 +5471,7 @@
       "response": {
         "description": "OK.",
         "schema": {
-          "generatedName": "OverdraftProtectionPatchOverdraftAccountsResponse",
+          "generatedName": "PatchOverdraftAccountsOverdraftProtectionResponse",
           "schema": "overdraftProtection",
           "source": {
             "file": "../openapi.yml",
@@ -6310,7 +6250,7 @@
           "description": "The unique identifier of this account resource. This is an opaque string.",
           "name": "accountId",
           "schema": {
-            "generatedName": "JointOwnersCreateJointOwnerInvitationRequestAccountId",
+            "generatedName": "CreateJointOwnerInvitationJointOwnersRequestAccountId",
             "schema": "resourceId",
             "source": {
               "file": "../openapi.yml",
@@ -6326,10 +6266,10 @@
       ],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "JointOwnersCreateJointOwnerInvitationRequest",
+      "generatedRequestName": "CreateJointOwnerInvitationJointOwnersRequest",
       "request": {
         "schema": {
-          "generatedName": "JointOwnersCreateJointOwnerInvitationRequest",
+          "generatedName": "CreateJointOwnerInvitationJointOwnersRequestBody",
           "schema": "newJointOwnerInvitation",
           "source": {
             "file": "../openapi.yml",
@@ -6349,7 +6289,7 @@
       "response": {
         "description": "OK.",
         "schema": {
-          "generatedName": "JointOwnersCreateJointOwnerInvitationResponse",
+          "generatedName": "CreateJointOwnerInvitationJointOwnersResponse",
           "schema": "jointOwnerInvitation",
           "source": {
             "file": "../openapi.yml",
@@ -7193,7 +7133,7 @@
               "maxLength": 36,
               "type": "string"
             },
-            "generatedName": "InstitutionsLookUpInstitutionByLocatorRequestLocator",
+            "generatedName": "LookUpInstitutionByLocatorInstitutionsRequestLocator",
             "groupName": [],
             "type": "primitive"
           },
@@ -7206,7 +7146,7 @@
           "description": "Indicates what type of value the `locator` query parameter is.",
           "name": "locatorType",
           "schema": {
-            "generatedName": "InstitutionsLookUpInstitutionByLocatorRequestLocatorType",
+            "generatedName": "LookUpInstitutionByLocatorInstitutionsRequestLocatorType",
             "schema": "institutionLocatorType",
             "source": {
               "file": "../openapi.yml",
@@ -7230,7 +7170,7 @@
               "example": "US",
               "type": "string"
             },
-            "generatedName": "InstitutionsLookUpInstitutionByLocatorRequestCountryCode",
+            "generatedName": "LookUpInstitutionByLocatorInstitutionsRequestCountryCode",
             "groupName": [],
             "type": "primitive"
           },
@@ -7243,17 +7183,17 @@
           "description": "If looking up a beneficiary institution for a wire transfer beneficiary institution, request the response also include a list of intermediary institutions.",
           "name": "includeIntermediaryInstitutions",
           "schema": {
-            "generatedName": "InstitutionsLookUpInstitutionByLocatorRequestIncludeIntermediaryInstitutions",
+            "generatedName": "LookUpInstitutionByLocatorInstitutionsRequestIncludeIntermediaryInstitutions",
             "value": {
               "schema": {
                 "type": "boolean"
               },
-              "generatedName": "InstitutionsLookUpInstitutionByLocatorRequestIncludeIntermediaryInstitutions",
+              "generatedName": "LookUpInstitutionByLocatorInstitutionsRequestIncludeIntermediaryInstitutions",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7262,11 +7202,11 @@
         }
       ],
       "headers": [],
-      "generatedRequestName": "InstitutionsLookUpInstitutionByLocatorRequest",
+      "generatedRequestName": "LookUpInstitutionByLocatorInstitutionsRequest",
       "response": {
         "description": "OK.",
         "schema": {
-          "generatedName": "InstitutionsLookUpInstitutionByLocatorResponse",
+          "generatedName": "LookUpInstitutionByLocatorInstitutionsResponse",
           "schema": "institutionLookupResult",
           "source": {
             "file": "../openapi.yml",
@@ -7862,16 +7802,6 @@
                 },
                 "type": "primitive"
               }
-            },
-            {
-              "name": "includeIntermediaryInstitutions",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
             }
           ],
           "headers": [],
@@ -8075,7 +8005,7 @@
           "description": "The unique identifier of a financial institution.",
           "name": "institutionId",
           "schema": {
-            "generatedName": "InstitutionsListTransferScheduleRequestInstitutionId",
+            "generatedName": "ListTransferScheduleInstitutionsRequestInstitutionId",
             "schema": "institutionId",
             "source": {
               "file": "../openapi.yml",
@@ -8095,11 +8025,9 @@
           "name": "startsOn",
           "schema": {
             "schema": {
-              "format": "date",
-              "example": "2022-07-04",
-              "type": "string"
+              "type": "date"
             },
-            "generatedName": "InstitutionsListTransferScheduleRequestStartsOn",
+            "generatedName": "ListTransferScheduleInstitutionsRequestStartsOn",
             "groupName": [],
             "type": "primitive"
           },
@@ -8112,19 +8040,17 @@
           "description": "The date to use to conclude calculations of the transfer schedule in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
           "name": "endsOn",
           "schema": {
-            "generatedName": "InstitutionsListTransferScheduleRequestEndsOn",
+            "generatedName": "ListTransferScheduleInstitutionsRequestEndsOn",
             "value": {
               "schema": {
-                "format": "date",
-                "example": "2022-07-04",
-                "type": "string"
+                "type": "date"
               },
-              "generatedName": "InstitutionsListTransferScheduleRequestEndsOn",
+              "generatedName": "ListTransferScheduleInstitutionsRequestEndsOn",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -8135,7 +8061,7 @@
           "description": "The direction of the transfer from the institution to the customer used for adjusting transfer dates due to banking holidays. For `debit`, dates are adjusted to the next business day. For `credit`, dates are adjusted to the previous business day.",
           "name": "direction",
           "schema": {
-            "generatedName": "InstitutionsListTransferScheduleRequestDirection",
+            "generatedName": "ListTransferScheduleInstitutionsRequestDirection",
             "schema": "transferScheduleDirection",
             "source": {
               "file": "../openapi.yml",
@@ -8152,7 +8078,7 @@
           "description": "The maximum amount of dates to calculate and include in the response. If an end date is provided, the total count may be lower than the requested count.",
           "name": "count",
           "schema": {
-            "generatedName": "InstitutionsListTransferScheduleRequestCount",
+            "generatedName": "ListTransferScheduleInstitutionsRequestCount",
             "value": {
               "schema": {
                 "default": 6,
@@ -8160,12 +8086,12 @@
                 "maximum": 12,
                 "type": "int"
               },
-              "generatedName": "InstitutionsListTransferScheduleRequestCount",
+              "generatedName": "ListTransferScheduleInstitutionsRequestCount",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -8176,7 +8102,7 @@
           "description": "The interval at which the money movement recurs.",
           "name": "frequency",
           "schema": {
-            "generatedName": "InstitutionsListTransferScheduleRequestFrequency",
+            "generatedName": "ListTransferScheduleInstitutionsRequestFrequency",
             "schema": "transferFrequency",
             "source": {
               "file": "../openapi.yml",
@@ -8191,11 +8117,11 @@
         }
       ],
       "headers": [],
-      "generatedRequestName": "InstitutionsListTransferScheduleRequest",
+      "generatedRequestName": "ListTransferScheduleInstitutionsRequest",
       "response": {
         "description": "OK.",
         "schema": {
-          "generatedName": "InstitutionsListTransferScheduleResponse",
+          "generatedName": "ListTransferScheduleInstitutionsResponse",
           "schema": "transferSchedules",
           "source": {
             "file": "../openapi.yml",
@@ -8915,7 +8841,7 @@
               "value": {
                 "value": {
                   "value": "2022-07-04",
-                  "type": "string"
+                  "type": "date"
                 },
                 "type": "primitive"
               }
@@ -8925,7 +8851,7 @@
               "value": {
                 "value": {
                   "value": "2022-07-04",
-                  "type": "string"
+                  "type": "date"
                 },
                 "type": "primitive"
               }
@@ -8935,16 +8861,6 @@
               "value": {
                 "value": "debit",
                 "type": "enum"
-              }
-            },
-            {
-              "name": "count",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
               }
             },
             {
@@ -8966,14 +8882,14 @@
                         "scheduledOn": {
                           "value": {
                             "value": "2022-06-27",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "effectiveOn": {
                           "value": {
                             "value": "2022-06-27",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -8985,14 +8901,14 @@
                         "scheduledOn": {
                           "value": {
                             "value": "2022-07-04",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "effectiveOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -9004,14 +8920,14 @@
                         "scheduledOn": {
                           "value": {
                             "value": "2022-07-11",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "effectiveOn": {
                           "value": {
                             "value": "2022-07-11",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -9023,14 +8939,14 @@
                         "scheduledOn": {
                           "value": {
                             "value": "2022-07-18",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "effectiveOn": {
                           "value": {
                             "value": "2022-07-18",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -9042,14 +8958,14 @@
                         "scheduledOn": {
                           "value": {
                             "value": "2022-07-25",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "effectiveOn": {
                           "value": {
                             "value": "2022-07-25",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -9061,14 +8977,14 @@
                         "scheduledOn": {
                           "value": {
                             "value": "2022-08-01",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "effectiveOn": {
                           "value": {
                             "value": "2022-07-01",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -9109,7 +9025,7 @@
           "description": "The unique identifier of a financial institution.",
           "name": "institutionId",
           "schema": {
-            "generatedName": "InstitutionsGetCutoffTimesRequestInstitutionId",
+            "generatedName": "GetCutoffTimesInstitutionsRequestInstitutionId",
             "schema": "institutionId",
             "source": {
               "file": "../openapi.yml",
@@ -9128,9 +9044,9 @@
           "description": "Identifies the time zone for formatting time values in the response. If omitted, time values are formatting in the local timezone of the financial institution.",
           "name": "timeZoneId",
           "schema": {
-            "generatedName": "InstitutionsGetCutoffTimesRequestTimeZoneId",
+            "generatedName": "GetCutoffTimesInstitutionsRequestTimeZoneId",
             "value": {
-              "generatedName": "InstitutionsGetCutoffTimesRequestTimeZoneId",
+              "generatedName": "GetCutoffTimesInstitutionsRequestTimeZoneId",
               "schema": "timeZoneId",
               "source": {
                 "file": "../openapi.yml",
@@ -9138,7 +9054,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -9151,18 +9067,18 @@
           "description": "The entity tag that was returned in the `ETag` response header of a previous call. If the resource's current entity tag value matches this header value, the `GET` will return 304 (Not Modified) and no response body, else the current resource representation and updated `ETag` is returned.",
           "name": "If-None-Match",
           "schema": {
-            "generatedName": "InstitutionsGetCutoffTimesRequestIfNoneMatch",
+            "generatedName": "GetCutoffTimesInstitutionsRequestIfNoneMatch",
             "value": {
               "schema": {
                 "maxLength": 512,
                 "type": "string"
               },
-              "generatedName": "InstitutionsGetCutoffTimesRequestIfNoneMatch",
+              "generatedName": "GetCutoffTimesInstitutionsRequestIfNoneMatch",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -9170,11 +9086,11 @@
           }
         }
       ],
-      "generatedRequestName": "InstitutionsGetCutoffTimesRequest",
+      "generatedRequestName": "GetCutoffTimesInstitutionsRequest",
       "response": {
         "description": "OK.",
         "schema": {
-          "generatedName": "InstitutionsGetCutoffTimesResponse",
+          "generatedName": "GetCutoffTimesInstitutionsResponse",
           "schema": "cutoffTimes",
           "source": {
             "file": "../openapi.yml",
@@ -10034,18 +9950,7 @@
               }
             }
           ],
-          "headers": [
-            {
-              "name": "If-None-Match",
-              "value": {
-                "value": {
-                  "value": "If-None-Match",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "headers": [],
           "response": {
             "value": {
               "properties": {
@@ -10156,7 +10061,7 @@
           "description": "The unique identifier of a financial institution.",
           "name": "institutionId",
           "schema": {
-            "generatedName": "InstitutionsGetTransferDateRestrictionsRequestInstitutionId",
+            "generatedName": "GetTransferDateRestrictionsInstitutionsRequestInstitutionId",
             "schema": "institutionId",
             "source": {
               "file": "../openapi.yml",
@@ -10175,19 +10080,17 @@
           "description": "The start of the range of dates to include in the response, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. While start dates far in the future are allowed, bank holiday schedules are only available for a small number of years ahead. The default is the current date.",
           "name": "startsOn",
           "schema": {
-            "generatedName": "InstitutionsGetTransferDateRestrictionsRequestStartsOn",
+            "generatedName": "GetTransferDateRestrictionsInstitutionsRequestStartsOn",
             "value": {
               "schema": {
-                "format": "date",
-                "example": "2022-07-04",
-                "type": "string"
+                "type": "date"
               },
-              "generatedName": "InstitutionsGetTransferDateRestrictionsRequestStartsOn",
+              "generatedName": "GetTransferDateRestrictionsInstitutionsRequestStartsOn",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -10198,19 +10101,17 @@
           "description": "The end of the range of dates to include in the response. in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. The default is at least one year from the `startOn` date and is limited to a four year interval.",
           "name": "endsOn",
           "schema": {
-            "generatedName": "InstitutionsGetTransferDateRestrictionsRequestEndsOn",
+            "generatedName": "GetTransferDateRestrictionsInstitutionsRequestEndsOn",
             "value": {
               "schema": {
-                "format": "date",
-                "example": "2022-07-04",
-                "type": "string"
+                "type": "date"
               },
-              "generatedName": "InstitutionsGetTransferDateRestrictionsRequestEndsOn",
+              "generatedName": "GetTransferDateRestrictionsInstitutionsRequestEndsOn",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -10221,9 +10122,9 @@
           "description": "Describes the type of transfer. This determines what business rules and adjustments to make to the date restrictions. Note ACH transfers (including CTX and PPD), that `Credit` and `Debit` here are relative to the account at the _external_ financial institution.",
           "name": "type",
           "schema": {
-            "generatedName": "InstitutionsGetTransferDateRestrictionsRequestType",
+            "generatedName": "GetTransferDateRestrictionsInstitutionsRequestType",
             "value": {
-              "generatedName": "InstitutionsGetTransferDateRestrictionsRequestType",
+              "generatedName": "GetTransferDateRestrictionsInstitutionsRequestType",
               "schema": "transferTypeForDateRestrictions",
               "source": {
                 "file": "../openapi.yml",
@@ -10231,7 +10132,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -10242,9 +10143,9 @@
           "description": "The primary account's risk level. This determines what business rules and adjustments to make to the date restrictions. This parameter only applies to ACH credit transfers (funds credited to an external account) and is ignored for others.",
           "name": "risk",
           "schema": {
-            "generatedName": "InstitutionsGetTransferDateRestrictionsRequestRisk",
+            "generatedName": "GetTransferDateRestrictionsInstitutionsRequestRisk",
             "value": {
-              "generatedName": "InstitutionsGetTransferDateRestrictionsRequestRisk",
+              "generatedName": "GetTransferDateRestrictionsInstitutionsRequestRisk",
               "schema": "achAccountRisk",
               "source": {
                 "file": "../openapi.yml",
@@ -10252,7 +10153,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -10261,11 +10162,11 @@
         }
       ],
       "headers": [],
-      "generatedRequestName": "InstitutionsGetTransferDateRestrictionsRequest",
+      "generatedRequestName": "GetTransferDateRestrictionsInstitutionsRequest",
       "response": {
         "description": "OK.",
         "schema": {
-          "generatedName": "InstitutionsGetTransferDateRestrictionsResponse",
+          "generatedName": "GetTransferDateRestrictionsInstitutionsResponse",
           "schema": "transferDateRestrictions",
           "source": {
             "file": "../openapi.yml",
@@ -10983,7 +10884,7 @@
               "value": {
                 "value": {
                   "value": "2022-07-04",
-                  "type": "string"
+                  "type": "date"
                 },
                 "type": "primitive"
               }
@@ -10993,23 +10894,9 @@
               "value": {
                 "value": {
                   "value": "2022-07-04",
-                  "type": "string"
+                  "type": "date"
                 },
                 "type": "primitive"
-              }
-            },
-            {
-              "name": "type",
-              "value": {
-                "value": "internal",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "risk",
-              "value": {
-                "value": "early",
-                "type": "enum"
               }
             }
           ],
@@ -11024,7 +10911,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-01",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11035,14 +10922,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11054,7 +10941,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-02",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11065,14 +10952,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11084,7 +10971,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-03",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11095,14 +10982,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11114,7 +11001,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-04",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11125,14 +11012,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11144,7 +11031,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11155,14 +11042,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11174,7 +11061,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-06",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11185,14 +11072,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11204,7 +11091,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-07",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11215,14 +11102,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11234,7 +11121,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-08",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11245,14 +11132,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11264,7 +11151,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-09",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11275,14 +11162,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11294,7 +11181,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-10",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11305,14 +11192,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11324,7 +11211,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-15",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11335,14 +11222,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11354,7 +11241,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-16",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11365,14 +11252,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11384,7 +11271,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-22",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11395,14 +11282,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11414,7 +11301,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-23",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11425,14 +11312,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11444,7 +11331,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-29",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11455,14 +11342,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11474,7 +11361,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-30",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11485,14 +11372,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11505,7 +11392,7 @@
                 "accuracyEndsOn": {
                   "value": {
                     "value": "2026-12-31T00:00:00.000Z",
-                    "type": "string"
+                    "type": "date"
                   },
                   "type": "primitive"
                 }
@@ -11540,7 +11427,7 @@
           "description": "The unique identifier of this account resource. This is an opaque string.",
           "name": "accountId",
           "schema": {
-            "generatedName": "TransactionsListTransactionsRequestAccountId",
+            "generatedName": "ListTransactionsTransactionsRequestAccountId",
             "schema": "resourceId",
             "source": {
               "file": "../openapi.yml",
@@ -11559,19 +11446,19 @@
           "description": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
           "name": "start",
           "schema": {
-            "generatedName": "TransactionsListTransactionsRequestStart",
+            "generatedName": "ListTransactionsTransactionsRequestStart",
             "value": {
               "schema": {
                 "default": "",
                 "maxLength": 256,
                 "type": "string"
               },
-              "generatedName": "TransactionsListTransactionsRequestStart",
+              "generatedName": "ListTransactionsTransactionsRequestStart",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11582,7 +11469,7 @@
           "description": "The maximum number of items to return in this paged response.",
           "name": "limit",
           "schema": {
-            "generatedName": "TransactionsListTransactionsRequestLimit",
+            "generatedName": "ListTransactionsTransactionsRequestLimit",
             "value": {
               "schema": {
                 "default": 100,
@@ -11590,12 +11477,12 @@
                 "maximum": 10000,
                 "type": "int"
               },
-              "generatedName": "TransactionsListTransactionsRequestLimit",
+              "generatedName": "ListTransactionsTransactionsRequestLimit",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11606,19 +11493,19 @@
           "description": "Return only transactions whose `occurredOn` date is in this date range. Dates ranges use dates expressed in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. Each account has an implicit default transaction history range of _n_ days. This is normally 30 days but may be shorter for accounts with high activity. This _n_ day period is applied to any unbounded date ranges. The default date range is the most recent _n_ days. Example date ranges: <ul> <li> `2023-05-19` match transactions occurring on May 19, 2023.</li> <li> `[2023-05-01,2023-05-31]` match transactions occurring between May 1 and 31, 2023, inclusive</li> <li> `[2023-05-01,2023-06-01)` match transactions occurring in May, 2023 (on or after May 1, but before June 1)</li> <li> `[2023-05-09,]` match transactions _n_ days on or after May 9, 2023</li> <li> `(2023-05-09,)` match transactions _n_ days after May 9, 2023</li> <li> `[,2023-05-09]` match transactions _n_ days on or before May 9, 2023</li> <li> `(,2023-05-09)` match transactions _n_ days before but excluding May 9, 2023</li> </ul>",
           "name": "occurredOn",
           "schema": {
-            "generatedName": "TransactionsListTransactionsRequestOccurredOn",
+            "generatedName": "ListTransactionsTransactionsRequestOccurredOn",
             "value": {
               "schema": {
                 "pattern": "^\\d{4}-\\d{2}-\\d{2}|([[(](\\d{4}-\\d{2}-\\d{2},(\\d{4}-\\d{2}-\\d{2})?|,\\d{4}-\\d{2}-\\d{2})[)\\]])$",
                 "example": "2023-05-19",
                 "type": "string"
               },
-              "generatedName": "TransactionsListTransactionsRequestOccurredOn",
+              "generatedName": "ListTransactionsTransactionsRequestOccurredOn",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11629,17 +11516,17 @@
           "description": "Limit transactions in the response based on the transaction's `posted` value. If `true`, include only posted transactions. If `false`, include only non-posted transactions. If omitted, do not filter based on `posted`. Note that using this filter excludes balance transactions because the `posted` property is not set on balance transactions, so neither `true` or `false` match them.",
           "name": "posted",
           "schema": {
-            "generatedName": "TransactionsListTransactionsRequestPosted",
+            "generatedName": "ListTransactionsTransactionsRequestPosted",
             "value": {
               "schema": {
                 "type": "boolean"
               },
-              "generatedName": "TransactionsListTransactionsRequestPosted",
+              "generatedName": "ListTransactionsTransactionsRequestPosted",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11650,9 +11537,9 @@
           "description": "Return only transactions whose `createdOn` date is in this date range. Example date ranges are the same format as the `occurredOn` query parameter.<br>**Warning**: The parameter `createdOn` was deprecated on version `v0.6.0` of the API. Use the `?occurredOn=` query parameter instead. `createdOn` will be removed on version `v0.9.0` of the API.",
           "name": "createdOn",
           "schema": {
-            "generatedName": "TransactionsListTransactionsRequestCreatedOn",
+            "generatedName": "ListTransactionsTransactionsRequestCreatedOn",
             "value": {
-              "generatedName": "TransactionsListTransactionsRequestCreatedOn",
+              "generatedName": "ListTransactionsTransactionsRequestCreatedOn",
               "schema": "dateRange",
               "source": {
                 "file": "../openapi.yml",
@@ -11660,7 +11547,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "availability": "Deprecated",
           "source": {
@@ -11672,9 +11559,9 @@
           "description": "Return only transactions whose `postedOn` date is in this date range. Example date ranges are the same format as the `occurredOn` query parameter.<br>**Warning**: The parameter `postedOn` was deprecated on version `v0.6.0` of the API. Use the `?occurredOn=` query parameter instead. `postedOn` will be removed on version `v0.9.0` of the API.",
           "name": "postedOn",
           "schema": {
-            "generatedName": "TransactionsListTransactionsRequestPostedOn",
+            "generatedName": "ListTransactionsTransactionsRequestPostedOn",
             "value": {
-              "generatedName": "TransactionsListTransactionsRequestPostedOn",
+              "generatedName": "ListTransactionsTransactionsRequestPostedOn",
               "schema": "dateRange",
               "source": {
                 "file": "../openapi.yml",
@@ -11682,7 +11569,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "availability": "Deprecated",
           "source": {
@@ -11694,10 +11581,10 @@
           "description": "Filter transactions to only those whose `category` is in this pipe-separated list. Categories are set by a transaction cleansing service or assigned by the account holder. Categories can include names such as `\"Shopping\"`, `\"Deposit\"`, `\"Bill\"`, `\"Transfer\"`, or `\"Other\"`.",
           "name": "category",
           "schema": {
-            "generatedName": "TransactionsListTransactionsRequestCategory",
+            "generatedName": "ListTransactionsTransactionsRequestCategory",
             "value": {
               "value": {
-                "generatedName": "TransactionsListTransactionsRequestCategoryItem",
+                "generatedName": "ListTransactionsTransactionsRequestCategoryItem",
                 "schema": "transactionCategoryLabel",
                 "source": {
                   "file": "../openapi.yml",
@@ -11705,12 +11592,12 @@
                 },
                 "type": "reference"
               },
-              "generatedName": "TransactionsListTransactionsRequestCategory",
+              "generatedName": "ListTransactionsTransactionsRequestCategory",
               "groupName": [],
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11721,10 +11608,10 @@
           "description": "Filter transactions to only those whose `type` is in this pipe-separated list.",
           "name": "type",
           "schema": {
-            "generatedName": "TransactionsListTransactionsRequestType",
+            "generatedName": "ListTransactionsTransactionsRequestType",
             "value": {
               "value": {
-                "generatedName": "TransactionsListTransactionsRequestTypeItem",
+                "generatedName": "ListTransactionsTransactionsRequestTypeItem",
                 "schema": "transactionType",
                 "source": {
                   "file": "../openapi.yml",
@@ -11732,12 +11619,12 @@
                 },
                 "type": "reference"
               },
-              "generatedName": "TransactionsListTransactionsRequestType",
+              "generatedName": "ListTransactionsTransactionsRequestType",
               "groupName": [],
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11748,10 +11635,10 @@
           "description": "Filter transactions to only those whose `subtype` is in this pipe-separated list.",
           "name": "subtype",
           "schema": {
-            "generatedName": "TransactionsListTransactionsRequestSubtype",
+            "generatedName": "ListTransactionsTransactionsRequestSubtype",
             "value": {
               "value": {
-                "generatedName": "TransactionsListTransactionsRequestSubtypeItem",
+                "generatedName": "ListTransactionsTransactionsRequestSubtypeItem",
                 "schema": "transactionSubType",
                 "source": {
                   "file": "../openapi.yml",
@@ -11759,12 +11646,12 @@
                 },
                 "type": "reference"
               },
-              "generatedName": "TransactionsListTransactionsRequestSubtype",
+              "generatedName": "ListTransactionsTransactionsRequestSubtype",
               "groupName": [],
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11775,9 +11662,9 @@
           "description": "Return only transactions whose `amount` is in this numeric range. This compares only the absolute value of the transaction. That is, the value `[1000.00,1100.00)` matches either a debit of `-1070.25` or a credit of `1021.90`.<br> Some examples of specifying an amount range: <ul> <li>`1200.50` match the dollar amount 1,200.50 exactly</li> <li>`[1000.00,1200.00)` matches items where `1000.00 <= amount < 1200.00`</li> <li>`[1000.00,1199.99]` matches items where `1000.00 <= amount <= 1199.99`</li> <li>`(999.99,1200.00]` matches items where `999.99 < amount <= 1200.00`</li> <li>`[1200.50,]` matches items where `amount >= 1200.50`</li> <li>`(1200.50,)` matches items where `amount > 1200.50`</li> <li>`[,1200.50]` matches items where `amount <= 1200.50`</li> <li>`(,1200.50)` matches items where `amount < 1200.50`</li> </ul>",
           "name": "amount",
           "schema": {
-            "generatedName": "TransactionsListTransactionsRequestAmount",
+            "generatedName": "ListTransactionsTransactionsRequestAmount",
             "value": {
-              "generatedName": "TransactionsListTransactionsRequestAmount",
+              "generatedName": "ListTransactionsTransactionsRequestAmount",
               "schema": "amountRange",
               "source": {
                 "file": "../openapi.yml",
@@ -11785,7 +11672,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11796,9 +11683,9 @@
           "description": "Return only transactions whose `check.number` is in this integer range. Examples: <ul> <li>`1200` match the integer 1,200 exactly</li> <li>`[1000,1200)` matches items where `1000 <= number < 1200`</li> <li>`[1000,1199]` matches items where `1000 <= number <= 1199`</li> <li>`(999,1200]` matches items where `999 < number <= 1200`</li> <li>`[1200,]` matches items where `number >= 1200`</li> <li>`(1200,)` matches items where `number > 1200`</li> <li>`[,1200]` matches items where `number <= 1200`</li> <li>`(,1200)` matches items where `number < 1200`</li> </ul>",
           "name": "checkNumber",
           "schema": {
-            "generatedName": "TransactionsListTransactionsRequestCheckNumber",
+            "generatedName": "ListTransactionsTransactionsRequestCheckNumber",
             "value": {
-              "generatedName": "TransactionsListTransactionsRequestCheckNumber",
+              "generatedName": "ListTransactionsTransactionsRequestCheckNumber",
               "schema": "checkNumberRange",
               "source": {
                 "file": "../openapi.yml",
@@ -11806,7 +11693,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11817,19 +11704,19 @@
           "description": "When retrying the operation, pass the `retryCount` from the `incompleteTransactions` response.",
           "name": "retryCount",
           "schema": {
-            "generatedName": "TransactionsListTransactionsRequestRetryCount",
+            "generatedName": "ListTransactionsTransactionsRequestRetryCount",
             "value": {
               "schema": {
                 "minimum": 1,
                 "maximum": 10,
                 "type": "int"
               },
-              "generatedName": "TransactionsListTransactionsRequestRetryCount",
+              "generatedName": "ListTransactionsTransactionsRequestRetryCount",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11838,11 +11725,11 @@
         }
       ],
       "headers": [],
-      "generatedRequestName": "TransactionsListTransactionsRequest",
+      "generatedRequestName": "ListTransactionsTransactionsRequest",
       "response": {
         "description": "OK.",
         "schema": {
-          "generatedName": "TransactionsListTransactionsResponse",
+          "generatedName": "ListTransactionsTransactionsResponse",
           "schema": "transactions",
           "source": {
             "file": "../openapi.yml",
@@ -12826,41 +12713,11 @@
           ],
           "queryParameters": [
             {
-              "name": "start",
-              "value": {
-                "value": {
-                  "value": "start",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "occurredOn",
               "value": {
                 "value": {
                   "value": "2023-05-19",
                   "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "posted",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
                 },
                 "type": "primitive"
               }
@@ -12901,16 +12758,6 @@
                 "value": {
                   "value": "[1000,1200)",
                   "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "retryCount",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
                 },
                 "type": "primitive"
               }
@@ -12963,7 +12810,7 @@
                         "occurredOn": {
                           "value": {
                             "value": "2023-06-18",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -13049,7 +12896,7 @@
                         "occurredOn": {
                           "value": {
                             "value": "2023-06-18",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -13205,18 +13052,18 @@
           "description": "The entity tag that was returned in the `ETag` response header of a previous call. If the resource's current entity tag value matches this header value, the `GET` will return 304 (Not Modified) and no response body, else the current resource representation and updated `ETag` is returned.",
           "name": "If-None-Match",
           "schema": {
-            "generatedName": "TransactionCategoriesListTransactionCategoriesRequestIfNoneMatch",
+            "generatedName": "ListTransactionCategoriesTransactionCategoriesRequestIfNoneMatch",
             "value": {
               "schema": {
                 "maxLength": 512,
                 "type": "string"
               },
-              "generatedName": "TransactionCategoriesListTransactionCategoriesRequestIfNoneMatch",
+              "generatedName": "ListTransactionCategoriesTransactionCategoriesRequestIfNoneMatch",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13224,11 +13071,11 @@
           }
         }
       ],
-      "generatedRequestName": "TransactionCategoriesListTransactionCategoriesRequest",
+      "generatedRequestName": "ListTransactionCategoriesTransactionCategoriesRequest",
       "response": {
         "description": "OK.",
         "schema": {
-          "generatedName": "TransactionCategoriesListTransactionCategoriesResponse",
+          "generatedName": "ListTransactionCategoriesTransactionCategoriesResponse",
           "schema": "transactionCategories",
           "source": {
             "file": "../openapi.yml",
@@ -13798,18 +13645,7 @@
         {
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [
-            {
-              "name": "If-None-Match",
-              "value": {
-                "value": {
-                  "value": "If-None-Match",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "headers": [],
           "response": {
             "value": {
               "properties": {
@@ -13873,9 +13709,9 @@
           "description": "Return only transactions whose `schedule.scheduledOn` date is in this date range. Excludes any transfers that do not have a `scheduledOn` date. Dates ranges use dates expressed in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. Example date ranges: <ul> <li> `2022-05-19` match only transfers scheduled on May 19, 2022.</li> <li> `[2022-05-01,2022-06-01)` in May, 2022: on or after May 1, but _before_ June 1</li> <li> `(2022-05-01,2022-06-01)` in May, 2022 (on or after May 1, but before June 1)</li> <li> `[2022-05-09,]` on or after May 9, 2022</li> <li> `(2022-05-09,)` after May 9, 2022</li> <li> `[,2022-05-09]` on or before May 9, 2022</li> <li> `(,2022-05-09)` before May 9, 2022</li> </ul>",
           "name": "scheduledOn",
           "schema": {
-            "generatedName": "TransfersListTransfersRequestScheduledOn",
+            "generatedName": "ListTransfersTransfersRequestScheduledOn",
             "value": {
-              "generatedName": "TransfersListTransfersRequestScheduledOn",
+              "generatedName": "ListTransfersTransfersRequestScheduledOn",
               "schema": "dateRange",
               "source": {
                 "file": "../openapi.yml",
@@ -13883,7 +13719,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13894,9 +13730,9 @@
           "description": "Return only transactions whose `schedule.debitsOn` date (when the funds are debited from the source account) is in this date range. Excludes any transfers that do not have a `scheduledOn` date. Dates ranges use dates expressed in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. See the `scheduledOn` query parameter for examples.",
           "name": "debitsOn",
           "schema": {
-            "generatedName": "TransfersListTransfersRequestDebitsOn",
+            "generatedName": "ListTransfersTransfersRequestDebitsOn",
             "value": {
-              "generatedName": "TransfersListTransfersRequestDebitsOn",
+              "generatedName": "ListTransfersTransfersRequestDebitsOn",
               "schema": "dateRange",
               "source": {
                 "file": "../openapi.yml",
@@ -13904,7 +13740,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13915,9 +13751,9 @@
           "description": "Return only transactions whose `schedule.creditsOn` (when the funds are credited to  the target account) is in this date range. Excludes any transfers that do not have a `scheduledOn` date. Dates ranges use dates expressed in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. See the `scheduledOn` query parameter for examples.",
           "name": "creditsOn",
           "schema": {
-            "generatedName": "TransfersListTransfersRequestCreditsOn",
+            "generatedName": "ListTransfersTransfersRequestCreditsOn",
             "value": {
-              "generatedName": "TransfersListTransfersRequestCreditsOn",
+              "generatedName": "ListTransfersTransfersRequestCreditsOn",
               "schema": "dateRange",
               "source": {
                 "file": "../openapi.yml",
@@ -13925,7 +13761,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13936,17 +13772,17 @@
           "description": "If `true`, list only historical (`state` is `processed`) transfers. If `false`, list only transfers that have not yet finished processing. If omitted, list all transfers.",
           "name": "historical",
           "schema": {
-            "generatedName": "TransfersListTransfersRequestHistorical",
+            "generatedName": "ListTransfersTransfersRequestHistorical",
             "value": {
               "schema": {
                 "type": "boolean"
               },
-              "generatedName": "TransfersListTransfersRequestHistorical",
+              "generatedName": "ListTransfersTransfersRequestHistorical",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13957,19 +13793,19 @@
           "description": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the `?start=` parameter on the `nextPage_url`.",
           "name": "start",
           "schema": {
-            "generatedName": "TransfersListTransfersRequestStart",
+            "generatedName": "ListTransfersTransfersRequestStart",
             "value": {
               "schema": {
                 "default": "",
                 "maxLength": 256,
                 "type": "string"
               },
-              "generatedName": "TransfersListTransfersRequestStart",
+              "generatedName": "ListTransfersTransfersRequestStart",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13980,7 +13816,7 @@
           "description": "The maximum number of items to return in this paged response.",
           "name": "limit",
           "schema": {
-            "generatedName": "TransfersListTransfersRequestLimit",
+            "generatedName": "ListTransfersTransfersRequestLimit",
             "value": {
               "schema": {
                 "default": 100,
@@ -13988,12 +13824,12 @@
                 "maximum": 1000,
                 "type": "int"
               },
-              "generatedName": "TransfersListTransfersRequestLimit",
+              "generatedName": "ListTransfersTransfersRequestLimit",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -14002,11 +13838,11 @@
         }
       ],
       "headers": [],
-      "generatedRequestName": "TransfersListTransfersRequest",
+      "generatedRequestName": "ListTransfersTransfersRequest",
       "response": {
         "description": "OK.",
         "schema": {
-          "generatedName": "TransfersListTransfersResponse",
+          "generatedName": "ListTransfersTransfersResponse",
           "schema": "transfers",
           "source": {
             "file": "../openapi.yml",
@@ -14605,36 +14441,6 @@
                 },
                 "type": "primitive"
               }
-            },
-            {
-              "name": "historical",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "start",
-              "value": {
-                "value": {
-                  "value": "start",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
             }
           ],
           "headers": [],
@@ -14760,7 +14566,7 @@
                             "scheduledOn": {
                               "value": {
                                 "value": "2026-06-28",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
@@ -14778,14 +14584,14 @@
                             "debitsOn": {
                               "value": {
                                 "value": "2026-06-24",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
                             "creditsOn": {
                               "value": {
                                 "value": "2026-06-26",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             }
@@ -14909,7 +14715,7 @@
                             "scheduledOn": {
                               "value": {
                                 "value": "2023-08-01",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
@@ -14934,14 +14740,14 @@
                             "debitsOn": {
                               "value": {
                                 "value": "2026-08-01",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
                             "creditsOn": {
                               "value": {
                                 "value": "2023-08-01",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             }
@@ -15012,9 +14818,9 @@
           "description": "This operation may require a completed challenge. If the first attempt calling this operation fails with a 401 `challengeRequired` error, the client should complete the challenge flow as described in the Challenges API, then retry the operation with this `Challenge` request header using the `challengeToken` returned at the end of that flow. If this is passed but the value is invalid, the operation fails with a 401 status code and the `invalidChallengeHeader` problem type.",
           "name": "Challenge",
           "schema": {
-            "generatedName": "TransfersCreateTransferRequestChallenge",
+            "generatedName": "CreateTransferTransfersRequestChallenge",
             "value": {
-              "generatedName": "TransfersCreateTransferRequestChallenge",
+              "generatedName": "CreateTransferTransfersRequestChallenge",
               "schema": "challengeToken",
               "source": {
                 "file": "../openapi.yml",
@@ -15022,7 +14828,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15030,10 +14836,10 @@
           }
         }
       ],
-      "generatedRequestName": "TransfersCreateTransferRequest",
+      "generatedRequestName": "CreateTransferTransfersRequest",
       "request": {
         "schema": {
-          "generatedName": "TransfersCreateTransferRequestBody",
+          "generatedName": "CreateTransferTransfersRequestBody",
           "schema": "newTransfer",
           "source": {
             "file": "../openapi.yml",
@@ -15053,7 +14859,7 @@
       "response": {
         "description": "Created.",
         "schema": {
-          "generatedName": "TransfersCreateTransferResponse",
+          "generatedName": "CreateTransferTransfersResponse",
           "schema": "transfer",
           "source": {
             "file": "../openapi.yml",
@@ -15623,18 +15429,7 @@
         {
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [
-            {
-              "name": "Challenge",
-              "value": {
-                "value": {
-                  "value": "Challenge",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "headers": [],
           "request": {
             "properties": {
               "amount": {
@@ -15688,7 +15483,7 @@
                   "scheduledOn": {
                     "value": {
                       "value": "2022-06-28",
-                      "type": "string"
+                      "type": "date"
                     },
                     "type": "primitive"
                   },
@@ -15799,7 +15594,7 @@
                     "scheduledOn": {
                       "value": {
                         "value": "2026-06-28",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -15813,8 +15608,8 @@
                     },
                     "endsOn": {
                       "value": {
-                        "value": "endsOn",
-                        "type": "string"
+                        "value": "2023-01-15",
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -15835,14 +15630,14 @@
                     "debitsOn": {
                       "value": {
                         "value": "2026-06-24",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
                     "creditsOn": {
                       "value": {
                         "value": "2026-06-26",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     }
@@ -15898,7 +15693,7 @@
           "description": "The unique identifier of this transfer. This is an opaque string.",
           "name": "transferId",
           "schema": {
-            "generatedName": "TransfersGetTransferRequestTransferId",
+            "generatedName": "GetTransferTransfersRequestTransferId",
             "schema": "resourceId",
             "source": {
               "file": "../openapi.yml",
@@ -15914,11 +15709,11 @@
       ],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "TransfersGetTransferRequest",
+      "generatedRequestName": "GetTransferTransfersRequest",
       "response": {
         "description": "OK.",
         "schema": {
-          "generatedName": "TransfersGetTransferResponse",
+          "generatedName": "GetTransferTransfersResponse",
           "schema": "transfer",
           "source": {
             "file": "../openapi.yml",
@@ -16463,7 +16258,7 @@
                     "scheduledOn": {
                       "value": {
                         "value": "2026-06-28",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -16477,8 +16272,8 @@
                     },
                     "endsOn": {
                       "value": {
-                        "value": "endsOn",
-                        "type": "string"
+                        "value": "2023-01-15",
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -16499,14 +16294,14 @@
                     "debitsOn": {
                       "value": {
                         "value": "2026-06-24",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
                     "creditsOn": {
                       "value": {
                         "value": "2026-06-26",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     }
@@ -16562,7 +16357,7 @@
           "description": "The unique identifier of this transfer. This is an opaque string.",
           "name": "transferId",
           "schema": {
-            "generatedName": "TransfersDeleteTransferRequestTransferId",
+            "generatedName": "DeleteTransferTransfersRequestTransferId",
             "schema": "resourceId",
             "source": {
               "file": "../openapi.yml",
@@ -16578,7 +16373,7 @@
       ],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "TransfersDeleteTransferRequest",
+      "generatedRequestName": "DeleteTransferTransfersRequest",
       "errors": {
         "401": {
           "generatedName": "UnauthorizedError",
@@ -17171,7 +16966,7 @@
           "description": "The unique identifier of this transfer. This is an opaque string.",
           "name": "transferId",
           "schema": {
-            "generatedName": "TransfersPatchTransferRequestTransferId",
+            "generatedName": "PatchTransferTransfersRequestTransferId",
             "schema": "resourceId",
             "source": {
               "file": "../openapi.yml",
@@ -17191,9 +16986,9 @@
           "description": "This operation may require a completed challenge. If the first attempt calling this operation fails with a 401 `challengeRequired` error, the client should complete the challenge flow as described in the Challenges API, then retry the operation with this `Challenge` request header using the `challengeToken` returned at the end of that flow. If this is passed but the value is invalid, the operation fails with a 401 status code and the `invalidChallengeHeader` problem type.",
           "name": "Challenge",
           "schema": {
-            "generatedName": "TransfersPatchTransferRequestChallenge",
+            "generatedName": "PatchTransferTransfersRequestChallenge",
             "value": {
-              "generatedName": "TransfersPatchTransferRequestChallenge",
+              "generatedName": "PatchTransferTransfersRequestChallenge",
               "schema": "challengeToken",
               "source": {
                 "file": "../openapi.yml",
@@ -17201,7 +16996,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17209,10 +17004,10 @@
           }
         }
       ],
-      "generatedRequestName": "TransfersPatchTransferRequest",
+      "generatedRequestName": "PatchTransferTransfersRequest",
       "request": {
         "schema": {
-          "generatedName": "TransfersPatchTransferRequestBody",
+          "generatedName": "PatchTransferTransfersRequestBody",
           "schema": "transferPatch",
           "source": {
             "file": "../openapi.yml",
@@ -17232,7 +17027,7 @@
       "response": {
         "description": "OK.",
         "schema": {
-          "generatedName": "TransfersPatchTransferResponse",
+          "generatedName": "PatchTransferTransfersResponse",
           "schema": "transfer",
           "source": {
             "file": "../openapi.yml",
@@ -17947,18 +17742,7 @@
             }
           ],
           "queryParameters": [],
-          "headers": [
-            {
-              "name": "Challenge",
-              "value": {
-                "value": {
-                  "value": "Challenge",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "headers": [],
           "request": {
             "properties": {
               "amount": {
@@ -17985,7 +17769,7 @@
                   "scheduledOn": {
                     "value": {
                       "value": "2022-06-28",
-                      "type": "string"
+                      "type": "date"
                     },
                     "type": "primitive"
                   },
@@ -18096,7 +17880,7 @@
                     "scheduledOn": {
                       "value": {
                         "value": "2026-06-28",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -18110,8 +17894,8 @@
                     },
                     "endsOn": {
                       "value": {
-                        "value": "endsOn",
-                        "type": "string"
+                        "value": "2023-01-15",
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -18132,14 +17916,14 @@
                     "debitsOn": {
                       "value": {
                         "value": "2026-06-24",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
                     "creditsOn": {
                       "value": {
                         "value": "2026-06-26",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     }
@@ -20478,9 +20262,7 @@
             "schema": {
               "description": "The scheduled date of the calculated calendar recurrence in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
               "schema": {
-                "format": "date",
-                "example": "2022-07-04",
-                "type": "string"
+                "type": "date"
               },
               "generatedName": "TransferScheduleItemScheduledOn",
               "groupName": [],
@@ -20495,9 +20277,7 @@
             "schema": {
               "description": "The effective date of the recurrence in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. When the effective date differs from the scheduled date, it is due to a banking holiday, weekend, or other non-business day. The date is adjusted to before the scheduled date when the transfer direction is `credit` and adjusted to after the scheduled date when the transfer direction is `debit`.",
               "schema": {
-                "format": "date",
-                "example": "2022-07-05",
-                "type": "string"
+                "type": "date"
               },
               "generatedName": "TransferScheduleItemEffectiveOn",
               "groupName": [],
@@ -20659,8 +20439,7 @@
               "value": {
                 "description": "The service only knows [bank holidays](https://www.federalreserve.gov/aboutthefed/k8.htm) for about two to four years in advance. This date is the end of that known holiday schedule, although the requested dates may extend well beyond this date. Any dates in the response beyond this date may omit holidays but may include other restricted dates based on the financial institution's normal scheduled closures such as Saturdays and Sundays.",
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "TransferDateRestrictionsAccuracyEndsOn",
                 "groupName": [],
@@ -20694,9 +20473,7 @@
             "schema": {
               "description": "The date that a transfers restriction occurs, is in the [ISO 8601 Date](https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates) format, `yyyy-mm-dd`.",
               "schema": {
-                "format": "date",
-                "example": "2019-04-05",
-                "type": "string"
+                "type": "date"
               },
               "generatedName": "TransferDateRestrictionOccursOn",
               "groupName": [],
@@ -20732,9 +20509,7 @@
               "value": {
                 "description": "The date the local financial institution account is credited in [RFC 3339 `YYYY-MM-DD`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the `date` based on the `risk` level. The credit-on date normally falls one business day after the restricted `date`. This property is only returned if the payment `type` is `achDebit` or `ach`.",
                 "schema": {
-                  "format": "date",
-                  "example": "2022-07-05",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "TransferDateRestrictionCreditOn",
                 "groupName": [],
@@ -20755,9 +20530,7 @@
               "value": {
                 "description": "The date the local financial institution account is debited in [RFC 3339 `YYYY-MM-DD`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the `date` based on the `risk` level and the transfer direction (`achDebit` or `achCredit`). The debit-on date normally falls one to three business days before the restricted `date`. This property is only returned if the payment `type` is `achCredit` or `ach`.",
                 "schema": {
-                  "format": "date",
-                  "example": "2022-07-05",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "TransferDateRestrictionDebitOn",
                 "groupName": [],
@@ -20866,9 +20639,7 @@
               "value": {
                 "description": "The date of the transaction in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.",
                 "schema": {
-                  "format": "date",
-                  "example": "2023-05-18",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "TransactionFieldsOccurredOn",
                 "groupName": [],
@@ -20892,9 +20663,7 @@
                 "description": "The date when the transaction occurred in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.<br>**Warning**: The property `createdOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `createdOn` will be removed on version `v3.0.0` of the schema.",
                 "availability": "Deprecated",
                 "schema": {
-                  "format": "date",
-                  "example": "2023-05-18",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "TransactionFieldsCreatedOn",
                 "groupName": [],
@@ -20919,9 +20688,7 @@
                 "description": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date `YYYY-MM-DD` format, UTC. This is derived and immutable and only present if `posted` is `true`.<br>**Warning**: The property `postedOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `postedOn` will be removed on version `v3.0.0` of the schema.",
                 "availability": "Deprecated",
                 "schema": {
-                  "format": "date",
-                  "example": "2023-05-18",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "TransactionFieldsPostedOn",
                 "groupName": [],
@@ -21674,8 +21441,7 @@
               "value": {
                 "description": "The date the the customer scheduled the transfer to occur in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format.",
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "TransferScheduleScheduledOn",
                 "groupName": [],
@@ -21734,8 +21500,7 @@
               "value": {
                 "description": "The optional date when the recurring transfer schedule ends, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. Subsequent recurring transfers may be scheduled up to and including this date, but not after. This property is ignored if `frequency` is `once`.",
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "TransferScheduleEndsOn",
                 "groupName": [],
@@ -21827,8 +21592,7 @@
               "value": {
                 "description": "The effective date the transfer is scheduled to debit the source account, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived from the `scheduledOn` date, based on the financial institution's transfer rules.",
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "TransferItemScheduleDebitsOn",
                 "groupName": [],
@@ -21850,8 +21614,7 @@
               "value": {
                 "description": "The effective the transfer is scheduled to credit the target account, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived from the `scheduledOn` date, based on the financial institution's transfer rules.",
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "TransferItemScheduleCreditsOn",
                 "groupName": [],

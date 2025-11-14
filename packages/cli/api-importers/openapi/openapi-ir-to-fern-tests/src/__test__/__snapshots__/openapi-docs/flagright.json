@@ -468,10 +468,13 @@ Calling `GET /business/user/{userId}` will return the entire User payload and ru
               "method": "GET",
               "pagination": undefined,
               "path": "/business/users/{userId}",
-              "path-parameters": {
-                "userId": {
-                  "docs": "",
-                  "type": "string",
+              "request": {
+                "name": "GetBusinessUserUserIdRequest",
+                "path-parameters": {
+                  "userId": {
+                    "docs": "",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -644,10 +647,13 @@ Calling `GET /transactions/{transactionId}` will return the entire transaction p
               "method": "GET",
               "pagination": undefined,
               "path": "/transactions/{transactionId}",
-              "path-parameters": {
-                "transactionId": {
-                  "docs": "Unique Transaction Identifier",
-                  "type": "string",
+              "request": {
+                "name": "GetConsumerTransactionRequest",
+                "path-parameters": {
+                  "transactionId": {
+                    "docs": "Unique Transaction Identifier",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -807,10 +813,13 @@ Calling `GET /consumer/user/{userId}` will return the entire user payload and ru
               "method": "GET",
               "pagination": undefined,
               "path": "/consumer/users/{userId}",
-              "path-parameters": {
-                "userId": {
-                  "docs": "",
-                  "type": "string",
+              "request": {
+                "name": "GetConsumerUserRequest",
+                "path-parameters": {
+                  "userId": {
+                    "docs": "",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -1376,10 +1385,6 @@ Here are some of the most used payload fields explained (you can find the full p
               "examples": [
                 {
                   "name": "example-1",
-                  "query-parameters": {
-                    "validateDestinationUserId": "validateDestinationUserId",
-                    "validateOriginUserId": "validateOriginUserId",
-                  },
                   "request": {
                     "destinationAmountDetails": {
                       "country": "IN",
@@ -2112,7 +2117,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         "types": {
-          "ACHDetails": {
+          "AchDetails": {
             "docs": "Model for ACH payment method",
             "inline": undefined,
             "properties": {
@@ -2160,7 +2165,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "openapi": "../openapi.yml",
             },
           },
-          "ACHPaymentMethod": {
+          "AchPaymentMethod": {
             "docs": "Classify the method of payment as "ACH" for ACHDetails",
             "type": "literal<"ACH">",
           },
@@ -2335,10 +2340,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "docs": "Director(s) of the company. Must be at least one",
                 "type": "optional<list<Person>>",
               },
-              "kycStatusDetails": "optional<KYCStatusDetails>",
+              "kycStatusDetails": "optional<KycStatusDetails>",
               "legalEntity": "optional<LegalEntity>",
               "linkedEntities": "optional<BusinessEntityLink>",
-              "mccDetails": "optional<MCCDetails>",
+              "mccDetails": "optional<MccDetails>",
               "riskLevel": "optional<RiskLevel>",
               "savedPaymentDetails": "optional<list<BusinessOptionalSavedPaymentDetailsItem>>",
               "shareHolders": {
@@ -2367,7 +2372,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
             "union": {
               "ACH": {
-                "type": "ACHDetails",
+                "type": "AchDetails",
               },
               "CARD": {
                 "type": "CardDetails",
@@ -2379,16 +2384,16 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "type": "GenericBankAccountDetails",
               },
               "IBAN": {
-                "type": "IBANDetails",
+                "type": "IbanDetails",
               },
               "MPESA": {
                 "type": "MpesaDetails",
               },
               "SWIFT": {
-                "type": "SWIFTDetails",
+                "type": "SwiftDetails",
               },
               "UPI": {
-                "type": "UPIDetails",
+                "type": "UpiDetails",
               },
               "WALLET": {
                 "type": "WalletDetails",
@@ -3751,7 +3756,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "openapi": "../openapi.yml",
             },
           },
-          "IBANDetails": {
+          "IbanDetails": {
             "docs": "Standardized model for Bank Details",
             "inline": undefined,
             "properties": {
@@ -3796,12 +3801,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "openapi": "../openapi.yml",
             },
           },
-          "IBANPaymentMethod": {
+          "IbanPaymentMethod": {
             "docs": "Classify the method of payment as "IBAN" for IBANDetails
 ",
             "type": "literal<"IBAN">",
           },
-          "KYCStatus": {
+          "KycStatus": {
             "enum": [
               "SUCCESSFUL",
               "FAILED",
@@ -3814,12 +3819,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "openapi": "../openapi.yml",
             },
           },
-          "KYCStatusDetails": {
+          "KycStatusDetails": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
               "reason": "optional<string>",
-              "status": "optional<KYCStatus>",
+              "status": "optional<KycStatus>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -3999,7 +4004,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "openapi": "../openapi.yml",
             },
           },
-          "MCCDetails": {
+          "MccDetails": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
@@ -4061,7 +4066,24 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Classify the method of payment as "Mpesa" for MpesaDetails",
             "type": "literal<"MPESA">",
           },
-          "PEPStatus": {
+          "PaymentMethod": {
+            "enum": [
+              "ACH",
+              "CARD",
+              "IBAN",
+              "UPI",
+              "GENERIC_BANK_ACCOUNT",
+              "MPESA",
+              "SWIFT",
+              "WALLET",
+              "CHECK",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "PepStatus": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
@@ -4080,23 +4102,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "openapi": "../openapi.yml",
             },
           },
-          "PaymentMethod": {
-            "enum": [
-              "ACH",
-              "CARD",
-              "IBAN",
-              "UPI",
-              "GENERIC_BANK_ACCOUNT",
-              "MPESA",
-              "SWIFT",
-              "WALLET",
-              "CHECK",
-            ],
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "Person": {
             "docs": "Model for a generic individual - different from User model by not having userId field",
             "inline": undefined,
@@ -4109,7 +4114,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "docs": "User's legal identity documents - See Document Model for details",
                 "type": "optional<list<LegalDocument>>",
               },
-              "pepStatus": "optional<list<PEPStatus>>",
+              "pepStatus": "optional<list<PepStatus>>",
               "tags": {
                 "docs": "Additional information that can be added via tags",
                 "type": "optional<list<Tag>>",
@@ -4325,7 +4330,35 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "openapi": "../openapi.yml",
             },
           },
-          "SWIFTDetails": {
+          "SanctionsDetails": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "entityType": "optional<SanctionsDetailsEntityType>",
+              "name": "string",
+              "searchId": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "SanctionsDetailsEntityType": {
+            "enum": [
+              "CONSUMER_NAME",
+              "LEGAL_NAME",
+              "SHAREHOLDER",
+              "DIRECTOR",
+              "NAME_ON_CARD",
+              "PAYMENT_NAME",
+              "PAYMENT_BENEFICIARY_NAME",
+              "BANK_NAME",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "SwiftDetails": {
             "docs": "Model for SWIFT payment method",
             "inline": undefined,
             "properties": {
@@ -4377,37 +4410,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "openapi": "../openapi.yml",
             },
           },
-          "SWIFTPaymentMethod": {
+          "SwiftPaymentMethod": {
             "docs": "Classify the method of payment as "SWIFT" for SWIFTDetails",
             "type": "literal<"SWIFT">",
-          },
-          "SanctionsDetails": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "entityType": "optional<SanctionsDetailsEntityType>",
-              "name": "string",
-              "searchId": "string",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "SanctionsDetailsEntityType": {
-            "enum": [
-              "CONSUMER_NAME",
-              "LEGAL_NAME",
-              "SHAREHOLDER",
-              "DIRECTOR",
-              "NAME_ON_CARD",
-              "PAYMENT_NAME",
-              "PAYMENT_BENEFICIARY_NAME",
-              "BANK_NAME",
-            ],
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
           },
           "Tag": {
             "docs": "Generic key-value pair model to append a custom variable being sent to Flagright API",
@@ -4446,7 +4451,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "access": "read-only",
                 "docs": "PublishedAt is the time at which the Thing was published.
 ",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
             },
             "source": {
@@ -4712,7 +4717,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
             "union": {
               "ACH": {
-                "type": "ACHDetails",
+                "type": "AchDetails",
               },
               "CARD": {
                 "type": "CardDetails",
@@ -4724,16 +4729,16 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "type": "GenericBankAccountDetails",
               },
               "IBAN": {
-                "type": "IBANDetails",
+                "type": "IbanDetails",
               },
               "MPESA": {
                 "type": "MpesaDetails",
               },
               "SWIFT": {
-                "type": "SWIFTDetails",
+                "type": "SwiftDetails",
               },
               "UPI": {
-                "type": "UPIDetails",
+                "type": "UpiDetails",
               },
               "WALLET": {
                 "type": "WalletDetails",
@@ -4751,7 +4756,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
             "union": {
               "ACH": {
-                "type": "ACHDetails",
+                "type": "AchDetails",
               },
               "CARD": {
                 "type": "CardDetails",
@@ -4763,16 +4768,16 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "type": "GenericBankAccountDetails",
               },
               "IBAN": {
-                "type": "IBANDetails",
+                "type": "IbanDetails",
               },
               "MPESA": {
                 "type": "MpesaDetails",
               },
               "SWIFT": {
-                "type": "SWIFTDetails",
+                "type": "SwiftDetails",
               },
               "UPI": {
-                "type": "UPIDetails",
+                "type": "UpiDetails",
               },
               "WALLET": {
                 "type": "WalletDetails",
@@ -4793,7 +4798,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "openapi": "../openapi.yml",
             },
           },
-          "UPIDetails": {
+          "UpiDetails": {
             "docs": "Model for UPI payment method",
             "inline": undefined,
             "properties": {
@@ -4836,7 +4841,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "openapi": "../openapi.yml",
             },
           },
-          "UPIPaymentMethod": {
+          "UpiPaymentMethod": {
             "docs": "Classify the method of payment as "UPI" for UPIDetails",
             "type": "literal<"UPI">",
           },
@@ -4945,12 +4950,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "properties": {
               "acquisitionChannel": "optional<AcquisitionChannel>",
               "contactDetails": "optional<ContactDetails>",
-              "kycStatusDetails": "optional<KYCStatusDetails>",
+              "kycStatusDetails": "optional<KycStatusDetails>",
               "legalDocuments": {
                 "docs": "User's legal identity documents - See Document Model for details",
                 "type": "optional<list<LegalDocument>>",
               },
-              "pepStatus": "optional<list<PEPStatus>>",
+              "pepStatus": "optional<list<PepStatus>>",
               "reasonForAccountOpening": "optional<list<string>>",
               "riskLevel": "optional<RiskLevel>",
               "tags": {
@@ -5201,7 +5206,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     docs: Model for User details
     properties:
       userStateDetails: optional<UserStateDetails>
-      kycStatusDetails: optional<KYCStatusDetails>
+      kycStatusDetails: optional<KycStatusDetails>
       legalDocuments:
         type: optional<list<LegalDocument>>
         docs: User's legal identity documents - See Document Model for details
@@ -5211,7 +5216,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       acquisitionChannel: optional<AcquisitionChannel>
       reasonForAccountOpening: optional<list<string>>
       userSegment: optional<UserOptionalUserSegment>
-      pepStatus: optional<list<PEPStatus>>
+      pepStatus: optional<list<PepStatus>>
       tags:
         type: optional<list<Tag>>
         docs: Additional information that can be added via tags
@@ -5236,7 +5241,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         type: optional<list<LegalDocument>>
         docs: User's legal identity documents - See Document Model for details
       contactDetails: optional<ContactDetails>
-      pepStatus: optional<list<PEPStatus>>
+      pepStatus: optional<list<PepStatus>>
       tags:
         type: optional<list<Tag>>
         docs: Additional information that can be added via tags
@@ -5311,15 +5316,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       GENERIC_BANK_ACCOUNT:
         type: GenericBankAccountDetails
       IBAN:
-        type: IBANDetails
+        type: IbanDetails
       ACH:
-        type: ACHDetails
+        type: AchDetails
       SWIFT:
-        type: SWIFTDetails
+        type: SwiftDetails
       MPESA:
         type: MpesaDetails
       UPI:
-        type: UPIDetails
+        type: UpiDetails
       WALLET:
         type: WalletDetails
       CHECK:
@@ -5338,15 +5343,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       GENERIC_BANK_ACCOUNT:
         type: GenericBankAccountDetails
       IBAN:
-        type: IBANDetails
+        type: IbanDetails
       ACH:
-        type: ACHDetails
+        type: AchDetails
       UPI:
-        type: UPIDetails
+        type: UpiDetails
       WALLET:
         type: WalletDetails
       SWIFT:
-        type: SWIFTDetails
+        type: SwiftDetails
       MPESA:
         type: MpesaDetails
       CHECK:
@@ -5842,15 +5847,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       GENERIC_BANK_ACCOUNT:
         type: GenericBankAccountDetails
       IBAN:
-        type: IBANDetails
+        type: IbanDetails
       ACH:
-        type: ACHDetails
+        type: AchDetails
       SWIFT:
-        type: SWIFTDetails
+        type: SwiftDetails
       MPESA:
         type: MpesaDetails
       UPI:
-        type: UPIDetails
+        type: UpiDetails
       WALLET:
         type: WalletDetails
       CHECK:
@@ -5861,7 +5866,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     docs: Model for a business user - optional fields
     properties:
       userStateDetails: optional<UserStateDetails>
-      kycStatusDetails: optional<KYCStatusDetails>
+      kycStatusDetails: optional<KycStatusDetails>
       legalEntity: optional<LegalEntity>
       shareHolders:
         type: optional<list<Person>>
@@ -5877,7 +5882,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       linkedEntities: optional<BusinessEntityLink>
       acquisitionChannel: optional<AcquisitionChannel>
       savedPaymentDetails: optional<list<BusinessOptionalSavedPaymentDetailsItem>>
-      mccDetails: optional<MCCDetails>
+      mccDetails: optional<MccDetails>
       tags:
         type: optional<list<Tag>>
         docs: Additional information that can be added via tags
@@ -5975,7 +5980,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       merchantDetails: optional<CardMerchantDetails>
     source:
       openapi: ../openapi.yml
-  IBANDetails:
+  IbanDetails:
     docs: Standardized model for Bank Details
     properties:
       BIC:
@@ -6033,7 +6038,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         docs: Phone number associated with the wallet, if any
     source:
       openapi: ../openapi.yml
-  ACHDetails:
+  AchDetails:
     docs: Model for ACH payment method
     properties:
       routingNumber:
@@ -6060,7 +6065,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         docs: Beneficiary name of the account
     source:
       openapi: ../openapi.yml
-  SWIFTDetails:
+  SwiftDetails:
     docs: Model for SWIFT payment method
     properties:
       swiftCode:
@@ -6148,7 +6153,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       paymentChannel: optional<string>
     source:
       openapi: ../openapi.yml
-  UPIDetails:
+  UpiDetails:
     docs: Model for UPI payment method
     properties:
       upiID:
@@ -6337,10 +6342,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     docs: Model for User acquisition channel
     source:
       openapi: ../openapi.yml
-  UPIPaymentMethod:
+  UpiPaymentMethod:
     type: literal<"UPI">
     docs: Classify the method of payment as "UPI" for UPIDetails
-  IBANPaymentMethod:
+  IbanPaymentMethod:
     type: literal<"IBAN">
     docs: |
       Classify the method of payment as "IBAN" for IBANDetails
@@ -6351,10 +6356,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
   WalletPaymentMethod:
     type: literal<"WALLET">
     docs: Classify the method of payment as "Wallet" for WalletDetails
-  ACHPaymentMethod:
+  AchPaymentMethod:
     type: literal<"ACH">
     docs: Classify the method of payment as "ACH" for ACHDetails
-  SWIFTPaymentMethod:
+  SwiftPaymentMethod:
     type: literal<"SWIFT">
     docs: Classify the method of payment as "SWIFT" for SWIFTDetails
   CheckPaymentMethod:
@@ -6382,7 +6387,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       - BLOCKED
     source:
       openapi: ../openapi.yml
-  KYCStatus:
+  KycStatus:
     enum:
       - SUCCESSFUL
       - FAILED
@@ -6391,7 +6396,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       - MANUAL_REVIEW
     source:
       openapi: ../openapi.yml
-  PEPStatus:
+  PepStatus:
     properties:
       isPepHit: boolean
       pepCountry:
@@ -6401,10 +6406,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           maxLength: 2
     source:
       openapi: ../openapi.yml
-  KYCStatusDetails:
+  KycStatusDetails:
     properties:
       reason: optional<string>
-      status: optional<KYCStatus>
+      status: optional<KycStatus>
     source:
       openapi: ../openapi.yml
   UserStateDetails:
@@ -7141,7 +7146,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       - ZWL
     source:
       openapi: ../openapi.yml
-  MCCDetails:
+  MccDetails:
     properties:
       code:
         type: double
@@ -7226,7 +7231,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
   Thing:
     properties:
       publishedAt:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: |
           PublishedAt is the time at which the Thing was published.
         access: read-only
@@ -7434,9 +7439,6 @@ service:
         - PostConsumerTransactionRequestTooManyRequestsError
       examples:
         - name: example-1
-          query-parameters:
-            validateOriginUserId: validateOriginUserId
-            validateDestinationUserId: validateDestinationUserId
           request:
             originAmountDetails:
               transactionAmount: 800
@@ -7524,11 +7526,13 @@ service:
         the corresponding `transactionId`
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        transactionId:
-          type: string
-          docs: Unique Transaction Identifier
       display-name: Retrieve a Transaction
+      request:
+        name: GetConsumerTransactionRequest
+        path-parameters:
+          transactionId:
+            type: string
+            docs: Unique Transaction Identifier
       response:
         docs: OK
         type: TransactionWithRulesResult
@@ -7979,11 +7983,13 @@ service:
         `userId`
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        userId:
-          type: string
-          docs: ''
       display-name: Retrieve a Consumer User
+      request:
+        name: GetConsumerUserRequest
+        path-parameters:
+          userId:
+            type: string
+            docs: ''
       response:
         docs: OK
         type: User
@@ -8175,11 +8181,13 @@ service:
         `userId`
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        userId:
-          type: string
-          docs: ''
       display-name: Retrieve a Business User
+      request:
+        name: GetBusinessUserUserIdRequest
+        path-parameters:
+          userId:
+            type: string
+            docs: ''
       response:
         docs: OK
         type: Business

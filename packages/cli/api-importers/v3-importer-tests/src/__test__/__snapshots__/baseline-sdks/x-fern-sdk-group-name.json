@@ -1383,6 +1383,7 @@
     },
     "pathParameters": []
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_user": {
       "fernFilepath": {

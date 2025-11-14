@@ -39,7 +39,7 @@ export class WellKnownProtoStructGenerator extends FileGenerator<CSharpFile, Mod
             sealed: true,
             parentClassReference: this.Collection.map(
                 this.Primitive.string,
-                this.protoValueClassReference.toOptionalIfNotAlready()
+                this.protoValueClassReference.asOptional()
             ),
             summary: this.typeDeclaration.docs,
             annotations: [this.System.Serializable]
@@ -76,10 +76,7 @@ export class WellKnownProtoStructGenerator extends FileGenerator<CSharpFile, Mod
                 this.csharp.parameter({
                     name: "value",
                     type: this.Collection.list(
-                        this.Collection.keyValuePair(
-                            this.Primitive.string,
-                            this.protoValueClassReference.toOptionalIfNotAlready()
-                        )
+                        this.Collection.keyValuePair(this.Primitive.string, this.protoValueClassReference.asOptional())
                     )
                 })
             ],

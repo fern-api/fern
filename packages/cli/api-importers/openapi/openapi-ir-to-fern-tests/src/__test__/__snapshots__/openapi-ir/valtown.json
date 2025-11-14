@@ -1801,7 +1801,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1822,7 +1822,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2227,26 +2227,6 @@
               }
             },
             {
-              "name": "since",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "until",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "relationship",
               "value": {
                 "value": "any",
@@ -2436,7 +2416,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2457,7 +2437,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2765,26 +2745,6 @@
                 },
                 "type": "primitive"
               }
-            },
-            {
-              "name": "since",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "until",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
             }
           ],
           "headers": [],
@@ -2920,7 +2880,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2996,7 +2956,6 @@
             ],
             "allOfPropertyConflicts": [],
             "generatedName": "BlobsListResponseItem",
-            "nameOverride": "BlobListingItem",
             "title": "BlobListingItem",
             "groupName": [],
             "additionalProperties": false,
@@ -3038,18 +2997,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "prefix",
-              "value": {
-                "value": {
-                  "value": "prefix",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -3181,7 +3129,7 @@
             "format": "binary",
             "type": "string"
           },
-          "generatedName": "BlobsStoreRequest",
+          "generatedName": "BlobsStoreRequestBody",
           "groupName": [],
           "type": "primitive"
         },
@@ -3819,12 +3767,10 @@
                               "description": "List of arguments to be used in the given statement",
                               "generatedName": "SqliteExecuteRequestStatementArgsArgs",
                               "title": "StatementArg",
-                              "nameOverride": "StatementArg",
                               "schemas": [
                                 {
                                   "value": {
                                     "generatedName": "SqliteExecuteRequestStatementArgsArgsZeroItem",
-                                    "nameOverride": "TursoValue",
                                     "title": "TursoValue",
                                     "description": "A value to be used as a parameter",
                                     "value": {
@@ -3832,7 +3778,6 @@
                                         "description": "A value to be used as a parameter",
                                         "generatedName": "SqliteExecuteRequestStatementArgsArgsZeroItem",
                                         "title": "TursoValue",
-                                        "nameOverride": "TursoValue",
                                         "schemas": [
                                           {
                                             "schema": {
@@ -3886,7 +3831,6 @@
                                   },
                                   "value": {
                                     "generatedName": "SqliteExecuteRequestStatementArgsArgsOneValue",
-                                    "nameOverride": "TursoValue",
                                     "title": "TursoValue",
                                     "description": "A value to be used as a parameter",
                                     "value": {
@@ -3894,7 +3838,6 @@
                                         "description": "A value to be used as a parameter",
                                         "generatedName": "SqliteExecuteRequestStatementArgsArgsOneValue",
                                         "title": "TursoValue",
-                                        "nameOverride": "TursoValue",
                                         "schemas": [
                                           {
                                             "schema": {
@@ -3955,7 +3898,6 @@
                       "allOfPropertyConflicts": [],
                       "description": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
                       "generatedName": "SqliteExecuteRequestStatementArgs",
-                      "nameOverride": "ParameterizedQuery",
                       "title": "ParameterizedQuery",
                       "groupName": [],
                       "additionalProperties": false,
@@ -4317,12 +4259,10 @@
                                 "description": "List of arguments to be used in the given statement",
                                 "generatedName": "SqliteBatchRequestStatementsItemArgsArgs",
                                 "title": "StatementArg",
-                                "nameOverride": "StatementArg",
                                 "schemas": [
                                   {
                                     "value": {
                                       "generatedName": "SqliteBatchRequestStatementsItemArgsArgsZeroItem",
-                                      "nameOverride": "TursoValue",
                                       "title": "TursoValue",
                                       "description": "A value to be used as a parameter",
                                       "value": {
@@ -4330,7 +4270,6 @@
                                           "description": "A value to be used as a parameter",
                                           "generatedName": "SqliteBatchRequestStatementsItemArgsArgsZeroItem",
                                           "title": "TursoValue",
-                                          "nameOverride": "TursoValue",
                                           "schemas": [
                                             {
                                               "schema": {
@@ -4384,7 +4323,6 @@
                                     },
                                     "value": {
                                       "generatedName": "SqliteBatchRequestStatementsItemArgsArgsOneValue",
-                                      "nameOverride": "TursoValue",
                                       "title": "TursoValue",
                                       "description": "A value to be used as a parameter",
                                       "value": {
@@ -4392,7 +4330,6 @@
                                           "description": "A value to be used as a parameter",
                                           "generatedName": "SqliteBatchRequestStatementsItemArgsArgsOneValue",
                                           "title": "TursoValue",
-                                          "nameOverride": "TursoValue",
                                           "schemas": [
                                             {
                                               "schema": {
@@ -4453,7 +4390,6 @@
                         "allOfPropertyConflicts": [],
                         "description": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
                         "generatedName": "SqliteBatchRequestStatementsItemArgs",
-                        "nameOverride": "ParameterizedQuery",
                         "title": "ParameterizedQuery",
                         "groupName": [],
                         "additionalProperties": false,
@@ -5078,7 +5014,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -5264,18 +5200,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "args",
-              "value": {
-                "value": {
-                  "value": "args",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -5336,7 +5261,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -5368,18 +5293,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "args",
-              "value": {
-                "value": {
-                  "value": "args",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -5565,13 +5479,11 @@
               "key": "from",
               "schema": {
                 "generatedName": "EmailsSendRequestFrom",
-                "nameOverride": "EmailData",
                 "title": "EmailData",
                 "value": {
                   "value": {
                     "generatedName": "EmailsSendRequestFrom",
                     "title": "EmailData",
-                    "nameOverride": "EmailData",
                     "schemas": [
                       {
                         "schema": {
@@ -5621,7 +5533,6 @@
                         "allOfPropertyConflicts": [],
                         "description": "An email address and name",
                         "generatedName": "EmailsSendRequestFromEmail",
-                        "nameOverride": "EmailNameAndAddress",
                         "title": "EmailNameAndAddress",
                         "groupName": [],
                         "additionalProperties": false,
@@ -5652,7 +5563,6 @@
               "key": "to",
               "schema": {
                 "generatedName": "EmailsSendRequestTo",
-                "nameOverride": "EmailDataInput",
                 "title": "EmailDataInput",
                 "description": "A single email or list of emails for one of the address fields",
                 "value": {
@@ -5660,13 +5570,11 @@
                     "description": "A single email or list of emails for one of the address fields",
                     "generatedName": "EmailsSendRequestTo",
                     "title": "EmailDataInput",
-                    "nameOverride": "EmailDataInput",
                     "schemas": [
                       {
                         "value": {
                           "generatedName": "EmailsSendRequestToZero",
                           "title": "EmailData",
-                          "nameOverride": "EmailData",
                           "schemas": [
                             {
                               "schema": {
@@ -5716,7 +5624,6 @@
                               "allOfPropertyConflicts": [],
                               "description": "An email address and name",
                               "generatedName": "EmailsSendRequestToZeroEmail",
-                              "nameOverride": "EmailNameAndAddress",
                               "title": "EmailNameAndAddress",
                               "groupName": [],
                               "additionalProperties": false,
@@ -5741,7 +5648,6 @@
                           "value": {
                             "generatedName": "EmailsSendRequestToOneItem",
                             "title": "EmailData",
-                            "nameOverride": "EmailData",
                             "schemas": [
                               {
                                 "schema": {
@@ -5791,7 +5697,6 @@
                                 "allOfPropertyConflicts": [],
                                 "description": "An email address and name",
                                 "generatedName": "EmailsSendRequestToOneItemEmail",
-                                "nameOverride": "EmailNameAndAddress",
                                 "title": "EmailNameAndAddress",
                                 "groupName": [],
                                 "additionalProperties": false,
@@ -5812,7 +5717,6 @@
                           "type": "oneOf"
                         },
                         "generatedName": "EmailsSendRequestToOne",
-                        "nameOverride": "EmailDataList",
                         "title": "EmailDataList",
                         "groupName": [],
                         "type": "array"
@@ -5838,7 +5742,6 @@
               "key": "cc",
               "schema": {
                 "generatedName": "EmailsSendRequestCc",
-                "nameOverride": "EmailDataInput",
                 "title": "EmailDataInput",
                 "description": "A single email or list of emails for one of the address fields",
                 "value": {
@@ -5846,13 +5749,11 @@
                     "description": "A single email or list of emails for one of the address fields",
                     "generatedName": "EmailsSendRequestCc",
                     "title": "EmailDataInput",
-                    "nameOverride": "EmailDataInput",
                     "schemas": [
                       {
                         "value": {
                           "generatedName": "EmailsSendRequestCcZero",
                           "title": "EmailData",
-                          "nameOverride": "EmailData",
                           "schemas": [
                             {
                               "schema": {
@@ -5902,7 +5803,6 @@
                               "allOfPropertyConflicts": [],
                               "description": "An email address and name",
                               "generatedName": "EmailsSendRequestCcZeroEmail",
-                              "nameOverride": "EmailNameAndAddress",
                               "title": "EmailNameAndAddress",
                               "groupName": [],
                               "additionalProperties": false,
@@ -5927,7 +5827,6 @@
                           "value": {
                             "generatedName": "EmailsSendRequestCcOneItem",
                             "title": "EmailData",
-                            "nameOverride": "EmailData",
                             "schemas": [
                               {
                                 "schema": {
@@ -5977,7 +5876,6 @@
                                 "allOfPropertyConflicts": [],
                                 "description": "An email address and name",
                                 "generatedName": "EmailsSendRequestCcOneItemEmail",
-                                "nameOverride": "EmailNameAndAddress",
                                 "title": "EmailNameAndAddress",
                                 "groupName": [],
                                 "additionalProperties": false,
@@ -5998,7 +5896,6 @@
                           "type": "oneOf"
                         },
                         "generatedName": "EmailsSendRequestCcOne",
-                        "nameOverride": "EmailDataList",
                         "title": "EmailDataList",
                         "groupName": [],
                         "type": "array"
@@ -6024,7 +5921,6 @@
               "key": "bcc",
               "schema": {
                 "generatedName": "EmailsSendRequestBcc",
-                "nameOverride": "EmailDataInput",
                 "title": "EmailDataInput",
                 "description": "A single email or list of emails for one of the address fields",
                 "value": {
@@ -6032,13 +5928,11 @@
                     "description": "A single email or list of emails for one of the address fields",
                     "generatedName": "EmailsSendRequestBcc",
                     "title": "EmailDataInput",
-                    "nameOverride": "EmailDataInput",
                     "schemas": [
                       {
                         "value": {
                           "generatedName": "EmailsSendRequestBccZero",
                           "title": "EmailData",
-                          "nameOverride": "EmailData",
                           "schemas": [
                             {
                               "schema": {
@@ -6088,7 +5982,6 @@
                               "allOfPropertyConflicts": [],
                               "description": "An email address and name",
                               "generatedName": "EmailsSendRequestBccZeroEmail",
-                              "nameOverride": "EmailNameAndAddress",
                               "title": "EmailNameAndAddress",
                               "groupName": [],
                               "additionalProperties": false,
@@ -6113,7 +6006,6 @@
                           "value": {
                             "generatedName": "EmailsSendRequestBccOneItem",
                             "title": "EmailData",
-                            "nameOverride": "EmailData",
                             "schemas": [
                               {
                                 "schema": {
@@ -6163,7 +6055,6 @@
                                 "allOfPropertyConflicts": [],
                                 "description": "An email address and name",
                                 "generatedName": "EmailsSendRequestBccOneItemEmail",
-                                "nameOverride": "EmailNameAndAddress",
                                 "title": "EmailNameAndAddress",
                                 "groupName": [],
                                 "additionalProperties": false,
@@ -6184,7 +6075,6 @@
                           "type": "oneOf"
                         },
                         "generatedName": "EmailsSendRequestBccOne",
-                        "nameOverride": "EmailDataList",
                         "title": "EmailDataList",
                         "groupName": [],
                         "type": "array"
@@ -6346,7 +6236,6 @@
                     ],
                     "allOfPropertyConflicts": [],
                     "generatedName": "EmailsSendRequestAttachmentsItem",
-                    "nameOverride": "AttachmentObject",
                     "title": "AttachmentObject",
                     "groupName": [],
                     "additionalProperties": false,
@@ -6371,7 +6260,6 @@
               "key": "replyToList",
               "schema": {
                 "generatedName": "EmailsSendRequestReplyToList",
-                "nameOverride": "ReplyToList",
                 "title": "ReplyToList",
                 "description": "A reply-to list of email addresses",
                 "value": {
@@ -6379,7 +6267,6 @@
                     "description": "A reply-to list of email addresses",
                     "generatedName": "EmailsSendRequestReplyToList",
                     "title": "ReplyToList",
-                    "nameOverride": "ReplyToList",
                     "schemas": [
                       {
                         "allOf": [],
@@ -6421,7 +6308,6 @@
                         "allOfPropertyConflicts": [],
                         "description": "An email address and name",
                         "generatedName": "EmailsSendRequestReplyToListEmail",
-                        "nameOverride": "EmailNameAndAddress",
                         "title": "EmailNameAndAddress",
                         "groupName": [],
                         "additionalProperties": false,
@@ -6472,7 +6358,6 @@
                           "allOfPropertyConflicts": [],
                           "description": "An email address and name",
                           "generatedName": "EmailsSendRequestReplyToListOneItem",
-                          "nameOverride": "EmailNameAndAddress",
                           "title": "EmailNameAndAddress",
                           "groupName": [],
                           "additionalProperties": false,
@@ -6483,7 +6368,6 @@
                           "type": "object"
                         },
                         "generatedName": "EmailsSendRequestReplyToListOne",
-                        "nameOverride": "EmailList",
                         "title": "EmailList",
                         "groupName": [],
                         "type": "array"
@@ -9273,7 +9157,6 @@
                   "type": "unknown"
                 },
                 "generatedName": "ResultSetRowsItem",
-                "nameOverride": "TursoRow",
                 "title": "TursoRow",
                 "groupName": [],
                 "type": "array"
@@ -9352,7 +9235,6 @@
         "allOfPropertyConflicts": [],
         "description": "Result of executing an SQL statement.",
         "generatedName": "ResultSet",
-        "nameOverride": "ResultSet",
         "title": "ResultSet",
         "groupName": [],
         "additionalProperties": false,

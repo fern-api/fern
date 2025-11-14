@@ -1,3 +1,62 @@
+- version: 3.15.1
+  changelogEntry:
+    - summary: |
+        Fix SDK generation failures for endpoints with custom pagination. Endpoints using `x-fern-pagination: type: custom` now generate successfully, returning the raw response type without automatic pagination wrappers.
+      type: fix
+  createdAt: "2025-11-14"
+  irVersion: 61
+
+- version: 3.15.0
+  changelogEntry:
+    - summary: |
+        Upgrade dependencies:
+        okhttp 4.12.0 -> 5.2.1,
+        jackson 2.17.2 -> 2.18.2,
+        [internal use only] mockito 3.11.2 -> 4.11.0.
+      type: feat
+  createdAt: "2025-11-13"
+  irVersion: 61
+
+- version: 3.14.14
+  changelogEntry:
+    - summary: |
+        Fix streaming method names and request types in wire tests. Wire tests now correctly normalize streaming endpoints to use `.methodStream()` naming pattern and `MethodStreamRequest` types, while non-streaming endpoints use `.method()` and `MethodRequest`. This eliminates "incompatible types" compilation errors where streaming method calls were paired with non-streaming response types.
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 61
+
+- version: 3.14.13
+  changelogEntry:
+    - summary: |
+        Revert unchecked operations warning fix in StreamTest generator due to type inference compilation errors. The previous fix (3.14.0) caused "incompatible types: inference variable T has incompatible equality constraints `Map<String,?>`,`Map`" errors when compiling generated StreamTest.java files. Restores the original implementation using raw types.
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 61
+
+- version: 3.14.12
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets compilation errors for literal-typed parameters. Literal-typed parameters (e.g., prompt with literal string value, stream with literal false) are now correctly filtered from builder method calls in generated snippets, as these fields only have hardcoded getters without corresponding setters. This maintains parity with Java v1 behavior where literal fields are excluded from all class builders (both model and request classes).
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 61
+
+- version: 3.14.11
+  changelogEntry:
+    - summary: |
+        Fix jsonEquals helper method not being generated in wire tests. The generator now correctly calls closeTestClass() to emit the jsonEquals helper method that enables numeric equivalence comparison in wire test assertions.
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 61
+
+- version: 3.14.10
+  changelogEntry:
+    - summary: |
+        Fix wire test failures for numeric type mismatches and header serialization. Wire tests now use numeric equivalence comparison to handle integer vs double type differences from OpenAPI specs. Headers are no longer incorrectly serialized into JSON request bodies - they now use @JsonIgnore and are sent only as HTTP headers.
+      type: fix
+  createdAt: "2025-11-12"
+  irVersion: 61
+
 - version: 3.14.9
   changelogEntry:
     - summary: Fix wire test compilation errors when using staged builders with collections. Builder method calls now correctly order required fields before collections like Lists, Sets, and Maps.
@@ -31,7 +90,7 @@
 - version: 3.14.5
   changelogEntry:
     - summary: |
-        Fix SDK generation failures for OpenAPI specs with nullable container types. The generator now properly handles nullable containers in response parsing and pagination, treating them distinctly from optional containers. Also adds support for literal container detection with improved error diagnostics. 
+        Fix SDK generation failures for OpenAPI specs with nullable container types. The generator now properly handles nullable containers in response parsing and pagination, treating them distinctly from optional containers. Also adds support for literal container detection with improved error diagnostics.
         This fixes "Unexpected container type" errors that occurred when processing APIs with nullable types or array examples in query parameters.
       type: fix
   createdAt: "2025-11-11"
