@@ -35,7 +35,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     groupEnvironmentsByHost: undefined,
     wrapReferencesToNullableInOptional: undefined,
     coerceOptionalSchemasToNullable: undefined,
-    removeDiscriminantsFromSchemas: undefined
+    removeDiscriminantsFromSchemas: undefined,
+    pathParameterOrder: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -151,7 +152,8 @@ export function parseBaseApiDefinitionSettingsSchema(
         groupEnvironmentsByHost: settings?.["group-environments-by-host"],
         removeDiscriminantsFromSchemas: parseRemoveDiscriminantsFromSchemas(
             settings?.["remove-discriminants-from-schemas"]
-        )
+        ),
+        pathParameterOrder: settings?.["path-parameter-order"]
     };
 }
 
@@ -365,7 +367,8 @@ async function parseApiConfigurationV2Schema({
         return {
             type: "conjure",
             pathToConjureDefinition: apiConfiguration.specs.conjure,
-            ...partialConfig
+            ...partialConfig,
+            settings: apiSettings
         };
     }
 
@@ -439,7 +442,8 @@ async function parseApiConfigurationV2Schema({
         return {
             type: "singleNamespace",
             definitions: rootDefinitions,
-            ...partialConfig
+            ...partialConfig,
+            settings: apiSettings
         };
     }
     // Yes namespaces
@@ -447,7 +451,8 @@ async function parseApiConfigurationV2Schema({
         type: "multiNamespace",
         rootDefinitions,
         definitions: namespacedDefinitions,
-        ...partialConfig
+        ...partialConfig,
+        settings: apiSettings
     };
 }
 
