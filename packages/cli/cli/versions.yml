@@ -1,27 +1,45 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Add support for custom fern.summary proto option to explicitly set gRPC endpoint display names in proto files.
-      type: feat
+        Specify the target of links throughout the docs navigation.
+      type: fix
   irVersion: 61
-  createdAt: "2025-11-13"
-  version: 0.123.0
+  createdAt: "2025-11-14"
+  version: 1.0.3
 
 - changelogEntry:
     - summary: |
-        The `fern docs dev` command now displays a progress bar while downloading the docs bundle.
-      type: chore
+        Display OpenAPI validation warnings when using the --warnings flag with fern check. Previously, warnings were counted but not shown; now they are logged with location details when --warnings is specified.
+      type: fix
   irVersion: 61
   createdAt: "2025-11-13"
-  version: 0.122.1
+  version: 1.0.2
 
 - changelogEntry:
     - summary: |
-        The `fern write-overrides` command now generates overrides files with names based on the API spec filename. For a spec named `api-name.yml`, the overrides file will be named `api-name-overrides.yml` and placed in the same directory as the spec. This allows for better organization when working with multiple API specs.
+        Update OpenAPI operation converter to use `x-fern-explorer` extension instead of `x-fern-explorer-enabled` for setting `apiPlayground` property in the IR. Operations now check for the `x-fern-explorer` boolean value to determine API playground availability.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 1.0.1
+
+- changelogEntry:
+    - summary: |
+        Change defaults for OpenAPI and AsyncAPI parsing settings:
+          - `title-as-schema-name`: `false` (was `true`)
+          - `respect-nullable-schemas`: `true` (was `false`)
+          - `inline-path-parameters`: `true` (was `false`)
+          - `idiomatic-request-names`: `true` (was `false`)
+          - `type-dates-as-strings`: `true` (was `false`)
+          - `wrap-references-to-nullable-in-optional`: `false` (was `true`)
+          - `coerce-optional-schemas-to-nullable`: `false` (was `true`)
+          - `object-query-parameters`: `true` (was `false`)
+        The CLI will automatically upgrade your _generators.yml_ to explicitly set the old defaults to preserve
+        existing behavior. New users will get the new defaults.
       type: feat
   irVersion: 61
   createdAt: "2025-11-13"
-  version: 0.122.0
+  version: 1.0.0
 
 - changelogEntry:
     - summary: |
