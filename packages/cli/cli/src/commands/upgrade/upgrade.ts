@@ -50,6 +50,16 @@ export async function upgrade({
     includePreReleases: boolean;
     targetVersion: string | undefined;
 }): Promise<void> {
+    const previousVersion = process.env[PREVIOUS_VERSION_ENV_VAR];
+    if (previousVersion != null) {
+        await runPostUpgradeSteps({
+            cliContext,
+            previousVersion,
+            newVersion: cliContext.environment.packageVersion
+        });
+        return;
+    }
+
     if (targetVersion != null) {
         const versionExists = await doesVersionOfCliExist({
             cliEnvironment: cliContext.environment,
