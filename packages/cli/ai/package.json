@@ -21,9 +21,7 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
   "scripts": {
     "generate": "baml-cli generate --from baml_src",
     "clean": "rm -rf ./lib && tsc --build --clean",
