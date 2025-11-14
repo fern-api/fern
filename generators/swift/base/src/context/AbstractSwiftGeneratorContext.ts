@@ -20,6 +20,7 @@ import {
 
 import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
 import { SwiftProject } from "../project";
+import { detectProhibitedCycles } from "./detect-cycles";
 import { registerDiscriminatedUnionVariants } from "./register-discriminated-unions";
 import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums";
 import { registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions";
@@ -37,12 +38,18 @@ export abstract class AbstractSwiftGeneratorContext<
     ) {
         super(config, generatorNotificationService);
         this.project = new SwiftProject({ context: this });
+        this.detectCycles(ir);
         this.registerProjectSymbols(this.project, ir);
     }
 
     private registerProjectSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
         this.registerSourceSymbols(project, ir);
         this.registerTestSymbols(project);
+    }
+
+    private detectCycles(ir: IntermediateRepresentation) {
+        detectProhibitedCycles(ir);
+        // TODO(kafkas): This is for later, not now. Detect allowed cycles (finite size cycles) and adjust generated code accordingly.
     }
 
     private registerSourceSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
