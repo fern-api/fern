@@ -12,7 +12,7 @@ webhooks:
     examples:
       - payload: $WebhookWithLegacyExamplesPayload.JohnExample
       - payload: $WebhookWithLegacyExamplesPayload.JaneExample
-  
+
   webhookWithDollarSignInName:
     docs: Test webhook with $ in example name
     method: POST
@@ -40,7 +40,7 @@ types:
         value: { person: { firstName: "John", middleInitial: "Q", lastName: "Sample" } }
       - name: JaneExample
         value: { person: { firstName: "Jane", middleInitial: "Q", lastName: "Sample" } }
-  
+
   SimplePayload:
     properties:
       message: string
