@@ -18,13 +18,23 @@ client<llm> Anthropic {
   }
 }
 
+// Bedrock client configuration
+client<llm> Bedrock {
+    provider aws-bedrock
+    options {
+        model anthropic.claude-3-5-sonnet-20240620-v1:0
+    }
+}
+
 // Fallback client that tries multiple providers
+// TODO(tjb9dc): I wish we didn't have to specify this, we're only going to use one at runtime
 client<llm> DefaultClient {
   provider fallback
   options {
     strategy [
       Anthropic
       OpenAI
+      Bedrock
     ]
   }
 }

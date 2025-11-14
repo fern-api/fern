@@ -3963,10 +3963,11 @@ importers:
         version: 4.0.8(@types/debug@4.1.12)(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.3.3)
 
   packages/cli/ai:
-    devDependencies:
+    dependencies:
       '@boundaryml/baml':
         specifier: ^0.211.2
         version: 0.211.2
+    devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../configs
