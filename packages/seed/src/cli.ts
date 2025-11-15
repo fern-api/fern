@@ -24,6 +24,7 @@ import { validateGenerator } from "./commands/validate/validateGeneratorChangelo
 import { validateVersionsYml } from "./commands/validate/validateVersionsYml";
 import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
 import { Semaphore } from "./Semaphore";
+import { executeTestRemoteLocalCommand, isFernRepo } from "./commands/test-remote-local";
 
 void tryRunCli();
 
@@ -254,8 +255,32 @@ function addTestRemoteLocalCommand(cli: Argv) {
                 .option("log-level", {
                     default: LogLevel.Info,
                     choices: LOG_LEVELS
+                })
+                .option("working-directory", {
+                    string: true,
+                    demandOption: false,
+                    description: "These tests must run with the fern repo path as their working directory. Defaults to the current working directory."
+                })
+                .option("github-token", {
+                    string: true,
+                    demandOption: false,
+                    description: "The GitHub token to use for the tests. Defaults to the GITHUB_TOKEN environment variable."
+                })
+                .option("fern-token", {
+                    string: true,
+                    demandOption: false,
+                    description: "The Fern token to use for the tests. Defaults to the FERN_TOKEN environment variable."
                 }),
-        async (argv) => {}
+        async (argv) => {
+            // Verify that the working directory is a valid path and is the root folder of the fern repo
+            const workingDirectory = argv.workingDirectory ?? process.cwd();
+            const isFernRepoResult = isFernRepo(workingDirectory);
+            if (!isFernRepoResult.success) {
+                throw new Error(isFernRepoResult.error);
+            }
+
+            executeTestRemoteLocalCommand(argv);
+        }
     );
 }
 
