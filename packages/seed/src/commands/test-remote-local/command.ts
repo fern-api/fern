@@ -1,6 +1,7 @@
 import { LogLevel, createLogger } from "@fern-api/logger";
 import { runTestCase } from "./case-runner";
 import path from "path";
+import { TaskContextFactory } from "../test/TaskContextFactory";
 
 export async function executeTestRemoteLocalCommand({
     generator,
@@ -20,19 +21,24 @@ export async function executeTestRemoteLocalCommand({
     fernToken: string;
 }): Promise<void> {
     console.log("Executing test remote local command");
-    const logger = createLogger(logLevel);
+    // TODO(jsklan): Do something better here maybe
+    const taskContextFactory = new TaskContextFactory(LogLevel.Debug);
+    const taskContext = taskContextFactory.create("test-remote-local");
+    const logger = taskContext.logger;
 
     logger.info("Executing test remote local command for ts-sdk:imdb:no-custom-config");
     await runTestCase({
         generator: "ts-sdk",
         fixture: "imdb",
         outputFolder: "no-custom-config",
+        outputMode: "local-file-system",
         context: {
             fernExecutable: path.join(workingDirectory, "packages", "cli", "cli", "dist", "prod", "cli.cjs"),
+            fernRepoDirectory: workingDirectory,
+            workingDirectory: path.join(workingDirectory, "seed-remote-local", "ts-sdk", "imdb", "no-custom-config"),
             logger,
             githubToken,
             fernToken
-
         }
     });
 }
