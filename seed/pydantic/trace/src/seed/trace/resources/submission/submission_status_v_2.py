@@ -28,12 +28,6 @@ class SubmissionStatusV2_Test(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-from ..commons.key_value_pair import KeyValuePair  # noqa: E402, F401, I001
-from ..commons.map_value import MapValue  # noqa: E402, F401, I001
-from ..commons.list_type import ListType  # noqa: E402, F401, I001
-from ..commons.map_type import MapType  # noqa: E402, F401, I001
-
-
 class SubmissionStatusV2_Workspace(UniversalBaseModel):
     type: typing.Literal["workspace"] = "workspace"
     updates: typing.List[WorkspaceSubmissionUpdate]
