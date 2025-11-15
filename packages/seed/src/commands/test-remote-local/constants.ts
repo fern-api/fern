@@ -1,0 +1,1 @@
+export const FERN_REPO_PACKAGE_NAME = "fern";

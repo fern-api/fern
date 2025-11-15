@@ -24,7 +24,7 @@ import { validateGenerator } from "./commands/validate/validateGeneratorChangelo
 import { validateVersionsYml } from "./commands/validate/validateVersionsYml";
 import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
 import { Semaphore } from "./Semaphore";
-import { executeTestRemoteLocalCommand, isFernRepo } from "./commands/test-remote-local";
+import { executeTestRemoteLocalCommand, isFernRepo, isLocalFernCliBuilt } from "./commands/test-remote-local";
 
 void tryRunCli();
 
@@ -273,13 +273,41 @@ function addTestRemoteLocalCommand(cli: Argv) {
                 }),
         async (argv) => {
             // Verify that the working directory is a valid path and is the root folder of the fern repo
+            const inputValidationErrors = [];
+
             const workingDirectory = argv.workingDirectory ?? process.cwd();
             const isFernRepoResult = isFernRepo(workingDirectory);
             if (!isFernRepoResult.success) {
-                throw new Error(isFernRepoResult.error);
+                inputValidationErrors.push(`The working directory (${workingDirectory}) is not the root folder of the fern repo. ${isFernRepoResult.error}`);
             }
 
-            executeTestRemoteLocalCommand(argv);
+            const localFernCliIsBuilt = await isLocalFernCliBuilt(workingDirectory);
+            if (!localFernCliIsBuilt.success) {
+                inputValidationErrors.push(localFernCliIsBuilt.error);
+            }
+
+            const githubToken = argv.githubToken ?? process.env.GITHUB_TOKEN;
+            if (githubToken == null) {
+                inputValidationErrors.push("GITHUB_TOKEN environment variable is not set");
+            }
+            const fernToken = argv.fernToken ?? process.env.FERN_TOKEN;
+            if (fernToken == null) {
+                inputValidationErrors.push("FERN_TOKEN environment variable is not set");
+            }
+
+            if (inputValidationErrors.length > 0) {
+                throw new Error(inputValidationErrors.join("\n"));
+            }
+
+            await executeTestRemoteLocalCommand({
+                generator: argv.generator ?? [],
+                fixture: argv.fixture ?? [],
+                outputFolder: argv.outputFolder ?? "",
+                logLevel: argv.logLevel,
+                workingDirectory,
+                githubToken: githubToken ?? "",
+                fernToken: fernToken ?? ""
+            });
         }
     );
 }

@@ -1,2 +1,2 @@
 export { executeTestRemoteLocalCommand } from "./command";
-export { isFernRepo } from "./utils";
+export { isFernRepo, isLocalFernCliBuilt } from "./utils";
