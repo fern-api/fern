@@ -49,7 +49,7 @@ export abstract class AbstractSwiftGeneratorContext<
 
     private detectCycles(ir: IntermediateRepresentation) {
         const cycleDetector = new CycleDetector(ir);
-        cycleDetector.detectProhibitedCycles();
+        cycleDetector.detectIllegalCycles();
         // TODO(kafkas): This is for later, not now. Detect allowed cycles (finite size cycles) and adjust generated code accordingly.
     }
 

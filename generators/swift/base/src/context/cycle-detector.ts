@@ -3,7 +3,7 @@ import { IntermediateRepresentation, TypeDeclaration, TypeId, TypeReference } fr
 export class CycleDetector {
     public constructor(private readonly ir: IntermediateRepresentation) {}
 
-    public detectProhibitedCycles() {
+    public detectIllegalCycles() {
         const dependencyGraph = this.buildRequiredDependencyGraph();
         const visited = new Set<TypeId>();
         const visiting = new Set<TypeId>();
@@ -38,19 +38,22 @@ export class CycleDetector {
         const graph = new Map<TypeId, TypeId[]>();
 
         for (const [typeId, typeDeclaration] of Object.entries(this.ir.types)) {
-            const dependencies = new Set<TypeId>();
-            this.addRequiredDependenciesForType(typeDeclaration, dependencies);
-            graph.set(typeId, Array.from(dependencies));
+            const deps = this.getRequiredDependenciesForType(typeDeclaration);
+            graph.set(typeId, deps);
         }
 
         return graph;
     }
 
-    private addRequiredDependenciesForType(typeDeclaration: TypeDeclaration, dependencies: Set<TypeId>): void {
+    private getRequiredDependenciesForType(typeDeclaration: TypeDeclaration): TypeId[] {
+        const dependencies = new Set<TypeId>();
+
         typeDeclaration.shape._visit({
             alias: (aliasShape) => {
-                const deps = this.getRequiredNamedDependencies(aliasShape.aliasOf);
-                deps.forEach((dep) => dependencies.add(dep));
+                const dep = this.getRequiredNamedDependencyForType(aliasShape.aliasOf);
+                if (dep != null) {
+                    dependencies.add(dep);
+                }
             },
             enum: () => {
                 // enums have no recursive structure
@@ -64,8 +67,10 @@ export class CycleDetector {
                 // All properties that are effectively required (see helper) contribute edges
                 const allProperties = [...(objectShape.extendedProperties ?? []), ...objectShape.properties];
                 for (const property of allProperties) {
-                    const deps = this.getRequiredNamedDependencies(property.valueType);
-                    deps.forEach((dep) => dependencies.add(dep));
+                    const dep = this.getRequiredNamedDependencyForType(property.valueType);
+                    if (dep != null) {
+                        dependencies.add(dep);
+                    }
                 }
             },
             union: (unionShape) => {
@@ -76,8 +81,10 @@ export class CycleDetector {
 
                 // Base properties are present for every union variant
                 for (const baseProperty of unionShape.baseProperties) {
-                    const deps = this.getRequiredNamedDependencies(baseProperty.valueType);
-                    deps.forEach((dep) => dependencies.add(dep));
+                    const dep = this.getRequiredNamedDependencyForType(baseProperty.valueType);
+                    if (dep != null) {
+                        dependencies.add(dep);
+                    }
                 }
 
                 // We intentionally ignore the individual union variants here.
@@ -95,60 +102,34 @@ export class CycleDetector {
                 // future-proof for new shapes
             }
         });
+
+        return Array.from(dependencies);
     }
 
-    /**
-     * Returns the set of named types that are *required* when using the given
-     * type reference as a property type. A dependency is considered required if
-     * there is no container/optional/nullable wrapper providing a finite base case.
-     *
-     * Examples:
-     *   - `CircularWorkspace.project: CircularProject` (required object property)
-     *       -> edge CircularWorkspace -> CircularProject
-     *   - `Tree.children: list<Tree>` (collection can be empty)
-     *       -> no edge
-     *   - `Child.parent: optional<Parent>`
-     *       -> no edge
-     */
-    private getRequiredNamedDependencies(typeReference: TypeReference): Set<TypeId> {
-        const result = new Set<TypeId>();
-
-        const unaliased = this.unwrapAlias(typeReference, new Set<TypeId>());
-
-        switch (unaliased.type) {
-            case "container":
-                // Any container (list, set, map, optional, nullable, literal)
-                // introduces a base case (empty collection or null), so it cannot
-                // force an infinitely large JSON value on its own.
-                return result;
-            case "named":
-                result.add(unaliased.typeId);
-                return result;
-            case "primitive":
-            case "unknown":
-            default:
-                return result;
-        }
+    private getRequiredNamedDependencyForType(typeReference: TypeReference): TypeId | null {
+        const unaliased = this.resolveAlias(typeReference);
+        return unaliased.type === "named" ? unaliased.typeId : null;
     }
 
-    /**
-     * Recursively resolves alias type declarations, stopping at:
-     *   - a non-alias type reference
-     *   - a previously visited alias (to avoid infinite recursion)
-     */
-    private unwrapAlias(typeReference: TypeReference, visitedAliases: Set<TypeId>): TypeReference {
-        if (typeReference.type === "named") {
-            const typeDeclaration = this.ir.types[typeReference.typeId];
-            if (
-                typeDeclaration != null &&
-                typeDeclaration.shape.type === "alias" &&
-                !visitedAliases.has(typeReference.typeId)
-            ) {
-                visitedAliases.add(typeReference.typeId);
-                return this.unwrapAlias(typeDeclaration.shape.aliasOf, visitedAliases);
+    private resolveAlias(typeReference: TypeReference): TypeReference {
+        const visitedAliases = new Set<TypeId>();
+
+        const unwrapAlias = (ref: TypeReference): TypeReference => {
+            if (ref.type === "named") {
+                const typeDeclaration = this.ir.types[ref.typeId];
+                if (
+                    typeDeclaration != null &&
+                    typeDeclaration.shape.type === "alias" &&
+                    !visitedAliases.has(ref.typeId)
+                ) {
+                    visitedAliases.add(ref.typeId);
+                    return unwrapAlias(typeDeclaration.shape.aliasOf);
+                }
             }
-        }
-        return typeReference;
+            return typeReference;
+        };
+
+        return unwrapAlias(typeReference);
     }
 
     private dfsFindCycle(
@@ -199,9 +180,9 @@ export class CycleDetector {
             .join(" -> ");
 
         return [
-            "Prohibited recursive type cycle detected in IR.",
-            `The following types reference each other via required properties with no nullable/optional/container base case: ${prettyPath}.`,
-            "Such a cycle cannot be represented as a finite JSON value. Please introduce a nullable/optional/container field somewhere in this cycle or restructure your types."
+            "Illegal recursive type cycle detected in IR.",
+            `The following types reference each other via required properties: ${prettyPath}.`,
+            "Such a cycle cannot be represented as a finite JSON value. Please restructure your types to introduce a finite base case."
         ].join(" ");
     }
 }
