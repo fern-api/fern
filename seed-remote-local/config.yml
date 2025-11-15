@@ -1,0 +1,8 @@
+enabledGenerators:
+  - ts-sdk
+  - python-sdk
+  - java-sdk
+  - go-sdk
+
+enabledFixtures:
+  - imdb

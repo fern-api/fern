@@ -40,6 +40,7 @@ export async function tryRunCli(): Promise<void> {
         });
 
     addTestCommand(cli);
+    addTestRemoteLocalCommand(cli);
     addRunCommand(cli);
     addGetAvailableFixturesCommand(cli);
     addRegisterCommands(cli);
@@ -223,6 +224,38 @@ function addTestCommand(cli: Argv) {
                 process.exit(1);
             }
         }
+    );
+}
+
+function addTestRemoteLocalCommand(cli: Argv) {
+    cli.command(
+        "test-remote-local",
+        "Run snapshot tests for the generators comparing local vs remote generation",
+        (yargs) =>
+            yargs
+                .option("generator", {
+                    type: "array",
+                    string: true,
+                    demandOption: false,
+                    alias: "g",
+                    description: "The generators to run tests for"
+                })
+                .option("fixture", {
+                    type: "array",
+                    string: true,
+                    demandOption: false,
+                    description: "Runs on all fixtures if not provided"
+                })
+                .option("outputFolder", {
+                    string: true,
+                    demandOption: false,
+                    description: "Runs on a specific output folder. Only relevant if there are >1 folders configured."
+                })
+                .option("log-level", {
+                    default: LogLevel.Info,
+                    choices: LOG_LEVELS
+                }),
+        async (argv) => {}
     );
 }
 
