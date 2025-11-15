@@ -19,7 +19,7 @@ import utc from "dayjs/plugin/utc";
 import { readFile, stat } from "fs/promises";
 import matter from "gray-matter";
 import { kebabCase } from "lodash-es";
-
+import { Target } from "../../configuration/src/docs-yml/schemas";
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
@@ -895,6 +895,7 @@ export class DocsDefinitionResolver {
                 title: product.product,
                 subtitle: product.subtitle ?? "",
                 href: DocsV1Write.Url(product.href ?? ""),
+                target: product.target,
                 default: false,
                 hidden: undefined,
                 authed: undefined,
@@ -1105,7 +1106,8 @@ export class DocsDefinitionResolver {
                     context: this.taskContext,
                     audiences: item.audiences,
                     enableUniqueErrorsPerEndpoint: true,
-                    generateV1Examples: false
+                    generateV1Examples: false,
+                    logWarnings: false
                 });
             } catch (error) {
                 // noop
@@ -1194,7 +1196,8 @@ export class DocsDefinitionResolver {
             id: this.#idgen.get(item.url),
             title: item.text,
             url: FernNavigation.V1.Url(item.url),
-            icon: this.resolveIconFileId(item.icon)
+            icon: this.resolveIconFileId(item.icon),
+            target: item.target
         };
     }
 
@@ -1307,7 +1310,7 @@ export class DocsDefinitionResolver {
         parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.TabChild> {
         return visitDiscriminatedUnion(item.child)._visit<Promise<FernNavigation.V1.TabChild>>({
-            link: ({ href }) => this.toTabLinkNode(item, href),
+            link: ({ href, target }) => this.toTabLinkNode(item, href, target),
             layout: ({ layout }) => this.toTabNode(prefix, item, layout, parentSlug),
             changelog: ({ changelog }) => this.toTabChangelogNode(item, changelog, parentSlug),
             variants: ({ variants }) => this.toTabNodeWithVariants(prefix, item, variants, parentSlug)
@@ -1337,12 +1340,17 @@ export class DocsDefinitionResolver {
         });
     }
 
-    private async toTabLinkNode(item: docsYml.TabbedNavigation, href: string): Promise<FernNavigation.V1.LinkNode> {
+    private async toTabLinkNode(
+        item: docsYml.TabbedNavigation,
+        href: string,
+        target?: Target
+    ): Promise<FernNavigation.V1.LinkNode> {
         return {
             type: "link",
             id: this.#idgen.get(href),
             title: item.title,
             url: FernNavigation.V1.Url(href),
+            target: target,
             icon: this.resolveIconFileId(item.icon)
         };
     }

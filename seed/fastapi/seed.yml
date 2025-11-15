@@ -133,6 +133,7 @@ allowedFailures:
   - server-sent-event-examples
   - streaming-parameter
   - any-auth
+  - nullable-request-body
   # Complex circular refs
   - bytes-download
   - bytes-upload

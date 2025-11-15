@@ -113,4 +113,5 @@ export * from "./ProductConfigBase";
 export * from "./ProductConfig";
 export * from "./InternalProduct";
 export * from "./ExternalProduct";
+export * from "./Target";
 export * from "./ProductFileConfig";

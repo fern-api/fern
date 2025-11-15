@@ -17,8 +17,6 @@ client.user().createUser(
     CreateUserRequest
         .builder()
         .name("Alice")
-        .type("CreateUserRequest")
-        .version("v1")
         .build()
 );
 ```

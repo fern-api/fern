@@ -15,8 +15,6 @@ public class Example0 {
                 .getTokenWithClientCredentials(GetTokenRequest.builder()
                         .clientId("my_oauth_app_123")
                         .clientSecret("sk_live_abcdef123456789")
-                        .audience("https://api.example.com")
-                        .grantType("client_credentials")
                         .scope("read:users")
                         .build());
     }

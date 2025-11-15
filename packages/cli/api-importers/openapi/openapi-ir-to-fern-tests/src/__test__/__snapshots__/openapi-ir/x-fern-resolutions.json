@@ -21,11 +21,11 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "UserGetRequest",
+      "generatedRequestName": "GetUserRequest",
       "response": {
         "description": "Success",
         "schema": {
-          "generatedName": "UserGetResponse",
+          "generatedName": "GetUserResponse",
           "schema": "User",
           "source": {
             "file": "../openapi.yml",
@@ -90,12 +90,12 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "UserGetAllRequest",
+      "generatedRequestName": "GetAllUserRequest",
       "response": {
         "description": "Success",
         "schema": {
           "value": {
-            "generatedName": "UserGetAllResponseItem",
+            "generatedName": "GetAllUserResponseItem",
             "schema": "User",
             "source": {
               "file": "../openapi.yml",
@@ -103,7 +103,7 @@
             },
             "type": "reference"
           },
-          "generatedName": "UserGetAllResponse",
+          "generatedName": "GetAllUserResponse",
           "groupName": [],
           "type": "array"
         },

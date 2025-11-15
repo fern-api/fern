@@ -6,7 +6,7 @@ Direct testing of OpenAPI v3 parser pipeline without CLI compilation.
 
 ```bash
 # Run tests
-cd packages/cli/workspace/register
+cd packages/cli/register
 pnpm test src/ir-to-fdr-converter/__test__/openapi-from-flag.test.ts
 
 # Update snapshots

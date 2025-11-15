@@ -26,10 +26,6 @@ public class SeedApiClient {
         return this.rawClient;
     }
 
-    public ResponseBody postWithNullableNamedRequestBodyType(String id) {
-        return this.rawClient.postWithNullableNamedRequestBodyType(id).body();
-    }
-
     public ResponseBody postWithNullableNamedRequestBodyType(
             String id, PostWithNullableNamedRequestBodyTypeRequest request) {
         return this.rawClient.postWithNullableNamedRequestBodyType(id, request).body();

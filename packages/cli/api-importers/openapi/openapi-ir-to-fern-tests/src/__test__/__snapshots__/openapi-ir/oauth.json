@@ -27,18 +27,18 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "AuthGetTokenRequest",
+      "generatedRequestName": "GetTokenAuthRequest",
       "request": {
         "schema": {
           "allOf": [],
           "properties": [
             {
               "conflict": {},
-              "generatedName": "authGetTokenRequestGrantType",
+              "generatedName": "getTokenAuthRequestGrantType",
               "key": "grant_type",
               "schema": {
                 "description": "The type of grant to request",
-                "generatedName": "AuthGetTokenRequestGrantType",
+                "generatedName": "GetTokenAuthRequestGrantType",
                 "values": [
                   {
                     "generatedName": "password",
@@ -67,17 +67,17 @@
             },
             {
               "conflict": {},
-              "generatedName": "authGetTokenRequestUsername",
+              "generatedName": "getTokenAuthRequestUsername",
               "key": "username",
               "schema": {
-                "generatedName": "AuthGetTokenRequestUsername",
+                "generatedName": "GetTokenAuthRequestUsername",
                 "description": "Required for password grant type",
                 "value": {
                   "description": "Required for password grant type",
                   "schema": {
                     "type": "string"
                   },
-                  "generatedName": "AuthGetTokenRequestUsername",
+                  "generatedName": "GetTokenAuthRequestUsername",
                   "groupName": [],
                   "type": "primitive"
                 },
@@ -88,17 +88,17 @@
             },
             {
               "conflict": {},
-              "generatedName": "authGetTokenRequestPassword",
+              "generatedName": "getTokenAuthRequestPassword",
               "key": "password",
               "schema": {
-                "generatedName": "AuthGetTokenRequestPassword",
+                "generatedName": "GetTokenAuthRequestPassword",
                 "description": "Required for password grant type",
                 "value": {
                   "description": "Required for password grant type",
                   "schema": {
                     "type": "string"
                   },
-                  "generatedName": "AuthGetTokenRequestPassword",
+                  "generatedName": "GetTokenAuthRequestPassword",
                   "groupName": [],
                   "type": "primitive"
                 },
@@ -109,17 +109,17 @@
             },
             {
               "conflict": {},
-              "generatedName": "authGetTokenRequestRefreshToken",
+              "generatedName": "getTokenAuthRequestRefreshToken",
               "key": "refresh_token",
               "schema": {
-                "generatedName": "AuthGetTokenRequestRefreshToken",
+                "generatedName": "GetTokenAuthRequestRefreshToken",
                 "description": "Required for refresh_token grant type",
                 "value": {
                   "description": "Required for refresh_token grant type",
                   "schema": {
                     "type": "string"
                   },
-                  "generatedName": "AuthGetTokenRequestRefreshToken",
+                  "generatedName": "GetTokenAuthRequestRefreshToken",
                   "groupName": [],
                   "type": "primitive"
                 },
@@ -130,14 +130,14 @@
             },
             {
               "conflict": {},
-              "generatedName": "authGetTokenRequestClientId",
+              "generatedName": "getTokenAuthRequestClientId",
               "key": "client_id",
               "schema": {
                 "description": "The client identifier",
                 "schema": {
                   "type": "string"
                 },
-                "generatedName": "AuthGetTokenRequestClientId",
+                "generatedName": "GetTokenAuthRequestClientId",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -145,14 +145,14 @@
             },
             {
               "conflict": {},
-              "generatedName": "authGetTokenRequestClientSecret",
+              "generatedName": "getTokenAuthRequestClientSecret",
               "key": "client_secret",
               "schema": {
                 "description": "The client secret",
                 "schema": {
                   "type": "string"
                 },
-                "generatedName": "AuthGetTokenRequestClientSecret",
+                "generatedName": "GetTokenAuthRequestClientSecret",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -160,7 +160,7 @@
             }
           ],
           "allOfPropertyConflicts": [],
-          "generatedName": "AuthGetTokenRequest",
+          "generatedName": "GetTokenAuthRequest",
           "groupName": [],
           "additionalProperties": false,
           "source": {
@@ -185,15 +185,15 @@
           "properties": [
             {
               "conflict": {},
-              "generatedName": "authGetTokenResponseAccessToken",
+              "generatedName": "getTokenAuthResponseAccessToken",
               "key": "access_token",
               "schema": {
-                "generatedName": "AuthGetTokenResponseAccessToken",
+                "generatedName": "GetTokenAuthResponseAccessToken",
                 "value": {
                   "schema": {
                     "type": "string"
                   },
-                  "generatedName": "AuthGetTokenResponseAccessToken",
+                  "generatedName": "GetTokenAuthResponseAccessToken",
                   "groupName": [],
                   "type": "primitive"
                 },
@@ -204,16 +204,16 @@
             },
             {
               "conflict": {},
-              "generatedName": "authGetTokenResponseTokenType",
+              "generatedName": "getTokenAuthResponseTokenType",
               "key": "token_type",
               "schema": {
-                "generatedName": "AuthGetTokenResponseTokenType",
+                "generatedName": "GetTokenAuthResponseTokenType",
                 "value": {
                   "schema": {
                     "example": "Bearer",
                     "type": "string"
                   },
-                  "generatedName": "AuthGetTokenResponseTokenType",
+                  "generatedName": "GetTokenAuthResponseTokenType",
                   "groupName": [],
                   "type": "primitive"
                 },
@@ -224,17 +224,17 @@
             },
             {
               "conflict": {},
-              "generatedName": "authGetTokenResponseExpiresIn",
+              "generatedName": "getTokenAuthResponseExpiresIn",
               "key": "expires_in",
               "schema": {
-                "generatedName": "AuthGetTokenResponseExpiresIn",
+                "generatedName": "GetTokenAuthResponseExpiresIn",
                 "description": "Token expiration time in seconds",
                 "value": {
                   "description": "Token expiration time in seconds",
                   "schema": {
                     "type": "int"
                   },
-                  "generatedName": "AuthGetTokenResponseExpiresIn",
+                  "generatedName": "GetTokenAuthResponseExpiresIn",
                   "groupName": [],
                   "type": "primitive"
                 },
@@ -245,15 +245,15 @@
             },
             {
               "conflict": {},
-              "generatedName": "authGetTokenResponseRefreshToken",
+              "generatedName": "getTokenAuthResponseRefreshToken",
               "key": "refresh_token",
               "schema": {
-                "generatedName": "AuthGetTokenResponseRefreshToken",
+                "generatedName": "GetTokenAuthResponseRefreshToken",
                 "value": {
                   "schema": {
                     "type": "string"
                   },
-                  "generatedName": "AuthGetTokenResponseRefreshToken",
+                  "generatedName": "GetTokenAuthResponseRefreshToken",
                   "groupName": [],
                   "type": "primitive"
                 },
@@ -264,7 +264,7 @@
             }
           ],
           "allOfPropertyConflicts": [],
-          "generatedName": "AuthGetTokenResponse",
+          "generatedName": "GetTokenAuthResponse",
           "groupName": [],
           "additionalProperties": false,
           "source": {

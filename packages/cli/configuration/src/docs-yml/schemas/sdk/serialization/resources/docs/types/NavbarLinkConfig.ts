@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { Target } from "./Target";
 import { WithViewers } from "./WithViewers";
 
 export const NavbarLinkConfig: core.serialization.ObjectSchema<
@@ -13,6 +14,7 @@ export const NavbarLinkConfig: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         href: core.serialization.string().optional(),
+        target: Target.optional(),
         url: core.serialization.string().optional(),
         text: core.serialization.string().optional(),
         icon: core.serialization.string().optional(),
@@ -24,6 +26,7 @@ export const NavbarLinkConfig: core.serialization.ObjectSchema<
 export declare namespace NavbarLinkConfig {
     export interface Raw extends WithViewers.Raw {
         href?: string | null;
+        target?: Target.Raw | null;
         url?: string | null;
         text?: string | null;
         icon?: string | null;

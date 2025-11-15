@@ -12,6 +12,12 @@ export interface FixtureConfigurations {
     audiences?: string[];
     outputFolder: string;
     outputVersion?: string;
+    /**
+     * If true, dynamic snippet tests will not be generated for this fixture.
+     * This is useful for situations where the main parts of the sdk are working, but the dynamic snippet tests are not.
+     * Disabling the dynamic snippet tests allows the fixture to compile and run tests, surfacing issues when failures there start to occur.
+     */
+    disableDynamicSnippetTests?: boolean;
     /** Overrides the default output mode */
     outputMode?: FernSeedConfig.OutputMode;
     license?: unknown;
