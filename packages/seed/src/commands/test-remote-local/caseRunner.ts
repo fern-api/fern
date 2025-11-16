@@ -451,25 +451,84 @@ function getPackageOutputConfig(
     }
 }
 
-function getLatestGeneratorVersion(
+async function getLatestGeneratorVersion(
     generator: GeneratorName,
     logger: Logger
 ): Promise<string> {
-    logger.debug(`Getting version for ${generator}`);
+    logger.debug(`Getting latest version for ${generator} from Docker Hub`);
 
-    // TODO: Implement getting the latest generator version from dockerhub
-    const map = {
-        "fernapi/fern-typescript-sdk": "3.29.2",
-        "fernapi/fern-java-sdk": "3.16.0",
-        "fernapi/fern-go-sdk": "1.15.1",
-        "fernapi/fern-python-sdk": "4.36.2"
-    };
-    const version = map[generator];
-    if (version == null) {
-        logger.error(`Generator ${generator} not found in version map`);
-        throw new Error(`Generator ${generator} not found in map`);
+    try {
+        // Extract repository name from generator (e.g., "fernapi/fern-typescript-sdk" -> "fern-typescript-sdk")
+        const [namespace, repository] = generator.split("/");
+        if (!namespace || !repository) {
+            throw new Error(`Invalid generator name format: ${generator}`);
+        }
+
+        // Docker Hub API endpoint for repository tags
+        const url = `https://hub.docker.com/v2/namespaces/${namespace}/repositories/${repository}/tags?page_size=100&ordering=-last_updated`;
+
+        logger.debug(`Fetching tags from: ${url}`);
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`Docker Hub API returned ${response.status}: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+
+        if (!data.results || !Array.isArray(data.results) || data.results.length === 0) {
+            throw new Error(`No tags found for ${generator}`);
+        }
+
+        // Filter out non-semantic version tags (e.g., "latest", "main", etc.)
+        // Look for tags that match semantic versioning pattern: X.Y.Z
+        const semverRegex = /^\d+\.\d+\.\d+$/;
+        const versionTags = data.results
+            .map((tag: { name: string }) => tag.name)
+            .filter((name: string) => semverRegex.test(name));
+
+        if (versionTags.length === 0) {
+            throw new Error(`No semantic version tags found for ${generator}`);
+        }
+
+        // The API returns tags ordered by last_updated, but we want the highest semantic version
+        // Sort versions by semantic versioning rules
+        const sortedVersions = versionTags.sort((a: string, b: string) => {
+            const aParts = a.split(".").map(Number);
+            const bParts = b.split(".").map(Number);
+
+            for (let i = 0; i < 3; i++) {
+                const aPart = aParts[i];
+                const bPart = bParts[i];
+                if (aPart && bPart) {
+                    return bPart - aPart; // Descending order
+                }
+            }
+            return 0;
+        });
+
+        const latestVersion = sortedVersions[0];
+        logger.debug(`Found latest version: ${latestVersion}`);
+        return latestVersion;
+    } catch (error) {
+        logger.error(`Failed to fetch version from Docker Hub: ${error instanceof Error ? error.message : String(error)}`);
+
+        // Fallback to hardcoded versions if Docker Hub API fails
+        logger.warn(`Falling back to hardcoded version`);
+        const fallbackMap: Record<string, string> = {
+            "fernapi/fern-typescript-sdk": "3.29.2",
+            "fernapi/fern-java-sdk": "3.16.0",
+            "fernapi/fern-go-sdk": "1.15.1",
+            "fernapi/fern-python-sdk": "4.36.2"
+        };
+
+        const version = fallbackMap[generator];
+        if (version == null) {
+            logger.error(`Generator ${generator} not found in fallback version map`);
+            throw new Error(`Generator ${generator} not found in fallback map and Docker Hub fetch failed`);
+        }
+
+        logger.debug(`Using fallback version: ${version}`);
+        return version;
     }
-
-    logger.debug(`Using hardcoded version ${version} (TODO: fetch from Docker Hub)`);
-    return Promise.resolve(version);
 }
