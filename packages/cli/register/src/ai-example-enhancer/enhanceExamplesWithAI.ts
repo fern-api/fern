@@ -310,7 +310,7 @@ async function enhancePackageExamples(
 
     const apiStats = { count: 0, total: allWorkItems.length };
 
-    const enhancementResults = await processBatchedWorkItems(
+    const enhancementResults = await processEndpointsConcurrently(
         allWorkItems,
         enhancer,
         context,
@@ -384,13 +384,7 @@ function collectWorkItems(
     return workItems;
 }
 
-interface RetryStrategy {
-    optimalBatchSize: number;
-    useOpenApiSpec: boolean;
-    timeoutCount: number;
-}
-
-async function processBatchedWorkItems(
+async function processEndpointsConcurrently(
     allWorkItems: (EndpointWorkItem & { packageId?: string })[],
     enhancer: LambdaExampleEnhancer,
     context: TaskContext,
@@ -404,306 +398,176 @@ async function processBatchedWorkItems(
 ): Promise<Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>> {
     const enhancementResults = new Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>();
 
-    const retryStrategy: RetryStrategy = {
-        optimalBatchSize: 10,
-        useOpenApiSpec: !!openApiSpec,
-        timeoutCount: 0
-    };
+    // Process endpoints concurrently (1 Lambda call per endpoint)
+    const maxConcurrentRequests = parseInt(process.env.FERN_AI_MAX_CONCURRENT || "25", 10);
 
-    let i = 0;
-    while (i < allWorkItems.length) {
-        const currentBatchSize = Math.min(retryStrategy.optimalBatchSize, allWorkItems.length - i);
-        const batch = allWorkItems.slice(i, i + currentBatchSize);
+    context.logger.debug(
+        `Processing ${allWorkItems.length} endpoints with max ${maxConcurrentRequests} concurrent Lambda calls`
+    );
 
-        const batchNumber = Math.floor(i / 10) + 1;
-        context.logger.debug(
-            `Processing batch ${batchNumber} with ${batch.length} endpoints (strategy: size=${retryStrategy.optimalBatchSize}, spec=${retryStrategy.useOpenApiSpec})`
+    // Process all work items concurrently in chunks
+    for (let i = 0; i < allWorkItems.length; i += maxConcurrentRequests) {
+        const chunk = allWorkItems.slice(i, i + maxConcurrentRequests);
+        const chunkNumber = Math.floor(i / maxConcurrentRequests) + 1;
+
+        context.logger.debug(`Processing chunk ${chunkNumber} with ${chunk.length} endpoints concurrently`);
+
+        // Process each endpoint concurrently
+        const endpointPromises = chunk.map((workItem, index) =>
+            processEndpoint(
+                workItem,
+                enhancer,
+                context,
+                organizationId,
+                stats,
+                enhancedExampleRecords,
+                openApiSpec,
+                sourceFilePath,
+                statusId,
+                apiStats,
+                i + index + 1
+            )
         );
 
-        let prunedOpenApiSpec: string | undefined;
-        if (openApiSpec && retryStrategy.useOpenApiSpec) {
-            // Collect all endpoints for this batch
-            const endpointsForBatch = batch.map((item) => ({
-                path: item.example.path,
-                method: item.endpoint.method
-            }));
+        // Wait for all endpoints in this chunk to complete
+        const results = await Promise.allSettled(endpointPromises);
 
-            prunedOpenApiSpec = await pruneOpenAPISpecForBatch(openApiSpec, endpointsForBatch, context);
-        } else if (openApiSpec && !retryStrategy.useOpenApiSpec) {
-            context.logger.debug("Skipping OpenAPI spec due to previous timeouts (retry strategy adaptation)");
+        // Process results
+        for (let j = 0; j < results.length; j++) {
+            const result = results[j];
+            if (!result) continue;
+
+            if (result.status === "fulfilled" && result.value) {
+                const { endpointKey, enhancedReq, enhancedRes } = result.value;
+                enhancementResults.set(endpointKey, { enhancedReq, enhancedRes });
+            } else if (result.status === "rejected") {
+                context.logger.warn(`Endpoint ${i + j + 1} failed: ${result.reason}`);
+            }
         }
 
-        const batchRequest = {
-            openApiSpec: prunedOpenApiSpec,
-            endpoints: batch.map((item) => ({
-                method: item.endpoint.method,
-                endpointPath: item.example.path,
-                organizationId,
-                operationSummary: item.endpoint.summary,
-                operationDescription: item.endpoint.description,
-                originalRequestExample: extractExampleValue(item.example.requestBodyV3),
-                originalResponseExample: extractExampleValue(item.example.responseBodyV3)
-            }))
-        };
-
-        // Adaptive retry with strategy adjustments
-        let batchSuccess = false;
-        let lastError: Error | undefined;
-
-        for (let attempt = 1; attempt <= 3; attempt++) {
+        // Save incrementally after each chunk
+        if (sourceFilePath && enhancedExampleRecords.length > 0) {
             try {
-                // Adjust strategy based on attempt
-                if (attempt === 2 && !batchSuccess) {
-                    // Attempt 2: Reduce batch size if we had a timeout
-                    if (lastError?.message.includes("timeout") || lastError?.message.includes("aborted")) {
-                        const newBatchSize = Math.max(2, Math.floor(retryStrategy.optimalBatchSize / 2));
-                        context.logger.debug(
-                            `Attempt ${attempt}: Reducing batch size from ${retryStrategy.optimalBatchSize} to ${newBatchSize} due to timeout`
-                        );
-
-                        // If we need to reduce the batch, split and retry
-                        if (newBatchSize < batch.length) {
-                            retryStrategy.optimalBatchSize = newBatchSize;
-                            retryStrategy.timeoutCount++;
-                            // Process this batch with reduced size
-                            const reducedBatch = batch.slice(0, newBatchSize);
-                            const remainingItems = batch.slice(newBatchSize);
-
-                            // Update the batch for this attempt
-                            const reducedBatchRequest = {
-                                ...batchRequest,
-                                endpoints: reducedBatch.map((item) => ({
-                                    method: item.endpoint.method,
-                                    endpointPath: item.example.path,
-                                    organizationId,
-                                    operationSummary: item.endpoint.summary,
-                                    operationDescription: item.endpoint.description,
-                                    originalRequestExample: extractExampleValue(item.example.requestBodyV3),
-                                    originalResponseExample: extractExampleValue(item.example.responseBodyV3)
-                                }))
-                            };
-
-                            const batchResponse = await enhancer.enhanceExamplesBatch(reducedBatchRequest);
-                            await processBatchResponse(
-                                reducedBatch,
-                                batchResponse,
-                                enhancementResults,
-                                enhancedExampleRecords,
-                                stats,
-                                context,
-                                statusId,
-                                apiStats
-                            );
-
-                            // Save results incrementally after successful reduced batch
-                            if (sourceFilePath && enhancedExampleRecords.length > 0) {
-                                try {
-                                    await writeAiExamplesOverride({
-                                        enhancedExamples: enhancedExampleRecords,
-                                        sourceFilePath,
-                                        context
-                                    });
-                                    context.logger.debug(
-                                        `Saved ${enhancedExampleRecords.length} examples to ai_overrides after reduced batch completion`
-                                    );
-                                } catch (error) {
-                                    context.logger.warn(`Failed to save incremental results: ${error}`);
-                                }
-                            }
-
-                            // Add remaining items back to the queue
-                            allWorkItems.splice(i + currentBatchSize, 0, ...remainingItems);
-                            batchSuccess = true;
-                            break;
-                        }
-                    }
-                } else if (attempt === 3 && !batchSuccess) {
-                    // Attempt 3: Further reduce batch size (to single endpoint)
-                    if (batch.length > 1) {
-                        context.logger.debug(
-                            `Attempt ${attempt}: Reducing to single endpoint due to repeated failures`
-                        );
-                        retryStrategy.optimalBatchSize = 1;
-                        retryStrategy.timeoutCount++;
-
-                        // Process only the first endpoint
-                        const singleBatch = batch.slice(0, 1);
-                        const remainingItems = batch.slice(1);
-
-                        // Update the batch for this attempt (keep OpenAPI spec)
-                        const singleBatchRequest = {
-                            ...batchRequest,
-                            endpoints: singleBatch.map((item) => ({
-                                method: item.endpoint.method,
-                                endpointPath: item.example.path,
-                                organizationId,
-                                operationSummary: item.endpoint.summary,
-                                operationDescription: item.endpoint.description,
-                                originalRequestExample: extractExampleValue(item.example.requestBodyV3),
-                                originalResponseExample: extractExampleValue(item.example.responseBodyV3)
-                            }))
-                        };
-
-                        const batchResponse = await enhancer.enhanceExamplesBatch(singleBatchRequest);
-                        await processBatchResponse(
-                            singleBatch,
-                            batchResponse,
-                            enhancementResults,
-                            enhancedExampleRecords,
-                            stats,
-                            context,
-                            statusId,
-                            apiStats
-                        );
-
-                        // Save results incrementally after successful single batch
-                        if (sourceFilePath && enhancedExampleRecords.length > 0) {
-                            try {
-                                await writeAiExamplesOverride({
-                                    enhancedExamples: enhancedExampleRecords,
-                                    sourceFilePath,
-                                    context
-                                });
-                                context.logger.debug(
-                                    `Saved ${enhancedExampleRecords.length} examples to ai_overrides after single batch completion`
-                                );
-                            } catch (error) {
-                                context.logger.warn(`Failed to save incremental results: ${error}`);
-                            }
-                        }
-
-                        // Add remaining items back to the queue
-                        allWorkItems.splice(i + currentBatchSize, 0, ...remainingItems);
-                        batchSuccess = true;
-                        break;
-                    }
-                }
-
-                const batchResponse = await enhancer.enhanceExamplesBatch(batchRequest);
-                await processBatchResponse(
-                    batch,
-                    batchResponse,
-                    enhancementResults,
-                    enhancedExampleRecords,
-                    stats,
-                    context,
-                    statusId,
-                    apiStats
-                );
-                batchSuccess = true;
-
-                // Save results incrementally after each successful batch
-                if (sourceFilePath && enhancedExampleRecords.length > 0) {
-                    try {
-                        await writeAiExamplesOverride({
-                            enhancedExamples: enhancedExampleRecords,
-                            sourceFilePath,
-                            context
-                        });
-                        context.logger.debug(
-                            `Saved ${enhancedExampleRecords.length} examples to ai_overrides after batch completion`
-                        );
-                    } catch (error) {
-                        context.logger.warn(`Failed to save incremental results: ${error}`);
-                    }
-                }
-                break;
+                await writeAiExamplesOverride({
+                    enhancedExamples: enhancedExampleRecords,
+                    sourceFilePath,
+                    context
+                });
+                context.logger.debug(`Saved ${enhancedExampleRecords.length} examples after chunk ${chunkNumber}`);
             } catch (error) {
-                lastError = error as Error;
-                const isTimeout =
-                    error instanceof Error && (error.message.includes("timeout") || error.message.includes("aborted"));
-
-                context.logger.warn(`Batch attempt ${attempt} failed${isTimeout ? " (timeout)" : ""}: ${error}`);
-
-                if (attempt === 3) {
-                    // Skip endpoints that fail after all attempts with OpenAPI spec
-                    context.logger.warn(`Skipping batch after 3 attempts (keeping OpenAPI spec requirement): ${error}`);
-                }
+                context.logger.warn(`Failed to save incremental results: ${error}`);
             }
         }
-
-        if (!batchSuccess) {
-            context.logger.warn(`Skipping batch of ${batch.length} endpoints after all retry attempts failed`);
-        } else {
-            // Batch size recovery: gradually increase batch size after successful attempts
-            const originalOptimalSize = 10;
-            if (retryStrategy.optimalBatchSize < originalOptimalSize) {
-                const newBatchSize = Math.min(originalOptimalSize, retryStrategy.optimalBatchSize + 1);
-                if (newBatchSize > retryStrategy.optimalBatchSize) {
-                    context.logger.debug(
-                        `Batch successful - increasing batch size from ${retryStrategy.optimalBatchSize} to ${newBatchSize}`
-                    );
-                    retryStrategy.optimalBatchSize = newBatchSize;
-                }
-            }
-        }
-
-        // Move to next batch
-        i += currentBatchSize;
     }
 
     return enhancementResults;
 }
 
-async function processBatchResponse(
-    batch: (EndpointWorkItem & { packageId?: string })[],
-    // biome-ignore lint/suspicious/noExplicitAny: batch response structure is dynamic
-    batchResponse: any,
-    enhancementResults: Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>,
-    enhancedExampleRecords: EnhancedExampleRecord[],
-    stats: { count: number; total: number },
+async function processEndpoint(
+    workItem: EndpointWorkItem & { packageId?: string },
+    enhancer: LambdaExampleEnhancer,
     context: TaskContext,
+    organizationId: string,
+    stats: { count: number; total: number },
+    enhancedExampleRecords: EnhancedExampleRecord[],
+    openApiSpec?: string,
+    sourceFilePath?: AbsoluteFilePath,
     statusId?: string,
-    apiStats?: { count: number; total: number }
-): Promise<void> {
-    const coordinator = SpinnerStatusCoordinator.getInstance();
+    apiStats?: { count: number; total: number },
+    endpointNumber?: number
+): Promise<{ endpointKey: string; enhancedReq?: unknown; enhancedRes?: unknown } | null> {
+    const endpointKey = workItem.endpointKey;
 
-    for (let j = 0; j < batch.length; j++) {
-        const item = batch[j];
-        const result = batchResponse.results[j];
+    context.logger.debug(`Processing endpoint ${endpointNumber}: ${workItem.endpoint.method} ${workItem.example.path}`);
 
-        if (!item) {
-            continue;
-        }
+    // Prune OpenAPI spec for just this endpoint
+    let prunedOpenApiSpec: string | undefined;
+    if (openApiSpec) {
+        prunedOpenApiSpec = await pruneOpenAPISpecForBatch(
+            openApiSpec,
+            [{ path: workItem.example.path, method: workItem.endpoint.method }],
+            context
+        );
+    }
 
-        if (result && !result.error) {
-            enhancementResults.set(item.endpointKey, {
-                enhancedReq: result.enhancedRequestExample,
-                enhancedRes: result.enhancedResponseExample
-            });
+    // Create single-endpoint request
+    const request = {
+        method: workItem.endpoint.method,
+        endpointPath: workItem.example.path,
+        organizationId,
+        operationSummary: workItem.endpoint.summary,
+        operationDescription: workItem.endpoint.description,
+        originalRequestExample: extractExampleValue(workItem.example.requestBodyV3),
+        originalResponseExample: extractExampleValue(workItem.example.responseBodyV3),
+        pathParameters: workItem.example.pathParameters,
+        queryParameters: workItem.example.queryParameters,
+        headers: workItem.example.headers,
+        openApiSpec: prunedOpenApiSpec
+    };
 
-            const enhancedExampleRecord: EnhancedExampleRecord = {
-                endpoint: item.example.path,
-                method: item.endpoint.method,
-                pathParameters: item.example.pathParameters,
-                queryParameters: item.example.queryParameters,
-                headers: item.example.headers,
-                requestBody:
-                    result.enhancedRequestExample !== extractExampleValue(item.example.requestBodyV3)
-                        ? result.enhancedRequestExample
-                        : undefined,
-                responseBody:
-                    result.enhancedResponseExample !== extractExampleValue(item.example.responseBodyV3)
-                        ? result.enhancedResponseExample
-                        : undefined
-            };
+    // Simple retry (2 attempts max) - Lambda client handles retries internally but we add one more layer
+    for (let attempt = 1; attempt <= 2; attempt++) {
+        try {
+            const result = await enhancer.enhanceExample(request);
 
-            if (enhancedExampleRecord.requestBody !== undefined || enhancedExampleRecord.responseBody !== undefined) {
+            // Check if anything was actually enhanced
+            const requestChanged = result.enhancedRequestExample !== request.originalRequestExample;
+            const responseChanged = result.enhancedResponseExample !== request.originalResponseExample;
+
+            if (requestChanged || responseChanged) {
+                // Create enhanced example record
+                const enhancedExampleRecord: EnhancedExampleRecord = {
+                    endpoint: workItem.example.path,
+                    method: workItem.endpoint.method,
+                    pathParameters: workItem.example.pathParameters,
+                    queryParameters: workItem.example.queryParameters,
+                    headers: workItem.example.headers,
+                    requestBody: requestChanged ? result.enhancedRequestExample : undefined,
+                    responseBody: responseChanged ? result.enhancedResponseExample : undefined
+                };
+
                 enhancedExampleRecords.push(enhancedExampleRecord);
                 stats.count++;
                 if (apiStats) {
                     apiStats.count++;
                 }
-                context.logger.debug(`Successfully enhanced example for ${item.endpoint.method} ${item.example.path}`);
-            }
-        } else if (result?.error) {
-            context.logger.debug(`Failed to enhance ${item.endpoint.method} ${item.example.path}: ${result.error}`);
-        }
+                context.logger.debug(`Successfully enhanced ${workItem.endpoint.method} ${workItem.example.path}`);
 
-        if (statusId && apiStats) {
-            coordinator.update(statusId, apiStats.count);
+                // Update progress
+                if (statusId && apiStats) {
+                    const coordinator = SpinnerStatusCoordinator.getInstance();
+                    coordinator.update(statusId, apiStats.count);
+                }
+
+                return {
+                    endpointKey,
+                    enhancedReq: result.enhancedRequestExample,
+                    enhancedRes: result.enhancedResponseExample
+                };
+            }
+
+            // If nothing changed, still return success (just no enhancement needed)
+            context.logger.debug(`No changes needed for ${workItem.endpoint.method} ${workItem.example.path}`);
+            return {
+                endpointKey,
+                enhancedReq: result.enhancedRequestExample,
+                enhancedRes: result.enhancedResponseExample
+            };
+        } catch (error) {
+            context.logger.warn(
+                `Endpoint ${workItem.endpoint.method} ${workItem.example.path} attempt ${attempt} failed: ${error}`
+            );
+
+            if (attempt < 2) {
+                // Simple backoff before retry
+                await new Promise((resolve) => setTimeout(resolve, 1500));
+            }
         }
     }
+
+    // All attempts failed
+    context.logger.warn(`Failed to enhance ${workItem.endpoint.method} ${workItem.example.path} after all attempts`);
+    return null;
 }
 
 function applyEnhancementResults(
@@ -756,159 +620,6 @@ function applyEnhancementResults(
     };
 }
 
-async function enhancePackageEndpoints(
-    pkg: FdrCjsSdk.api.v1.register.ApiDefinitionPackage,
-    enhancer: LambdaExampleEnhancer,
-    context: TaskContext,
-    organizationId: string,
-    stats: { count: number; total: number },
-    enhancedExampleRecords: EnhancedExampleRecord[],
-    coveredEndpoints: Set<string>,
-    openApiSpec?: string
-): Promise<FdrCjsSdk.api.v1.register.ApiDefinitionPackage> {
-    // This function is now deprecated - keeping for compatibility
-    // New batching logic is in enhancePackageExamples
-    const workItems = collectWorkItems(pkg, coveredEndpoints);
-    const endpointMap = new Map<string, EndpointV3>();
-
-    for (const item of workItems) {
-        endpointMap.set(item.endpointKey, item.endpoint);
-    }
-
-    stats.total += workItems.length;
-
-    context.logger.debug(
-        `Package has ${pkg.endpoints.length} total endpoints, ${workItems.length} work items after filtering`
-    );
-
-    const batchSize = 10;
-    const enhancementResults = new Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>();
-
-    for (let i = 0; i < workItems.length; i += batchSize) {
-        const batch = workItems.slice(i, Math.min(i + batchSize, workItems.length));
-
-        context.logger.debug(`Processing batch ${Math.floor(i / batchSize) + 1} with ${batch.length} endpoints`);
-
-        let prunedOpenApiSpec: string | undefined;
-        if (openApiSpec) {
-            const endpointSelectors = batch.map((item) => ({
-                path: item.example.path,
-                method: item.endpoint.method
-            }));
-            prunedOpenApiSpec = await pruneOpenAPISpecForBatch(openApiSpec, endpointSelectors, context);
-        }
-
-        const batchRequest: ExampleEnhancementBatchRequest = {
-            openApiSpec: prunedOpenApiSpec,
-            endpoints: batch.map((item) => ({
-                endpointPath: item.example.path,
-                method: item.endpoint.method,
-                organizationId,
-                operationSummary: item.endpoint.summary,
-                operationDescription: item.endpoint.description,
-                originalRequestExample: extractExampleValue(item.example.requestBodyV3),
-                originalResponseExample: extractExampleValue(item.example.responseBodyV3)
-            }))
-        };
-
-        try {
-            const batchResponse = await enhancer.enhanceExamplesBatch(batchRequest);
-
-            for (let j = 0; j < batch.length; j++) {
-                const item = batch[j];
-                const result = batchResponse.results[j];
-
-                if (!item) {
-                    continue;
-                }
-
-                if (result && !result.error) {
-                    enhancementResults.set(item.endpointKey, {
-                        enhancedReq: result.enhancedRequestExample,
-                        enhancedRes: result.enhancedResponseExample
-                    });
-                } else if (result?.error) {
-                    context.logger.warn(
-                        `Failed to enhance ${item.endpoint.method} ${item.example.path}: ${result.error}`
-                    );
-                }
-            }
-        } catch (error) {
-            context.logger.warn(`Batch enhancement failed: ${error}`);
-        }
-    }
-
-    // Apply results to endpoints
-    const enhancedEndpoints = pkg.endpoints.map((endpoint) => {
-        const endpointV3 = endpoint as unknown as EndpointV3;
-
-        const enhancedExamples = endpointV3.examples.map((example) => {
-            const endpointKey = `${endpointV3.method.toLowerCase()}:${example.path}`;
-            const result = enhancementResults.get(endpointKey);
-
-            if (!result) {
-                return example;
-            }
-
-            const originalRequestExample = extractExampleValue(example.requestBodyV3);
-            const originalResponseExample = extractExampleValue(example.responseBodyV3);
-
-            const requestChanged =
-                result.enhancedReq !== undefined && !deepEqual(result.enhancedReq, originalRequestExample);
-            const responseChanged =
-                result.enhancedRes !== undefined && !deepEqual(result.enhancedRes, originalResponseExample);
-
-            if (!requestChanged && !responseChanged) {
-                context.logger.debug(`AI returned no changes for ${endpointV3.method} ${example.path}`);
-                return example;
-            }
-
-            const enhancedExampleRecord: EnhancedExampleRecord = {
-                endpoint: example.path,
-                method: endpointV3.method,
-                pathParameters: example.pathParameters,
-                queryParameters: example.queryParameters,
-                headers: example.headers,
-                requestBody: requestChanged ? result.enhancedReq : undefined,
-                responseBody: responseChanged ? result.enhancedRes : undefined
-            };
-            enhancedExampleRecords.push(enhancedExampleRecord);
-
-            const enhancedExample: ExampleV3 = { ...example };
-
-            if (requestChanged && example.requestBodyV3) {
-                enhancedExample.requestBody = result.enhancedReq;
-                enhancedExample.requestBodyV3 = {
-                    ...example.requestBodyV3,
-                    value: result.enhancedReq
-                };
-            }
-
-            if (responseChanged && example.responseBodyV3) {
-                enhancedExample.responseBody = result.enhancedRes;
-                enhancedExample.responseBodyV3 = {
-                    ...example.responseBodyV3,
-                    value: result.enhancedRes
-                };
-            }
-
-            stats.count++;
-            context.logger.info(`Successfully enhanced example for ${endpointV3.method} ${example.path}`);
-            return enhancedExample;
-        });
-
-        return {
-            ...endpointV3,
-            examples: enhancedExamples
-        };
-    });
-
-    return {
-        ...pkg,
-        endpoints: enhancedEndpoints as unknown as FdrCjsSdk.api.v1.register.EndpointDefinition[]
-    };
-}
-
 function isExampleAutogenerated(example: ExampleV3): boolean {
     const hasGenericName = !example.name || example.name === "" || example.name === "Example";
     const hasEmptyDescription = !example.description || example.description === "";
@@ -958,49 +669,4 @@ function extractExampleValue(bodyV3: BodyV3 | undefined): unknown {
         default:
             return bodyV3.value;
     }
-}
-
-function deepEqual(a: unknown, b: unknown): boolean {
-    if (Object.is(a, b)) {
-        return true;
-    }
-
-    if (a === null || b === null || a === undefined || b === undefined) {
-        return a === b;
-    }
-
-    if (typeof a !== typeof b) {
-        return false;
-    }
-
-    if (typeof a !== "object") {
-        return false;
-    }
-
-    if (Array.isArray(a) && Array.isArray(b)) {
-        if (a.length !== b.length) {
-            return false;
-        }
-        return a.every((item, index) => deepEqual(item, b[index]));
-    }
-
-    if (Array.isArray(a) || Array.isArray(b)) {
-        return false;
-    }
-
-    const aObj = a as Record<string, unknown>;
-    const bObj = b as Record<string, unknown>;
-
-    const aKeys = Object.keys(aObj).sort();
-    const bKeys = Object.keys(bObj).sort();
-
-    if (aKeys.length !== bKeys.length) {
-        return false;
-    }
-
-    if (!aKeys.every((key, index) => key === bKeys[index])) {
-        return false;
-    }
-
-    return aKeys.every((key) => deepEqual(aObj[key], bObj[key]));
 }

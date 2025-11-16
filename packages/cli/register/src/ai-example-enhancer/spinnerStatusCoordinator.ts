@@ -2,6 +2,7 @@ interface ApiProgress {
     apiName: string;
     completed: number;
     total: number;
+    endpointsSample?: string; // Sample of endpoints being processed
 }
 
 export class SpinnerStatusCoordinator {
@@ -19,9 +20,9 @@ export class SpinnerStatusCoordinator {
         return SpinnerStatusCoordinator.instance;
     }
 
-    public create(apiName: string, total: number): string {
+    public create(apiName: string, total: number, endpointsSample?: string): string {
         const id = `${apiName}-${Date.now()}-${Math.random()}`;
-        this.progress.set(id, { apiName, completed: 0, total });
+        this.progress.set(id, { apiName, completed: 0, total, endpointsSample });
         this.queue.push(id);
 
         if (!this.currentApiId) {
@@ -69,7 +70,15 @@ export class SpinnerStatusCoordinator {
 
         const apiProgress = this.progress.get(this.currentApiId);
         if (apiProgress) {
-            process.env.FERN_SPINNER_STATUS = `generating AI examples for ${apiProgress.apiName} - ${apiProgress.completed}/${apiProgress.total}`;
+            let statusMessage = `generating AI examples for ${apiProgress.apiName}`;
+
+            // Add endpoint information if available
+            if (apiProgress.endpointsSample) {
+                statusMessage += ` (${apiProgress.endpointsSample})`;
+            }
+
+            statusMessage += ` - ${apiProgress.completed}/${apiProgress.total}`;
+            process.env.FERN_SPINNER_STATUS = statusMessage;
         }
     }
 }
