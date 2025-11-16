@@ -31,6 +31,7 @@ export abstract class AbstractSwiftGeneratorContext<
     public readonly project: SwiftProject;
     private readonly indirectPropertiesMapping: Map<TypeId, Set<string>>;
     private readonly schemaTypeIdBySymbolId: Map<string, TypeId>;
+    private readonly recursiveTypeIdsForSwiftEnums: Set<TypeId>;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -41,7 +42,10 @@ export abstract class AbstractSwiftGeneratorContext<
         super(config, generatorNotificationService);
         this.project = new SwiftProject({ context: this });
         this.schemaTypeIdBySymbolId = new Map();
-        this.indirectPropertiesMapping = this.detectCycles(ir);
+        const cycleDetector = new CycleDetector(ir);
+        cycleDetector.detectIllegalCycles();
+        this.indirectPropertiesMapping = cycleDetector.computeIndirectPropertiesMapping();
+        this.recursiveTypeIdsForSwiftEnums = cycleDetector.computeRecursiveTypeIdsForSwiftEnums();
         this.registerProjectSymbols(this.project, ir);
     }
 
@@ -50,20 +54,17 @@ export abstract class AbstractSwiftGeneratorContext<
         this.registerTestSymbols(project);
     }
 
-    private detectCycles(ir: IntermediateRepresentation): Map<TypeId, Set<string>> {
-        const cycleDetector = new CycleDetector(ir);
-        cycleDetector.detectIllegalCycles();
-        // For legal cycles, compute which specific properties should be boxed
-        // as `Indirect<...>` in Swift.
-        return cycleDetector.computeIndirectPropertiesMapping();
-    }
-
     public shouldGeneratePropertyAsIndirect(typeId: TypeId, propertyWireValue: string): boolean {
         return this.indirectPropertiesMapping.get(typeId)?.has(propertyWireValue) ?? false;
     }
 
-    public getTypeIdForSchemaSymbolOrThrow(symbol: swift.Symbol): TypeId | undefined {
+    public getTypeIdForSchemaSymbol(symbol: swift.Symbol): TypeId | undefined {
         return this.schemaTypeIdBySymbolId.get(symbol.id);
+    }
+
+    public shouldGenerateEnumAsIndirect(symbol: swift.Symbol): boolean {
+        const typeId = this.getTypeIdForSchemaSymbol(symbol);
+        return typeId != null && this.recursiveTypeIdsForSwiftEnums.has(typeId);
     }
 
     private registerSourceSymbols(project: SwiftProject, ir: IntermediateRepresentation) {

@@ -34,7 +34,7 @@ export class ObjectGenerator {
     }
 
     public generateStructForTypeDeclaration(): swift.Struct {
-        const typeId = this.context.getTypeIdForSchemaSymbolOrThrow(this.symbol);
+        const typeId = this.context.getTypeIdForSchemaSymbol(this.symbol);
 
         return new StructGenerator({
             symbol: this.symbol,
