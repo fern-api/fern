@@ -244,7 +244,14 @@ async function compareResults(
     const diffResult = await loggingExeca(
         logger,
         DIFF_COMMAND,
-        [DIFF_RECURSIVE_FLAG, remoteResult.outputFolder, localResult.outputFolder],
+        [
+            DIFF_RECURSIVE_FLAG,
+            "--exclude=.git",
+            "--exclude=node_modules",
+            "--exclude=.DS_Store",
+            remoteResult.outputFolder,
+            localResult.outputFolder
+        ],
         {
             cwd: workingDirectory,
             reject: false // Don't reject on non-zero exit (diff returns 1 when files differ)
@@ -423,16 +430,28 @@ async function cloneRepository(
         ? `${GITHUB_BASE_URL.replace("https://", `https://${githubToken}@`)}/${repository}.git`
         : `${GITHUB_BASE_URL}/${repository}.git`;
 
+    // Log the clone URL (redacting token for security)
+    const logUrl = githubToken ? `${GITHUB_BASE_URL}/${repository}.git (with auth token)` : cloneUrl;
+    logger.debug(`Clone URL: ${logUrl}`);
+    logger.debug(
+        `Clone command: git ${GIT_CLONE_COMMAND} ${GIT_BRANCH_FLAG} ${branch} ${GIT_DEPTH_FLAG} ${GIT_DEPTH_VALUE} [url] ${targetDirectory}`
+    );
+
     const result = await loggingExeca(
         logger,
-        GIT_CLONE_COMMAND,
-        [GIT_BRANCH_FLAG, branch, GIT_DEPTH_FLAG, GIT_DEPTH_VALUE, cloneUrl, targetDirectory],
+        "git",
+        [GIT_CLONE_COMMAND, GIT_BRANCH_FLAG, branch, GIT_DEPTH_FLAG, GIT_DEPTH_VALUE, cloneUrl, targetDirectory],
         { reject: false }
     );
 
     if (result.exitCode !== 0) {
-        logger.error(`${ERROR_FAILED_TO_CLONE}: ${result.stderr}`);
-        throw new Error(`${ERROR_FAILED_TO_CLONE}: ${result.stderr}`);
+        const errorOutput = result.stderr || result.stdout || "No error output captured";
+        logger.error(`${ERROR_FAILED_TO_CLONE} (exit code ${result.exitCode})`);
+        logger.error(`  Repository: ${repository}`);
+        logger.error(`  Branch: ${branch}`);
+        logger.error(`  Target: ${targetDirectory}`);
+        logger.error(`  Error output: ${errorOutput}`);
+        throw new Error(`${ERROR_FAILED_TO_CLONE}: ${errorOutput}`);
     }
 
     logger.debug(`Successfully cloned repository`);
