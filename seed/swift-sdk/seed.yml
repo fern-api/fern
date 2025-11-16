@@ -145,7 +145,6 @@ allowedFailures:
   - required-nullable:nullable-as-optional
   - reserved-keywords
   - response-property
-  - simple-fhir
   - streaming
   - streaming-parameter
   - trace
