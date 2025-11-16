@@ -2,16 +2,14 @@
 - version: 3.31.0
   changelogEntry:
     - summary: |
-        Add `generateSubpackageExports` configuration option to enable direct imports of subpackage clients. This allows JavaScript bundlers to tree-shake and include only the imported subpackage code, resulting in much smaller bundle sizes.
+        Add `generateSubpackageExports` configuration option to enable direct imports of subpackage clients. 
+        This allows JavaScript bundlers to tree-shake and include only the imported subpackage code, resulting in much smaller bundle sizes.
 
         Example:
-        ```typescript
-        import { FooBarClient } from '@contoso/sdk/foo/bar';
+        ```ts
+        import { BarClient } from '@acme/sdk/foo/bar';
 
-        const client = new FooBarClient({
-            environment: "https://api.contoso.com",
-            token: "your-token"
-        });
+        const client = new BarClient({...});
         ```
 
         To enable this feature, add the following configuration to your _generators.yml_ file:
@@ -24,7 +22,7 @@
                 generateSubpackageExports: true
         ```
       type: feat
-  createdAt: "2025-11-14"
+  createdAt: "2025-11-17"
   irVersion: 61
 
 - version: 3.30.0
