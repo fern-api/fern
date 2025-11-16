@@ -117,6 +117,7 @@ async fn main() {
 </dl>
 </details>
 
+## MultipartForm
 ## PathParam
 <details><summary><code>client.path_param.<a href="/src/api/resources/path_param/client.rs">send</a>(operand: Operand, operand_or_color: ColorOrOperand) -> Result<(), ApiError></code></summary>
 <dl>

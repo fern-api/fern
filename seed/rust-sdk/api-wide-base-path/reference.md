@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">post</a>(path_param: String, service_param: String, resource_param: String, endpoint_param: i64) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">post</a>(path_param: String, service_param: String, endpoint_param: i64, resource_param: String) -> Result<(), ApiError></code></summary>
 <dl>
 <dd>
 
@@ -26,8 +26,8 @@ async fn main() {
         .post(
             &"pathParam".to_string(),
             &"serviceParam".to_string(),
-            &"resourceParam".to_string(),
             &1,
+            &"resourceParam".to_string(),
             None,
         )
         .await;
@@ -62,7 +62,7 @@ async fn main() {
 <dl>
 <dd>
 
-**resource_param:** `String` 
+**endpoint_param:** `i64` 
     
 </dd>
 </dl>
@@ -70,7 +70,7 @@ async fn main() {
 <dl>
 <dd>
 
-**endpoint_param:** `i64` 
+**resource_param:** `String` 
     
 </dd>
 </dl>

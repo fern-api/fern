@@ -554,3 +554,99 @@ async fn main() {
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_user_specifics</a>(tenant_id: String, user_id: String, version: i64, thought: String) -> Result<User, ApiError></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Test endpoint with path parameters listed in different order than found in path
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_path_parameters::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = PathParametersClient::new(config).expect("Failed to build client");
+    client
+        .user
+        .get_user_specifics(
+            &"tenant_id".to_string(),
+            &"user_id".to_string(),
+            &1,
+            &"thought".to_string(),
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenant_id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `i64` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**thought:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>

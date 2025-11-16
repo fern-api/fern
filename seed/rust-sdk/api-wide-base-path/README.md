@@ -5,6 +5,19 @@
 
 The Seed Rust library provides convenient access to the Seed APIs from Rust.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Errors](#errors)
+- [Advanced](#advanced)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+- [Contributing](#contributing)
+
 ## Installation
 
 Add this to your `Cargo.toml`:
@@ -42,8 +55,8 @@ async fn main() {
         .post(
             &"pathParam".to_string(),
             &"serviceParam".to_string(),
-            &"resourceParam".to_string(),
             &1,
+            &"resourceParam".to_string(),
             None,
         )
         .await;

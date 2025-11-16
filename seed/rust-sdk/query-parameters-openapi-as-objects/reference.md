@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">search</a>(limit: Option<i64>, id: Option<String>, date: Option<String>, deadline: Option<String>, bytes: Option<String>, user: Option<User>, optional_deadline: Option<Option<String>>, key_value: Option<Option<std::collections::HashMap<String, Option<String>>>>, optional_string: Option<Option<String>>, nested_user: Option<Option<NestedUser>>, optional_user: Option<Option<User>>, neighbor: Option<Option<SearchRequestNeighbor>>, neighbor_required: Option<SearchRequestNeighborRequired>) -> Result<SearchResponse, ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">search</a>(limit: Option<i64>, id: Option<String>, date: Option<String>, deadline: Option<String>, bytes: Option<String>, user: Option<User>, optional_deadline: Option<Option<String>>, key_value: Option<Option<std::collections::HashMap<String, String>>>, optional_string: Option<Option<String>>, nested_user: Option<Option<NestedUser>>, optional_user: Option<Option<User>>, neighbor: Option<Option<SearchRequestNeighbor>>, neighbor_required: Option<SearchRequestNeighborRequired>) -> Result<SearchResponse, ApiError></code></summary>
 <dl>
 <dd>
 
@@ -25,7 +25,7 @@ async fn main() {
             &SearchQueryRequest {
                 limit: 1,
                 id: "id".to_string(),
-                date: "date".to_string(),
+                date: NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
                 deadline: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
                     .unwrap()
                     .with_timezone(&Utc),
@@ -45,7 +45,7 @@ async fn main() {
                 ),
                 key_value: Some(HashMap::from([(
                     "keyValue".to_string(),
-                    Some("keyValue".to_string()),
+                    "keyValue".to_string(),
                 )])),
                 optional_string: Some("optionalString".to_string()),
                 nested_user: Some(NestedUser {
@@ -155,7 +155,7 @@ async fn main() {
 <dl>
 <dd>
 
-**key_value:** `Option<std::collections::HashMap<String, Option<String>>>` 
+**key_value:** `Option<std::collections::HashMap<String, String>>` 
     
 </dd>
 </dl>

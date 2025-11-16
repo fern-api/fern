@@ -111,4 +111,35 @@ impl UserClient {
             )
             .await
     }
+
+    /// Test endpoint with path parameters listed in different order than found in path
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn get_user_specifics(
+        &self,
+        tenant_id: &String,
+        user_id: &String,
+        version: i64,
+        thought: &String,
+        options: Option<RequestOptions>,
+    ) -> Result<User, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::GET,
+                &format!(
+                    "/{}/user/{}/specifics/{}/{}",
+                    tenant_id, user_id, version, thought
+                ),
+                None,
+                None,
+                options,
+            )
+            .await
+    }
 }
