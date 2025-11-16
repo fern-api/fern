@@ -2,7 +2,25 @@ import { LogLevel } from "@fern-api/logger";
 import path from "path";
 import { TaskContextFactory } from "../test/TaskContextFactory";
 import { getLatestGeneratorVersions, runTestCase } from "./caseRunner";
-import { ALL_GENERATOR_NICKNAMES, ALL_OUTPUT_MODES, ALL_TEST_FIXTURES, GeneratorName, GeneratorNickname, OutputMode, TestFixture } from "./constants";
+import {
+    ALL_GENERATOR_NICKNAMES,
+    ALL_OUTPUT_MODES,
+    ALL_TEST_FIXTURES,
+    CLI_RELATIVE_PATH,
+    ERROR_NO_GENERATOR_VERSION,
+    GeneratorName,
+    GeneratorNickname,
+    LOG_HEADER_TEST_SUMMARY,
+    LOG_SEPARATOR,
+    MSG_ALL_TESTS_PASSED,
+    MSG_TEST_FAILED_PREFIX,
+    MSG_TEST_PASSED_PREFIX,
+    MSG_TESTS_FAILED_TEMPLATE,
+    OUTPUT_MODE_SUFFIX,
+    OutputMode,
+    SEED_REMOTE_LOCAL_OUTPUT_DIR,
+    TestFixture
+} from "./constants";
 
 interface TestResult {
     generator: GeneratorNickname;
@@ -38,7 +56,9 @@ export async function executeTestRemoteLocalCommand({
     const fixtures = (fixture.length > 0 ? fixture : ALL_TEST_FIXTURES) as TestFixture[];
     const outputModes: OutputMode[] = Array.from(ALL_OUTPUT_MODES) as OutputMode[];
 
-    logger.info(`Starting test-remote-local execution for ${generators.length} generator(s), ${fixtures.length} fixture(s)`);
+    logger.info(
+        `Starting test-remote-local execution for ${generators.length} generator(s), ${fixtures.length} fixture(s)`
+    );
     logger.debug(`Generators: ${generators.join(", ")}`);
     logger.debug(`Fixtures: ${fixtures.join(", ")}`);
 
@@ -51,7 +71,7 @@ export async function executeTestRemoteLocalCommand({
     }
 
     const results: TestResult[] = [];
-    const fernExecutable = path.join(fernRepoDirectory, "packages", "cli", "cli", "dist", "prod", "cli.cjs");
+    const fernExecutable = path.join(fernRepoDirectory, CLI_RELATIVE_PATH);
 
     // Sequential execution (no parallelization)
     for (const gen of generators) {
@@ -59,11 +79,18 @@ export async function executeTestRemoteLocalCommand({
             for (const mode of outputModes) {
                 // Working directory includes the output mode subdirectory
                 // Structure: seed-remote-local/{generator}/{fixture}/{outputFolder}/{outputMode}/
-                const testWorkingDirectory = path.join(fernRepoDirectory, "seed-remote-local", gen, fix, outputFolder, mode + "OutputMode");
+                const testWorkingDirectory = path.join(
+                    fernRepoDirectory,
+                    SEED_REMOTE_LOCAL_OUTPUT_DIR,
+                    gen,
+                    fix,
+                    outputFolder,
+                    mode + OUTPUT_MODE_SUFFIX
+                );
 
-                logger.info(`\n${"=".repeat(80)}`);
+                logger.info(`\n${LOG_SEPARATOR}`);
                 logger.info(`Running test: ${gen} / ${fix} / ${mode}`);
-                logger.info(`${"=".repeat(80)}`);
+                logger.info(LOG_SEPARATOR);
 
                 try {
                     await runTestCase({
@@ -89,7 +116,7 @@ export async function executeTestRemoteLocalCommand({
                         success: true
                     });
 
-                    logger.info(`✓ Test passed: ${gen} / ${fix} / ${mode}`);
+                    logger.info(`${MSG_TEST_PASSED_PREFIX}${gen} / ${fix} / ${mode}`);
                 } catch (error) {
                     const errorMessage = error instanceof Error ? error.message : String(error);
                     results.push({
@@ -100,27 +127,30 @@ export async function executeTestRemoteLocalCommand({
                         error: errorMessage
                     });
 
-                    logger.error(`✗ Test failed: ${gen} / ${fix} / ${mode}`, error instanceof Error ? error.message : String(error));
+                    logger.error(
+                        `${MSG_TEST_FAILED_PREFIX}${gen}:${fix}:${mode}`,
+                        error instanceof Error ? error.message : String(error)
+                    );
                 }
             }
         }
     }
 
     // Print summary
-    logger.info(`\n${"=".repeat(80)}`);
-    logger.info("TEST SUMMARY");
-    logger.info(`${"=".repeat(80)}`);
+    logger.info(`\n${LOG_SEPARATOR}`);
+    logger.info(LOG_HEADER_TEST_SUMMARY);
+    logger.info(LOG_SEPARATOR);
 
-    const passed = results.filter(r => r.success).length;
-    const failed = results.filter(r => !r.success).length;
+    const passed = results.filter((r) => r.success).length;
+    const failed = results.filter((r) => !r.success).length;
     const total = results.length;
 
     logger.info(`Total: ${total} | Passed: ${passed} | Failed: ${failed}`);
 
     if (failed > 0) {
         logger.info("\nFailed tests:");
-        for (const result of results.filter(r => !r.success)) {
-            logger.error(`  ✗ ${result.generator} / ${result.fixture} / ${result.outputMode}`);
+        for (const result of results.filter((r) => !r.success)) {
+            logger.error(`  ${MSG_TEST_FAILED_PREFIX}${result.generator} / ${result.fixture} / ${result.outputMode}`);
             if (result.error) {
                 logger.error(`    ${result.error}`);
             }
@@ -128,8 +158,8 @@ export async function executeTestRemoteLocalCommand({
     }
 
     if (failed > 0) {
-        throw new Error(`${failed} test(s) failed`);
+        throw new Error(MSG_TESTS_FAILED_TEMPLATE(failed));
     }
 
-    logger.info("\n✓ All tests passed!");
+    logger.info(`\n${MSG_ALL_TESTS_PASSED}`);
 }

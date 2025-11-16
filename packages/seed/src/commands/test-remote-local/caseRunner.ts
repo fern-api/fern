@@ -5,17 +5,80 @@ import yaml from "js-yaml";
 import path from "path";
 import tmp from "tmp-promise";
 import {
+    APIS_DIRECTORY_NAME,
+    DEFINITION_DIRECTORY_NAME,
+    DIFF_COMMAND,
+    DIFF_RECURSIVE_FLAG,
+    DOCKER_HUB_API_BASE_URL,
+    DOCKER_HUB_TAGS_ORDERING,
+    DOCKER_HUB_TAGS_PAGE_SIZE,
+    ENV_VAR_FERN_TOKEN,
+    ENV_VAR_GITHUB_TOKEN,
+    ERROR_DIFF_COMMAND_FAILED,
+    ERROR_DOCKER_HUB_API_FAILED,
+    ERROR_FAILED_TO_CLONE,
+    ERROR_FAILED_TO_FETCH_VERSION,
+    ERROR_FAILED_TO_GET_BRANCH,
+    ERROR_INVALID_GENERATOR_NAME,
+    ERROR_NO_GENERATOR_VERSION,
+    ERROR_NO_SEMVER_TAGS,
+    ERROR_NO_TAGS_FOUND,
+    ERROR_OUTPUTS_DIFFER,
     FERN_CONFIG_JSON_CONTENT,
     FERN_CONFIG_JSON_FILENAME,
+    FERN_DIRECTORY_NAME,
+    FERN_GENERATE_COMMAND,
     FERN_TEST_REPO_NAME,
+    FLAG_GROUP,
+    FLAG_LOCAL,
+    FLAG_LOG_LEVEL,
+    GENERATION_MODE_SUFFIX,
+    GENERATORS_YML_FILENAME,
+    GENERATORS_YML_SCHEMA_COMMENT,
+    GENERATORS_YML_SCHEMA_URL,
     GenerationMode,
     GeneratorName,
     GeneratorNameFromNickname,
     GeneratorNickname,
+    GH_API_SUBCOMMAND,
+    GH_BRANCHES_JQ_QUERY,
+    GH_COMMAND,
+    GH_JQ_FLAG,
+    GIT_BRANCH_FLAG,
+    GIT_CLONE_COMMAND,
+    GIT_DEPTH_FLAG,
+    GIT_DEPTH_VALUE,
+    GITHUB_BASE_URL,
+    GITHUB_BRANCH_URL_REGEX,
+    GITHUB_OUTPUT_MODE_PULL_REQUEST,
+    GITHUB_TOKEN_ENV_VAR_REFERENCE,
+    GO_SDK_MODULE_PATH,
+    JAVA_SDK_MAVEN_COORDINATE,
     LOCAL_GROUP_NAME,
+    LOG_HEADER_COMPARING_OUTPUTS,
+    LOG_HEADER_LOCAL_GENERATION,
+    LOG_HEADER_REMOTE_GENERATION,
+    LOG_SECTION_SEPARATOR,
+    MSG_BOTH_GENERATIONS_SUCCESSFUL,
+    MSG_BRANCH_NOT_FOUND_FALLBACK,
+    MSG_GENERATION_COMPLETED_PREFIX,
+    MSG_GENERATION_FAILED_PREFIX,
+    MSG_GENERATION_RUNNING_PREFIX,
+    MSG_OUTPUTS_DIFFER,
+    MSG_OUTPUTS_MATCH,
+    MSG_SUCCESSFULLY_COPIED_GITHUB,
     OutputMode,
+    PACKAGE_LOCATION_LOCAL_FILE_SYSTEM,
+    PACKAGE_LOCATION_MAVEN,
+    PACKAGE_LOCATION_NPM,
+    PACKAGE_LOCATION_PYPI,
+    PYTHON_SDK_PACKAGE_NAME,
     REMOTE_GROUP_NAME,
-    TestFixture
+    SDKS_DIRECTORY_NAME,
+    SEMVER_REGEX,
+    TEST_DEFINITIONS_RELATIVE_PATH,
+    TestFixture,
+    TS_SDK_PACKAGE_NAME
 } from "./constants";
 
 export type GenerationResult = GenerationResultSuccess | GenerationResultFailure;
@@ -59,8 +122,8 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<void
     await rm(workingDirectory, { recursive: true, force: true });
     await mkdir(workingDirectory, { recursive: true });
 
-    const fernDirectory = path.join(workingDirectory, "fern");
-    const definitionDirectory = path.join(fernDirectory, "definition");
+    const fernDirectory = path.join(workingDirectory, FERN_DIRECTORY_NAME);
+    const definitionDirectory = path.join(fernDirectory, DEFINITION_DIRECTORY_NAME);
     await mkdir(definitionDirectory, { recursive: true });
 
     // Write fern.config.json
@@ -71,7 +134,14 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<void
     );
 
     // Copy fixture api definition
-    const fixtureSource = path.join(fernRepoDirectory, "test-definitions", "fern", "apis", fixture, "definition");
+    const fixtureSource = path.join(
+        fernRepoDirectory,
+        TEST_DEFINITIONS_RELATIVE_PATH,
+        FERN_DIRECTORY_NAME,
+        APIS_DIRECTORY_NAME,
+        fixture,
+        DEFINITION_DIRECTORY_NAME
+    );
     logger.debug(`Copying fixture definition from ${fixtureSource}`);
     await cp(fixtureSource, definitionDirectory, { recursive: true });
 
@@ -79,7 +149,7 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<void
     const generatorName = GeneratorNameFromNickname[generator];
     const generatorVersion = generatorVersions[generatorName];
     if (!generatorVersion) {
-        throw new Error(`No version found for generator ${generatorName}`);
+        throw new Error(`${ERROR_NO_GENERATOR_VERSION} ${generatorName}`);
     }
     logger.debug(`Using generator version: ${generatorVersion}`);
 
@@ -120,11 +190,11 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<void
 
     // Run generations
     logger.info("");
-    logger.info("━━━ LOCAL GENERATION (Docker) ━━━");
+    logger.info(`${LOG_SECTION_SEPARATOR} ${LOG_HEADER_LOCAL_GENERATION} ${LOG_SECTION_SEPARATOR}`);
     const localResult = await runGeneration(testCase, "local");
 
     logger.info("");
-    logger.info("━━━ REMOTE GENERATION (Fiddle) ━━━");
+    logger.info(`${LOG_SECTION_SEPARATOR} ${LOG_HEADER_REMOTE_GENERATION} ${LOG_SECTION_SEPARATOR}`);
     const remoteResult = await runGeneration(testCase, "remote");
 
     // Check for generation failures
@@ -142,11 +212,11 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<void
     }
 
     logger.info("");
-    logger.info("✓ Both generations completed successfully");
+    logger.info(MSG_BOTH_GENERATIONS_SUCCESSFUL);
 
     // Compare results
     logger.info("");
-    logger.info("━━━ COMPARING OUTPUTS ━━━");
+    logger.info(`${LOG_SECTION_SEPARATOR} ${LOG_HEADER_COMPARING_OUTPUTS} ${LOG_SECTION_SEPARATOR}`);
     await compareResults(testCase, localResult, remoteResult);
 }
 
@@ -162,8 +232,8 @@ async function compareResults(
 
     const diffResult = await loggingExeca(
         logger,
-        "diff",
-        ["-r", remoteResult.outputFolder, localResult.outputFolder],
+        DIFF_COMMAND,
+        [DIFF_RECURSIVE_FLAG, remoteResult.outputFolder, localResult.outputFolder],
         {
             cwd: workingDirectory,
             reject: false // Don't reject on non-zero exit (diff returns 1 when files differ)
@@ -175,23 +245,23 @@ async function compareResults(
     // 1 = files differ (expected case, not an error)
     // 2+ = actual error (e.g., file not found, permission denied)
     if (diffResult.exitCode === 0) {
-        logger.info("✓ Outputs match perfectly");
+        logger.info(MSG_OUTPUTS_MATCH);
     } else if (diffResult.exitCode === 1) {
         // Files differ - this is what we're testing for!
         const diffOutput = diffResult.stdout.trim();
         const lineCount = diffOutput.split("\n").length;
-        logger.warn(`⚠ Outputs differ (${lineCount} lines of differences)`);
+        logger.warn(`${MSG_OUTPUTS_DIFFER} (${lineCount} lines of differences)`);
 
         // Log a sample of the differences
         const sampleLines = diffOutput.split("\n").slice(0, 50).join("\n");
         logger.warn(`Sample differences:\n${sampleLines}${lineCount > 50 ? "\n... (truncated)" : ""}`);
 
-        throw new Error(`Local and remote outputs differ. See logs for details.`);
+        throw new Error(ERROR_OUTPUTS_DIFFER);
     } else {
         // Actual diff error
-        logger.error(`Diff command failed with exit code ${diffResult.exitCode}`);
+        logger.error(`${ERROR_DIFF_COMMAND_FAILED} with exit code ${diffResult.exitCode}`);
         logger.error(`stderr: ${diffResult.stderr}`);
-        throw new Error(`Diff command failed: ${diffResult.stderr}`);
+        throw new Error(`${ERROR_DIFF_COMMAND_FAILED}: ${diffResult.stderr}`);
     }
 }
 
@@ -202,13 +272,13 @@ async function runGeneration(
     const { outputMode } = testCase;
     const { fernExecutable, workingDirectory, logger, githubToken, fernToken } = testCase.context;
     const group = generationMode === "local" ? LOCAL_GROUP_NAME : REMOTE_GROUP_NAME;
-    const extraFlags = generationMode === "local" ? ["--local"] : [];
+    const extraFlags = generationMode === "local" ? [FLAG_LOCAL] : [];
 
     // Use debug level to capture all output (needed for extracting branch info)
     // but we won't forward all logs to stdout - only our own structured logs
-    const args = ["generate", "--group", group, "--log-level", LogLevel.Debug, ...extraFlags];
+    const args = [FERN_GENERATE_COMMAND, FLAG_GROUP, group, FLAG_LOG_LEVEL, LogLevel.Debug, ...extraFlags];
 
-    logger.info(`▶ Running ${generationMode} generation...`);
+    logger.info(`${MSG_GENERATION_RUNNING_PREFIX} ${generationMode} generation...`);
     logger.debug(`  Command: ${fernExecutable} ${args.join(" ")}`);
     logger.debug(`  Working directory: ${workingDirectory}`);
 
@@ -219,8 +289,8 @@ async function runGeneration(
         const result = await runExeca(undefined, fernExecutable, args, {
             cwd: workingDirectory,
             env: {
-                GITHUB_TOKEN: githubToken,
-                FERN_TOKEN: fernToken
+                [ENV_VAR_GITHUB_TOKEN]: githubToken,
+                [ENV_VAR_FERN_TOKEN]: fernToken
             },
             reject: false,
             all: true // Combine stdout and stderr for easier parsing
@@ -229,7 +299,9 @@ async function runGeneration(
         const duration = Date.now() - startTime;
 
         if (result.exitCode !== 0) {
-            logger.error(`✗ ${generationMode} generation failed after ${duration}ms (exit code: ${result.exitCode})`);
+            logger.error(
+                `${MSG_GENERATION_FAILED_PREFIX} ${generationMode} generation failed after ${duration}ms (exit code: ${result.exitCode})`
+            );
 
             // Show error output from the subprocess
             if (result.stderr) {
@@ -244,7 +316,7 @@ async function runGeneration(
             return { success: false, error: result.stderr || "Unknown error" };
         }
 
-        logger.info(`✓ ${generationMode} generation completed in ${duration}ms`);
+        logger.info(`${MSG_GENERATION_COMPLETED_PREFIX} ${generationMode} generation completed in ${duration}ms`);
 
         const outputDirectory = getOutputDirectory(testCase, generationMode);
         if (outputMode === "github") {
@@ -281,7 +353,7 @@ async function copyGithubOutputToOutputDirectory(
     if (remoteBranch) {
         logger.debug(`Found branch in logs: ${remoteBranch}`);
     } else {
-        logger.warn(`Branch not found in logs, falling back to most recent branch`);
+        logger.warn(MSG_BRANCH_NOT_FOUND_FALLBACK);
         const fallbackBranch = await getMostRecentlyCreatedBranch(repository, logger);
         logger.debug(`Using fallback branch: ${fallbackBranch}`);
     }
@@ -295,29 +367,30 @@ async function copyGithubOutputToOutputDirectory(
     logger.debug(`Copying cloned repository to ${outputDirectory}`);
     await cp(tmpDir.path, outputDirectory, { recursive: true });
 
-    logger.info(`Successfully copied GitHub output from branch: ${branchToClone}`);
+    logger.info(`${MSG_SUCCESSFULLY_COPIED_GITHUB}${branchToClone}`);
 }
 
 function getRemoteBranchFromLogs(logs: string): string | undefined {
     // Example log line: INFO  2025-11-15T23:49:44.180Z [api]: fernapi/fern-typescript-sdk Pushed branch: https://github.com/fern-api/lattice-sdk-javascript/tree/fern-bot/2025-11-15T23-49Z
-    const branchRegex = /Pushed branch: https:\/\/github\.com\/[^\/]+\/[^\/]+\/tree\/([^\s]+)/;
-    const match = logs.match(branchRegex);
+    const match = logs.match(GITHUB_BRANCH_URL_REGEX);
     return match?.[1];
 }
 
-async function getMostRecentlyCreatedBranch(
-    repository: string,
-    logger: Logger
-): Promise<string> {
+async function getMostRecentlyCreatedBranch(repository: string, logger: Logger): Promise<string> {
     logger.debug(`Fetching most recent branch for ${repository}`);
 
-    const result = await loggingExeca(logger, "gh", ["api", `repos/${repository}/branches`, "--jq", ".[0].name"], {
-        reject: false
-    });
+    const result = await loggingExeca(
+        logger,
+        GH_COMMAND,
+        [GH_API_SUBCOMMAND, `repos/${repository}/branches`, GH_JQ_FLAG, GH_BRANCHES_JQ_QUERY],
+        {
+            reject: false
+        }
+    );
 
     if (result.exitCode !== 0) {
-        logger.error(`Failed to get most recent branch: ${result.stderr}`);
-        throw new Error(`Failed to get most recent branch: ${result.stderr}`);
+        logger.error(`${ERROR_FAILED_TO_GET_BRANCH}: ${result.stderr}`);
+        throw new Error(`${ERROR_FAILED_TO_GET_BRANCH}: ${result.stderr}`);
     }
 
     const branch = result.stdout.trim();
@@ -336,34 +409,31 @@ async function cloneRepository(
 
     // Use authenticated URL if token is provided (for private repos)
     const cloneUrl = githubToken
-        ? `https://${githubToken}@github.com/${repository}.git`
-        : `https://github.com/${repository}.git`;
+        ? `${GITHUB_BASE_URL.replace("https://", `https://${githubToken}@`)}/${repository}.git`
+        : `${GITHUB_BASE_URL}/${repository}.git`;
 
     const result = await loggingExeca(
         logger,
-        "git",
-        ["clone", "--branch", branch, "--depth", "1", cloneUrl, targetDirectory],
+        GIT_CLONE_COMMAND,
+        [GIT_BRANCH_FLAG, branch, GIT_DEPTH_FLAG, GIT_DEPTH_VALUE, cloneUrl, targetDirectory],
         { reject: false }
     );
 
     if (result.exitCode !== 0) {
-        logger.error(`Failed to clone repository: ${result.stderr}`);
-        throw new Error(`Failed to clone repository: ${result.stderr}`);
+        logger.error(`${ERROR_FAILED_TO_CLONE}: ${result.stderr}`);
+        throw new Error(`${ERROR_FAILED_TO_CLONE}: ${result.stderr}`);
     }
 
     logger.debug(`Successfully cloned repository`);
 }
 
-function getOutputDirectory(
-    testCase: RemoteVsLocalTestCase,
-    generationMode: GenerationMode
-): string {
+function getOutputDirectory(testCase: RemoteVsLocalTestCase, generationMode: GenerationMode): string {
     const { generator } = testCase;
     const { workingDirectory } = testCase.context;
 
     // Structure: {workingDirectory}/sdks/{generationMode}/{generator}
     // Example: seed-remote-local/python-sdk/imdb/no-custom-config/local-file-system/sdks/local/python-sdk
-    return path.join(workingDirectory, "sdks", generationMode + "Generation", generator);
+    return path.join(workingDirectory, SDKS_DIRECTORY_NAME, generationMode + GENERATION_MODE_SUFFIX, generator);
 }
 
 async function writeGeneratorsYml(fernDirectory: string, localConfig: unknown, remoteConfig: unknown): Promise<void> {
@@ -377,9 +447,9 @@ async function writeGeneratorsYml(fernDirectory: string, localConfig: unknown, r
             }
         }
     };
-    const schemaServer = "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json";
+    const schemaServer = `${GENERATORS_YML_SCHEMA_COMMENT}${GENERATORS_YML_SCHEMA_URL}`;
     const content = schemaServer + "\n" + yaml.dump(structuredContent, { lineWidth: -1 });
-    await writeFile(path.join(fernDirectory, "generators.yml"), content);
+    await writeFile(path.join(fernDirectory, GENERATORS_YML_FILENAME), content);
 }
 
 function loadCustomConfig(
@@ -394,7 +464,7 @@ function loadCustomConfig(
         logger.debug(`Loaded custom Go module config`);
         return Promise.resolve({
             module: {
-                path: "github.com/fern-api/test-remote-local-sdk"
+                path: GO_SDK_MODULE_PATH
             }
         });
     }
@@ -407,23 +477,20 @@ function getGithubConfig(generator: GeneratorNickname, generationMode: Generatio
     if (generationMode === "remote") {
         return {
             repository: FERN_TEST_REPO_NAME,
-            mode: "pull-request"
+            mode: GITHUB_OUTPUT_MODE_PULL_REQUEST
         };
     } else if (generationMode === "local") {
         return {
             uri: FERN_TEST_REPO_NAME,
-            token: "${GITHUB_TOKEN}",
-            mode: "pull-request"
+            token: GITHUB_TOKEN_ENV_VAR_REFERENCE,
+            mode: GITHUB_OUTPUT_MODE_PULL_REQUEST
         };
     } else {
         throw new Error(`Generation mode ${generationMode} not supported`);
     }
 }
 
-function getPackageOutputConfig(
-    testCase: RemoteVsLocalTestCase,
-    generationMode: GenerationMode
-): unknown | undefined {
+function getPackageOutputConfig(testCase: RemoteVsLocalTestCase, generationMode: GenerationMode): unknown | undefined {
     const { generator, outputMode } = testCase;
     const { workingDirectory } = testCase.context;
 
@@ -431,18 +498,18 @@ function getPackageOutputConfig(
         switch (generator) {
             case "ts-sdk":
                 return {
-                    location: "npm",
-                    "package-name": "@fern-fern/test-remote-local-sdk"
+                    location: PACKAGE_LOCATION_NPM,
+                    "package-name": TS_SDK_PACKAGE_NAME
                 };
             case "java-sdk":
                 return {
-                    location: "maven",
-                    coordinate: "com.fern-api:test-remote-local-sdk"
+                    location: PACKAGE_LOCATION_MAVEN,
+                    coordinate: JAVA_SDK_MAVEN_COORDINATE
                 };
             case "python-sdk":
                 return {
-                    location: "pypi",
-                    "package-name": "test-remote-local-sdk"
+                    location: PACKAGE_LOCATION_PYPI,
+                    "package-name": PYTHON_SDK_PACKAGE_NAME
                 };
             case "go-sdk":
                 return undefined;
@@ -451,12 +518,12 @@ function getPackageOutputConfig(
         }
     } else if (outputMode === "local") {
         const absoluteOutputPath = getOutputDirectory(testCase, generationMode);
-        const fernDirectory = path.join(workingDirectory, "fern");
+        const fernDirectory = path.join(workingDirectory, FERN_DIRECTORY_NAME);
         // Calculate relative path from generators.yml location (fern/generators.yml) to output directory
         const relativePath = path.relative(fernDirectory, absoluteOutputPath);
 
         return {
-            location: "local-file-system",
+            location: PACKAGE_LOCATION_LOCAL_FILE_SYSTEM,
             path: relativePath
         };
     } else {
@@ -472,7 +539,7 @@ export async function getLatestGeneratorVersions(
     generators: readonly GeneratorNickname[],
     logger: Logger
 ): Promise<Record<GeneratorName, string>> {
-    const generatorNames = generators.map(nickname => GeneratorNameFromNickname[nickname]);
+    const generatorNames = generators.map((nickname) => GeneratorNameFromNickname[nickname]);
     const uniqueGeneratorNames = Array.from(new Set(generatorNames));
 
     logger.debug(`Fetching versions for ${uniqueGeneratorNames.length} generator(s)`);
@@ -490,44 +557,40 @@ export async function getLatestGeneratorVersions(
     return versions;
 }
 
-async function getLatestGeneratorVersion(
-    generator: GeneratorName,
-    logger: Logger
-): Promise<string> {
+async function getLatestGeneratorVersion(generator: GeneratorName, logger: Logger): Promise<string> {
     logger.debug(`Getting latest version for ${generator} from Docker Hub`);
 
     try {
         // Extract repository name from generator (e.g., "fernapi/fern-typescript-sdk" -> "fern-typescript-sdk")
         const [namespace, repository] = generator.split("/");
         if (!namespace || !repository) {
-            throw new Error(`Invalid generator name format: ${generator}`);
+            throw new Error(`${ERROR_INVALID_GENERATOR_NAME}: ${generator}`);
         }
 
         // Docker Hub API endpoint for repository tags
-        const url = `https://hub.docker.com/v2/namespaces/${namespace}/repositories/${repository}/tags?page_size=100&ordering=-last_updated`;
+        const url = `${DOCKER_HUB_API_BASE_URL}/namespaces/${namespace}/repositories/${repository}/tags?page_size=${DOCKER_HUB_TAGS_PAGE_SIZE}&ordering=${DOCKER_HUB_TAGS_ORDERING}`;
 
         logger.debug(`Fetching tags from: ${url}`);
         const response = await fetch(url);
 
         if (!response.ok) {
-            throw new Error(`Docker Hub API returned ${response.status}: ${response.statusText}`);
+            throw new Error(`${ERROR_DOCKER_HUB_API_FAILED} ${response.status}: ${response.statusText}`);
         }
 
         const data = await response.json();
 
         if (!data.results || !Array.isArray(data.results) || data.results.length === 0) {
-            throw new Error(`No tags found for ${generator}`);
+            throw new Error(`${ERROR_NO_TAGS_FOUND} ${generator}`);
         }
 
         // Filter out non-semantic version tags (e.g., "latest", "main", etc.)
         // Look for tags that match semantic versioning pattern: X.Y.Z
-        const semverRegex = /^\d+\.\d+\.\d+$/;
         const versionTags = data.results
             .map((tag: { name: string }) => tag.name)
-            .filter((name: string) => semverRegex.test(name));
+            .filter((name: string) => SEMVER_REGEX.test(name));
 
         if (versionTags.length === 0) {
-            throw new Error(`No semantic version tags found for ${generator}`);
+            throw new Error(`${ERROR_NO_SEMVER_TAGS} ${generator}`);
         }
 
         // The API returns tags ordered by last_updated, but we want the highest semantic version
@@ -550,7 +613,11 @@ async function getLatestGeneratorVersion(
         logger.debug(`Found latest version: ${latestVersion}`);
         return latestVersion;
     } catch (error) {
-        logger.error(`Failed to fetch version from Docker Hub: ${error instanceof Error ? error.message : String(error)}`);
-        throw new Error(`Failed to get latest version for ${generator} from Docker Hub: ${error instanceof Error ? error.message : String(error)}`);
+        logger.error(
+            `Failed to fetch version from Docker Hub: ${error instanceof Error ? error.message : String(error)}`
+        );
+        throw new Error(
+            `${ERROR_FAILED_TO_FETCH_VERSION} ${generator} from Docker Hub: ${error instanceof Error ? error.message : String(error)}`
+        );
     }
 }
