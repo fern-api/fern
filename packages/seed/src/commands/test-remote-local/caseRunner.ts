@@ -254,7 +254,8 @@ async function runGeneration(
                 FERN_TEST_REPO_NAME,
                 result.all || result.stdout,
                 outputDirectory,
-                logger
+                logger,
+                githubToken
             );
         }
 
@@ -271,7 +272,8 @@ async function copyGithubOutputToOutputDirectory(
     repository: string,
     logs: string,
     outputDirectory: string,
-    logger: Logger
+    logger: Logger,
+    githubToken?: string
 ): Promise<void> {
     logger.debug(`Attempting to extract GitHub branch from logs`);
     const remoteBranch = getRemoteBranchFromLogs(logs);
@@ -288,7 +290,7 @@ async function copyGithubOutputToOutputDirectory(
     const tmpDir = await tmp.dir();
 
     logger.debug(`Cloning ${repository}@${branchToClone} to temporary directory`);
-    await cloneRepository(repository, branchToClone, tmpDir.path, logger);
+    await cloneRepository(repository, branchToClone, tmpDir.path, logger, githubToken);
 
     logger.debug(`Copying cloned repository to ${outputDirectory}`);
     await cp(tmpDir.path, outputDirectory, { recursive: true });
@@ -327,14 +329,20 @@ async function cloneRepository(
     repository: string,
     branch: string,
     targetDirectory: string,
-    logger: Logger
+    logger: Logger,
+    githubToken?: string
 ): Promise<void> {
     logger.debug(`Cloning ${repository}@${branch} to ${targetDirectory}`);
+
+    // Use authenticated URL if token is provided (for private repos)
+    const cloneUrl = githubToken
+        ? `https://${githubToken}@github.com/${repository}.git`
+        : `https://github.com/${repository}.git`;
 
     const result = await loggingExeca(
         logger,
         "git",
-        ["clone", "--branch", branch, "--depth", "1", `https://github.com/${repository}.git`, targetDirectory],
+        ["clone", "--branch", branch, "--depth", "1", cloneUrl, targetDirectory],
         { reject: false }
     );
 
