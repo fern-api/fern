@@ -32,6 +32,7 @@ export async function runLocalGenerationForWorkspace({
     keepDocker,
     inspect,
     context,
+    absolutePathToPreview,
     runner
 }: {
     token: FernToken | undefined;
@@ -41,6 +42,7 @@ export async function runLocalGenerationForWorkspace({
     version: string | undefined;
     keepDocker: boolean;
     context: TaskContext;
+    absolutePathToPreview: AbsoluteFilePath | undefined;
     runner: ContainerRunner | undefined;
     inspect: boolean;
 }): Promise<void> {
@@ -132,12 +134,20 @@ export async function runLocalGenerationForWorkspace({
                     intermediateRepresentation.publishConfig = publishConfig;
                 }
 
+                const absolutePathToPreviewForGenerator = resolveAbsolutePathToLocalPreview(
+                    absolutePathToPreview,
+                    generatorInvocation
+                );
+
                 const absolutePathToLocalOutput =
+                    absolutePathToPreviewForGenerator ??
                     generatorInvocation.absolutePathToLocalOutput ??
                     AbsoluteFilePath.of(await tmp.dir().then((dir) => dir.path));
 
-                // TODO(jsklan): Dont hardcode preview mode to false
-                const selfhostedGithubConfig = getSelfhostedGithubConfig(generatorInvocation, false);
+                const selfhostedGithubConfig = getSelfhostedGithubConfig(
+                    generatorInvocation,
+                    absolutePathToPreviewForGenerator != null
+                );
 
                 if (selfhostedGithubConfig != null) {
                     await fs.rm(absolutePathToLocalOutput, { recursive: true, force: true });
@@ -192,10 +202,10 @@ export async function runLocalGenerationForWorkspace({
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
 
                 if (selfhostedGithubConfig != null) {
-                    postProcessGithubSelfHosted(
+                    await postProcessGithubSelfHosted(
+                        interactiveTaskContext,
                         selfhostedGithubConfig,
-                        absolutePathToLocalOutput,
-                        interactiveTaskContext
+                        absolutePathToLocalOutput
                     );
                 }
             });
@@ -231,11 +241,22 @@ function getPackageNameFromGeneratorConfig(generatorInvocation: GeneratorInvocat
     }
     return undefined;
 }
+function resolveAbsolutePathToLocalPreview(
+    absolutePathToPreview: AbsoluteFilePath | undefined,
+    generatorInvocation: GeneratorInvocation
+): AbsoluteFilePath | undefined {
+    if (absolutePathToPreview == null) {
+        return undefined;
+    }
+    const generatorName = generatorInvocation.name.split("/").pop() ?? "sdk";
+    const subfolderName = generatorName.replace(/[^a-zA-Z0-9-_]/g, "_");
 
+    return absolutePathToPreview ? join(absolutePathToPreview, RelativeFilePath.of(subfolderName)) : undefined;
+}
 async function postProcessGithubSelfHosted(
+    context: TaskContext,
     selfhostedGithubConfig: SelhostedGithubConfig,
-    absolutePathToLocalOutput: AbsoluteFilePath,
-    context: TaskContext
+    absolutePathToLocalOutput: AbsoluteFilePath
 ): Promise<void> {
     try {
         context.logger.debug("Starting GitHub self-hosted flow...");
@@ -248,6 +269,7 @@ async function postProcessGithubSelfHosted(
             await repository.checkout(prBranch);
         }
 
+        context.logger.debug("Committing changes...");
         await repository.commit("SDK Generation");
         context.logger.debug(`Committed changes to local copy of GitHub repository at ${absolutePathToLocalOutput}`);
 
@@ -288,7 +310,7 @@ async function postProcessGithubSelfHosted(
             }
         }
     } catch (error) {
-        context.failWithoutThrowing(`Error during GitHub self-hosted flow: ${String(error)}`);
+        context.failAndThrow(`Error during GitHub self-hosted flow: ${String(error)}`);
     }
 }
 

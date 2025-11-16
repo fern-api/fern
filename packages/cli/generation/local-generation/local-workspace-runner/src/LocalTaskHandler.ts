@@ -92,9 +92,6 @@ export class LocalTaskHandler {
         );
         const fernIgnorePaths = await getFernIgnorePaths({ absolutePathToFernignore });
 
-        // If absolutePathToLocalOutput is already a git repository, work directly in it
-        await this.runGitCommand(["add", "."], this.absolutePathToLocalOutput);
-
         const response = await this.runGitCommand(["config", "--list"], this.absolutePathToLocalOutput);
         if (!response.includes("user.name")) {
             await this.runGitCommand(["config", "user.name", "fern-api"], this.absolutePathToLocalOutput);
@@ -103,13 +100,15 @@ export class LocalTaskHandler {
                 this.absolutePathToLocalOutput
             );
         }
-        await this.runGitCommand(["commit", "--allow-empty", "-m", '"init"'], this.absolutePathToLocalOutput);
 
         // Stage deletions `git rm -rf .`
         await this.runGitCommand(["rm", "-rf", "."], this.absolutePathToLocalOutput);
 
         // Copy all files from generated temp dir
         await this.copyGeneratedFilesToDirectory(this.absolutePathToLocalOutput);
+
+        // If absolutePathToLocalOutput is already a git repository, work directly in it
+        await this.runGitCommand(["add", "."], this.absolutePathToLocalOutput);
 
         // Undo changes to fernignore paths
         await this.runGitCommand(["reset", "--", ...fernIgnorePaths], this.absolutePathToLocalOutput);
