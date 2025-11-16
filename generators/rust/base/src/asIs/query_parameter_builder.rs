@@ -30,6 +30,14 @@ impl QueryBuilder {
         self
     }
 
+    /// Add a big integer parameter (accept both required/optional)
+    pub fn big_int(mut self, key: &str, value: impl Into<Option<num_bigint::BigInt>>) -> Self {
+        if let Some(v) = value.into() {
+            self.params.push((key.to_string(), v.to_string()));
+        }
+        self
+    }
+
     /// Add a float parameter
     pub fn float(mut self, key: &str, value: impl Into<Option<f64>>) -> Self {
         if let Some(v) = value.into() {

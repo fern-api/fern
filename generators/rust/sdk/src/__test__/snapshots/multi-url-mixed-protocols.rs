@@ -23,3 +23,8 @@ impl Environment {
     }
 }
 }
+impl Default for Environment {
+    fn default() -> Self {
+    Self::Production(ProductionUrls { api: "https://api.example.com".to_string(), websocket: "wss://ws.example.com".to_string() })
+}
+}
