@@ -1,5 +1,6 @@
 import { LogLevel } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
+import { execa } from "execa";
 import { cp, mkdir, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
@@ -116,10 +117,12 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<void
     await writeGeneratorsYml(fernDirectory, localConfig, remoteConfig);
 
     // Run generations
-    logger.info("Starting local generation (Docker)...");
+    logger.info("");
+    logger.info("━━━ LOCAL GENERATION (Docker) ━━━");
     const localResult = await runGeneration(testCase, "local");
 
-    logger.info("Starting remote generation (Fiddle)...");
+    logger.info("");
+    logger.info("━━━ REMOTE GENERATION (Fiddle) ━━━");
     const remoteResult = await runGeneration(testCase, "remote");
 
     // Check for generation failures
@@ -127,19 +130,21 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<void
         const errors: string[] = [];
         if (!localResult.success) {
             errors.push(`Local generation failed: ${localResult.error}`);
-            logger.error(`Local generation error: ${localResult.error}`);
+            logger.error(`✗ Local generation error: ${localResult.error}`);
         }
         if (!remoteResult.success) {
             errors.push(`Remote generation failed: ${remoteResult.error}`);
-            logger.error(`Remote generation error: ${remoteResult.error}`);
+            logger.error(`✗ Remote generation error: ${remoteResult.error}`);
         }
         throw new Error(errors.join("\n"));
     }
 
-    logger.info("Both generations completed successfully");
+    logger.info("");
+    logger.info("✓ Both generations completed successfully");
 
     // Compare results
-    logger.info("Comparing local and remote outputs...");
+    logger.info("");
+    logger.info("━━━ COMPARING OUTPUTS ━━━");
     await compareResults(testCase, localResult, remoteResult);
 }
 
@@ -197,39 +202,67 @@ async function runGeneration(
     const group = generationMode === "local" ? LOCAL_GROUP_NAME : REMOTE_GROUP_NAME;
     const extraFlags = generationMode === "local" ? ["--local"] : [];
 
+    // Use debug level to capture all output (needed for extracting branch info)
+    // but we won't forward all logs to stdout - only our own structured logs
     const args = ["generate", "--group", group, "--log-level", LogLevel.Debug, ...extraFlags];
-    logger.debug(`Running: ${fernExecutable} ${args.join(" ")}`);
+
+    logger.info(`▶ Running ${generationMode} generation...`);
+    logger.debug(`  Command: ${fernExecutable} ${args.join(" ")}`);
+    logger.debug(`  Working directory: ${workingDirectory}`);
 
     const startTime = Date.now();
-    const result = await loggingExeca(logger, fernExecutable, args, {
-        cwd: workingDirectory, // Run from the working directory where fern/ folder is
-        env: {
-            GITHUB_TOKEN: githubToken,
-            FERN_TOKEN: fernToken
-        },
-        reject: false
-    });
-    const duration = Date.now() - startTime;
 
-    if (result.exitCode !== 0) {
-        logger.error(`${generationMode} generation failed after ${duration}ms (exit code: ${result.exitCode})`);
-        logger.error(`stderr: ${result.stderr}`);
-        return { success: false, error: result.stderr };
+    try {
+        // Use execa directly instead of loggingExeca to avoid forwarding all subprocess logs
+        const result = await execa(fernExecutable, args, {
+            cwd: workingDirectory,
+            env: {
+                GITHUB_TOKEN: githubToken,
+                FERN_TOKEN: fernToken
+            },
+            reject: false,
+            all: true // Combine stdout and stderr for easier parsing
+        });
+
+        const duration = Date.now() - startTime;
+
+        if (result.exitCode !== 0) {
+            logger.error(`✗ ${generationMode} generation failed after ${duration}ms (exit code: ${result.exitCode})`);
+
+            // Show error output from the subprocess
+            if (result.stderr) {
+                logger.error(`  Error output:`);
+                result.stderr.split("\n").forEach(line => {
+                    if (line.trim()) {
+                        logger.error(`    ${line}`);
+                    }
+                });
+            }
+
+            return { success: false, error: result.stderr || "Unknown error" };
+        }
+
+        logger.info(`✓ ${generationMode} generation completed in ${duration}ms`);
+
+        const outputDirectory = getOutputDirectory(testCase, generationMode);
+        if (outputMode === "github") {
+            logger.debug(`  Copying GitHub output to ${outputDirectory}`);
+            // Pass the combined output (stdout + stderr) to extract branch info
+            await copyGithubOutputToOutputDirectory(
+                FERN_TEST_REPO_NAME,
+                result.all || result.stdout,
+                outputDirectory,
+                logger
+            );
+        }
+
+        return { success: true, outputFolder: outputDirectory };
+    } catch (error) {
+        const duration = Date.now() - startTime;
+        logger.error(`✗ ${generationMode} generation failed after ${duration}ms`);
+        logger.error(`  Error: ${error instanceof Error ? error.message : String(error)}`);
+        return { success: false, error: error instanceof Error ? error.message : String(error) };
     }
-
-    logger.info(`${generationMode} generation completed in ${duration}ms`);
-
-    const outputDirectory = getOutputDirectory(testCase, generationMode);
-    if (outputMode === "github") {
-        logger.debug(`Copying GitHub output to ${outputDirectory}`);
-        await copyGithubOutputToOutputDirectory(
-            FERN_TEST_REPO_NAME,
-            result.stdout,
-            outputDirectory,
-            logger
-        );
-    }
-    return { success: true, outputFolder: outputDirectory };
 }
 
 async function copyGithubOutputToOutputDirectory(
