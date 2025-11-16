@@ -29,6 +29,8 @@ export abstract class AbstractSwiftGeneratorContext<
     CustomConfig extends BaseSwiftCustomConfigSchema
 > extends AbstractGeneratorContext {
     public readonly project: SwiftProject;
+    private readonly indirectPropertiesMapping: Map<TypeId, Set<string>>;
+    private readonly schemaTypeIdBySymbolId: Map<string, TypeId>;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -38,7 +40,8 @@ export abstract class AbstractSwiftGeneratorContext<
     ) {
         super(config, generatorNotificationService);
         this.project = new SwiftProject({ context: this });
-        this.detectCycles(ir);
+        this.schemaTypeIdBySymbolId = new Map();
+        this.indirectPropertiesMapping = this.detectCycles(ir);
         this.registerProjectSymbols(this.project, ir);
     }
 
@@ -47,10 +50,20 @@ export abstract class AbstractSwiftGeneratorContext<
         this.registerTestSymbols(project);
     }
 
-    private detectCycles(ir: IntermediateRepresentation) {
+    private detectCycles(ir: IntermediateRepresentation): Map<TypeId, Set<string>> {
         const cycleDetector = new CycleDetector(ir);
         cycleDetector.detectIllegalCycles();
-        // TODO(kafkas): This is for later, not now. Detect allowed cycles (finite size cycles) and adjust generated code accordingly.
+        // For legal cycles, compute which specific properties should be boxed
+        // as `Indirect<...>` in Swift.
+        return cycleDetector.computeIndirectPropertiesMapping();
+    }
+
+    public shouldGeneratePropertyAsIndirect(typeId: TypeId, propertyWireValue: string): boolean {
+        return this.indirectPropertiesMapping.get(typeId)?.has(propertyWireValue) ?? false;
+    }
+
+    public getTypeIdForSchemaSymbolOrThrow(symbol: swift.Symbol): TypeId | undefined {
+        return this.schemaTypeIdBySymbolId.get(symbol.id);
     }
 
     private registerSourceSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
@@ -84,7 +97,11 @@ export abstract class AbstractSwiftGeneratorContext<
                 typeDeclaration.name.name.pascalCase.unsafeName,
                 symbolShape
             );
-            return { typeDeclaration, registeredSymbol: schemaTypeSymbol };
+            return { typeId, typeDeclaration, registeredSymbol: schemaTypeSymbol };
+        });
+
+        registeredSchemaTypes.forEach(({ typeId, registeredSymbol }) => {
+            this.schemaTypeIdBySymbolId.set(registeredSymbol.id, typeId);
         });
 
         registeredSchemaTypes.forEach(({ typeDeclaration, registeredSymbol }) => {

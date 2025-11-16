@@ -23,6 +23,36 @@ export class CycleDetector {
     }
 
     /**
+     * Returns, for each object type, the set of property names that should be
+     * generated as `Indirect<...>` in Swift in order to break legal cycles.
+     */
+    public computeIndirectPropertiesMapping(): Map<TypeId, Set<string>> {
+        const indirectPropertiesMapping = new Map<TypeId, Set<string>>();
+
+        for (const [typeId, typeDeclaration] of Object.entries(this.ir.types)) {
+            if (typeDeclaration.shape.type !== "object") {
+                continue;
+            }
+
+            const objectShape = typeDeclaration.shape;
+            const allProperties = [...(objectShape.extendedProperties ?? []), ...objectShape.properties];
+
+            for (const property of allProperties) {
+                if (this.shouldBoxPropertyAsIndirect(typeDeclaration, property.valueType)) {
+                    let properties = indirectPropertiesMapping.get(typeId);
+                    if (properties == null) {
+                        properties = new Set<string>();
+                        indirectPropertiesMapping.set(typeId, properties);
+                    }
+                    properties.add(property.name.wireValue);
+                }
+            }
+        }
+
+        return indirectPropertiesMapping;
+    }
+
+    /**
      * Builds a graph where there is a directed edge A -> B iff every value of A
      * must (transitively) contain a value of B. In practice, this means:
      *
@@ -109,6 +139,41 @@ export class CycleDetector {
     private getRequiredNamedDependencyForType(typeReference: TypeReference): TypeId | null {
         const unaliased = this.resolveAlias(typeReference);
         return unaliased.type === "named" ? unaliased.typeId : null;
+    }
+
+    /**
+     * Determines whether a given object property should be generated as
+     * `Indirect<...>` in Swift.
+     *
+     * Current rules:
+     * - The property type must be an alias (possibly nested) whose resolved
+     *   underlying type reference is:
+     *      container.optional(named(selfType))
+     *   i.e., an optional reference back to the containing object type,
+     *   with no list/set/map wrappers.
+     *
+     * This covers patterns like:
+     *   BinaryTreeNode.leftChild: optional<BinaryTreeNode>
+     *
+     * but does NOT require boxing for:
+     *   TreeNode.children: list<TreeNode>
+     * because the recursion is guarded by a collection.
+     */
+    private shouldBoxPropertyAsIndirect(owningType: TypeDeclaration, propertyTypeReference: TypeReference): boolean {
+        const resolved = this.resolveAlias(propertyTypeReference);
+
+        // We only care about optional container at the top level
+        if (resolved.type !== "container" || resolved.container.type !== "optional") {
+            return false;
+        }
+
+        const inner = this.resolveAlias(resolved.container.optional);
+        if (inner.type !== "named") {
+            return false;
+        }
+
+        // Only box when the optional points back to the same object type
+        return inner.typeId === owningType.name.typeId;
     }
 
     private resolveAlias(typeReference: TypeReference): TypeReference {

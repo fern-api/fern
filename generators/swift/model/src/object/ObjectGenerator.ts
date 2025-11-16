@@ -34,6 +34,8 @@ export class ObjectGenerator {
     }
 
     public generateStructForTypeDeclaration(): swift.Struct {
+        const typeId = this.context.getTypeIdForSchemaSymbolOrThrow(this.symbol);
+
         return new StructGenerator({
             symbol: this.symbol,
             constantPropertyDefinitions: [],
@@ -41,6 +43,7 @@ export class ObjectGenerator {
                 unsafeName: sanitizeSelf(p.name.name.camelCase.unsafeName),
                 rawName: p.name.wireValue,
                 type: p.valueType,
+                indirect: typeId != null && this.context.shouldGeneratePropertyAsIndirect(typeId, p.name.wireValue),
                 docsContent: p.docs
             })),
             additionalProperties: true,
