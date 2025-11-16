@@ -1,6 +1,6 @@
 import { FernToken } from "@fern-api/auth";
 import { Project } from "@fern-api/project-loader";
-import { registerApi } from "@fern-api/register";
+import { AIExampleEnhancerConfig, registerApi } from "@fern-api/register";
 import chalk from "chalk";
 
 import { CliContext } from "../../cli-context/CliContext";
@@ -14,6 +14,9 @@ export async function registerWorkspacesV2({
     cliContext: CliContext;
     token: FernToken;
 }): Promise<void> {
+    // Configure AI example enhancement from environment variables
+    const aiEnhancerConfig = getAIEnhancerConfig();
+
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
@@ -33,10 +36,15 @@ export async function registerWorkspacesV2({
                         phpSdk: undefined,
                         swiftSdk: undefined,
                         rustSdk: undefined
-                    }
+                    },
+                    aiEnhancerConfig
                 });
                 context.logger.info(chalk.green("Registered API"));
             });
         })
     );
+}
+
+function getAIEnhancerConfig(): AIExampleEnhancerConfig | undefined {
+    return undefined;
 }

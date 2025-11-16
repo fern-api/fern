@@ -318,7 +318,12 @@ public final class BuilderGenerator {
                     enrichedObjectProperty.enrichedObjectProperty.docs().get()));
             methodBuilder.addJavadoc(JavaDocUtils.getReturnDocs(CHAINED_RETURN_DOCS));
         }
-        if (enrichedObjectProperty.enrichedObjectProperty.wireKey().isPresent()) {
+        if (enrichedObjectProperty.enrichedObjectProperty.wireKey().isPresent()
+                && !enrichedObjectProperty
+                        .enrichedObjectProperty
+                        .wireKey()
+                        .get()
+                        .isEmpty()) {
             methodBuilder.addAnnotation(AnnotationSpec.builder(JsonSetter.class)
                     .addMember(
                             "value",
@@ -438,7 +443,12 @@ public final class BuilderGenerator {
     private MethodSpec.Builder getDefaultSetterForImpl(
             EnrichedObjectPropertyWithField enrichedObjectProperty, ClassName returnClass, boolean isOverridden) {
         MethodSpec.Builder methodBuilder = getDefaultSetter(enrichedObjectProperty, returnClass, isOverridden);
-        if (enrichedObjectProperty.enrichedObjectProperty.wireKey().isPresent()) {
+        if (enrichedObjectProperty.enrichedObjectProperty.wireKey().isPresent()
+                && !enrichedObjectProperty
+                        .enrichedObjectProperty
+                        .wireKey()
+                        .get()
+                        .isEmpty()) {
             methodBuilder.addAnnotation(AnnotationSpec.builder(JsonSetter.class)
                     .addMember(
                             "value",
@@ -973,7 +983,8 @@ public final class BuilderGenerator {
                 .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .addParameter(poetTypeName, fieldSpec.name);
 
-        if (enrichedProperty.enrichedObjectProperty.wireKey().isPresent()) {
+        if (enrichedProperty.enrichedObjectProperty.wireKey().isPresent()
+                && !enrichedProperty.enrichedObjectProperty.wireKey().get().isEmpty()) {
             implSetter.addAnnotation(AnnotationSpec.builder(JsonSetter.class)
                     .addMember(
                             "value",
@@ -1033,7 +1044,8 @@ public final class BuilderGenerator {
 
         implSetter.addParameter(paramBuilder.build());
 
-        if (enrichedProperty.enrichedObjectProperty.wireKey().isPresent()) {
+        if (enrichedProperty.enrichedObjectProperty.wireKey().isPresent()
+                && !enrichedProperty.enrichedObjectProperty.wireKey().get().isEmpty()) {
             implSetter.addAnnotation(AnnotationSpec.builder(JsonSetter.class)
                     .addMember(
                             "value",

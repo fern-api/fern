@@ -44,7 +44,11 @@ class TestCaseGrade_NonHidden(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-from ...commons.types.variable_value import VariableValue  # noqa: E402, I001
+from ...commons.types.key_value_pair import KeyValuePair  # noqa: E402, F401, I001
+from ...commons.types.map_value import MapValue  # noqa: E402, F401, I001
+from ...commons.types.variable_value import VariableValue  # noqa: E402, F401, I001
 
-TestCaseGrade = typing.Union[TestCaseGrade_Hidden, TestCaseGrade_NonHidden]
+TestCaseGrade = typing_extensions.Annotated[
+    typing.Union[TestCaseGrade_Hidden, TestCaseGrade_NonHidden], pydantic.Field(discriminator="type")
+]
 update_forward_refs(TestCaseGrade_NonHidden)

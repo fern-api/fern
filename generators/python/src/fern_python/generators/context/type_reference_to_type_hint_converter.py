@@ -39,7 +39,7 @@ class TypeReferenceToTypeHintConverter:
                 as_if_type_checking_import=as_if_type_checking_import,
             ),
             primitive=self._get_type_hint_for_primitive,
-            unknown=lambda: AST.TypeHint.optional(AST.TypeHint.any()),
+            unknown=lambda: AST.TypeHint.any(),
         )
 
     def _get_set_type_hint_for_named(

@@ -13,11 +13,12 @@ type DocsDefinition = DocsV1Write.DocsDefinition;
 
 import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { convertIrToFdrApi } from "@fern-api/register";
+import { AIExampleEnhancerConfig, convertIrToFdrApi, enhanceExamplesWithAI } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import axios from "axios";
 import chalk from "chalk";
+import { createHash } from "crypto";
 import { readFile } from "fs/promises";
 import { chunk } from "lodash-es";
 import * as mime from "mime-types";
@@ -29,11 +30,17 @@ import { measureImageSizes } from "./measureImageSizes";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
+const HASH_BATCH_SIZE = 10;
 
 interface FileWithMimeType {
     mediaType: string;
     absoluteFilePath: AbsoluteFilePath;
     relativeFilePath: RelativeFilePath;
+}
+
+export async function calculateFileHash(absoluteFilePath: AbsoluteFilePath | string): Promise<string> {
+    const fileBuffer = await readFile(absoluteFilePath);
+    return createHash("sha256").update(new Uint8Array(fileBuffer)).digest("hex");
 }
 
 export async function publishDocs({
@@ -50,6 +57,7 @@ export async function publishDocs({
     isPrivate = false,
     disableTemplates = false,
     skipUpload = false,
+    withAiExamples = false,
     targetAudiences
 }: {
     token: FernToken;
@@ -65,6 +73,7 @@ export async function publishDocs({
     isPrivate: boolean | undefined;
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
+    withAiExamples?: boolean;
     targetAudiences?: string[];
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
@@ -75,6 +84,7 @@ export async function publishDocs({
     const basePath = parseBasePath(domain);
     const useDynamicSnippets = docsWorkspace.config.experimental?.dynamicSnippets;
     const disableSnippetGen = preview || useDynamicSnippets;
+
     const resolver = new DocsDefinitionResolver({
         domain,
         docsWorkspace,
@@ -99,31 +109,39 @@ export async function publishDocs({
 
             const images: DocsV2Write.ImageFilePath[] = [];
 
-            [...measuredImages.values()].forEach((image) => {
+            for (const image of measuredImages.values()) {
                 const filePath = filesMap.get(image.filePath);
                 if (filePath == null) {
-                    return;
+                    continue;
                 }
-                const imageFilePath = {
-                    filePath: DocsV1Write.FilePath(convertToFernHostRelativeFilePath(filePath.relativeFilePath)),
+
+                images.push({
+                    filePath: CjsFdrSdk.docs.v1.write.FilePath(
+                        convertToFernHostRelativeFilePath(filePath.relativeFilePath)
+                    ),
                     width: image.width,
                     height: image.height,
                     blurDataUrl: image.blurDataUrl,
                     alt: undefined,
-                    fileHash: undefined
-                };
-                images.push(imageFilePath);
-            });
+                    fileHash: await calculateFileHash(filePath.absoluteFilePath)
+                });
+            }
 
-            const filepaths = files
-                .filter(({ absoluteFilePath }) => !measuredImages.has(absoluteFilePath))
-                .map(({ relativeFilePath }) => convertToFernHostRelativeFilePath(relativeFilePath));
+            const nonImageFiles = files.filter(({ absoluteFilePath }) => !measuredImages.has(absoluteFilePath));
+            const filepaths: CjsFdrSdk.docs.v2.write.FilePathInput[] = [];
+
+            for (const file of nonImageFiles) {
+                filepaths.push({
+                    path: CjsFdrSdk.docs.v1.write.FilePath(convertToFernHostRelativeFilePath(file.relativeFilePath)),
+                    fileHash: await calculateFileHash(file.absoluteFilePath)
+                });
+            }
 
             if (preview) {
                 const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
                     orgId: CjsFdrSdk.OrgId(organization),
                     authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
-                    filepaths: filepaths.map((filePath) => DocsV1Write.FilePath(filePath)),
+                    filepaths: filepaths,
                     images,
                     basePath
                 });
@@ -133,12 +151,26 @@ export async function publishDocs({
                     if (skipUpload) {
                         context.logger.debug("Skip-upload mode: skipping file uploads for docs preview");
                     } else {
-                        await uploadFiles(
-                            startDocsRegisterResponse.body.uploadUrls,
-                            docsWorkspace.absoluteFilePath,
-                            context,
-                            UPLOAD_FILE_BATCH_SIZE
+                        const skippedSet = new Set(startDocsRegisterResponse.body.skippedFiles || []);
+                        const urlsToUpload = Object.fromEntries(
+                            Object.entries(startDocsRegisterResponse.body.uploadUrls).filter(
+                                ([filepath]) => !skippedSet.has(filepath as CjsFdrSdk.docs.v1.write.FilePath)
+                            )
                         );
+
+                        const uploadCount = Object.keys(urlsToUpload).length;
+
+                        if (uploadCount > 0) {
+                            // context.logger.info(`↑ Uploading ${uploadCount} files...`); // uncomment when FDR is updated to persist hashes over multiple previews
+                            await uploadFiles(
+                                urlsToUpload,
+                                docsWorkspace.absoluteFilePath,
+                                context,
+                                UPLOAD_FILE_BATCH_SIZE
+                            );
+                        } else {
+                            // context.logger.info("✓ No files to upload (all up to date)"); //ibid.
+                        }
                     }
                     return convertToFilePathPairs(
                         startDocsRegisterResponse.body.uploadUrls,
@@ -154,20 +186,42 @@ export async function publishDocs({
                     authConfig,
                     apiId: CjsFdrSdk.ApiId(""),
                     orgId: CjsFdrSdk.OrgId(organization),
-                    filepaths: filepaths.map((filePath) => DocsV1Write.FilePath(filePath)),
+                    filepaths: filepaths,
                     images
                 });
                 if (startDocsRegisterResponse.ok) {
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
+
+                    const skippedCount = startDocsRegisterResponse.body.skippedFiles?.length || 0;
+                    if (skippedCount > 0) {
+                        context.logger.info(
+                            `Skipped ${skippedCount} unchanged file${skippedCount === 1 ? "" : "s"} (already uploaded)`
+                        );
+                    }
+
                     if (skipUpload) {
                         context.logger.debug("Skip-upload mode: skipping file uploads for docs");
                     } else {
-                        await uploadFiles(
-                            startDocsRegisterResponse.body.uploadUrls,
-                            docsWorkspace.absoluteFilePath,
-                            context,
-                            UPLOAD_FILE_BATCH_SIZE
+                        const skippedSet = new Set(startDocsRegisterResponse.body.skippedFiles || []);
+                        const urlsToUpload = Object.fromEntries(
+                            Object.entries(startDocsRegisterResponse.body.uploadUrls).filter(
+                                ([filepath]) => !skippedSet.has(filepath as CjsFdrSdk.docs.v1.write.FilePath)
+                            )
                         );
+
+                        const uploadCount = Object.keys(urlsToUpload).length;
+
+                        if (uploadCount > 0) {
+                            context.logger.info(`↑ Uploading ${uploadCount} files...`);
+                            await uploadFiles(
+                                urlsToUpload,
+                                docsWorkspace.absoluteFilePath,
+                                context,
+                                UPLOAD_FILE_BATCH_SIZE
+                            );
+                        } else {
+                            context.logger.info("No files to upload (all up to date)");
+                        }
                     }
                     return convertToFilePathPairs(
                         startDocsRegisterResponse.body.uploadUrls,
@@ -179,7 +233,23 @@ export async function publishDocs({
             }
         },
         registerApi: async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
-            const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
+            let apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
+
+            const aiEnhancerConfig = getAIEnhancerConfig(withAiExamples);
+            if (aiEnhancerConfig && workspace) {
+                const sources = workspace.getSources();
+                const openApiSource = sources.find((source) => source.type === "openapi");
+                const sourceFilePath = openApiSource?.absoluteFilePath;
+
+                apiDefinition = await enhanceExamplesWithAI(
+                    apiDefinition,
+                    aiEnhancerConfig,
+                    context,
+                    token,
+                    organization,
+                    sourceFilePath
+                );
+            }
 
             // create dynamic IR + metadata for each generator language
             let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
@@ -593,7 +663,7 @@ async function updateAiChatFromDocsDefinition({
     domain: string;
     customDomains: string[];
 }): Promise<void> {
-    if (docsDefinition.config.aiChatConfig == null) {
+    if (docsDefinition.config.aiChatConfig == null || isPreview) {
         return;
     }
     context.logger.debug("Processing AI Chat configuration from docs.yml");
@@ -642,4 +712,17 @@ async function updateAiChatFromDocsDefinition({
             );
         }
     }
+}
+
+function getAIEnhancerConfig(withAiExamples: boolean): AIExampleEnhancerConfig | undefined {
+    if (!withAiExamples) {
+        return undefined;
+    }
+
+    return {
+        enabled: true,
+        model: process.env.FERN_AI_MODEL || "gpt-4o-mini",
+        maxRetries: parseInt(process.env.FERN_AI_MAX_RETRIES || "3"),
+        requestTimeoutMs: parseInt(process.env.FERN_AI_TIMEOUT_MS || "25000")
+    };
 }

@@ -1,12 +1,12 @@
 import Foundation
 
 /// Represents a value that can be either a concrete value or explicit `null`, distinguishing between null and missing fields in JSON.
-public enum Nullable<Wrapped>: Codable, Hashable, Sendable
-where Wrapped: Codable & Hashable & Sendable {
+public enum Nullable<Wrapped>: Swift.Codable, Swift.Hashable, Swift.Sendable
+where Wrapped: Swift.Codable & Swift.Hashable & Swift.Sendable {
     case value(Wrapped)
     case null
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: Swift.Decoder) throws {
         let container = try decoder.singleValueContainer()
 
         if container.decodeNil() {
@@ -17,7 +17,7 @@ where Wrapped: Codable & Hashable & Sendable {
         }
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Swift.Encoder) throws {
         var container = encoder.singleValueContainer()
 
         switch self {
@@ -39,7 +39,7 @@ where Wrapped: Codable & Hashable & Sendable {
     }
 
     /// Returns true if this contains an explicit null value
-    public var isNull: Bool {
+    public var isNull: Swift.Bool {
         switch self {
         case .value(_):
             return false

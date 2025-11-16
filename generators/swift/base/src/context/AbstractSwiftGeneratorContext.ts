@@ -143,6 +143,7 @@ export abstract class AbstractSwiftGeneratorContext<
             sourceModuleName: sourceModuleSymbol.name,
             asIsSymbols: Object.values(TestAsIsFiles).flatMap((file) => file.symbols)
         });
+        nameRegistry.registerRetryTestSuiteSymbol();
         nameRegistry.getAllSubClientSymbols().forEach((s) => {
             nameRegistry.registerWireTestSuiteSymbol(s.name);
         });

@@ -10,7 +10,7 @@ export class SnippetJsonGenerator extends WithGeneration {
     private readonly context: SdkGeneratorContext;
     private readonly rootClientGenerator: RootClientGenerator;
     constructor({ context }: { context: SdkGeneratorContext }) {
-        super(context);
+        super(context.generation);
         this.context = context;
         this.rootClientGenerator = new RootClientGenerator(context);
     }

@@ -1,9 +1,8 @@
-import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { ast, GrpcClientInfo, lazy } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator, GrpcClientInfo } from "@fern-api/csharp-base";
+import { ast, lazy } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
 import { RawClient } from "../endpoint/http/RawClient";
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator";
 
@@ -16,7 +15,7 @@ export declare namespace SubClientGenerator {
     }
 }
 
-export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
     private classReference: ast.ClassReference;
     private subpackage: Subpackage;
     private serviceId?: ServiceId;
@@ -78,20 +77,20 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         class_.addField({
             origin: this.members.client,
             access: ast.Access.Private,
-            type: this.csharp.Type.reference(this.types.RawClient)
+            type: this.Types.RawClient
         });
 
         if (this.grpcClientInfo != null) {
             class_.addField({
                 origin: this.members.grpcClient,
                 access: ast.Access.Private,
-                type: this.csharp.Type.reference(this.types.RawGrpcClient)
+                type: this.Types.RawGrpcClient
             });
 
             class_.addField({
                 origin: class_.explicit(this.members.grpcClientName),
                 access: ast.Access.Private,
-                type: this.csharp.Type.reference(this.grpcClientInfo.classReference)
+                type: this.grpcClientInfo.classReference
             });
         }
 
@@ -102,7 +101,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
                     origin: subpackage,
                     access: ast.Access.Public,
                     get: true,
-                    type: this.csharp.Type.reference(this.context.getSubpackageClassReference(subpackage))
+                    type: this.context.getSubpackageClassReference(subpackage)
                 });
             }
         }
@@ -146,11 +145,11 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         });
     }
 
-    private getConstructorMethod(): ast.Class.Constructor {
+    private getConstructorMethod() {
         const parameters: ast.Parameter[] = [
             this.csharp.parameter({
                 name: "client",
-                type: this.csharp.Type.reference(this.types.RawClient)
+                type: this.Types.RawClient
             })
         ];
         return {

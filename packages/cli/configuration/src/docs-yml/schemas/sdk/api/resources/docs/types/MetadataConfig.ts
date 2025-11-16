@@ -9,21 +9,40 @@ import * as FernDocsConfig from "../../../index";
  * These settings are applied globally, but can be overridden on a per-page basis using frontmatter.
  */
 export interface MetadataConfig {
+    /** The name of your website for Open Graph tags. */
     ogSiteName?: string;
+    /** The title shown in social media previews. */
     ogTitle?: string;
+    /** The description shown in social media previews. */
     ogDescription?: string;
+    /** The canonical URL of your documentation. */
     ogUrl?: string;
+    /** The image shown in social media previews. Recommended size is 1200x630 pixels. */
     ogImage?: string;
+    /** The width of your Open Graph image in pixels. */
     ogImageWidth?: number;
+    /** The height of your Open Graph image in pixels. */
     ogImageHeight?: number;
+    /** The locale of your content (e.g., "en_US"). */
     ogLocale?: string;
+    /** URL to your company logo. */
     ogLogo?: string;
+    /** The title shown in Twitter Card previews. */
     twitterTitle?: string;
+    /** The description shown in Twitter Card previews. */
     twitterDescription?: string;
+    /** Your company's Twitter handle. */
     twitterHandle?: string;
+    /** The image shown in Twitter Card previews. */
     twitterImage?: string;
+    /** The Twitter handle for your website. */
     twitterSite?: string;
     twitterUrl?: string;
+    /** The Twitter Card type. Options are `summary`, `summary_large_image`, `app`, or `player`. */
     twitterCard?: FernDocsConfig.TwitterCardSetting;
+    /**
+     * The host of your documentation website. This will be used to set the canonical URL for metadata tags and documents like the sitemap.
+     * Defaults to the URL defined in the `instances` configuration.
+     */
     canonicalHost?: string;
 }

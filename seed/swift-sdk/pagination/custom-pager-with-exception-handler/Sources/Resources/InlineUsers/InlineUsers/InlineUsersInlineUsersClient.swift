@@ -14,7 +14,7 @@ public final class InlineUsersInlineUsersClient: Sendable {
             queryParams: [
                 "page": page.map { .int($0) }, 
                 "per_page": perPage.map { .int($0) }, 
-                "order": order.map { .unknown($0.rawValue) }, 
+                "order": order.map { .string($0.rawValue) }, 
                 "starting_after": startingAfter.map { .string($0) }
             ],
             requestOptions: requestOptions,
@@ -51,7 +51,7 @@ public final class InlineUsersInlineUsersClient: Sendable {
             queryParams: [
                 "page": page.map { .int($0) }, 
                 "per_page": perPage.map { .int($0) }, 
-                "order": order.map { .unknown($0.rawValue) }, 
+                "order": order.map { .string($0.rawValue) }, 
                 "starting_after": startingAfter.map { .string($0) }
             ],
             requestOptions: requestOptions,
@@ -66,7 +66,7 @@ public final class InlineUsersInlineUsersClient: Sendable {
             queryParams: [
                 "page": page.map { .double($0) }, 
                 "per_page": perPage.map { .double($0) }, 
-                "order": order.map { .unknown($0.rawValue) }, 
+                "order": order.map { .string($0.rawValue) }, 
                 "starting_after": startingAfter.map { .string($0) }
             ],
             requestOptions: requestOptions,
@@ -91,7 +91,7 @@ public final class InlineUsersInlineUsersClient: Sendable {
             queryParams: [
                 "page": page.map { .int($0) }, 
                 "limit": limit.map { .int($0) }, 
-                "order": order.map { .unknown($0.rawValue) }
+                "order": order.map { .string($0.rawValue) }
             ],
             requestOptions: requestOptions,
             responseType: ListUsersPaginationResponse.self
@@ -105,7 +105,7 @@ public final class InlineUsersInlineUsersClient: Sendable {
             queryParams: [
                 "page": page.map { .int($0) }, 
                 "limit": limit.map { .int($0) }, 
-                "order": order.map { .unknown($0.rawValue) }
+                "order": order.map { .string($0.rawValue) }
             ],
             requestOptions: requestOptions,
             responseType: ListUsersPaginationResponse.self

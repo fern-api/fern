@@ -297,22 +297,22 @@
           "headers": [],
           "requestBody": {
             "name": {
-              "originalName": "ChatCompletionsCreateStreamRequest",
+              "originalName": "CreateChatCompletionsStreamRequest",
               "camelCase": {
-                "unsafeName": "chatCompletionsCreateStreamRequest",
-                "safeName": "chatCompletionsCreateStreamRequest"
+                "unsafeName": "createChatCompletionsStreamRequest",
+                "safeName": "createChatCompletionsStreamRequest"
               },
               "snakeCase": {
-                "unsafeName": "chat_completions_create_stream_request",
-                "safeName": "chat_completions_create_stream_request"
+                "unsafeName": "create_chat_completions_stream_request",
+                "safeName": "create_chat_completions_stream_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "CHAT_COMPLETIONS_CREATE_STREAM_REQUEST",
-                "safeName": "CHAT_COMPLETIONS_CREATE_STREAM_REQUEST"
+                "unsafeName": "CREATE_CHAT_COMPLETIONS_STREAM_REQUEST",
+                "safeName": "CREATE_CHAT_COMPLETIONS_STREAM_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "ChatCompletionsCreateStreamRequest",
-                "safeName": "ChatCompletionsCreateStreamRequest"
+                "unsafeName": "CreateChatCompletionsStreamRequest",
+                "safeName": "CreateChatCompletionsStreamRequest"
               }
             },
             "extends": [],
@@ -401,22 +401,22 @@
           "sdkRequest": {
             "shape": {
               "wrapperName": {
-                "originalName": "ChatCompletionsCreateStreamRequest",
+                "originalName": "CreateChatCompletionsStreamRequest",
                 "camelCase": {
-                  "unsafeName": "chatCompletionsCreateStreamRequest",
-                  "safeName": "chatCompletionsCreateStreamRequest"
+                  "unsafeName": "createChatCompletionsStreamRequest",
+                  "safeName": "createChatCompletionsStreamRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "chat_completions_create_stream_request",
-                  "safeName": "chat_completions_create_stream_request"
+                  "unsafeName": "create_chat_completions_stream_request",
+                  "safeName": "create_chat_completions_stream_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "CHAT_COMPLETIONS_CREATE_STREAM_REQUEST",
-                  "safeName": "CHAT_COMPLETIONS_CREATE_STREAM_REQUEST"
+                  "unsafeName": "CREATE_CHAT_COMPLETIONS_STREAM_REQUEST",
+                  "safeName": "CREATE_CHAT_COMPLETIONS_STREAM_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "ChatCompletionsCreateStreamRequest",
-                  "safeName": "ChatCompletionsCreateStreamRequest"
+                  "unsafeName": "CreateChatCompletionsStreamRequest",
+                  "safeName": "CreateChatCompletionsStreamRequest"
                 }
               },
               "bodyKey": {
@@ -540,22 +540,22 @@
           "headers": [],
           "requestBody": {
             "name": {
-              "originalName": "ChatCompletionsCreateRequest",
+              "originalName": "CreateChatCompletionsRequest",
               "camelCase": {
-                "unsafeName": "chatCompletionsCreateRequest",
-                "safeName": "chatCompletionsCreateRequest"
+                "unsafeName": "createChatCompletionsRequest",
+                "safeName": "createChatCompletionsRequest"
               },
               "snakeCase": {
-                "unsafeName": "chat_completions_create_request",
-                "safeName": "chat_completions_create_request"
+                "unsafeName": "create_chat_completions_request",
+                "safeName": "create_chat_completions_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "CHAT_COMPLETIONS_CREATE_REQUEST",
-                "safeName": "CHAT_COMPLETIONS_CREATE_REQUEST"
+                "unsafeName": "CREATE_CHAT_COMPLETIONS_REQUEST",
+                "safeName": "CREATE_CHAT_COMPLETIONS_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "ChatCompletionsCreateRequest",
-                "safeName": "ChatCompletionsCreateRequest"
+                "unsafeName": "CreateChatCompletionsRequest",
+                "safeName": "CreateChatCompletionsRequest"
               }
             },
             "extends": [],
@@ -644,22 +644,22 @@
           "sdkRequest": {
             "shape": {
               "wrapperName": {
-                "originalName": "ChatCompletionsCreateRequest",
+                "originalName": "CreateChatCompletionsRequest",
                 "camelCase": {
-                  "unsafeName": "chatCompletionsCreateRequest",
-                  "safeName": "chatCompletionsCreateRequest"
+                  "unsafeName": "createChatCompletionsRequest",
+                  "safeName": "createChatCompletionsRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "chat_completions_create_request",
-                  "safeName": "chat_completions_create_request"
+                  "unsafeName": "create_chat_completions_request",
+                  "safeName": "create_chat_completions_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "CHAT_COMPLETIONS_CREATE_REQUEST",
-                  "safeName": "CHAT_COMPLETIONS_CREATE_REQUEST"
+                  "unsafeName": "CREATE_CHAT_COMPLETIONS_REQUEST",
+                  "safeName": "CREATE_CHAT_COMPLETIONS_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "ChatCompletionsCreateRequest",
-                  "safeName": "ChatCompletionsCreateRequest"
+                  "unsafeName": "CreateChatCompletionsRequest",
+                  "safeName": "CreateChatCompletionsRequest"
                 }
               },
               "bodyKey": {
@@ -991,22 +991,22 @@
         "request": {
           "declaration": {
             "name": {
-              "originalName": "ChatCompletionsCreateStreamRequest",
+              "originalName": "CreateChatCompletionsStreamRequest",
               "camelCase": {
-                "unsafeName": "chatCompletionsCreateStreamRequest",
-                "safeName": "chatCompletionsCreateStreamRequest"
+                "unsafeName": "createChatCompletionsStreamRequest",
+                "safeName": "createChatCompletionsStreamRequest"
               },
               "snakeCase": {
-                "unsafeName": "chat_completions_create_stream_request",
-                "safeName": "chat_completions_create_stream_request"
+                "unsafeName": "create_chat_completions_stream_request",
+                "safeName": "create_chat_completions_stream_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "CHAT_COMPLETIONS_CREATE_STREAM_REQUEST",
-                "safeName": "CHAT_COMPLETIONS_CREATE_STREAM_REQUEST"
+                "unsafeName": "CREATE_CHAT_COMPLETIONS_STREAM_REQUEST",
+                "safeName": "CREATE_CHAT_COMPLETIONS_STREAM_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "ChatCompletionsCreateStreamRequest",
-                "safeName": "ChatCompletionsCreateStreamRequest"
+                "unsafeName": "CreateChatCompletionsStreamRequest",
+                "safeName": "CreateChatCompletionsStreamRequest"
               }
             },
             "fernFilepath": {
@@ -1203,22 +1203,22 @@
         "request": {
           "declaration": {
             "name": {
-              "originalName": "ChatCompletionsCreateRequest",
+              "originalName": "CreateChatCompletionsRequest",
               "camelCase": {
-                "unsafeName": "chatCompletionsCreateRequest",
-                "safeName": "chatCompletionsCreateRequest"
+                "unsafeName": "createChatCompletionsRequest",
+                "safeName": "createChatCompletionsRequest"
               },
               "snakeCase": {
-                "unsafeName": "chat_completions_create_request",
-                "safeName": "chat_completions_create_request"
+                "unsafeName": "create_chat_completions_request",
+                "safeName": "create_chat_completions_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "CHAT_COMPLETIONS_CREATE_REQUEST",
-                "safeName": "CHAT_COMPLETIONS_CREATE_REQUEST"
+                "unsafeName": "CREATE_CHAT_COMPLETIONS_REQUEST",
+                "safeName": "CREATE_CHAT_COMPLETIONS_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "ChatCompletionsCreateRequest",
-                "safeName": "ChatCompletionsCreateRequest"
+                "unsafeName": "CreateChatCompletionsRequest",
+                "safeName": "CreateChatCompletionsRequest"
               }
             },
             "fernFilepath": {
@@ -1346,6 +1346,7 @@
     },
     "pathParameters": []
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_chatCompletions": {
       "fernFilepath": {

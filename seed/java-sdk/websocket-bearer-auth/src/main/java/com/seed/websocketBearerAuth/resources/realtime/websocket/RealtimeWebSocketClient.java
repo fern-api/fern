@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.websocketBearerAuth.core.ClientOptions;
 import com.seed.websocketBearerAuth.core.ObjectMappers;
+import com.seed.websocketBearerAuth.core.ReconnectingWebSocketListener;
 import com.seed.websocketBearerAuth.resources.realtime.types.ReceiveEvent;
 import com.seed.websocketBearerAuth.resources.realtime.types.ReceiveEvent2;
 import com.seed.websocketBearerAuth.resources.realtime.types.ReceiveEvent3;
@@ -18,17 +19,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.function.Consumer;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.WebSocket;
-import okhttp3.WebSocketListener;
 
 /**
  * WebSocket client for the realtime channel.
@@ -41,13 +38,11 @@ public class RealtimeWebSocketClient {
 
     private final OkHttpClient okHttpClient;
 
-    private WebSocket webSocket;
-
     private ScheduledExecutorService timeoutExecutor;
 
     private volatile WebSocketReadyState readyState = WebSocketReadyState.CLOSED;
 
-    private final String id;
+    private final String sessionId;
 
     private final Optional<String> model;
 
@@ -61,6 +56,8 @@ public class RealtimeWebSocketClient {
 
     private CompletableFuture<Void> connectionFuture;
 
+    private ReconnectingWebSocketListener reconnectingListener;
+
     private Consumer<ReceiveEvent> receiveHandler;
 
     private Consumer<ReceiveSnakeCase> receiveSnakeCaseHandler;
@@ -71,22 +68,22 @@ public class RealtimeWebSocketClient {
 
     /**
      * Creates a new async WebSocket client for the realtime channel.
-     * @param id the id path parameter
+     * @param sessionId the sessionId path parameter
      * @param model Optional model query parameter
      * @param temperature Optional temperature query parameter
      */
     public RealtimeWebSocketClient(
-            ClientOptions clientOptions, String id, Optional<String> model, Optional<Integer> temperature) {
+            ClientOptions clientOptions, String sessionId, Optional<String> model, Optional<Integer> temperature) {
         this.clientOptions = clientOptions;
         this.objectMapper = ObjectMappers.JSON_MAPPER;
         this.okHttpClient = clientOptions.httpClient();
-        this.id = id;
+        this.sessionId = sessionId;
         this.model = model;
         this.temperature = temperature;
     }
 
     /**
-     * Establishes the WebSocket connection asynchronously.
+     * Establishes the WebSocket connection asynchronously with automatic reconnection.
      * @return a CompletableFuture that completes when the connection is established
      */
     public CompletableFuture<Void> connect() {
@@ -94,7 +91,7 @@ public class RealtimeWebSocketClient {
         String baseUrl = clientOptions.environment().getUrl();
         StringBuilder pathBuilder = new StringBuilder();
         pathBuilder.append("/realtime/");
-        pathBuilder.append(id);
+        pathBuilder.append(sessionId);
         pathBuilder.append("");
         String fullPath = pathBuilder.toString();
         if (baseUrl.endsWith("/") && fullPath.startsWith("/")) {
@@ -111,60 +108,50 @@ public class RealtimeWebSocketClient {
         }
         Request.Builder requestBuilder = new Request.Builder().url(urlBuilder.build());
         clientOptions.headers(null).forEach(requestBuilder::addHeader);
-        Request request = requestBuilder.build();
-        this.webSocket = okHttpClient.newWebSocket(request, new WebSocketListener() {
-            @Override
-            public void onOpen(WebSocket webSocket, Response response) {
-                readyState = WebSocketReadyState.OPEN;
-                if (onConnectedHandler != null) {
-                    onConnectedHandler.run();
-                }
-                connectionFuture.complete(null);
-            }
-
-            @Override
-            public void onMessage(WebSocket webSocket, String text) {
-                handleIncomingMessage(text);
-            }
-
-            @Override
-            public void onFailure(WebSocket webSocket, Throwable t, Response response) {
-                readyState = WebSocketReadyState.CLOSED;
-                if (onErrorHandler != null) {
-                    onErrorHandler.accept(new RuntimeException(t));
-                }
-                connectionFuture.completeExceptionally(t);
-            }
-
-            @Override
-            public void onClosing(WebSocket webSocket, int code, String reason) {
-                readyState = WebSocketReadyState.CLOSING;
-            }
-
-            @Override
-            public void onClosed(WebSocket webSocket, int code, String reason) {
-                readyState = WebSocketReadyState.CLOSED;
-                if (onDisconnectedHandler != null) {
-                    onDisconnectedHandler.accept(new DisconnectReason(code, reason));
-                }
-            }
-        });
+        final Request request = requestBuilder.build();
         this.readyState = WebSocketReadyState.CONNECTING;
-        this.timeoutExecutor = Executors.newSingleThreadScheduledExecutor();
-        timeoutExecutor.schedule(
-                () -> {
-                    ;
-                    if (!connectionFuture.isDone()) {
-                        connectionFuture.completeExceptionally(new TimeoutException("Connection timeout"));
-                        if (webSocket != null) {
-                            webSocket.close(1000, "Connection timeout");
-                            webSocket = null;
-                        }
-                        this.readyState = WebSocketReadyState.CLOSED;
+        ReconnectingWebSocketListener.ReconnectOptions reconnectOptions =
+                ReconnectingWebSocketListener.ReconnectOptions.builder().build();
+        this.reconnectingListener =
+                new ReconnectingWebSocketListener(reconnectOptions, () -> {
+                    if (clientOptions.webSocketFactory().isPresent()) {
+                        return clientOptions.webSocketFactory().get().create(request, this.reconnectingListener);
+                    } else {
+                        return okHttpClient.newWebSocket(request, this.reconnectingListener);
                     }
-                },
-                10,
-                TimeUnit.SECONDS);
+                }) {
+                    @Override
+                    protected void onWebSocketOpen(WebSocket webSocket, Response response) {
+                        readyState = WebSocketReadyState.OPEN;
+                        if (onConnectedHandler != null) {
+                            onConnectedHandler.run();
+                        }
+                        connectionFuture.complete(null);
+                    }
+
+                    @Override
+                    protected void onWebSocketMessage(WebSocket webSocket, String text) {
+                        handleIncomingMessage(text);
+                    }
+
+                    @Override
+                    protected void onWebSocketFailure(WebSocket webSocket, Throwable t, Response response) {
+                        readyState = WebSocketReadyState.CLOSED;
+                        if (onErrorHandler != null) {
+                            onErrorHandler.accept(new RuntimeException(t));
+                        }
+                        connectionFuture.completeExceptionally(t);
+                    }
+
+                    @Override
+                    protected void onWebSocketClosed(WebSocket webSocket, int code, String reason) {
+                        readyState = WebSocketReadyState.CLOSED;
+                        if (onDisconnectedHandler != null) {
+                            onDisconnectedHandler.accept(new DisconnectReason(code, reason));
+                        }
+                    }
+                };
+        reconnectingListener.connect();
         return connectionFuture;
     }
 
@@ -172,10 +159,7 @@ public class RealtimeWebSocketClient {
      * Disconnects the WebSocket connection and releases resources.
      */
     public void disconnect() {
-        if (webSocket != null) {
-            webSocket.close(1000, "Client disconnecting");
-            webSocket = null;
-        }
+        reconnectingListener.disconnect();
         if (timeoutExecutor != null) {
             timeoutExecutor.shutdownNow();
             timeoutExecutor = null;
@@ -193,7 +177,8 @@ public class RealtimeWebSocketClient {
      */
     @Deprecated
     public boolean hasWebSocketInstance() {
-        return webSocket != null;
+        // Check if WebSocket connection is open based on ready state
+        return readyState == WebSocketReadyState.OPEN || readyState == WebSocketReadyState.CONNECTING;
     }
 
     /**
@@ -295,8 +280,11 @@ public class RealtimeWebSocketClient {
      * @throws IllegalStateException if the socket is not connected or not open
      */
     private void assertSocketIsOpen() {
-        if (webSocket == null) {
+        if (reconnectingListener.getWebSocket() == null) {
             throw new IllegalStateException("WebSocket is not connected. Call connect() first.");
+        }
+        if (readyState != WebSocketReadyState.OPEN) {
+            throw new IllegalStateException("WebSocket is not open. Current state: " + readyState);
         }
     }
 
@@ -308,12 +296,13 @@ public class RealtimeWebSocketClient {
             envelope.put("type", type);
             envelope.put("body", body);
             String json = objectMapper.writeValueAsString(envelope);
-            boolean queued = webSocket.send(json);
-            if (queued) {
+            // Use reconnecting listener's send method which handles queuing
+            boolean sent = reconnectingListener.send(json);
+            if (sent) {
                 future.complete(null);
             } else {
-                future.completeExceptionally(
-                        new RuntimeException("Failed to queue message - WebSocket may be closing or closed"));
+                // Message was queued for later delivery when reconnected
+                future.complete(null);
             }
         } catch (IllegalStateException e) {
             future.completeExceptionally(e);

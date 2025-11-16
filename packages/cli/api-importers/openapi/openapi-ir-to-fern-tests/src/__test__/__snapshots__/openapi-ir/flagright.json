@@ -34,7 +34,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55,7 +55,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -268,28 +268,7 @@
         {
           "name": "example-1",
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "validateOriginUserId",
-              "value": {
-                "value": {
-                  "value": "validateOriginUserId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "validateDestinationUserId",
-              "value": {
-                "value": {
-                  "value": "validateDestinationUserId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "request": {
             "properties": {
@@ -8080,7 +8059,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for standardized address",
         "generatedName": "Address",
-        "nameOverride": "Address",
         "title": "Address",
         "groupName": [],
         "additionalProperties": false,
@@ -8151,7 +8129,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for User details",
         "generatedName": "UserBase",
-        "nameOverride": "UserBase",
         "title": "UserBase",
         "groupName": [],
         "additionalProperties": false,
@@ -8429,7 +8406,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for User details",
         "generatedName": "UserOptional",
-        "nameOverride": "UserOptional",
         "title": "UserOptional",
         "groupName": [],
         "additionalProperties": false,
@@ -8464,7 +8440,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for User details",
         "generatedName": "User",
-        "nameOverride": "User",
         "title": "User",
         "groupName": [],
         "additionalProperties": false,
@@ -8598,7 +8573,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for a generic individual - different from User model by not having userId field",
         "generatedName": "Person",
-        "nameOverride": "Person",
         "title": "Person",
         "groupName": [],
         "additionalProperties": false,
@@ -8754,7 +8728,6 @@
         "allOfPropertyConflicts": [],
         "description": "LegalDocument model generalizes User's identity document type (ex: Passport)",
         "generatedName": "LegalDocument",
-        "nameOverride": "LegalDocument",
         "title": "LegalDocument",
         "groupName": [],
         "additionalProperties": false,
@@ -8803,7 +8776,6 @@
         "allOfPropertyConflicts": [],
         "description": "Generic key-value pair model to append a custom variable being sent to Flagright API",
         "generatedName": "Tag",
-        "nameOverride": "Tag",
         "title": "Tag",
         "groupName": [],
         "additionalProperties": false,
@@ -9273,7 +9245,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for transaction additional payload",
         "generatedName": "TransactionUpdatable",
-        "nameOverride": "TransactionUpdatable",
         "title": "TransactionUpdatable",
         "groupName": [],
         "additionalProperties": false,
@@ -9386,7 +9357,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for transaction base Payload",
         "generatedName": "TransactionBase",
-        "nameOverride": "TransactionBase",
         "title": "TransactionBase",
         "groupName": [],
         "additionalProperties": false,
@@ -9453,7 +9423,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for transaction payload with rules result",
         "generatedName": "TransactionWithRulesResult",
-        "nameOverride": "TransactionWithRulesResult",
         "title": "TransactionWithRulesResult",
         "groupName": [],
         "additionalProperties": false,
@@ -9708,7 +9677,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for device data",
         "generatedName": "DeviceData",
-        "nameOverride": "DeviceData",
         "title": "DeviceData",
         "groupName": [],
         "additionalProperties": false,
@@ -9900,7 +9868,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "RulesResults",
-        "nameOverride": "RulesResults",
         "title": "RulesResults",
         "groupName": [],
         "additionalProperties": false,
@@ -10077,7 +10044,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for list of executed rules",
         "generatedName": "ExecutedRulesResult",
-        "nameOverride": "ExecutedRulesResult",
         "title": "ExecutedRulesResult",
         "groupName": [],
         "additionalProperties": false,
@@ -10240,7 +10206,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for list of hit rules",
         "generatedName": "HitRulesDetails",
-        "nameOverride": "HitRulesDetails",
         "title": "HitRulesDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -10322,7 +10287,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for list of rules failed execution. It means rules could not be run",
         "generatedName": "FailedRulesResult",
-        "nameOverride": "FailedRulesResult",
         "title": "FailedRulesResult",
         "groupName": [],
         "additionalProperties": false,
@@ -10370,7 +10334,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "RuleFailureException",
-        "nameOverride": "RuleFailureException",
         "title": "RuleFailureException",
         "groupName": [],
         "additionalProperties": false,
@@ -10438,7 +10401,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for results from Risk Scoring",
         "generatedName": "RiskScoringResult",
-        "nameOverride": "RiskScoringResult",
         "title": "RiskScoringResult",
         "groupName": [],
         "additionalProperties": false,
@@ -10515,7 +10477,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for a generic consumer name",
         "generatedName": "ConsumerName",
-        "nameOverride": "ConsumerName",
         "title": "ConsumerName",
         "groupName": [],
         "additionalProperties": false,
@@ -10585,7 +10546,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for transaction amount details",
         "generatedName": "TransactionAmountDetails",
-        "nameOverride": "TransactionAmountDetails",
         "title": "TransactionAmountDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -10634,7 +10594,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for amount",
         "generatedName": "Amount",
-        "nameOverride": "Amount",
         "title": "Amount",
         "groupName": [],
         "additionalProperties": false,
@@ -10757,7 +10716,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for business user legal entity details",
         "generatedName": "LegalEntity",
-        "nameOverride": "LegalEntity",
         "title": "LegalEntity",
         "groupName": [],
         "additionalProperties": false,
@@ -10905,7 +10863,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for business user contact information details",
         "generatedName": "ContactDetails",
-        "nameOverride": "ContactDetails",
         "title": "ContactDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -10991,7 +10948,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for business user company financial details",
         "generatedName": "CompanyFinancialDetails",
-        "nameOverride": "CompanyFinancialDetails",
         "title": "CompanyFinancialDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -11128,7 +11084,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for consumer user personal details",
         "generatedName": "UserDetails",
-        "nameOverride": "UserDetails",
         "title": "UserDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -11140,7 +11095,6 @@
       },
       "UserRegistrationStatus": {
         "generatedName": "UserRegistrationStatus",
-        "nameOverride": "UserRegistrationStatus",
         "title": "UserRegistrationStatus",
         "values": [
           {
@@ -11338,7 +11292,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for business user company general details",
         "generatedName": "CompanyGeneralDetails",
-        "nameOverride": "CompanyGeneralDetails",
         "title": "CompanyGeneralDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -11477,7 +11430,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for business user company registration details",
         "generatedName": "CompanyRegistrationDetails",
-        "nameOverride": "CompanyRegistrationDetails",
         "title": "CompanyRegistrationDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -11559,7 +11511,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for a business user base fields",
         "generatedName": "BusinessBase",
-        "nameOverride": "BusinessBase",
         "title": "BusinessBase",
         "groupName": [],
         "additionalProperties": false,
@@ -11963,7 +11914,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for a business user - optional fields",
         "generatedName": "BusinessOptional",
-        "nameOverride": "BusinessOptional",
         "title": "BusinessOptional",
         "groupName": [],
         "additionalProperties": false,
@@ -11996,7 +11946,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for business user risk score response",
         "generatedName": "BusinessUsersResponse",
-        "nameOverride": "BusinessUsersResponse",
         "title": "BusinessUsersResponse",
         "groupName": [],
         "additionalProperties": false,
@@ -12029,7 +11978,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for consumer user risk score response",
         "generatedName": "ConsumerUsersResponse",
-        "nameOverride": "ConsumerUsersResponse",
         "title": "ConsumerUsersResponse",
         "groupName": [],
         "additionalProperties": false,
@@ -12388,7 +12336,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for credit or debit card details",
         "generatedName": "CardDetails",
-        "nameOverride": "CardDetails",
         "title": "CardDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -12594,7 +12541,6 @@
         "allOfPropertyConflicts": [],
         "description": "Standardized model for Bank Details",
         "generatedName": "IbanDetails",
-        "nameOverride": "IBANDetails",
         "title": "IBANDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -12732,7 +12678,6 @@
         "allOfPropertyConflicts": [],
         "description": "Standardized model for a Generic wallet transaction",
         "generatedName": "WalletDetails",
-        "nameOverride": "WalletDetails",
         "title": "WalletDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -12878,7 +12823,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for ACH payment method",
         "generatedName": "AchDetails",
-        "nameOverride": "ACHDetails",
         "title": "ACHDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -13045,7 +12989,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for SWIFT payment method",
         "generatedName": "SwiftDetails",
-        "nameOverride": "SWIFTDetails",
         "title": "SWIFTDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -13136,7 +13079,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for Mpesa payment method",
         "generatedName": "MpesaDetails",
-        "nameOverride": "MpesaDetails",
         "title": "MpesaDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -13321,7 +13263,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for any generic bank account",
         "generatedName": "GenericBankAccountDetails",
-        "nameOverride": "GenericBankAccountDetails",
         "title": "GenericBankAccountDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -13419,7 +13360,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for UPI payment method",
         "generatedName": "UpiDetails",
-        "nameOverride": "UPIDetails",
         "title": "UPIDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -13776,7 +13716,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for transaction limits for a given user",
         "generatedName": "TransactionLimits",
-        "nameOverride": "TransactionLimits",
         "title": "TransactionLimits",
         "groupName": [],
         "additionalProperties": false,
@@ -13789,7 +13728,6 @@
       "RuleAction": {
         "description": "Model for rule action if a rule is hit. This is returned in the API response and can be configured on Console by operational accounts like a Compliance Analyst",
         "generatedName": "RuleAction",
-        "nameOverride": "RuleAction",
         "title": "RuleAction",
         "values": [
           {
@@ -13908,7 +13846,6 @@
       },
       "RuleHitDirection": {
         "generatedName": "RuleHitDirection",
-        "nameOverride": "RuleHitDirection",
         "title": "RuleHitDirection",
         "values": [
           {
@@ -13963,7 +13900,6 @@
       },
       "RuleLabels": {
         "generatedName": "RuleLabels",
-        "nameOverride": "RuleLabels",
         "title": "RuleLabels",
         "values": [
           {
@@ -14328,7 +14264,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for consumer user-related events",
         "generatedName": "ConsumerUserEvent",
-        "nameOverride": "ConsumerUserEvent",
         "title": "ConsumerUserEvent",
         "groupName": [],
         "additionalProperties": false,
@@ -14462,7 +14397,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for business user-related events",
         "generatedName": "BusinessUserEvent",
-        "nameOverride": "BusinessUserEvent",
         "title": "BusinessUserEvent",
         "groupName": [],
         "additionalProperties": false,
@@ -14646,7 +14580,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for case management events",
         "generatedName": "CaseManagementEvent",
-        "nameOverride": "CaseManagementEvent",
         "title": "CaseManagementEvent",
         "groupName": [],
         "additionalProperties": false,
@@ -14708,7 +14641,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for date",
         "generatedName": "Date",
-        "nameOverride": "Date",
         "title": "Date",
         "groupName": [],
         "additionalProperties": false,
@@ -14721,7 +14653,6 @@
       "TransactionState": {
         "description": "Model for transaction states. E.g. Processing, Refunded, Successful etc.",
         "generatedName": "TransactionState",
-        "nameOverride": "TransactionState",
         "title": "TransactionState",
         "values": [
           {
@@ -14775,7 +14706,6 @@
       "AcquisitionChannel": {
         "description": "Model for User acquisition channel",
         "generatedName": "AcquisitionChannel",
-        "nameOverride": "AcquisitionChannel",
         "title": "AcquisitionChannel",
         "values": [
           {
@@ -14823,7 +14753,6 @@
           "type": "string"
         },
         "generatedName": "UpiPaymentMethod",
-        "nameOverride": "UPIPaymentMethod",
         "title": "UPIPaymentMethod",
         "groupName": [],
         "type": "literal"
@@ -14835,7 +14764,6 @@
           "type": "string"
         },
         "generatedName": "IbanPaymentMethod",
-        "nameOverride": "IBANPaymentMethod",
         "title": "IBANPaymentMethod",
         "groupName": [],
         "type": "literal"
@@ -14847,7 +14775,6 @@
           "type": "string"
         },
         "generatedName": "CardPaymentMethod",
-        "nameOverride": "CardPaymentMethod",
         "title": "CardPaymentMethod",
         "groupName": [],
         "type": "literal"
@@ -14859,7 +14786,6 @@
           "type": "string"
         },
         "generatedName": "WalletPaymentMethod",
-        "nameOverride": "WalletPaymentMethod",
         "title": "WalletPaymentMethod",
         "groupName": [],
         "type": "literal"
@@ -14871,7 +14797,6 @@
           "type": "string"
         },
         "generatedName": "AchPaymentMethod",
-        "nameOverride": "ACHPaymentMethod",
         "title": "ACHPaymentMethod",
         "groupName": [],
         "type": "literal"
@@ -14883,7 +14808,6 @@
           "type": "string"
         },
         "generatedName": "SwiftPaymentMethod",
-        "nameOverride": "SWIFTPaymentMethod",
         "title": "SWIFTPaymentMethod",
         "groupName": [],
         "type": "literal"
@@ -14895,7 +14819,6 @@
           "type": "string"
         },
         "generatedName": "CheckPaymentMethod",
-        "nameOverride": "CheckPaymentMethod",
         "title": "CheckPaymentMethod",
         "groupName": [],
         "type": "literal"
@@ -14907,7 +14830,6 @@
           "type": "string"
         },
         "generatedName": "MpesaPaymentMethod",
-        "nameOverride": "MpesaPaymentMethod",
         "title": "MpesaPaymentMethod",
         "groupName": [],
         "type": "literal"
@@ -14919,14 +14841,12 @@
           "type": "string"
         },
         "generatedName": "GeneralBankAccountPaymentMethod",
-        "nameOverride": "GeneralBankAccountPaymentMethod",
         "title": "GeneralBankAccountPaymentMethod",
         "groupName": [],
         "type": "literal"
       },
       "UserState": {
         "generatedName": "UserState",
-        "nameOverride": "UserState",
         "title": "UserState",
         "values": [
           {
@@ -14989,7 +14909,6 @@
       },
       "KYCStatus": {
         "generatedName": "KycStatus",
-        "nameOverride": "KYCStatus",
         "title": "KYCStatus",
         "values": [
           {
@@ -15066,7 +14985,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "PepStatus",
-        "nameOverride": "PEPStatus",
         "title": "PEPStatus",
         "groupName": [],
         "additionalProperties": false,
@@ -15122,7 +15040,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "KycStatusDetails",
-        "nameOverride": "KYCStatusDetails",
         "title": "KYCStatusDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -15193,7 +15110,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "UserStateDetails",
-        "nameOverride": "UserStateDetails",
         "title": "UserStateDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -15357,7 +15273,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "CaseClosedDetails",
-        "nameOverride": "CaseClosedDetails",
         "title": "CaseClosedDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -15597,7 +15512,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "AlertClosedDetails",
-        "nameOverride": "AlertClosedDetails",
         "title": "AlertClosedDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -15609,7 +15523,6 @@
       },
       "RiskLevel": {
         "generatedName": "RiskLevel",
-        "nameOverride": "RiskLevel",
         "title": "RiskLevel",
         "values": [
           {
@@ -15689,7 +15602,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "CardExpiry",
-        "nameOverride": "CardExpiry",
         "title": "CardExpiry",
         "groupName": [],
         "additionalProperties": false,
@@ -15701,7 +15613,6 @@
       },
       "TransactionType": {
         "generatedName": "TransactionType",
-        "nameOverride": "TransactionType",
         "title": "TransactionType",
         "values": [
           {
@@ -15810,7 +15721,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "WebhookEvent",
-        "nameOverride": "WebhookEvent",
         "title": "WebhookEvent",
         "groupName": [],
         "additionalProperties": false,
@@ -15822,7 +15732,6 @@
       },
       "WebhookEventType": {
         "generatedName": "WebhookEventType",
-        "nameOverride": "WebhookEventType",
         "title": "WebhookEventType",
         "values": [
           {
@@ -15955,7 +15864,6 @@
         },
         "generatedName": "ListKeyMetadata",
         "title": "ListKeyMetadata",
-        "nameOverride": "ListKeyMetadata",
         "groupName": [],
         "type": "map"
       },
@@ -16014,7 +15922,6 @@
         "allOfPropertyConflicts": [],
         "description": "Payload of a list, new or existed",
         "generatedName": "ListData",
-        "nameOverride": "ListData",
         "title": "ListData",
         "groupName": [],
         "additionalProperties": false,
@@ -16065,7 +15972,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "ListItem",
-        "nameOverride": "ListItem",
         "title": "ListItem",
         "groupName": [],
         "additionalProperties": false,
@@ -16161,7 +16067,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "ListMetadata",
-        "nameOverride": "ListMetadata",
         "title": "ListMetadata",
         "groupName": [],
         "additionalProperties": true,
@@ -16230,7 +16135,6 @@
         "allOfPropertyConflicts": [],
         "description": "List with ID and header",
         "generatedName": "ListExisted",
-        "nameOverride": "ListExisted",
         "title": "ListExisted",
         "groupName": [],
         "additionalProperties": false,
@@ -16343,7 +16247,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "ListHeader",
-        "nameOverride": "ListHeader",
         "title": "ListHeader",
         "groupName": [],
         "additionalProperties": false,
@@ -16355,7 +16258,6 @@
       },
       "PaymentMethod": {
         "generatedName": "PaymentMethod",
-        "nameOverride": "PaymentMethod",
         "title": "PaymentMethod",
         "values": [
           {
@@ -16552,7 +16454,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "CardMerchantDetails",
-        "nameOverride": "CardMerchantDetails",
         "title": "CardMerchantDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -16718,7 +16619,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "CheckDetails",
-        "nameOverride": "CheckDetails",
         "title": "CheckDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -16730,7 +16630,6 @@
       },
       "CountryCode": {
         "generatedName": "CountryCode",
-        "nameOverride": "CountryCode",
         "title": "CountryCode",
         "values": [
           {
@@ -17993,7 +17892,6 @@
       },
       "CurrencyCode": {
         "generatedName": "CurrencyCode",
-        "nameOverride": "CurrencyCode",
         "title": "CurrencyCode",
         "values": [
           {
@@ -19396,7 +19294,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "MccDetails",
-        "nameOverride": "MCCDetails",
         "title": "MCCDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -19488,7 +19385,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "TransactionCountLimit",
-        "nameOverride": "TransactionCountLimit",
         "title": "TransactionCountLimit",
         "groupName": [],
         "additionalProperties": false,
@@ -19588,7 +19484,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "TransactionAmountLimit",
-        "nameOverride": "TransactionAmountLimit",
         "title": "TransactionAmountLimit",
         "groupName": [],
         "additionalProperties": false,
@@ -19667,7 +19562,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "TransactionLimit",
-        "nameOverride": "TransactionLimit",
         "title": "TransactionLimit",
         "groupName": [],
         "additionalProperties": false,
@@ -19711,7 +19605,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "FalsePositiveDetails",
-        "nameOverride": "FalsePositiveDetails",
         "title": "FalsePositiveDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -19776,7 +19669,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "SanctionsDetails",
-        "nameOverride": "SanctionsDetails",
         "title": "SanctionsDetails",
         "groupName": [],
         "additionalProperties": false,
@@ -19788,7 +19680,6 @@
       },
       "SanctionsDetailsEntityType": {
         "generatedName": "SanctionsDetailsEntityType",
-        "nameOverride": "SanctionsDetailsEntityType",
         "title": "SanctionsDetailsEntityType",
         "values": [
           {
@@ -19888,7 +19779,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "BusinessEntityLink",
-        "nameOverride": "BusinessEntityLink",
         "title": "BusinessEntityLink",
         "groupName": [],
         "additionalProperties": false,
@@ -19965,7 +19855,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for consumer user payload with rules result",
         "generatedName": "UserWithRulesResult",
-        "nameOverride": "UserWithRulesResult",
         "title": "UserWithRulesResult",
         "groupName": [],
         "additionalProperties": false,
@@ -20042,7 +19931,6 @@
         "allOfPropertyConflicts": [],
         "description": "Model for business payload with rules result",
         "generatedName": "BusinessWithRulesResult",
-        "nameOverride": "BusinessWithRulesResult",
         "title": "BusinessWithRulesResult",
         "groupName": [],
         "additionalProperties": false,
@@ -20061,16 +19949,24 @@
             "key": "publishedAt",
             "schema": {
               "generatedName": "ThingPublishedAt",
+              "description": "PublishedAt is the time at which the Thing was published.\n",
               "value": {
-                "schema": {
-                  "type": "string"
-                },
                 "generatedName": "ThingPublishedAt",
+                "description": "PublishedAt is the time at which the Thing was published.\n",
+                "value": {
+                  "description": "PublishedAt is the time at which the Thing was published.\n",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ThingPublishedAt",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "type": "nullable"
               },
               "groupName": [],
-              "type": "nullable"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true

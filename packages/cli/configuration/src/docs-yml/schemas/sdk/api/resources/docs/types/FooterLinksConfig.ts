@@ -3,16 +3,28 @@
  */
 
 export interface FooterLinksConfig {
+    /** URL to your GitHub repository or organization. */
     github?: string;
+    /** URL to your Twitter profile. Use `footer-links.x` for the new X branding. */
     twitter?: string;
+    /** URL to your X (formerly Twitter) profile. */
     x?: string;
+    /** URL to your LinkedIn company page or profile. */
     linkedin?: string;
+    /** URL to your YouTube channel. */
     youtube?: string;
+    /** URL to your Instagram profile. */
     instagram?: string;
+    /** URL to your Facebook page. */
     facebook?: string;
+    /** URL to your Discord server invite. */
     discord?: string;
+    /** URL to your Slack community or workspace. */
     slack?: string;
+    /** URL to your Hacker News profile. */
     hackernews?: string;
+    /** URL to your Medium publication or profile. */
     medium?: string;
+    /** URL to your main website or homepage. */
     website?: string;
 }

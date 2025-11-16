@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import typing
 
+import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import UniversalBaseModel, update_forward_refs
 
 
@@ -17,8 +19,10 @@ class ContainerValue_Optional(UniversalBaseModel):
     type: typing.Literal["optional"] = "optional"
 
 
-ContainerValue = typing.Union[ContainerValue_List, ContainerValue_Optional]
-from .field_value import FieldValue  # noqa: E402, I001
+ContainerValue = typing_extensions.Annotated[
+    typing.Union[ContainerValue_List, ContainerValue_Optional], pydantic.Field(discriminator="type")
+]
+from .field_value import FieldValue  # noqa: E402, F401, I001
 
 update_forward_refs(ContainerValue_List)
 update_forward_refs(ContainerValue_Optional)

@@ -72,4 +72,6 @@ Exception_Generic(
     exception_stacktrace="<logs>",
 )
 """
-Exception = typing.Union[Exception_Generic, Exception_Timeout]
+Exception = typing_extensions.Annotated[
+    typing.Union[Exception_Generic, Exception_Timeout], pydantic.Field(discriminator="type")
+]

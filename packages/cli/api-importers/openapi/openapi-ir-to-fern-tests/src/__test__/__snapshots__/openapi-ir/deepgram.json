@@ -74,7 +74,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -113,7 +113,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -133,7 +133,7 @@
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "ListenRequestCustomTopic",
+                    "generatedName": "ListenRequestCustomTopicZero",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -142,11 +142,11 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "ListenRequestCustomTopicItem",
+                      "generatedName": "ListenRequestCustomTopicOneItem",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "generatedName": "ListenRequestCustomTopic",
+                    "generatedName": "ListenRequestCustomTopicOne",
                     "groupName": [],
                     "type": "array"
                   }
@@ -161,7 +161,7 @@
               "type": "oneOf"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -200,7 +200,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -221,7 +221,7 @@
                       "example": "unsubscribe",
                       "type": "string"
                     },
-                    "generatedName": "ListenRequestCustomIntent",
+                    "generatedName": "ListenRequestCustomIntentZero",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -231,11 +231,11 @@
                         "example": "unsubscribe, account deletion",
                         "type": "string"
                       },
-                      "generatedName": "ListenRequestCustomIntentItem",
+                      "generatedName": "ListenRequestCustomIntentOneItem",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "generatedName": "ListenRequestCustomIntent",
+                    "generatedName": "ListenRequestCustomIntentOne",
                     "groupName": [],
                     "type": "array"
                   }
@@ -250,7 +250,7 @@
               "type": "oneOf"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -289,7 +289,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -311,7 +311,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -333,7 +333,7 @@
                       "example": true,
                       "type": "boolean"
                     },
-                    "generatedName": "ListenRequestDetectLanguage",
+                    "generatedName": "ListenRequestDetectLanguageZero",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -343,11 +343,11 @@
                         "example": "en, fr",
                         "type": "string"
                       },
-                      "generatedName": "ListenRequestDetectLanguageItem",
+                      "generatedName": "ListenRequestDetectLanguageOneItem",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "generatedName": "ListenRequestDetectLanguage",
+                    "generatedName": "ListenRequestDetectLanguageOne",
                     "groupName": [],
                     "type": "array"
                   }
@@ -362,7 +362,7 @@
               "type": "oneOf"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -385,7 +385,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -407,7 +407,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -430,7 +430,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -494,7 +494,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -514,7 +514,7 @@
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "ListenRequestExtra",
+                    "generatedName": "ListenRequestExtraZero",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -523,11 +523,11 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "ListenRequestExtraItem",
+                      "generatedName": "ListenRequestExtraOneItem",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "generatedName": "ListenRequestExtra",
+                    "generatedName": "ListenRequestExtraOne",
                     "groupName": [],
                     "type": "array"
                   }
@@ -542,7 +542,7 @@
               "type": "oneOf"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -564,7 +564,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -586,7 +586,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -612,7 +612,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -632,7 +632,7 @@
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "ListenRequestKeywords",
+                    "generatedName": "ListenRequestKeywordsZero",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -641,11 +641,11 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "ListenRequestKeywordsItem",
+                      "generatedName": "ListenRequestKeywordsOneItem",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "generatedName": "ListenRequestKeywords",
+                    "generatedName": "ListenRequestKeywordsOne",
                     "groupName": [],
                     "type": "array"
                   }
@@ -660,7 +660,7 @@
               "type": "oneOf"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -969,7 +969,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -991,7 +991,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1237,7 +1237,7 @@
                       "example": "custom-model-123",
                       "type": "string"
                     },
-                    "generatedName": "ListenRequestModel",
+                    "generatedName": "ListenRequestModelOne",
                     "groupName": [],
                     "type": "primitive"
                   }
@@ -1252,7 +1252,7 @@
               "type": "oneOf"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1274,7 +1274,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1296,7 +1296,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1318,7 +1318,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1340,7 +1340,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1362,7 +1362,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1382,13 +1382,13 @@
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "ListenRequestRedact",
+                    "generatedName": "ListenRequestRedactZero",
                     "groupName": [],
                     "type": "primitive"
                   },
                   {
                     "value": {
-                      "generatedName": "ListenRequestRedactItem",
+                      "generatedName": "ListenRequestRedactOneItem",
                       "values": [
                         {
                           "generatedName": "pci",
@@ -1413,7 +1413,7 @@
                       },
                       "type": "enum"
                     },
-                    "generatedName": "ListenRequestRedact",
+                    "generatedName": "ListenRequestRedactOne",
                     "groupName": [],
                     "type": "array"
                   }
@@ -1428,7 +1428,7 @@
               "type": "oneOf"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1448,7 +1448,7 @@
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "ListenRequestReplace",
+                    "generatedName": "ListenRequestReplaceZero",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -1457,11 +1457,11 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "ListenRequestReplaceItem",
+                      "generatedName": "ListenRequestReplaceOneItem",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "generatedName": "ListenRequestReplace",
+                    "generatedName": "ListenRequestReplaceOne",
                     "groupName": [],
                     "type": "array"
                   }
@@ -1476,7 +1476,7 @@
               "type": "oneOf"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1496,7 +1496,7 @@
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "ListenRequestSearch",
+                    "generatedName": "ListenRequestSearchZero",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -1505,11 +1505,11 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "ListenRequestSearchItem",
+                      "generatedName": "ListenRequestSearchOneItem",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "generatedName": "ListenRequestSearch",
+                    "generatedName": "ListenRequestSearchOne",
                     "groupName": [],
                     "type": "array"
                   }
@@ -1524,7 +1524,7 @@
               "type": "oneOf"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1546,7 +1546,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1568,7 +1568,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1604,8 +1604,7 @@
                     "schema": {
                       "type": "boolean"
                     },
-                    "generatedName": "ListenRequestSummarize",
-                    "nameOverride": "Legacy",
+                    "generatedName": "ListenRequestSummarizeOne",
                     "title": "Legacy",
                     "groupName": [],
                     "type": "primitive"
@@ -1621,7 +1620,7 @@
               "type": "oneOf"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1641,7 +1640,7 @@
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "ListenRequestTag",
+                    "generatedName": "ListenRequestTagZero",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -1650,11 +1649,11 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "ListenRequestTagItem",
+                      "generatedName": "ListenRequestTagOneItem",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "generatedName": "ListenRequestTag",
+                    "generatedName": "ListenRequestTagOne",
                     "groupName": [],
                     "type": "array"
                   }
@@ -1669,7 +1668,7 @@
               "type": "oneOf"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1691,7 +1690,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1713,7 +1712,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1735,7 +1734,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1765,7 +1764,7 @@
                       "example": "model-123",
                       "type": "string"
                     },
-                    "generatedName": "ListenRequestVersion",
+                    "generatedName": "ListenRequestVersionOne",
                     "groupName": [],
                     "type": "primitive"
                   }
@@ -1780,7 +1779,7 @@
               "type": "oneOf"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1975,7 +1974,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2014,7 +2013,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2034,7 +2033,7 @@
                     "schema": {
                       "type": "string"
                     },
-                    "generatedName": "TextReadRequestCustomTopic",
+                    "generatedName": "TextReadRequestCustomTopicZero",
                     "groupName": [],
                     "type": "primitive"
                   },
@@ -2043,11 +2042,11 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "TextReadRequestCustomTopicItem",
+                      "generatedName": "TextReadRequestCustomTopicOneItem",
                       "groupName": [],
                       "type": "primitive"
                     },
-                    "generatedName": "TextReadRequestCustomTopic",
+                    "generatedName": "TextReadRequestCustomTopicOne",
                     "groupName": [],
                     "type": "array"
                   }
@@ -2062,7 +2061,7 @@
               "type": "oneOf"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2101,7 +2100,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2123,7 +2122,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2145,7 +2144,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2167,7 +2166,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2189,7 +2188,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2211,7 +2210,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2399,80 +2398,6 @@
                 },
                 "type": "primitive"
               }
-            },
-            {
-              "name": "callback_method",
-              "value": {
-                "value": "POST",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "custom_topic",
-              "value": {
-                "value": {
-                  "value": "custom_topic",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "custom_topic_mode",
-              "value": {
-                "value": "extended",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "intents",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "read_language",
-              "value": {
-                "value": {
-                  "value": "en",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            },
-            {
-              "name": "sentiment",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "read_summarize",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "topics",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
             }
           ],
           "headers": [],
@@ -2631,14 +2556,13 @@
                 "maximum": 192000,
                 "type": "int"
               },
-              "generatedName": "SpeakRequestBitRate",
-              "nameOverride": "aac",
+              "generatedName": "SpeakRequestBitRateTwo",
               "title": "aac",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2660,7 +2584,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2699,7 +2623,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2763,7 +2687,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2852,7 +2776,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2869,14 +2793,13 @@
               "schema": {
                 "type": "int"
               },
-              "generatedName": "SpeakRequestSpeakSampleRate",
-              "nameOverride": "opus",
+              "generatedName": "SpeakRequestSpeakSampleRateFour",
               "title": "opus",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3768,7 +3691,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3789,7 +3712,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3810,7 +3733,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3831,7 +3754,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4412,16 +4335,6 @@
           ],
           "queryParameters": [
             {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "start",
               "value": {
                 "value": {
@@ -4437,16 +4350,6 @@
                 "value": {
                   "value": "2024-07-31T00:00:00",
                   "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "page",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
                 },
                 "type": "primitive"
               }
@@ -5118,7 +5021,7 @@
       "generatedRequestName": "UpdateProjectRequest",
       "request": {
         "schema": {
-          "generatedName": "UpdateProjectRequest",
+          "generatedName": "UpdateProjectRequestBody",
           "schema": "update_projects",
           "source": {
             "file": "../openapi.yml",
@@ -8532,7 +8435,7 @@
       "generatedRequestName": "CreateProjectKeyRequest",
       "request": {
         "schema": {
-          "generatedName": "CreateProjectKeyRequest",
+          "generatedName": "CreateProjectKeyRequestBody",
           "schema": "keys",
           "source": {
             "file": "../openapi.yml",
@@ -11582,7 +11485,7 @@
       "generatedRequestName": "UpdateProjectMemberScopesRequest",
       "request": {
         "schema": {
-          "generatedName": "UpdateProjectMemberScopesRequest",
+          "generatedName": "UpdateProjectMemberScopesRequestBody",
           "schema": "update_member_scope",
           "source": {
             "file": "../openapi.yml",
@@ -12276,7 +12179,7 @@
       "generatedRequestName": "CreateProjectInviteRequest",
       "request": {
         "schema": {
-          "generatedName": "CreateProjectInviteRequest",
+          "generatedName": "CreateProjectInviteRequestBody",
           "schema": "create_project_invite",
           "source": {
             "file": "../openapi.yml",
@@ -13893,7 +13796,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13914,7 +13817,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13938,7 +13841,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -13959,7 +13862,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -14583,26 +14486,6 @@
                 },
                 "type": "primitive"
               }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "page",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
             }
           ],
           "headers": [],
@@ -14992,7 +14875,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15013,7 +14896,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15232,7 +15115,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15255,9 +15138,7 @@
                 "generatedName": "GetProjectUsageResponseStart",
                 "value": {
                   "schema": {
-                    "format": "date",
-                    "example": "2024-10-16",
-                    "type": "string"
+                    "type": "date"
                   },
                   "generatedName": "GetProjectUsageResponseStart",
                   "groupName": [],
@@ -15276,9 +15157,7 @@
                 "generatedName": "GetProjectUsageResponseEnd",
                 "value": {
                   "schema": {
-                    "format": "date",
-                    "example": "2024-10-23",
-                    "type": "string"
+                    "type": "date"
                   },
                   "generatedName": "GetProjectUsageResponseEnd",
                   "groupName": [],
@@ -15807,13 +15686,6 @@
                 },
                 "type": "primitive"
               }
-            },
-            {
-              "name": "project_filters",
-              "value": {
-                "value": "alternatives.yml",
-                "type": "enum"
-              }
             }
           ],
           "headers": [],
@@ -15823,14 +15695,14 @@
                 "start": {
                   "value": {
                     "value": "2024-10-16",
-                    "type": "string"
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
                 "end": {
                   "value": {
                     "value": "2024-10-23",
-                    "type": "string"
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
@@ -15908,7 +15780,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15929,7 +15801,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16758,7 +16630,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16779,7 +16651,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16998,7 +16870,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17172,7 +17044,7 @@
               "type": "object"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17194,9 +17066,7 @@
               "schema": {
                 "description": "Start date of the usage period",
                 "schema": {
-                  "format": "date",
-                  "example": "2025-01-16",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "GetProjectUsageBreakdownResponseStart",
                 "groupName": [],
@@ -17211,9 +17081,7 @@
               "schema": {
                 "description": "End date of the usage period",
                 "schema": {
-                  "format": "date",
-                  "example": "2025-01-23",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "GetProjectUsageBreakdownResponseEnd",
                 "groupName": [],
@@ -17407,9 +17275,7 @@
                               "value": {
                                 "description": "Start date for this group",
                                 "schema": {
-                                  "format": "date",
-                                  "example": "2025-01-16",
-                                  "type": "string"
+                                  "type": "date"
                                 },
                                 "generatedName": "GetProjectUsageBreakdownResponseResultsItemGroupingStart",
                                 "groupName": [],
@@ -17430,9 +17296,7 @@
                               "value": {
                                 "description": "End date for this group",
                                 "schema": {
-                                  "format": "date",
-                                  "example": "2025-01-16",
-                                  "type": "string"
+                                  "type": "date"
                                 },
                                 "generatedName": "GetProjectUsageBreakdownResponseResultsItemGroupingEnd",
                                 "groupName": [],
@@ -18071,13 +17935,6 @@
                 },
                 "type": "primitive"
               }
-            },
-            {
-              "name": "project_filters",
-              "value": {
-                "value": "alternatives.yml",
-                "type": "enum"
-              }
             }
           ],
           "headers": [],
@@ -18087,14 +17944,14 @@
                 "start": {
                   "value": {
                     "value": "2025-01-16",
-                    "type": "string"
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
                 "end": {
                   "value": {
                     "value": "2025-01-23",
-                    "type": "string"
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
@@ -18175,14 +18032,14 @@
                             "start": {
                               "value": {
                                 "value": "2025-01-16",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
                             "end": {
                               "value": {
                                 "value": "2025-01-16",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
@@ -18299,7 +18156,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18323,7 +18180,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18681,16 +18538,6 @@
                 "value": {
                   "value": "2024-07-01T00:00:00",
                   "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
                 },
                 "type": "primitive"
               }
@@ -21237,7 +21084,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -22769,7 +22616,6 @@
                 "type": "string"
               },
               "generatedName": "Authorization",
-              "nameOverride": "SpeakApiKey",
               "title": "SpeakApiKey",
               "groupName": [],
               "type": "primitive"
@@ -22787,7 +22633,6 @@
             "schema": {
               "description": "Encoding allows you to specify the expected encoding of your audio output",
               "generatedName": "Encoding",
-              "nameOverride": "SpeakEncoding",
               "title": "SpeakEncoding",
               "values": [
                 {
@@ -22849,7 +22694,6 @@
             "schema": {
               "description": "AI model used to process submitted text",
               "generatedName": "Model",
-              "nameOverride": "SpeakModel",
               "title": "SpeakModel",
               "values": [
                 {
@@ -22936,7 +22780,6 @@
             "schema": {
               "description": "Sample Rate specifies the sample rate for the output audio. Based on encoding 8000 or 24000 are possible defaults. For some encodings sample rate is not configurable.",
               "generatedName": "SampleRate",
-              "nameOverride": "SpeakSampleRate",
               "title": "SpeakSampleRate",
               "values": [
                 {
@@ -23345,7 +23188,6 @@
                 "type": "string"
               },
               "generatedName": "Authorization",
-              "nameOverride": "ListenApiKey",
               "title": "ListenApiKey",
               "groupName": [],
               "type": "primitive"
@@ -23367,7 +23209,6 @@
                 "type": "string"
               },
               "generatedName": "Callback",
-              "nameOverride": "ListenCallback",
               "title": "ListenCallback",
               "groupName": [],
               "type": "primitive"
@@ -23383,7 +23224,6 @@
             "schema": {
               "description": "HTTP method by which the callback request will be made",
               "generatedName": "CallbackMethod",
-              "nameOverride": "ListenCallbackMethod",
               "title": "ListenCallbackMethod",
               "values": [
                 {
@@ -23435,7 +23275,6 @@
                 "type": "string"
               },
               "generatedName": "Channels",
-              "nameOverride": "ListenChannels",
               "title": "ListenChannels",
               "groupName": [],
               "type": "primitive"
@@ -23451,7 +23290,6 @@
             "schema": {
               "description": "Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0",
               "generatedName": "Diarize",
-              "nameOverride": "ListenDiarize",
               "title": "ListenDiarize",
               "values": [
                 {
@@ -23493,7 +23331,6 @@
                 "type": "string"
               },
               "generatedName": "DiarizeVersion",
-              "nameOverride": "ListenDiarizeVersion",
               "title": "ListenDiarizeVersion",
               "groupName": [],
               "type": "primitive"
@@ -23509,7 +23346,6 @@
             "schema": {
               "description": "Identify and extract key entities from content in submitted audio",
               "generatedName": "Dictation",
-              "nameOverride": "ListenDictation",
               "title": "ListenDictation",
               "values": [
                 {
@@ -23546,7 +23382,6 @@
             "schema": {
               "description": "Specify the expected encoding of your submitted audio",
               "generatedName": "Encoding",
-              "nameOverride": "ListenEncoding",
               "title": "ListenEncoding",
               "values": [
                 {
@@ -23613,7 +23448,6 @@
                 "type": "string"
               },
               "generatedName": "Endpointing",
-              "nameOverride": "ListenEndpointing",
               "title": "ListenEndpointing",
               "groupName": [],
               "type": "primitive"
@@ -23633,7 +23467,6 @@
                 "type": "string"
               },
               "generatedName": "Extra",
-              "nameOverride": "ListenExtra",
               "title": "ListenExtra",
               "groupName": [],
               "type": "primitive"
@@ -23649,7 +23482,6 @@
             "schema": {
               "description": "Filler Words can help transcribe interruptions in your audio, like \"uh\" and \"um\"",
               "generatedName": "FillerWords",
-              "nameOverride": "ListenFillerWords",
               "title": "ListenFillerWords",
               "values": [
                 {
@@ -23686,7 +23518,6 @@
             "schema": {
               "description": "Specifies whether the streaming endpoint should provide ongoing transcription updates as more audio is received. When set to true, the endpoint sends continuous updates, meaning transcription results may evolve over time",
               "generatedName": "InterimResults",
-              "nameOverride": "ListenInterimResults",
               "title": "ListenInterimResults",
               "values": [
                 {
@@ -23727,7 +23558,6 @@
                 "type": "string"
               },
               "generatedName": "Keyterm",
-              "nameOverride": "ListenKeyterm",
               "title": "ListenKeyterm",
               "groupName": [],
               "type": "primitive"
@@ -23747,7 +23577,6 @@
                 "type": "string"
               },
               "generatedName": "Keywords",
-              "nameOverride": "ListenKeywords",
               "title": "ListenKeywords",
               "groupName": [],
               "type": "primitive"
@@ -23763,7 +23592,6 @@
             "schema": {
               "description": "The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model you choose only certain languages are available",
               "generatedName": "Language",
-              "nameOverride": "ListenLanguage",
               "title": "ListenLanguage",
               "values": [
                 {
@@ -24070,7 +23898,6 @@
             "schema": {
               "description": "AI model to use for the transcription",
               "generatedName": "Model",
-              "nameOverride": "ListenModel",
               "title": "ListenModel",
               "values": [
                 {
@@ -24242,7 +24069,6 @@
             "schema": {
               "description": "Transcribe each audio channel independently",
               "generatedName": "Multichannel",
-              "nameOverride": "ListenMultichannel",
               "title": "ListenMultichannel",
               "values": [
                 {
@@ -24279,7 +24105,6 @@
             "schema": {
               "description": "Convert numbers from written format to numerical format",
               "generatedName": "Numerals",
-              "nameOverride": "ListenNumerals",
               "title": "ListenNumerals",
               "values": [
                 {
@@ -24316,7 +24141,6 @@
             "schema": {
               "description": "Profanity Filter looks for recognized profanity and converts it to the nearest recognized non-profane word or removes it from the transcript completely",
               "generatedName": "ProfanityFilter",
-              "nameOverride": "ListenProfanityFilter",
               "title": "ListenProfanityFilter",
               "values": [
                 {
@@ -24353,7 +24177,6 @@
             "schema": {
               "description": "Add punctuation and capitalization to the transcript",
               "generatedName": "Punctuate",
-              "nameOverride": "ListenPunctuate",
               "title": "ListenPunctuate",
               "values": [
                 {
@@ -24390,7 +24213,6 @@
             "schema": {
               "description": "Redaction removes sensitive information from your transcripts",
               "generatedName": "Redact",
-              "nameOverride": "ListenRedact",
               "title": "ListenRedact",
               "values": [
                 {
@@ -24451,7 +24273,6 @@
                 "type": "string"
               },
               "generatedName": "Replace",
-              "nameOverride": "ListenReplace",
               "title": "ListenReplace",
               "groupName": [],
               "type": "primitive"
@@ -24471,7 +24292,6 @@
                 "type": "string"
               },
               "generatedName": "SampleRate",
-              "nameOverride": "ListenSampleRate",
               "title": "ListenSampleRate",
               "groupName": [],
               "type": "primitive"
@@ -24491,7 +24311,6 @@
                 "type": "string"
               },
               "generatedName": "Search",
-              "nameOverride": "ListenSearch",
               "title": "ListenSearch",
               "groupName": [],
               "type": "primitive"
@@ -24507,7 +24326,6 @@
             "schema": {
               "description": "Apply formatting to transcript output. When set to true, additional formatting will be applied to transcripts to improve readability",
               "generatedName": "SmartFormat",
-              "nameOverride": "ListenSmartFormat",
               "title": "ListenSmartFormat",
               "values": [
                 {
@@ -24548,7 +24366,6 @@
                 "type": "string"
               },
               "generatedName": "Tag",
-              "nameOverride": "ListenTag",
               "title": "ListenTag",
               "groupName": [],
               "type": "primitive"
@@ -24568,7 +24385,6 @@
                 "type": "string"
               },
               "generatedName": "UtteranceEnd",
-              "nameOverride": "ListenUtteranceEnd",
               "title": "ListenUtteranceEnd",
               "groupName": [],
               "type": "primitive"
@@ -24584,7 +24400,6 @@
             "schema": {
               "description": "Indicates that speech has started. You'll begin receiving Speech Started messages upon speech starting",
               "generatedName": "VadEvents",
-              "nameOverride": "ListenVadEvents",
               "title": "ListenVadEvents",
               "values": [
                 {
@@ -24626,7 +24441,6 @@
                 "type": "string"
               },
               "generatedName": "Version",
-              "nameOverride": "ListenVersion",
               "title": "ListenVersion",
               "groupName": [],
               "type": "primitive"
@@ -25766,7 +25580,6 @@
                 "type": "string"
               },
               "generatedName": "Authorization",
-              "nameOverride": "AgentApiKey",
               "title": "AgentApiKey",
               "groupName": [],
               "type": "primitive"

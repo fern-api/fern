@@ -110,6 +110,7 @@ async function visitNavigationItem({
         page: noop,
         featureFlag: noop,
         openrpc: noop,
+        postman: noop,
         contents: async (items: docsYml.RawSchemas.NavigationItem[] | undefined): Promise<void> => {
             if (items == null) {
                 return;

@@ -76,6 +76,58 @@ export class TestClassBuilder {
         };
     }
 
+    public closeTestClass(writer: Writer): void {
+        // Generate compact helper method for numeric equivalence comparison
+        this.generateJsonEqualsHelper(writer);
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
+    /**
+     * Generates a compact helper for JSON comparison with numeric equivalence.
+     * Treats integers and doubles as numerically equal, which handles the common
+     * case where OpenAPI specs have integer examples but Java types are Double.
+     */
+    private generateJsonEqualsHelper(writer: Writer): void {
+        writer.writeLine("");
+        writer.writeLine("/**");
+        writer.writeLine(" * Compares two JsonNodes with numeric equivalence.");
+        writer.writeLine(" */");
+        writer.writeLine("private boolean jsonEquals(JsonNode a, JsonNode b) {");
+        writer.indent();
+        writer.writeLine("if (a.equals(b)) return true;");
+        writer.writeLine(
+            "if (a.isNumber() && b.isNumber()) return Math.abs(a.doubleValue() - b.doubleValue()) < 1e-10;"
+        );
+        writer.writeLine("if (a.isObject() && b.isObject()) {");
+        writer.indent();
+        writer.writeLine("if (a.size() != b.size()) return false;");
+        writer.writeLine("java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = a.fields();");
+        writer.writeLine("while (iter.hasNext()) {");
+        writer.indent();
+        writer.writeLine("java.util.Map.Entry<String, JsonNode> entry = iter.next();");
+        writer.writeLine("if (!jsonEquals(entry.getValue(), b.get(entry.getKey()))) return false;");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeLine("return true;");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeLine("if (a.isArray() && b.isArray()) {");
+        writer.indent();
+        writer.writeLine("if (a.size() != b.size()) return false;");
+        writer.writeLine("for (int i = 0; i < a.size(); i++) {");
+        writer.indent();
+        writer.writeLine("if (!jsonEquals(a.get(i), b.get(i))) return false;");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeLine("return true;");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeLine("return false;");
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
     /**
      * Generates environment configuration for the client builder
      * Supports both single URL and multi-URL environment setups

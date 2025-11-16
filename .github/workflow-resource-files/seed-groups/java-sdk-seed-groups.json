@@ -3,7 +3,7 @@
   "groups": [
     {
       "fixtures": [
-        "optional",
+        "optional:wire-tests",
         "oauth-client-credentials-environment-variables",
         "folders",
         "file-upload:no-custom-config",
@@ -148,7 +148,7 @@
         "pagination:default",
         "property-access",
         "java-pagination-deep-cursor-path:wire-tests",
-        "streaming",
+        "streaming:streaming",
         "server-sent-event-examples",
         "bytes-download"
       ],

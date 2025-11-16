@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SeedUndiscriminatedUnionWithResponseProperty.Test/SeedUndiscriminatedUnionWithResponseProperty.Test.csproj" />
+  <Project Path="SeedUndiscriminatedUnionWithResponseProperty/SeedUndiscriminatedUnionWithResponseProperty.csproj" />
+</Solution>

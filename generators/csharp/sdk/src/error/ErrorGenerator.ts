@@ -4,10 +4,9 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
 
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
-export class ErrorGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+export class ErrorGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
     readonly classReference;
 
     constructor(
@@ -22,11 +21,11 @@ export class ErrorGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSch
         const bodyType =
             this.errorDeclaration.type != null
                 ? this.context.csharpTypeMapper.convert({ reference: this.errorDeclaration.type })
-                : this.csharp.Type.object;
+                : this.Primitive.object;
         const class_ = this.csharp.class_({
             reference: this.classReference,
             access: ast.Access.Public,
-            parentClassReference: this.types.BaseApiException,
+            parentClassReference: this.Types.BaseApiException,
             primaryConstructor: {
                 parameters: [this.csharp.parameter({ name: "body", type: bodyType })],
                 superClassArguments: [
@@ -36,9 +35,9 @@ export class ErrorGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSch
                 ]
             },
             summary: "This exception type will be thrown for any non-2XX API responses.",
-            annotations: [this.extern.System.Serializable]
+            annotations: [this.System.Serializable]
         });
-        if (this.errorDeclaration.type != null && !is.Type.object(bodyType)) {
+        if (this.errorDeclaration.type != null && !is.Primitive.object(bodyType)) {
             class_.addField({
                 origin: class_.explicit("Body"),
                 type: bodyType,

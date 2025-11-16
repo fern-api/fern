@@ -49,4 +49,17 @@ export interface ApiDefinitionSettingsSchema {
      * - Add protocol if still collision (e.g., "prod: wss://api.com/foo" -> "foo_wss", only for non-HTTPS protocols)
      */
     "group-environments-by-host"?: boolean;
+    /**
+     * If `always`, remove discriminant properties from schemas when generating types, unless the schema is also used outside of a discriminated union.
+     * If `never`, keep discriminant properties in schemas when generating types.
+     * Defaults to `always`.
+     */
+    "remove-discriminants-from-schemas"?: FernDefinition.RemoveDiscriminantsFromSchemas;
+    /**
+     * Controls the order of path parameters in generated method signatures.
+     * - `url-order`: Use the order path parameters appear in the URL path (e.g., /users/{userId}/posts/{postId})
+     * - `spec-order`: Use the order path parameters are defined in the spec
+     * Defaults to `url-order`.
+     */
+    "path-parameter-order"?: FernDefinition.PathParameterOrder;
 }

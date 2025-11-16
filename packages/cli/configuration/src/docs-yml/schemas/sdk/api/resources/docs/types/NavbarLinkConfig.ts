@@ -5,11 +5,34 @@
 import * as FernDocsConfig from "../../../index";
 
 export interface NavbarLinkConfig extends FernDocsConfig.WithViewers {
+    /**
+     * The URL once you click on the button.
+     * Example: https://buildwithfern.com/contact
+     */
     href?: string;
+    target?: FernDocsConfig.Target;
     /** Use `href` instead. */
     url?: string;
+    /** Text inside the button. */
     text?: string;
+    /**
+     * The icon to be used in the button. This icon will appear to the **left** of the text content.
+     * Icons can be in three formats:
+     * - **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.
+     * - **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.
+     * - **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `"<svg>...</svg>"`).
+     */
     icon?: string;
+    /**
+     * The icon to be used in the button. This icon will appear to the **right** of the text content.
+     * Icons can be in three formats:
+     * - **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.
+     * - **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.
+     * - **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `"<svg>...</svg>"`).
+     *
+     * By default, the `rightIcon` for a `filled` button is set to `arrow-right`.
+     */
     rightIcon?: string;
+    /** When `true`, the border radius of the button will be fully rounded. */
     rounded?: boolean;
 }

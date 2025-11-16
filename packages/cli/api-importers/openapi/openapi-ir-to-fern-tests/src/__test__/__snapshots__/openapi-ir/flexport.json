@@ -769,7 +769,7 @@
               "new_cargo_ready_date": {
                 "value": {
                   "value": "2019-06-30",
-                  "type": "string"
+                  "type": "date"
                 },
                 "type": "primitive"
               },
@@ -1369,7 +1369,7 @@
                     "new_cargo_ready_date": {
                       "value": {
                         "value": "2019-06-30",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -1763,7 +1763,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1788,7 +1788,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1827,7 +1827,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1849,7 +1849,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1871,7 +1871,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1893,7 +1893,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2333,13 +2333,6 @@
                   "type": "int"
                 },
                 "type": "primitive"
-              }
-            },
-            {
-              "name": "direction",
-              "value": {
-                "value": "asc",
-                "type": "enum"
               }
             },
             {
@@ -3538,7 +3531,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3563,7 +3556,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3597,7 +3590,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3636,7 +3629,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3670,7 +3663,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3692,7 +3685,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3714,7 +3707,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3736,7 +3729,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3756,7 +3749,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3777,7 +3770,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3798,7 +3791,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3819,7 +3812,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3840,7 +3833,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3861,7 +3854,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3882,7 +3875,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3903,7 +3896,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3924,7 +3917,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3945,7 +3938,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3966,7 +3959,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3987,7 +3980,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4619,27 +4612,6 @@
               }
             },
             {
-              "name": "sort",
-              "value": {
-                "value": "cargo_ready_date",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "direction",
-              "value": {
-                "value": "asc",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "f.status",
-              "value": {
-                "value": "booked",
-                "type": "enum"
-              }
-            },
-            {
               "name": "f.shipment.id",
               "value": {
                 "value": {
@@ -4664,126 +4636,6 @@
               "value": {
                 "value": {
                   "value": "amazon-us",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.name",
-              "value": {
-                "value": {
-                  "value": "f.name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.cargo_ready_date",
-              "value": {
-                "value": {
-                  "value": "f.cargo_ready_date",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.cargo_ready_date.gt",
-              "value": {
-                "value": {
-                  "value": "f.cargo_ready_date.gt",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.cargo_ready_date.gte",
-              "value": {
-                "value": {
-                  "value": "f.cargo_ready_date.gte",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.cargo_ready_date.lt",
-              "value": {
-                "value": {
-                  "value": "f.cargo_ready_date.lt",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.cargo_ready_date.lte",
-              "value": {
-                "value": {
-                  "value": "f.cargo_ready_date.lte",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.created_at",
-              "value": {
-                "value": {
-                  "value": "f.created_at",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.created_at.gt",
-              "value": {
-                "value": {
-                  "value": "f.created_at.gt",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.created_at.gte",
-              "value": {
-                "value": {
-                  "value": "f.created_at.gte",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.created_at.lt",
-              "value": {
-                "value": {
-                  "value": "f.created_at.lt",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.created_at.lte",
-              "value": {
-                "value": {
-                  "value": "f.created_at.lte",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.metadata.YOUR_METADATA_KEY",
-              "value": {
-                "value": {
-                  "value": "f.metadata.YOUR_METADATA_KEY",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -5593,14 +5445,14 @@
                             "cargo_ready_date": {
                               "value": {
                                 "value": "2019-06-30",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
                             "delivery_date": {
                               "value": {
                                 "value": "2019-07-31",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
@@ -6765,14 +6617,14 @@
               "cargo_ready_date": {
                 "value": {
                   "value": "2019-06-30",
-                  "type": "string"
+                  "type": "date"
                 },
                 "type": "primitive"
               },
               "delivery_date": {
                 "value": {
                   "value": "2019-07-31",
-                  "type": "string"
+                  "type": "date"
                 },
                 "type": "primitive"
               },
@@ -8044,7 +7896,7 @@
                     "cargo_ready_date": {
                       "value": {
                         "value": "2019-05-30",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -8133,7 +7985,7 @@
                     "delivery_date": {
                       "value": {
                         "value": "2019-05-30",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -10078,7 +9930,7 @@
                     "cargo_ready_date": {
                       "value": {
                         "value": "2019-01-30",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -10167,7 +10019,7 @@
                     "delivery_date": {
                       "value": {
                         "value": "2019-02-22",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -11051,7 +10903,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11076,7 +10928,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11097,7 +10949,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11118,7 +10970,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11139,7 +10991,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11160,7 +11012,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -11504,46 +11356,6 @@
                 "value": {
                   "value": 20,
                   "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.shipment.id",
-              "value": {
-                "value": {
-                  "value": "f.shipment.id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.invoice_number",
-              "value": {
-                "value": {
-                  "value": "f.invoice_number",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.involved_party_seller_id",
-              "value": {
-                "value": {
-                  "value": "f.involved_party_seller_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.involved_party_seller_ref",
-              "value": {
-                "value": {
-                  "value": "f.involved_party_seller_ref",
-                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -15340,7 +15152,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15365,7 +15177,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15386,7 +15198,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -15823,16 +15635,6 @@
                 },
                 "type": "primitive"
               }
-            },
-            {
-              "name": "f.shipment.id",
-              "value": {
-                "value": {
-                  "value": "f.shipment.id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
             }
           ],
           "headers": [],
@@ -15915,7 +15717,7 @@
                             "release_date": {
                               "value": {
                                 "value": "2019-05-03",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
@@ -16371,7 +16173,7 @@
                     "release_date": {
                       "value": {
                         "value": "2019-05-03",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -16451,7 +16253,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16476,7 +16278,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16497,7 +16299,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16518,7 +16320,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16539,7 +16341,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16560,7 +16362,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16581,7 +16383,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16602,7 +16404,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -16623,7 +16425,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -17084,76 +16886,6 @@
                 "value": {
                   "value": 20,
                   "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.shipment.id",
-              "value": {
-                "value": {
-                  "value": "f.shipment.id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.document_type",
-              "value": {
-                "value": {
-                  "value": "f.document_type",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.archived_at.exists",
-              "value": {
-                "value": {
-                  "value": "f.archived_at.exists",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.uploaded_at.gt",
-              "value": {
-                "value": {
-                  "value": "f.uploaded_at.gt",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.uploaded_at.lt",
-              "value": {
-                "value": {
-                  "value": "f.uploaded_at.lt",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.uploaded_at.gte",
-              "value": {
-                "value": {
-                  "value": "f.uploaded_at.gte",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.uploaded_at.lte",
-              "value": {
-                "value": {
-                  "value": "f.uploaded_at.lte",
-                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -18545,7 +18277,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18567,7 +18299,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18589,7 +18321,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18610,7 +18342,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -18664,7 +18396,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -19077,23 +18809,6 @@
                   "type": "string"
                 },
                 "type": "primitive"
-              }
-            },
-            {
-              "name": "f.data.shipment.id",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.data.resource._object",
-              "value": {
-                "value": "/document",
-                "type": "enum"
               }
             }
           ],
@@ -20104,7 +19819,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20128,7 +19843,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20150,7 +19865,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20189,7 +19904,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20233,7 +19948,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20255,7 +19970,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20276,7 +19991,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20298,7 +20013,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20320,7 +20035,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20342,7 +20057,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20364,7 +20079,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20386,7 +20101,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20408,7 +20123,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20430,7 +20145,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -20452,7 +20167,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "availability": "Deprecated",
           "source": {
@@ -20475,7 +20190,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "availability": "Deprecated",
           "source": {
@@ -21130,45 +20845,11 @@
               }
             },
             {
-              "name": "sort",
-              "value": {
-                "value": {
-                  "value": "due_date",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            },
-            {
-              "name": "direction",
-              "value": {
-                "value": "asc",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "f.status",
-              "value": {
-                "value": "outstanding",
-                "type": "enum"
-              }
-            },
-            {
               "name": "f.shipment.id",
               "value": {
                 "value": {
                   "value": 12345,
                   "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.billed_directly_to_client",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
                 },
                 "type": "primitive"
               }
@@ -21347,7 +21028,7 @@
                             "due_date": {
                               "value": {
                                 "value": "2019-05-22",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
@@ -23092,7 +22773,7 @@
                     "due_date": {
                       "value": {
                         "value": "2019-05-22",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -24242,7 +23923,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -24267,7 +23948,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -24288,7 +23969,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -24309,7 +23990,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -24796,26 +24477,6 @@
                 "value": {
                   "value": 20,
                   "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.ref",
-              "value": {
-                "value": {
-                  "value": "f.ref",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.metadata.YOUR_METADATA_KEY",
-              "value": {
-                "value": {
-                  "value": "f.metadata.YOUR_METADATA_KEY",
-                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -26405,7 +26066,7 @@
       "generatedRequestName": "NetworkCompanyUpdateRequest",
       "request": {
         "schema": {
-          "generatedName": "NetworkCompanyUpdateRequest",
+          "generatedName": "NetworkCompanyUpdateRequestBody",
           "schema": "UpdateCompany",
           "source": {
             "file": "../openapi.yml",
@@ -27119,7 +26780,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -27144,7 +26805,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -27165,7 +26826,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -27186,7 +26847,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -27207,7 +26868,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -27675,36 +27336,6 @@
                 "value": {
                   "value": 20,
                   "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.ref",
-              "value": {
-                "value": {
-                  "value": "f.ref",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.company_id",
-              "value": {
-                "value": {
-                  "value": "f.company_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.company_ref",
-              "value": {
-                "value": {
-                  "value": "f.company_ref",
-                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -29046,7 +28677,7 @@
       "generatedRequestName": "NetworkCompanyEntityUpdateRequest",
       "request": {
         "schema": {
-          "generatedName": "NetworkCompanyEntityUpdateRequest",
+          "generatedName": "NetworkCompanyEntityUpdateRequestBody",
           "schema": "UpdateCompanyEntity",
           "source": {
             "file": "../openapi.yml",
@@ -29603,7 +29234,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -29628,7 +29259,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -29649,7 +29280,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -29670,7 +29301,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -29691,7 +29322,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -30150,36 +29781,6 @@
                 "value": {
                   "value": 20,
                   "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.company_ref",
-              "value": {
-                "value": {
-                  "value": "f.company_ref",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.company.id",
-              "value": {
-                "value": {
-                  "value": "f.company.id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.location.id",
-              "value": {
-                "value": {
-                  "value": "f.location.id",
-                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -31376,7 +30977,7 @@
       "generatedRequestName": "NetworkContactUpdateRequest",
       "request": {
         "schema": {
-          "generatedName": "NetworkContactUpdateRequest",
+          "generatedName": "NetworkContactUpdateRequestBody",
           "schema": "UpdateContact",
           "source": {
             "file": "../openapi.yml",
@@ -31878,7 +31479,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -31903,7 +31504,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -31924,7 +31525,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -31945,7 +31546,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -31966,7 +31567,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -31987,7 +31588,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -32008,7 +31609,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -32481,56 +32082,6 @@
                 "value": {
                   "value": 20,
                   "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.ref",
-              "value": {
-                "value": {
-                  "value": "f.ref",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.company_ref",
-              "value": {
-                "value": {
-                  "value": "f.company_ref",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.company.id",
-              "value": {
-                "value": {
-                  "value": "f.company.id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.contact.id",
-              "value": {
-                "value": {
-                  "value": "f.contact.id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.metadata.YOUR_METADATA_KEY",
-              "value": {
-                "value": {
-                  "value": "f.metadata.YOUR_METADATA_KEY",
-                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -34064,7 +33615,7 @@
       "generatedRequestName": "LocationUpdateRequest",
       "request": {
         "schema": {
-          "generatedName": "LocationUpdateRequest",
+          "generatedName": "LocationUpdateRequestBody",
           "schema": "UpdateLocation",
           "source": {
             "file": "../openapi.yml",
@@ -35357,7 +34908,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -35382,7 +34933,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -35403,7 +34954,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -35424,7 +34975,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -35445,7 +34996,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -35885,36 +35436,6 @@
                 "value": {
                   "value": 20,
                   "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.leg.id",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.shipment_container.id",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.shipment_container.container_number",
-              "value": {
-                "value": {
-                  "value": "f.shipment_container.container_number",
-                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -36610,7 +36131,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -36635,7 +36156,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -36656,7 +36177,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -36677,7 +36198,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -36698,7 +36219,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -37180,36 +36701,6 @@
                 },
                 "type": "primitive"
               }
-            },
-            {
-              "name": "f.shipment.id",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.container_number",
-              "value": {
-                "value": {
-                  "value": "f.container_number",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.metadata.YOUR_METADATA_KEY",
-              "value": {
-                "value": {
-                  "value": "f.metadata.YOUR_METADATA_KEY",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
             }
           ],
           "headers": [],
@@ -37401,14 +36892,14 @@
                             "empty_returned_date": {
                               "value": {
                                 "value": "2019-02-28",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
                             "cargo_ready_date": {
                               "value": {
                                 "value": "2019-02-06",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
@@ -38203,14 +37694,14 @@
                     "empty_returned_date": {
                       "value": {
                         "value": "2019-02-28",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
                     "cargo_ready_date": {
                       "value": {
                         "value": "2019-02-06",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -38475,7 +37966,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -38500,7 +37991,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -38544,7 +38035,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -38566,7 +38057,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -39075,13 +38566,6 @@
               }
             },
             {
-              "name": "f.port_type",
-              "value": {
-                "value": "airport",
-                "type": "enum"
-              }
-            },
-            {
               "name": "f.unlocode",
               "value": {
                 "value": {
@@ -39508,7 +38992,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -39529,7 +39013,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -39550,7 +39034,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -39985,38 +39469,7 @@
         {
           "name": "Success",
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "f.sku",
-              "value": {
-                "value": {
-                  "value": "f.sku",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.archived_at.exists",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.product_properties.TYPE",
-              "value": {
-                "value": {
-                  "value": "f.product_properties.TYPE",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -41325,7 +40778,7 @@
       "generatedRequestName": "ProductUpdateRequest",
       "request": {
         "schema": {
-          "generatedName": "ProductUpdateRequest",
+          "generatedName": "ProductUpdateRequestBody",
           "schema": "UpdateProduct",
           "source": {
             "file": "../openapi.yml",
@@ -41872,7 +41325,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -41897,7 +41350,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -41936,7 +41389,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -41958,7 +41411,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -41979,7 +41432,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -42001,7 +41454,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -42022,7 +41475,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -42561,13 +42014,6 @@
               }
             },
             {
-              "name": "direction",
-              "value": {
-                "value": "asc",
-                "type": "enum"
-              }
-            },
-            {
               "name": "f.purchase_order.id",
               "value": {
                 "value": {
@@ -42578,31 +42024,11 @@
               }
             },
             {
-              "name": "f.line_item_number",
-              "value": {
-                "value": {
-                  "value": "f.line_item_number",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
               "name": "f.item_key",
               "value": {
                 "value": {
                   "value": "item1",
                   "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.purchase_order_version.id",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
                 },
                 "type": "primitive"
               }
@@ -42881,7 +42307,7 @@
                             "must_arrive_date": {
                               "value": {
                                 "value": "2019-03-11",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
@@ -43952,7 +43378,7 @@
                     "must_arrive_date": {
                       "value": {
                         "value": "2019-03-11",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -44642,7 +44068,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -44667,7 +44093,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -44689,7 +44115,7 @@
               "type": "literal"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -44728,7 +44154,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -44749,7 +44175,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -44788,7 +44214,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -44810,7 +44236,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -44832,7 +44258,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -44854,7 +44280,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -44876,7 +44302,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -44965,7 +44391,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -44987,7 +44413,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -45009,7 +44435,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -45031,7 +44457,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -45053,7 +44479,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -45685,40 +45111,6 @@
               }
             },
             {
-              "name": "sort",
-              "value": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
-                },
-                "type": "literal"
-              }
-            },
-            {
-              "name": "direction",
-              "value": {
-                "value": "asc",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "f.archived_at.exists",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.status",
-              "value": {
-                "value": "open",
-                "type": "enum"
-              }
-            },
-            {
               "name": "f.buyer_ref",
               "value": {
                 "value": {
@@ -45890,7 +45282,7 @@
                             "issue_date": {
                               "value": {
                                 "value": "2019-06-30",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
@@ -45905,14 +45297,14 @@
                             "cargo_ready_date": {
                               "value": {
                                 "value": "2019-06-30",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
                             "must_arrive_date": {
                               "value": {
                                 "value": "2019-07-31",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
@@ -47788,14 +47180,14 @@
               "must_arrive_date": {
                 "value": {
                   "value": "2019-07-31",
-                  "type": "string"
+                  "type": "date"
                 },
                 "type": "primitive"
               },
               "issue_date": {
                 "value": {
                   "value": "2019-06-30",
-                  "type": "string"
+                  "type": "date"
                 },
                 "type": "primitive"
               },
@@ -47806,7 +47198,7 @@
               "cargo_ready_date": {
                 "value": {
                   "value": "2019-06-30",
-                  "type": "string"
+                  "type": "date"
                 },
                 "type": "primitive"
               },
@@ -48001,14 +47393,14 @@
                       "must_arrive_date": {
                         "value": {
                           "value": "2019-07-31",
-                          "type": "string"
+                          "type": "date"
                         },
                         "type": "primitive"
                       },
                       "cargo_ready_date": {
                         "value": {
                           "value": "2019-06-30",
-                          "type": "string"
+                          "type": "date"
                         },
                         "type": "primitive"
                       },
@@ -48199,8 +47591,8 @@
                 },
                 "issue_date": {
                   "value": {
-                    "value": "issue_date",
-                    "type": "string"
+                    "value": "2023-01-15",
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
@@ -48218,15 +47610,15 @@
                 },
                 "cargo_ready_date": {
                   "value": {
-                    "value": "cargo_ready_date",
-                    "type": "string"
+                    "value": "2023-01-15",
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
                 "must_arrive_date": {
                   "value": {
-                    "value": "must_arrive_date",
-                    "type": "string"
+                    "value": "2023-01-15",
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
@@ -49020,7 +48412,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -49540,18 +48932,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "f.purchase_order_version.id",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -49621,8 +49002,8 @@
                     },
                     "issue_date": {
                       "value": {
-                        "value": "issue_date",
-                        "type": "string"
+                        "value": "2023-01-15",
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -49640,15 +49021,15 @@
                     },
                     "cargo_ready_date": {
                       "value": {
-                        "value": "cargo_ready_date",
-                        "type": "string"
+                        "value": "2023-01-15",
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
                     "must_arrive_date": {
                       "value": {
-                        "value": "must_arrive_date",
-                        "type": "string"
+                        "value": "2023-01-15",
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -50270,7 +49651,7 @@
       "generatedRequestName": "PurchaseOrderUpdateRequest",
       "request": {
         "schema": {
-          "generatedName": "PurchaseOrderUpdateRequest",
+          "generatedName": "PurchaseOrderUpdateRequestBody",
           "schema": "CreateOrUpdatePurchaseOrder",
           "source": {
             "file": "../openapi.yml",
@@ -50951,14 +50332,14 @@
               "must_arrive_date": {
                 "value": {
                   "value": "2019-07-31",
-                  "type": "string"
+                  "type": "date"
                 },
                 "type": "primitive"
               },
               "issue_date": {
                 "value": {
                   "value": "2019-06-30",
-                  "type": "string"
+                  "type": "date"
                 },
                 "type": "primitive"
               },
@@ -50969,7 +50350,7 @@
               "cargo_ready_date": {
                 "value": {
                   "value": "2019-06-30",
-                  "type": "string"
+                  "type": "date"
                 },
                 "type": "primitive"
               },
@@ -51106,8 +50487,8 @@
                 },
                 "issue_date": {
                   "value": {
-                    "value": "issue_date",
-                    "type": "string"
+                    "value": "2023-01-15",
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
@@ -51125,15 +50506,15 @@
                 },
                 "cargo_ready_date": {
                   "value": {
-                    "value": "cargo_ready_date",
-                    "type": "string"
+                    "value": "2023-01-15",
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
                 "must_arrive_date": {
                   "value": {
-                    "value": "must_arrive_date",
-                    "type": "string"
+                    "value": "2023-01-15",
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
@@ -51913,7 +51294,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -51938,7 +51319,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -51959,7 +51340,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -51980,7 +51361,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -52002,7 +51383,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -52557,36 +51938,6 @@
                 },
                 "type": "primitive"
               }
-            },
-            {
-              "name": "f.shipment.id",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.transportation_mode",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.include_deleted",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
             }
           ],
           "headers": [],
@@ -52721,7 +52072,7 @@
                                 "cargo_ready_date": {
                                   "value": {
                                     "value": "2019-02-06",
-                                    "type": "string"
+                                    "type": "date"
                                   },
                                   "type": "primitive"
                                 },
@@ -53391,7 +52742,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -53829,18 +53180,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "f.include_deleted",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -53955,7 +53295,7 @@
                         "cargo_ready_date": {
                           "value": {
                             "value": "2019-02-06",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -54723,8 +54063,8 @@
                     },
                     "cargo_ready_date": {
                       "value": {
-                        "value": "cargo_ready_date",
-                        "type": "string"
+                        "value": "2023-01-15",
+                        "type": "date"
                       },
                       "type": "primitive"
                     }
@@ -54770,7 +54110,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -54794,7 +54134,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -54848,7 +54188,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -54887,7 +54227,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -54908,7 +54248,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -54929,7 +54269,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -54950,7 +54290,7 @@
               },
               "type": "reference"
             },
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -54972,7 +54312,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -54994,7 +54334,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55016,7 +54356,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55037,7 +54377,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55058,7 +54398,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55079,7 +54419,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55100,7 +54440,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55121,7 +54461,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55142,7 +54482,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55163,7 +54503,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55184,7 +54524,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55205,7 +54545,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55226,7 +54566,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55247,7 +54587,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55268,7 +54608,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55289,7 +54629,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55310,7 +54650,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55331,7 +54671,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55352,7 +54692,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55373,7 +54713,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55394,7 +54734,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55415,7 +54755,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55436,7 +54776,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -55457,7 +54797,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -56140,41 +55480,6 @@
               }
             },
             {
-              "name": "sort",
-              "value": {
-                "value": "id",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "direction",
-              "value": {
-                "value": "asc",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "f.transportation_mode",
-              "value": {
-                "value": "ocean",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "f.status",
-              "value": {
-                "value": "seller_location",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "f.statuses.any",
-              "value": {
-                "value": "seller_location",
-                "type": "enum"
-              }
-            },
-            {
               "name": "f.container_number",
               "value": {
                 "value": {
@@ -56200,216 +55505,6 @@
                 "value": {
                   "value": "ASA121",
                   "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.updated_at.gt",
-              "value": {
-                "value": {
-                  "value": "f.updated_at.gt",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.updated_at.lt",
-              "value": {
-                "value": {
-                  "value": "f.updated_at.lt",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.archived_at.gt",
-              "value": {
-                "value": {
-                  "value": "f.archived_at.gt",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.archived_at.lt",
-              "value": {
-                "value": {
-                  "value": "f.archived_at.lt",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.master_bill_number",
-              "value": {
-                "value": {
-                  "value": "f.master_bill_number",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.house_bill_number",
-              "value": {
-                "value": {
-                  "value": "f.house_bill_number",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.consignee_external_ref",
-              "value": {
-                "value": {
-                  "value": "f.consignee_external_ref",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.origin_address_ref",
-              "value": {
-                "value": {
-                  "value": "f.origin_address_ref",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.destination_address_ref",
-              "value": {
-                "value": {
-                  "value": "f.destination_address_ref",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.metadata.YOUR_METADATA_KEY",
-              "value": {
-                "value": {
-                  "value": "f.metadata.YOUR_METADATA_KEY",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.wants_freight_management_bco",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.wants_flexport_freight",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.wants_import_customs_service",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.wants_export_customs_service",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.wants_commercial_invoice_transcription",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.wants_flexport_insurance",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.wants_pickup_service",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.wants_trade_declaration_service",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.visibility_only",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.wants_delivery_service",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "f.belongs_to_a_buyers_consol",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
                 },
                 "type": "primitive"
               }
@@ -56667,7 +55762,7 @@
                             "cargo_ready_date": {
                               "value": {
                                 "value": "2019-02-06",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
@@ -58749,7 +57844,7 @@
                     "cargo_ready_date": {
                       "value": {
                         "value": "2019-02-06",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -58903,8 +57998,8 @@
                     },
                     "target_delivery_date": {
                       "value": {
-                        "value": "target_delivery_date",
-                        "type": "string"
+                        "value": "2023-01-15",
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -60187,7 +59282,7 @@
       "generatedRequestName": "ShipmentUpdateRequest",
       "request": {
         "schema": {
-          "generatedName": "ShipmentUpdateRequest",
+          "generatedName": "ShipmentUpdateRequestBody",
           "schema": "UpdateShipment",
           "source": {
             "file": "../openapi.yml",
@@ -60995,7 +60090,7 @@
                     "cargo_ready_date": {
                       "value": {
                         "value": "2019-02-06",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -61149,8 +60244,8 @@
                     },
                     "target_delivery_date": {
                       "value": {
-                        "value": "target_delivery_date",
-                        "type": "string"
+                        "value": "2023-01-15",
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -63932,15 +63027,15 @@
                 "properties": [
                   {
                     "conflict": {},
-                    "generatedName": "metadataCreateItemName",
+                    "generatedName": "metadataCreateOneItemName",
                     "key": "name",
                     "schema": {
-                      "generatedName": "MetadataCreateItemName",
+                      "generatedName": "MetadataCreateOneItemName",
                       "value": {
                         "schema": {
                           "type": "string"
                         },
-                        "generatedName": "MetadataCreateItemName",
+                        "generatedName": "MetadataCreateOneItemName",
                         "groupName": [],
                         "type": "primitive"
                       },
@@ -63951,20 +63046,20 @@
                   },
                   {
                     "conflict": {},
-                    "generatedName": "metadataCreateItemValue",
+                    "generatedName": "metadataCreateOneItemValue",
                     "key": "value",
                     "schema": {
-                      "generatedName": "MetadataCreateItemValue",
+                      "generatedName": "MetadataCreateOneItemValue",
                       "value": {
                         "value": {
                           "schema": {
                             "type": "string"
                           },
-                          "generatedName": "MetadataCreateItemValueItem",
+                          "generatedName": "MetadataCreateOneItemValueItem",
                           "groupName": [],
                           "type": "primitive"
                         },
-                        "generatedName": "MetadataCreateItemValue",
+                        "generatedName": "MetadataCreateOneItemValue",
                         "groupName": [],
                         "type": "array"
                       },
@@ -63975,7 +63070,7 @@
                   }
                 ],
                 "allOfPropertyConflicts": [],
-                "generatedName": "MetadataCreateItem",
+                "generatedName": "MetadataCreateOneItem",
                 "groupName": [],
                 "additionalProperties": false,
                 "source": {
@@ -63984,7 +63079,7 @@
                 },
                 "type": "object"
               },
-              "generatedName": "MetadataCreate",
+              "generatedName": "MetadataCreateOne",
               "groupName": [],
               "type": "array"
             }
@@ -64304,9 +63399,7 @@
               "value": {
                 "description": "Date when cargo is ready for pickup at the origin location.",
                 "schema": {
-                  "format": "date",
-                  "example": "2019-06-30",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "CreateBookingAmendmentNewCargoReadyDate",
                 "groupName": [],
@@ -65822,8 +64915,10 @@
               "generatedName": "BookingAmendmentNewContainerCounts",
               "description": "The requested new container count values",
               "value": {
+                "description": "The requested new container count values",
                 "generatedName": "BookingAmendmentNewContainerCounts",
                 "schema": "ContainerCounts",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -65931,8 +65026,10 @@
               "generatedName": "BookingAmendmentNewOriginAddress",
               "description": "The requested new origin address",
               "value": {
+                "description": "The requested new origin address",
                 "generatedName": "BookingAmendmentNewOriginAddress",
                 "schema": "Address",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -65952,8 +65049,10 @@
               "generatedName": "BookingAmendmentNewPortOfLoading",
               "description": "The requested new origin port (port of loading)",
               "value": {
+                "description": "The requested new origin port (port of loading)",
                 "generatedName": "BookingAmendmentNewPortOfLoading",
                 "schema": "Address",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -65973,8 +65072,10 @@
               "generatedName": "BookingAmendmentNewPortOfUnloading",
               "description": "The requested new destination port (port of unloading)",
               "value": {
+                "description": "The requested new destination port (port of unloading)",
                 "generatedName": "BookingAmendmentNewPortOfUnloading",
                 "schema": "Address",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -65996,8 +65097,7 @@
               "value": {
                 "description": "The requested new cargo ready date",
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "BookingAmendmentNewCargoReadyDate",
                 "groupName": [],
@@ -66043,8 +65143,10 @@
               "generatedName": "BookingAmendmentNewCargo",
               "description": "The requested new cargo, possibly including package details",
               "value": {
+                "description": "The requested new cargo, possibly including package details",
                 "generatedName": "BookingAmendmentNewCargo",
                 "schema": "Cargo",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -66064,8 +65166,10 @@
               "generatedName": "BookingAmendmentNewMetadata",
               "description": "The requested new metadata",
               "value": {
+                "description": "The requested new metadata",
                 "generatedName": "BookingAmendmentNewMetadata",
                 "schema": "Metadata",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -68563,8 +67667,7 @@
               "generatedName": "BookingCargoReadyDate",
               "value": {
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "BookingCargoReadyDate",
                 "groupName": [],
@@ -68604,8 +67707,7 @@
               "generatedName": "BookingDeliveryDate",
               "value": {
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "BookingDeliveryDate",
                 "groupName": [],
@@ -69716,9 +68818,7 @@
             "schema": {
               "description": "Always required. Date when cargo is ready for pickup at the origin location.",
               "schema": {
-                "format": "date",
-                "example": "2019-06-30",
-                "type": "string"
+                "type": "date"
               },
               "generatedName": "CreateBookingCargoReadyDate",
               "groupName": [],
@@ -69736,9 +68836,7 @@
               "value": {
                 "description": "Optional. Target date by when cargo must be delivered.",
                 "schema": {
-                  "format": "date",
-                  "example": "2019-07-23",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "CreateBookingDeliveryDate",
                 "groupName": [],
@@ -71286,8 +70384,10 @@
               "generatedName": "CommercialInvoiceLineItemWeight",
               "description": "Weight including any associated packaging (padding, foam, etc).",
               "value": {
+                "description": "Weight including any associated packaging (padding, foam, etc).",
                 "generatedName": "CommercialInvoiceLineItemWeight",
                 "schema": "Weight",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -71328,8 +70428,10 @@
               "generatedName": "CommercialInvoiceLineItemNetWeight",
               "description": "Weight excluding packaging.",
               "value": {
+                "description": "Weight excluding packaging.",
                 "generatedName": "CommercialInvoiceLineItemNetWeight",
                 "schema": "Weight",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -71349,8 +70451,10 @@
               "generatedName": "CommercialInvoiceLineItemNetNetWeight",
               "description": "Weight excluding packaging, tags, labels, instruction manuals, etc.",
               "value": {
+                "description": "Weight excluding packaging, tags, labels, instruction manuals, etc.",
                 "generatedName": "CommercialInvoiceLineItemNetNetWeight",
                 "schema": "Weight",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -73076,8 +72180,7 @@
               "value": {
                 "description": "The cargo release date for this entry.",
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "CustomsEntryReleaseDate",
                 "groupName": [],
@@ -73628,7 +72731,7 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "GenericObjectRefId",
+                      "generatedName": "GenericObjectRefIdZero",
                       "groupName": [],
                       "type": "primitive"
                     },
@@ -73636,7 +72739,7 @@
                       "schema": {
                         "type": "int"
                       },
-                      "generatedName": "GenericObjectRefId",
+                      "generatedName": "GenericObjectRefIdOne",
                       "groupName": [],
                       "type": "primitive"
                     }
@@ -75702,8 +74805,7 @@
               "value": {
                 "description": "Date when cargo is ready for pickup at the origin location",
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "ShipmentCargoReadyDate",
                 "groupName": [],
@@ -76012,8 +75114,7 @@
               "value": {
                 "description": "Target date for when the shipment will be fully delivered. This date is set when the shipment's booking is confirmed. This value may be different from estimated_delivered_in_full_date, which is updated when there is new information about the progress of a shipment.",
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "ShipmentTargetDeliveryDate",
                 "groupName": [],
@@ -76523,8 +75624,7 @@
               "value": {
                 "description": "Represents the date when the cargo on the leg is ready for pickup.",
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "AdditionalDatesCargoReadyDate",
                 "groupName": [],
@@ -77822,8 +76922,7 @@
               "value": {
                 "description": "[DEPRECATED] See additional_dates",
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "ShipmentLegCargoReadyDate",
                 "groupName": [],
@@ -78656,8 +77755,7 @@
                 "generatedName": "ShipmentContainerEmptyReturnedDate",
                 "value": {
                   "schema": {
-                    "format": "date",
-                    "type": "string"
+                    "type": "date"
                   },
                   "generatedName": "ShipmentContainerEmptyReturnedDate",
                   "groupName": [],
@@ -78681,8 +77779,7 @@
                 "generatedName": "ShipmentContainerCargoReadyDate",
                 "value": {
                   "schema": {
-                    "format": "date",
-                    "type": "string"
+                    "type": "date"
                   },
                   "generatedName": "ShipmentContainerCargoReadyDate",
                   "groupName": [],
@@ -79104,8 +78201,10 @@
               "generatedName": "ShipmentEventDataLocation",
               "description": "Possibly null. Location associated with the event.",
               "value": {
+                "description": "Possibly null. Location associated with the event.",
                 "generatedName": "ShipmentEventDataLocation",
                 "schema": "ShipmentNode",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -79991,9 +79090,7 @@
               "value": {
                 "description": "Due date of the invoice",
                 "schema": {
-                  "format": "date",
-                  "example": "2019-05-22",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "InvoiceDueDate",
                 "groupName": [],
@@ -83630,8 +82727,7 @@
               "generatedName": "PurchaseOrderLineItemMustArriveDate",
               "value": {
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "PurchaseOrderLineItemMustArriveDate",
                 "groupName": [],
@@ -84495,8 +83591,7 @@
               "value": {
                 "description": "the date that the order was issued",
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "PurchaseOrderIssueDate",
                 "groupName": [],
@@ -84600,8 +83695,7 @@
               "generatedName": "PurchaseOrderCargoReadyDate",
               "value": {
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "PurchaseOrderCargoReadyDate",
                 "groupName": [],
@@ -84620,8 +83714,7 @@
               "generatedName": "PurchaseOrderMustArriveDate",
               "value": {
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "PurchaseOrderMustArriveDate",
                 "groupName": [],
@@ -85805,9 +84898,7 @@
               "value": {
                 "description": "Required if there is no must_arrive_date in the line item's purchase order. The must arrive date for this purchase order.",
                 "schema": {
-                  "format": "date",
-                  "example": "2019-09-30",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "CreateLineItemMustArriveDate",
                 "groupName": [],
@@ -85828,9 +84919,7 @@
               "value": {
                 "description": "Required if there is no cargo_ready_date in the line item's purchase order. Date when cargo is ready for pickup at the origin location.",
                 "schema": {
-                  "format": "date",
-                  "example": "2019-06-30",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "CreateLineItemCargoReadyDate",
                 "groupName": [],
@@ -87045,9 +86134,7 @@
               "value": {
                 "description": "Required if there is no must_arrive_date in each line item. The must arrive date for this purchase order.",
                 "schema": {
-                  "format": "date",
-                  "example": "2019-09-30",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "CreateOrUpdatePurchaseOrderMustArriveDate",
                 "groupName": [],
@@ -87068,9 +86155,7 @@
               "value": {
                 "description": "The issue date for this purchase order.",
                 "schema": {
-                  "format": "date",
-                  "example": "2019-09-30",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "CreateOrUpdatePurchaseOrderIssueDate",
                 "groupName": [],
@@ -87125,9 +86210,7 @@
               "value": {
                 "description": "Required if there is no cargo_ready_date in each line item. Date when cargo is ready for pickup at the origin location.",
                 "schema": {
-                  "format": "date",
-                  "example": "2019-06-30",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "CreateOrUpdatePurchaseOrderCargoReadyDate",
                 "groupName": [],

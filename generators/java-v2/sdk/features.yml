@@ -59,3 +59,8 @@ features:
       The SDK provides access to raw response data, including headers, through the `withRawResponse()` method.
       The `withRawResponse()` method returns a raw client that wraps all responses with `body()` and `headers()` methods.
       (A normal client's `response` is identical to a raw client's `response.body()`.)
+
+  - id: WEBSOCKET
+    description: |
+      The SDK provides WebSocket support for real-time bidirectional communication. You can connect to a WebSocket,
+      register message handlers to receive server messages, send messages to the server, and close the connection when done.

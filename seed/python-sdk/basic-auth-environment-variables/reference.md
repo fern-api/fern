@@ -114,7 +114,7 @@ client.basic_auth.post_with_basic_auth(
 <dl>
 <dd>
 
-**request:** `typing.Optional[typing.Any]` 
+**request:** `typing.Any` 
     
 </dd>
 </dl>

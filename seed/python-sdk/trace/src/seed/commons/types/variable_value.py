@@ -93,6 +93,9 @@ class VariableValue_MapValue(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .map_value import MapValue  # noqa: E402, F401, I001
+
+
 class VariableValue_ListValue(UniversalBaseModel):
     value: typing.List["VariableValue"]
     type: typing.Literal["listValue"] = "listValue"
@@ -164,20 +167,23 @@ class VariableValue_NullValue(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-VariableValue = typing.Union[
-    VariableValue_IntegerValue,
-    VariableValue_BooleanValue,
-    VariableValue_DoubleValue,
-    VariableValue_StringValue,
-    VariableValue_CharValue,
-    VariableValue_MapValue,
-    VariableValue_ListValue,
-    VariableValue_BinaryTreeValue,
-    VariableValue_SinglyLinkedListValue,
-    VariableValue_DoublyLinkedListValue,
-    VariableValue_NullValue,
+VariableValue = typing_extensions.Annotated[
+    typing.Union[
+        VariableValue_IntegerValue,
+        VariableValue_BooleanValue,
+        VariableValue_DoubleValue,
+        VariableValue_StringValue,
+        VariableValue_CharValue,
+        VariableValue_MapValue,
+        VariableValue_ListValue,
+        VariableValue_BinaryTreeValue,
+        VariableValue_SinglyLinkedListValue,
+        VariableValue_DoublyLinkedListValue,
+        VariableValue_NullValue,
+    ],
+    pydantic.Field(discriminator="type"),
 ]
-from .key_value_pair import KeyValuePair  # noqa: E402, I001
+from .key_value_pair import KeyValuePair  # noqa: E402, F401, I001
 
 update_forward_refs(VariableValue_MapValue)
 update_forward_refs(VariableValue_ListValue)

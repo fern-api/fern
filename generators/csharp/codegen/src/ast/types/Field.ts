@@ -1,6 +1,7 @@
 import { fail } from "assert";
 import { type Generation } from "../../context/generation-info";
 import { type Origin } from "../../context/model-navigator";
+import { is } from "../../utils/type-guards";
 import { type ClassInstantiation } from "../code/ClassInstantiation";
 import { MemberNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
@@ -9,7 +10,7 @@ import { Annotation } from "../language/Annotation";
 import { CodeBlock } from "../language/CodeBlock";
 import { XmlDocBlock } from "../language/XmlDocBlock";
 import { ClassReference } from "./ClassReference";
-import { type Type } from "./Type";
+import { type Type } from "./IType";
 
 export declare namespace Field {
     export type Accessors = {
@@ -153,7 +154,7 @@ export class Field extends MemberNode {
             this
         );
 
-        this.type = type instanceof ClassReference ? this.csharp.Type.reference(type) : type;
+        this.type = type;
         this.const_ = const_ ?? false;
         this.new_ = new_ ?? false;
         this.access = access;
@@ -176,7 +177,7 @@ export class Field extends MemberNode {
         if (this.jsonPropertyName != null) {
             this.annotations = [
                 this.csharp.annotation({
-                    reference: this.extern.System.Text.Json.Serialization.JsonPropertyName,
+                    reference: this.System.Text.Json.Serialization.JsonPropertyName,
                     argument: `"${this.jsonPropertyName}"`
                 }),
                 ...this.annotations
@@ -239,9 +240,8 @@ export class Field extends MemberNode {
         if (this.new_) {
             writer.write("new ");
         }
-        const underlyingTypeIfOptional = this.type.underlyingTypeIfOptional();
-        const isOptional = underlyingTypeIfOptional != null;
-        const isCollection = (underlyingTypeIfOptional ?? this.type).isCollection;
+        const isOptional = this.type.isOptional;
+        const isCollection = this.type.asNonOptional().isCollection;
         if (this.useRequired && !isOptional && !isCollection && this.initializer == null) {
             writer.write("required ");
         }
@@ -333,7 +333,9 @@ export class Field extends MemberNode {
             this.initializer.write(writer);
             writer.writeLine(";");
         } else if (!this.skipDefaultInitializer && !isOptional && isCollection) {
-            this.type.writeEmptyCollectionInitializer(writer);
+            if (is.Type(this.type)) {
+                this.type.writeEmptyCollectionInitializer(writer);
+            }
         } else if (!this.get && !this.init) {
             writer.writeLine(";");
         }

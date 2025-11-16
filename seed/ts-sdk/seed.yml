@@ -110,6 +110,18 @@ fixtures:
     - outputFolder: consolidate-type-files
       customConfig:
         consolidateTypeFiles: true
+    - outputFolder: parameter-naming-original-name
+      customConfig:
+        parameterNaming: originalName
+    - outputFolder: parameter-naming-wire-value
+      customConfig:
+        parameterNaming: wireValue
+    - outputFolder: parameter-naming-camel-case
+      customConfig:
+        parameterNaming: camelCase
+    - outputFolder: parameter-naming-snake-case
+      customConfig:
+        parameterNaming: snakeCase
   error-property:
     - outputFolder: no-custom-config
       customConfig: null
@@ -166,6 +178,18 @@ fixtures:
     - outputFolder: serde
       customConfig:
         noSerdeLayer: false
+    - outputFolder: parameter-naming-original-name
+      customConfig:
+        parameterNaming: originalName
+    - outputFolder: parameter-naming-wire-value
+      customConfig:
+        parameterNaming: wireValue
+    - outputFolder: parameter-naming-camel-case
+      customConfig:
+        parameterNaming: camelCase
+    - outputFolder: parameter-naming-snake-case
+      customConfig:
+        parameterNaming: snakeCase
   request-parameters:
     - outputFolder: no-custom-config
       customConfig: null
@@ -271,6 +295,18 @@ fixtures:
       customConfig:
         inlinePathParameters: true
         retainOriginalCasing: true
+    - outputFolder: parameter-naming-original-name
+      customConfig:
+        parameterNaming: originalName
+    - outputFolder: parameter-naming-wire-value
+      customConfig:
+        parameterNaming: wireValue
+    - outputFolder: parameter-naming-camel-case
+      customConfig:
+        parameterNaming: camelCase
+    - outputFolder: parameter-naming-snake-case
+      customConfig:
+        parameterNaming: snakeCase
   websocket:
     - outputFolder: no-websocket-clients
     - outputFolder: serde
@@ -367,7 +403,7 @@ fixtures:
         useLegacyExports: true
     - outputFolder: oidc-token
       publishConfig:
-        type: npm     
+        type: npm
         registryUrl: https://registry.npmjs.org/
         packageName: "@fern-api/dummy"
         token: <USE_OIDC>
@@ -386,6 +422,12 @@ fixtures:
     - outputFolder: serde
       customConfig:
         noSerdeLayer: false
+  pagination:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: page-index-semantics
+      customConfig:
+        offsetSemantics: "page-index"
 scripts:
   - docker: fernapi/ts-seed
     commands:
@@ -425,7 +467,6 @@ scripts:
           if grep -q '"test":' package.json; then corepack yarn test; fi
         fi
 allowedFailures:
-  - circular-references
   - enum:no-custom-config
   - enum:forward-compatible-enums
   - enum:serde

@@ -78,12 +78,16 @@ public final class GetDefaultStarterFilesResponse {
     )
     public Builder files(Map<Language, ProblemFiles> files) {
       this.files.clear();
-      this.files.putAll(files);
+      if (files != null) {
+        this.files.putAll(files);
+      }
       return this;
     }
 
     public Builder putAllFiles(Map<Language, ProblemFiles> files) {
-      this.files.putAll(files);
+      if (files != null) {
+        this.files.putAll(files);
+      }
       return this;
     }
 

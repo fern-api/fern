@@ -370,7 +370,9 @@ function convertThemeConfig(
     return {
         sidebar: theme.sidebar ?? "default",
         tabs: theme.tabs ?? "default",
-        body: theme.body ?? "default"
+        body: theme.body ?? "default",
+        pageActions: theme.pageActions ?? "default",
+        footerNav: theme.footerNav ?? "default"
     };
 }
 
@@ -487,6 +489,7 @@ async function getVersionedNavigationConfiguration({
             navigation: versionNavigation,
             availability: version.availability,
             slug: version.slug,
+            hidden: version.hidden,
             viewers: parseRoles(version.viewers),
             orphaned: version.orphaned,
             featureFlags: convertFeatureFlag(version.featureFlag)
@@ -572,6 +575,7 @@ async function getNavigationConfiguration({
                     type: "external",
                     product: product.displayName,
                     href: product.href,
+                    target: product.target,
                     subtitle: product.subtitle,
                     icon: resolveIconPath(product.icon, absolutePathToConfig) || "fa-solid fa-code",
                     image: productImageFile,
@@ -825,7 +829,8 @@ async function convertNavigationTabConfiguration({
             hidden: tab.hidden,
             child: {
                 type: "link",
-                href: tab.href
+                href: tab.href,
+                target: tab.target
             },
             viewers: parseRoles(tab.viewers),
             orphaned: tab.orphaned,
@@ -988,6 +993,7 @@ async function convertNavigationItem({
                 rawConfig.snippets != null
                     ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets })
                     : undefined,
+            postman: rawConfig.postman,
             navigation:
                 rawConfig.layout?.flatMap((item) => parseApiReferenceLayoutItem(item, absolutePathToConfig)) ?? [],
             overviewAbsolutePath: resolveFilepath(rawConfig.summary, absolutePathToConfig),
@@ -1009,7 +1015,8 @@ async function convertNavigationItem({
             type: "link",
             text: rawConfig.link,
             url: rawConfig.href,
-            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig)
+            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
+            target: rawConfig.target
         };
     }
     if (isRawChangelogConfig(rawConfig)) {
@@ -1082,7 +1089,8 @@ function parseApiReferenceLayoutItem(
                 type: "link",
                 text: item.link,
                 url: item.href,
-                icon: resolveIconPath(item.icon, absolutePathToConfig)
+                icon: resolveIconPath(item.icon, absolutePathToConfig),
+                target: item.target
             }
         ];
     } else if (isRawApiRefSectionConfiguration(item)) {
@@ -1276,13 +1284,15 @@ function convertNavbarLinks(
                 return {
                     type: "github",
                     url: CjsFdrSdk.Url(githubValue),
-                    viewers: undefined
+                    viewers: undefined,
+                    target: undefined
                 };
             } else {
                 return {
                     type: "github",
                     url: CjsFdrSdk.Url(githubValue.url),
-                    viewers: convertRoleToRoleIds(githubValue.viewers)
+                    viewers: convertRoleToRoleIds(githubValue.viewers),
+                    target: githubValue.target
                 };
             }
         }
@@ -1300,6 +1310,7 @@ function convertNavbarLinks(
                 links:
                     navbarLink.links?.map((link) => ({
                         href: link.href,
+                        target: link.target,
                         url: CjsFdrSdk.Url(link.url ?? link.href ?? "/"),
                         text: link.text,
                         icon: resolveIconPath(link.icon, absoluteFilepathToDocsConfig),
@@ -1314,6 +1325,7 @@ function convertNavbarLinks(
             type: navbarLink.type,
             text: navbarLink.text,
             url: CjsFdrSdk.Url(navbarLink.href ?? navbarLink.url ?? "/"),
+            target: navbarLink.target,
             icon: resolveIconPath(navbarLink.icon, absoluteFilepathToDocsConfig),
             rightIcon: resolveIconPath(navbarLink.rightIcon, absoluteFilepathToDocsConfig),
             rounded: navbarLink.rounded,

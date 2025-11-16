@@ -1,6 +1,4 @@
-import { type ClassReference } from "../ast/types/ClassReference";
-import { type Type } from "../ast/types/Type";
-import { type TypeParameter } from "../ast/types/TypeParameter";
+import { type Type } from "../ast/types/IType";
 import { type Generation } from "../context/generation-info";
 import { lazy } from "../utils/lazy";
 
@@ -28,11 +26,14 @@ export class Extern {
          * @param typeParameters - The generic type parameters (optional)
          * @returns A ClassReference for Action<T>
          */
-        Action: (typeParameters?: (ClassReference | TypeParameter | Type)[]) =>
+        Action: (typeParameters?: Type[]) =>
             this.csharp.classReference({
                 name: "Action",
                 namespace: "System",
-                generics: typeParameters ? typeParameters : undefined
+                generics: typeParameters ? typeParameters : undefined,
+                multipartMethodName: null, // can not be added to multipart form
+                multipartMethodNameForCollection: null, // can not be added to multipart form
+                isReferenceType: true // is historically a "reference" type
             }),
         /**
          * Creates a reference to System.Func<TArgs..., TResult> delegate.
@@ -41,10 +42,7 @@ export class Extern {
          * @param returnType - The return type (optional)
          * @returns A ClassReference for Func<TArgs..., TResult>
          */
-        Func: (
-            typeParameters?: (Type | TypeParameter | ClassReference)[],
-            returnType?: Type | TypeParameter | ClassReference
-        ) =>
+        Func: (typeParameters?: Type[], returnType?: Type) =>
             this.csharp.classReference({
                 name: "Func",
                 namespace: "System",
@@ -54,7 +52,10 @@ export class Extern {
                         : typeParameters
                     : returnType
                       ? [returnType]
-                      : undefined
+                      : undefined,
+                multipartMethodName: null, // can not be added to multipart form
+                multipartMethodNameForCollection: null, // can not be added to multipart form,
+                isReferenceType: true // is historically a "reference" type
             }),
         /**
          * Reference to System.DateOnly class.
@@ -96,7 +97,7 @@ export class Extern {
          * @param type - The element type
          * @returns A ClassReference for ReadOnlyMemory<T>
          */
-        ReadOnlyMemory: (type: Type | ClassReference | TypeParameter) =>
+        ReadOnlyMemory: (type: Type) =>
             this.csharp.classReference({
                 name: "ReadOnlyMemory",
                 namespace: "System",
@@ -120,6 +121,20 @@ export class Extern {
                 namespace: "System"
             }),
 
+        /**
+         * Reference to System.Type class.
+         *
+         * @returns A ClassReference for System.Type
+         */
+        Type: () =>
+            this.csharp.classReference({
+                name: "Type",
+                namespace: "System",
+                isReferenceType: true,
+                multipartMethodName: null, // can not be added to multipart form
+                multipartMethodNameForCollection: null, // can not be added to multipart form
+                fullyQualified: true
+            }),
         /**
          * Reference to System.TimeSpan class.
          */
@@ -180,7 +195,7 @@ export class Extern {
                          * @param elementType - The element type (optional)
                          * @returns A ClassReference for IAsyncEnumerable<T>
                          */
-                        IAsyncEnumerable: (elementType?: ClassReference | TypeParameter | Type) => {
+                        IAsyncEnumerable: (elementType?: Type) => {
                             return this.csharp.classReference({
                                 name: "IAsyncEnumerable",
                                 namespace: "System.Collections.Generic",
@@ -194,7 +209,7 @@ export class Extern {
                          * @param elementType - The element type (optional)
                          * @returns A ClassReference for IEnumerable<T>
                          */
-                        IEnumerable: (elementType?: ClassReference | TypeParameter | Type) => {
+                        IEnumerable: (elementType?: Type) => {
                             return this.csharp.classReference({
                                 name: "IEnumerable",
                                 namespace: "System.Collections.Generic",
@@ -209,10 +224,7 @@ export class Extern {
                          * @param valueType - The value type (optional)
                          * @returns A ClassReference for KeyValuePair<TKey, TValue>
                          */
-                        KeyValuePair: (
-                            keyType?: ClassReference | TypeParameter | Type,
-                            valueType?: ClassReference | TypeParameter | Type
-                        ) => {
+                        KeyValuePair: (keyType?: Type, valueType?: Type) => {
                             return this.csharp.classReference({
                                 name: "KeyValuePair",
                                 namespace: "System.Collections.Generic",
@@ -226,11 +238,12 @@ export class Extern {
                          * @param elementType - The element type (optional)
                          * @returns A ClassReference for List<T>
                          */
-                        List: (elementType?: ClassReference | TypeParameter | Type) => {
+                        List: (elementType?: Type) => {
                             return this.csharp.classReference({
                                 name: "List",
                                 namespace: "System.Collections.Generic",
-                                generics: elementType ? [elementType] : undefined
+                                generics: elementType ? [elementType] : undefined,
+                                isCollection: true
                             });
                         },
 
@@ -240,11 +253,12 @@ export class Extern {
                          * @param elementType - The element type (optional)
                          * @returns A ClassReference for HashSet<T>
                          */
-                        HashSet: (elementType?: ClassReference | TypeParameter | Type) => {
+                        HashSet: (elementType?: Type) => {
                             return this.csharp.classReference({
                                 name: "HashSet",
                                 namespace: "System.Collections.Generic",
-                                generics: elementType ? [elementType] : undefined
+                                generics: elementType ? [elementType] : undefined,
+                                isCollection: true
                             });
                         },
 
@@ -255,14 +269,12 @@ export class Extern {
                          * @param valueType - The value type (optional)
                          * @returns A ClassReference for Dictionary<TKey, TValue>
                          */
-                        Dictionary: (
-                            keyType?: ClassReference | TypeParameter | Type,
-                            valueType?: ClassReference | TypeParameter | Type
-                        ) => {
+                        Dictionary: (keyType?: Type, valueType?: Type) => {
                             return this.csharp.classReference({
                                 name: "Dictionary",
                                 namespace: "System.Collections.Generic",
-                                generics: keyType && valueType ? [keyType, valueType] : undefined
+                                generics: keyType && valueType ? [keyType, valueType] : undefined,
+                                isCollection: true
                             });
                         },
                         /**
@@ -272,10 +284,7 @@ export class Extern {
                          * @param valueType - The value type
                          * @returns A ClassReference for IDictionary<TKey, TValue>
                          */
-                        IDictionary: (
-                            keyType: Type | ClassReference | TypeParameter,
-                            valueType: Type | ClassReference | TypeParameter
-                        ) =>
+                        IDictionary: (keyType: Type, valueType: Type) =>
                             this.csharp.classReference({
                                 name: "IDictionary",
                                 namespace: "System.Collections.Generic",
@@ -594,7 +603,7 @@ export class Extern {
                                  * @param typeToConvert - The type to convert (optional)
                                  * @returns A ClassReference for JsonConverter<T>
                                  */
-                                JsonConverter: (typeToConvert?: ClassReference | TypeParameter | Type) => {
+                                JsonConverter: (typeToConvert?: Type) => {
                                     return this.csharp.classReference({
                                         name: "JsonConverter",
                                         namespace: "System.Text.Json.Serialization",
@@ -647,7 +656,7 @@ export class Extern {
                          * @param ofType - The result type (optional)
                          * @returns A ClassReference for Task<T>
                          */
-                        Task: (ofType?: ClassReference | TypeParameter | Type) => {
+                        Task: (ofType?: Type) => {
                             return this.csharp.classReference({
                                 name: "Task",
                                 namespace: "System.Threading.Tasks",
@@ -729,7 +738,7 @@ export class Extern {
          * @param generics - Array of generic type parameters (optional)
          * @returns A ClassReference for OneOf<T1, T2, ...>
          */
-        OneOf: (generics?: ClassReference[] | TypeParameter[] | Type[]) => {
+        OneOf: (generics?: Type[]) => {
             return this.csharp.classReference({
                 name: "OneOf",
                 namespace: "OneOf",
@@ -743,7 +752,7 @@ export class Extern {
          * @param generics - Array of generic type parameters (optional)
          * @returns A ClassReference for OneOfBase<T1, T2, ...>
          */
-        OneOfBase: (generics?: ClassReference[] | TypeParameter[] | Type[]) => {
+        OneOfBase: (generics?: Type[]) => {
             return this.csharp.classReference({
                 name: "OneOfBase",
                 namespace: "OneOf",

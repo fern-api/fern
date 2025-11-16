@@ -68,6 +68,10 @@ class TestSubmissionUpdateInfo_GradedTestCase(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from ...commons.types.key_value_pair import KeyValuePair  # noqa: E402, F401, I001
+from ...commons.types.map_value import MapValue  # noqa: E402, F401, I001
+
+
 class TestSubmissionUpdateInfo_RecordedTestCase(UniversalBaseModel):
     type: typing.Literal["recordedTestCase"] = "recordedTestCase"
     test_case_id: typing_extensions.Annotated[TestCaseId, FieldMetadata(alias="testCaseId")]
@@ -96,12 +100,15 @@ class TestSubmissionUpdateInfo_Finished(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-TestSubmissionUpdateInfo = typing.Union[
-    TestSubmissionUpdateInfo_Running,
-    TestSubmissionUpdateInfo_Stopped,
-    TestSubmissionUpdateInfo_Errored,
-    TestSubmissionUpdateInfo_GradedTestCase,
-    TestSubmissionUpdateInfo_RecordedTestCase,
-    TestSubmissionUpdateInfo_Finished,
+TestSubmissionUpdateInfo = typing_extensions.Annotated[
+    typing.Union[
+        TestSubmissionUpdateInfo_Running,
+        TestSubmissionUpdateInfo_Stopped,
+        TestSubmissionUpdateInfo_Errored,
+        TestSubmissionUpdateInfo_GradedTestCase,
+        TestSubmissionUpdateInfo_RecordedTestCase,
+        TestSubmissionUpdateInfo_Finished,
+    ],
+    pydantic.Field(discriminator="type"),
 ]
 update_forward_refs(TestSubmissionUpdateInfo_GradedTestCase)

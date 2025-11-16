@@ -28,12 +28,6 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/test",
-              "path-parameters": {
-                "corpus_key": {
-                  "docs": "The unique key",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -56,7 +50,12 @@
                 "content-type": "multipart/form-data",
                 "headers": undefined,
                 "name": "PostTestRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "corpus_key": {
+                    "docs": "The unique key",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -87,12 +86,6 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/example",
-              "path-parameters": {
-                "corpus_key": {
-                  "docs": "The unique key",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": {
                   "properties": {
@@ -105,7 +98,12 @@
                 "content-type": "application/json",
                 "headers": undefined,
                 "name": "PostExampleRequest",
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "corpus_key": {
+                    "docs": "The unique key",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": undefined,
               },
               "response": {
@@ -134,13 +132,13 @@
         Test multipart request with different content types.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        corpus_key:
-          type: string
-          docs: The unique key
       display-name: Test upload
       request:
         name: PostTestRequest
+        path-parameters:
+          corpus_key:
+            type: string
+            docs: The unique key
         body:
           properties:
             metadata:
@@ -176,13 +174,13 @@
         Test request with dual content types.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        corpus_key:
-          type: string
-          docs: The unique key
       display-name: Test with dual Content-Type request types
       request:
         name: PostExampleRequest
+        path-parameters:
+          corpus_key:
+            type: string
+            docs: The unique key
         body:
           properties:
             metadata:

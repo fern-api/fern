@@ -76,16 +76,22 @@ types:
 
   PostHogConfig:
     properties:
-      api-key: string
+      api-key:
+        type: string
+        docs: Your PostHog project API key. Defaults to the api-host of "https://us.i.posthog.com".
       endpoint: optional<string>
 
   GTMConfig:
     properties:
-      container-id: string
+      container-id:
+        type: string
+        docs: Your Google Tag Manager container ID. Must start with "GTM-".
 
   GoogleAnalytics4Config:
     properties:
-      measurement-id: string
+      measurement-id:
+        type: string
+        docs: Your Google Analytics 4 measurement ID. Must start with "G-".
 
   # AmplitudeConfig:
   #   properties:
@@ -133,7 +139,7 @@ types:
       instances: list<DocsInstance>
       title:
         type: optional<string>
-        docs: used as tab bar title, and in the navbar if no logo is defined
+        docs: A string that is used as the tab bar title.
       analytics:
         type: optional<AnalyticsConfig>
         docs: |
@@ -150,7 +156,9 @@ types:
       tabs: optional<map<TabId, TabConfig>>
       versions: optional<list<VersionConfig>>
       products: optional<list<ProductConfig>>
-      landing-page: optional<PageConfiguration>
+      landing-page:
+        type: optional<PageConfiguration>
+        docs: Creates a landing page for your documentation website.
       navigation:
         type: optional<NavigationConfig>
         docs: The navigation config is skipped when multiple versions are present.
@@ -158,7 +166,11 @@ types:
       "footer-links": optional<FooterLinksConfig>
       "page-actions": optional<PageActionsConfig>
       experimental: optional<ExperimentalConfig>
-      "default-language": optional<ProgrammingLanguage>
+      "default-language":
+        type: optional<ProgrammingLanguage>
+        docs: |
+          Sets the default language displayed by code snippets in the API Reference.
+          Options include: typescript, python, java, go, ruby, csharp, php, swift, curl
 
       languages: optional<list<Language>>
 
@@ -175,7 +187,9 @@ types:
 
       # branding
       logo: optional<LogoConfiguration>
-      favicon: optional<string>
+      favicon:
+        type: optional<string>
+        docs: Relative filepath to the favicon.
       background-image: optional<BackgroundImageConfiguration>
       colors: optional<ColorsConfiguration>
       typography: optional<DocsTypographyConfig>
@@ -194,7 +208,10 @@ types:
 
   PageActionsConfig:
     properties:
-      default: optional<PageActionOption>
+      default:
+        type: optional<PageActionOption>
+        docs: |
+          The default page action to display. Options: copy-page, view-as-markdown, ask-ai, chatgpt, claude, cursor, vscode.
       options: optional<PageActionOptions>
 
   PageActionOption:
@@ -212,24 +229,69 @@ types:
 
   PageActionOptions:
     properties:
-      copy-page: optional<boolean>
-      view-as-markdown: optional<boolean>
-      ask-ai: optional<boolean>
-      chatgpt: optional<boolean>
-      claude: optional<boolean>
-      cursor: optional<boolean>
-      vscode: optional<boolean>
+      copy-page:
+        type: optional<boolean>
+        docs: |
+          When enabled, displays a button that allows users to copy the entire page content to their clipboard for easy sharing or reference.
+
+          @default: true
+      view-as-markdown:
+        type: optional<boolean>
+        docs: |
+          When enabled, displays a button that allows users to view the raw Markdown source of the current page.
+
+          @default: true
+      ask-ai:
+        type: optional<boolean>
+        docs: |
+          When enabled, displays an "Ask AI" button that allows users to ask questions about the page content using AI-powered assistance.
+
+          @default: true
+      chatgpt:
+        type: optional<boolean>
+        docs: |
+          When enabled, displays an "Open in ChatGPT" button that allows users to send the page content to ChatGPT for further exploration and Q&A.
+
+          @default: false
+      claude:
+        type: optional<boolean>
+        docs: |
+          When enabled, displays an "Open in Claude" button that allows users to send the page content to Claude for further exploration and Q&A.
+
+          @default: false
+      cursor:
+        type: optional<boolean>
+        docs: |
+          When enabled, displays an "Open in Cursor" button that allows users to open the page content in Cursor IDE with AI-powered code assistance.
+
+          @default: false
+      vscode:
+        type: optional<boolean>
+        docs: |
+          When enabled, displays an "Open in VS Code" button that allows users to open the page content in Visual Studio Code for editing and development.
+
+          @default: false
 
   AIChatConfig:
     properties:
       model: optional<AIChatModel>
       "system-prompt":
         type: optional<string>
-        docs: This is a system prompt that acts as context given to the LLM for AI chat.
+        docs: |
+          By default, Ask Fern uses system prompts to finetune AI search results. Add a custom prompt here to override it.
+          See Anthropic's prompting guide for ideas and examples.
       location:
         type: optional<list<AIChatLocation>>
+        docs: |
+          Specifies where Ask Fern will be available. Options:
+          - `docs` enables Ask Fern on your documentation site
+          - `slack` enables Ask Fern in Slack
+          - `discord` enables Ask Fern in Discord
+
+          Most users should enable Ask Fern for both `docs` and either `slack` or `discord`.
       datasources:
         type: optional<list<AIChatDatasource>>
+        docs: Additional content sources that Ask Fern should index and search.
 
   AIChatLocation:
     enum:
@@ -244,8 +306,12 @@ types:
 
   AIChatWebsiteDatasource:
     properties:
-      url: string
-      title: optional<string>
+      url:
+        type: string
+        docs: The URL of the website to index. Ask Fern will crawl and index the content from this URL.
+      title:
+        type: optional<string>
+        docs: An optional display name for this datasource. This helps users understand where the information is coming from when Ask Fern cites content from this source.
 
   AIChatModel:
     enum:
@@ -270,6 +336,7 @@ types:
           If `href` is set, clicking on the tab will redirect to the given URL.
 
           Tabs with `href` must not have children in the navigation config.
+      target: optional<Target>
       changelog: optional<ChangelogFolderRelativePath>
 
   ChangelogFolderRelativePath:
@@ -288,8 +355,12 @@ types:
 
   DocsInstance:
     properties:
-      url: string
-      "custom-domain": optional<CustomDomain>
+      url:
+        type: string
+        docs: The URL where your Fern documentation is deployed. Must contain the suffix `docs.buildwithfern.com`.
+      "custom-domain":
+        type: optional<CustomDomain>
+        docs: The custom domain where your documentation is hosted. Learn more about setting up a custom domain.
       private:
         type: optional<boolean>
         docs: This config option is no longer used. Please reach out to the Fern Team if you want to enable private docs.
@@ -297,9 +368,13 @@ types:
       "edit-this-page":
         type: optional<EditThisPageConfig>
         docs: |
-          If `edit-this-page` is set, Fern will add an "Edit this page" link to the bottom of each page that links to the given GitHub repository.
+          If specified, adds an "Edit this page" link to the bottom of each page that links to the given public GitHub repository.
         availability: in-development
-      audiences: optional<Audience>
+      audiences:
+        type: optional<Audience>
+        docs: |
+          Specify which audiences this instance serves (e.g., internal developers, beta testers, public customers).
+          You can use audiences to control which versions and products appear in each documentation instance, enabling you to create separate sites for different user groups. Content is included when its audience tag matches the instance audience. Content without an audience tag is included by default.
 
   CustomDomain:
     discriminated: false
@@ -318,12 +393,16 @@ types:
         type: optional<string>
         docs: |
           @default: `github.com`
-      owner: string
-      repo: string
+      owner:
+        type: string
+        docs: The GitHub organization that owns the documentation repository.
+      repo:
+        type: string
+        docs: The name of the GitHub repository containing your fern folder.
       branch:
         type: optional<string>
         docs: |
-          @default: `main`
+          The branch of the repository you would like the GitHub editor to open a PR to. Default is `main`.
 
   VersionConfig:
     extends: [WithPermissions, WithFeatureFlags]
@@ -340,6 +419,10 @@ types:
         docs: |
           If `availability` is set to `deprecated`, Fern will display a warning banner on the docs site.
       audiences: optional<Audience>
+      hidden:
+        type: optional<boolean>
+        docs: |
+          If true, this version will be hidden from navigation, search, and indexing, but still accessible via direct URL.
 
   Availability:
     enum:
@@ -422,10 +505,20 @@ types:
 
   LogoConfiguration:
     properties:
-      dark: optional<string>
-      light: optional<string>
+      dark:
+        type: optional<string>
+        docs: |
+          Path to your dark mode logo file, relative to the docs root. SVG format is recommended for optimal quality.
+          Example: `assets/images/logo-dark.svg`
+      light:
+        type: optional<string>
+        docs: |
+          Path to your light mode logo file, relative to the docs root. SVG format is recommended for optimal quality.
+          Example: `assets/images/logo-light.svg`
       height: optional<double> # todo: this should be a string like `32px` or `2rem`
-      href: optional<string>
+      href:
+        type: optional<string>
+        docs: The URL that users will be directed to when clicking the logo. Typically your company's homepage or app.
 
   BackgroundImageConfiguration:
     docs: This background image is used to customize the appearance of your docs site.
@@ -436,14 +529,30 @@ types:
 
   BackgroundImageThemedConfig:
     properties:
-      dark: optional<string>
-      light: optional<string>
+      dark:
+        type: optional<string>
+        docs: Relative filepath to the dark-mode background image.
+      light:
+        type: optional<string>
+        docs: Relative filepath to the light-mode background image.
 
   DocsTypographyConfig:
     properties:
-      headingsFont: optional<FontConfig>
-      bodyFont: optional<FontConfig>
-      codeFont: optional<FontConfig>
+      headingsFont:
+        type: optional<FontConfig>
+        docs: |
+          The font used for headings, titles, and other prominent text elements. Can be the same as your body font
+          if you prefer a unified look. Supports multiple weights for different heading levels.
+      bodyFont:
+        type: optional<FontConfig>
+        docs: |
+          The font used for all body text including paragraphs, lists, and general content.
+          For optimal performance, use WOFF2 format.
+      codeFont:
+        type: optional<FontConfig>
+        docs: |
+          The font used for code blocks and inline code. Monospace fonts are recommended for better code readability.
+          Popular choices include JetBrains Mono, Fira Code, and Source Code Pro.
 
   LayoutConfig:
     availability: generally-available
@@ -552,22 +661,75 @@ types:
 
   DocsSettingsConfig:
     properties:
-      search-text: optional<string>
-      disable-search: optional<boolean>
-      dark-mode-code: optional<boolean>
-      default-search-filters: optional<boolean>
-      http-snippets: optional<HttpSnippetsConfig>
-      hide-404-page: optional<boolean>
-      use-javascript-as-typescript: optional<boolean>
-      disable-explorer-proxy: optional<boolean>
+      search-text:
+        type: optional<string>
+        docs: |
+          The text to display in the searchbar.
+
+          @default: Search
+      disable-search:
+        type: optional<boolean>
+        docs: |
+          If set to true, the searchbar will be disabled. Use this if you want to use a custom search solution.
+
+          @default: false
+      dark-mode-code:
+        type: optional<boolean>
+        docs: |
+          If set to true, the code blocks will be displayed in dark mode, regardless of the selected theme.
+
+          @default: false
+      default-search-filters:
+        type: optional<boolean>
+        docs: |
+          By default (`false`), search will display results for pages across all products and versions.
+          If set to true, search will display results for pages within the current product and version.
+
+          @default: false
+      http-snippets:
+        type: optional<HttpSnippetsConfig>
+        docs: |
+          Controls the display of HTTP snippets in the API Reference. HTTP snippets are enabled by default for all languages.
+          - Set to `false` to disable HTTP snippets completely
+          - Provide a list of languages to enable snippets for specific languages only
+
+          @default: true
+      hide-404-page:
+        type: optional<boolean>
+        docs: |
+          If set to true, when a user navigates to a page that does not exist, they will be redirected to the home page.
+          By default, a 404 page will be displayed.
+
+          @default: false
+      use-javascript-as-typescript:
+        type: optional<boolean>
+        docs: |
+          If set to true, the TypeScript snippets will be displayed as JavaScript snippets in the API Reference.
+
+          @default: false
+      disable-explorer-proxy:
+        type: optional<boolean>
+        docs: |
+          If set to true, the API Explorer will bypass the proxy when sending requests directly to your API.
+
+          When this feature is enabled, your API must have Cross-Origin Resource Sharing (CORS) enabled to allow requests from the documentation domain.
+
+          @default: false
       disable-analytics: optional<boolean>
       language: optional<Language>
 
   ThemeConfig:
     properties:
-      sidebar: SidebarThemeConfig
-      body: BodyThemeConfig
-      tabs: TabsThemeConfig
+      sidebar: optional<SidebarThemeConfig>
+      body: optional<BodyThemeConfig>
+      tabs: optional<TabsThemeConfig>
+      page-actions: optional<PageActionsThemeConfig>
+      footer-nav: optional<FooterNavThemeConfig>
+
+  FooterNavThemeConfig:
+    enum:
+      - default
+      - minimal
 
   TabsThemeConfig:
     enum:
@@ -583,6 +745,11 @@ types:
     enum:
       - default
       - minimal
+
+  PageActionsThemeConfig:
+    enum:
+      - default
+      - toolbar
 
   HttpSnippetsConfig:
     discriminated: false
@@ -692,24 +859,31 @@ types:
       name:
         type: optional<string>
         docs: |
-          If the `name` is not supplied, Fern will default it to a generated name that will be used to reference your custom font in the eventually injected CSS in the docs.
+          The name of the font. Defaults to a generated name that will be used to reference your custom font in the eventually injected CSS.
       path:
         type: optional<string>
-        docs: The relative path of the font file. To define multiple weight and style variations of the same font, use `paths` instead.
+        docs: |
+          The path to your font file, relative to your docs folder. Use this when you have a single font file.
+          For multiple font files (like separate files for bold, italic etc), use `paths` instead.
       weight:
         type: optional<FontWeight>
         docs: |
+          The weight of the font. Can be a number (400, 700) or a range for variable fonts (400 700).
+          Common values: 400 (normal), 700 (bold).
+
           @default: `100 900`.
         availability: in-development
       style:
         type: optional<FontStyle>
         docs: |
+          The font style, either "normal" or "italic". Defaults to "normal" if not specified.
+
           @default: `normal`.
         availability: in-development
       paths:
         type: optional<list<FontConfigPath>>
         docs: |
-          Use this instead of `path` if you want to specify multiple font files for different font weights and styles.
+          A list of font files for particular weights. Each element in the list includes a `path`, `weight`, and `style` property.
         availability: in-development
       display:
         type: optional<FontDisplay>
@@ -833,6 +1007,9 @@ types:
         type: optional<boolean>
         docs: Defaults to false
       snippets: optional<SnippetsConfiguration>
+      postman:
+        type: optional<string>
+        docs: URL to a Postman collection for this API reference
       summary:
         type: optional<string>
         docs: Relative path to the markdown file
@@ -944,6 +1121,7 @@ types:
       link: string
       href: string
       icon: optional<string>
+      target: optional<Target>
 
   VersionedSnippetLanguageConfiguration:
     properties:
@@ -976,7 +1154,8 @@ types:
       accent-primary:
         type: optional<ColorConfig>
         docs: |
-          The primary accent color is used for buttons, links, and other interactive elements.
+          The primary brand color used for interactive elements like links, buttons, and highlighted text.
+          Configure separate colors for light and dark modes to ensure proper contrast and visibility.
 
           @default: #818CF8
 
@@ -990,7 +1169,8 @@ types:
       background:
         type: optional<ColorConfig>
         docs: |
-          The background color is used for the main background of the docs site.
+          The main background color for all documentation pages. Choose colors that provide good contrast with text
+          and complement your brand colors. Dark mode colors should reduce eye strain.
 
           @default:
             dark: #111111
@@ -1001,7 +1181,8 @@ types:
       border:
         type: optional<ColorConfig>
         docs: |
-          The border color is used for the borders of cards and other elements.
+          Used for dividing lines, borders around elements, and visual separators. Choose subtle colors that create
+          clear boundaries without being too prominent.
 
           @default:
             dark: black/12%
@@ -1017,19 +1198,20 @@ types:
       sidebar-background:
         type: optional<ColorConfig>
         docs: |
-          If `sidebarBackground` is not set, the sidebar will render with a transparent background without a border.
-          If `sidebarBackground` is set, the sidebar will also render a 1px border on the right side.
+          Background color for the navigation sidebar. When specified, includes a 1px border on the right side.
+          If omitted, the sidebar uses a transparent background without a border.
 
       header-background:
         type: optional<ColorConfig>
         docs: |
-          If `headerBackground` is not set, the header will render with a transparent background, with a 1px faded border on the bottom.
-          If `headerBackground` is set, the header will render with a solid background, with a 1px solid border on the bottom.
+          Background color for the top navigation header. When specified, includes a 1px solid border on the bottom.
+          If omitted, the header uses a transparent background with a subtle gradient border.
 
       card-background:
         type: optional<ColorConfig>
         docs: |
-          This is the background color of cards and code blocks.
+          Background color for cards, code blocks, and other contained elements. Should be slightly different from the
+          main background to create visual hierarchy while maintaining readability.
 
           @default:
             dark: white/3.5%
@@ -1074,15 +1256,40 @@ types:
   NavbarLinkConfig:
     extends: [WithViewers]
     properties:
-      href: optional<string>
+      href:
+        type: optional<string>
+        docs: |
+          The URL once you click on the button.
+          Example: https://buildwithfern.com/contact
+      target: optional<Target>
       url:
         type: optional<string>
         availability: deprecated
         docs: Use `href` instead.
-      text: optional<string>
-      icon: optional<string>
-      rightIcon: optional<string>
-      rounded: optional<boolean>
+      text:
+        type: optional<string>
+        docs: Text inside the button.
+      icon:
+        type: optional<string>
+        docs: |
+          The icon to be used in the button. This icon will appear to the **left** of the text content.
+          Icons can be in three formats:
+          - **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.
+          - **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.
+          - **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `"<svg>...</svg>"`).
+      rightIcon:
+        type: optional<string>
+        docs: |
+          The icon to be used in the button. This icon will appear to the **right** of the text content.
+          Icons can be in three formats:
+          - **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.
+          - **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.
+          - **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `"<svg>...</svg>"`).
+
+          By default, the `rightIcon` for a `filled` button is set to `arrow-right`.
+      rounded:
+        type: optional<boolean>
+        docs: When `true`, the border radius of the button will be fully rounded.
 
   NavbarGithubConfig:
     discriminated: false
@@ -1094,21 +1301,46 @@ types:
     extends: [WithViewers]
     properties:
       url: string
+      target: optional<Target>
 
   FooterLinksConfig:
     properties:
-      github: optional<string>
-      twitter: optional<string>
-      x: optional<string>
-      linkedin: optional<string>
-      youtube: optional<string>
-      instagram: optional<string>
-      facebook: optional<string>
-      discord: optional<string>
-      slack: optional<string>
-      hackernews: optional<string>
-      medium: optional<string>
-      website: optional<string>
+      github:
+        type: optional<string>
+        docs: URL to your GitHub repository or organization.
+      twitter:
+        type: optional<string>
+        docs: URL to your Twitter profile. Use `footer-links.x` for the new X branding.
+      x:
+        type: optional<string>
+        docs: URL to your X (formerly Twitter) profile.
+      linkedin:
+        type: optional<string>
+        docs: URL to your LinkedIn company page or profile.
+      youtube:
+        type: optional<string>
+        docs: URL to your YouTube channel.
+      instagram:
+        type: optional<string>
+        docs: URL to your Instagram profile.
+      facebook:
+        type: optional<string>
+        docs: URL to your Facebook page.
+      discord:
+        type: optional<string>
+        docs: URL to your Discord server invite.
+      slack:
+        type: optional<string>
+        docs: URL to your Slack community or workspace.
+      hackernews:
+        type: optional<string>
+        docs: URL to your Hacker News profile.
+      medium:
+        type: optional<string>
+        docs: URL to your Medium publication or profile.
+      website:
+        type: optional<string>
+        docs: URL to your main website or homepage.
 
   CssConfig:
     docs: |-
@@ -1202,23 +1434,57 @@ types:
       These settings are applied globally, but can be overridden on a per-page basis using frontmatter.
     availability: pre-release
     properties:
-      "og:site_name": optional<string>
-      "og:title": optional<string>
-      "og:description": optional<string>
-      "og:url": optional<string>
-      "og:image": optional<string>
-      "og:image:width": optional<double>
-      "og:image:height": optional<double>
-      "og:locale": optional<string>
-      "og:logo": optional<string>
-      "twitter:title": optional<string>
-      "twitter:description": optional<string>
-      "twitter:handle": optional<string>
-      "twitter:image": optional<string>
-      "twitter:site": optional<string>
+      "og:site_name":
+        type: optional<string>
+        docs: The name of your website for Open Graph tags.
+      "og:title":
+        type: optional<string>
+        docs: The title shown in social media previews.
+      "og:description":
+        type: optional<string>
+        docs: The description shown in social media previews.
+      "og:url":
+        type: optional<string>
+        docs: The canonical URL of your documentation.
+      "og:image":
+        type: optional<string>
+        docs: The image shown in social media previews. Recommended size is 1200x630 pixels.
+      "og:image:width":
+        type: optional<double>
+        docs: The width of your Open Graph image in pixels.
+      "og:image:height":
+        type: optional<double>
+        docs: The height of your Open Graph image in pixels.
+      "og:locale":
+        type: optional<string>
+        docs: The locale of your content (e.g., "en_US").
+      "og:logo":
+        type: optional<string>
+        docs: URL to your company logo.
+      "twitter:title":
+        type: optional<string>
+        docs: The title shown in Twitter Card previews.
+      "twitter:description":
+        type: optional<string>
+        docs: The description shown in Twitter Card previews.
+      "twitter:handle":
+        type: optional<string>
+        docs: Your company's Twitter handle.
+      "twitter:image":
+        type: optional<string>
+        docs: The image shown in Twitter Card previews.
+      "twitter:site":
+        type: optional<string>
+        docs: The Twitter handle for your website.
       "twitter:url": optional<string>
-      "twitter:card": optional<TwitterCardSetting>
-      canonical-host: optional<string>
+      "twitter:card":
+        type: optional<TwitterCardSetting>
+        docs: The Twitter Card type. Options are `summary`, `summary_large_image`, `app`, or `player`.
+      canonical-host:
+        type: optional<string>
+        docs: |
+          The host of your documentation website. This will be used to set the canonical URL for metadata tags and documents like the sitemap.
+          Defaults to the URL defined in the `instances` configuration.
 
   TwitterCardSetting:
     enum:
@@ -1230,7 +1496,7 @@ types:
   RedirectConfig:
     availability: in-development
     docs: |
-      The `redirects` object allows you to redirect traffic from one path to another, i.e.
+      The `redirects` object allows you to redirect traffic from one path to another. You can redirect exact paths or use dynamic patterns with regex parameters like `:slug` to handle bulk redirects. You can redirect to internal paths within your site or external URLs.
 
       ```yaml
       redirects:
@@ -1242,13 +1508,18 @@ types:
     properties:
       source:
         type: string
-        docs: The path that you want to redirect from, i.e. `/old-path`
+        docs: The path you want to redirect from.
       destination:
         type: string
-        docs: The path that you want to redirect to, i.e. `/new-path`
+        docs: |
+          The path you want to route to. Can be an internal path (`/new-path`) or an external URL (`https://example.com`).
+          External URLs must include the full address, including `https`.
       permanent:
         type: optional<boolean>
-        # default: false
+        docs: |
+          By default, uses the 308 status code to instructs clients and search engines to cache the redirect forever. Set to `false` only if you need a temporary redirect using the 307 status code, which won't be cached.
+
+          @default: true
 
   IntegrationsConfig:
     properties:
@@ -1281,9 +1552,14 @@ types:
         type: optional<boolean>
         availability: pre-release
         docs: |
-          If `dynamic-snippets` is set to true, snippets will be created using a dynamic method.
+          By default, SDK snippets are static code examples that are displayed in your API Reference. Alternatively, you can use dynamic SDK snippets that allow users to modify parameters and see code examples update in real time.
 
-          This allows users to generate snippets for all SDK languages.
+          Enable dynamic snippets in `docs.yml`, then configure them by following the SDK snippets setup instructions.
+      ai-examples:
+        type: optional<boolean>
+        availability: pre-release
+        docs: |
+          Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
 
   PlaygroundSettings:
     properties:
@@ -1365,6 +1641,20 @@ types:
       href:
         type: string
         docs: The absolute URL to the product.
+      target:
+        type: optional<Target>
+        docs: The target of the URL
+
+  Target:
+    enum:
+      - name: blank
+        value: _blank
+      - name: self
+        value: _self
+      - name: parent
+        value: _parent
+      - name: top
+        value: _top
 
   ProductFileConfig:
     properties:

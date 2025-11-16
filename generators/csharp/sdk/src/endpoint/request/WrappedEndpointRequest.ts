@@ -12,7 +12,7 @@ import {
     ServiceId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-
+import { fail } from "assert";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { RawClient } from "../http/RawClient";
 import {
@@ -43,9 +43,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     public getParameterType(): ast.Type {
-        return this.csharp.Type.reference(
-            this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName)
-        );
+        return this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
     }
 
     public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {
@@ -70,8 +68,8 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 writer.write(`var ${this.names.variables.query} = `);
                 writer.writeNodeStatement(
                     this.csharp.dictionary({
-                        keyType: this.csharp.Type.string,
-                        valueType: this.csharp.Type.object,
+                        keyType: this.Primitive.string,
+                        valueType: this.Primitive.object,
                         values: undefined
                     })
                 );
@@ -113,7 +111,8 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     public getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined {
-        const service = this.context.getHttpServiceOrThrow(this.serviceId);
+        const service =
+            this.context.getHttpService(this.serviceId) ?? fail(`Service with id ${this.serviceId} not found`);
         const headers = [...service.headers, ...this.endpoint.headers];
         if (headers.length === 0) {
             return undefined;
@@ -133,11 +132,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 writer.write(`var ${this.names.variables.headers} = `);
                 writer.writeNodeStatement(
                     this.csharp.instantiateClass({
-                        classReference: this.types.Headers,
+                        classReference: this.Types.Headers,
                         arguments_: [
                             this.csharp.dictionary({
-                                keyType: this.csharp.Type.string,
-                                valueType: this.csharp.Type.string,
+                                keyType: this.Primitive.string,
+                                valueType: this.Primitive.string,
                                 values: {
                                     type: "entries",
                                     entries: requiredHeaders.map((header) => {
@@ -215,13 +214,13 @@ export class WrappedEndpointRequest extends EndpointRequest {
         if (this.isDateOrDateTime({ type: "datetime", typeReference: reference })) {
             return this.csharp.codeblock((writer) => {
                 writer.write(`${parameter}${maybeDotValue}.ToString(`);
-                writer.writeNode(this.types.Constants);
+                writer.writeNode(this.Types.Constants);
                 writer.write(".DateTimeFormat)");
             });
         } else if (this.isDateOrDateTime({ type: "date", typeReference: reference })) {
             return this.csharp.codeblock((writer) => {
                 writer.write(`${parameter}${maybeDotValue}.ToString(`);
-                writer.writeNode(this.types.Constants);
+                writer.writeNode(this.Types.Constants);
                 writer.write(".DateFormat)");
             });
         } else if (this.isEnum({ typeReference: reference })) {
@@ -234,7 +233,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             return this.csharp.codeblock((writer) => {
                 writer.writeNode(
                     this.csharp.invokeMethod({
-                        on: this.types.JsonUtils,
+                        on: this.Types.JsonUtils,
                         method: "Serialize",
                         arguments_: [this.csharp.codeblock(`${parameter}${maybeDotValue}`)]
                     })
@@ -289,7 +288,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             }
             case "primitive": {
                 const csharpType = this.context.csharpTypeMapper.convert({ reference: typeReference });
-                return is.Type.string(csharpType);
+                return is.Primitive.string(csharpType);
             }
             case "unknown": {
                 return false;

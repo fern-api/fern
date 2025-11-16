@@ -1,0 +1,2404 @@
+{
+  "apiDisplayName": undefined,
+  "apiDocs": undefined,
+  "apiName": {
+    "camelCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+    "originalName": "",
+    "pascalCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+    "screamingSnakeCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+    "snakeCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+  },
+  "apiPlayground": undefined,
+  "apiVersion": undefined,
+  "audiences": undefined,
+  "auth": {
+    "docs": undefined,
+    "requirement": "ANY",
+    "schemes": [
+      {
+        "_visit": [Function],
+        "docs": "The web3 wallet of the end user",
+        "headerEnvVar": undefined,
+        "key": "wallet",
+        "name": {
+          "name": {
+            "camelCase": {
+              "safeName": "apiKey",
+              "unsafeName": "apiKey",
+            },
+            "originalName": "apiKey",
+            "pascalCase": {
+              "safeName": "ApiKey",
+              "unsafeName": "ApiKey",
+            },
+            "screamingSnakeCase": {
+              "safeName": "API_KEY",
+              "unsafeName": "API_KEY",
+            },
+            "snakeCase": {
+              "safeName": "api_key",
+              "unsafeName": "api_key",
+            },
+          },
+          "wireValue": "x-coinflow-auth-wallet",
+        },
+        "prefix": undefined,
+        "type": "header",
+        "valueType": {
+          "_visit": [Function],
+          "container": {
+            "_visit": [Function],
+            "optional": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": undefined,
+                },
+              },
+              "type": "primitive",
+            },
+            "type": "optional",
+          },
+          "type": "container",
+        },
+      },
+      {
+        "_visit": [Function],
+        "docs": "The blockchain associated with the end user",
+        "headerEnvVar": undefined,
+        "key": "blockchain",
+        "name": {
+          "name": {
+            "camelCase": {
+              "safeName": "apiKey",
+              "unsafeName": "apiKey",
+            },
+            "originalName": "apiKey",
+            "pascalCase": {
+              "safeName": "ApiKey",
+              "unsafeName": "ApiKey",
+            },
+            "screamingSnakeCase": {
+              "safeName": "API_KEY",
+              "unsafeName": "API_KEY",
+            },
+            "snakeCase": {
+              "safeName": "api_key",
+              "unsafeName": "api_key",
+            },
+          },
+          "wireValue": "x-coinflow-auth-blockchain",
+        },
+        "prefix": undefined,
+        "type": "header",
+        "valueType": {
+          "_visit": [Function],
+          "container": {
+            "_visit": [Function],
+            "optional": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": undefined,
+                },
+              },
+              "type": "primitive",
+            },
+            "type": "optional",
+          },
+          "type": "container",
+        },
+      },
+      {
+        "_visit": [Function],
+        "docs": "The external identifier of the end user",
+        "headerEnvVar": undefined,
+        "key": "userId",
+        "name": {
+          "name": {
+            "camelCase": {
+              "safeName": "apiKey",
+              "unsafeName": "apiKey",
+            },
+            "originalName": "apiKey",
+            "pascalCase": {
+              "safeName": "ApiKey",
+              "unsafeName": "ApiKey",
+            },
+            "screamingSnakeCase": {
+              "safeName": "API_KEY",
+              "unsafeName": "API_KEY",
+            },
+            "snakeCase": {
+              "safeName": "api_key",
+              "unsafeName": "api_key",
+            },
+          },
+          "wireValue": "x-coinflow-auth-user-id",
+        },
+        "prefix": undefined,
+        "type": "header",
+        "valueType": {
+          "_visit": [Function],
+          "container": {
+            "_visit": [Function],
+            "optional": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": undefined,
+                },
+              },
+              "type": "primitive",
+            },
+            "type": "optional",
+          },
+          "type": "container",
+        },
+      },
+      {
+        "_visit": [Function],
+        "docs": "The API key of the merchant",
+        "headerEnvVar": undefined,
+        "key": "merchant",
+        "name": {
+          "name": {
+            "camelCase": {
+              "safeName": "apiKey",
+              "unsafeName": "apiKey",
+            },
+            "originalName": "apiKey",
+            "pascalCase": {
+              "safeName": "ApiKey",
+              "unsafeName": "ApiKey",
+            },
+            "screamingSnakeCase": {
+              "safeName": "API_KEY",
+              "unsafeName": "API_KEY",
+            },
+            "snakeCase": {
+              "safeName": "api_key",
+              "unsafeName": "api_key",
+            },
+          },
+          "wireValue": "Authorization",
+        },
+        "prefix": undefined,
+        "type": "header",
+        "valueType": {
+          "_visit": [Function],
+          "container": {
+            "_visit": [Function],
+            "optional": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": undefined,
+                },
+              },
+              "type": "primitive",
+            },
+            "type": "optional",
+          },
+          "type": "container",
+        },
+      },
+      {
+        "_visit": [Function],
+        "docs": undefined,
+        "headerEnvVar": undefined,
+        "key": "admin",
+        "name": {
+          "name": {
+            "camelCase": {
+              "safeName": "apiKey",
+              "unsafeName": "apiKey",
+            },
+            "originalName": "apiKey",
+            "pascalCase": {
+              "safeName": "ApiKey",
+              "unsafeName": "ApiKey",
+            },
+            "screamingSnakeCase": {
+              "safeName": "API_KEY",
+              "unsafeName": "API_KEY",
+            },
+            "snakeCase": {
+              "safeName": "api_key",
+              "unsafeName": "api_key",
+            },
+          },
+          "wireValue": "Authorization",
+        },
+        "prefix": undefined,
+        "type": "header",
+        "valueType": {
+          "_visit": [Function],
+          "container": {
+            "_visit": [Function],
+            "optional": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": undefined,
+                },
+              },
+              "type": "primitive",
+            },
+            "type": "optional",
+          },
+          "type": "container",
+        },
+      },
+    ],
+  },
+  "basePath": undefined,
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "dynamic": undefined,
+  "environments": {
+    "defaultEnvironment": "https://api.example.com/v1",
+    "environments": {
+      "_visit": [Function],
+      "environments": [
+        {
+          "docs": undefined,
+          "id": "https://api.example.com/v1",
+          "name": {
+            "camelCase": {
+              "safeName": "httpsApiExampleComV1",
+              "unsafeName": "httpsApiExampleComV1",
+            },
+            "originalName": "https://api.example.com/v1",
+            "pascalCase": {
+              "safeName": "HttpsApiExampleComV1",
+              "unsafeName": "HttpsApiExampleComV1",
+            },
+            "screamingSnakeCase": {
+              "safeName": "HTTPS_API_EXAMPLE_COM_V_1",
+              "unsafeName": "HTTPS_API_EXAMPLE_COM_V_1",
+            },
+            "snakeCase": {
+              "safeName": "https_api_example_com_v_1",
+              "unsafeName": "https_api_example_com_v_1",
+            },
+          },
+          "url": "https://api.example.com/v1",
+        },
+      ],
+      "type": "singleBaseUrl",
+    },
+  },
+  "errorDiscriminationStrategy": {
+    "_visit": [Function],
+    "type": "statusCode",
+  },
+  "errors": {
+    "CreateTransactionRequestUnauthorizedError": {
+      "discriminantValue": {
+        "name": {
+          "camelCase": {
+            "safeName": "createTransactionRequestUnauthorizedError",
+            "unsafeName": "createTransactionRequestUnauthorizedError",
+          },
+          "originalName": "CreateTransactionRequestUnauthorizedError",
+          "pascalCase": {
+            "safeName": "CreateTransactionRequestUnauthorizedError",
+            "unsafeName": "CreateTransactionRequestUnauthorizedError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_TRANSACTION_REQUEST_UNAUTHORIZED_ERROR",
+            "unsafeName": "CREATE_TRANSACTION_REQUEST_UNAUTHORIZED_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "create_transaction_request_unauthorized_error",
+            "unsafeName": "create_transaction_request_unauthorized_error",
+          },
+        },
+        "wireValue": "CreateTransactionRequestUnauthorizedError",
+      },
+      "displayName": "UnauthorizedError",
+      "docs": "Unauthorized",
+      "examples": [],
+      "name": {
+        "errorId": "CreateTransactionRequestUnauthorizedError",
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "createTransactionRequestUnauthorizedError",
+            "unsafeName": "createTransactionRequestUnauthorizedError",
+          },
+          "originalName": "CreateTransactionRequestUnauthorizedError",
+          "pascalCase": {
+            "safeName": "CreateTransactionRequestUnauthorizedError",
+            "unsafeName": "CreateTransactionRequestUnauthorizedError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_TRANSACTION_REQUEST_UNAUTHORIZED_ERROR",
+            "unsafeName": "CREATE_TRANSACTION_REQUEST_UNAUTHORIZED_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "create_transaction_request_unauthorized_error",
+            "unsafeName": "create_transaction_request_unauthorized_error",
+          },
+        },
+      },
+      "statusCode": 401,
+      "type": {
+        "_visit": [Function],
+        "default": undefined,
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "inline": false,
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
+        "type": "named",
+        "typeId": "Error",
+      },
+      "v2Examples": {
+        "autogeneratedExamples": {},
+        "userSpecifiedExamples": {},
+      },
+    },
+  },
+  "fdrApiDefinitionId": undefined,
+  "generationMetadata": undefined,
+  "headers": [],
+  "idempotencyHeaders": [],
+  "pathParameters": [],
+  "publishConfig": undefined,
+  "readmeConfig": undefined,
+  "rootPackage": {
+    "docs": undefined,
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": undefined,
+      "packagePath": [],
+    },
+    "hasEndpointsInTree": false,
+    "navigationConfig": undefined,
+    "service": "service_",
+    "subpackages": [],
+    "types": [
+      "TransactionRequest",
+      "TransactionResponse",
+      "MerchantSettings",
+      "User",
+      "Error",
+    ],
+    "webhooks": undefined,
+    "websocket": undefined,
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": true,
+    "platformHeaders": {
+      "language": "",
+      "sdkName": "",
+      "sdkVersion": "",
+      "userAgent": undefined,
+    },
+  },
+  "selfHosted": false,
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {},
+  },
+  "services": {
+    "service_": {
+      "audiences": undefined,
+      "availability": undefined,
+      "basePath": {
+        "head": "",
+        "parts": [],
+      },
+      "displayName": undefined,
+      "encoding": undefined,
+      "endpoints": [
+        {
+          "allPathParameters": [],
+          "apiPlayground": undefined,
+          "audiences": [],
+          "auth": true,
+          "autogeneratedExamples": [],
+          "availability": undefined,
+          "basePath": undefined,
+          "baseUrl": "https://api.example.com/v1",
+          "displayName": "Create a transaction requiring multiple auth headers",
+          "docs": undefined,
+          "errors": [
+            {
+              "docs": "Unauthorized",
+              "error": {
+                "errorId": "CreateTransactionRequestUnauthorizedError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "file": undefined,
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "createTransactionRequestUnauthorizedError",
+                    "unsafeName": "createTransactionRequestUnauthorizedError",
+                  },
+                  "originalName": "CreateTransactionRequestUnauthorizedError",
+                  "pascalCase": {
+                    "safeName": "CreateTransactionRequestUnauthorizedError",
+                    "unsafeName": "CreateTransactionRequestUnauthorizedError",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "CREATE_TRANSACTION_REQUEST_UNAUTHORIZED_ERROR",
+                    "unsafeName": "CREATE_TRANSACTION_REQUEST_UNAUTHORIZED_ERROR",
+                  },
+                  "snakeCase": {
+                    "safeName": "create_transaction_request_unauthorized_error",
+                    "unsafeName": "create_transaction_request_unauthorized_error",
+                  },
+                },
+              },
+            },
+          ],
+          "fullPath": {
+            "head": "/transaction",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_.createTransaction",
+          "idempotent": false,
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "createTransaction",
+              "unsafeName": "createTransaction",
+            },
+            "originalName": "createTransaction",
+            "pascalCase": {
+              "safeName": "CreateTransaction",
+              "unsafeName": "CreateTransaction",
+            },
+            "screamingSnakeCase": {
+              "safeName": "CREATE_TRANSACTION",
+              "unsafeName": "CREATE_TRANSACTION",
+            },
+            "snakeCase": {
+              "safeName": "create_transaction",
+              "unsafeName": "create_transaction",
+            },
+          },
+          "pagination": undefined,
+          "path": {
+            "head": "/transaction",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": {
+            "_visit": [Function],
+            "contentType": "application/json",
+            "docs": undefined,
+            "requestBodyType": {
+              "_visit": [Function],
+              "default": undefined,
+              "displayName": undefined,
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "inline": false,
+              "name": {
+                "camelCase": {
+                  "safeName": "transactionRequest",
+                  "unsafeName": "transactionRequest",
+                },
+                "originalName": "TransactionRequest",
+                "pascalCase": {
+                  "safeName": "TransactionRequest",
+                  "unsafeName": "TransactionRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TRANSACTION_REQUEST",
+                  "unsafeName": "TRANSACTION_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "transaction_request",
+                  "unsafeName": "transaction_request",
+                },
+              },
+              "type": "named",
+              "typeId": "TransactionRequest",
+            },
+            "type": "reference",
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "createTransactionExample": {
+                  "amount": 100.5,
+                  "currency": "USD",
+                },
+              },
+              "userSpecifiedExamples": {},
+            },
+          },
+          "response": {
+            "body": {
+              "_visit": [Function],
+              "type": "json",
+              "value": {
+                "_visit": [Function],
+                "docs": "Transaction created successfully",
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "transactionResponse",
+                      "unsafeName": "transactionResponse",
+                    },
+                    "originalName": "TransactionResponse",
+                    "pascalCase": {
+                      "safeName": "TransactionResponse",
+                      "unsafeName": "TransactionResponse",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "TRANSACTION_RESPONSE",
+                      "unsafeName": "TRANSACTION_RESPONSE",
+                    },
+                    "snakeCase": {
+                      "safeName": "transaction_response",
+                      "unsafeName": "transaction_response",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "TransactionResponse",
+                },
+                "type": "response",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "createTransactionExample": {
+                      "id": "txn_123456",
+                      "status": "completed",
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            },
+            "statusCode": 200,
+          },
+          "retries": undefined,
+          "sdkRequest": undefined,
+          "security": [
+            {
+              "blockchain": [],
+              "wallet": [],
+            },
+          ],
+          "source": {
+            "_visit": [Function],
+            "type": "openapi",
+          },
+          "transport": undefined,
+          "userSpecifiedExamples": [],
+          "v2BaseUrls": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "createTransactionExample_200": {
+                "codeSamples": undefined,
+                "displayName": "createTransactionExample",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "POST",
+                    "path": "/transaction",
+                  },
+                  "environment": "https://api.example.com/v1",
+                  "headers": {},
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "requestBody": {
+                    "amount": 100.5,
+                    "currency": "USD",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "id": "txn_123456",
+                      "status": "completed",
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 200,
+                },
+              },
+            },
+            "userSpecifiedExamples": {},
+          },
+          "v2RequestBodies": {
+            "requestBodies": [
+              {
+                "_visit": [Function],
+                "contentType": "application/json",
+                "docs": undefined,
+                "requestBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "transactionRequest",
+                      "unsafeName": "transactionRequest",
+                    },
+                    "originalName": "TransactionRequest",
+                    "pascalCase": {
+                      "safeName": "TransactionRequest",
+                      "unsafeName": "TransactionRequest",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "TRANSACTION_REQUEST",
+                      "unsafeName": "TRANSACTION_REQUEST",
+                    },
+                    "snakeCase": {
+                      "safeName": "transaction_request",
+                      "unsafeName": "transaction_request",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "TransactionRequest",
+                },
+                "type": "reference",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "createTransactionExample": {
+                      "amount": 100.5,
+                      "currency": "USD",
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            ],
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "body": {
+                  "_visit": [Function],
+                  "type": "json",
+                  "value": {
+                    "_visit": [Function],
+                    "docs": "Transaction created successfully",
+                    "responseBodyType": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "displayName": undefined,
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": undefined,
+                        "packagePath": [],
+                      },
+                      "inline": false,
+                      "name": {
+                        "camelCase": {
+                          "safeName": "transactionResponse",
+                          "unsafeName": "transactionResponse",
+                        },
+                        "originalName": "TransactionResponse",
+                        "pascalCase": {
+                          "safeName": "TransactionResponse",
+                          "unsafeName": "TransactionResponse",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "TRANSACTION_RESPONSE",
+                          "unsafeName": "TRANSACTION_RESPONSE",
+                        },
+                        "snakeCase": {
+                          "safeName": "transaction_response",
+                          "unsafeName": "transaction_response",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "TransactionResponse",
+                    },
+                    "type": "response",
+                    "v2Examples": {
+                      "autogeneratedExamples": {
+                        "createTransactionExample": {
+                          "id": "txn_123456",
+                          "status": "completed",
+                        },
+                      },
+                      "userSpecifiedExamples": {},
+                    },
+                  },
+                },
+                "statusCode": 200,
+              },
+            ],
+          },
+        },
+        {
+          "allPathParameters": [],
+          "apiPlayground": undefined,
+          "audiences": [],
+          "auth": true,
+          "autogeneratedExamples": [],
+          "availability": undefined,
+          "basePath": undefined,
+          "baseUrl": "https://api.example.com/v1",
+          "displayName": "Create a user transaction with multiple auth options",
+          "docs": undefined,
+          "errors": [],
+          "fullPath": {
+            "head": "/user-transaction",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_.createUserTransaction",
+          "idempotent": false,
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "createUserTransaction",
+              "unsafeName": "createUserTransaction",
+            },
+            "originalName": "createUserTransaction",
+            "pascalCase": {
+              "safeName": "CreateUserTransaction",
+              "unsafeName": "CreateUserTransaction",
+            },
+            "screamingSnakeCase": {
+              "safeName": "CREATE_USER_TRANSACTION",
+              "unsafeName": "CREATE_USER_TRANSACTION",
+            },
+            "snakeCase": {
+              "safeName": "create_user_transaction",
+              "unsafeName": "create_user_transaction",
+            },
+          },
+          "pagination": undefined,
+          "path": {
+            "head": "/user-transaction",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": {
+            "_visit": [Function],
+            "contentType": "application/json",
+            "docs": undefined,
+            "requestBodyType": {
+              "_visit": [Function],
+              "default": undefined,
+              "displayName": undefined,
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "inline": false,
+              "name": {
+                "camelCase": {
+                  "safeName": "transactionRequest",
+                  "unsafeName": "transactionRequest",
+                },
+                "originalName": "TransactionRequest",
+                "pascalCase": {
+                  "safeName": "TransactionRequest",
+                  "unsafeName": "TransactionRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TRANSACTION_REQUEST",
+                  "unsafeName": "TRANSACTION_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "transaction_request",
+                  "unsafeName": "transaction_request",
+                },
+              },
+              "type": "named",
+              "typeId": "TransactionRequest",
+            },
+            "type": "reference",
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "createUserTransactionExample": {
+                  "amount": 100.5,
+                  "currency": "USD",
+                },
+              },
+              "userSpecifiedExamples": {},
+            },
+          },
+          "response": {
+            "body": {
+              "_visit": [Function],
+              "type": "json",
+              "value": {
+                "_visit": [Function],
+                "docs": "Transaction created successfully",
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "transactionResponse",
+                      "unsafeName": "transactionResponse",
+                    },
+                    "originalName": "TransactionResponse",
+                    "pascalCase": {
+                      "safeName": "TransactionResponse",
+                      "unsafeName": "TransactionResponse",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "TRANSACTION_RESPONSE",
+                      "unsafeName": "TRANSACTION_RESPONSE",
+                    },
+                    "snakeCase": {
+                      "safeName": "transaction_response",
+                      "unsafeName": "transaction_response",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "TransactionResponse",
+                },
+                "type": "response",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "createUserTransactionExample": {
+                      "id": "txn_123456",
+                      "status": "completed",
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            },
+            "statusCode": 200,
+          },
+          "retries": undefined,
+          "sdkRequest": undefined,
+          "security": [
+            {
+              "blockchain": [],
+              "wallet": [],
+            },
+            {
+              "blockchain": [],
+              "userId": [],
+            },
+          ],
+          "source": {
+            "_visit": [Function],
+            "type": "openapi",
+          },
+          "transport": undefined,
+          "userSpecifiedExamples": [],
+          "v2BaseUrls": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "createUserTransactionExample_200": {
+                "codeSamples": undefined,
+                "displayName": "createUserTransactionExample",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "POST",
+                    "path": "/user-transaction",
+                  },
+                  "environment": "https://api.example.com/v1",
+                  "headers": {},
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "requestBody": {
+                    "amount": 100.5,
+                    "currency": "USD",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "id": "txn_123456",
+                      "status": "completed",
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 200,
+                },
+              },
+            },
+            "userSpecifiedExamples": {},
+          },
+          "v2RequestBodies": {
+            "requestBodies": [
+              {
+                "_visit": [Function],
+                "contentType": "application/json",
+                "docs": undefined,
+                "requestBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "transactionRequest",
+                      "unsafeName": "transactionRequest",
+                    },
+                    "originalName": "TransactionRequest",
+                    "pascalCase": {
+                      "safeName": "TransactionRequest",
+                      "unsafeName": "TransactionRequest",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "TRANSACTION_REQUEST",
+                      "unsafeName": "TRANSACTION_REQUEST",
+                    },
+                    "snakeCase": {
+                      "safeName": "transaction_request",
+                      "unsafeName": "transaction_request",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "TransactionRequest",
+                },
+                "type": "reference",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "createUserTransactionExample": {
+                      "amount": 100.5,
+                      "currency": "USD",
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            ],
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "body": {
+                  "_visit": [Function],
+                  "type": "json",
+                  "value": {
+                    "_visit": [Function],
+                    "docs": "Transaction created successfully",
+                    "responseBodyType": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "displayName": undefined,
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": undefined,
+                        "packagePath": [],
+                      },
+                      "inline": false,
+                      "name": {
+                        "camelCase": {
+                          "safeName": "transactionResponse",
+                          "unsafeName": "transactionResponse",
+                        },
+                        "originalName": "TransactionResponse",
+                        "pascalCase": {
+                          "safeName": "TransactionResponse",
+                          "unsafeName": "TransactionResponse",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "TRANSACTION_RESPONSE",
+                          "unsafeName": "TRANSACTION_RESPONSE",
+                        },
+                        "snakeCase": {
+                          "safeName": "transaction_response",
+                          "unsafeName": "transaction_response",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "TransactionResponse",
+                    },
+                    "type": "response",
+                    "v2Examples": {
+                      "autogeneratedExamples": {
+                        "createUserTransactionExample": {
+                          "id": "txn_123456",
+                          "status": "completed",
+                        },
+                      },
+                      "userSpecifiedExamples": {},
+                    },
+                  },
+                },
+                "statusCode": 200,
+              },
+            ],
+          },
+        },
+        {
+          "allPathParameters": [],
+          "apiPlayground": undefined,
+          "audiences": [],
+          "auth": true,
+          "autogeneratedExamples": [],
+          "availability": undefined,
+          "basePath": undefined,
+          "baseUrl": "https://api.example.com/v1",
+          "displayName": "Get merchant settings",
+          "docs": undefined,
+          "errors": [],
+          "fullPath": {
+            "head": "/merchant/settings",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_.getMerchantSettings",
+          "idempotent": false,
+          "method": "GET",
+          "name": {
+            "camelCase": {
+              "safeName": "getMerchantSettings",
+              "unsafeName": "getMerchantSettings",
+            },
+            "originalName": "getMerchantSettings",
+            "pascalCase": {
+              "safeName": "GetMerchantSettings",
+              "unsafeName": "GetMerchantSettings",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET_MERCHANT_SETTINGS",
+              "unsafeName": "GET_MERCHANT_SETTINGS",
+            },
+            "snakeCase": {
+              "safeName": "get_merchant_settings",
+              "unsafeName": "get_merchant_settings",
+            },
+          },
+          "pagination": undefined,
+          "path": {
+            "head": "/merchant/settings",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": undefined,
+          "response": {
+            "body": {
+              "_visit": [Function],
+              "type": "json",
+              "value": {
+                "_visit": [Function],
+                "docs": "Merchant settings",
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "merchantSettings",
+                      "unsafeName": "merchantSettings",
+                    },
+                    "originalName": "MerchantSettings",
+                    "pascalCase": {
+                      "safeName": "MerchantSettings",
+                      "unsafeName": "MerchantSettings",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "MERCHANT_SETTINGS",
+                      "unsafeName": "MERCHANT_SETTINGS",
+                    },
+                    "snakeCase": {
+                      "safeName": "merchant_settings",
+                      "unsafeName": "merchant_settings",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "MerchantSettings",
+                },
+                "type": "response",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "getMerchantSettingsExample": {
+                      "merchantId": "merchant_123",
+                      "name": "Example Merchant",
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            },
+            "statusCode": 200,
+          },
+          "retries": undefined,
+          "sdkRequest": undefined,
+          "security": [
+            {
+              "merchant": [],
+            },
+          ],
+          "source": {
+            "_visit": [Function],
+            "type": "openapi",
+          },
+          "transport": undefined,
+          "userSpecifiedExamples": [],
+          "v2BaseUrls": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "base_getMerchantSettingsExample_200": {
+                "codeSamples": undefined,
+                "displayName": "getMerchantSettingsExample",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "GET",
+                    "path": "/merchant/settings",
+                  },
+                  "environment": "https://api.example.com/v1",
+                  "headers": {},
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "requestBody": undefined,
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "merchantId": "merchant_123",
+                      "name": "Example Merchant",
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 200,
+                },
+              },
+            },
+            "userSpecifiedExamples": {},
+          },
+          "v2RequestBodies": {
+            "requestBodies": undefined,
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "body": {
+                  "_visit": [Function],
+                  "type": "json",
+                  "value": {
+                    "_visit": [Function],
+                    "docs": "Merchant settings",
+                    "responseBodyType": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "displayName": undefined,
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": undefined,
+                        "packagePath": [],
+                      },
+                      "inline": false,
+                      "name": {
+                        "camelCase": {
+                          "safeName": "merchantSettings",
+                          "unsafeName": "merchantSettings",
+                        },
+                        "originalName": "MerchantSettings",
+                        "pascalCase": {
+                          "safeName": "MerchantSettings",
+                          "unsafeName": "MerchantSettings",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "MERCHANT_SETTINGS",
+                          "unsafeName": "MERCHANT_SETTINGS",
+                        },
+                        "snakeCase": {
+                          "safeName": "merchant_settings",
+                          "unsafeName": "merchant_settings",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "MerchantSettings",
+                    },
+                    "type": "response",
+                    "v2Examples": {
+                      "autogeneratedExamples": {
+                        "getMerchantSettingsExample": {
+                          "merchantId": "merchant_123",
+                          "name": "Example Merchant",
+                        },
+                      },
+                      "userSpecifiedExamples": {},
+                    },
+                  },
+                },
+                "statusCode": 200,
+              },
+            ],
+          },
+        },
+        {
+          "allPathParameters": [],
+          "apiPlayground": undefined,
+          "audiences": [],
+          "auth": true,
+          "autogeneratedExamples": [],
+          "availability": undefined,
+          "basePath": undefined,
+          "baseUrl": "https://api.example.com/v1",
+          "displayName": "List all users (admin only)",
+          "docs": undefined,
+          "errors": [],
+          "fullPath": {
+            "head": "/admin/users",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_.listUsers",
+          "idempotent": false,
+          "method": "GET",
+          "name": {
+            "camelCase": {
+              "safeName": "listUsers",
+              "unsafeName": "listUsers",
+            },
+            "originalName": "listUsers",
+            "pascalCase": {
+              "safeName": "ListUsers",
+              "unsafeName": "ListUsers",
+            },
+            "screamingSnakeCase": {
+              "safeName": "LIST_USERS",
+              "unsafeName": "LIST_USERS",
+            },
+            "snakeCase": {
+              "safeName": "list_users",
+              "unsafeName": "list_users",
+            },
+          },
+          "pagination": undefined,
+          "path": {
+            "head": "/admin/users",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": undefined,
+          "response": {
+            "body": {
+              "_visit": [Function],
+              "type": "json",
+              "value": {
+                "_visit": [Function],
+                "docs": "List of users",
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "container": {
+                    "_visit": [Function],
+                    "list": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "displayName": undefined,
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": undefined,
+                        "packagePath": [],
+                      },
+                      "inline": false,
+                      "name": {
+                        "camelCase": {
+                          "safeName": "user",
+                          "unsafeName": "user",
+                        },
+                        "originalName": "User",
+                        "pascalCase": {
+                          "safeName": "User",
+                          "unsafeName": "User",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "USER",
+                          "unsafeName": "USER",
+                        },
+                        "snakeCase": {
+                          "safeName": "user",
+                          "unsafeName": "user",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "User",
+                    },
+                    "type": "list",
+                  },
+                  "type": "container",
+                },
+                "type": "response",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "listUsersExample": [
+                      {
+                        "email": "user@example.com",
+                        "id": "user_123",
+                      },
+                    ],
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            },
+            "statusCode": 200,
+          },
+          "retries": undefined,
+          "sdkRequest": undefined,
+          "security": [
+            {
+              "admin": [],
+            },
+          ],
+          "source": {
+            "_visit": [Function],
+            "type": "openapi",
+          },
+          "transport": undefined,
+          "userSpecifiedExamples": [],
+          "v2BaseUrls": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "base_listUsersExample_200": {
+                "codeSamples": undefined,
+                "displayName": "listUsersExample",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "GET",
+                    "path": "/admin/users",
+                  },
+                  "environment": "https://api.example.com/v1",
+                  "headers": {},
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "requestBody": undefined,
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": [
+                      {
+                        "email": "user@example.com",
+                        "id": "user_123",
+                      },
+                    ],
+                  },
+                  "docs": undefined,
+                  "statusCode": 200,
+                },
+              },
+            },
+            "userSpecifiedExamples": {},
+          },
+          "v2RequestBodies": {
+            "requestBodies": undefined,
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "body": {
+                  "_visit": [Function],
+                  "type": "json",
+                  "value": {
+                    "_visit": [Function],
+                    "docs": "List of users",
+                    "responseBodyType": {
+                      "_visit": [Function],
+                      "container": {
+                        "_visit": [Function],
+                        "list": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "displayName": undefined,
+                          "fernFilepath": {
+                            "allParts": [],
+                            "file": undefined,
+                            "packagePath": [],
+                          },
+                          "inline": false,
+                          "name": {
+                            "camelCase": {
+                              "safeName": "user",
+                              "unsafeName": "user",
+                            },
+                            "originalName": "User",
+                            "pascalCase": {
+                              "safeName": "User",
+                              "unsafeName": "User",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "USER",
+                              "unsafeName": "USER",
+                            },
+                            "snakeCase": {
+                              "safeName": "user",
+                              "unsafeName": "user",
+                            },
+                          },
+                          "type": "named",
+                          "typeId": "User",
+                        },
+                        "type": "list",
+                      },
+                      "type": "container",
+                    },
+                    "type": "response",
+                    "v2Examples": {
+                      "autogeneratedExamples": {
+                        "listUsersExample": [
+                          {
+                            "email": "user@example.com",
+                            "id": "user_123",
+                          },
+                        ],
+                      },
+                      "userSpecifiedExamples": {},
+                    },
+                  },
+                },
+                "statusCode": 200,
+              },
+            ],
+          },
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+      "transport": undefined,
+    },
+  },
+  "sourceConfig": undefined,
+  "subpackages": {},
+  "types": {
+    "Error": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
+        "typeId": "Error",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "code",
+                  "unsafeName": "code",
+                },
+                "originalName": "code",
+                "pascalCase": {
+                  "safeName": "Code",
+                  "unsafeName": "Code",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CODE",
+                  "unsafeName": "CODE",
+                },
+                "snakeCase": {
+                  "safeName": "code",
+                  "unsafeName": "code",
+                },
+              },
+              "wireValue": "code",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ErrorCode_example_0": "UNAUTHORIZED",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+                "originalName": "message",
+                "pascalCase": {
+                  "safeName": "Message",
+                  "unsafeName": "Message",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MESSAGE",
+                  "unsafeName": "MESSAGE",
+                },
+                "snakeCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+              },
+              "wireValue": "message",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ErrorMessage_example_0": "Authentication required",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "Error_example_autogenerated": {
+            "code": "UNAUTHORIZED",
+            "message": "Authentication required",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "MerchantSettings": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "merchantSettings",
+            "unsafeName": "merchantSettings",
+          },
+          "originalName": "MerchantSettings",
+          "pascalCase": {
+            "safeName": "MerchantSettings",
+            "unsafeName": "MerchantSettings",
+          },
+          "screamingSnakeCase": {
+            "safeName": "MERCHANT_SETTINGS",
+            "unsafeName": "MERCHANT_SETTINGS",
+          },
+          "snakeCase": {
+            "safeName": "merchant_settings",
+            "unsafeName": "merchant_settings",
+          },
+        },
+        "typeId": "MerchantSettings",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Merchant identifier",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "merchantId",
+                  "unsafeName": "merchantId",
+                },
+                "originalName": "merchantId",
+                "pascalCase": {
+                  "safeName": "MerchantId",
+                  "unsafeName": "MerchantId",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MERCHANT_ID",
+                  "unsafeName": "MERCHANT_ID",
+                },
+                "snakeCase": {
+                  "safeName": "merchant_id",
+                  "unsafeName": "merchant_id",
+                },
+              },
+              "wireValue": "merchantId",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "MerchantSettingsMerchantId_example_0": "merchant_123",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Merchant name",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+                "originalName": "name",
+                "pascalCase": {
+                  "safeName": "Name",
+                  "unsafeName": "Name",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "NAME",
+                  "unsafeName": "NAME",
+                },
+                "snakeCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+              },
+              "wireValue": "name",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "MerchantSettingsName_example_0": "Example Merchant",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "MerchantSettings_example_autogenerated": {
+            "merchantId": "merchant_123",
+            "name": "Example Merchant",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "TransactionRequest": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "transactionRequest",
+            "unsafeName": "transactionRequest",
+          },
+          "originalName": "TransactionRequest",
+          "pascalCase": {
+            "safeName": "TransactionRequest",
+            "unsafeName": "TransactionRequest",
+          },
+          "screamingSnakeCase": {
+            "safeName": "TRANSACTION_REQUEST",
+            "unsafeName": "TRANSACTION_REQUEST",
+          },
+          "snakeCase": {
+            "safeName": "transaction_request",
+            "unsafeName": "transaction_request",
+          },
+        },
+        "typeId": "TransactionRequest",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Transaction amount",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "amount",
+                  "unsafeName": "amount",
+                },
+                "originalName": "amount",
+                "pascalCase": {
+                  "safeName": "Amount",
+                  "unsafeName": "Amount",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "AMOUNT",
+                  "unsafeName": "AMOUNT",
+                },
+                "snakeCase": {
+                  "safeName": "amount",
+                  "unsafeName": "amount",
+                },
+              },
+              "wireValue": "amount",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "TransactionRequestAmount_example_0": 100.5,
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "DOUBLE",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "double",
+                  "validation": {
+                    "exclusiveMax": undefined,
+                    "exclusiveMin": undefined,
+                    "max": undefined,
+                    "min": undefined,
+                    "multipleOf": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Currency code",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "currency",
+                  "unsafeName": "currency",
+                },
+                "originalName": "currency",
+                "pascalCase": {
+                  "safeName": "Currency",
+                  "unsafeName": "Currency",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CURRENCY",
+                  "unsafeName": "CURRENCY",
+                },
+                "snakeCase": {
+                  "safeName": "currency",
+                  "unsafeName": "currency",
+                },
+              },
+              "wireValue": "currency",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "TransactionRequestCurrency_example_0": "USD",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "TransactionRequest_example_autogenerated": {
+            "amount": 100.5,
+            "currency": "USD",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "TransactionResponse": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "transactionResponse",
+            "unsafeName": "transactionResponse",
+          },
+          "originalName": "TransactionResponse",
+          "pascalCase": {
+            "safeName": "TransactionResponse",
+            "unsafeName": "TransactionResponse",
+          },
+          "screamingSnakeCase": {
+            "safeName": "TRANSACTION_RESPONSE",
+            "unsafeName": "TRANSACTION_RESPONSE",
+          },
+          "snakeCase": {
+            "safeName": "transaction_response",
+            "unsafeName": "transaction_response",
+          },
+        },
+        "typeId": "TransactionResponse",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Transaction identifier",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "wireValue": "id",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "TransactionResponseId_example_0": "txn_123456",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Transaction status",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "status",
+                  "unsafeName": "status",
+                },
+                "originalName": "status",
+                "pascalCase": {
+                  "safeName": "Status",
+                  "unsafeName": "Status",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "STATUS",
+                  "unsafeName": "STATUS",
+                },
+                "snakeCase": {
+                  "safeName": "status",
+                  "unsafeName": "status",
+                },
+              },
+              "wireValue": "status",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "TransactionResponseStatus_example_0": "completed",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "TransactionResponse_example_autogenerated": {
+            "id": "txn_123456",
+            "status": "completed",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "User": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "user",
+            "unsafeName": "user",
+          },
+          "originalName": "User",
+          "pascalCase": {
+            "safeName": "User",
+            "unsafeName": "User",
+          },
+          "screamingSnakeCase": {
+            "safeName": "USER",
+            "unsafeName": "USER",
+          },
+          "snakeCase": {
+            "safeName": "user",
+            "unsafeName": "user",
+          },
+        },
+        "typeId": "User",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "User identifier",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "wireValue": "id",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "UserId_example_0": "user_123",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "User email",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "email",
+                  "unsafeName": "email",
+                },
+                "originalName": "email",
+                "pascalCase": {
+                  "safeName": "Email",
+                  "unsafeName": "Email",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "EMAIL",
+                  "unsafeName": "EMAIL",
+                },
+                "snakeCase": {
+                  "safeName": "email",
+                  "unsafeName": "email",
+                },
+              },
+              "wireValue": "email",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "UserEmail_example_0": "user@example.com",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "User_example_autogenerated": {
+            "email": "user@example.com",
+            "id": "user_123",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+  },
+  "variables": [],
+  "webhookGroups": {},
+  "websocketChannels": undefined,
+}

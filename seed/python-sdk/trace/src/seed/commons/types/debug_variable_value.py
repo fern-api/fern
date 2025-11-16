@@ -95,6 +95,9 @@ class DebugVariableValue_MapValue(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .debug_map_value import DebugMapValue  # noqa: E402, F401, I001
+
+
 class DebugVariableValue_ListValue(UniversalBaseModel):
     value: typing.List["DebugVariableValue"]
     type: typing.Literal["listValue"] = "listValue"
@@ -194,22 +197,25 @@ class DebugVariableValue_GenericValue(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-DebugVariableValue = typing.Union[
-    DebugVariableValue_IntegerValue,
-    DebugVariableValue_BooleanValue,
-    DebugVariableValue_DoubleValue,
-    DebugVariableValue_StringValue,
-    DebugVariableValue_CharValue,
-    DebugVariableValue_MapValue,
-    DebugVariableValue_ListValue,
-    DebugVariableValue_BinaryTreeNodeValue,
-    DebugVariableValue_SinglyLinkedListNodeValue,
-    DebugVariableValue_DoublyLinkedListNodeValue,
-    DebugVariableValue_UndefinedValue,
-    DebugVariableValue_NullValue,
-    DebugVariableValue_GenericValue,
+DebugVariableValue = typing_extensions.Annotated[
+    typing.Union[
+        DebugVariableValue_IntegerValue,
+        DebugVariableValue_BooleanValue,
+        DebugVariableValue_DoubleValue,
+        DebugVariableValue_StringValue,
+        DebugVariableValue_CharValue,
+        DebugVariableValue_MapValue,
+        DebugVariableValue_ListValue,
+        DebugVariableValue_BinaryTreeNodeValue,
+        DebugVariableValue_SinglyLinkedListNodeValue,
+        DebugVariableValue_DoublyLinkedListNodeValue,
+        DebugVariableValue_UndefinedValue,
+        DebugVariableValue_NullValue,
+        DebugVariableValue_GenericValue,
+    ],
+    pydantic.Field(discriminator="type"),
 ]
-from .debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402, I001
+from .debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402, F401, I001
 
 update_forward_refs(DebugVariableValue_MapValue)
 update_forward_refs(DebugVariableValue_ListValue)

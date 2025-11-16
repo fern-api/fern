@@ -25,4 +25,46 @@ describe("Optional", () => {
         });
         expect(response).toEqual("string");
     });
+
+    test("sendOptionalTypedBody", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedObjectsWithImportsClient({ environment: server.baseUrl });
+        const rawRequestBody = { message: "message" };
+        const rawResponseBody = "string";
+        server
+            .mockEndpoint()
+            .post("/send-optional-typed-body")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.optional.sendOptionalTypedBody({
+            message: "message",
+        });
+        expect(response).toEqual("string");
+    });
+
+    test("sendOptionalNullableWithAllOptionalProperties", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedObjectsWithImportsClient({ environment: server.baseUrl });
+        const rawRequestBody = { updateDraft: true };
+        const rawResponseBody = { success: true };
+        server
+            .mockEndpoint()
+            .post("/deploy/actionId/versions/id")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.optional.sendOptionalNullableWithAllOptionalProperties("actionId", "id", {
+            updateDraft: true,
+        });
+        expect(response).toEqual({
+            success: true,
+        });
+    });
 });

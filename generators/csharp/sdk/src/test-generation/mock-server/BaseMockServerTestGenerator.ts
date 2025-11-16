@@ -1,15 +1,15 @@
 import { NamedArgument } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { ast } from "@fern-api/csharp-codegen";
+import { ast, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ExampleEndpointCall, Name, OAuthScheme } from "@fern-fern/ir-sdk/api";
+import { fail } from "assert";
 import { MultiUrlEnvironmentGenerator } from "../../environment/MultiUrlEnvironmentGenerator";
 import { RootClientGenerator } from "../../root-client/RootClientGenerator";
-import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { MockEndpointGenerator } from "./MockEndpointGenerator";
 
-export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
     private readonly rootClientGenerator: RootClientGenerator;
     private readonly mockEndpointGenerator: MockEndpointGenerator;
     constructor(context: SdkGeneratorContext) {
@@ -20,17 +20,17 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
 
     public doGenerate(): CSharpFile {
         const class_ = this.csharp.class_({
-            reference: this.types.BaseMockServerTest,
+            reference: this.Types.BaseMockServerTest,
             partial: false,
             access: ast.Access.Public,
-            annotations: [this.extern.NUnit.Framework.SetUpFixture]
+            annotations: [this.NUnit.Framework.SetUpFixture]
         });
 
         class_.addField({
             origin: class_.explicit("Server"),
             access: ast.Access.Protected,
             static_: true,
-            type: this.csharp.Type.reference(this.extern.WireMock.Server),
+            type: this.WireMock.Server,
             get: true,
             initializer: this.csharp.codeblock("null!"),
             set: true
@@ -40,7 +40,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
             origin: class_.explicit("Client"),
             access: ast.Access.Protected,
             static_: true,
-            type: this.csharp.Type.reference(this.types.RootClient),
+            type: this.Types.RootClient,
             get: true,
             initializer: this.csharp.codeblock("null!"),
             set: true
@@ -50,7 +50,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
             origin: class_.explicit("RequestOptions"),
             access: ast.Access.Protected,
             static_: true,
-            type: this.csharp.Type.reference(this.types.RequestOptions),
+            type: this.Types.RequestOptions,
             get: true,
             initializer: this.csharp.codeblock("new()"),
             set: true
@@ -58,7 +58,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
 
         if (this.context.hasIdempotencyHeaders()) {
             // create an initializer for the fields
-            const initializer = this.csharp.codeblock((writer) => {
+            const initializer = this.csharp.codeblock((writer: Writer) => {
                 writer.writeLine("new()");
                 writer.pushScope();
                 this.context.getIdempotencyInitializers(writer);
@@ -69,7 +69,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                 origin: class_.explicit("IdempotentRequestOptions"),
                 access: ast.Access.Protected,
                 static_: true,
-                type: this.csharp.Type.reference(this.types.IdempotentRequestOptions),
+                type: this.Types.IdempotentRequestOptions,
                 get: true,
                 initializer,
                 set: true
@@ -81,13 +81,13 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
         class_.addMethod({
             name: "GlobalSetup",
             access: ast.Access.Public,
-            body: this.csharp.codeblock((writer) => {
+            body: this.csharp.codeblock((writer: Writer) => {
                 writer.writeLine("// Start the WireMock server");
                 writer.writeStatement(
                     "Server = WireMockServer.Start(new ",
-                    this.extern.WireMock.WireMockServerSettings,
+                    this.WireMock.WireMockServerSettings,
                     " { Logger = new ",
-                    this.extern.WireMock.WireMockConsoleLogger,
+                    this.WireMock.WireMockConsoleLogger,
                     "() })"
                 );
                 writer.writeLine();
@@ -98,7 +98,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                     this.rootClientGenerator.generateExampleClientInstantiationSnippet({
                         includeEnvVarArguments: true,
                         clientOptionsArgument: this.csharp.instantiateClass({
-                            classReference: this.types.ClientOptions,
+                            classReference: this.Types.ClientOptions,
                             arguments_: [
                                 this.context.ir.environments?.environments._visit<NamedArgument>({
                                     singleBaseUrl: () => ({
@@ -138,7 +138,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
             }),
             isAsync: false,
             parameters: [],
-            annotations: [this.extern.NUnit.Framework.OneTimeSetUp]
+            annotations: [this.NUnit.Framework.OneTimeSetUp]
         });
 
         if (oauth) {
@@ -148,13 +148,13 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
         class_.addMethod({
             name: "GlobalTeardown",
             access: ast.Access.Public,
-            body: this.csharp.codeblock((writer) => {
+            body: this.csharp.codeblock((writer: Writer) => {
                 writer.writeLine("Server.Stop();");
                 writer.writeLine("Server.Dispose();");
             }),
             isAsync: false,
             parameters: [],
-            annotations: [this.extern.NUnit.Framework.OneTimeTearDown]
+            annotations: [this.NUnit.Framework.OneTimeTearDown]
         });
 
         return new CSharpFile({
@@ -173,14 +173,16 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
             access: ast.Access.Private,
             name: this.names.methods.mockOauth,
             parameters: [],
-            body: this.csharp.codeblock((writer) => {
+            body: this.csharp.codeblock((writer: Writer) => {
                 if (shouldScope) {
                     writer.pushScope();
                 }
                 // token endpoint
                 const tokenEndpointReference = scheme.configuration.tokenEndpoint.endpointReference;
-                const tokenEndpointHttpService = this.context.getHttpServiceOrThrow(tokenEndpointReference.serviceId);
-                const tokenHttpEndpoint = this.context.resolveEndpointOrThrow(
+                const tokenEndpointHttpService =
+                    this.context.getHttpService(tokenEndpointReference.serviceId) ??
+                    fail(`Service with id ${tokenEndpointReference.serviceId} not found`);
+                const tokenHttpEndpoint = this.context.resolveEndpoint(
                     tokenEndpointHttpService,
                     tokenEndpointReference.endpointId
                 );
@@ -228,10 +230,10 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
                 }
                 if (scheme.configuration.refreshEndpoint) {
                     const refreshEndpointReference = scheme.configuration.refreshEndpoint.endpointReference;
-                    const refreshEndpointHttpService = this.context.getHttpServiceOrThrow(
-                        refreshEndpointReference.serviceId
-                    );
-                    const refreshHttpEndpoint = this.context.resolveEndpointOrThrow(
+                    const refreshEndpointHttpService =
+                        this.context.getHttpService(refreshEndpointReference.serviceId) ??
+                        fail(`Service with id ${refreshEndpointReference.serviceId} not found`);
+                    const refreshHttpEndpoint = this.context.resolveEndpoint(
                         refreshEndpointHttpService,
                         refreshEndpointReference.endpointId
                     );
@@ -261,7 +263,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
         return join(
             this.constants.folders.testFiles,
             this.generation.constants.folders.mockServerTests,
-            RelativeFilePath.of(`${this.types.BaseMockServerTest.name}.cs`)
+            RelativeFilePath.of(`${this.Types.BaseMockServerTest.name}.cs`)
         );
     }
 }

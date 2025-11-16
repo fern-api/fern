@@ -16,12 +16,12 @@
 client.user().createUsername(
     CreateUsernameRequest
         .builder()
-        .tags(
-            Arrays.asList("tags", "tags")
-        )
         .username("username")
         .password("password")
         .name("test")
+        .tags(
+            Arrays.asList("tags", "tags")
+        )
         .build()
 );
 ```
@@ -90,9 +90,6 @@ client.user().createUsername(
 client.user().createUsernameWithReferencedType(
     CreateUsernameReferencedRequest
         .builder()
-        .tags(
-            Arrays.asList("tags", "tags")
-        )
         .body(
             CreateUsernameBody
                 .builder()
@@ -100,6 +97,9 @@ client.user().createUsernameWithReferencedType(
                 .password("password")
                 .name("test")
                 .build()
+        )
+        .tags(
+            Arrays.asList("tags", "tags")
         )
         .build()
 );
@@ -151,9 +151,7 @@ client.user().createUsernameWithReferencedType(
 
 ```java
 client.user().createUsernameOptional(
-    Optional.of(
-        Optional.empty()
-    )
+    Optional.empty()
 );
 ```
 </dd>
@@ -211,6 +209,23 @@ client.user().getUsername(
                 )
                 .build()
         )
+        .nestedUser(
+            NestedUser
+                .builder()
+                .name("name")
+                .user(
+                    User
+                        .builder()
+                        .name("name")
+                        .tags(
+                            Arrays.asList("tags", "tags")
+                        )
+                        .build()
+                )
+                .build()
+        )
+        .longParam(1000000L)
+        .bigIntParam(new BigInteger("1000000"))
         .userList(
             Arrays.asList(
                 User
@@ -234,21 +249,6 @@ client.user().getUsername(
                 put("keyValue", "keyValue");
             }}
         )
-        .nestedUser(
-            NestedUser
-                .builder()
-                .name("name")
-                .user(
-                    User
-                        .builder()
-                        .name("name")
-                        .tags(
-                            Arrays.asList("tags", "tags")
-                        )
-                        .build()
-                )
-                .build()
-        )
         .excludeUser(
             Arrays.asList(
                 User
@@ -263,8 +263,6 @@ client.user().getUsername(
         .filter(
             Arrays.asList("filter")
         )
-        .longParam(1000000L)
-        .bigIntParam(new BigInteger("1000000"))
         .optionalDeadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
         .optionalString("optionalString")
         .optionalUser(

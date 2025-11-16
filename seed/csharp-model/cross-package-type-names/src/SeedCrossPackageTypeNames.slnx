@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SeedCrossPackageTypeNames.Test/SeedCrossPackageTypeNames.Test.csproj" />
+  <Project Path="SeedCrossPackageTypeNames/SeedCrossPackageTypeNames.csproj" />
+</Solution>

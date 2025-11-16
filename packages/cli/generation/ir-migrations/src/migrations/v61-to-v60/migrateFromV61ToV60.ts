@@ -30,7 +30,7 @@ export const V61_TO_V60_MIGRATION: IrMigration<
         [GeneratorName.GO_MODEL]: "0.23.9",
         [GeneratorName.GO_SDK]: "1.14.0",
         [GeneratorName.RUBY_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.RUBY_SDK]: "1.0.0-rc34",
         [GeneratorName.CSHARP_MODEL]: "0.0.4",
         [GeneratorName.CSHARP_SDK]: "2.4.0",
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -48,13 +48,29 @@ export const V61_TO_V60_MIGRATION: IrMigration<
     migrateBackwards: (
         v61: IrVersions.V61.IntermediateRepresentation
     ): IrVersions.V60.ir.IntermediateRepresentation => {
+        const { apiPlayground: _apiPlayground, ...rest } = v61;
         return {
-            ...v61,
+            ...rest,
             dynamic: v61.dynamic != null ? convertDynamic(v61.dynamic) : undefined,
-            publishConfig: v61.publishConfig != null ? convertPublishConfig(v61.publishConfig) : undefined
+            publishConfig: v61.publishConfig != null ? convertPublishConfig(v61.publishConfig) : undefined,
+            services: Object.fromEntries(
+                Object.entries(v61.services).map(([key, service]) => [key, convertHttpService(service)])
+            )
         };
     }
 };
+
+function convertHttpService(service: IrVersions.V61.http.HttpService): IrVersions.V60.http.HttpService {
+    return {
+        ...service,
+        endpoints: service.endpoints.map(convertHttpEndpoint)
+    };
+}
+
+function convertHttpEndpoint(endpoint: IrVersions.V61.http.HttpEndpoint): IrVersions.V60.http.HttpEndpoint {
+    const { apiPlayground: _apiPlayground, ...rest } = endpoint;
+    return rest;
+}
 
 function convertPublishConfig(
     publishConfig: IrVersions.V61.PublishingConfig

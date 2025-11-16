@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SeedWebsocketAuth.Test/SeedWebsocketAuth.Test.csproj" />
+  <Project Path="SeedWebsocketAuth/SeedWebsocketAuth.csproj" />
+</Solution>

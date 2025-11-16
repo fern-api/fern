@@ -277,7 +277,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
     // This ensures channels can correctly reference their environment URLs while keeping
     // URL IDs clean and readable when there are no collisions.
     if (
-        context.groupEnvironmentsByHost &&
+        context.options.groupEnvironmentsByHost &&
         hasWebsocketServersWithName &&
         (hasTopLevelServersWithName || context.ir.servers.length > 0)
     ) {

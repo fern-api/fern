@@ -33,3 +33,13 @@ types:
       - string
       - integer
       - boolean
+  JsonLikeWithNullAndUndefined:
+    discriminated: false
+    union:
+      - list<optional<nullable<JsonLikeWithNullAndUndefined>>>
+      - map<string, optional<nullable<JsonLikeWithNullAndUndefined>>>
+      - optional<nullable<string>>
+      - optional<nullable<integer>>
+      - optional<nullable<boolean>>
+      - optional<nullable<integer>>
+      - optional<nullable<boolean>>

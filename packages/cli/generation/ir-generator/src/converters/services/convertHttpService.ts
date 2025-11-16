@@ -1,4 +1,5 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { isVariablePathParameter, RawSchemas } from "@fern-api/fern-definition-schema";
 import {
@@ -18,7 +19,6 @@ import {
 import { constructHttpPath, IdGenerator } from "@fern-api/ir-utils";
 import { SourceResolver } from "@fern-api/source-resolver";
 import urlJoin from "url-join";
-
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
@@ -26,6 +26,8 @@ import { PropertyResolver } from "../../resolvers/PropertyResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { VariableResolver } from "../../resolvers/VariableResolver";
 import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
+import { IRGenerationSettings } from "../../utils/getIrGenerationSettings";
+import { orderPathParametersByUrl } from "../../utils/orderPathParametersByUrl";
 import { convertAvailability, convertDeclaration } from "../convertDeclaration";
 import { convertCodeSample } from "./convertCodeSamples";
 import { convertExampleEndpointCall } from "./convertExampleEndpointCall";
@@ -51,7 +53,8 @@ export function convertHttpService({
     sourceResolver,
     globalErrors,
     workspace,
-    auth
+    auth,
+    irSettings
 }: {
     rootDefaultUrl: string | undefined;
     rootPathParameters: PathParameter[];
@@ -66,13 +69,29 @@ export function convertHttpService({
     globalErrors: ResponseErrors;
     workspace: FernWorkspace;
     auth: ApiAuth;
+    irSettings: IRGenerationSettings;
 }): HttpService {
-    const servicePathParameters = convertPathParameters({
+    const servicePathParametersRaw = convertPathParameters({
         pathParameters: serviceDefinition["path-parameters"],
         location: PathParameterLocation.Service,
         file,
         variableResolver
     });
+
+    const pathParameterOrder = irSettings.pathParameterOrder;
+
+    const servicePathParameters = (() => {
+        switch (pathParameterOrder) {
+            case generatorsYml.PathParameterOrder.UrlOrder:
+                return serviceDefinition["base-path"]
+                    ? orderPathParametersByUrl(serviceDefinition["base-path"], servicePathParametersRaw)
+                    : servicePathParametersRaw;
+            case generatorsYml.PathParameterOrder.SpecOrder:
+                return servicePathParametersRaw;
+            default:
+                assertNever(pathParameterOrder);
+        }
+    })();
 
     const transport = getTransportForService({
         file,
@@ -96,12 +115,47 @@ export function convertHttpService({
         encoding: convertTransportToEncoding(transport, serviceDefinition),
         transport,
         endpoints: Object.entries(serviceDefinition.endpoints).map(([endpointKey, endpoint]): HttpEndpoint => {
-            const endpointPathParameters = convertPathParameters({
+            const fullPathString =
+                endpoint["base-path"] != null
+                    ? urlJoin(endpoint["base-path"], endpoint.path)
+                    : file.rootApiFile["base-path"] != null
+                      ? urlJoin(file.rootApiFile["base-path"], serviceDefinition["base-path"], endpoint.path)
+                      : urlJoin(serviceDefinition["base-path"], endpoint.path);
+
+            const endpointPathParametersRaw = convertPathParameters({
                 pathParameters: getEndpointPathParameters(endpoint),
                 location: PathParameterLocation.Endpoint,
                 file,
                 variableResolver
             });
+
+            const endpointPathParameters = (() => {
+                switch (pathParameterOrder) {
+                    case generatorsYml.PathParameterOrder.UrlOrder:
+                        return orderPathParametersByUrl(endpoint.path, endpointPathParametersRaw);
+                    case generatorsYml.PathParameterOrder.SpecOrder:
+                        return endpointPathParametersRaw;
+                    default:
+                        assertNever(pathParameterOrder);
+                }
+            })();
+
+            const allPathParametersRaw =
+                endpoint["base-path"] != null
+                    ? endpointPathParameters
+                    : [...rootPathParameters, ...servicePathParameters, ...endpointPathParameters];
+
+            const allPathParameters = (() => {
+                switch (pathParameterOrder) {
+                    case generatorsYml.PathParameterOrder.UrlOrder:
+                        return orderPathParametersByUrl(fullPathString, allPathParametersRaw);
+                    case generatorsYml.PathParameterOrder.SpecOrder:
+                        return allPathParametersRaw;
+                    default:
+                        assertNever(pathParameterOrder);
+                }
+            })();
+
             const httpEndpoint: HttpEndpoint = {
                 ...convertDeclaration(endpoint),
                 id: "",
@@ -130,18 +184,9 @@ export function convertHttpService({
                 method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
                 basePath: endpoint["base-path"] != null ? constructHttpPath(endpoint["base-path"]) : undefined,
                 path: constructHttpPath(endpoint.path),
-                fullPath: constructHttpPath(
-                    endpoint["base-path"] != null
-                        ? urlJoin(endpoint["base-path"], endpoint.path)
-                        : file.rootApiFile["base-path"] != null
-                          ? urlJoin(file.rootApiFile["base-path"], serviceDefinition["base-path"], endpoint.path)
-                          : urlJoin(serviceDefinition["base-path"], endpoint.path)
-                ),
+                fullPath: constructHttpPath(fullPathString),
                 pathParameters: endpointPathParameters,
-                allPathParameters:
-                    endpoint["base-path"] != null
-                        ? endpointPathParameters
-                        : [...rootPathParameters, ...servicePathParameters, ...endpointPathParameters],
+                allPathParameters,
                 queryParameters:
                     typeof endpoint.request !== "string" && endpoint.request?.["query-parameters"] != null
                         ? Object.entries(endpoint.request["query-parameters"]).map(
@@ -224,7 +269,8 @@ export function convertHttpService({
                 audiences: endpoint.audiences,
                 retries: convertRetries({
                     endpointSchema: endpoint
-                })
+                }),
+                apiPlayground: undefined
             };
             httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
             return httpEndpoint;

@@ -7,7 +7,10 @@ version = "0.0.1"
 description = ""
 readme = "README.md"
 authors = []
-keywords = []
+keywords = [
+    "fern",
+    "test"
+]
 
 classifiers = [
     "Intended Audience :: Developers",
@@ -30,7 +33,9 @@ packages = [
     { include = "seed", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
+Documentation = 'https://buildwithfern.com/learn'
+Homepage = 'https://buildwithfern.com/'
 Repository = 'https://github.com/enum/fern'
 
 [tool.poetry.dependencies]

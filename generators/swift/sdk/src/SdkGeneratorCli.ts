@@ -14,12 +14,14 @@ import {
 } from "@fern-api/swift-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { template as templateFn } from "lodash-es";
 
 import {
     PackageSwiftGenerator,
     RootClientGenerator,
     SingleUrlEnvironmentGenerator,
     SubClientGenerator,
+    TemplateDataGenerator,
     WireTestSuiteGenerator
 } from "./generators";
 import { ReferenceConfigAssembler } from "./reference";
@@ -573,13 +575,31 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     private async generateTestAsIsFiles(context: SdkGeneratorContext): Promise<void> {
         await Promise.all(
             context.getTestAsIsFiles().map(async (def) => {
-                context.project.addTestAsIsFile({
-                    nameCandidateWithoutExtension: def.filenameWithoutExtension,
-                    directory: def.directory,
-                    contents: await def.loadContents()
-                });
+                const rawContents = await def.loadContents();
+                if (def.filenameWithoutExtension.endsWith(".Template")) {
+                    const templateDataGenerator = new TemplateDataGenerator({ context });
+                    const templateData = templateDataGenerator.generateTemplateData(def.filenameWithoutExtension);
+                    if (templateData) {
+                        const contents = this.renderTemplate(rawContents, templateData);
+                        context.project.addTestAsIsFile({
+                            nameCandidateWithoutExtension: def.filenameWithoutExtension.replace(".Template", ""),
+                            directory: def.directory,
+                            contents
+                        });
+                    }
+                } else {
+                    context.project.addTestAsIsFile({
+                        nameCandidateWithoutExtension: def.filenameWithoutExtension,
+                        directory: def.directory,
+                        contents: rawContents
+                    });
+                }
             })
         );
+    }
+
+    private renderTemplate(template: string, data: Record<string, unknown>): string {
+        return templateFn(template)(data);
     }
 
     private generateWireTestSuiteFiles(context: SdkGeneratorContext): void {

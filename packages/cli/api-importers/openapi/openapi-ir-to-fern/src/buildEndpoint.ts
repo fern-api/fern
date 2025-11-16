@@ -153,7 +153,9 @@ export function buildEndpoint({
             generatedRequestName: endpoint.generatedRequestName,
             requestNameOverride: endpoint.requestNameOverride ?? undefined,
             pathParameters:
-                context.inlinePathParameters && Object.keys(pathParameters).length > 0 ? pathParameters : undefined,
+                context.options.inlinePathParameters && Object.keys(pathParameters).length > 0
+                    ? pathParameters
+                    : undefined,
             queryParameters: Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
             nonRequestReferencedSchemas: Array.from(nonRequestReferencedSchemas),
             headers: Object.keys(headers).length > 0 ? headers : undefined,
@@ -164,7 +166,7 @@ export function buildEndpoint({
         schemaIdsToExclude = [...schemaIdsToExclude, ...(convertedRequest.schemaIdsToExclude ?? [])];
         context.unsetInState(State.Request);
     } else {
-        const hasPathParams = context.inlinePathParameters && Object.keys(pathParameters).length > 0;
+        const hasPathParams = context.options.inlinePathParameters && Object.keys(pathParameters).length > 0;
         const hasQueryParams = Object.keys(queryParameters).length > 0;
         const hasHeaders = Object.keys(headers).length > 0;
 
@@ -712,7 +714,7 @@ function endpointRequestSupportsInlinedPathParameters({
     context: OpenApiIrConverterContext;
     request: Request | undefined;
 }): boolean {
-    if (!context.inlinePathParameters) {
+    if (!context.options.inlinePathParameters) {
         return false;
     }
     if (request == null) {

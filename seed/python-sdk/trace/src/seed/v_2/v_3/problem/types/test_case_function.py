@@ -46,6 +46,11 @@ class TestCaseFunction_Custom(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-TestCaseFunction = typing.Union[TestCaseFunction_WithActualResult, TestCaseFunction_Custom]
+from .....commons.types.list_type import ListType  # noqa: E402, F401, I001
+from .....commons.types.map_type import MapType  # noqa: E402, F401, I001
+
+TestCaseFunction = typing_extensions.Annotated[
+    typing.Union[TestCaseFunction_WithActualResult, TestCaseFunction_Custom], pydantic.Field(discriminator="type")
+]
 update_forward_refs(TestCaseFunction_WithActualResult)
 update_forward_refs(TestCaseFunction_Custom)

@@ -727,7 +727,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -857,18 +857,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "expand",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "x-client-id",
@@ -1035,7 +1024,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -1165,18 +1154,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "expand",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "x-client-id",
@@ -2244,7 +2222,6 @@
         "allOfPropertyConflicts": [],
         "description": "An Account represents an account with an insurance carrier and includes high-level account information (e.g. name) and any Policy objects associated with the Account.",
         "generatedName": "Account",
-        "nameOverride": "Account",
         "title": "Account",
         "groupName": [
           "Accounts"
@@ -2531,7 +2508,6 @@
         "allOfPropertyConflicts": [],
         "description": "A Policy represents a specific policy associated with an Account and includes high-level policy information (e.g. policy number) and any children objects (e.g., coverages) associated with the policy.",
         "generatedName": "Policy",
-        "nameOverride": "Policy",
         "title": "Policy",
         "groupName": [
           "Accounts"
@@ -2663,7 +2639,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Address",
-        "nameOverride": "Address",
         "title": "Address",
         "groupName": [],
         "additionalProperties": false,
@@ -2785,7 +2760,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Carrier",
-        "nameOverride": "Carrier",
         "title": "Carrier",
         "groupName": [],
         "additionalProperties": false,
@@ -2948,7 +2922,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Coverage",
-        "nameOverride": "Coverage",
         "title": "Coverage",
         "groupName": [],
         "additionalProperties": false,
@@ -3010,7 +2983,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Property",
-        "nameOverride": "Property",
         "title": "Property",
         "groupName": [],
         "additionalProperties": false,
@@ -3101,7 +3073,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Vehicle",
-        "nameOverride": "Vehicle",
         "title": "Vehicle",
         "groupName": [],
         "additionalProperties": false,
@@ -3278,7 +3249,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Insured",
-        "nameOverride": "Insured",
         "title": "Insured",
         "groupName": [],
         "additionalProperties": false,
@@ -3500,7 +3470,6 @@
         "allOfPropertyConflicts": [],
         "description": "User to attach to Ignition session. If user is set, unique `id` must be provided.",
         "generatedName": "User",
-        "nameOverride": "User",
         "title": "User",
         "groupName": [],
         "additionalProperties": false,
@@ -3516,7 +3485,6 @@
           "type": "boolean"
         },
         "generatedName": "Success",
-        "nameOverride": "Success",
         "title": "Success",
         "groupName": [],
         "type": "primitive"
@@ -3569,7 +3537,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Error",
-        "nameOverride": "Error",
         "title": "Error",
         "groupName": [],
         "additionalProperties": false,

@@ -6,21 +6,13 @@ from typing import Callable, List, Literal, Optional, Sequence, Tuple, Type, Uni
 
 from .pydantic_field import PydanticField
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
+from fern_python.codegen.ast.nodes.docstring import escape_docstring
 from fern_python.external_dependencies import Pydantic, PydanticVersionCompatibility
 from fern_python.generators.pydantic_model.field_metadata import FieldMetadata
 from pydantic import BaseModel
 
 # these are the properties that BaseModel already has
 BASE_MODEL_PROPERTIES = set(dir(BaseModel))
-
-
-def escape_docstring(text: str) -> str:
-    """
-    Escape backslashes in docstrings to avoid SyntaxWarning for invalid escape sequences.
-    This is needed when docstrings contain raw text from OpenAPI specs that may have
-    backslashes (e.g., OTHER\_GIFT\_CARD).
-    """
-    return text.replace("\\", "\\\\")
 
 
 class PydanticModel:
@@ -59,7 +51,7 @@ class PydanticModel:
         self._class_declaration = AST.ClassDeclaration(
             name=name,
             extends=base_models or [pydantic_base_model],
-            docstring=AST.Docstring(escape_docstring(docstring)) if docstring is not None else None,
+            docstring=AST.Docstring(docstring) if docstring is not None else None,
             snippet=snippet,
         )
 
@@ -437,6 +429,80 @@ class PydanticModel:
                 )
             )
         )
+
+    def update_forward_refs_with_ghost_references(self, ghost_references: List[AST.ClassReference]) -> None:
+        # Filter out self-references
+        filtered_ghost_refs = [
+            ref
+            for ref in ghost_references
+            if ref.import_ is None
+            or ref.import_ != self._local_class_reference.import_
+            or ref.qualified_name_excluding_import != self._local_class_reference.qualified_name_excluding_import
+        ]
+
+        if not filtered_ghost_refs:
+            return
+
+        # Create two sets of references:
+        # 1. Constraint refs with must_import_after_current_declaration=True to keep imports at bottom
+        # 2. Kwarg refs with must_import_after_current_declaration=False so they resolve correctly
+        import dataclasses
+
+        constraint_refs: list[AST.Reference] = []  # For adding footer constraint
+        kwarg_refs: list[AST.Reference] = []  # For actual function call
+
+        for ghost_ref in filtered_ghost_refs:
+            # Constraint ref: keeps import in dict until write_remaining_imports
+            constraint_ref = dataclasses.replace(
+                ghost_ref,
+                must_import_after_current_declaration=True,
+                is_forward_reference=False,
+            )
+            constraint_refs.append(constraint_ref)
+
+            # Kwarg ref: resolves as actual reference (not string)
+            kwarg_ref = dataclasses.replace(
+                ghost_ref,
+                must_import_after_current_declaration=False,
+                is_forward_reference=False,
+            )
+            kwarg_refs.append(kwarg_ref)
+
+        # Create a custom AST node that includes constraint refs in metadata but doesn't write them
+        class UpdateForwardRefsNode(AST.AstNode):
+            def __init__(self, constraint_refs: List[AST.Reference], func_invocation: AST.FunctionInvocation):
+                self.constraint_refs = constraint_refs
+                self.func_invocation = func_invocation
+
+            def get_metadata(self) -> AST.AstNodeMetadata:
+                metadata = AST.AstNodeMetadata()
+                # Add constraint refs to metadata
+                for ref in self.constraint_refs:
+                    metadata.references.add(ref)
+                # Add function invocation metadata
+                metadata.update(self.func_invocation.get_metadata())
+                return metadata
+
+            def write(self, writer: AST.NodeWriter, should_write_as_snippet: Optional[bool] = None) -> None:
+                # Only write the function invocation, not the constraint refs
+                writer.write_node(self.func_invocation)
+
+        update_node = UpdateForwardRefsNode(
+            constraint_refs=constraint_refs,
+            func_invocation=AST.FunctionInvocation(
+                function_definition=self._update_forward_ref_function_reference,
+                args=[AST.Expression(self._local_class_reference)],
+                kwargs=[
+                    (
+                        get_named_import_or_throw(kwarg_ref),
+                        AST.Expression(kwarg_ref),
+                    )
+                    for kwarg_ref in kwarg_refs
+                ],
+            ),
+        )
+
+        self._source_file.add_footer_expression(AST.Expression(update_node))
 
     def _get_v1_config_class(self) -> Optional[AST.ClassDeclaration]:
         config = AST.ClassDeclaration(name="Config")

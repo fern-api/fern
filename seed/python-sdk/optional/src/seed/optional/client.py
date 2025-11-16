@@ -5,6 +5,9 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from .raw_client import AsyncRawOptionalClient, RawOptionalClient
+from .types.deploy_params import DeployParams
+from .types.deploy_response import DeployResponse
+from .types.send_optional_body_request import SendOptionalBodyRequest
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -28,13 +31,13 @@ class OptionalClient:
     def send_optional_body(
         self,
         *,
-        request: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        request: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> str:
         """
         Parameters
         ----------
-        request : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        request : typing.Optional[typing.Dict[str, typing.Any]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -58,6 +61,90 @@ class OptionalClient:
         _response = self._raw_client.send_optional_body(request=request, request_options=request_options)
         return _response.data
 
+    def send_optional_typed_body(
+        self,
+        *,
+        request: typing.Optional[SendOptionalBodyRequest] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> str:
+        """
+        Parameters
+        ----------
+        request : typing.Optional[SendOptionalBodyRequest]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+            Id of the created resource
+
+        Examples
+        --------
+        from seed import SeedObjectsWithImports
+        from seed.optional import SendOptionalBodyRequest
+
+        client = SeedObjectsWithImports(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.optional.send_optional_typed_body(
+            request=SendOptionalBodyRequest(
+                message="message",
+            ),
+        )
+        """
+        _response = self._raw_client.send_optional_typed_body(request=request, request_options=request_options)
+        return _response.data
+
+    def send_optional_nullable_with_all_optional_properties(
+        self,
+        action_id: str,
+        id: str,
+        *,
+        request: typing.Optional[DeployParams] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> DeployResponse:
+        """
+        Tests optional(nullable(T)) where T has only optional properties.
+        This should not generate wire tests expecting {} when Optional.empty() is passed.
+
+        Parameters
+        ----------
+        action_id : str
+
+        id : str
+
+        request : typing.Optional[DeployParams]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DeployResponse
+
+        Examples
+        --------
+        from seed import SeedObjectsWithImports
+        from seed.optional import DeployParams
+
+        client = SeedObjectsWithImports(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.optional.send_optional_nullable_with_all_optional_properties(
+            action_id="actionId",
+            id="id",
+            request=DeployParams(
+                update_draft=True,
+            ),
+        )
+        """
+        _response = self._raw_client.send_optional_nullable_with_all_optional_properties(
+            action_id, id, request=request, request_options=request_options
+        )
+        return _response.data
+
 
 class AsyncOptionalClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -77,13 +164,13 @@ class AsyncOptionalClient:
     async def send_optional_body(
         self,
         *,
-        request: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        request: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> str:
         """
         Parameters
         ----------
-        request : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        request : typing.Optional[typing.Dict[str, typing.Any]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -113,4 +200,104 @@ class AsyncOptionalClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.send_optional_body(request=request, request_options=request_options)
+        return _response.data
+
+    async def send_optional_typed_body(
+        self,
+        *,
+        request: typing.Optional[SendOptionalBodyRequest] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> str:
+        """
+        Parameters
+        ----------
+        request : typing.Optional[SendOptionalBodyRequest]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+            Id of the created resource
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedObjectsWithImports
+        from seed.optional import SendOptionalBodyRequest
+
+        client = AsyncSeedObjectsWithImports(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.optional.send_optional_typed_body(
+                request=SendOptionalBodyRequest(
+                    message="message",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.send_optional_typed_body(request=request, request_options=request_options)
+        return _response.data
+
+    async def send_optional_nullable_with_all_optional_properties(
+        self,
+        action_id: str,
+        id: str,
+        *,
+        request: typing.Optional[DeployParams] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> DeployResponse:
+        """
+        Tests optional(nullable(T)) where T has only optional properties.
+        This should not generate wire tests expecting {} when Optional.empty() is passed.
+
+        Parameters
+        ----------
+        action_id : str
+
+        id : str
+
+        request : typing.Optional[DeployParams]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DeployResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedObjectsWithImports
+        from seed.optional import DeployParams
+
+        client = AsyncSeedObjectsWithImports(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.optional.send_optional_nullable_with_all_optional_properties(
+                action_id="actionId",
+                id="id",
+                request=DeployParams(
+                    update_draft=True,
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.send_optional_nullable_with_all_optional_properties(
+            action_id, id, request=request, request_options=request_options
+        )
         return _response.data

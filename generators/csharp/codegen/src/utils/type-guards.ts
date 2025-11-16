@@ -1,10 +1,18 @@
 import { fail } from "node:assert";
-
-import { Type } from "../ast";
-import { TypeLiteral } from "../ast/code/TypeLiteral";
+import { Literal } from "../ast/code/Literal";
+import { AstNode } from "../ast/core/AstNode";
+import { ClassReference } from "../ast/types/ClassReference";
+import { Type } from "../ast/types/IType";
+import { BaseType, Collection, Optional, Primitive, Value } from "../ast/types/Type";
 import { type Provenance } from "../context/model-navigator";
 import { is as DynamicIR } from "./dynamic-ir-type-guards";
 import { is as IR } from "./ir-type-guards";
+
+const ISO_8601_DATE_REGEX = /^[+-]?\d{4}-(0?[1-9]|1[0-2])-(0?[1-9]|[12]\d|3[01])$/;
+
+const ISO_8601_DATE_TIME_REGEX =
+    /^([+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))[T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24:?00)([.,]\d+(?!:))?)?(\16[0-5]\d([.,]\d+)?)?([zZ]|([+-])([01]\d|2[0-3]):?([0-5]\d)?)?)$/;
+
 /** Universal Type Guard functions
  *
  * Using these functions on objects is preferable to sniffing the internals of the object.
@@ -25,6 +33,14 @@ export const is = {
     Explicit: (value: unknown): value is Provenance & { explicit: true } =>
         is.Provenance(value) && value.explicit === true,
     NonNullable: <T>(value: T): value is NonNullable<T> => value != null,
+    isIsoDateString: (value: unknown): value is string => is.string(value) && ISO_8601_DATE_REGEX.test(value),
+    isIsoDateTimeString: (value: unknown): value is string => is.string(value) && ISO_8601_DATE_TIME_REGEX.test(value),
+    Type: (value: unknown): value is BaseType => value instanceof BaseType,
+    ClassReference: (value: unknown): value is ClassReference => value instanceof ClassReference,
+    Optional: (value: Type): value is Optional => value instanceof Optional,
+    AsyncEnumerable: (value: Type | undefined): value is Type =>
+        value != null &&
+        value.asNonOptional().fullyQualifiedName.startsWith("System.Collections.Generic.IAsyncEnumerable"),
     Record: {
         empty: (value: unknown): value is Record<string, unknown> =>
             value == null || Object.keys(value || {}).length === 0,
@@ -36,57 +52,66 @@ export const is = {
             is.object(value) && !(key in value)
     },
 
-    Type: {
-        string: (value: Type | undefined) => value instanceof Type.String,
-        boolean: (value: Type | undefined) => value instanceof Type.Boolean,
-        int: (value: Type | undefined) => value instanceof Type.Integer,
-        long: (value: Type | undefined) => value instanceof Type.Long,
-        uint: (value: Type | undefined) => value instanceof Type.Uint,
-        ulong: (value: Type | undefined) => value instanceof Type.ULong,
-        float: (value: Type | undefined) => value instanceof Type.Float,
-        double: (value: Type | undefined) => value instanceof Type.Double,
-        dateTime: (value: Type | undefined) => value instanceof Type.DateTime,
-        uuid: (value: Type | undefined) => value instanceof Type.Uuid,
-        object: (value: Type | undefined) => value instanceof Type.Object,
-        array: (value: Type | undefined) => value instanceof Type.Array,
-        listType: (value: Type | undefined) => value instanceof Type.ListType,
-        list: (value: Type | undefined) => value instanceof Type.List,
-        set: (value: Type | undefined) => value instanceof Type.Set,
-        map: (value: Type | undefined) => value instanceof Type.Map,
-        idictionary: (value: Type | undefined) => value instanceof Type.IDictionary,
-        keyValuePair: (value: Type | undefined) => value instanceof Type.KeyValuePair,
-        optional: (value: Type | undefined) => value instanceof Type.Optional,
-        fileParam: (value: Type | undefined) => value instanceof Type.FileParameter,
-        func: (value: Type | undefined) => value instanceof Type.Func,
-        action: (value: Type | undefined) => value instanceof Type.Action,
-        systemType: (value: Type | undefined) => value instanceof Type.SystemType,
-        byte: (value: Type | undefined) => value instanceof Type.Binary,
-        reference: (value: Type | undefined) => value instanceof Type.Reference,
-        coreReference: (value: Type | undefined) => value instanceof Type.CoreReference,
-        oneOf: (value: Type | undefined) => value instanceof Type.OneOf,
-        oneOfBase: (value: Type | undefined) => value instanceof Type.OneOfBase,
-        stringEnum: (value: Type | undefined) => value instanceof Type.StringEnum
+    Ast: {
+        Node: (value: unknown) => value instanceof AstNode,
+        NamedNode: (value: unknown): value is AstNode & { name: string } =>
+            is.Ast.Node(value) && "name" in value && typeof value.name === "string"
+    },
+    OneOf: {
+        OneOf: (value: Type | undefined): value is ClassReference =>
+            is.ClassReference(value) && value.fullyQualifiedName === "OneOf.OneOf",
+        OneOfBase: (value: Type | undefined): value is ClassReference =>
+            is.ClassReference(value) && value.fullyQualifiedName === "OneOf.OneOfBase"
     },
 
-    TypeLiteral: {
-        string: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.String,
-        boolean: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Boolean,
-        decimal: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Decimal,
-        double: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Double,
-        date: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Date,
-        dateTime: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.DateTime,
-        float: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Float,
-        int: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Integer,
-        long: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Long,
-        uint: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Uint,
-        ulong: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Ulong,
-        class: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Class_,
-        list: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.List,
-        set: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Set,
-        dictionary: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Dictionary,
-        nop: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Nop,
-        null: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Null,
-        unknown: (value: TypeLiteral | undefined) => value instanceof TypeLiteral.Unknown
+    Primitive: {
+        string: (value: Type | undefined) => value instanceof Primitive.String,
+        boolean: (value: Type | undefined) => value instanceof Primitive.Boolean,
+        int: (value: Type | undefined) => value instanceof Primitive.Integer,
+        long: (value: Type | undefined) => value instanceof Primitive.Long,
+        uint: (value: Type | undefined) => value instanceof Primitive.Uint,
+        ulong: (value: Type | undefined) => value instanceof Primitive.ULong,
+        float: (value: Type | undefined) => value instanceof Primitive.Float,
+        double: (value: Type | undefined) => value instanceof Primitive.Double,
+        object: (value: Type | undefined) => value instanceof Primitive.Object
+    },
+
+    Value: {
+        dateTime: (value: Type | undefined) => value instanceof Value.DateTime,
+        uuid: (value: Type | undefined) => value instanceof Value.Uuid,
+        byte: (value: Type | undefined) => value instanceof Value.Binary,
+        stringEnum: (value: Type | undefined) => value instanceof Value.StringEnum
+    },
+
+    Collection: {
+        array: (value: Type | undefined) => value instanceof Collection.Array,
+        listType: (value: Type | undefined) => value instanceof Collection.ListType,
+        list: (value: Type | undefined) => value instanceof Collection.List,
+        set: (value: Type | undefined) => value instanceof Collection.Set,
+        map: (value: Type | undefined) => value instanceof Collection.Map,
+        idictionary: (value: Type | undefined) => value instanceof Collection.IDictionary,
+        keyValuePair: (value: Type | undefined) => value instanceof Collection.KeyValuePair
+    },
+
+    Literal: {
+        string: (value: Literal | undefined) => value instanceof Literal.String,
+        boolean: (value: Literal | undefined) => value instanceof Literal.Boolean,
+        decimal: (value: Literal | undefined) => value instanceof Literal.Decimal,
+        double: (value: Literal | undefined) => value instanceof Literal.Double,
+        date: (value: Literal | undefined) => value instanceof Literal.Date,
+        dateTime: (value: Literal | undefined) => value instanceof Literal.DateTime,
+        float: (value: Literal | undefined) => value instanceof Literal.Float,
+        int: (value: Literal | undefined) => value instanceof Literal.Integer,
+        long: (value: Literal | undefined) => value instanceof Literal.Long,
+        uint: (value: Literal | undefined) => value instanceof Literal.Uint,
+        ulong: (value: Literal | undefined) => value instanceof Literal.Ulong,
+        class: (value: Literal | undefined) => value instanceof Literal.Class_,
+        list: (value: Literal | undefined) => value instanceof Literal.List,
+        set: (value: Literal | undefined) => value instanceof Literal.Set,
+        dictionary: (value: Literal | undefined) => value instanceof Literal.Dictionary,
+        nop: (value: Literal | undefined) => value instanceof Literal.Nop,
+        null: (value: Literal | undefined) => value instanceof Literal.Null,
+        unknown: (value: Literal | undefined) => value instanceof Literal.Unknown
     },
 
     IR, // Intermediate Representation typeguards

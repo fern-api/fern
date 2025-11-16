@@ -18,8 +18,6 @@ client.auth().getTokenWithClientCredentials(
         .builder()
         .clientId("client_id")
         .clientSecret("client_secret")
-        .audience("https://api.example.com")
-        .grantType("client_credentials")
         .scope("scope")
         .build()
 );
@@ -100,8 +98,6 @@ client.auth().refreshToken(
         .clientId("client_id")
         .clientSecret("client_secret")
         .refreshToken("refresh_token")
-        .audience("https://api.example.com")
-        .grantType("refresh_token")
         .scope("scope")
         .build()
 );

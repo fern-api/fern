@@ -5,15 +5,27 @@
 import * as FernDocsConfig from "../../../index";
 
 export interface FontConfig {
-    /** If the `name` is not supplied, Fern will default it to a generated name that will be used to reference your custom font in the eventually injected CSS in the docs. */
+    /** The name of the font. Defaults to a generated name that will be used to reference your custom font in the eventually injected CSS. */
     name?: string;
-    /** The relative path of the font file. To define multiple weight and style variations of the same font, use `paths` instead. */
+    /**
+     * The path to your font file, relative to your docs folder. Use this when you have a single font file.
+     * For multiple font files (like separate files for bold, italic etc), use `paths` instead.
+     */
     path?: string;
-    /** @default: `100 900`. */
+    /**
+     * The weight of the font. Can be a number (400, 700) or a range for variable fonts (400 700).
+     * Common values: 400 (normal), 700 (bold).
+     *
+     * @default: `100 900`.
+     */
     weight?: FernDocsConfig.FontWeight;
-    /** @default: `normal`. */
+    /**
+     * The font style, either "normal" or "italic". Defaults to "normal" if not specified.
+     *
+     * @default: `normal`.
+     */
     style?: FernDocsConfig.FontStyle;
-    /** Use this instead of `path` if you want to specify multiple font files for different font weights and styles. */
+    /** A list of font files for particular weights. Each element in the list includes a `path`, `weight`, and `style` property. */
     paths?: FernDocsConfig.FontConfigPath[];
     /** @default: `swap`. */
     display?: FernDocsConfig.FontDisplay;

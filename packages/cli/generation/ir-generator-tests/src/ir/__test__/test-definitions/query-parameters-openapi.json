@@ -31,6 +31,152 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
+        "type_:SearchRequestNeighbor": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "SearchRequestNeighbor",
+                    "camelCase": {
+                        "unsafeName": "searchRequestNeighbor",
+                        "safeName": "searchRequestNeighbor"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "search_request_neighbor",
+                        "safeName": "search_request_neighbor"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SEARCH_REQUEST_NEIGHBOR",
+                        "safeName": "SEARCH_REQUEST_NEIGHBOR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SearchRequestNeighbor",
+                        "safeName": "SearchRequestNeighbor"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "displayName": null,
+                "typeId": "type_:SearchRequestNeighbor"
+            },
+            "shape": {
+                "_type": "undiscriminatedUnion",
+                "members": [
+                    {
+                        "type": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "User",
+                                "camelCase": {
+                                    "unsafeName": "user",
+                                    "safeName": "user"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "user",
+                                    "safeName": "user"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "USER",
+                                    "safeName": "USER"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "User",
+                                    "safeName": "User"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": [],
+                                "file": null
+                            },
+                            "displayName": "User",
+                            "typeId": "type_:User",
+                            "default": null,
+                            "inline": null
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "NestedUser",
+                                "camelCase": {
+                                    "unsafeName": "nestedUser",
+                                    "safeName": "nestedUser"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "nested_user",
+                                    "safeName": "nested_user"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "NESTED_USER",
+                                    "safeName": "NESTED_USER"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "NestedUser",
+                                    "safeName": "NestedUser"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": [],
+                                "file": null
+                            },
+                            "displayName": "Nested User",
+                            "typeId": "type_:NestedUser",
+                            "default": null,
+                            "inline": null
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "INTEGER",
+                                "v2": {
+                                    "type": "integer",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [
+                "type_:User",
+                "type_:NestedUser"
+            ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": null
+        },
         "type_:SearchRequestNeighborRequired": {
             "inline": null,
             "name": {
@@ -778,17 +924,8 @@
                             "valueType": {
                                 "_type": "primitive",
                                 "primitive": {
-                                    "v1": "STRING",
-                                    "v2": {
-                                        "type": "string",
-                                        "default": null,
-                                        "validation": {
-                                            "format": "date",
-                                            "pattern": null,
-                                            "minLength": null,
-                                            "maxLength": null
-                                        }
-                                    }
+                                    "v1": "DATE",
+                                    "v2": null
                                 }
                             },
                             "allowMultiple": false,
@@ -1096,19 +1233,13 @@
                                                 }
                                             },
                                             "valueType": {
-                                                "_type": "container",
-                                                "container": {
-                                                    "_type": "optional",
-                                                    "optional": {
-                                                        "_type": "primitive",
-                                                        "primitive": {
-                                                            "v1": "STRING",
-                                                            "v2": {
-                                                                "type": "string",
-                                                                "default": null,
-                                                                "validation": null
-                                                            }
-                                                        }
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                        "type": "string",
+                                                        "default": null,
+                                                        "validation": null
                                                     }
                                                 }
                                             }
@@ -1454,22 +1585,22 @@
                                     "optional": {
                                         "_type": "named",
                                         "name": {
-                                            "originalName": "User",
+                                            "originalName": "SearchRequestNeighbor",
                                             "camelCase": {
-                                                "unsafeName": "user",
-                                                "safeName": "user"
+                                                "unsafeName": "searchRequestNeighbor",
+                                                "safeName": "searchRequestNeighbor"
                                             },
                                             "snakeCase": {
-                                                "unsafeName": "user",
-                                                "safeName": "user"
+                                                "unsafeName": "search_request_neighbor",
+                                                "safeName": "search_request_neighbor"
                                             },
                                             "screamingSnakeCase": {
-                                                "unsafeName": "USER",
-                                                "safeName": "USER"
+                                                "unsafeName": "SEARCH_REQUEST_NEIGHBOR",
+                                                "safeName": "SEARCH_REQUEST_NEIGHBOR"
                                             },
                                             "pascalCase": {
-                                                "unsafeName": "User",
-                                                "safeName": "User"
+                                                "unsafeName": "SearchRequestNeighbor",
+                                                "safeName": "SearchRequestNeighbor"
                                             }
                                         },
                                         "fernFilepath": {
@@ -1478,7 +1609,7 @@
                                             "file": null
                                         },
                                         "displayName": null,
-                                        "typeId": "type_:User",
+                                        "typeId": "type_:SearchRequestNeighbor",
                                         "default": null,
                                         "inline": null
                                     }
@@ -1671,7 +1802,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "beabc08c",
+                                "id": "aaeadedb",
                                 "url": "/user/getUsername",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1783,13 +1914,11 @@
                                             "shape": {
                                                 "type": "primitive",
                                                 "primitive": {
-                                                    "type": "string",
-                                                    "string": {
-                                                        "original": "date"
-                                                    }
+                                                    "type": "date",
+                                                    "date": "2023-01-15"
                                                 }
                                             },
-                                            "jsonExample": "date"
+                                            "jsonExample": "2023-01-15"
                                         }
                                     },
                                     {
@@ -2542,6 +2671,7 @@
                     "source": null,
                     "audiences": null,
                     "retries": null,
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 }
@@ -2583,6 +2713,7 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_": [
+                "type_:SearchRequestNeighbor",
                 "type_:SearchRequestNeighborRequired",
                 "type_:SearchResponse",
                 "type_:User",
@@ -2599,6 +2730,53 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
+            "type_:SearchRequestNeighbor": {
+                "type": "undiscriminatedUnion",
+                "declaration": {
+                    "name": {
+                        "originalName": "SearchRequestNeighbor",
+                        "camelCase": {
+                            "unsafeName": "searchRequestNeighbor",
+                            "safeName": "searchRequestNeighbor"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "search_request_neighbor",
+                            "safeName": "search_request_neighbor"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SEARCH_REQUEST_NEIGHBOR",
+                            "safeName": "SEARCH_REQUEST_NEIGHBOR"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "SearchRequestNeighbor",
+                            "safeName": "SearchRequestNeighbor"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "types": [
+                    {
+                        "type": "named",
+                        "value": "type_:User"
+                    },
+                    {
+                        "type": "named",
+                        "value": "type_:NestedUser"
+                    },
+                    {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    {
+                        "type": "primitive",
+                        "value": "INTEGER"
+                    }
+                ]
+            },
             "type_:SearchRequestNeighborRequired": {
                 "type": "undiscriminatedUnion",
                 "declaration": {
@@ -3063,7 +3241,7 @@
                             },
                             "typeReference": {
                                 "type": "primitive",
-                                "value": "STRING"
+                                "value": "DATE"
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -3259,11 +3437,8 @@
                                         "value": "STRING"
                                     },
                                     "value": {
-                                        "type": "optional",
-                                        "value": {
-                                            "type": "primitive",
-                                            "value": "STRING"
-                                        }
+                                        "type": "primitive",
+                                        "value": "STRING"
                                     }
                                 }
                             },
@@ -3468,7 +3643,7 @@
                                 "type": "optional",
                                 "value": {
                                     "type": "named",
-                                    "value": "type_:User"
+                                    "value": "type_:SearchRequestNeighbor"
                                 }
                             },
                             "propertyAccess": null,
@@ -3525,6 +3700,7 @@
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {
@@ -3535,6 +3711,7 @@
         "websocket": null,
         "service": "service_",
         "types": [
+            "type_:SearchRequestNeighbor",
             "type_:SearchRequestNeighborRequired",
             "type_:SearchResponse",
             "type_:User",

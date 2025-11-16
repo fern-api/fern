@@ -7,6 +7,8 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { UnionSettingsSchema } from "./UnionSettingsSchema";
 import { MessageNamingSettingsSchema } from "./MessageNamingSettingsSchema";
+import { RemoveDiscriminantsFromSchemas } from "./RemoveDiscriminantsFromSchemas";
+import { PathParameterOrder } from "./PathParameterOrder";
 
 export const ApiDefinitionSettingsSchema: core.serialization.ObjectSchema<
     serializers.ApiDefinitionSettingsSchema.Raw,
@@ -22,6 +24,8 @@ export const ApiDefinitionSettingsSchema: core.serialization.ObjectSchema<
     "wrap-references-to-nullable-in-optional": core.serialization.boolean().optional(),
     "coerce-optional-schemas-to-nullable": core.serialization.boolean().optional(),
     "group-environments-by-host": core.serialization.boolean().optional(),
+    "remove-discriminants-from-schemas": RemoveDiscriminantsFromSchemas.optional(),
+    "path-parameter-order": PathParameterOrder.optional(),
 });
 
 export declare namespace ApiDefinitionSettingsSchema {
@@ -36,5 +40,7 @@ export declare namespace ApiDefinitionSettingsSchema {
         "wrap-references-to-nullable-in-optional"?: boolean | null;
         "coerce-optional-schemas-to-nullable"?: boolean | null;
         "group-environments-by-host"?: boolean | null;
+        "remove-discriminants-from-schemas"?: RemoveDiscriminantsFromSchemas.Raw | null;
+        "path-parameter-order"?: PathParameterOrder.Raw | null;
     }
 }

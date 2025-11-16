@@ -70,7 +70,6 @@
               "type": "string"
             },
             "generatedName": "GetTransactionV3TransactionsIdGetRequestId",
-            "nameOverride": "Id",
             "title": "Id",
             "groupName": [],
             "type": "primitive"
@@ -187,7 +186,7 @@
                 "date": {
                   "value": {
                     "value": "2024-03-30",
-                    "type": "string"
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
@@ -505,7 +504,6 @@
               "type": "string"
             },
             "generatedName": "DeleteTransactionV3TransactionsIdDeleteRequestId",
-            "nameOverride": "Id",
             "title": "Id",
             "groupName": [],
             "type": "primitive"
@@ -633,7 +631,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -658,7 +656,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -670,7 +668,6 @@
           "name": "cursor",
           "schema": {
             "generatedName": "ListTransactionsV3TransactionsGetRequestCursor",
-            "nameOverride": "Cursor",
             "title": "Cursor",
             "description": "Starting point for the set of transactions",
             "value": {
@@ -679,13 +676,12 @@
                 "type": "string"
               },
               "generatedName": "ListTransactionsV3TransactionsGetRequestCursor",
-              "nameOverride": "Cursor",
               "title": "Cursor",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -697,7 +693,6 @@
           "name": "limit",
           "schema": {
             "generatedName": "ListTransactionsV3TransactionsGetRequestLimit",
-            "nameOverride": "Limit",
             "title": "Limit",
             "description": "The limit of transactions to be returned",
             "value": {
@@ -709,13 +704,12 @@
                 "type": "int"
               },
               "generatedName": "ListTransactionsV3TransactionsGetRequestLimit",
-              "nameOverride": "Limit",
               "title": "Limit",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -740,7 +734,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -809,58 +803,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "created_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "created_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "cursor",
-              "value": {
-                "value": {
-                  "value": "cursor",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "account_holder_id",
-              "value": {
-                "value": {
-                  "value": "account_holder_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -893,7 +836,7 @@
                         "date": {
                           "value": {
                             "value": "2024-03-30",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -1305,7 +1248,7 @@
                       "date": {
                         "value": {
                           "value": "2024-03-30",
-                          "type": "string"
+                          "type": "date"
                         },
                         "type": "primitive"
                       },
@@ -1641,7 +1584,6 @@
               "type": "string"
             },
             "generatedName": "SetTransactionAhV3TransactionsIdAssignPostRequestId",
-            "nameOverride": "Id",
             "title": "Id",
             "groupName": [],
             "type": "primitive"
@@ -1657,7 +1599,7 @@
       "generatedRequestName": "SetTransactionAhV3TransactionsIdAssignPostRequest",
       "request": {
         "schema": {
-          "generatedName": "SetTransactionAhV3TransactionsIdAssignPostRequest",
+          "generatedName": "SetTransactionAhV3TransactionsIdAssignPostRequestBody",
           "schema": "Body_set_transaction_ah_v3_transactions__id__assign_post",
           "source": {
             "file": "../openapi.yml",
@@ -1790,7 +1732,7 @@
                 "date": {
                   "value": {
                     "value": "2024-03-30",
-                    "type": "string"
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
@@ -2120,7 +2062,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2145,7 +2087,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2157,7 +2099,6 @@
           "name": "cursor",
           "schema": {
             "generatedName": "GetBatchesV3BatchesGetRequestCursor",
-            "nameOverride": "Cursor",
             "title": "Cursor",
             "description": "Starting point for the set of batches",
             "value": {
@@ -2166,13 +2107,12 @@
                 "type": "string"
               },
               "generatedName": "GetBatchesV3BatchesGetRequestCursor",
-              "nameOverride": "Cursor",
               "title": "Cursor",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2184,7 +2124,6 @@
           "name": "limit",
           "schema": {
             "generatedName": "GetBatchesV3BatchesGetRequestLimit",
-            "nameOverride": "Limit",
             "title": "Limit",
             "description": "The limit of batches to be returned",
             "value": {
@@ -2196,13 +2135,12 @@
                 "type": "int"
               },
               "generatedName": "GetBatchesV3BatchesGetRequestLimit",
-              "nameOverride": "Limit",
               "title": "Limit",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2216,8 +2154,10 @@
             "generatedName": "GetBatchesV3BatchesGetRequestStatus",
             "description": "If specified, only return batches with this status",
             "value": {
+              "description": "If specified, only return batches with this status",
               "generatedName": "GetBatchesV3BatchesGetRequestStatus",
               "schema": "BatchStatus",
+              "groupName": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -2225,7 +2165,7 @@
               "type": "reference"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -2294,55 +2234,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "created_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "created_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "cursor",
-              "value": {
-                "value": {
-                  "value": "cursor",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "status",
-              "value": {
-                "value": "processing",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -2544,7 +2436,7 @@
                       "date": {
                         "value": {
                           "value": "2024-03-30",
-                          "type": "string"
+                          "type": "date"
                         },
                         "type": "primitive"
                       },
@@ -2672,7 +2564,6 @@
               "type": "string"
             },
             "generatedName": "GetSingleBatchV3BatchesIdGetRequestId",
-            "nameOverride": "Id",
             "title": "Id",
             "groupName": [],
             "type": "primitive"
@@ -2853,7 +2744,6 @@
               "type": "string"
             },
             "generatedName": "GetBatchResultsV3BatchesIdResultsGetRequestId",
-            "nameOverride": "Id",
             "title": "Id",
             "groupName": [],
             "type": "primitive"
@@ -3262,7 +3152,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3287,7 +3177,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3299,7 +3189,6 @@
           "name": "cursor",
           "schema": {
             "generatedName": "GetBankStatementsV3BankStatementsGetRequestCursor",
-            "nameOverride": "Cursor",
             "title": "Cursor",
             "description": "Starting point for the set of bank statements",
             "value": {
@@ -3308,13 +3197,12 @@
                 "type": "string"
               },
               "generatedName": "GetBankStatementsV3BankStatementsGetRequestCursor",
-              "nameOverride": "Cursor",
               "title": "Cursor",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3326,7 +3214,6 @@
           "name": "limit",
           "schema": {
             "generatedName": "GetBankStatementsV3BankStatementsGetRequestLimit",
-            "nameOverride": "Limit",
             "title": "Limit",
             "description": "The limit of bank statements to be returned",
             "value": {
@@ -3338,13 +3225,12 @@
                 "type": "int"
               },
               "generatedName": "GetBankStatementsV3BankStatementsGetRequestLimit",
-              "nameOverride": "Limit",
               "title": "Limit",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3358,8 +3244,10 @@
             "generatedName": "GetBankStatementsV3BankStatementsGetRequestStatus",
             "description": "If specified, only return bank statements with this status",
             "value": {
+              "description": "If specified, only return bank statements with this status",
               "generatedName": "GetBankStatementsV3BankStatementsGetRequestStatus",
               "schema": "DocumentStatus",
+              "groupName": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -3367,7 +3255,7 @@
               "type": "reference"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -3436,55 +3324,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "created_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "created_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "cursor",
-              "value": {
-                "value": {
-                  "value": "cursor",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "status",
-              "value": {
-                "value": "queued",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -3793,7 +3633,6 @@
               "type": "string"
             },
             "generatedName": "GetBankStatementV3BankStatementsIdGetRequestId",
-            "nameOverride": "Id",
             "title": "Id",
             "groupName": [],
             "type": "primitive"
@@ -3995,7 +3834,6 @@
               "type": "string"
             },
             "generatedName": "DeleteBankStatementV3BankStatementsIdDeleteRequestId",
-            "nameOverride": "Id",
             "title": "Id",
             "groupName": [],
             "type": "primitive"
@@ -4097,7 +3935,6 @@
               "type": "string"
             },
             "generatedName": "GetBankStatementStatementInfoV3BankStatementsIdOverviewPostRequestId",
-            "nameOverride": "Id",
             "title": "Id",
             "groupName": [],
             "type": "primitive"
@@ -4208,14 +4045,14 @@
                 "start_date": {
                   "value": {
                     "value": "2024-01-01",
-                    "type": "string"
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
                 "end_date": {
                   "value": {
                     "value": "2024-02-01",
-                    "type": "string"
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
@@ -4362,7 +4199,6 @@
               "type": "string"
             },
             "generatedName": "GetBankStatementResultV3BankStatementsIdResultsGetRequestId",
-            "nameOverride": "Id",
             "title": "Id",
             "groupName": [],
             "type": "primitive"
@@ -4491,14 +4327,14 @@
                         "start_date": {
                           "value": {
                             "value": "2024-01-01",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "end_date": {
                           "value": {
                             "value": "2024-02-01",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -4544,7 +4380,7 @@
                                 "date": {
                                   "value": {
                                     "value": "2024-03-30",
-                                    "type": "string"
+                                    "type": "date"
                                   },
                                   "type": "primitive"
                                 },
@@ -4624,7 +4460,6 @@
               "type": "string"
             },
             "generatedName": "GetAccountHolderV3AccountHoldersIdGetRequestId",
-            "nameOverride": "Id",
             "title": "Id",
             "groupName": [],
             "type": "primitive"
@@ -4791,7 +4626,6 @@
               "type": "string"
             },
             "generatedName": "DeleteAccountHolderV3AccountHoldersIdDeleteRequestId",
-            "nameOverride": "Id",
             "title": "Id",
             "groupName": [],
             "type": "primitive"
@@ -4919,7 +4753,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4944,7 +4778,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4956,7 +4790,6 @@
           "name": "cursor",
           "schema": {
             "generatedName": "GetAccountHoldersV3AccountHoldersGetRequestCursor",
-            "nameOverride": "Cursor",
             "title": "Cursor",
             "description": "Starting point for the set of account holders",
             "value": {
@@ -4965,13 +4798,12 @@
                 "type": "string"
               },
               "generatedName": "GetAccountHoldersV3AccountHoldersGetRequestCursor",
-              "nameOverride": "Cursor",
               "title": "Cursor",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -4983,7 +4815,6 @@
           "name": "limit",
           "schema": {
             "generatedName": "GetAccountHoldersV3AccountHoldersGetRequestLimit",
-            "nameOverride": "Limit",
             "title": "Limit",
             "description": "The limit of account holders to be returned",
             "value": {
@@ -4995,13 +4826,12 @@
                 "type": "int"
               },
               "generatedName": "GetAccountHoldersV3AccountHoldersGetRequestLimit",
-              "nameOverride": "Limit",
               "title": "Limit",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -5069,48 +4899,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "created_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "created_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "cursor",
-              "value": {
-                "value": {
-                  "value": "cursor",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -5372,7 +5161,6 @@
               "type": "string"
             },
             "generatedName": "GetAccountHolderRecurringPaymentsV3AccountHoldersIdRecurringGroupsPostRequestId",
-            "nameOverride": "Id",
             "title": "Id",
             "groupName": [],
             "type": "primitive"
@@ -5491,14 +5279,14 @@
                     "start_date": {
                       "value": {
                         "value": "2024-03-01",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
                     "end_date": {
                       "value": {
                         "value": "2024-03-30",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -6020,7 +5808,6 @@
               "type": "string"
             },
             "generatedName": "GetWebhookV3WebhooksIdGetRequestId",
-            "nameOverride": "Id",
             "title": "Id",
             "groupName": [],
             "type": "primitive"
@@ -6199,7 +5986,6 @@
               "type": "string"
             },
             "generatedName": "DeleteWebhookV3WebhooksIdDeleteRequestId",
-            "nameOverride": "Id",
             "title": "Id",
             "groupName": [],
             "type": "primitive"
@@ -6315,7 +6101,6 @@
               "type": "string"
             },
             "generatedName": "PatchWebhookV3WebhooksIdPatchRequestId",
-            "nameOverride": "Id",
             "title": "Id",
             "groupName": [],
             "type": "primitive"
@@ -6331,7 +6116,7 @@
       "generatedRequestName": "PatchWebhookV3WebhooksIdPatchRequest",
       "request": {
         "schema": {
-          "generatedName": "PatchWebhookV3WebhooksIdPatchRequest",
+          "generatedName": "PatchWebhookV3WebhooksIdPatchRequestBody",
           "schema": "WebhookPatch",
           "source": {
             "file": "../openapi.yml",
@@ -6974,7 +6759,6 @@
               "type": "int"
             },
             "generatedName": "FilterDeleteV3RulesIndexDeleteRequestIndex",
-            "nameOverride": "Index",
             "title": "Index",
             "groupName": [],
             "type": "primitive"
@@ -7126,7 +6910,6 @@
               "type": "int"
             },
             "generatedName": "FilterPatchV3RulesIndexPatchRequestIndex",
-            "nameOverride": "Index",
             "title": "Index",
             "groupName": [],
             "type": "primitive"
@@ -7142,7 +6925,7 @@
       "generatedRequestName": "FilterPatchV3RulesIndexPatchRequest",
       "request": {
         "schema": {
-          "generatedName": "FilterPatchV3RulesIndexPatchRequest",
+          "generatedName": "FilterPatchV3RulesIndexPatchRequestBody",
           "schema": "Action",
           "source": {
             "file": "../openapi.yml",
@@ -7320,7 +7103,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7345,7 +7128,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7357,7 +7140,6 @@
           "name": "cursor",
           "schema": {
             "generatedName": "GetReportsV3ReportsGetRequestCursor",
-            "nameOverride": "Cursor",
             "title": "Cursor",
             "description": "Starting point for the set of report",
             "value": {
@@ -7366,13 +7148,12 @@
                 "type": "string"
               },
               "generatedName": "GetReportsV3ReportsGetRequestCursor",
-              "nameOverride": "Cursor",
               "title": "Cursor",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7384,7 +7165,6 @@
           "name": "limit",
           "schema": {
             "generatedName": "GetReportsV3ReportsGetRequestLimit",
-            "nameOverride": "Limit",
             "title": "Limit",
             "description": "The limit of report to be returned",
             "value": {
@@ -7396,13 +7176,12 @@
                 "type": "int"
               },
               "generatedName": "GetReportsV3ReportsGetRequestLimit",
-              "nameOverride": "Limit",
               "title": "Limit",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7416,8 +7195,10 @@
             "generatedName": "GetReportsV3ReportsGetRequestStatus",
             "description": "If specified, only return reports with this status",
             "value": {
+              "description": "If specified, only return reports with this status",
               "generatedName": "GetReportsV3ReportsGetRequestStatus",
               "schema": "ReportStatus",
+              "groupName": [],
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -7425,7 +7206,7 @@
               "type": "reference"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -7494,55 +7275,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "created_after",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "created_before",
-              "value": {
-                "value": {
-                  "value": "2024-01-15T09:30:00Z",
-                  "type": "datetime"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "cursor",
-              "value": {
-                "value": {
-                  "value": "cursor",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "status",
-              "value": {
-                "value": "open",
-                "type": "enum"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -7860,7 +7593,6 @@
               "type": "string"
             },
             "generatedName": "GetReportV3ReportsIdGetRequestId",
-            "nameOverride": "Id",
             "title": "Id",
             "groupName": [],
             "type": "primitive"
@@ -8054,7 +7786,6 @@
               "type": "string"
             },
             "generatedName": "DeleteReportV3ReportsIdDeleteRequestId",
-            "nameOverride": "Id",
             "title": "Id",
             "groupName": [],
             "type": "primitive"
@@ -8470,7 +8201,7 @@
       "generatedRequestName": "CustomCategoriesPostV3CategoriesAccountHolderTypePostRequest",
       "request": {
         "schema": {
-          "generatedName": "CustomCategoriesPostV3CategoriesAccountHolderTypePostRequest",
+          "generatedName": "CustomCategoriesPostV3CategoriesAccountHolderTypePostRequestBody",
           "schema": "CustomCategorySet",
           "source": {
             "file": "../openapi.yml",
@@ -9021,7 +8752,6 @@
           "name": "name",
           "schema": {
             "generatedName": "SearchEntityV3EntitiesLookupGetRequestName",
-            "nameOverride": "Name",
             "title": "Name",
             "description": "The name of the entity to resolve",
             "value": {
@@ -9030,13 +8760,12 @@
                 "type": "string"
               },
               "generatedName": "SearchEntityV3EntitiesLookupGetRequestName",
-              "nameOverride": "Name",
               "title": "Name",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -9048,7 +8777,6 @@
           "name": "website",
           "schema": {
             "generatedName": "SearchEntityV3EntitiesLookupGetRequestWebsite",
-            "nameOverride": "Website",
             "title": "Website",
             "description": "The website of the entity to resolve",
             "value": {
@@ -9057,13 +8785,12 @@
                 "type": "string"
               },
               "generatedName": "SearchEntityV3EntitiesLookupGetRequestWebsite",
-              "nameOverride": "Website",
               "title": "Website",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -9075,7 +8802,6 @@
           "name": "location",
           "schema": {
             "generatedName": "SearchEntityV3EntitiesLookupGetRequestLocation",
-            "nameOverride": "Location",
             "title": "Location",
             "description": "An unstructured location string of the entity to resolve",
             "value": {
@@ -9084,13 +8810,12 @@
                 "type": "string"
               },
               "generatedName": "SearchEntityV3EntitiesLookupGetRequestLocation",
-              "nameOverride": "Location",
               "title": "Location",
               "groupName": [],
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -9183,38 +8908,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "name",
-              "value": {
-                "value": {
-                  "value": "name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "website",
-              "value": {
-                "value": {
-                  "value": "website",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "location",
-              "value": {
-                "value": {
-                  "value": "location",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {
@@ -9303,7 +8997,6 @@
               "type": "string"
             },
             "generatedName": "GetEntityByIdV3EntitiesIdGetRequestId",
-            "nameOverride": "Id",
             "title": "Id",
             "groupName": [],
             "type": "primitive"
@@ -9497,14 +9190,12 @@
             "key": "type",
             "schema": {
               "generatedName": "AccountType",
-              "nameOverride": "Type",
               "title": "Type",
               "value": {
                 "schema": {
                   "type": "string"
                 },
                 "generatedName": "AccountType",
-                "nameOverride": "Type",
                 "title": "Type",
                 "groupName": [],
                 "type": "primitive"
@@ -9520,14 +9211,12 @@
             "key": "number",
             "schema": {
               "generatedName": "AccountNumber",
-              "nameOverride": "Number",
               "title": "Number",
               "value": {
                 "schema": {
                   "type": "string"
                 },
                 "generatedName": "AccountNumber",
-                "nameOverride": "Number",
                 "title": "Number",
                 "groupName": [],
                 "type": "primitive"
@@ -9603,7 +9292,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Account",
-        "nameOverride": "Account",
         "title": "Account",
         "groupName": [],
         "additionalProperties": false,
@@ -9643,14 +9331,12 @@
             "key": "name",
             "schema": {
               "generatedName": "AccountHolderName",
-              "nameOverride": "Name",
               "title": "Name",
               "value": {
                 "schema": {
                   "type": "string"
                 },
                 "generatedName": "AccountHolderName",
-                "nameOverride": "Name",
                 "title": "Name",
                 "groupName": [],
                 "type": "primitive"
@@ -9684,7 +9370,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "AccountHolder",
-        "nameOverride": "AccountHolder",
         "title": "AccountHolder",
         "groupName": [],
         "additionalProperties": false,
@@ -9708,7 +9393,6 @@
                 "type": "string"
               },
               "generatedName": "AccountHolderCreateId",
-              "nameOverride": "Id",
               "title": "Id",
               "groupName": [],
               "type": "primitive"
@@ -9738,7 +9422,6 @@
             "key": "name",
             "schema": {
               "generatedName": "AccountHolderCreateName",
-              "nameOverride": "Name",
               "title": "Name",
               "description": "The name of the account holder",
               "value": {
@@ -9747,7 +9430,6 @@
                   "type": "string"
                 },
                 "generatedName": "AccountHolderCreateName",
-                "nameOverride": "Name",
                 "title": "Name",
                 "groupName": [],
                 "type": "primitive"
@@ -9760,7 +9442,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "AccountHolderCreate",
-        "nameOverride": "AccountHolderCreate",
         "title": "AccountHolderCreate",
         "groupName": [],
         "additionalProperties": false,
@@ -9784,7 +9465,6 @@
                 "type": "string"
               },
               "generatedName": "AccountHolderExternalId",
-              "nameOverride": "Id",
               "title": "Id",
               "groupName": [],
               "type": "primitive"
@@ -9814,7 +9494,6 @@
             "key": "name",
             "schema": {
               "generatedName": "AccountHolderExternalName",
-              "nameOverride": "Name",
               "title": "Name",
               "description": "The name of the account holder",
               "value": {
@@ -9823,7 +9502,6 @@
                   "type": "string"
                 },
                 "generatedName": "AccountHolderExternalName",
-                "nameOverride": "Name",
                 "title": "Name",
                 "groupName": [],
                 "type": "primitive"
@@ -9852,7 +9530,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "AccountHolderExternal",
-        "nameOverride": "AccountHolderExternal",
         "title": "AccountHolderExternal",
         "groupName": [],
         "additionalProperties": false,
@@ -9865,7 +9542,6 @@
       "AccountHolderType": {
         "description": "An enumeration.",
         "generatedName": "AccountHolderType",
-        "nameOverride": "AccountHolderType",
         "title": "AccountHolderType",
         "values": [
           {
@@ -9889,7 +9565,6 @@
       "AccountType": {
         "description": "An enumeration.",
         "generatedName": "AccountType",
-        "nameOverride": "AccountType",
         "title": "AccountType",
         "values": [
           {
@@ -9913,7 +9588,6 @@
       "AccountingCategory": {
         "description": "An enumeration.",
         "generatedName": "AccountingCategory",
-        "nameOverride": "AccountingCategory",
         "title": "AccountingCategory",
         "values": [
           {
@@ -9967,14 +9641,12 @@
             "key": "street",
             "schema": {
               "generatedName": "AddressStreet",
-              "nameOverride": "Street",
               "title": "Street",
               "value": {
                 "schema": {
                   "type": "string"
                 },
                 "generatedName": "AddressStreet",
-                "nameOverride": "Street",
                 "title": "Street",
                 "groupName": [],
                 "type": "primitive"
@@ -9990,14 +9662,12 @@
             "key": "postcode",
             "schema": {
               "generatedName": "AddressPostcode",
-              "nameOverride": "Postcode",
               "title": "Postcode",
               "value": {
                 "schema": {
                   "type": "string"
                 },
                 "generatedName": "AddressPostcode",
-                "nameOverride": "Postcode",
                 "title": "Postcode",
                 "groupName": [],
                 "type": "primitive"
@@ -10013,14 +9683,12 @@
             "key": "city",
             "schema": {
               "generatedName": "AddressCity",
-              "nameOverride": "City",
               "title": "City",
               "value": {
                 "schema": {
                   "type": "string"
                 },
                 "generatedName": "AddressCity",
-                "nameOverride": "City",
                 "title": "City",
                 "groupName": [],
                 "type": "primitive"
@@ -10036,14 +9704,12 @@
             "key": "state",
             "schema": {
               "generatedName": "AddressState",
-              "nameOverride": "State",
               "title": "State",
               "value": {
                 "schema": {
                   "type": "string"
                 },
                 "generatedName": "AddressState",
-                "nameOverride": "State",
                 "title": "State",
                 "groupName": [],
                 "type": "primitive"
@@ -10059,14 +9725,12 @@
             "key": "country",
             "schema": {
               "generatedName": "AddressCountry",
-              "nameOverride": "Country",
               "title": "Country",
               "value": {
                 "schema": {
                   "type": "string"
                 },
                 "generatedName": "AddressCountry",
-                "nameOverride": "Country",
                 "title": "Country",
                 "groupName": [],
                 "type": "primitive"
@@ -10079,7 +9743,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Address",
-        "nameOverride": "Address",
         "title": "Address",
         "groupName": [],
         "additionalProperties": false,
@@ -10107,7 +9770,6 @@
                 "type": "reference"
               },
               "generatedName": "AsyncEnrichmentInputTransactions",
-              "nameOverride": "Transactions",
               "title": "Transactions",
               "groupName": [],
               "type": "array"
@@ -10117,7 +9779,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "AsyncEnrichmentInput",
-        "nameOverride": "AsyncEnrichmentInput",
         "title": "AsyncEnrichmentInput",
         "groupName": [],
         "additionalProperties": false,
@@ -10140,7 +9801,6 @@
                 "type": "string"
               },
               "generatedName": "BankStatementId",
-              "nameOverride": "Id",
               "title": "Id",
               "groupName": [],
               "type": "primitive"
@@ -10153,7 +9813,6 @@
             "key": "name",
             "schema": {
               "generatedName": "BankStatementName",
-              "nameOverride": "Name",
               "title": "Name",
               "description": "The name of the bank statement file, if available.",
               "value": {
@@ -10162,7 +9821,6 @@
                   "type": "string"
                 },
                 "generatedName": "BankStatementName",
-                "nameOverride": "Name",
                 "title": "Name",
                 "groupName": [],
                 "type": "primitive"
@@ -10247,7 +9905,6 @@
         "allOfPropertyConflicts": [],
         "description": "Represents a bank statement with details about the file and its status.",
         "generatedName": "BankStatement",
-        "nameOverride": "BankStatement",
         "title": "BankStatement",
         "groupName": [],
         "additionalProperties": false,
@@ -10266,7 +9923,6 @@
             "key": "number",
             "schema": {
               "generatedName": "BankStatementAccountNumber",
-              "nameOverride": "Number",
               "title": "Number",
               "description": "The account number, if available.",
               "value": {
@@ -10275,7 +9931,6 @@
                   "type": "string"
                 },
                 "generatedName": "BankStatementAccountNumber",
-                "nameOverride": "Number",
                 "title": "Number",
                 "groupName": [],
                 "type": "primitive"
@@ -10342,8 +9997,7 @@
               "value": {
                 "description": "The start date of the statement period.",
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "BankStatementAccountStartDate",
                 "title": "Start Date",
@@ -10366,8 +10020,7 @@
               "value": {
                 "description": "The end date of the statement period.",
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "BankStatementAccountEndDate",
                 "title": "End Date",
@@ -10464,7 +10117,6 @@
                 "type": "reference"
               },
               "generatedName": "BankStatementAccountTransactions",
-              "nameOverride": "Transactions",
               "title": "Transactions",
               "groupName": [],
               "type": "array"
@@ -10474,7 +10126,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "BankStatementAccount",
-        "nameOverride": "BankStatementAccount",
         "title": "BankStatementAccount",
         "groupName": [],
         "additionalProperties": false,
@@ -10513,7 +10164,6 @@
                 "type": "string"
               },
               "generatedName": "BankStatementErrorMessage",
-              "nameOverride": "Message",
               "title": "Message",
               "groupName": [],
               "type": "primitive"
@@ -10523,7 +10173,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "BankStatementError",
-        "nameOverride": "BankStatementError",
         "title": "BankStatementError",
         "groupName": [],
         "additionalProperties": false,
@@ -10536,7 +10185,6 @@
       "BankStatementErrorCode": {
         "description": "An enumeration.",
         "generatedName": "BankStatementErrorCode",
-        "nameOverride": "BankStatementErrorCode",
         "title": "BankStatementErrorCode",
         "values": [
           {
@@ -10582,7 +10230,6 @@
             "key": "size",
             "schema": {
               "generatedName": "BankStatementFileSize",
-              "nameOverride": "Size",
               "title": "Size",
               "description": "The size of the bank statement file in bytes, if available.",
               "value": {
@@ -10591,7 +10238,6 @@
                   "type": "int"
                 },
                 "generatedName": "BankStatementFileSize",
-                "nameOverride": "Size",
                 "title": "Size",
                 "groupName": [],
                 "type": "primitive"
@@ -10604,7 +10250,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "BankStatementFile",
-        "nameOverride": "BankStatementFile",
         "title": "BankStatementFile",
         "groupName": [],
         "additionalProperties": false,
@@ -10633,7 +10278,6 @@
                 "type": "reference"
               },
               "generatedName": "BankStatementResultsAccounts",
-              "nameOverride": "Accounts",
               "title": "Accounts",
               "groupName": [],
               "type": "array"
@@ -10643,7 +10287,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "BankStatementResults",
-        "nameOverride": "BankStatementResults",
         "title": "BankStatementResults",
         "groupName": [],
         "additionalProperties": false,
@@ -10656,7 +10299,6 @@
       "BankStatementStatus": {
         "description": "An enumeration.",
         "generatedName": "BankStatementStatus",
-        "nameOverride": "BankStatementStatus",
         "title": "BankStatementStatus",
         "values": [
           {
@@ -10696,7 +10338,6 @@
                 "type": "string"
               },
               "generatedName": "BankStatementTransactionId",
-              "nameOverride": "Id",
               "title": "Id",
               "groupName": [],
               "type": "primitive"
@@ -10715,7 +10356,6 @@
                 "type": "string"
               },
               "generatedName": "BankStatementTransactionDescription",
-              "nameOverride": "Description",
               "title": "Description",
               "groupName": [],
               "type": "primitive"
@@ -10729,11 +10369,9 @@
             "schema": {
               "description": "The date that the transaction was posted. Uses ISO 8601 format (YYYY-MM-DD)",
               "schema": {
-                "format": "date",
-                "type": "string"
+                "type": "date"
               },
               "generatedName": "BankStatementTransactionDate",
-              "nameOverride": "Date",
               "title": "Date",
               "groupName": [],
               "type": "primitive"
@@ -10751,7 +10389,6 @@
                 "type": "double"
               },
               "generatedName": "BankStatementTransactionAmount",
-              "nameOverride": "Amount",
               "title": "Amount",
               "groupName": [],
               "type": "primitive"
@@ -10818,7 +10455,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "BankStatementTransaction",
-        "nameOverride": "BankStatementTransaction",
         "title": "BankStatementTransaction",
         "groupName": [],
         "additionalProperties": false,
@@ -10841,7 +10477,6 @@
                 "type": "string"
               },
               "generatedName": "BatchId",
-              "nameOverride": "Id",
               "title": "Id",
               "groupName": [],
               "type": "primitive"
@@ -10907,7 +10542,6 @@
                 "type": "int"
               },
               "generatedName": "BatchProgress",
-              "nameOverride": "Progress",
               "title": "Progress",
               "groupName": [],
               "type": "primitive"
@@ -10924,7 +10558,6 @@
                 "type": "int"
               },
               "generatedName": "BatchTotal",
-              "nameOverride": "Total",
               "title": "Total",
               "groupName": [],
               "type": "primitive"
@@ -10935,7 +10568,6 @@
         "allOfPropertyConflicts": [],
         "description": "The `Batch` object represents the status and progress of an asynchronous batch enrichment job.",
         "generatedName": "Batch",
-        "nameOverride": "Batch",
         "title": "Batch",
         "groupName": [],
         "additionalProperties": false,
@@ -10958,7 +10590,6 @@
                 "type": "string"
               },
               "generatedName": "BatchResultId",
-              "nameOverride": "Id",
               "title": "Id",
               "groupName": [],
               "type": "primitive"
@@ -10975,7 +10606,6 @@
                 "type": "int"
               },
               "generatedName": "BatchResultTotal",
-              "nameOverride": "Total",
               "title": "Total",
               "groupName": [],
               "type": "primitive"
@@ -11020,7 +10650,6 @@
         "allOfPropertyConflicts": [],
         "description": "The `BatchResult` object represents the result of a batch enrichment job, including its status and\nenriched transactions.",
         "generatedName": "BatchResult",
-        "nameOverride": "BatchResult",
         "title": "BatchResult",
         "groupName": [],
         "additionalProperties": false,
@@ -11033,7 +10662,6 @@
       "BatchStatus": {
         "description": "An enumeration.",
         "generatedName": "BatchStatus",
-        "nameOverride": "BatchStatus",
         "title": "BatchStatus",
         "values": [
           {
@@ -11072,7 +10700,6 @@
                 "type": "string"
               },
               "generatedName": "BodyPostBankStatementV3BankStatementsPostFile",
-              "nameOverride": "File",
               "title": "File",
               "groupName": [],
               "type": "primitive"
@@ -11130,7 +10757,6 @@
             "key": "general",
             "schema": {
               "generatedName": "CategoriesGeneral",
-              "nameOverride": "General",
               "title": "General",
               "description": "The category of the transaction. View the valid set of categories for your key [here](./docs/v3/enrichment/entities).",
               "value": {
@@ -11139,7 +10765,6 @@
                   "type": "string"
                 },
                 "generatedName": "CategoriesGeneral",
-                "nameOverride": "General",
                 "title": "General",
                 "groupName": [],
                 "type": "primitive"
@@ -11157,8 +10782,10 @@
               "generatedName": "CategoriesAccounting",
               "description": "The corresponding accounting category. Only available for `business` transactions.",
               "value": {
+                "description": "The corresponding accounting category. Only available for `business` transactions.",
                 "generatedName": "CategoriesAccounting",
                 "schema": "AccountingCategory",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -11173,7 +10800,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Categories",
-        "nameOverride": "Categories",
         "title": "Categories",
         "groupName": [],
         "additionalProperties": false,
@@ -11186,7 +10812,6 @@
       "CategoryConfidence": {
         "description": "An enumeration.",
         "generatedName": "CategoryConfidence",
-        "nameOverride": "CategoryConfidence",
         "title": "CategoryConfidence",
         "values": [
           {
@@ -11234,7 +10859,6 @@
                 "type": "primitive"
               },
               "generatedName": "CategorySetIncoming",
-              "nameOverride": "Incoming",
               "title": "Incoming",
               "groupName": [],
               "type": "array"
@@ -11255,7 +10879,6 @@
                 "type": "primitive"
               },
               "generatedName": "CategorySetOutgoing",
-              "nameOverride": "Outgoing",
               "title": "Outgoing",
               "groupName": [],
               "type": "array"
@@ -11265,7 +10888,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "CategorySet",
-        "nameOverride": "CategorySet",
         "title": "CategorySet",
         "groupName": [],
         "additionalProperties": false,
@@ -11284,7 +10906,6 @@
             "key": "id",
             "schema": {
               "generatedName": "CounterpartyId",
-              "nameOverride": "Id",
               "title": "Id",
               "description": "The unique UUID identifier of the entity",
               "value": {
@@ -11293,7 +10914,6 @@
                   "type": "string"
                 },
                 "generatedName": "CounterpartyId",
-                "nameOverride": "Id",
                 "title": "Id",
                 "groupName": [],
                 "type": "primitive"
@@ -11309,7 +10929,6 @@
             "key": "name",
             "schema": {
               "generatedName": "CounterpartyName",
-              "nameOverride": "Name",
               "title": "Name",
               "description": "The name of the entity",
               "value": {
@@ -11318,7 +10937,6 @@
                   "type": "string"
                 },
                 "generatedName": "CounterpartyName",
-                "nameOverride": "Name",
                 "title": "Name",
                 "groupName": [],
                 "type": "primitive"
@@ -11334,7 +10952,6 @@
             "key": "website",
             "schema": {
               "generatedName": "CounterpartyWebsite",
-              "nameOverride": "Website",
               "title": "Website",
               "description": "The website URL of the entity",
               "value": {
@@ -11343,7 +10960,6 @@
                   "type": "string"
                 },
                 "generatedName": "CounterpartyWebsite",
-                "nameOverride": "Website",
                 "title": "Website",
                 "groupName": [],
                 "type": "primitive"
@@ -11359,7 +10975,6 @@
             "key": "logo",
             "schema": {
               "generatedName": "CounterpartyLogo",
-              "nameOverride": "Logo",
               "title": "Logo",
               "description": "Logo's URL",
               "value": {
@@ -11368,7 +10983,6 @@
                   "type": "string"
                 },
                 "generatedName": "CounterpartyLogo",
-                "nameOverride": "Logo",
                 "title": "Logo",
                 "groupName": [],
                 "type": "primitive"
@@ -11384,7 +10998,6 @@
             "key": "mccs",
             "schema": {
               "generatedName": "CounterpartyMccs",
-              "nameOverride": "Mccs",
               "title": "Mccs",
               "description": "A list of [Merchant Category Codes](https://en.wikipedia.org/wiki/Merchant_category_code)",
               "value": {
@@ -11398,7 +11011,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "CounterpartyMccs",
-                "nameOverride": "Mccs",
                 "title": "Mccs",
                 "groupName": [],
                 "type": "array"
@@ -11428,7 +11040,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Counterparty",
-        "nameOverride": "Counterparty",
         "title": "Counterparty",
         "groupName": [],
         "additionalProperties": false,
@@ -11441,7 +11052,6 @@
       "CounterpartyType": {
         "description": "An enumeration.",
         "generatedName": "CounterpartyType",
-        "nameOverride": "CounterpartyType",
         "title": "CounterpartyType",
         "values": [
           {
@@ -11465,7 +11075,6 @@
       "Country": {
         "description": "An enumeration.",
         "generatedName": "Country",
-        "nameOverride": "Country",
         "title": "Country",
         "values": [
           {
@@ -12699,7 +12308,6 @@
       "Currency": {
         "description": "An enumeration.",
         "generatedName": "Currency",
-        "nameOverride": "Currency",
         "title": "Currency",
         "values": [
           {
@@ -13477,7 +13085,6 @@
                 "type": "primitive"
               },
               "generatedName": "CustomCategorySetIncoming",
-              "nameOverride": "Incoming",
               "title": "Incoming",
               "groupName": [],
               "type": "array"
@@ -13498,7 +13105,6 @@
                 "type": "primitive"
               },
               "generatedName": "CustomCategorySetOutgoing",
-              "nameOverride": "Outgoing",
               "title": "Outgoing",
               "groupName": [],
               "type": "array"
@@ -13508,7 +13114,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "CustomCategorySet",
-        "nameOverride": "CustomCategorySet",
         "title": "CustomCategorySet",
         "groupName": [],
         "additionalProperties": false,
@@ -13521,7 +13126,6 @@
       "DocumentStatus": {
         "description": "An enumeration.",
         "generatedName": "DocumentStatus",
-        "nameOverride": "DocumentStatus",
         "title": "DocumentStatus",
         "values": [
           {
@@ -13666,7 +13270,6 @@
                 "type": "string"
               },
               "generatedName": "EnrichedTransactionId",
-              "nameOverride": "Id",
               "title": "Id",
               "groupName": [],
               "type": "primitive"
@@ -13676,7 +13279,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "EnrichedTransaction",
-        "nameOverride": "EnrichedTransaction",
         "title": "EnrichedTransaction",
         "groupName": [],
         "additionalProperties": false,
@@ -13705,7 +13307,6 @@
                 "type": "reference"
               },
               "generatedName": "EnrichmentResultTransactions",
-              "nameOverride": "Transactions",
               "title": "Transactions",
               "groupName": [],
               "type": "array"
@@ -13715,7 +13316,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "EnrichmentResult",
-        "nameOverride": "EnrichmentResult",
         "title": "EnrichmentResult",
         "groupName": [],
         "additionalProperties": false,
@@ -13755,7 +13355,6 @@
             "key": "intermediaries",
             "schema": {
               "generatedName": "EntitiesIntermediaries",
-              "nameOverride": "Intermediaries",
               "title": "Intermediaries",
               "value": {
                 "value": {
@@ -13768,7 +13367,6 @@
                   "type": "reference"
                 },
                 "generatedName": "EntitiesIntermediaries",
-                "nameOverride": "Intermediaries",
                 "title": "Intermediaries",
                 "groupName": [],
                 "type": "array"
@@ -13782,7 +13380,6 @@
         "allOfPropertyConflicts": [],
         "description": "Entities found by identity identification",
         "generatedName": "Entities",
-        "nameOverride": "Entities",
         "title": "Entities",
         "groupName": [],
         "additionalProperties": false,
@@ -13801,7 +13398,6 @@
             "key": "id",
             "schema": {
               "generatedName": "EntityId",
-              "nameOverride": "Id",
               "title": "Id",
               "description": "The unique UUID identifier of the entity",
               "value": {
@@ -13810,7 +13406,6 @@
                   "type": "string"
                 },
                 "generatedName": "EntityId",
-                "nameOverride": "Id",
                 "title": "Id",
                 "groupName": [],
                 "type": "primitive"
@@ -13826,7 +13421,6 @@
             "key": "name",
             "schema": {
               "generatedName": "EntityName",
-              "nameOverride": "Name",
               "title": "Name",
               "description": "The name of the entity",
               "value": {
@@ -13835,7 +13429,6 @@
                   "type": "string"
                 },
                 "generatedName": "EntityName",
-                "nameOverride": "Name",
                 "title": "Name",
                 "groupName": [],
                 "type": "primitive"
@@ -13851,7 +13444,6 @@
             "key": "website",
             "schema": {
               "generatedName": "EntityWebsite",
-              "nameOverride": "Website",
               "title": "Website",
               "description": "The website URL of the entity",
               "value": {
@@ -13860,7 +13452,6 @@
                   "type": "string"
                 },
                 "generatedName": "EntityWebsite",
-                "nameOverride": "Website",
                 "title": "Website",
                 "groupName": [],
                 "type": "primitive"
@@ -13876,7 +13467,6 @@
             "key": "logo",
             "schema": {
               "generatedName": "EntityLogo",
-              "nameOverride": "Logo",
               "title": "Logo",
               "description": "Logo's URL",
               "value": {
@@ -13885,7 +13475,6 @@
                   "type": "string"
                 },
                 "generatedName": "EntityLogo",
-                "nameOverride": "Logo",
                 "title": "Logo",
                 "groupName": [],
                 "type": "primitive"
@@ -13901,7 +13490,6 @@
             "key": "mccs",
             "schema": {
               "generatedName": "EntityMccs",
-              "nameOverride": "Mccs",
               "title": "Mccs",
               "description": "A list of [Merchant Category Codes](https://en.wikipedia.org/wiki/Merchant_category_code)",
               "value": {
@@ -13915,7 +13503,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "EntityMccs",
-                "nameOverride": "Mccs",
                 "title": "Mccs",
                 "groupName": [],
                 "type": "array"
@@ -13928,7 +13515,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Entity",
-        "nameOverride": "Entity",
         "title": "Entity",
         "groupName": [],
         "additionalProperties": false,
@@ -13941,7 +13527,6 @@
       "EntryType": {
         "description": "An enumeration.",
         "generatedName": "EntryType",
-        "nameOverride": "EntryType",
         "title": "EntryType",
         "values": [
           {
@@ -13980,7 +13565,6 @@
             "key": "detail",
             "schema": {
               "generatedName": "HttpValidationErrorDetail",
-              "nameOverride": "Detail",
               "title": "Detail",
               "value": {
                 "value": {
@@ -13993,7 +13577,6 @@
                   "type": "reference"
                 },
                 "generatedName": "HttpValidationErrorDetail",
-                "nameOverride": "Detail",
                 "title": "Detail",
                 "groupName": [],
                 "type": "array"
@@ -14006,7 +13589,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "HttpValidationError",
-        "nameOverride": "HTTPValidationError",
         "title": "HTTPValidationError",
         "groupName": [],
         "additionalProperties": false,
@@ -14025,7 +13607,6 @@
             "key": "id",
             "schema": {
               "generatedName": "IntermediaryId",
-              "nameOverride": "Id",
               "title": "Id",
               "description": "The unique UUID identifier of the entity",
               "value": {
@@ -14034,7 +13615,6 @@
                   "type": "string"
                 },
                 "generatedName": "IntermediaryId",
-                "nameOverride": "Id",
                 "title": "Id",
                 "groupName": [],
                 "type": "primitive"
@@ -14050,7 +13630,6 @@
             "key": "name",
             "schema": {
               "generatedName": "IntermediaryName",
-              "nameOverride": "Name",
               "title": "Name",
               "description": "The name of the entity",
               "value": {
@@ -14059,7 +13638,6 @@
                   "type": "string"
                 },
                 "generatedName": "IntermediaryName",
-                "nameOverride": "Name",
                 "title": "Name",
                 "groupName": [],
                 "type": "primitive"
@@ -14075,7 +13653,6 @@
             "key": "website",
             "schema": {
               "generatedName": "IntermediaryWebsite",
-              "nameOverride": "Website",
               "title": "Website",
               "description": "The website URL of the entity",
               "value": {
@@ -14084,7 +13661,6 @@
                   "type": "string"
                 },
                 "generatedName": "IntermediaryWebsite",
-                "nameOverride": "Website",
                 "title": "Website",
                 "groupName": [],
                 "type": "primitive"
@@ -14100,7 +13676,6 @@
             "key": "logo",
             "schema": {
               "generatedName": "IntermediaryLogo",
-              "nameOverride": "Logo",
               "title": "Logo",
               "description": "Logo's URL",
               "value": {
@@ -14109,7 +13684,6 @@
                   "type": "string"
                 },
                 "generatedName": "IntermediaryLogo",
-                "nameOverride": "Logo",
                 "title": "Logo",
                 "groupName": [],
                 "type": "primitive"
@@ -14125,7 +13699,6 @@
             "key": "mccs",
             "schema": {
               "generatedName": "IntermediaryMccs",
-              "nameOverride": "Mccs",
               "title": "Mccs",
               "description": "A list of [Merchant Category Codes](https://en.wikipedia.org/wiki/Merchant_category_code)",
               "value": {
@@ -14139,7 +13712,6 @@
                   "type": "primitive"
                 },
                 "generatedName": "IntermediaryMccs",
-                "nameOverride": "Mccs",
                 "title": "Mccs",
                 "groupName": [],
                 "type": "array"
@@ -14169,7 +13741,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Intermediary",
-        "nameOverride": "Intermediary",
         "title": "Intermediary",
         "groupName": [],
         "additionalProperties": false,
@@ -14182,7 +13753,6 @@
       "IntermediaryType": {
         "description": "An enumeration.",
         "generatedName": "IntermediaryType",
-        "nameOverride": "IntermediaryType",
         "title": "IntermediaryType",
         "values": [
           {
@@ -14237,8 +13807,10 @@
               "generatedName": "LocationStructured",
               "description": "When raw is set, a structured representation of it.",
               "value": {
+                "description": "When raw is set, a structured representation of it.",
                 "generatedName": "LocationStructured",
                 "schema": "LocationStructured",
+                "groupName": [],
                 "source": {
                   "file": "../openapi.yml",
                   "type": "openapi"
@@ -14253,7 +13825,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Location",
-        "nameOverride": "Location",
         "title": "Location",
         "groupName": [],
         "additionalProperties": false,
@@ -14310,7 +13881,6 @@
         "allOfPropertyConflicts": [],
         "description": "Location of where the transaction has taken place. This can greatly improve entity identification, especially\nunder ambiguity.",
         "generatedName": "LocationInput",
-        "nameOverride": "LocationInput",
         "title": "LocationInput",
         "groupName": [],
         "additionalProperties": false,
@@ -14329,7 +13899,6 @@
             "key": "street",
             "schema": {
               "generatedName": "LocationStructuredStreet",
-              "nameOverride": "Street",
               "title": "Street",
               "description": "The street name and number of the location",
               "value": {
@@ -14338,7 +13907,6 @@
                   "type": "string"
                 },
                 "generatedName": "LocationStructuredStreet",
-                "nameOverride": "Street",
                 "title": "Street",
                 "groupName": [],
                 "type": "primitive"
@@ -14354,7 +13922,6 @@
             "key": "city",
             "schema": {
               "generatedName": "LocationStructuredCity",
-              "nameOverride": "City",
               "title": "City",
               "description": "The city where the location is situated",
               "value": {
@@ -14363,7 +13930,6 @@
                   "type": "string"
                 },
                 "generatedName": "LocationStructuredCity",
-                "nameOverride": "City",
                 "title": "City",
                 "groupName": [],
                 "type": "primitive"
@@ -14379,7 +13945,6 @@
             "key": "state",
             "schema": {
               "generatedName": "LocationStructuredState",
-              "nameOverride": "State",
               "title": "State",
               "description": "The state or region of the location",
               "value": {
@@ -14388,7 +13953,6 @@
                   "type": "string"
                 },
                 "generatedName": "LocationStructuredState",
-                "nameOverride": "State",
                 "title": "State",
                 "groupName": [],
                 "type": "primitive"
@@ -14404,7 +13968,6 @@
             "key": "postcode",
             "schema": {
               "generatedName": "LocationStructuredPostcode",
-              "nameOverride": "Postcode",
               "title": "Postcode",
               "description": "The postal code or ZIP code of the location",
               "value": {
@@ -14413,7 +13976,6 @@
                   "type": "string"
                 },
                 "generatedName": "LocationStructuredPostcode",
-                "nameOverride": "Postcode",
                 "title": "Postcode",
                 "groupName": [],
                 "type": "primitive"
@@ -14452,7 +14014,6 @@
             "key": "country",
             "schema": {
               "generatedName": "LocationStructuredCountry",
-              "nameOverride": "Country",
               "title": "Country",
               "description": "The full name of the country",
               "value": {
@@ -14461,7 +14022,6 @@
                   "type": "string"
                 },
                 "generatedName": "LocationStructuredCountry",
-                "nameOverride": "Country",
                 "title": "Country",
                 "groupName": [],
                 "type": "primitive"
@@ -14477,7 +14037,6 @@
             "key": "latitude",
             "schema": {
               "generatedName": "LocationStructuredLatitude",
-              "nameOverride": "Latitude",
               "title": "Latitude",
               "description": "The latitude coordinate of the location",
               "value": {
@@ -14486,7 +14045,6 @@
                   "type": "double"
                 },
                 "generatedName": "LocationStructuredLatitude",
-                "nameOverride": "Latitude",
                 "title": "Latitude",
                 "groupName": [],
                 "type": "primitive"
@@ -14502,7 +14060,6 @@
             "key": "longitude",
             "schema": {
               "generatedName": "LocationStructuredLongitude",
-              "nameOverride": "Longitude",
               "title": "Longitude",
               "description": "The longitude coordinate of the location",
               "value": {
@@ -14511,7 +14068,6 @@
                   "type": "double"
                 },
                 "generatedName": "LocationStructuredLongitude",
-                "nameOverride": "Longitude",
                 "title": "Longitude",
                 "groupName": [],
                 "type": "primitive"
@@ -14593,7 +14149,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "LocationStructured",
-        "nameOverride": "LocationStructured",
         "title": "LocationStructured",
         "groupName": [],
         "additionalProperties": false,
@@ -14636,7 +14191,6 @@
                 "type": "reference"
               },
               "generatedName": "PagedResponseAccountHolderExternalData",
-              "nameOverride": "Data",
               "title": "Data",
               "groupName": [],
               "type": "array"
@@ -14688,7 +14242,6 @@
                 "type": "reference"
               },
               "generatedName": "PagedResponseBankStatementData",
-              "nameOverride": "Data",
               "title": "Data",
               "groupName": [],
               "type": "array"
@@ -14740,7 +14293,6 @@
                 "type": "reference"
               },
               "generatedName": "PagedResponseBatchData",
-              "nameOverride": "Data",
               "title": "Data",
               "groupName": [],
               "type": "array"
@@ -14798,7 +14350,6 @@
                 "type": "reference"
               },
               "generatedName": "PagedResponseReportData",
-              "nameOverride": "Data",
               "title": "Data",
               "groupName": [],
               "type": "array"
@@ -14850,7 +14401,6 @@
                 "type": "reference"
               },
               "generatedName": "PagedResponseTransactionData",
-              "nameOverride": "Data",
               "title": "Data",
               "groupName": [],
               "type": "array"
@@ -14902,7 +14452,6 @@
                 "type": "reference"
               },
               "generatedName": "PagedResponseWebhookData",
-              "nameOverride": "Data",
               "title": "Data",
               "groupName": [],
               "type": "array"
@@ -14945,7 +14494,6 @@
         "allOfPropertyConflicts": [],
         "description": "The `Recurrence` object represents the recurrence pattern of a transaction. It provides information about\nwhether a transaction is a one-time event or a part of a recurring series.",
         "generatedName": "Recurrence",
-        "nameOverride": "Recurrence",
         "title": "Recurrence",
         "groupName": [],
         "additionalProperties": false,
@@ -14968,7 +14516,6 @@
                 "type": "string"
               },
               "generatedName": "RecurrenceGroupId",
-              "nameOverride": "Id",
               "title": "Id",
               "groupName": [],
               "type": "primitive"
@@ -14982,8 +14529,7 @@
             "schema": {
               "description": "The date of the oldest transaction in the group",
               "schema": {
-                "format": "date",
-                "type": "string"
+                "type": "date"
               },
               "generatedName": "RecurrenceGroupStartDate",
               "title": "Start Date",
@@ -14999,8 +14545,7 @@
             "schema": {
               "description": "The date of the most recent transaction in the group",
               "schema": {
-                "format": "date",
-                "type": "string"
+                "type": "date"
               },
               "generatedName": "RecurrenceGroupEndDate",
               "title": "End Date",
@@ -15132,7 +14677,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "RecurrenceGroup",
-        "nameOverride": "RecurrenceGroup",
         "title": "RecurrenceGroup",
         "groupName": [],
         "additionalProperties": false,
@@ -15145,7 +14689,6 @@
       "RecurrencePeriodicity": {
         "description": "An enumeration.",
         "generatedName": "RecurrencePeriodicity",
-        "nameOverride": "RecurrencePeriodicity",
         "title": "RecurrencePeriodicity",
         "values": [
           {
@@ -15204,7 +14747,6 @@
       "RecurrenceType": {
         "description": "An enumeration.",
         "generatedName": "RecurrenceType",
-        "nameOverride": "RecurrenceType",
         "title": "RecurrenceType",
         "values": [
           {
@@ -15260,7 +14802,6 @@
                 "type": "string"
               },
               "generatedName": "ReportDescription",
-              "nameOverride": "Description",
               "title": "Description",
               "groupName": [],
               "type": "primitive"
@@ -15282,7 +14823,6 @@
                 "type": "primitive"
               },
               "generatedName": "ReportFields",
-              "nameOverride": "Fields",
               "title": "Fields",
               "groupName": [],
               "type": "array"
@@ -15299,7 +14839,6 @@
                 "type": "string"
               },
               "generatedName": "ReportId",
-              "nameOverride": "Id",
               "title": "Id",
               "groupName": [],
               "type": "primitive"
@@ -15365,7 +14904,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Report",
-        "nameOverride": "Report",
         "title": "Report",
         "groupName": [],
         "additionalProperties": false,
@@ -15405,7 +14943,6 @@
                 "type": "string"
               },
               "generatedName": "ReportBaseDescription",
-              "nameOverride": "Description",
               "title": "Description",
               "groupName": [],
               "type": "primitive"
@@ -15427,7 +14964,6 @@
                 "type": "primitive"
               },
               "generatedName": "ReportBaseFields",
-              "nameOverride": "Fields",
               "title": "Fields",
               "groupName": [],
               "type": "array"
@@ -15437,7 +14973,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "ReportBase",
-        "nameOverride": "ReportBase",
         "title": "ReportBase",
         "groupName": [],
         "additionalProperties": false,
@@ -15450,7 +14985,6 @@
       "ReportStatus": {
         "description": "An enumeration.",
         "generatedName": "ReportStatus",
-        "nameOverride": "ReportStatus",
         "title": "ReportStatus",
         "values": [
           {
@@ -15490,14 +15024,12 @@
             "key": "institution",
             "schema": {
               "generatedName": "StatementInfoInstitution",
-              "nameOverride": "Institution",
               "title": "Institution",
               "value": {
                 "schema": {
                   "type": "string"
                 },
                 "generatedName": "StatementInfoInstitution",
-                "nameOverride": "Institution",
                 "title": "Institution",
                 "groupName": [],
                 "type": "primitive"
@@ -15516,8 +15048,7 @@
               "title": "Start Date",
               "value": {
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "StatementInfoStartDate",
                 "title": "Start Date",
@@ -15538,8 +15069,7 @@
               "title": "End Date",
               "value": {
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "StatementInfoEndDate",
                 "title": "End Date",
@@ -15578,7 +15108,6 @@
             "key": "accounts",
             "schema": {
               "generatedName": "StatementInfoAccounts",
-              "nameOverride": "Accounts",
               "title": "Accounts",
               "value": {
                 "value": {
@@ -15591,7 +15120,6 @@
                   "type": "reference"
                 },
                 "generatedName": "StatementInfoAccounts",
-                "nameOverride": "Accounts",
                 "title": "Accounts",
                 "groupName": [],
                 "type": "array"
@@ -15604,7 +15132,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "StatementInfo",
-        "nameOverride": "StatementInfo",
         "title": "StatementInfo",
         "groupName": [],
         "additionalProperties": false,
@@ -15632,7 +15159,6 @@
                 "type": "reference"
               },
               "generatedName": "SyncEnrichmentInputTransactions",
-              "nameOverride": "Transactions",
               "title": "Transactions",
               "groupName": [],
               "type": "array"
@@ -15642,7 +15168,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "SyncEnrichmentInput",
-        "nameOverride": "SyncEnrichmentInput",
         "title": "SyncEnrichmentInput",
         "groupName": [],
         "additionalProperties": false,
@@ -15671,7 +15196,6 @@
                 "type": "reference"
               },
               "generatedName": "SyncEnrichmentOutputTransactions",
-              "nameOverride": "Transactions",
               "title": "Transactions",
               "groupName": [],
               "type": "array"
@@ -15681,7 +15205,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "SyncEnrichmentOutput",
-        "nameOverride": "SyncEnrichmentOutput",
         "title": "SyncEnrichmentOutput",
         "groupName": [],
         "additionalProperties": false,
@@ -15705,7 +15228,6 @@
                 "type": "string"
               },
               "generatedName": "TransactionId",
-              "nameOverride": "Id",
               "title": "Id",
               "groupName": [],
               "type": "primitive"
@@ -15724,7 +15246,6 @@
                 "type": "string"
               },
               "generatedName": "TransactionDescription",
-              "nameOverride": "Description",
               "title": "Description",
               "groupName": [],
               "type": "primitive"
@@ -15738,11 +15259,9 @@
             "schema": {
               "description": "The date that the transaction was posted. Uses ISO 8601 format (YYYY-MM-DD)",
               "schema": {
-                "format": "date",
-                "type": "string"
+                "type": "date"
               },
               "generatedName": "TransactionDate",
-              "nameOverride": "Date",
               "title": "Date",
               "groupName": [],
               "type": "primitive"
@@ -15760,7 +15279,6 @@
                 "type": "double"
               },
               "generatedName": "TransactionAmount",
-              "nameOverride": "Amount",
               "title": "Amount",
               "groupName": [],
               "type": "primitive"
@@ -15949,7 +15467,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Transaction",
-        "nameOverride": "Transaction",
         "title": "Transaction",
         "groupName": [],
         "additionalProperties": false,
@@ -15988,7 +15505,6 @@
                 "type": "string"
               },
               "generatedName": "TransactionErrorMessage",
-              "nameOverride": "Message",
               "title": "Message",
               "groupName": [],
               "type": "primitive"
@@ -15998,7 +15514,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "TransactionError",
-        "nameOverride": "TransactionError",
         "title": "TransactionError",
         "groupName": [],
         "additionalProperties": false,
@@ -16011,7 +15526,6 @@
       "TransactionErrorCode": {
         "description": "An enumeration.",
         "generatedName": "TransactionErrorCode",
-        "nameOverride": "TransactionErrorCode",
         "title": "TransactionErrorCode",
         "values": [
           {
@@ -16046,7 +15560,6 @@
                 "type": "string"
               },
               "generatedName": "TransactionInputId",
-              "nameOverride": "Id",
               "title": "Id",
               "groupName": [],
               "type": "primitive"
@@ -16065,7 +15578,6 @@
                 "type": "string"
               },
               "generatedName": "TransactionInputDescription",
-              "nameOverride": "Description",
               "title": "Description",
               "groupName": [],
               "type": "primitive"
@@ -16079,11 +15591,9 @@
             "schema": {
               "description": "The date that the transaction was posted. Uses ISO 8601 format (YYYY-MM-DD)",
               "schema": {
-                "format": "date",
-                "type": "string"
+                "type": "date"
               },
               "generatedName": "TransactionInputDate",
-              "nameOverride": "Date",
               "title": "Date",
               "groupName": [],
               "type": "primitive"
@@ -16101,7 +15611,6 @@
                 "type": "double"
               },
               "generatedName": "TransactionInputAmount",
-              "nameOverride": "Amount",
               "title": "Amount",
               "groupName": [],
               "type": "primitive"
@@ -16182,7 +15691,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "TransactionInput",
-        "nameOverride": "TransactionInput",
         "title": "TransactionInput",
         "groupName": [],
         "additionalProperties": false,
@@ -16208,7 +15716,7 @@
                       "schema": {
                         "type": "string"
                       },
-                      "generatedName": "ValidationErrorLocItem",
+                      "generatedName": "ValidationErrorLocItemZero",
                       "groupName": [],
                       "type": "primitive"
                     },
@@ -16216,7 +15724,7 @@
                       "schema": {
                         "type": "int"
                       },
-                      "generatedName": "ValidationErrorLocItem",
+                      "generatedName": "ValidationErrorLocItemOne",
                       "groupName": [],
                       "type": "primitive"
                     }
@@ -16231,7 +15739,6 @@
                 "type": "oneOf"
               },
               "generatedName": "ValidationErrorLoc",
-              "nameOverride": "Location",
               "title": "Location",
               "groupName": [],
               "type": "array"
@@ -16247,7 +15754,6 @@
                 "type": "string"
               },
               "generatedName": "ValidationErrorMsg",
-              "nameOverride": "Message",
               "title": "Message",
               "groupName": [],
               "type": "primitive"
@@ -16272,7 +15778,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "ValidationError",
-        "nameOverride": "ValidationError",
         "title": "ValidationError",
         "groupName": [],
         "additionalProperties": false,
@@ -16298,7 +15803,6 @@
                 "type": "string"
               },
               "generatedName": "WebhookUrl",
-              "nameOverride": "Url",
               "title": "Url",
               "groupName": [],
               "type": "primitive"
@@ -16358,7 +15862,6 @@
                 "type": "enum"
               },
               "generatedName": "WebhookEvents",
-              "nameOverride": "Events",
               "title": "Events",
               "groupName": [],
               "type": "array"
@@ -16371,7 +15874,6 @@
             "key": "token",
             "schema": {
               "generatedName": "WebhookToken",
-              "nameOverride": "Token",
               "title": "Token",
               "description": "A secret string used to authenticate the webhook. This value will be included in the `X-Ntropy-Token` header when sending requests to the webhook",
               "value": {
@@ -16381,7 +15883,6 @@
                   "type": "string"
                 },
                 "generatedName": "WebhookToken",
-                "nameOverride": "Token",
                 "title": "Token",
                 "groupName": [],
                 "type": "primitive"
@@ -16401,7 +15902,6 @@
                 "type": "string"
               },
               "generatedName": "WebhookId",
-              "nameOverride": "Id",
               "title": "Id",
               "groupName": [],
               "type": "primitive"
@@ -16434,7 +15934,6 @@
                 "type": "boolean"
               },
               "generatedName": "WebhookEnabled",
-              "nameOverride": "Enabled",
               "title": "Enabled",
               "groupName": [],
               "type": "primitive"
@@ -16444,7 +15943,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Webhook",
-        "nameOverride": "Webhook",
         "title": "Webhook",
         "groupName": [],
         "additionalProperties": false,
@@ -16470,7 +15968,6 @@
                 "type": "string"
               },
               "generatedName": "WebhookBaseUrl",
-              "nameOverride": "Url",
               "title": "Url",
               "groupName": [],
               "type": "primitive"
@@ -16530,7 +16027,6 @@
                 "type": "enum"
               },
               "generatedName": "WebhookBaseEvents",
-              "nameOverride": "Events",
               "title": "Events",
               "groupName": [],
               "type": "array"
@@ -16543,7 +16039,6 @@
             "key": "token",
             "schema": {
               "generatedName": "WebhookBaseToken",
-              "nameOverride": "Token",
               "title": "Token",
               "description": "A secret string used to authenticate the webhook. This value will be included in the `X-Ntropy-Token` header when sending requests to the webhook",
               "value": {
@@ -16553,7 +16048,6 @@
                   "type": "string"
                 },
                 "generatedName": "WebhookBaseToken",
-                "nameOverride": "Token",
                 "title": "Token",
                 "groupName": [],
                 "type": "primitive"
@@ -16566,7 +16060,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "WebhookBase",
-        "nameOverride": "WebhookBase",
         "title": "WebhookBase",
         "groupName": [],
         "additionalProperties": false,
@@ -16585,7 +16078,6 @@
             "key": "url",
             "schema": {
               "generatedName": "WebhookPatchUrl",
-              "nameOverride": "Url",
               "title": "Url",
               "description": "The URL of the webhook",
               "value": {
@@ -16597,7 +16089,6 @@
                   "type": "string"
                 },
                 "generatedName": "WebhookPatchUrl",
-                "nameOverride": "Url",
                 "title": "Url",
                 "groupName": [],
                 "type": "primitive"
@@ -16613,7 +16104,6 @@
             "key": "events",
             "schema": {
               "generatedName": "WebhookPatchEvents",
-              "nameOverride": "Events",
               "title": "Events",
               "description": "A list of events that this webhook subscribes to",
               "value": {
@@ -16665,7 +16155,6 @@
                   "type": "enum"
                 },
                 "generatedName": "WebhookPatchEvents",
-                "nameOverride": "Events",
                 "title": "Events",
                 "groupName": [],
                 "type": "array"
@@ -16681,7 +16170,6 @@
             "key": "token",
             "schema": {
               "generatedName": "WebhookPatchToken",
-              "nameOverride": "Token",
               "title": "Token",
               "description": "A secret string used to authenticate the webhook. This value will be included in the `X-Ntropy-Token` header when sending requests to the webhook",
               "value": {
@@ -16691,7 +16179,6 @@
                   "type": "string"
                 },
                 "generatedName": "WebhookPatchToken",
-                "nameOverride": "Token",
                 "title": "Token",
                 "groupName": [],
                 "type": "primitive"
@@ -16707,7 +16194,6 @@
             "key": "enabled",
             "schema": {
               "generatedName": "WebhookPatchEnabled",
-              "nameOverride": "Enabled",
               "title": "Enabled",
               "description": "Whether the webhook is enabled or not.",
               "value": {
@@ -16716,7 +16202,6 @@
                   "type": "boolean"
                 },
                 "generatedName": "WebhookPatchEnabled",
-                "nameOverride": "Enabled",
                 "title": "Enabled",
                 "groupName": [],
                 "type": "primitive"
@@ -16729,7 +16214,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "WebhookPatch",
-        "nameOverride": "WebhookPatch",
         "title": "WebhookPatch",
         "groupName": [],
         "additionalProperties": false,
@@ -16743,14 +16227,12 @@
         "value": {
           "generatedName": "Expr",
           "title": "expression",
-          "nameOverride": "expression",
           "schemas": [
             {
               "schema": {
                 "type": "boolean"
               },
-              "generatedName": "Expr",
-              "nameOverride": "boolean",
+              "generatedName": "ExprZero",
               "title": "boolean",
               "groupName": [],
               "type": "primitive"
@@ -16759,8 +16241,7 @@
               "schema": {
                 "type": "string"
               },
-              "generatedName": "Expr",
-              "nameOverride": "string",
+              "generatedName": "ExprOne",
               "title": "string",
               "groupName": [],
               "type": "primitive"
@@ -16769,8 +16250,7 @@
               "schema": {
                 "type": "double"
               },
-              "generatedName": "Expr",
-              "nameOverride": "number",
+              "generatedName": "ExprTwo",
               "title": "number",
               "groupName": [],
               "type": "primitive"
@@ -16796,7 +16276,6 @@
       },
       "TxProp": {
         "generatedName": "TxProp",
-        "nameOverride": "properties",
         "title": "properties",
         "values": [
           {
@@ -17607,7 +17086,6 @@
         "value": {
           "generatedName": "Action",
           "title": "action",
-          "nameOverride": "action",
           "schemas": [
             {
               "generatedName": "ActionZero",
@@ -17719,7 +17197,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "If",
-        "nameOverride": "if",
         "title": "if",
         "groupName": [],
         "additionalProperties": false,
@@ -18029,7 +17506,6 @@
         ],
         "allOfPropertyConflicts": [],
         "generatedName": "Setter",
-        "nameOverride": "set",
         "title": "set",
         "groupName": [],
         "additionalProperties": false,
@@ -18050,7 +17526,6 @@
           "type": "reference"
         },
         "generatedName": "Personalization",
-        "nameOverride": "Filter",
         "title": "Filter",
         "groupName": [],
         "type": "array"

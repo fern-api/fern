@@ -55,7 +55,8 @@ export abstract class AbstractChannelConverter<TChannel> extends AbstractConvert
         const fernExamplesExtension = new FernExamplesExtension({
             context: this.context,
             breadcrumbs: this.breadcrumbs,
-            channel: this.channel as object
+            channel: this.channel as object,
+            baseDir: this.context.documentBaseDir
         });
         const fernExamples = fernExamplesExtension.convert();
         if (fernExamples == null) {

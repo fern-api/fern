@@ -5,6 +5,14 @@
 
 The IMDB Inc C# library provides convenient access to the IMDB Inc APIs from C#.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Preexisting Custom Section](#preexisting-custom-section)
+- [Custom Section](#custom-section)
+- [Second Custom Section](#second-custom-section)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh

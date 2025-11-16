@@ -15,25 +15,33 @@ from ..types.operand import Operand
 class RawPathParamClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-    
-    def send(self, operand: Operand, operand_or_color: ColorOrOperand, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
+
+    def send(
+        self,
+        operand: Operand,
+        operand_or_color: ColorOrOperand,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[None]:
         """
         Parameters
         ----------
         operand : Operand
-        
+
         operand_or_color : ColorOrOperand
-        
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-        
+
         Returns
         -------
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"path/{jsonable_encoder(operand)}/{jsonable_encoder(operand_or_color)}",method="POST",
-            request_options=request_options,)
+            f"path/{jsonable_encoder(operand)}/{jsonable_encoder(operand_or_color)}",
+            method="POST",
+            request_options=request_options,
+        )
         try:
             if 200 <= _response.status_code < 300:
                 return HttpResponse(response=_response, data=None)
@@ -41,28 +49,38 @@ class RawPathParamClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+
 class AsyncRawPathParamClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-    
-    async def send(self, operand: Operand, operand_or_color: ColorOrOperand, *, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[None]:
+
+    async def send(
+        self,
+        operand: Operand,
+        operand_or_color: ColorOrOperand,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[None]:
         """
         Parameters
         ----------
         operand : Operand
-        
+
         operand_or_color : ColorOrOperand
-        
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-        
+
         Returns
         -------
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"path/{jsonable_encoder(operand)}/{jsonable_encoder(operand_or_color)}",method="POST",
-            request_options=request_options,)
+            f"path/{jsonable_encoder(operand)}/{jsonable_encoder(operand_or_color)}",
+            method="POST",
+            request_options=request_options,
+        )
         try:
             if 200 <= _response.status_code < 300:
                 return AsyncHttpResponse(response=_response, data=None)

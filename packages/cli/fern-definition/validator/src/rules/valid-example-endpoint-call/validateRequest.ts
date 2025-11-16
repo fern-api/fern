@@ -48,7 +48,7 @@ export function validateRequest({
                 breadcrumbs: ["request"],
                 depth: 0
             }).map((val): RuleViolation => {
-                return { severity: "fatal", message: val.message };
+                return { severity: val.severity ?? "fatal", message: val.message };
             })
         );
     } else {
@@ -63,7 +63,7 @@ export function validateRequest({
                 breadcrumbs: ["response", "body"],
                 depth: 0
             }).map((val): RuleViolation => {
-                return { severity: "fatal", message: val.message };
+                return { severity: val.severity ?? "fatal", message: val.message };
             })
         );
     }

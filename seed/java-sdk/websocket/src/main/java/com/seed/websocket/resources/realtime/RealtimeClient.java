@@ -16,11 +16,12 @@ public class RealtimeClient {
 
     /**
      * Creates a new WebSocket client for the realtime channel.
-     * @param id the id path parameter
+     * @param sessionId the sessionId path parameter
      * @param model Optional model query parameter
      * @param temperature Optional temperature query parameter
      */
-    public RealtimeWebSocketClient realtimeWebSocket(String id, Optional<String> model, Optional<Integer> temperature) {
-        return new RealtimeWebSocketClient(clientOptions, id, model, temperature);
+    public RealtimeWebSocketClient realtimeWebSocket(
+            String sessionId, Optional<String> model, Optional<Integer> temperature) {
+        return new RealtimeWebSocketClient(clientOptions, sessionId, model, temperature);
     }
 }

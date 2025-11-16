@@ -1,5 +1,33 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 1.9.3
+  changelogEntry:
+    - summary: Fix circular reference issue for recursive types and unions.
+      type: fix
+  createdAt: "2025-11-14"
+  irVersion: 61
+
+- version: 1.9.2
+  changelogEntry:
+    - summary: Resolve PydanticUserError for mutually recursive models in Pydantic v2.
+      type: fix
+  createdAt: "2025-11-12"
+  irVersion: 61
+
+- version: 1.9.1
+  changelogEntry:
+    - summary: Add back F401-ignored imports for circular references.
+      type: fix
+  createdAt: "2025-11-10"
+  irVersion: 61
+
+- version: 1.9.0
+  changelogEntry:
+    - summary: Add automatic discriminated union support using Pydantic's Field(discriminator=...) to improve serialization performance. Benchmarks show a 2x speedup by eliminating sequential variant attempts and enabling O(1) variant selection.
+      type: feat
+  createdAt: "2025-11-10"
+  irVersion: 61
+
 - version: 1.8.2
   changelogEntry:
     - summary: Upgrade to IRv61

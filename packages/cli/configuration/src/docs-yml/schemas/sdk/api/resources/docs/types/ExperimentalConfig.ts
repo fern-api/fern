@@ -19,9 +19,11 @@ export interface ExperimentalConfig {
     /** OpenAPI parser in alpha. */
     openapiParserV3?: boolean;
     /**
-     * If `dynamic-snippets` is set to true, snippets will be created using a dynamic method.
+     * By default, SDK snippets are static code examples that are displayed in your API Reference. Alternatively, you can use dynamic SDK snippets that allow users to modify parameters and see code examples update in real time.
      *
-     * This allows users to generate snippets for all SDK languages.
+     * Enable dynamic snippets in `docs.yml`, then configure them by following the SDK snippets setup instructions.
      */
     dynamicSnippets?: boolean;
+    /** Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples. */
+    aiExamples?: boolean;
 }

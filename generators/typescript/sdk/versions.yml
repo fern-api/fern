@@ -1,4 +1,117 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.30.0
+  changelogEntry:
+    - summary: |
+        Add `offsetSemantics` flag, which changes how the `step` attribute in `x-fern-pagination` is interpreted.
+        When `offsetSemantics` is `item-index` (the default), offset is understood as an item index that increases by the number of entities fetched.
+        When `offsetSemantics` is `page-index`, offset is understood as a page index that increases by 1 each time.
+      type: feat
+  createdAt: "2025-11-14"
+  irVersion: 61
+
+- version: 3.29.2
+  changelogEntry:
+    - summary: Improve SDK generation performance.
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 61
+
+- version: 3.29.1
+  changelogEntry:
+    - summary: |
+        When generating `hasNextPage`, use `Math.Floor` to ensure an integer comparison against the number of entities.
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 61
+
+- version: 3.29.0
+  changelogEntry:
+    - summary: |
+        Add `parameterNaming` configuration option to control how parameter names are generated in the SDK.
+        The available options are:
+        - `originalName`: Use the original name from the OpenAPI spec.
+        - `wireValue`: Use the wire value from the OpenAPI spec, falling back to the original name if not present.
+        - `camelCase`: Convert the name to camelCase.
+        - `snakeCase`: Convert the name to snake_case.
+        - `default`: Use the default naming strategy.
+      type: feat
+  createdAt: "2025-11-11"
+  irVersion: 61
+
+- version: 3.28.11
+  changelogEntry:
+    - summary: |
+        Do not generate a _snippet-templates.json_ file in the generated TypeScript SDK.
+      type: fix
+  createdAt: "2025-11-11"
+  irVersion: 61
+
+- version: 3.28.12
+  changelogEntry:
+    - summary: |
+        Include more files and folders in .npmignore:
+        * .mock
+        * .fern
+        * dist
+        * scripts
+        * jest.config.*
+        * vitest.config.*
+      type: fix
+    - summary: |
+        Only generate _.npmignore_ when `useLegacyExports: true`.
+        When `useLegacyExports: false`, we generate a _package.json_ with `"files"` field which makes _.npmignore_ redundant.
+      type: fix
+  createdAt: "2025-11-11"
+  irVersion: 61
+
+- version: 3.28.11
+  changelogEntry:
+    - summary: |
+        Do not generate a _snippet-templates.json_ file in the generated TypeScript SDK.
+      type: fix
+  createdAt: "2025-11-11"
+  irVersion: 61
+
+- version: 3.28.10
+  changelogEntry:
+    - summary: |
+        Set `Accept` header for JSON (`application/json`), text (`text/plain`), and other (`*/*`) response types.
+        This ensures that the `Accept` header is set consistently across runtimes.
+        Unlike all other runtimes, Cloudflare Workers and Vercel Edge Runtime do not set a default `Accept` header in their `fetch` implementations.
+      type: fix
+  createdAt: "2025-11-10"
+  irVersion: 61
+
+- version: 3.28.9
+  changelogEntry:
+    - summary: Fix `Error._visit` to pass the correct type (`core.Fetcher.Error`) to the `_other` callback.
+      type: fix
+  createdAt: "2025-11-10"
+  irVersion: 61
+
+- version: 3.28.8
+  changelogEntry:
+    - summary: Clean up imports for requestWithRetries.test.ts.
+      type: fix
+  createdAt: "2025-11-10"
+  irVersion: 61
+
+- version: 3.28.7
+  changelogEntry:
+    - summary: |
+        Fix circular type alias errors (TS2456) in undiscriminated unions containing self-recursive Record types where the value is a union of itself with null and/or undefined.
+      type: fix
+  createdAt: "2025-11-08"
+  irVersion: 61
+
+- version: 3.28.6
+  changelogEntry:
+    - summary: |
+        Fix circular type alias errors (TS2456) in undiscriminated unions containing self-recursive Record types.
+      type: fix
+  createdAt: "2025-11-07"
+  irVersion: 61
+
 - version: 3.28.5
   changelogEntry:
     - summary: Fix issue where logs were logged even when the respective log level was disabled.

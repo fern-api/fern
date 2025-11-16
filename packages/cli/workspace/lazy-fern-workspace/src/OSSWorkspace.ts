@@ -9,13 +9,13 @@ import {
     Spec
 } from "@fern-api/api-workspace-commons";
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
-import { Audiences } from "@fern-api/configuration";
+import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
-import { AbsoluteFilePath, cwd, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
-import { parse } from "@fern-api/openapi-ir-parser";
+import { ParseOpenAPIOptions, parse } from "@fern-api/openapi-ir-parser";
 import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-to-ir";
 import { OpenRPCConverter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir";
 import { TaskContext } from "@fern-api/task-context";
@@ -23,7 +23,6 @@ import { ErrorCollector } from "@fern-api/v3-importer-commons";
 import { readFile } from "fs/promises";
 import { OpenAPIV3_1 } from "openapi-types";
 import { v4 as uuidv4 } from "uuid";
-
 import { constructCasingsGenerator } from "../../../../commons/casings-generator/src/CasingsGenerator";
 import { loadOpenRpc } from "./loaders";
 import { OpenAPILoader } from "./loaders/OpenAPILoader";
@@ -40,6 +39,22 @@ export declare namespace OSSWorkspace {
     export type Settings = BaseOpenAPIWorkspace.Settings;
 }
 
+function convertRemoveDiscriminantsFromSchemas(
+    specs: (OpenAPISpec | ProtobufSpec)[]
+): generatorsYml.RemoveDiscriminantsFromSchemas {
+    // If any spec has removeDiscriminantsFromSchemas set to Never, return Never
+    if (
+        specs.every(
+            (spec) =>
+                spec.settings?.removeDiscriminantsFromSchemas === generatorsYml.RemoveDiscriminantsFromSchemas.Never
+        )
+    ) {
+        return generatorsYml.RemoveDiscriminantsFromSchemas.Never;
+    }
+    // Otherwise, return Always
+    return generatorsYml.RemoveDiscriminantsFromSchemas.Always;
+}
+
 export class OSSWorkspace extends BaseOpenAPIWorkspace {
     public type: string = "oss";
     public allSpecs: Spec[];
@@ -47,6 +62,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     public sources: IdentifiableSource[];
 
     private loader: OpenAPILoader;
+    private readonly parseOptions: Partial<ParseOpenAPIOptions>;
+    private readonly groupMultiApiEnvironments: boolean;
 
     constructor({ allSpecs, specs, ...superArgs }: OSSWorkspace.Args) {
         super({
@@ -56,6 +73,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             wrapReferencesToNullableInOptional: specs.every(
                 (spec) => spec.settings?.wrapReferencesToNullableInOptional
             ),
+            removeDiscriminantsFromSchemas: convertRemoveDiscriminantsFromSchemas(specs),
             coerceOptionalSchemasToNullable: specs.every((spec) => spec.settings?.coerceOptionalSchemasToNullable),
             onlyIncludeReferencedSchemas: specs.every((spec) => spec.settings?.onlyIncludeReferencedSchemas),
             inlinePathParameters: specs.every((spec) => spec.settings?.inlinePathParameters),
@@ -91,6 +109,24 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         this.allSpecs = allSpecs;
         this.sources = this.convertSpecsToIdentifiableSources(specs);
         this.loader = new OpenAPILoader(this.absoluteFilePath);
+        this.groupMultiApiEnvironments = this.specs.some((spec) => spec.settings?.groupMultiApiEnvironments);
+        this.parseOptions = {
+            onlyIncludeReferencedSchemas: this.onlyIncludeReferencedSchemas,
+            respectReadonlySchemas: this.respectReadonlySchemas,
+            respectNullableSchemas: this.respectNullableSchemas,
+            wrapReferencesToNullableInOptional: this.wrapReferencesToNullableInOptional,
+            coerceOptionalSchemasToNullable: this.coerceOptionalSchemasToNullable,
+            inlinePathParameters: this.inlinePathParameters,
+            objectQueryParameters: this.objectQueryParameters,
+            exampleGeneration: this.exampleGeneration,
+            useBytesForBinaryResponse: this.useBytesForBinaryResponse,
+            respectForwardCompatibleEnums: this.respectForwardCompatibleEnums,
+            inlineAllOfSchemas: this.inlineAllOfSchemas,
+            resolveAliases: this.resolveAliases,
+            removeDiscriminantsFromSchemas: this.removeDiscriminantsFromSchemas,
+            groupMultiApiEnvironments: this.groupMultiApiEnvironments,
+            groupEnvironmentsByHost: this.groupEnvironmentsByHost
+        };
     }
 
     public async getOpenAPIIr(
@@ -112,22 +148,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             }),
             options: {
                 ...settings,
-                respectReadonlySchemas: settings?.respectReadonlySchemas ?? this.respectReadonlySchemas,
-                respectNullableSchemas: settings?.respectNullableSchemas ?? this.respectNullableSchemas,
-                wrapReferencesToNullableInOptional:
-                    settings?.wrapReferencesToNullableInOptional ?? this.wrapReferencesToNullableInOptional,
-                onlyIncludeReferencedSchemas:
-                    settings?.onlyIncludeReferencedSchemas ?? this.onlyIncludeReferencedSchemas,
-                inlinePathParameters: settings?.inlinePathParameters ?? this.inlinePathParameters,
-                objectQueryParameters: settings?.objectQueryParameters ?? this.objectQueryParameters,
-                exampleGeneration: settings?.exampleGeneration ?? this.exampleGeneration,
-                useBytesForBinaryResponse: settings?.useBytesForBinaryResponse ?? this.useBytesForBinaryResponse,
-                inlineAllOfSchemas: settings?.inlineAllOfSchemas ?? this.inlineAllOfSchemas,
-                resolveAliases: settings?.resolveAliases ?? this.resolveAliases,
-                groupMultiApiEnvironments:
-                    settings?.groupMultiApiEnvironments ??
-                    this.specs.some((spec) => spec.settings?.groupMultiApiEnvironments),
-                groupEnvironmentsByHost: settings?.groupEnvironmentsByHost ?? this.groupEnvironmentsByHost
+                ...this.parseOptions
             }
         });
     }
@@ -140,12 +161,14 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         context,
         audiences,
         enableUniqueErrorsPerEndpoint,
-        generateV1Examples
+        generateV1Examples,
+        logWarnings
     }: {
         context: TaskContext;
         audiences: Audiences;
         enableUniqueErrorsPerEndpoint: boolean;
         generateV1Examples: boolean;
+        logWarnings: boolean;
     }): Promise<IntermediateRepresentation> {
         const specs = await getAllOpenAPISpecs({ context, specs: this.specs });
         const documents = await this.loader.loadDocuments({ context, specs });
@@ -201,7 +224,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         globalHeaderOverrides,
                         enableUniqueErrorsPerEndpoint,
                         generateV1Examples,
-                        settings: getOpenAPISettings({ options: document.settings })
+                        settings: getOpenAPISettings({ options: document.settings }),
+                        documentBaseDir: dirname(absoluteFilepathToSpec)
                     });
                     const converter = new OpenAPI3_1Converter({ context: converterContext, audiences });
                     result = await converter.convert();
@@ -342,6 +366,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     : "";
 
                 // TODO(kenny): we should do something more useful with the warnings here, or remove.
+
                 if (errorStats.numErrors > 0) {
                     context.logger.log(
                         "error",
@@ -358,7 +383,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
                 context.logger.log("info", "");
 
-                await errorCollector.logErrors({ logWarnings: false });
+                await errorCollector.logErrors({ logWarnings });
             }
         }
 

@@ -27,7 +27,7 @@ extension MultipartFormDataConvertible {
             case .field(let encodableValue, let fieldName):
                 do {
                     let encodedData = try jsonEncoder.encode(value: encodableValue)
-                    if let encodedString = String(data: encodedData, encoding: .utf8) {
+                    if let encodedString = Swift.String(data: encodedData, encoding: .utf8) {
                         multipartData.appendField(encodedString, withName: fieldName)
                     }
                 } catch {

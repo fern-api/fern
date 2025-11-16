@@ -17,7 +17,7 @@ export interface HttpHeadersFieldOptionArgs {
 
 export class BaseOptionsGenerator extends WithGeneration {
     constructor(private readonly context: SdkGeneratorContext) {
-        super(context);
+        super(context.generation);
     }
 
     public readonly members = lazy({
@@ -30,7 +30,7 @@ export class BaseOptionsGenerator extends WithGeneration {
             origin: classOrInterface.explicit("BaseUrl"),
             get: true,
             init: true,
-            type: this.csharp.Type.optional(this.csharp.Type.string),
+            type: this.Primitive.string.asOptional(),
             summary: this.members.baseUrlSummary
         });
     }
@@ -39,14 +39,14 @@ export class BaseOptionsGenerator extends WithGeneration {
         classOrInterface: ast.Interface | ast.Class,
         { optional, includeInitializer }: OptionArgs
     ) {
-        const type = this.csharp.Type.reference(this.extern.System.Net.Http.HttpClient);
+        const type = this.System.Net.Http.HttpClient;
         classOrInterface.addField({
             origin: classOrInterface.explicit("HttpClient"),
             access: ast.Access.Public,
             get: true,
             init: true,
-            type: optional ? this.csharp.Type.optional(type) : type,
-            initializer: includeInitializer ? this.csharp.codeblock("new HttpClient()") : undefined,
+            type: optional ? type.asOptional() : type,
+            initializer: includeInitializer ? this.System.Net.Http.HttpClient.new() : undefined,
             summary: "The http client used to make requests."
         });
     }
@@ -55,14 +55,14 @@ export class BaseOptionsGenerator extends WithGeneration {
         classOrInterface: ast.Interface | ast.Class,
         { optional, includeInitializer, interfaceReference }: HttpHeadersFieldOptionArgs
     ) {
-        const headersReference = this.csharp.Type.reference(this.types.Headers);
+        const headersReference = this.Types.Headers;
         classOrInterface.addField({
             // Classes implementing internal interface field cannot have an access modifier
             origin: classOrInterface.explicit("Headers"),
             access: !interfaceReference ? ast.Access.Internal : undefined,
             get: true,
             init: true,
-            type: optional ? this.csharp.Type.optional(headersReference) : headersReference,
+            type: optional ? headersReference.asOptional() : headersReference,
             initializer: includeInitializer ? this.csharp.codeblock("new()") : undefined,
             summary: "The http headers sent with the request.",
             interfaceReference
@@ -73,26 +73,26 @@ export class BaseOptionsGenerator extends WithGeneration {
         classOrInterface: ast.Interface | ast.Class,
         { optional, includeInitializer }: OptionArgs
     ) {
-        const type = this.csharp.Type.integer;
+        const type = this.Primitive.integer;
         classOrInterface.addField({
             origin: classOrInterface.explicit("MaxRetries"),
             access: ast.Access.Public,
             get: true,
             init: true,
-            type: optional ? this.csharp.Type.optional(type) : type,
+            type: optional ? type.asOptional() : type,
             initializer: includeInitializer ? this.csharp.codeblock("2") : undefined,
             summary: "The http client used to make requests."
         });
     }
 
     public getTimeoutField(classOrInterface: ast.Interface | ast.Class, { optional, includeInitializer }: OptionArgs) {
-        const type = this.csharp.Type.reference(this.extern.System.TimeSpan);
+        const type = this.System.TimeSpan;
         classOrInterface.addField({
             origin: classOrInterface.explicit("Timeout"),
             access: ast.Access.Public,
             get: true,
             init: true,
-            type: optional ? this.csharp.Type.optional(type) : type,
+            type: optional ? type.asOptional() : type,
             initializer: includeInitializer ? this.csharp.codeblock("TimeSpan.FromSeconds(30)") : undefined,
             summary: "The timeout for the request."
         });
@@ -108,15 +108,8 @@ export class BaseOptionsGenerator extends WithGeneration {
             includeInitializer: boolean;
         }
     ) {
-        const type = this.csharp.Type.reference(
-            this.extern.System.Collections.Generic.IEnumerable(
-                this.csharp.Type.reference(
-                    this.extern.System.Collections.Generic.KeyValuePair(
-                        this.csharp.Type.string,
-                        this.csharp.Type.string.toOptionalIfNotAlready()
-                    )
-                )
-            )
+        const type = this.System.Collections.Generic.IEnumerable(
+            this.System.Collections.Generic.KeyValuePair(this.Primitive.string, this.Primitive.string.asOptional())
         );
         classOrInterface.addField({
             origin: classOrInterface.explicit("AdditionalHeaders"),
@@ -164,7 +157,7 @@ export class BaseOptionsGenerator extends WithGeneration {
         this.getHttpHeadersField(classOrInterface, {
             optional: false,
             includeInitializer: true,
-            interfaceReference: this.types.RequestOptionsInterface
+            interfaceReference: this.Types.RequestOptionsInterface
         });
         this.getAdditionalHeadersField(classOrInterface, {
             summary:
@@ -214,9 +207,9 @@ export class BaseOptionsGenerator extends WithGeneration {
     private getLiteralRootClientParameterType({ literal }: { literal: Literal }): ast.Type {
         switch (literal.type) {
             case "string":
-                return this.csharp.Type.optional(this.csharp.Type.string);
+                return this.Primitive.string.asOptional();
             case "boolean":
-                return this.csharp.Type.optional(this.csharp.Type.boolean);
+                return this.Primitive.boolean.asOptional();
             default:
                 assertNever(literal);
         }

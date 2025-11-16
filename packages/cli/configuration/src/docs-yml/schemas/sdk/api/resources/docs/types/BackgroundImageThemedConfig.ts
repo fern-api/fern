@@ -3,6 +3,8 @@
  */
 
 export interface BackgroundImageThemedConfig {
+    /** Relative filepath to the dark-mode background image. */
     dark?: string;
+    /** Relative filepath to the light-mode background image. */
     light?: string;
 }

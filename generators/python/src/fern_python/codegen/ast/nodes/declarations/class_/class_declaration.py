@@ -5,7 +5,7 @@ from typing import List, Optional, Sequence
 from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ....references import ClassReference, Module, Reference, ReferenceImport
 from ...code_writer import CodeWriter
-from ...docstring import Docstring
+from ...docstring import Docstring, escape_docstring
 from ...expressions import Expression
 from ...reference_node import ReferenceNode
 from ..function import FunctionDeclaration, FunctionParameter, FunctionSignature
@@ -192,7 +192,7 @@ class ClassDeclaration(AstNode):
                     if param.type_hint is not None:
                         writer.write_node(param.type_hint)
                     if param.docs is not None:
-                        split = param.docs.split("\n")
+                        split = escape_docstring(param.docs).split("\n")
                         with writer.indent():
                             for i, line in enumerate(split):
                                 writer.write(line)

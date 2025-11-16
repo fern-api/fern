@@ -10,6 +10,7 @@ buildScripts:
   compileScript:
     commands:
       - poetry run mypy .
+      - PYTHONWARNINGS=error::SyntaxWarning python -m compileall -q -f .
 
 publish:
   workingDirectory: generators/python
@@ -132,6 +133,7 @@ allowedFailures:
   - server-sent-event-examples
   - streaming-parameter
   - any-auth
+  - nullable-request-body
   # Complex circular refs
   - bytes-download
   - bytes-upload

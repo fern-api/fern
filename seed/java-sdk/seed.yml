@@ -159,6 +159,11 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: default
+  unions-with-local-date:
+    - customConfig:
+        use-local-date-for-dates: true
+        package-prefix: com.seed.unions
+      outputFolder: default
   accept-header:
     - outputFolder: accept-header
   client-side-params:
@@ -261,12 +266,19 @@ fixtures:
     - customConfig:
         collapse-optional-nullable: true
       outputFolder: collapse-optional-nullable
+  optional:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: wire-tests
+  streaming:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: streaming
 scripts:
   - docker: fernapi/java-seed
     commands:
       - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava spotlessCheck
 allowedFailures:
-  - api-wide-base-path
   - alias-extends
   - bytes-download
   - bytes-upload
@@ -309,11 +321,8 @@ allowedFailures:
   - oauth-client-credentials-default
   - oauth-client-credentials-environment-variables
   - oauth-client-credentials-nested-root
-  - package-yml
   - pagination-custom
-  - path-parameters
   - query-parameters
-  - streaming
 
   - java-pagination-deep-cursor-path:wire-tests
 
@@ -326,3 +335,7 @@ allowedFailures:
   - file-upload:wrapped-aliases
   - file-upload:inline-file-properties
   - file-upload-openapi
+
+  # Optional wire tests have snippet generation bug with optional(nullable(T))
+  # Snippet generator doesn't wrap value in Optional.of() for optional request bodies
+  - optional:wire-tests

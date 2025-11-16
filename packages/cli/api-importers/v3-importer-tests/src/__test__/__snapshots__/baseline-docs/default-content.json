@@ -282,6 +282,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "GenerateContentRequest",
+                "camelCase": {
+                  "unsafeName": "generateContentRequest",
+                  "safeName": "generateContentRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "generate_content_request",
+                  "safeName": "generate_content_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GENERATE_CONTENT_REQUEST",
+                  "safeName": "GENERATE_CONTENT_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "GenerateContentRequest",
+                  "safeName": "GenerateContentRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -533,6 +597,70 @@
           "path": "/generateContent"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "GenerateContentRequest",
+              "camelCase": {
+                "unsafeName": "generateContentRequest",
+                "safeName": "generateContentRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "generate_content_request",
+                "safeName": "generate_content_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "GENERATE_CONTENT_REQUEST",
+                "safeName": "GENERATE_CONTENT_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "GenerateContentRequest",
+                "safeName": "GenerateContentRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "generativelanguage",
+                  "camelCase": {
+                    "unsafeName": "generativelanguage",
+                    "safeName": "generativelanguage"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "generativelanguage",
+                    "safeName": "generativelanguage"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GENERATIVELANGUAGE",
+                    "safeName": "GENERATIVELANGUAGE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Generativelanguage",
+                    "safeName": "Generativelanguage"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "generativelanguage",
+                "camelCase": {
+                  "unsafeName": "generativelanguage",
+                  "safeName": "generativelanguage"
+                },
+                "snakeCase": {
+                  "unsafeName": "generativelanguage",
+                  "safeName": "generativelanguage"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GENERATIVELANGUAGE",
+                  "safeName": "GENERATIVELANGUAGE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Generativelanguage",
+                  "safeName": "Generativelanguage"
+                }
+              }
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -563,7 +691,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -604,6 +738,7 @@
       }
     }
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_generativelanguage": {
       "fernFilepath": {

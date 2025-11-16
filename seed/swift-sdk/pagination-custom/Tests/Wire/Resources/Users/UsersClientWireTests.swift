@@ -4,7 +4,7 @@ import Pagination
 
 @Suite("UsersClient Wire Tests") struct UsersClientWireTests {
     @Test func listUsernamesCustom1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -34,7 +34,10 @@ import Pagination
                 ]
             )
         )
-        let response = try await client.users.listUsernamesCustom(startingAfter: "starting_after")
+        let response = try await client.users.listUsernamesCustom(
+            startingAfter: "starting_after",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

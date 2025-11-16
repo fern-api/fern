@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "circle",
+        "square"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "circle"
+        },
+        "radius": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "type",
+        "radius"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "square"
+        },
+        "length": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "type",
+        "length"
+      ]
+    }
+  ],
+  "definitions": {}
+}

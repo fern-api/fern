@@ -1,14 +1,12 @@
 import { AbstractProject, FernGeneratorExec, File, SourceFetcher } from "@fern-api/base-generator";
-import { BaseCsharpCustomConfigSchema } from "@fern-api/csharp-codegen";
+import { WithGeneration } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { access, mkdir, readFile, unlink, writeFile } from "fs/promises";
-
 import { template } from "lodash-es";
 import path from "path";
-
 import { AsIsFiles } from "../AsIs";
-import { BaseCsharpGeneratorContext } from "../context/BaseCsharpGeneratorContext";
+import { GeneratorContext } from "../context/GeneratorContext";
 import { findDotnetToolPath } from "../findDotNetToolPath";
 import { CSharpFile } from "./CSharpFile";
 
@@ -17,7 +15,7 @@ export const PUBLIC_CORE_DIRECTORY_NAME = "Public";
 /**
  * In memory representation of a C# project.
  */
-export class CsharpProject extends AbstractProject<BaseCsharpGeneratorContext<BaseCsharpCustomConfigSchema>> {
+export class CsharpProject extends AbstractProject<GeneratorContext> {
     private name: string;
     private sourceFiles: CSharpFile[] = [];
     private testFiles: CSharpFile[] = [];
@@ -32,7 +30,7 @@ export class CsharpProject extends AbstractProject<BaseCsharpGeneratorContext<Ba
         context,
         name
     }: {
-        context: BaseCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+        context: GeneratorContext;
         name: string;
     }) {
         super(context);
@@ -51,9 +49,6 @@ export class CsharpProject extends AbstractProject<BaseCsharpGeneratorContext<Ba
     protected get registry() {
         return this.generation.registry;
     }
-    protected get extern() {
-        return this.generation.extern;
-    }
     protected get settings() {
         return this.generation.settings;
     }
@@ -63,26 +58,41 @@ export class CsharpProject extends AbstractProject<BaseCsharpGeneratorContext<Ba
     protected get names() {
         return this.generation.names;
     }
-    protected get types() {
-        return this.generation.types;
-    }
     protected get model() {
         return this.generation.model;
+    }
+    protected get format() {
+        return this.generation.format;
     }
     protected get csharp() {
         return this.generation.csharp;
     }
+    protected get Types() {
+        return this.generation.Types;
+    }
     protected get System() {
-        return this.extern.System;
+        return this.generation.extern.System;
     }
     protected get NUnit() {
-        return this.extern.NUnit;
+        return this.generation.extern.NUnit;
     }
     protected get OneOf() {
-        return this.extern.OneOf;
+        return this.generation.extern.OneOf;
     }
     protected get Google() {
-        return this.extern.Google;
+        return this.generation.extern.Google;
+    }
+    protected get WireMock() {
+        return this.generation.extern.WireMock;
+    }
+    protected get Primitive() {
+        return this.generation.Primitive;
+    }
+    protected get Value() {
+        return this.generation.Value;
+    }
+    protected get Collection() {
+        return this.generation.Collection;
     }
 
     public addCoreFiles(file: File): void {
@@ -279,7 +289,7 @@ dotnet_diagnostic.IDE0005.severity = error
     }: {
         absolutePathToSrcDirectory: AbsoluteFilePath;
     }): Promise<AbsoluteFilePath> {
-        await access(path.join(absolutePathToSrcDirectory, `${this.name}.sln`)).catch(() =>
+        await access(path.join(absolutePathToSrcDirectory, `${this.name}.slnx`)).catch(() =>
             loggingExeca(this.context.logger, "dotnet", ["new", "sln", "-n", this.name, "--no-update-check"], {
                 doNotPipeOutput: true,
                 cwd: absolutePathToSrcDirectory
@@ -292,7 +302,7 @@ dotnet_diagnostic.IDE0005.severity = error
 
         const absolutePathToProtoDirectory = join(
             this.absolutePathToOutputDirectory,
-            RelativeFilePath.of(this.context.generation.constants.folders.protobuf)
+            RelativeFilePath.of(this.generation.constants.folders.protobuf)
         );
         const protobufSourceFilePaths = await this.sourceFetcher.copyProtobufSources(absolutePathToProtoDirectory);
         const csproj = new CsProj({
@@ -476,7 +486,8 @@ dotnet_diagnostic.IDE0005.severity = error
                     namespace,
                     testNamespace: this.namespaces.test,
                     additionalProperties: this.settings.generateNewAdditionalProperties,
-                    context: this.context
+                    context: this.context,
+                    namespaces: this.namespaces
                 }
             })
         );
@@ -494,7 +505,8 @@ dotnet_diagnostic.IDE0005.severity = error
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                     namespace,
                     additionalProperties: this.settings.generateNewAdditionalProperties,
-                    context: this.context
+                    context: this.context,
+                    namespaces: this.namespaces
                 }
             })
         );
@@ -502,7 +514,7 @@ dotnet_diagnostic.IDE0005.severity = error
 
     private async createCustomPagerAsIsFiles(): Promise<File[]> {
         const customPagerFileName = AsIsFiles.CustomPager;
-        const customPagerName = this.names.classes.customPager;
+        const customPagerName = this.generation.names.classes.customPager;
         const customPagerContents = await readFile(getAsIsFilepath(customPagerFileName), {
             encoding: "utf-8"
         });
@@ -521,7 +533,8 @@ dotnet_diagnostic.IDE0005.severity = error
                         idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                         namespace: this.namespaces.core,
                         additionalProperties: this.settings.generateNewAdditionalProperties,
-                        context: this.context
+                        context: this.context,
+                        namespaces: this.namespaces
                     }
                 }).replaceAll("CustomPager", customPagerName)
             ),
@@ -535,7 +548,8 @@ dotnet_diagnostic.IDE0005.severity = error
                         idempotencyHeaders: this.context.hasIdempotencyHeaders(),
                         namespace: this.namespaces.core,
                         additionalProperties: this.settings.generateNewAdditionalProperties,
-                        context: this.context
+                        context: this.context,
+                        namespaces: this.namespaces
                     }
                 }).replaceAll("CustomPager", customPagerName)
             )
@@ -555,7 +569,8 @@ dotnet_diagnostic.IDE0005.severity = error
                     namespace: this.namespaces.testUtils,
                     testNamespace: this.namespaces.test,
                     additionalProperties: this.settings.generateNewAdditionalProperties,
-                    context: this.context
+                    context: this.context,
+                    namespaces: this.namespaces
                 }
             })
         );
@@ -589,29 +604,30 @@ declare namespace CsProj {
         version?: string;
         license?: FernGeneratorExec.LicenseConfig;
         githubUrl?: string;
-        context: BaseCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+        context: GeneratorContext;
         protobufSourceFilePaths: RelativeFilePath[];
     }
 }
 
-class CsProj {
+class CsProj extends WithGeneration {
     private name: string;
     private license: FernGeneratorExec.LicenseConfig | undefined;
     private githubUrl: string | undefined;
     private packageId: string | undefined;
-    private context: BaseCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+    private context: GeneratorContext;
     private protobufSourceFilePaths: RelativeFilePath[];
 
     public constructor({ name, license, githubUrl, context, protobufSourceFilePaths }: CsProj.Args) {
+        super(context.generation);
         this.name = name;
         this.license = license;
         this.githubUrl = githubUrl;
         this.context = context;
         this.protobufSourceFilePaths = protobufSourceFilePaths;
-        this.packageId = this.context.settings.packageId;
+        this.packageId = this.generation.settings.packageId;
     }
 
-    public toString(): string {
+    public override toString(): string {
         const projectGroup = this.getProjectGroup();
         const dependencies = this.getDependencies();
         return `
@@ -639,18 +655,18 @@ ${projectGroup.join("\n")}
         <Compile Remove="Core\\DateOnlyConverter.cs" />
     </ItemGroup>
     <ItemGroup>
-        ${dependencies.join(`\n${this.context.generation.constants.formatting.indent}${this.context.generation.constants.formatting.indent}`)}
-        ${this.getSseDependencies().join(`\n${this.context.generation.constants.formatting.indent}`)}
-        ${this.getWebSocketAsyncDependencies().join(`\n${this.context.generation.constants.formatting.indent}`)}
+        ${dependencies.join(`\n${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}`)}
+        ${this.getSseDependencies().join(`\n${this.generation.constants.formatting.indent}`)}
+        ${this.getWebSocketAsyncDependencies().join(`\n${this.generation.constants.formatting.indent}`)}
     </ItemGroup>
-${this.getProtobufDependencies(this.protobufSourceFilePaths).join(`\n${this.context.generation.constants.formatting.indent}`)}
+${this.getProtobufDependencies(this.protobufSourceFilePaths).join(`\n${this.generation.constants.formatting.indent}`)}
     <ItemGroup>
         <None Include="..\\..\\README.md" Pack="true" PackagePath=""/>
     </ItemGroup>
-${this.getAdditionalItemGroups().join(`\n${this.context.generation.constants.formatting.indent}`)}
+${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.indent}`)}
     <ItemGroup>
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-            <_Parameter1>${this.context.generation.names.files.testProject}</_Parameter1>
+            <_Parameter1>${this.generation.names.files.testProject}</_Parameter1>
         </AssemblyAttribute>
     </ItemGroup>
 
@@ -663,16 +679,16 @@ ${this.getAdditionalItemGroups().join(`\n${this.context.generation.constants.for
         const result: string[] = [];
         result.push('<PackageReference Include="PolySharp" Version="1.15.0">');
         result.push(
-            `${this.context.generation.constants.formatting.indent}<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>`
+            `${this.generation.constants.formatting.indent}<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>`
         );
-        result.push(`${this.context.generation.constants.formatting.indent}<PrivateAssets>all</PrivateAssets>`);
+        result.push(`${this.generation.constants.formatting.indent}<PrivateAssets>all</PrivateAssets>`);
         result.push("</PackageReference>");
         result.push('<PackageReference Include="OneOf" Version="3.0.271" />');
         result.push('<PackageReference Include="OneOf.Extended" Version="3.0.271" />');
         result.push('<PackageReference Include="System.Text.Json" Version="8.0.5" />');
         result.push('<PackageReference Include="System.Net.Http" Version="[4.3.4,)" />');
         result.push('<PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />');
-        for (const [name, version] of Object.entries(this.context.settings.extraDependencies)) {
+        for (const [name, version] of Object.entries(this.generation.settings.extraDependencies)) {
             result.push(`<PackageReference Include="${name}" Version="${version}" />`);
         }
         return result;
@@ -703,7 +719,7 @@ ${this.getAdditionalItemGroups().join(`\n${this.context.generation.constants.for
             return [];
         }
 
-        const pathToProtobufDirectory = `..\\..\\${this.context.generation.constants.folders.protobuf}`;
+        const pathToProtobufDirectory = `..\\..\\${this.generation.constants.folders.protobuf}`;
 
         const result: string[] = [];
 
@@ -736,32 +752,32 @@ ${this.getAdditionalItemGroups().join(`\n${this.context.generation.constants.for
     private getProjectGroup(): string[] {
         const result: string[] = [];
 
-        result.push(`${this.context.generation.constants.formatting.indent}<PropertyGroup>`);
+        result.push(`${this.generation.constants.formatting.indent}<PropertyGroup>`);
         if (this.packageId) {
             result.push(
-                `${this.context.generation.constants.formatting.indent}${this.context.generation.constants.formatting.indent}<PackageId>${this.packageId}</PackageId>`
+                `${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}<PackageId>${this.packageId}</PackageId>`
             );
         }
         result.push(
-            `${this.context.generation.constants.formatting.indent}${this.context.generation.constants.formatting.indent}<TargetFrameworks>net462;net8.0;net7.0;net6.0;netstandard2.0</TargetFrameworks>`
+            `${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}<TargetFrameworks>net462;net8.0;net7.0;net6.0;netstandard2.0</TargetFrameworks>`
         );
         result.push(
-            `${this.context.generation.constants.formatting.indent}${this.context.generation.constants.formatting.indent}<ImplicitUsings>enable</ImplicitUsings>`
+            `${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}<ImplicitUsings>enable</ImplicitUsings>`
         );
         result.push(
-            `${this.context.generation.constants.formatting.indent}${this.context.generation.constants.formatting.indent}<LangVersion>12</LangVersion>`
+            `${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}<LangVersion>12</LangVersion>`
         );
         result.push(
-            `${this.context.generation.constants.formatting.indent}${this.context.generation.constants.formatting.indent}<Nullable>enable</Nullable>`
+            `${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}<Nullable>enable</Nullable>`
         );
 
         const propertyGroups = this.getPropertyGroups();
         for (const propertyGroup of propertyGroups) {
             result.push(
-                `${this.context.generation.constants.formatting.indent}${this.context.generation.constants.formatting.indent}${propertyGroup}`
+                `${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}${propertyGroup}`
             );
         }
-        result.push(`${this.context.generation.constants.formatting.indent}</PropertyGroup>`);
+        result.push(`${this.generation.constants.formatting.indent}</PropertyGroup>`);
 
         return result;
     }

@@ -1,3 +1,171 @@
+- version: 3.16.0
+  changelogEntry:
+    - summary: |
+        Add opt-in use-local-date-for-dates config flag to generate java.time.LocalDate instead of String for Fern date types.
+      type: feat
+  createdAt: "2025-11-14"
+  irVersion: 61
+
+- version: 3.15.1
+  changelogEntry:
+    - summary: |
+        Fix SDK generation failures for endpoints with custom pagination. Endpoints using `x-fern-pagination: type: custom` now generate successfully, returning the raw response type without automatic pagination wrappers.
+      type: fix
+  createdAt: "2025-11-14"
+  irVersion: 61
+
+- version: 3.15.0
+  changelogEntry:
+    - summary: |
+        Upgrade dependencies:
+        okhttp 4.12.0 -> 5.2.1,
+        jackson 2.17.2 -> 2.18.2,
+        [internal use only] mockito 3.11.2 -> 4.11.0.
+      type: feat
+  createdAt: "2025-11-13"
+  irVersion: 61
+
+- version: 3.14.14
+  changelogEntry:
+    - summary: |
+        Fix streaming method names and request types in wire tests. Wire tests now correctly normalize streaming endpoints to use `.methodStream()` naming pattern and `MethodStreamRequest` types, while non-streaming endpoints use `.method()` and `MethodRequest`. This eliminates "incompatible types" compilation errors where streaming method calls were paired with non-streaming response types.
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 61
+
+- version: 3.14.13
+  changelogEntry:
+    - summary: |
+        Revert unchecked operations warning fix in StreamTest generator due to type inference compilation errors. The previous fix (3.14.0) caused "incompatible types: inference variable T has incompatible equality constraints `Map<String,?>`,`Map`" errors when compiling generated StreamTest.java files. Restores the original implementation using raw types.
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 61
+
+- version: 3.14.12
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets compilation errors for literal-typed parameters. Literal-typed parameters (e.g., prompt with literal string value, stream with literal false) are now correctly filtered from builder method calls in generated snippets, as these fields only have hardcoded getters without corresponding setters. This maintains parity with Java v1 behavior where literal fields are excluded from all class builders (both model and request classes).
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 61
+
+- version: 3.14.11
+  changelogEntry:
+    - summary: |
+        Fix jsonEquals helper method not being generated in wire tests. The generator now correctly calls closeTestClass() to emit the jsonEquals helper method that enables numeric equivalence comparison in wire test assertions.
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 61
+
+- version: 3.14.10
+  changelogEntry:
+    - summary: |
+        Fix wire test failures for numeric type mismatches and header serialization. Wire tests now use numeric equivalence comparison to handle integer vs double type differences from OpenAPI specs. Headers are no longer incorrectly serialized into JSON request bodies - they now use @JsonIgnore and are sent only as HTTP headers.
+      type: fix
+  createdAt: "2025-11-12"
+  irVersion: 61
+
+- version: 3.14.9
+  changelogEntry:
+    - summary: Fix wire test compilation errors when using staged builders with collections. Builder method calls now correctly order required fields before collections like Lists, Sets, and Maps.
+      type: fix
+  createdAt: "2025-11-12"
+  irVersion: 61
+
+- version: 3.14.8
+  changelogEntry:
+    - summary: |
+        Fix critical wire test generation failures causing build crashes. Implemented service name resolution to handle IR vs Dynamic IR mismatches and added graceful error handling instead of build failures.
+      type: fix
+  createdAt: "2025-11-12"
+  irVersion: 61
+
+- version: 3.14.7
+  changelogEntry:
+    - summary: Fix inconsistent behavior between local and remote Java generation by ensuring license files are copied and platform headers are populated in all generation scenarios
+      type: fix
+  createdAt: "2025-11-11"
+  irVersion: 61
+
+- version: 3.14.6
+  changelogEntry:
+    - summary: |
+        Upgrade Gradle wrapper from 7.4.2 to 8.14.3. This update brings Java 24 support, GraalVM Native Image toolchain selection, enhanced test reporting, and build authoring improvements. The bundled Gradle wrapper files now use the latest stable Gradle 8.x release.
+      type: chore
+  createdAt: "2025-11-11"
+  irVersion: 61
+
+- version: 3.14.5
+  changelogEntry:
+    - summary: |
+        Fix SDK generation failures for OpenAPI specs with nullable container types. The generator now properly handles nullable containers in response parsing and pagination, treating them distinctly from optional containers. Also adds support for literal container detection with improved error diagnostics.
+        This fixes "Unexpected container type" errors that occurred when processing APIs with nullable types or array examples in query parameters.
+      type: fix
+  createdAt: "2025-11-11"
+  irVersion: 61
+
+- version: 3.14.4
+  changelogEntry:
+    - summary: |
+        Replace gradle wrapper command with resource copy to eliminate internet requests during SDK generation. Gradle wrapper files are now copied from bundled resources instead of being downloaded via `gradle wrapper` command. All `./gradlew` invocations during generation have been removed to avoid network calls and HTTP proxy issues.
+      type: fix
+  createdAt: "2025-11-11"
+  irVersion: 61
+
+- version: 3.14.3
+  changelogEntry:
+    - summary: |
+        Skip empty object validation in wire tests for optional request bodies. When request bodies are optional(nullable(T)) where T has only optional properties, wire tests now correctly skip {} validation when Optional.empty() is passed, matching actual SDK behavior.
+      type: fix
+  createdAt: "2025-11-11"
+  irVersion: 61
+
+- version: 3.14.2
+  changelogEntry:
+    - summary: |
+        Fix double-wrapping of Optional.empty() in request bodies. Wire tests and dynamic snippets now correctly generate Optional.empty() instead of Optional.of(Optional.empty()) for optional request bodies.
+      type: fix
+  createdAt: "2025-11-07"
+  irVersion: 61
+
+- version: 3.14.1
+  changelogEntry:
+    - summary: |
+        Fix wire test failures by pruning union base properties from expected JSON. The Java generator does not generate base properties for union types, so wire test expectations now exclude these fields to match actual SDK serialization behavior.
+      type: fix
+  createdAt: "2025-11-07"
+  irVersion: 61
+
+- version: 3.14.0
+  changelogEntry:
+    - summary: |
+        Add support for WebSocket channels with bidirectional communication. Generated WebSocket clients
+        provide automatic reconnection with exponential backoff, strongly-typed message handlers, and message
+        queuing during disconnections. Clients are accessible via factory methods in subpackage clients.
+
+        ```java
+        // Create WebSocket client with path and query parameters
+        RealtimeWebSocketClient ws = client.realtime().realtimeWebSocket(
+            "session-123",
+            Optional.of("gpt-4"),
+            Optional.of(0)
+        );
+
+        // Register handlers and connect
+        ws.onReceive(message -> System.out.println("Received: " + message.getAlpha()));
+        ws.onConnected(() -> System.out.println("Connected!"));
+        ws.connect().get();
+
+        // Send typed messages
+        ws.sendSend(SendEvent.builder()
+            .sendText("Hello WebSocket!")
+            .sendParam(42)
+            .build());
+        ```
+      type: feat
+  createdAt: "2025-11-07"
+  irVersion: 61
+
 - version: 3.13.0
   changelogEntry:
     - summary: |

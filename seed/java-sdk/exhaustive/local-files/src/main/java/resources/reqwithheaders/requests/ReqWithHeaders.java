@@ -6,6 +6,7 @@ package com.fern.sdk.resources.reqwithheaders.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -40,12 +41,12 @@ public final class ReqWithHeaders {
     this.additionalProperties = additionalProperties;
   }
 
-  @JsonProperty("X-TEST-SERVICE-HEADER")
+  @JsonIgnore
   public String getXTestServiceHeader() {
     return xTestServiceHeader;
   }
 
-  @JsonProperty("X-TEST-ENDPOINT-HEADER")
+  @JsonIgnore
   public String getXTestEndpointHeader() {
     return xTestEndpointHeader;
   }
@@ -127,14 +128,12 @@ public final class ReqWithHeaders {
     }
 
     @java.lang.Override
-    @JsonSetter("X-TEST-SERVICE-HEADER")
     public XTestEndpointHeaderStage xTestServiceHeader(@NotNull String xTestServiceHeader) {
       this.xTestServiceHeader = Objects.requireNonNull(xTestServiceHeader, "xTestServiceHeader must not be null");
       return this;
     }
 
     @java.lang.Override
-    @JsonSetter("X-TEST-ENDPOINT-HEADER")
     public BodyStage xTestEndpointHeader(@NotNull String xTestEndpointHeader) {
       this.xTestEndpointHeader = Objects.requireNonNull(xTestEndpointHeader, "xTestEndpointHeader must not be null");
       return this;

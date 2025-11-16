@@ -19,8 +19,9 @@ public class Example15 {
                         .title("The Boy and the Heron")
                         .from("Hayao Miyazaki")
                         .rating(8.0)
-                        .type("movie")
                         .tag("tag-wf9as23d")
+                        .revenue(1000000L)
+                        .prequel("movie-cv9b914f")
                         .metadata(new HashMap<String, Object>() {
                             {
                                 put(
@@ -36,8 +37,6 @@ public class Example15 {
                                 });
                             }
                         })
-                        .revenue(1000000L)
-                        .prequel("movie-cv9b914f")
                         .build());
     }
 }

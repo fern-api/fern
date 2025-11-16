@@ -19,7 +19,7 @@ import utc from "dayjs/plugin/utc";
 import { readFile, stat } from "fs/promises";
 import matter from "gray-matter";
 import { kebabCase } from "lodash-es";
-
+import { Target } from "../../configuration/src/docs-yml/schemas";
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
@@ -637,7 +637,16 @@ export class DocsDefinitionResolver {
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
             pageActions: this.parsedDocsConfig.pageActions,
-            theme: this.parsedDocsConfig.theme,
+            theme:
+                this.parsedDocsConfig.theme != null
+                    ? {
+                          sidebar: this.parsedDocsConfig.theme.sidebar,
+                          body: this.parsedDocsConfig.theme.body,
+                          tabs: this.parsedDocsConfig.theme.tabs,
+                          "page-actions": this.parsedDocsConfig.theme.pageActions,
+                          footerNav: this.parsedDocsConfig.theme.footerNav
+                      }
+                    : undefined,
             // deprecated
             logo: undefined,
             logoV2: undefined,
@@ -663,8 +672,8 @@ export class DocsDefinitionResolver {
             return this.apiWorkspaces[0];
         }
         const errorMessage = apiSection.apiName
-            ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs`
-            : "Failed to load API Definition referenced in docs";
+            ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs.\nA valid API configuration was not found at the path: fern/apis/${apiSection.apiName}.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions`
+            : "Failed to load API Definition referenced in docs.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions";
         throw new Error(errorMessage);
     }
 
@@ -678,8 +687,8 @@ export class DocsDefinitionResolver {
             return this.ossWorkspaces[0];
         }
         const errorMessage = apiSection.apiName
-            ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs`
-            : "Failed to load API Definition referenced in docs";
+            ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs.\nA valid API configuration was not found at the path: fern/apis/${apiSection.apiName}.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions`
+            : "Failed to load API Definition referenced in docs.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions";
         throw new Error(errorMessage);
     }
 
@@ -784,6 +793,13 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.VersionedNode> {
         const id = this.#idgen.get("versioned");
 
+        const defaultVersion = versioned.versions[0];
+        if (defaultVersion?.hidden === true) {
+            throw new Error(
+                `The default version "${defaultVersion.version}" cannot be hidden. Please set a non-hidden version as the first version in your versions list, or remove the hidden flag from the default version.`
+            );
+        }
+
         return {
             id,
             type: "versioned",
@@ -879,6 +895,7 @@ export class DocsDefinitionResolver {
                 title: product.product,
                 subtitle: product.subtitle ?? "",
                 href: DocsV1Write.Url(product.href ?? ""),
+                target: product.target,
                 default: false,
                 hidden: undefined,
                 authed: undefined,
@@ -912,7 +929,7 @@ export class DocsDefinitionResolver {
             default: isDefault,
             availability: version.availability != null ? convertAvailability(version.availability) : undefined,
             landingPage: version.landingPage ? this.toLandingPageNode(version.landingPage, slug) : undefined,
-            hidden: undefined,
+            hidden: version.hidden,
             authed: undefined,
             viewers: version.viewers,
             orphaned: version.orphaned,
@@ -1089,7 +1106,8 @@ export class DocsDefinitionResolver {
                     context: this.taskContext,
                     audiences: item.audiences,
                     enableUniqueErrorsPerEndpoint: true,
-                    generateV1Examples: false
+                    generateV1Examples: false,
+                    logWarnings: false
                 });
             } catch (error) {
                 // noop
@@ -1178,7 +1196,8 @@ export class DocsDefinitionResolver {
             id: this.#idgen.get(item.url),
             title: item.text,
             url: FernNavigation.V1.Url(item.url),
-            icon: this.resolveIconFileId(item.icon)
+            icon: this.resolveIconFileId(item.icon),
+            target: item.target
         };
     }
 
@@ -1291,7 +1310,7 @@ export class DocsDefinitionResolver {
         parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.TabChild> {
         return visitDiscriminatedUnion(item.child)._visit<Promise<FernNavigation.V1.TabChild>>({
-            link: ({ href }) => this.toTabLinkNode(item, href),
+            link: ({ href, target }) => this.toTabLinkNode(item, href, target),
             layout: ({ layout }) => this.toTabNode(prefix, item, layout, parentSlug),
             changelog: ({ changelog }) => this.toTabChangelogNode(item, changelog, parentSlug),
             variants: ({ variants }) => this.toTabNodeWithVariants(prefix, item, variants, parentSlug)
@@ -1321,12 +1340,17 @@ export class DocsDefinitionResolver {
         });
     }
 
-    private async toTabLinkNode(item: docsYml.TabbedNavigation, href: string): Promise<FernNavigation.V1.LinkNode> {
+    private async toTabLinkNode(
+        item: docsYml.TabbedNavigation,
+        href: string,
+        target?: Target
+    ): Promise<FernNavigation.V1.LinkNode> {
         return {
             type: "link",
             id: this.#idgen.get(href),
             title: item.title,
             url: FernNavigation.V1.Url(href),
+            target: target,
             icon: this.resolveIconFileId(item.icon)
         };
     }

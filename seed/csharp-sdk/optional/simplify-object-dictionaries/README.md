@@ -5,6 +5,18 @@
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+- [Contributing](#contributing)
+
 ## Requirements
 
 This SDK requires:
@@ -25,7 +37,6 @@ Instantiate and use the client with the following:
 
 ```csharp
 using SeedObjectsWithImports;
-using System.Collections.Generic;
 
 var client = new SeedObjectsWithImportsClient();
 await client.Optional.SendOptionalBodyAsync(

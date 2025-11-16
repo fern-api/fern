@@ -29,6 +29,7 @@ export declare namespace GeneratedStreamingEndpointImplementation {
         omitUndefined: boolean;
         streamType: "wrapper" | "web";
         generateEndpointMetadata: boolean;
+        parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     }
 }
 
@@ -47,6 +48,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     private readonly omitUndefined: boolean;
     private readonly streamType: "wrapper" | "web";
     private readonly generateEndpointMetadata: boolean;
+    private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
 
     constructor({
         endpoint,
@@ -59,7 +61,8 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         retainOriginalCasing,
         omitUndefined,
         streamType,
-        generateEndpointMetadata
+        generateEndpointMetadata,
+        parameterNaming
     }: GeneratedStreamingEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -72,6 +75,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         this.omitUndefined = omitUndefined;
         this.streamType = streamType;
         this.generateEndpointMetadata = generateEndpointMetadata;
+        this.parameterNaming = parameterNaming;
     }
 
     public isPaginated(context: SdkContext): boolean {
@@ -225,7 +229,8 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             omitUndefined: this.omitUndefined,
             getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
                 return this.request.getReferenceToPathParameter(pathParameter.name.originalName, context);
-            }
+            },
+            parameterNaming: this.parameterNaming
         });
         if (url != null) {
             return context.coreUtilities.urlUtils.join._invoke([baseUrl, url]);

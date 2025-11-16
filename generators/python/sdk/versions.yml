@@ -1,5 +1,61 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.36.2
+  changelogEntry:
+    - summary: Fix circular reference issue for recursive types and unions.
+      type: fix
+  createdAt: "2025-11-14"
+  irVersion: 61
+
+- version: 4.36.1
+  changelogEntry:
+    - summary: Resolve PydanticUserError for mutually recursive models in Pydantic v2.
+      type: fix
+  createdAt: "2025-11-12"
+  irVersion: 61
+
+- version: 4.36.0
+  changelogEntry:
+    - summary: Add custom license file copying and GitHub installation token population for local generation workflows
+      type: feat
+  createdAt: "2025-11-11"
+  irVersion: 61
+
+- version: 4.35.3
+  changelogEntry:
+    - summary: Fix double Optional wrapping for unknown types in nullable fields by mapping unknown to Any instead of Optional[Any].
+      type: fix
+  createdAt: "2025-11-11"
+  irVersion: 61
+
+- version: 4.35.2
+  changelogEntry:
+    - summary: Add back F401-ignored imports for circular references.
+      type: fix
+  createdAt: "2025-11-10"
+  irVersion: 61
+
+- version: 4.35.1
+  changelogEntry:
+    - summary: Generated Python SDKs no longer show SyntaxWarnings when API docs or enum values include backslashes.
+      type: fix
+  createdAt: "2025-11-10"
+  irVersion: 61
+
+- version: 4.35.0
+  changelogEntry:
+    - summary: Add automatic discriminated union support using Pydantic's Field(discriminator=...) to improve serialization performance. Benchmarks show a 2x speedup by eliminating sequential variant attempts and enabling O(1) variant selection.
+      type: feat
+  createdAt: "2025-11-10"
+  irVersion: 61
+
+- version: 4.34.1
+  changelogEntry:
+    - summary: Fix websocket response type generation to use typing.Any when no server-to-client messages are defined, preventing mypy errors with empty Union types.
+      type: fix
+  createdAt: "2025-11-07"
+  irVersion: 61
+
 - version: 4.34.0
   changelogEntry:
     - summary: Add support for disabling retries on endpoints

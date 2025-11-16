@@ -10,6 +10,7 @@ import {
     ExperimentalConfig,
     Language,
     PlaygroundSettings,
+    Target,
     ThemeConfig,
     VersionAvailability
 } from "./schemas";
@@ -168,6 +169,7 @@ export interface VersionInfo
     version: string;
     availability: VersionAvailability | undefined;
     slug: string | undefined;
+    hidden: boolean | undefined;
 }
 
 export type ProductInfo = InternalProduct | ExternalProduct;
@@ -194,6 +196,7 @@ export interface ExternalProduct
     href: string | undefined;
     icon: string | AbsoluteFilePath;
     image: AbsoluteFilePath | undefined;
+    target: Target | undefined;
 }
 
 export type DocsNavigationConfiguration =
@@ -231,6 +234,7 @@ export declare namespace TabbedNavigationChild {
     export interface Link {
         type: "link";
         href: string;
+        target: Target | undefined;
     }
 
     export interface Changelog {
@@ -305,6 +309,7 @@ export declare namespace DocsNavigationItem {
         availability: Availability | undefined;
         showErrors: boolean;
         snippetsConfiguration: SnippetsConfiguration | undefined;
+        postman: string | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;
         navigation: ParsedApiReferenceLayoutItem[];
         collapsed: boolean | undefined;
@@ -322,6 +327,7 @@ export declare namespace DocsNavigationItem {
         text: string;
         url: string;
         icon: string | AbsoluteFilePath | undefined;
+        target: Target | undefined;
     }
 
     export interface Changelog

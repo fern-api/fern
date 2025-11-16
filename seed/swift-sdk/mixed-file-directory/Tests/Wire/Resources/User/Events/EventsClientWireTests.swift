@@ -4,7 +4,7 @@ import MixedFileDirectory
 
 @Suite("EventsClient Wire Tests") struct EventsClientWireTests {
     @Test func listEvents1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -35,7 +35,10 @@ import MixedFileDirectory
                 name: "name"
             )
         ]
-        let response = try await client.user.events.listEvents(limit: 1)
+        let response = try await client.user.events.listEvents(
+            limit: 1,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

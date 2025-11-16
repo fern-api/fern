@@ -5,6 +5,11 @@
 
 The Basic Rust library provides convenient access to the Basic APIs from Rust.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Contributing](#contributing)
+
 ## Installation
 
 Add this to your `Cargo.toml`:

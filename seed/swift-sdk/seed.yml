@@ -29,9 +29,6 @@ defaultCustomConfig: {}
 scripts:
   - docker: swift:6.1.2
     commands:
-      # On Linux, URLSession/URLRequest require explicit FoundationNetworking import
-      # The Swift generator only outputs "import Foundation" but Linux needs both imports
-      - find . -name "*.swift" -exec sed -i '1s/^import Foundation$/import Foundation\nimport FoundationNetworking/' {} \;
       - swift build -c release --build-tests
       - swift test
 
@@ -134,6 +131,7 @@ allowedFailures:
   - nullable:nullable-as-optional
   - nullable-optional:no-custom-config
   - nullable-optional:nullable-as-optional
+  - nullable-request-body
   - oauth-client-credentials-custom
   - oauth-client-credentials-with-variables
   - pagination:no-custom-config
@@ -153,6 +151,8 @@ allowedFailures:
   - trace
   - undiscriminated-unions
   - unions
+  # Java-specific fixture for LocalDate support
+  - unions-with-local-date
   - variables
   - websocket-inferred-auth
   # Intermediate failures
