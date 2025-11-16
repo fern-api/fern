@@ -65,10 +65,7 @@ export async function executeTestRemoteLocalCommand({
     // Fetch latest versions for all generators upfront
     logger.info("\nFetching latest generator versions from Docker Hub...");
     const generatorVersions = await getLatestGeneratorVersions(generators, logger);
-    logger.info("Generator versions:");
-    for (const [gen, version] of Object.entries(generatorVersions)) {
-        logger.info(`  ${gen}: ${version}`);
-    }
+    logger.info("Successfully fetched all generator versions");
 
     const results: TestResult[] = [];
     const fernExecutable = path.join(fernRepoDirectory, CLI_RELATIVE_PATH);

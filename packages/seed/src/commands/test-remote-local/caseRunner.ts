@@ -1,6 +1,6 @@
 import { Logger, LogLevel } from "@fern-api/logger";
 import { loggingExeca, runExeca } from "@fern-api/logging-execa";
-import { cp, mkdir, rm, writeFile } from "fs/promises";
+import { cp, mkdir, readFile, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import tmp from "tmp-promise";
@@ -75,6 +75,7 @@ import {
     PYTHON_SDK_PACKAGE_NAME,
     REMOTE_GROUP_NAME,
     SDKS_DIRECTORY_NAME,
+    SEED_REMOTE_LOCAL_OUTPUT_DIR,
     SEMVER_REGEX,
     TEST_DEFINITIONS_RELATIVE_PATH,
     TestFixture,
@@ -107,6 +108,16 @@ export interface RemoteVsLocalTestCase {
     outputFolder?: string;
     generatorVersions: Record<GeneratorName, string>;
     context: TestCaseContext;
+}
+
+// Structure of seed-remote-local seed.yml files
+interface RemoteLocalSeedConfig {
+    fixtures?: {
+        [fixtureName: string]: Array<{
+            outputFolder: string;
+            customConfig?: unknown;
+        }>;
+    };
 }
 
 export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<void> {
@@ -154,9 +165,9 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<void
     logger.debug(`Using generator version: ${generatorVersion}`);
 
     // Load custom config
-    const customConfig = await loadCustomConfig(generator, fixture, logger);
+    const customConfig = await loadCustomConfig(generator, fixture, testCase.outputFolder, fernRepoDirectory, logger);
     if (customConfig) {
-        logger.debug(`Loaded custom config for ${generator}/${fixture}`);
+        logger.debug(`Loaded custom config for ${generator}/${fixture}/${testCase.outputFolder || "no-custom-config"}`);
     }
 
     const baseConfig = {
@@ -452,25 +463,56 @@ async function writeGeneratorsYml(fernDirectory: string, localConfig: unknown, r
     await writeFile(path.join(fernDirectory, GENERATORS_YML_FILENAME), content);
 }
 
-function loadCustomConfig(
+async function loadCustomConfig(
     generator: GeneratorNickname,
     fixture: TestFixture,
+    outputFolder: string | undefined,
+    fernRepoDirectory: string,
     logger: Logger
 ): Promise<unknown | undefined> {
-    logger.debug(`Looking for custom config for ${generator}/${fixture}`);
+    logger.debug(`Looking for custom config for ${generator}/${fixture}/${outputFolder || "no-custom-config"}`);
 
-    // TODO: Implement pulling custom config for fixtures from somewhere
-    if (generator === "go-sdk") {
-        logger.debug(`Loaded custom Go module config`);
-        return Promise.resolve({
-            module: {
-                path: GO_SDK_MODULE_PATH
-            }
-        });
+    // Load seed.yml from seed-remote-local/{generator}/seed.yml
+    const seedYmlPath = path.join(fernRepoDirectory, SEED_REMOTE_LOCAL_OUTPUT_DIR, generator, "seed.yml");
+
+    try {
+        const seedYmlContent = await readFile(seedYmlPath, "utf-8");
+        const seedConfig = yaml.load(seedYmlContent) as RemoteLocalSeedConfig;
+
+        // Look for fixture-specific config
+        const fixtureConfigs = seedConfig.fixtures?.[fixture];
+        if (!fixtureConfigs || fixtureConfigs.length === 0) {
+            logger.debug(`No fixture config found in seed.yml for ${fixture}, using defaults`);
+            return undefined;
+        }
+
+        // Find the config matching the outputFolder
+        const matchingConfig = fixtureConfigs.find(
+            (config) => config.outputFolder === (outputFolder || "no-custom-config")
+        );
+
+        if (!matchingConfig) {
+            logger.debug(
+                `No matching outputFolder config found for ${outputFolder || "no-custom-config"}, using defaults`
+            );
+            return undefined;
+        }
+
+        if (matchingConfig.customConfig !== undefined && matchingConfig.customConfig !== null) {
+            logger.debug(`Loaded custom config from seed.yml: ${JSON.stringify(matchingConfig.customConfig)}`);
+            return matchingConfig.customConfig;
+        }
+
+        logger.debug(`Custom config is null/undefined, using defaults`);
+        return undefined;
+    } catch (error) {
+        if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+            logger.debug(`No seed.yml found at ${seedYmlPath}, using defaults`);
+            return undefined;
+        }
+        logger.warn(`Error loading seed.yml: ${error instanceof Error ? error.message : String(error)}`);
+        return undefined;
     }
-
-    logger.debug(`No custom config found, using defaults`);
-    return Promise.resolve(undefined);
 }
 
 function getGithubConfig(generator: GeneratorNickname, generationMode: GenerationMode): unknown | undefined {
@@ -551,6 +593,8 @@ export async function getLatestGeneratorVersions(
         uniqueGeneratorNames.map(async (generator) => {
             const version = await getLatestGeneratorVersion(generator, logger);
             versions[generator] = version;
+            // Log immediately after fetching each version
+            logger.info(`  Fetched ${generator}: ${version}`);
         })
     );
 
@@ -567,8 +611,9 @@ async function getLatestGeneratorVersion(generator: GeneratorName, logger: Logge
             throw new Error(`${ERROR_INVALID_GENERATOR_NAME}: ${generator}`);
         }
 
-        // Docker Hub API endpoint for repository tags
-        const url = `${DOCKER_HUB_API_BASE_URL}/namespaces/${namespace}/repositories/${repository}/tags?page_size=${DOCKER_HUB_TAGS_PAGE_SIZE}&ordering=${DOCKER_HUB_TAGS_ORDERING}`;
+        // Docker Hub API v2 endpoint for repository tags
+        // Note: The correct endpoint format is /repositories/{namespace}/{repository}/tags
+        const url = `${DOCKER_HUB_API_BASE_URL}/repositories/${namespace}/${repository}/tags?page_size=${DOCKER_HUB_TAGS_PAGE_SIZE}&ordering=${DOCKER_HUB_TAGS_ORDERING}`;
 
         logger.debug(`Fetching tags from: ${url}`);
         const response = await fetch(url);
@@ -577,32 +622,35 @@ async function getLatestGeneratorVersion(generator: GeneratorName, logger: Logge
             throw new Error(`${ERROR_DOCKER_HUB_API_FAILED} ${response.status}: ${response.statusText}`);
         }
 
-        const data = await response.json();
+        const data = (await response.json()) as {
+            results?: Array<{ name: string; last_updated?: string }>;
+        };
 
         if (!data.results || !Array.isArray(data.results) || data.results.length === 0) {
             throw new Error(`${ERROR_NO_TAGS_FOUND} ${generator}`);
         }
 
+        logger.debug(`Fetched ${data.results.length} tags from Docker Hub`);
+
         // Filter out non-semantic version tags (e.g., "latest", "main", etc.)
         // Look for tags that match semantic versioning pattern: X.Y.Z
-        const versionTags = data.results
-            .map((tag: { name: string }) => tag.name)
-            .filter((name: string) => SEMVER_REGEX.test(name));
+        const versionTags = data.results.map((tag) => tag.name).filter((name) => SEMVER_REGEX.test(name));
+
+        logger.debug(`Found ${versionTags.length} semantic version tags`);
 
         if (versionTags.length === 0) {
             throw new Error(`${ERROR_NO_SEMVER_TAGS} ${generator}`);
         }
 
-        // The API returns tags ordered by last_updated, but we want the highest semantic version
-        // Sort versions by semantic versioning rules
+        // Sort versions by semantic versioning rules (descending order)
         const sortedVersions = versionTags.sort((a: string, b: string) => {
             const aParts = a.split(".").map(Number);
             const bParts = b.split(".").map(Number);
 
             for (let i = 0; i < 3; i++) {
-                const aPart = aParts[i];
-                const bPart = bParts[i];
-                if (aPart && bPart) {
+                const aPart = aParts[i] ?? 0;
+                const bPart = bParts[i] ?? 0;
+                if (aPart !== bPart) {
                     return bPart - aPart; // Descending order
                 }
             }
@@ -610,6 +658,9 @@ async function getLatestGeneratorVersion(generator: GeneratorName, logger: Logge
         });
 
         const latestVersion = sortedVersions[0];
+        if (!latestVersion) {
+            throw new Error(`${ERROR_NO_SEMVER_TAGS} ${generator}`);
+        }
         logger.debug(`Found latest version: ${latestVersion}`);
         return latestVersion;
     } catch (error) {
