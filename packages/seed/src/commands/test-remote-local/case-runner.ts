@@ -51,7 +51,8 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<void
 
     logger.info(`Running test case for generator: ${generator}, fixture: ${fixture}, output mode: ${outputMode}`);
     logger.info(`Clearing working directory: ${workingDirectory}`);
-    await rm(workingDirectory + "/*", { recursive: true });
+    await rm(workingDirectory, { recursive: true });
+    await mkdir(workingDirectory, { recursive: true });
 
     const fernDirectory = path.join(workingDirectory, "fern");
     const definitionDirectory = path.join(fernDirectory, "definition");
