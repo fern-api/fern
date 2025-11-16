@@ -37,6 +37,7 @@ export async function executeTestRemoteLocalCommand({
     generator,
     fixture,
     outputFolder,
+    outputMode,
     logLevel,
     fernRepoDirectory,
     githubToken,
@@ -46,6 +47,7 @@ export async function executeTestRemoteLocalCommand({
     generator: string[];
     fixture: string[];
     outputFolder: string;
+    outputMode: string[];
     logLevel: LogLevel;
     fernRepoDirectory: string;
     githubToken: string;
@@ -56,16 +58,19 @@ export async function executeTestRemoteLocalCommand({
     const taskContext = taskContextFactory.create("test-remote-local");
     const logger = taskContext.logger;
 
-    // Default to all generators/fixtures if not specified
+    // Default to all generators/fixtures/output modes if not specified
     const generators = (generator.length > 0 ? generator : ALL_GENERATOR_NICKNAMES) as GeneratorNickname[];
     const fixtures = (fixture.length > 0 ? fixture : ALL_TEST_FIXTURES) as TestFixture[];
-    const outputModes: OutputMode[] = Array.from(ALL_OUTPUT_MODES) as OutputMode[];
+    const outputModes: OutputMode[] = (
+        outputMode.length > 0 ? outputMode : Array.from(ALL_OUTPUT_MODES)
+    ) as OutputMode[];
 
     logger.info(
-        `Starting test-remote-local execution for ${generators.length} generator(s), ${fixtures.length} fixture(s)`
+        `Starting test-remote-local execution for ${generators.length} generator(s), ${fixtures.length} fixture(s), ${outputModes.length} output mode(s)`
     );
     logger.debug(`Generators: ${generators.join(", ")}`);
     logger.debug(`Fixtures: ${fixtures.join(", ")}`);
+    logger.debug(`Output modes: ${outputModes.join(", ")}`);
 
     // Build generator Docker images if requested
     if (buildGenerator) {

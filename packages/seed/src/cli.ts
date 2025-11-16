@@ -255,6 +255,13 @@ function addTestRemoteLocalCommand(cli: Argv) {
                     demandOption: false,
                     description: "Runs on a specific output folder. Only relevant if there are >1 folders configured."
                 })
+                .option("output-mode", {
+                    type: "array",
+                    string: true,
+                    demandOption: false,
+                    alias: "m",
+                    description: "The output modes to test. Options: 'local', 'github'. Runs all modes if not provided."
+                })
                 .option("log-level", {
                     default: LogLevel.Info,
                     choices: LOG_LEVELS
@@ -317,6 +324,7 @@ function addTestRemoteLocalCommand(cli: Argv) {
                 generator: argv.generator ?? [],
                 fixture: argv.fixture ?? [],
                 outputFolder: argv.outputFolder ?? "",
+                outputMode: argv.outputMode ?? [],
                 logLevel: argv.logLevel,
                 fernRepoDirectory,
                 githubToken: githubToken ?? "",
