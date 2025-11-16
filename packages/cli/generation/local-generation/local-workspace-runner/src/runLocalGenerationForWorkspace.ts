@@ -192,69 +192,11 @@ export async function runLocalGenerationForWorkspace({
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
 
                 if (selfhostedGithubConfig != null) {
-                    try {
-                        context.logger.debug("Starting GitHub self-hosted flow...");
-                        const repository = ClonedRepository.createAtPath(absolutePathToLocalOutput);
-                        const now = new Date();
-                        const formattedDate = now
-                            .toISOString()
-                            .replace("T", "_")
-                            .replace(/:/g, "-")
-                            .replace(/\..+/, "");
-                        const prBranch = `fern-bot/${formattedDate}`;
-                        if (selfhostedGithubConfig.mode === "pull-request") {
-                            context.logger.debug(`Checking out new branch ${prBranch}`);
-                            await repository.checkout(prBranch);
-                        }
-
-                        await repository.commit("SDK Generation");
-                        context.logger.debug(
-                            `Committed changes to local copy of GitHub repository at ${absolutePathToLocalOutput}`
-                        );
-
-                        if (!selfhostedGithubConfig.previewMode) {
-                            await repository.push();
-                            const pushedBranch = await repository.getCurrentBranch();
-                            context.logger.info(
-                                `Pushed branch https://${selfhostedGithubConfig.uri}/tree/${pushedBranch}`
-                            );
-                        }
-
-                        if (selfhostedGithubConfig.mode === "pull-request") {
-                            const baseBranch = await repository.getDefaultBranch();
-
-                            const octokit = new Octokit({
-                                auth: selfhostedGithubConfig.token
-                            });
-                            // Use octokit directly to create the pull request
-                            const parsedRepo = parseRepository(selfhostedGithubConfig.uri);
-                            const { owner, repo } = parsedRepo;
-                            const head = `${owner}:${prBranch}`;
-
-                            try {
-                                await octokit.pulls.create({
-                                    owner,
-                                    repo,
-                                    title: "SDK Generation",
-                                    body: "Automated SDK generation by Fern",
-                                    head,
-                                    base: baseBranch,
-                                    draft: false
-                                });
-
-                                context.logger.info(
-                                    `Created pull request ${head} -> ${baseBranch} on ${selfhostedGithubConfig.uri}`
-                                );
-                            } catch (error) {
-                                const message = error instanceof Error ? error.message : String(error);
-                                if (message.includes("A pull request already exists for")) {
-                                    context.failWithoutThrowing(`A pull request already exists for ${head}`);
-                                }
-                            }
-                        }
-                    } catch (error) {
-                        context.failAndThrow(`Error during GitHub self-hosted flow: ${String(error)}`);
-                    }
+                    postProcessGithubSelfHosted(
+                        selfhostedGithubConfig,
+                        absolutePathToLocalOutput,
+                        interactiveTaskContext
+                    );
                 }
             });
         })
@@ -288,6 +230,66 @@ function getPackageNameFromGeneratorConfig(generatorInvocation: GeneratorInvocat
         }
     }
     return undefined;
+}
+
+async function postProcessGithubSelfHosted(
+    selfhostedGithubConfig: SelhostedGithubConfig,
+    absolutePathToLocalOutput: AbsoluteFilePath,
+    context: TaskContext
+): Promise<void> {
+    try {
+        context.logger.debug("Starting GitHub self-hosted flow...");
+        const repository = ClonedRepository.createAtPath(absolutePathToLocalOutput);
+        const now = new Date();
+        const formattedDate = now.toISOString().replace("T", "_").replace(/:/g, "-").replace(/\..+/, "");
+        const prBranch = `fern-bot/${formattedDate}`;
+        if (selfhostedGithubConfig.mode === "pull-request") {
+            context.logger.debug(`Checking out new branch ${prBranch}`);
+            await repository.checkout(prBranch);
+        }
+
+        await repository.commit("SDK Generation");
+        context.logger.debug(`Committed changes to local copy of GitHub repository at ${absolutePathToLocalOutput}`);
+
+        if (!selfhostedGithubConfig.previewMode) {
+            await repository.push();
+            const pushedBranch = await repository.getCurrentBranch();
+            context.logger.info(`Pushed branch https://${selfhostedGithubConfig.uri}/tree/${pushedBranch}`);
+        }
+
+        if (selfhostedGithubConfig.mode === "pull-request") {
+            const baseBranch = await repository.getDefaultBranch();
+
+            const octokit = new Octokit({
+                auth: selfhostedGithubConfig.token
+            });
+            // Use octokit directly to create the pull request
+            const parsedRepo = parseRepository(selfhostedGithubConfig.uri);
+            const { owner, repo } = parsedRepo;
+            const head = `${owner}:${prBranch}`;
+
+            try {
+                await octokit.pulls.create({
+                    owner,
+                    repo,
+                    title: "SDK Generation",
+                    body: "Automated SDK generation by Fern",
+                    head,
+                    base: baseBranch,
+                    draft: false
+                });
+
+                context.logger.info(`Created pull request ${head} -> ${baseBranch} on ${selfhostedGithubConfig.uri}`);
+            } catch (error) {
+                const message = error instanceof Error ? error.message : String(error);
+                if (message.includes("A pull request already exists for")) {
+                    context.failWithoutThrowing(`A pull request already exists for ${head}`);
+                }
+            }
+        }
+    } catch (error) {
+        context.failWithoutThrowing(`Error during GitHub self-hosted flow: ${String(error)}`);
+    }
 }
 
 export async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {
