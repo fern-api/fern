@@ -1,11 +1,9 @@
-import { LogLevel } from "@fern-api/logger";
-import { loggingExeca } from "@fern-api/logging-execa";
-import { execa } from "execa";
+import { Logger, LogLevel } from "@fern-api/logger";
+import { loggingExeca, runExeca } from "@fern-api/logging-execa";
 import { cp, mkdir, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import tmp from "tmp-promise";
-import { TaskContext } from "@fern-api/task-context";
 import {
     FERN_CONFIG_JSON_CONTENT,
     FERN_CONFIG_JSON_FILENAME,
@@ -34,7 +32,7 @@ export interface TestCaseContext {
     fernExecutable: string;
     fernRepoDirectory: string;
     workingDirectory: string;
-    taskContext: TaskContext;
+    logger: Logger;
     githubToken: string;
     fernToken: string;
 }
@@ -48,9 +46,8 @@ export interface RemoteVsLocalTestCase {
 }
 
 export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<void> {
-    const { generator, fixture, outputMode, outputFolder, context } = testCase;
-    const { fernExecutable, fernRepoDirectory, workingDirectory, taskContext, githubToken, fernToken } = context;
-    const logger = taskContext.logger;
+    const { generator, fixture, outputMode, context } = testCase;
+    const { fernRepoDirectory, workingDirectory, logger } = context;
 
     logger.debug(`Test configuration: generator=${generator}, fixture=${fixture}, outputMode=${outputMode}`);
     logger.debug(`Working directory: ${workingDirectory}`);
@@ -153,7 +150,8 @@ async function compareResults(
     localResult: GenerationResultSuccess,
     remoteResult: GenerationResultSuccess
 ): Promise<void> {
-    const logger = testCase.context.taskContext.logger;
+    const { context } = testCase;
+    const { logger, workingDirectory } = context;
 
     logger.debug(`Running diff between:\n  Remote: ${remoteResult.outputFolder}\n  Local: ${localResult.outputFolder}`);
 
@@ -162,7 +160,7 @@ async function compareResults(
         "diff",
         ["-r", remoteResult.outputFolder, localResult.outputFolder],
         {
-            cwd: testCase.context.workingDirectory,
+            cwd: workingDirectory,
             reject: false // Don't reject on non-zero exit (diff returns 1 when files differ)
         }
     );
@@ -197,8 +195,7 @@ async function runGeneration(
     generationMode: GenerationMode
 ): Promise<GenerationResult> {
     const { outputMode } = testCase;
-    const { fernExecutable, workingDirectory, taskContext, githubToken, fernToken } = testCase.context;
-    const logger = taskContext.logger;
+    const { fernExecutable, workingDirectory, logger, githubToken, fernToken } = testCase.context;
     const group = generationMode === "local" ? LOCAL_GROUP_NAME : REMOTE_GROUP_NAME;
     const extraFlags = generationMode === "local" ? ["--local"] : [];
 
@@ -214,7 +211,7 @@ async function runGeneration(
 
     try {
         // Use execa directly instead of loggingExeca to avoid forwarding all subprocess logs
-        const result = await execa(fernExecutable, args, {
+        const result = await runExeca(undefined, fernExecutable, args, {
             cwd: workingDirectory,
             env: {
                 GITHUB_TOKEN: githubToken,
@@ -232,7 +229,7 @@ async function runGeneration(
             // Show error output from the subprocess
             if (result.stderr) {
                 logger.error(`  Error output:`);
-                result.stderr.split("\n").forEach(line => {
+                result.stderr.split("\n").forEach((line: string) => {
                     if (line.trim()) {
                         logger.error(`    ${line}`);
                     }
@@ -269,7 +266,7 @@ async function copyGithubOutputToOutputDirectory(
     repository: string,
     logs: string,
     outputDirectory: string,
-    logger: TaskContext["logger"]
+    logger: Logger
 ): Promise<void> {
     logger.debug(`Attempting to extract GitHub branch from logs`);
     const remoteBranch = getRemoteBranchFromLogs(logs);
@@ -303,7 +300,7 @@ function getRemoteBranchFromLogs(logs: string): string | undefined {
 
 async function getMostRecentlyCreatedBranch(
     repository: string,
-    logger: TaskContext["logger"]
+    logger: Logger
 ): Promise<string> {
     logger.debug(`Fetching most recent branch for ${repository}`);
 
@@ -325,7 +322,7 @@ async function cloneRepository(
     repository: string,
     branch: string,
     targetDirectory: string,
-    logger: TaskContext["logger"]
+    logger: Logger
 ): Promise<void> {
     logger.debug(`Cloning ${repository}@${branch} to ${targetDirectory}`);
 
@@ -375,7 +372,7 @@ async function writeGeneratorsYml(fernDirectory: string, localConfig: unknown, r
 function loadCustomConfig(
     generator: GeneratorNickname,
     fixture: TestFixture,
-    logger: TaskContext["logger"]
+    logger: Logger
 ): Promise<unknown | undefined> {
     logger.debug(`Looking for custom config for ${generator}/${fixture}`);
 
@@ -456,7 +453,7 @@ function getPackageOutputConfig(
 
 function getLatestGeneratorVersion(
     generator: GeneratorName,
-    logger: TaskContext["logger"]
+    logger: Logger
 ): Promise<string> {
     logger.debug(`Getting version for ${generator}`);
 

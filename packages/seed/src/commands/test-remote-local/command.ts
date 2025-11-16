@@ -36,7 +36,7 @@ export async function executeTestRemoteLocalCommand({
     // Default to all generators/fixtures if not specified
     const generators = (generator.length > 0 ? generator : ALL_GENERATOR_NICKNAMES) as GeneratorNickname[];
     const fixtures = (fixture.length > 0 ? fixture : ALL_TEST_FIXTURES) as TestFixture[];
-    const outputModes: OutputMode[] = ["local-file-system"]; // Default to local-file-system for now
+    const outputModes: OutputMode[] = Array.from(ALL_OUTPUT_MODES) as OutputMode[];
 
     logger.info(`Starting test-remote-local execution for ${generators.length} generator(s), ${fixtures.length} fixture(s)`);
     logger.debug(`Generators: ${generators.join(", ")}`);
@@ -68,7 +68,7 @@ export async function executeTestRemoteLocalCommand({
                             fernExecutable,
                             fernRepoDirectory,
                             workingDirectory: testWorkingDirectory,
-                            taskContext,
+                            logger,
                             githubToken,
                             fernToken
                         }
