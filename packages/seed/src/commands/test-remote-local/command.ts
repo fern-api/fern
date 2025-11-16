@@ -1,8 +1,8 @@
 import { LogLevel } from "@fern-api/logger";
 import path from "path";
 import { TaskContextFactory } from "../test/TaskContextFactory";
-import { runTestCase } from "./caseRunner";
-import { ALL_GENERATOR_NICKNAMES, ALL_OUTPUT_MODES, ALL_TEST_FIXTURES, GeneratorNickname, OutputMode, TestFixture } from "./constants";
+import { getLatestGeneratorVersions, runTestCase } from "./caseRunner";
+import { ALL_GENERATOR_NICKNAMES, ALL_OUTPUT_MODES, ALL_TEST_FIXTURES, GeneratorName, GeneratorNickname, OutputMode, TestFixture } from "./constants";
 
 interface TestResult {
     generator: GeneratorNickname;
@@ -42,6 +42,14 @@ export async function executeTestRemoteLocalCommand({
     logger.debug(`Generators: ${generators.join(", ")}`);
     logger.debug(`Fixtures: ${fixtures.join(", ")}`);
 
+    // Fetch latest versions for all generators upfront
+    logger.info("\nFetching latest generator versions from Docker Hub...");
+    const generatorVersions = await getLatestGeneratorVersions(generators, logger);
+    logger.info("Generator versions:");
+    for (const [gen, version] of Object.entries(generatorVersions)) {
+        logger.info(`  ${gen}: ${version}`);
+    }
+
     const results: TestResult[] = [];
     const fernExecutable = path.join(fernRepoDirectory, "packages", "cli", "cli", "dist", "prod", "cli.cjs");
 
@@ -63,6 +71,7 @@ export async function executeTestRemoteLocalCommand({
                         fixture: fix,
                         outputFolder,
                         outputMode: mode,
+                        generatorVersions,
                         context: {
                             fernExecutable,
                             fernRepoDirectory,

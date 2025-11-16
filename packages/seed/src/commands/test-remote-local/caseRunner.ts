@@ -42,11 +42,12 @@ export interface RemoteVsLocalTestCase {
     fixture: TestFixture;
     outputMode: OutputMode;
     outputFolder?: string;
+    generatorVersions: Record<GeneratorName, string>;
     context: TestCaseContext;
 }
 
 export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<void> {
-    const { generator, fixture, outputMode, context } = testCase;
+    const { generator, fixture, outputMode, generatorVersions, context } = testCase;
     const { fernRepoDirectory, workingDirectory, logger } = context;
 
     logger.debug(`Test configuration: generator=${generator}, fixture=${fixture}, outputMode=${outputMode}`);
@@ -74,8 +75,12 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<void
     logger.debug(`Copying fixture definition from ${fixtureSource}`);
     await cp(fixtureSource, definitionDirectory, { recursive: true });
 
-    // Get generator version
-    const generatorVersion = await getLatestGeneratorVersion(GeneratorNameFromNickname[generator], logger);
+    // Get generator version from pre-fetched map
+    const generatorName = GeneratorNameFromNickname[generator];
+    const generatorVersion = generatorVersions[generatorName];
+    if (!generatorVersion) {
+        throw new Error(`No version found for generator ${generatorName}`);
+    }
     logger.debug(`Using generator version: ${generatorVersion}`);
 
     // Load custom config
@@ -451,6 +456,32 @@ function getPackageOutputConfig(
     }
 }
 
+/**
+ * Fetches the latest versions for all specified generators from Docker Hub.
+ * This should be called once at the beginning of a test run to avoid redundant API calls.
+ */
+export async function getLatestGeneratorVersions(
+    generators: readonly GeneratorNickname[],
+    logger: Logger
+): Promise<Record<GeneratorName, string>> {
+    const generatorNames = generators.map(nickname => GeneratorNameFromNickname[nickname]);
+    const uniqueGeneratorNames = Array.from(new Set(generatorNames));
+
+    logger.debug(`Fetching versions for ${uniqueGeneratorNames.length} generator(s)`);
+
+    const versions: Record<GeneratorName, string> = {} as Record<GeneratorName, string>;
+
+    // Fetch all versions in parallel
+    await Promise.all(
+        uniqueGeneratorNames.map(async (generator) => {
+            const version = await getLatestGeneratorVersion(generator, logger);
+            versions[generator] = version;
+        })
+    );
+
+    return versions;
+}
+
 async function getLatestGeneratorVersion(
     generator: GeneratorName,
     logger: Logger
@@ -512,23 +543,6 @@ async function getLatestGeneratorVersion(
         return latestVersion;
     } catch (error) {
         logger.error(`Failed to fetch version from Docker Hub: ${error instanceof Error ? error.message : String(error)}`);
-
-        // Fallback to hardcoded versions if Docker Hub API fails
-        logger.warn(`Falling back to hardcoded version`);
-        const fallbackMap: Record<string, string> = {
-            "fernapi/fern-typescript-sdk": "3.29.2",
-            "fernapi/fern-java-sdk": "3.16.0",
-            "fernapi/fern-go-sdk": "1.15.1",
-            "fernapi/fern-python-sdk": "4.36.2"
-        };
-
-        const version = fallbackMap[generator];
-        if (version == null) {
-            logger.error(`Generator ${generator} not found in fallback version map`);
-            throw new Error(`Generator ${generator} not found in fallback map and Docker Hub fetch failed`);
-        }
-
-        logger.debug(`Using fallback version: ${version}`);
-        return version;
+        throw new Error(`Failed to get latest version for ${generator} from Docker Hub: ${error instanceof Error ? error.message : String(error)}`);
     }
 }
