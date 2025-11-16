@@ -196,6 +196,7 @@ where
     type Item = Result<T, ApiError>;
 
     fn poll_next(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
+        use futures::StreamExt;
         let this = self.project();
         match this.inner.poll_next(cx) {
             Poll::Ready(Some(Ok(event))) => {
@@ -239,6 +240,7 @@ where
     type Item = Result<SseEvent<T>, ApiError>;
 
     fn poll_next(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
+        use futures::StreamExt;
         let this = self.project();
 
         // Access the inner stream's fields through pin projection

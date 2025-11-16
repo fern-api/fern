@@ -105,6 +105,3 @@ fixtures:
           timeouts:
             - GET /movie/{movieId}
       outputFolder: readme-config
-
-allowedFailures:
-  - public-object
