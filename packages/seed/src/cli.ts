@@ -7,6 +7,7 @@ import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import { generateCliChangelog } from "./commands/generate/generateCliChangelog";
 import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog";
+import { buildGeneratorImage } from "./commands/img/buildGeneratorImage";
 import { getLatestCli } from "./commands/latest/getLatestCli";
 import { getLatestGenerator } from "./commands/latest/getLatestGenerator";
 import { getLatestVersionsYml } from "./commands/latest/getLatestVersionsYml";
@@ -20,6 +21,7 @@ import { TaskContextFactory } from "./commands/test/TaskContextFactory";
 import { DockerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/test-runner";
 import { FIXTURES, LANGUAGE_SPECIFIC_FIXTURE_PREFIXES, testGenerator } from "./commands/test/testWorkspaceFixtures";
 import { executeTestRemoteLocalCommand, isFernRepo, isLocalFernCliBuilt } from "./commands/test-remote-local";
+import { assertValidSemVerOrThrow } from "./commands/validate/semVerUtils";
 import { validateCliRelease } from "./commands/validate/validateCliChangelog";
 import { validateGenerator } from "./commands/validate/validateGeneratorChangelog";
 import { validateVersionsYml } from "./commands/validate/validateVersionsYml";
@@ -43,6 +45,7 @@ export async function tryRunCli(): Promise<void> {
     addTestCommand(cli);
     addTestRemoteLocalCommand(cli);
     addRunCommand(cli);
+    addImgCommand(cli);
     addGetAvailableFixturesCommand(cli);
     addRegisterCommands(cli);
     addPublishCommands(cli);
@@ -401,6 +404,71 @@ function addRunCommand(cli: Argv) {
                 inspect: argv.inspect,
                 local: argv.local,
                 keepDocker: argv.keepDocker
+            });
+        }
+    );
+}
+
+const DEFAULT_IMAGE_VERSION = "99.99.99";
+function addImgCommand(cli: Argv) {
+    cli.command(
+        "img <generator> [tag]",
+        "Builds a docker image for the specified generator and stores it in the local docker daemon",
+        (yargs) =>
+            yargs
+                .version(false)
+                .positional("generator", {
+                    type: "string",
+                    demandOption: true,
+                    description: "Generator to build docker image for"
+                })
+                .positional("tag", {
+                    type: "string",
+                    demandOption: false,
+                    description: "Version tag (optional positional)"
+                })
+                .option("version", {
+                    alias: "v",
+                    type: "string",
+                    demandOption: false,
+                    description: `Version tag for the docker image (must be valid semver, defaults to ${DEFAULT_IMAGE_VERSION})`
+                })
+                .option("log-level", {
+                    default: LogLevel.Info,
+                    choices: LOG_LEVELS
+                }),
+        async (argv) => {
+            const generators = await loadGeneratorWorkspaces();
+            throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
+
+            const generator = generators.find((g) => g.workspaceName === argv.generator);
+            if (generator == null) {
+                throw new Error(
+                    `Generator ${argv.generator} not found. Please make sure that there is a folder with the name ${argv.generator} in the seed directory.`
+                );
+            }
+
+            const positionalTag = argv.tag as string | undefined;
+            const version = positionalTag ?? argv.version ?? DEFAULT_IMAGE_VERSION;
+            try {
+                assertValidSemVerOrThrow(version);
+            } catch (error) {
+                throw new Error(
+                    `Invalid version: ${version}. Version must be a valid semver (e.g., 1.2.3 or 1.2.3-rc5).`
+                );
+            }
+
+            const logLevel = argv["log-level"];
+            const taskContextFactory = new TaskContextFactory(logLevel);
+            const taskContext = taskContextFactory.create(`Building docker image for ${generator.workspaceName}`);
+
+            taskContext.logger.info(`Using version: ${version}`);
+
+            await buildGeneratorImage({
+                generator,
+                version,
+                context: taskContext,
+                logLevel
             });
         }
     );
