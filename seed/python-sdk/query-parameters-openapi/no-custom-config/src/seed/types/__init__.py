@@ -7,11 +7,13 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .nested_user import NestedUser
+    from .search_request_neighbor import SearchRequestNeighbor
     from .search_request_neighbor_required import SearchRequestNeighborRequired
     from .search_response import SearchResponse
     from .user import User
 _dynamic_imports: typing.Dict[str, str] = {
     "NestedUser": ".nested_user",
+    "SearchRequestNeighbor": ".search_request_neighbor",
     "SearchRequestNeighborRequired": ".search_request_neighbor_required",
     "SearchResponse": ".search_response",
     "User": ".user",
@@ -39,4 +41,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["NestedUser", "SearchRequestNeighborRequired", "SearchResponse", "User"]
+__all__ = ["NestedUser", "SearchRequestNeighbor", "SearchRequestNeighborRequired", "SearchResponse", "User"]

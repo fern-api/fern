@@ -21,6 +21,7 @@ class OAuthTokenProviderGenerator:
         self._class_name = self.CLIENT_CLASS_NAME
         self._oauth_scheme: ir_types.OAuthScheme = oauth_scheme
         self._refresh_client_member_name: Optional[str] = None
+        self._has_api_key: Optional[bool] = None
 
     def generate(self, source_file: SourceFile) -> None:
         oauth_configuration: ir_types.OAuthConfiguration = self._oauth_scheme.configuration
@@ -34,7 +35,7 @@ class OAuthTokenProviderGenerator:
     def _create_client_credentials_class_declaration(
         self, client_credentials: ir_types.OAuthClientCredentials
     ) -> AST.ClassDeclaration:
-        constructor_parameters = self._get_constructor_parameters()
+        constructor_parameters = self._get_constructor_parameters(client_credentials)
 
         named_parameters = [
             AST.NamedFunctionParameter(
@@ -76,8 +77,26 @@ class OAuthTokenProviderGenerator:
 
         return class_declaration
 
-    def _get_constructor_parameters(self) -> List[ConstructorParameter]:
+    def _get_constructor_parameters(self, client_credentials: ir_types.OAuthClientCredentials) -> List[ConstructorParameter]:
         parameters: List[ConstructorParameter] = []
+
+        endpoint_to_check = (
+            self._get_endpoint_for_id(client_credentials.refresh_endpoint.endpoint_reference.endpoint_id)
+            if client_credentials.refresh_endpoint is not None
+            else self._get_endpoint_for_id(client_credentials.token_endpoint.endpoint_reference.endpoint_id)
+        )
+        
+        has_api_key = self._endpoint_has_api_key_parameter(endpoint_to_check)
+        self._has_api_key = has_api_key
+        
+        if has_api_key:
+            parameters.append(
+                ConstructorParameter(
+                    constructor_parameter_name=self._get_api_key_constructor_parameter_name(),
+                    private_member_name=self._get_api_key_member_name(),
+                    type_hint=AST.TypeHint.str_(),
+                )
+            )
 
         parameters.append(
             ConstructorParameter(
@@ -401,7 +420,24 @@ class OAuthTokenProviderGenerator:
         self, client_credentials: ir_types.OAuthClientCredentials
     ) -> AST.FunctionInvocation:
         # TODO(amckinney): Support non-in-lined request types.
-        kwargs = [
+        endpoint_to_check = (
+            self._get_endpoint_for_id(client_credentials.refresh_endpoint.endpoint_reference.endpoint_id)
+            if client_credentials.refresh_endpoint is not None
+            else self._get_endpoint_for_id(client_credentials.token_endpoint.endpoint_reference.endpoint_id)
+        )
+        
+        has_api_key = self._endpoint_has_api_key_parameter(endpoint_to_check)
+        
+        kwargs = []
+        if has_api_key:
+            kwargs.append(
+                (
+                    "api_key",
+                    AST.Expression(f"self.{self._get_api_key_member_name()}"),
+                )
+            )
+        
+        kwargs.extend([
             (
                 "client_id",
                 AST.Expression(f"self.{self._get_client_id_member_name()}"),
@@ -410,7 +446,8 @@ class OAuthTokenProviderGenerator:
                 "client_secret",
                 AST.Expression(f"self.{self._get_client_secret_member_name()}"),
             ),
-        ]
+        ])
+        
         if client_credentials.refresh_endpoint is None:
             token_endpoint: ir_types.HttpEndpoint = self._get_endpoint_for_id(
                 client_credentials.token_endpoint.endpoint_reference.endpoint_id
@@ -538,6 +575,28 @@ class OAuthTokenProviderGenerator:
                 if endpoint.id == endpoint_id:
                     return endpoint
         raise Exception(f"Could not find an endpoint with id {endpoint_id}")
+
+    def _endpoint_has_api_key_parameter(self, endpoint: ir_types.HttpEndpoint) -> bool:
+        """Check if the endpoint has an api_key parameter in its request body."""
+        if endpoint.request_body is None:
+            return False
+        
+        request_body = endpoint.request_body.get_as_union()
+        if request_body.type != "inlinedRequestBody":
+            return False
+        
+        inlined_request_body = request_body
+        for property in inlined_request_body.properties:
+            if property.name.name.snake_case.safe_name == "api_key":
+                return True
+        
+        return False
+
+    def _get_api_key_constructor_parameter_name(self) -> str:
+        return "api_key"
+
+    def _get_api_key_member_name(self) -> str:
+        return "_api_key"
 
     def _get_client_id_constructor_parameter_name(self) -> str:
         return "client_id"

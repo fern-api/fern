@@ -5,6 +5,20 @@
 
 The Seed Python library provides convenient access to the Seed APIs from Python.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Async Client](#async-client)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Client](#custom-client)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
@@ -30,7 +44,9 @@ client = SeedApi(
 client.search(
     limit=1,
     id="id",
-    date="date",
+    date=datetime.date.fromisoformat(
+        "2023-01-15",
+    ),
     deadline=datetime.datetime.fromisoformat(
         "2024-01-15 09:30:00+00:00",
     ),
@@ -94,7 +110,9 @@ async def main() -> None:
     await client.search(
         limit=1,
         id="id",
-        date="date",
+        date=datetime.date.fromisoformat(
+            "2023-01-15",
+        ),
         deadline=datetime.datetime.fromisoformat(
             "2024-01-15 09:30:00+00:00",
         ),
