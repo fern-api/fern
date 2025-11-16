@@ -144,36 +144,43 @@ export class CycleDetector {
     /**
      * Determines whether a given object property should be generated as
      * `Indirect<...>` in Swift.
-     *
-     * Current rules:
-     * - The property type must be an alias (possibly nested) whose resolved
-     *   underlying type reference is:
-     *      container.optional(named(selfType))
-     *   i.e., an optional reference back to the containing object type,
-     *   with no list/set/map wrappers.
-     *
-     * This covers patterns like:
-     *   BinaryTreeNode.leftChild: optional<BinaryTreeNode>
-     *
-     * but does NOT require boxing for:
-     *   TreeNode.children: list<TreeNode>
-     * because the recursion is guarded by a collection.
      */
     private shouldBoxPropertyAsIndirect(owningType: TypeDeclaration, propertyTypeReference: TypeReference): boolean {
         const resolved = this.resolveAlias(propertyTypeReference);
+        const owningTypeId = owningType.name.typeId;
 
-        // We only care about optional container at the top level
-        if (resolved.type !== "container" || resolved.container.type !== "optional") {
-            return false;
+        // Rule 1: self-recursive optional properties on the same type
+        if (resolved.type === "container" && resolved.container.type === "optional") {
+            const inner = this.resolveAlias(resolved.container.optional);
+            if (inner.type === "named" && inner.typeId === owningTypeId) {
+                return true;
+            }
         }
 
-        const inner = this.resolveAlias(resolved.container.optional);
-        if (inner.type !== "named") {
-            return false;
+        // Rule 2: required back-reference into an optional forward reference
+        if (resolved.type === "named") {
+            const targetTypeId = resolved.typeId;
+            const targetTypeDeclaration = this.ir.types[targetTypeId];
+            if (targetTypeDeclaration != null && targetTypeDeclaration.shape.type === "object") {
+                const targetObjectShape = targetTypeDeclaration.shape;
+                const targetProperties = [
+                    ...(targetObjectShape.extendedProperties ?? []),
+                    ...targetObjectShape.properties
+                ];
+
+                for (const targetProperty of targetProperties) {
+                    const targetPropResolved = this.resolveAlias(targetProperty.valueType);
+                    if (targetPropResolved.type === "container" && targetPropResolved.container.type === "optional") {
+                        const inner = this.resolveAlias(targetPropResolved.container.optional);
+                        if (inner.type === "named" && inner.typeId === owningTypeId) {
+                            return true;
+                        }
+                    }
+                }
+            }
         }
 
-        // Only box when the optional points back to the same object type
-        return inner.typeId === owningType.name.typeId;
+        return false;
     }
 
     private resolveAlias(typeReference: TypeReference): TypeReference {
