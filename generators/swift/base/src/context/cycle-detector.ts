@@ -126,7 +126,7 @@ export class CycleDetector {
                     return unwrapAlias(typeDeclaration.shape.aliasOf);
                 }
             }
-            return typeReference;
+            return ref;
         };
 
         return unwrapAlias(typeReference);
