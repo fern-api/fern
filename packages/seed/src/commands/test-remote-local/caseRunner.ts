@@ -366,14 +366,30 @@ async function copyGithubOutputToOutputDirectory(
     githubToken?: string
 ): Promise<void> {
     logger.debug(`Attempting to extract GitHub branch from logs`);
+    logger.debug(`Logs length: ${logs.length} characters`);
+
+    // Log a sample of the logs to see what we're working with
+    const logLines = logs.split("\n");
+    const relevantLines = logLines.filter(
+        (line) => line.includes("Pushed branch") || line.includes("github.com") || line.includes("fern-bot")
+    );
+    if (relevantLines.length > 0) {
+        logger.debug(`Found ${relevantLines.length} potentially relevant log lines:`);
+        relevantLines.slice(0, 5).forEach((line) => {
+            logger.debug(`  ${line}`);
+        });
+    } else {
+        logger.debug(`No lines containing 'Pushed branch', 'github.com', or 'fern-bot' found in logs`);
+    }
+
     const remoteBranch = getRemoteBranchFromLogs(logs);
 
     if (remoteBranch) {
-        logger.debug(`Found branch in logs: ${remoteBranch}`);
+        logger.info(`✓ Found branch in logs: ${remoteBranch}`);
     } else {
         logger.warn(MSG_BRANCH_NOT_FOUND_FALLBACK);
         const fallbackBranch = await getMostRecentlyCreatedBranch(repository, logger);
-        logger.debug(`Using fallback branch: ${fallbackBranch}`);
+        logger.warn(`Using fallback branch: ${fallbackBranch} (this may be incorrect if multiple tests are running)`);
     }
 
     const branchToClone = remoteBranch ?? (await getMostRecentlyCreatedBranch(repository, logger));
@@ -390,17 +406,37 @@ async function copyGithubOutputToOutputDirectory(
 
 function getRemoteBranchFromLogs(logs: string): string | undefined {
     // Example log line: INFO  2025-11-15T23:49:44.180Z [api]: fernapi/fern-typescript-sdk Pushed branch: https://github.com/fern-api/lattice-sdk-javascript/tree/fern-bot/2025-11-15T23-49Z
-    const match = logs.match(GITHUB_BRANCH_URL_REGEX);
-    return match?.[1];
+    // Try multiple patterns to be more robust
+
+    // Pattern 1: Full GitHub URL with branch
+    const urlMatch = logs.match(GITHUB_BRANCH_URL_REGEX);
+    if (urlMatch?.[1]) {
+        return urlMatch[1];
+    }
+
+    // Pattern 2: Look for "branch: <branch-name>" pattern
+    const branchMatch = logs.match(/branch:\s+(\S+)/i);
+    if (branchMatch?.[1] && !branchMatch[1].startsWith("http")) {
+        return branchMatch[1];
+    }
+
+    // Pattern 3: Look for fern-bot/<timestamp> pattern directly
+    const fernBotMatch = logs.match(/fern-bot\/[\d-]+T[\d-]+Z/);
+    if (fernBotMatch?.[0]) {
+        return fernBotMatch[0];
+    }
+
+    return undefined;
 }
 
 async function getMostRecentlyCreatedBranch(repository: string, logger: Logger): Promise<string> {
     logger.debug(`Fetching most recent branch for ${repository}`);
 
+    // Fetch all branches with their commit information (includes commit.sha and commit.url)
     const result = await loggingExeca(
         logger,
         GH_COMMAND,
-        [GH_API_SUBCOMMAND, `repos/${repository}/branches`, GH_JQ_FLAG, GH_BRANCHES_JQ_QUERY],
+        [GH_API_SUBCOMMAND, `repos/${repository}/branches`, GH_JQ_FLAG, "."],
         {
             reject: false
         }
@@ -411,9 +447,77 @@ async function getMostRecentlyCreatedBranch(repository: string, logger: Logger):
         throw new Error(`${ERROR_FAILED_TO_GET_BRANCH}: ${result.stderr}`);
     }
 
-    const branch = result.stdout.trim();
-    logger.debug(`Most recent branch: ${branch}`);
-    return branch;
+    interface BranchInfo {
+        name: string;
+        commit: {
+            sha: string;
+            url: string;
+        };
+    }
+
+    const branches = JSON.parse(result.stdout) as BranchInfo[];
+    logger.debug(`Found ${branches.length} branches, fetching commit dates...`);
+
+    // Fetch commit date for each branch
+    interface BranchWithDate {
+        name: string;
+        commitDate: string;
+    }
+
+    const branchesWithDates: BranchWithDate[] = await Promise.all(
+        branches.map(async (branch) => {
+            try {
+                // Get commit details to extract the commit date
+                const commitResult = await loggingExeca(
+                    logger,
+                    GH_COMMAND,
+                    [
+                        GH_API_SUBCOMMAND,
+                        `repos/${repository}/commits/${branch.commit.sha}`,
+                        GH_JQ_FLAG,
+                        ".commit.committer.date"
+                    ],
+                    {
+                        reject: false
+                    }
+                );
+
+                if (commitResult.exitCode === 0) {
+                    const commitDate = commitResult.stdout.trim().replace(/"/g, ""); // Remove quotes from JSON string
+                    logger.debug(`Branch ${branch.name}: commit date ${commitDate}`);
+                    return {
+                        name: branch.name,
+                        commitDate
+                    };
+                } else {
+                    logger.warn(`Failed to get commit date for branch ${branch.name}, using epoch`);
+                    return {
+                        name: branch.name,
+                        commitDate: "1970-01-01T00:00:00Z"
+                    };
+                }
+            } catch (error) {
+                logger.warn(`Error fetching commit date for ${branch.name}: ${error}`);
+                return {
+                    name: branch.name,
+                    commitDate: "1970-01-01T00:00:00Z"
+                };
+            }
+        })
+    );
+
+    // Sort by commit date descending (most recent first)
+    branchesWithDates.sort((a, b) => {
+        return new Date(b.commitDate).getTime() - new Date(a.commitDate).getTime();
+    });
+
+    const mostRecentBranch = branchesWithDates[0]?.name;
+    if (!mostRecentBranch) {
+        throw new Error(`${ERROR_FAILED_TO_GET_BRANCH}: No branches found`);
+    }
+
+    logger.debug(`Most recent branch by commit date: ${mostRecentBranch} (${branchesWithDates[0].commitDate})`);
+    return mostRecentBranch;
 }
 
 async function cloneRepository(
