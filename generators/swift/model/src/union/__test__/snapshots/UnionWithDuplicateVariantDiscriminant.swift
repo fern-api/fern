@@ -71,24 +71,20 @@ public enum UnionWithDuplicateVariantDiscriminant: Codable, Hashable, Sendable {
     public struct VariantB: Codable, Hashable, Sendable {
         public let type: String = "variantB"
         public let propertyB: String
-        public let type: VariantB
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
             propertyB: String,
-            type: VariantB,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.propertyB = propertyB
-            self.type = type
             self.additionalProperties = additionalProperties
         }
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.propertyB = try container.decode(String.self, forKey: .propertyB)
-            self.type = try container.decode(VariantB.self, forKey: .type)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
@@ -97,7 +93,6 @@ public enum UnionWithDuplicateVariantDiscriminant: Codable, Hashable, Sendable {
             try encoder.encodeAdditionalProperties(self.additionalProperties)
             try container.encode(self.type, forKey: .type)
             try container.encode(self.propertyB, forKey: .propertyB)
-            try container.encode(self.type, forKey: .type)
         }
 
         public enum VariantB: String, Codable, Hashable, CaseIterable, Sendable {
@@ -108,7 +103,6 @@ public enum UnionWithDuplicateVariantDiscriminant: Codable, Hashable, Sendable {
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
             case propertyB
-            case type
         }
     }
 
