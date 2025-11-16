@@ -612,38 +612,59 @@ async function getLatestGeneratorVersion(generator: GeneratorName, logger: Logge
         }
 
         // Docker Hub API v2 endpoint for repository tags
-        // Note: The correct endpoint format is /repositories/{namespace}/{repository}/tags
-        const url = `${DOCKER_HUB_API_BASE_URL}/repositories/${namespace}/${repository}/tags?page_size=${DOCKER_HUB_TAGS_PAGE_SIZE}&ordering=${DOCKER_HUB_TAGS_ORDERING}`;
+        // Note: We need to fetch multiple pages to ensure we get all versions
+        // The API returns paginated results, and ordering by last_updated may not give us the highest version first
+        let allVersionTags: string[] = [];
+        let nextUrl: string | null =
+            `${DOCKER_HUB_API_BASE_URL}/repositories/${namespace}/${repository}/tags?page_size=${DOCKER_HUB_TAGS_PAGE_SIZE}&ordering=${DOCKER_HUB_TAGS_ORDERING}`;
+        let pageCount = 0;
+        const maxPages = 10; // Limit to prevent infinite loops
 
-        logger.debug(`Fetching tags from: ${url}`);
-        const response = await fetch(url);
+        while (nextUrl && pageCount < maxPages) {
+            logger.debug(`Fetching page ${pageCount + 1} from: ${nextUrl}`);
+            const response = await fetch(nextUrl);
 
-        if (!response.ok) {
-            throw new Error(`${ERROR_DOCKER_HUB_API_FAILED} ${response.status}: ${response.statusText}`);
+            if (!response.ok) {
+                throw new Error(`${ERROR_DOCKER_HUB_API_FAILED} ${response.status}: ${response.statusText}`);
+            }
+
+            const data = (await response.json()) as {
+                results?: Array<{ name: string; last_updated?: string }>;
+                next?: string | null;
+            };
+
+            if (!data.results || !Array.isArray(data.results)) {
+                throw new Error(`${ERROR_NO_TAGS_FOUND} ${generator}`);
+            }
+
+            logger.debug(`Fetched ${data.results.length} tags from page ${pageCount + 1}`);
+
+            // Filter and collect semantic version tags
+            const pageVersionTags = data.results.map((tag) => tag.name).filter((name) => SEMVER_REGEX.test(name));
+
+            allVersionTags = allVersionTags.concat(pageVersionTags);
+            logger.debug(`Found ${pageVersionTags.length} semantic version tags on page ${pageCount + 1}`);
+
+            // Move to next page if available
+            nextUrl = data.next ?? null;
+            pageCount++;
+
+            // If we've already found a good number of versions, we can stop early
+            // Most repos won't have more than a few hundred versions
+            if (allVersionTags.length >= 500) {
+                logger.debug(`Found ${allVersionTags.length} versions, stopping pagination`);
+                break;
+            }
         }
 
-        const data = (await response.json()) as {
-            results?: Array<{ name: string; last_updated?: string }>;
-        };
-
-        if (!data.results || !Array.isArray(data.results) || data.results.length === 0) {
-            throw new Error(`${ERROR_NO_TAGS_FOUND} ${generator}`);
-        }
-
-        logger.debug(`Fetched ${data.results.length} tags from Docker Hub`);
-
-        // Filter out non-semantic version tags (e.g., "latest", "main", etc.)
-        // Look for tags that match semantic versioning pattern: X.Y.Z
-        const versionTags = data.results.map((tag) => tag.name).filter((name) => SEMVER_REGEX.test(name));
-
-        logger.debug(`Found ${versionTags.length} semantic version tags`);
-
-        if (versionTags.length === 0) {
+        if (allVersionTags.length === 0) {
             throw new Error(`${ERROR_NO_SEMVER_TAGS} ${generator}`);
         }
 
+        logger.debug(`Total semantic version tags found: ${allVersionTags.length}`);
+
         // Sort versions by semantic versioning rules (descending order)
-        const sortedVersions = versionTags.sort((a: string, b: string) => {
+        const sortedVersions = allVersionTags.sort((a: string, b: string) => {
             const aParts = a.split(".").map(Number);
             const bParts = b.split(".").map(Number);
 
@@ -661,7 +682,7 @@ async function getLatestGeneratorVersion(generator: GeneratorName, logger: Logge
         if (!latestVersion) {
             throw new Error(`${ERROR_NO_SEMVER_TAGS} ${generator}`);
         }
-        logger.debug(`Found latest version: ${latestVersion}`);
+        logger.debug(`Found latest version: ${latestVersion} (from ${sortedVersions.length} total versions)`);
         return latestVersion;
     } catch (error) {
         logger.error(
