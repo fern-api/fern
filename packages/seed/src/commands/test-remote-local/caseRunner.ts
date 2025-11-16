@@ -1,5 +1,6 @@
 import { Logger, LogLevel } from "@fern-api/logger";
 import { loggingExeca, runExeca } from "@fern-api/logging-execa";
+import { Octokit } from "@octokit/rest";
 import { cp, mkdir, readFile, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
@@ -388,11 +389,11 @@ async function copyGithubOutputToOutputDirectory(
         logger.info(`✓ Found branch in logs: ${remoteBranch}`);
     } else {
         logger.warn(MSG_BRANCH_NOT_FOUND_FALLBACK);
-        const fallbackBranch = await getMostRecentlyCreatedBranch(repository, logger);
+        const fallbackBranch = await getMostRecentlyCreatedBranch(repository, logger, githubToken);
         logger.warn(`Using fallback branch: ${fallbackBranch} (this may be incorrect if multiple tests are running)`);
     }
 
-    const branchToClone = remoteBranch ?? (await getMostRecentlyCreatedBranch(repository, logger));
+    const branchToClone = remoteBranch ?? (await getMostRecentlyCreatedBranch(repository, logger, githubToken));
     const tmpDir = await tmp.dir();
 
     logger.debug(`Cloning ${repository}@${branchToClone} to temporary directory`);
@@ -429,95 +430,90 @@ function getRemoteBranchFromLogs(logs: string): string | undefined {
     return undefined;
 }
 
-async function getMostRecentlyCreatedBranch(repository: string, logger: Logger): Promise<string> {
+async function getMostRecentlyCreatedBranch(repository: string, logger: Logger, githubToken?: string): Promise<string> {
     logger.debug(`Fetching most recent branch for ${repository}`);
 
-    // Fetch all branches with their commit information (includes commit.sha and commit.url)
-    const result = await loggingExeca(
-        logger,
-        GH_COMMAND,
-        [GH_API_SUBCOMMAND, `repos/${repository}/branches`, GH_JQ_FLAG, "."],
-        {
-            reject: false
-        }
-    );
-
-    if (result.exitCode !== 0) {
-        logger.error(`${ERROR_FAILED_TO_GET_BRANCH}: ${result.stderr}`);
-        throw new Error(`${ERROR_FAILED_TO_GET_BRANCH}: ${result.stderr}`);
-    }
-
-    interface BranchInfo {
-        name: string;
-        commit: {
-            sha: string;
-            url: string;
-        };
-    }
-
-    const branches = JSON.parse(result.stdout) as BranchInfo[];
-    logger.debug(`Found ${branches.length} branches, fetching commit dates...`);
-
-    // Fetch commit date for each branch
-    interface BranchWithDate {
-        name: string;
-        commitDate: string;
-    }
-
-    const branchesWithDates: BranchWithDate[] = await Promise.all(
-        branches.map(async (branch) => {
-            try {
-                // Get commit details to extract the commit date
-                const commitResult = await loggingExeca(
-                    logger,
-                    GH_COMMAND,
-                    [
-                        GH_API_SUBCOMMAND,
-                        `repos/${repository}/commits/${branch.commit.sha}`,
-                        GH_JQ_FLAG,
-                        ".commit.committer.date"
-                    ],
-                    {
-                        reject: false
-                    }
-                );
-
-                if (commitResult.exitCode === 0) {
-                    const commitDate = commitResult.stdout.trim().replace(/"/g, ""); // Remove quotes from JSON string
-                    logger.debug(`Branch ${branch.name}: commit date ${commitDate}`);
-                    return {
-                        name: branch.name,
-                        commitDate
-                    };
-                } else {
-                    logger.warn(`Failed to get commit date for branch ${branch.name}, using epoch`);
-                    return {
-                        name: branch.name,
-                        commitDate: "1970-01-01T00:00:00Z"
-                    };
-                }
-            } catch (error) {
-                logger.warn(`Error fetching commit date for ${branch.name}: ${error}`);
-                return {
-                    name: branch.name,
-                    commitDate: "1970-01-01T00:00:00Z"
-                };
-            }
-        })
-    );
-
-    // Sort by commit date descending (most recent first)
-    branchesWithDates.sort((a, b) => {
-        return new Date(b.commitDate).getTime() - new Date(a.commitDate).getTime();
+    // Create Octokit instance
+    const octokit = new Octokit({
+        auth: githubToken
     });
 
-    const mostRecentBranch = branchesWithDates[0]?.name;
-    if (!mostRecentBranch) {
-        throw new Error(`${ERROR_FAILED_TO_GET_BRANCH}: No branches found`);
+    // Parse repository owner and repo name
+    const [owner, repo] = repository.split("/");
+    if (!owner || !repo) {
+        throw new Error(`Invalid repository format: ${repository}`);
     }
 
-    logger.debug(`Most recent branch by commit date: ${mostRecentBranch} (${branchesWithDates[0].commitDate})`);
-    return mostRecentBranch;
+    try {
+        // Fetch all branches
+        const { data: branches } = await octokit.rest.repos.listBranches({
+            owner,
+            repo,
+            per_page: 100
+        });
+
+        logger.debug(`Found ${branches.length} branches, fetching commit dates...`);
+
+        if (branches.length === 0) {
+            throw new Error(`${ERROR_FAILED_TO_GET_BRANCH}: No branches found`);
+        }
+
+        interface BranchWithDate {
+            name: string;
+            commitDate: string;
+        }
+
+        // Process branches in batches of 5 to avoid too many concurrent requests
+        const batchSize = 5;
+        const branchesWithDates: BranchWithDate[] = [];
+
+        for (let i = 0; i < branches.length; i += batchSize) {
+            const batch = branches.slice(i, i + batchSize);
+            const batchResults = await Promise.all(
+                batch.map(async (branch) => {
+                    try {
+                        // Get commit details to extract the commit date
+                        const { data: commit } = await octokit.rest.repos.getCommit({
+                            owner,
+                            repo,
+                            ref: branch.commit.sha
+                        });
+
+                        const commitDate = commit.commit.committer?.date || "1970-01-01T00:00:00Z";
+                        logger.debug(`Branch ${branch.name}: commit date ${commitDate}`);
+
+                        return {
+                            name: branch.name,
+                            commitDate
+                        };
+                    } catch (error) {
+                        logger.warn(`Error fetching commit date for ${branch.name}: ${error}`);
+                        return {
+                            name: branch.name,
+                            commitDate: "1970-01-01T00:00:00Z"
+                        };
+                    }
+                })
+            );
+            branchesWithDates.push(...batchResults);
+        }
+
+        // Sort by commit date descending (most recent first)
+        branchesWithDates.sort((a, b) => {
+            return new Date(b.commitDate).getTime() - new Date(a.commitDate).getTime();
+        });
+
+        const mostRecentBranch = branchesWithDates[0];
+        if (!mostRecentBranch) {
+            throw new Error(`${ERROR_FAILED_TO_GET_BRANCH}: No branches found`);
+        }
+
+        logger.debug(`Most recent branch by commit date: ${mostRecentBranch.name} (${mostRecentBranch.commitDate})`);
+        return mostRecentBranch.name;
+    } catch (error) {
+        logger.error(`Failed to fetch branches: ${error instanceof Error ? error.message : String(error)}`);
+        throw new Error(`${ERROR_FAILED_TO_GET_BRANCH}: ${error instanceof Error ? error.message : String(error)}`);
+    }
 }
 
 async function cloneRepository(

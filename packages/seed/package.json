@@ -38,6 +38,7 @@
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/configuration": "workspace:*",
+    "@octokit/rest": "^21.0.2",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/local-workspace-runner": "workspace:*",
