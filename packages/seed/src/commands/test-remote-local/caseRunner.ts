@@ -54,7 +54,8 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<void
     logger.debug(`Test configuration: generator=${generator}, fixture=${fixture}, outputMode=${outputMode}`);
     logger.debug(`Working directory: ${workingDirectory}`);
 
-    // Setup working directory
+    // Setup working directory (caller has already set this to include output mode)
+    // Structure: seed-remote-local/{generator}/{fixture}/{outputFolder}/{outputMode}/
     logger.debug(`Clearing working directory: ${workingDirectory}`);
     await rm(workingDirectory, { recursive: true, force: true });
     await mkdir(workingDirectory, { recursive: true });
@@ -201,7 +202,7 @@ async function runGeneration(
 
     const startTime = Date.now();
     const result = await loggingExeca(logger, fernExecutable, args, {
-        cwd: workingDirectory,
+        cwd: workingDirectory, // Run from the working directory where fern/ folder is
         env: {
             GITHUB_TOKEN: githubToken,
             FERN_TOKEN: fernToken
@@ -310,29 +311,16 @@ async function cloneRepository(
     logger.debug(`Successfully cloned repository`);
 }
 
-function getOutputDirectory(testCase: RemoteVsLocalTestCase, generationMode: GenerationMode): string {
-    const { generator, outputMode } = testCase;
+function getOutputDirectory(
+    testCase: RemoteVsLocalTestCase,
+    generationMode: GenerationMode
+): string {
+    const { generator } = testCase;
     const { workingDirectory } = testCase.context;
 
-    let _path = path.join(workingDirectory, "sdks");
-    switch (outputMode) {
-        case "github":
-            _path = path.join(_path, "github");
-            break;
-        case "local-file-system":
-            _path = path.join(_path, "local-file-system");
-            break;
-    }
-    switch (generationMode) {
-        case "local":
-            _path = path.join(_path, "local");
-            break;
-        case "remote":
-            _path = path.join(_path, "remote");
-            break;
-    }
-    _path = path.join(_path, generator);
-    return _path;
+    // Structure: {workingDirectory}/sdks/{generationMode}/{generator}
+    // Example: seed-remote-local/python-sdk/imdb/no-custom-config/local-file-system/sdks/local/python-sdk
+    return path.join(workingDirectory, "sdks", generationMode, generator);
 }
 
 async function writeGeneratorsYml(fernDirectory: string, localConfig: unknown, remoteConfig: unknown): Promise<void> {
@@ -389,8 +377,13 @@ function getGithubConfig(generator: GeneratorNickname, generationMode: Generatio
     }
 }
 
-function getPackageOutputConfig(testCase: RemoteVsLocalTestCase, generationMode: GenerationMode): unknown | undefined {
+function getPackageOutputConfig(
+    testCase: RemoteVsLocalTestCase,
+    generationMode: GenerationMode
+): unknown | undefined {
     const { generator, outputMode } = testCase;
+    const { workingDirectory } = testCase.context;
+
     if (outputMode === "github") {
         switch (generator) {
             case "ts-sdk":
@@ -414,9 +407,14 @@ function getPackageOutputConfig(testCase: RemoteVsLocalTestCase, generationMode:
                 throw new Error(`Generator ${generator} not supported`);
         }
     } else if (outputMode === "local-file-system") {
+        const absoluteOutputPath = getOutputDirectory(testCase, generationMode);
+        const fernDirectory = path.join(workingDirectory, "fern");
+        // Calculate relative path from generators.yml location (fern/generators.yml) to output directory
+        const relativePath = path.relative(fernDirectory, absoluteOutputPath);
+
         return {
             location: "local-file-system",
-            path: getOutputDirectory(testCase, generationMode)
+            path: relativePath
         };
     } else {
         throw new Error(`Output mode ${outputMode} not supported`);

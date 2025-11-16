@@ -50,7 +50,9 @@ export async function executeTestRemoteLocalCommand({
     for (const gen of generators) {
         for (const fix of fixtures) {
             for (const mode of outputModes) {
-                const testWorkingDirectory = path.join(workingDirectory, "seed-remote-local", gen, fix, outputFolder);
+                // Working directory includes the output mode subdirectory
+                // Structure: seed-remote-local/{generator}/{fixture}/{outputFolder}/{outputMode}/
+                const testWorkingDirectory = path.join(workingDirectory, "seed-remote-local", gen, fix, outputFolder, mode);
 
                 logger.info(`\n${"=".repeat(80)}`);
                 logger.info(`Running test: ${gen} / ${fix} / ${mode}`);
