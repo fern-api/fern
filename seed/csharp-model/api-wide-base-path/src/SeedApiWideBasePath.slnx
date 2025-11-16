@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SeedApiWideBasePath.Test/SeedApiWideBasePath.Test.csproj" />
+  <Project Path="SeedApiWideBasePath/SeedApiWideBasePath.csproj" />
+</Solution>

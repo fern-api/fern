@@ -1,4 +1,4 @@
-from typing import List, Optional, Set, Union
+from typing import List, Optional, Union
 
 from ....context.pydantic_generator_context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig, UnionNamingVersions
@@ -17,6 +17,7 @@ from fern_python.generators.pydantic_model.type_declaration_handler.discriminate
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 from fern_python.pydantic_codegen.pydantic_field import FernAwarePydanticField
 from fern_python.snippet import SnippetWriter
+from ordered_set import OrderedSet
 
 import fern.ir.resources as ir_types
 
@@ -202,20 +203,44 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
         internal_pydantic_model_for_single_union_type: PydanticModel,
         single_union_type: ir_types.SingleUnionType,
     ) -> None:
-        referenced_type_ids: Set[ir_types.TypeId] = single_union_type.shape.visit(
-            same_properties_as_object=lambda _: set(),
-            single_property=lambda single_property: set(
+        referenced_type_ids: OrderedSet[ir_types.TypeId] = single_union_type.shape.visit(
+            same_properties_as_object=lambda _: OrderedSet(),
+            single_property=lambda single_property: OrderedSet(
                 self._context.get_referenced_types_of_type_reference(single_property.type) or []
             ),
-            no_properties=lambda: set(),
+            no_properties=lambda: OrderedSet(),
         )
+
+        # Check if any referenced types are self-referencing union members
+        union_self_referencing_members = self._context.get_union_self_referencing_members_from_types()
+        ghost_reference_type_ids: List[ir_types.TypeId] = []
 
         for referenced_type_id in referenced_type_ids:
             if self._context.does_type_reference_other_type(
                 type_id=referenced_type_id, other_type_id=self._name.type_id
             ):
-                internal_pydantic_model_for_single_union_type.update_forward_refs()
-                break
+                # Check if this is a self-referencing union member
+                if self._name.type_id in union_self_referencing_members:
+                    self_ref_members = union_self_referencing_members[self._name.type_id]
+                    if referenced_type_id in self_ref_members:
+                        ghost_reference_type_ids.append(referenced_type_id)
+                        # Add as ghost reference so it gets imported
+                        internal_pydantic_model_for_single_union_type.add_ghost_reference(
+                            self._context.get_class_reference_for_type_id(referenced_type_id, as_request=False)
+                        )
+
+        # If we have ghost references, use the special update method; otherwise use regular
+        if ghost_reference_type_ids:
+            ghost_references = [
+                self._context.get_class_reference_for_type_id(type_id, as_request=False)
+                for type_id in ghost_reference_type_ids
+            ]
+            internal_pydantic_model_for_single_union_type.update_forward_refs_with_ghost_references(ghost_references)
+        elif any(
+            self._context.does_type_reference_other_type(type_id=ref_id, other_type_id=self._name.type_id)
+            for ref_id in referenced_type_ids
+        ):
+            internal_pydantic_model_for_single_union_type.update_forward_refs()
 
 
 class PydanticModelDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnionSnippetGenerator):

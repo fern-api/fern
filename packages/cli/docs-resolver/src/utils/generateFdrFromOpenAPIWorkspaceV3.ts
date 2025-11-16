@@ -21,7 +21,8 @@ export async function generateFdrFromOpenApiWorkspaceV3(
         context,
         audiences,
         enableUniqueErrorsPerEndpoint: true,
-        generateV1Examples: false
+        generateV1Examples: false,
+        logWarnings: false
     });
 
     return convertIrToFdrApi({

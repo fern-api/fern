@@ -1209,6 +1209,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "GetTreeRequest",
+                "camelCase": {
+                  "unsafeName": "getTreeRequest",
+                  "safeName": "getTreeRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "get_tree_request",
+                  "safeName": "get_tree_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GET_TREE_REQUEST",
+                  "safeName": "GET_TREE_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "GetTreeRequest",
+                  "safeName": "GetTreeRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -1625,6 +1689,70 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "GetFernRequest",
+                "camelCase": {
+                  "unsafeName": "getFernRequest",
+                  "safeName": "getFernRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "get_fern_request",
+                  "safeName": "get_fern_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GET_FERN_REQUEST",
+                  "safeName": "GET_FERN_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "GetFernRequest",
+                  "safeName": "GetFernRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "includePathParameters": true,
+              "onlyPathParameters": true,
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
           "response": {
             "body": {
               "value": {
@@ -2630,6 +2758,31 @@
           "path": "/trees/{treeId}"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "GetTreeRequest",
+              "camelCase": {
+                "unsafeName": "getTreeRequest",
+                "safeName": "getTreeRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "get_tree_request",
+                "safeName": "get_tree_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "GET_TREE_REQUEST",
+                "safeName": "GET_TREE_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "GetTreeRequest",
+                "safeName": "GetTreeRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [],
+              "packagePath": []
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -2660,7 +2813,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -2835,6 +2994,31 @@
           "path": "/ferns/{fernId}"
         },
         "request": {
+          "declaration": {
+            "name": {
+              "originalName": "GetFernRequest",
+              "camelCase": {
+                "unsafeName": "getFernRequest",
+                "safeName": "getFernRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "get_fern_request",
+                "safeName": "get_fern_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "GET_FERN_REQUEST",
+                "safeName": "GET_FERN_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "GetFernRequest",
+                "safeName": "GetFernRequest"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [],
+              "packagePath": []
+            }
+          },
           "pathParameters": [
             {
               "name": {
@@ -2865,7 +3049,13 @@
               }
             }
           ],
-          "type": "body"
+          "queryParameters": [],
+          "headers": [],
+          "metadata": {
+            "includePathParameters": true,
+            "onlyPathParameters": true
+          },
+          "type": "inlined"
         },
         "response": {
           "type": "json"
@@ -3043,6 +3233,7 @@
     },
     "pathParameters": []
   },
+  "apiPlayground": true,
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

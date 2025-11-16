@@ -229,25 +229,25 @@
   ],
   "idempotencyHeaders": [],
   "types": {
-    "type_status:StatusUpdateInlinedPayload": {
+    "type_status:UpdateInlinedStatusPayload": {
       "name": {
         "name": {
-          "originalName": "StatusUpdateInlinedPayload",
+          "originalName": "UpdateInlinedStatusPayload",
           "camelCase": {
-            "unsafeName": "statusUpdateInlinedPayload",
-            "safeName": "statusUpdateInlinedPayload"
+            "unsafeName": "updateInlinedStatusPayload",
+            "safeName": "updateInlinedStatusPayload"
           },
           "snakeCase": {
-            "unsafeName": "status_update_inlined_payload",
-            "safeName": "status_update_inlined_payload"
+            "unsafeName": "update_inlined_status_payload",
+            "safeName": "update_inlined_status_payload"
           },
           "screamingSnakeCase": {
-            "unsafeName": "STATUS_UPDATE_INLINED_PAYLOAD",
-            "safeName": "STATUS_UPDATE_INLINED_PAYLOAD"
+            "unsafeName": "UPDATE_INLINED_STATUS_PAYLOAD",
+            "safeName": "UPDATE_INLINED_STATUS_PAYLOAD"
           },
           "pascalCase": {
-            "unsafeName": "StatusUpdateInlinedPayload",
-            "safeName": "StatusUpdateInlinedPayload"
+            "unsafeName": "UpdateInlinedStatusPayload",
+            "safeName": "UpdateInlinedStatusPayload"
           }
         },
         "fernFilepath": {
@@ -293,7 +293,7 @@
             }
           }
         },
-        "typeId": "type_status:StatusUpdateInlinedPayload"
+        "typeId": "type_status:UpdateInlinedStatusPayload"
       },
       "shape": {
         "extends": [],
@@ -553,7 +553,7 @@
   "serviceTypeReferenceInfo": {
     "typesReferencedOnlyByService": {},
     "sharedTypes": [
-      "type_status:StatusUpdateInlinedPayload",
+      "type_status:UpdateInlinedStatusPayload",
       "type_:Update"
     ]
   },
@@ -744,22 +744,22 @@
         "payload": {
           "payloadType": {
             "name": {
-              "originalName": "StatusUpdateInlinedPayload",
+              "originalName": "UpdateInlinedStatusPayload",
               "camelCase": {
-                "unsafeName": "statusUpdateInlinedPayload",
-                "safeName": "statusUpdateInlinedPayload"
+                "unsafeName": "updateInlinedStatusPayload",
+                "safeName": "updateInlinedStatusPayload"
               },
               "snakeCase": {
-                "unsafeName": "status_update_inlined_payload",
-                "safeName": "status_update_inlined_payload"
+                "unsafeName": "update_inlined_status_payload",
+                "safeName": "update_inlined_status_payload"
               },
               "screamingSnakeCase": {
-                "unsafeName": "STATUS_UPDATE_INLINED_PAYLOAD",
-                "safeName": "STATUS_UPDATE_INLINED_PAYLOAD"
+                "unsafeName": "UPDATE_INLINED_STATUS_PAYLOAD",
+                "safeName": "UPDATE_INLINED_STATUS_PAYLOAD"
               },
               "pascalCase": {
-                "unsafeName": "StatusUpdateInlinedPayload",
-                "safeName": "StatusUpdateInlinedPayload"
+                "unsafeName": "UpdateInlinedStatusPayload",
+                "safeName": "UpdateInlinedStatusPayload"
               }
             },
             "fernFilepath": {
@@ -805,7 +805,7 @@
                 }
               }
             },
-            "typeId": "type_status:StatusUpdateInlinedPayload",
+            "typeId": "type_status:UpdateInlinedStatusPayload",
             "type": "named"
           },
           "type": "reference"
@@ -815,7 +815,7 @@
             "payload": {
               "shape": {
                 "typeName": {
-                  "typeId": "type_status:StatusUpdateInlinedPayload",
+                  "typeId": "type_status:UpdateInlinedStatusPayload",
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -860,22 +860,22 @@
                     }
                   },
                   "name": {
-                    "originalName": "StatusUpdateInlinedPayload",
+                    "originalName": "UpdateInlinedStatusPayload",
                     "camelCase": {
-                      "unsafeName": "statusUpdateInlinedPayload",
-                      "safeName": "statusUpdateInlinedPayload"
+                      "unsafeName": "updateInlinedStatusPayload",
+                      "safeName": "updateInlinedStatusPayload"
                     },
                     "snakeCase": {
-                      "unsafeName": "status_update_inlined_payload",
-                      "safeName": "status_update_inlined_payload"
+                      "unsafeName": "update_inlined_status_payload",
+                      "safeName": "update_inlined_status_payload"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "STATUS_UPDATE_INLINED_PAYLOAD",
-                      "safeName": "STATUS_UPDATE_INLINED_PAYLOAD"
+                      "unsafeName": "UPDATE_INLINED_STATUS_PAYLOAD",
+                      "safeName": "UPDATE_INLINED_STATUS_PAYLOAD"
                     },
                     "pascalCase": {
-                      "unsafeName": "StatusUpdateInlinedPayload",
-                      "safeName": "StatusUpdateInlinedPayload"
+                      "unsafeName": "UpdateInlinedStatusPayload",
+                      "safeName": "UpdateInlinedStatusPayload"
                     }
                   }
                 },
@@ -1057,25 +1057,25 @@
   "dynamic": {
     "version": "1.0.0",
     "types": {
-      "type_status:StatusUpdateInlinedPayload": {
+      "type_status:UpdateInlinedStatusPayload": {
         "declaration": {
           "name": {
-            "originalName": "StatusUpdateInlinedPayload",
+            "originalName": "UpdateInlinedStatusPayload",
             "camelCase": {
-              "unsafeName": "statusUpdateInlinedPayload",
-              "safeName": "statusUpdateInlinedPayload"
+              "unsafeName": "updateInlinedStatusPayload",
+              "safeName": "updateInlinedStatusPayload"
             },
             "snakeCase": {
-              "unsafeName": "status_update_inlined_payload",
-              "safeName": "status_update_inlined_payload"
+              "unsafeName": "update_inlined_status_payload",
+              "safeName": "update_inlined_status_payload"
             },
             "screamingSnakeCase": {
-              "unsafeName": "STATUS_UPDATE_INLINED_PAYLOAD",
-              "safeName": "STATUS_UPDATE_INLINED_PAYLOAD"
+              "unsafeName": "UPDATE_INLINED_STATUS_PAYLOAD",
+              "safeName": "UPDATE_INLINED_STATUS_PAYLOAD"
             },
             "pascalCase": {
-              "unsafeName": "StatusUpdateInlinedPayload",
-              "safeName": "StatusUpdateInlinedPayload"
+              "unsafeName": "UpdateInlinedStatusPayload",
+              "safeName": "UpdateInlinedStatusPayload"
             }
           },
           "fernFilepath": {
@@ -1313,6 +1313,7 @@
     "endpoints": {},
     "pathParameters": []
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_status": {
       "fernFilepath": {
@@ -1378,7 +1379,7 @@
         }
       },
       "types": [
-        "type_status:StatusUpdateInlinedPayload"
+        "type_status:UpdateInlinedStatusPayload"
       ],
       "errors": [],
       "subpackages": [],

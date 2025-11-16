@@ -1,6 +1,7 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
+import cliProgress from "cli-progress";
 import decompress from "decompress";
 import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
@@ -171,7 +172,48 @@ export async function downloadBundle({
             throw contactFernSupportError("Docs bundle has empty response body");
         }
 
-        const nodeBuffer = Buffer.from(await docsBundleZipResponse.arrayBuffer());
+        const contentLength = docsBundleZipResponse.headers.get("content-length");
+        const totalBytes = contentLength ? parseInt(contentLength, 10) : 0;
+
+        let progressBar: cliProgress.SingleBar | undefined;
+        if (app && totalBytes > 0) {
+            progressBar = new cliProgress.SingleBar({
+                format: "Downloading docs bundle [{bar}] {percentage}% | {value}/{total} MB",
+                barCompleteChar: "\u2588",
+                barIncompleteChar: "\u2591",
+                hideCursor: true
+            });
+            progressBar.start(Math.ceil(totalBytes / (1024 * 1024)), 0);
+        } else if (app) {
+            logger.info("Downloading docs bundle...");
+        }
+
+        const chunks: Uint8Array[] = [];
+        let downloadedBytes = 0;
+
+        const reader = docsBundleZipResponse.body.getReader();
+        try {
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) {
+                    break;
+                }
+
+                chunks.push(value);
+                downloadedBytes += value.length;
+
+                if (progressBar && totalBytes > 0) {
+                    progressBar.update(Math.ceil(downloadedBytes / (1024 * 1024)));
+                }
+            }
+        } finally {
+            reader.releaseLock();
+            if (progressBar) {
+                progressBar.stop();
+            }
+        }
+
+        const nodeBuffer = Buffer.concat(chunks);
         await writeFile(outputZipPath, new Uint8Array(nodeBuffer));
         logger.debug(`Wrote ${tryTar ? "output.tar.gz" : "output.zip"} to ${outputZipPath}`);
 

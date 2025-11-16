@@ -365,6 +365,9 @@ export function generateIr({
         };
     });
 
+    // Write missing examples report
+    exampleEndpointFactory.finalize();
+
     const groupInfo = getFernGroups({ document: openApi, context });
 
     const ir: OpenApiIntermediateRepresentation = {

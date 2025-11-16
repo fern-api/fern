@@ -1095,6 +1095,7 @@
                     "retries": {
                         "disabled": true
                     },
+                    "apiPlayground": null,
                     "availability": null,
                     "docs": null
                 }
@@ -1370,6 +1371,7 @@
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_retries": {
             "name": {

@@ -827,10 +827,13 @@ types:
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v1/token/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The ID of the API key to delete",
-                  "type": "string",
+              "request": {
+                "name": "DeleteApiKeyRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The ID of the API key to delete",
+                    "type": "string",
+                  },
                 },
               },
               "source": {
@@ -906,15 +909,16 @@ types:
               "method": "PATCH",
               "pagination": undefined,
               "path": "/v1/token/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The ID of the key to edit",
-                  "type": "string",
-                },
-              },
               "request": {
                 "body": "string",
                 "content-type": "application/json",
+                "name": "UpdateApiKeyRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The ID of the key to edit",
+                    "type": "string",
+                  },
+                },
               },
               "response": {
                 "docs": "APIKeyResponseWrapper contains the details of the API key which can be used by the user to access the API",
@@ -993,10 +997,12 @@ service:
       docs: Deletes the given API key for the logged in user
       source:
         openapi: ../openapi.json
-      path-parameters:
-        id:
-          type: string
-          docs: The ID of the API key to delete
+      request:
+        name: DeleteApiKeyRequest
+        path-parameters:
+          id:
+            type: string
+            docs: The ID of the API key to delete
       examples:
         - path-parameters:
             id: id
@@ -1010,12 +1016,13 @@ service:
       docs: Update API key name for the logged in user
       source:
         openapi: ../openapi.json
-      path-parameters:
-        id:
-          type: string
-          docs: The ID of the key to edit
       request:
         body: string
+        path-parameters:
+          id:
+            type: string
+            docs: The ID of the key to edit
+        name: UpdateApiKeyRequest
         content-type: application/json
       response:
         docs: >-
@@ -2095,10 +2102,13 @@ This should include the fullName and email of the consenting individual.",
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v1/voices/{id}",
-              "path-parameters": {
-                "id": {
-                  "docs": "The ID of the voice to delete",
-                  "type": "string",
+              "request": {
+                "name": "DeleteVoiceRequest",
+                "path-parameters": {
+                  "id": {
+                    "docs": "The ID of the voice to delete",
+                    "type": "string",
+                  },
                 },
               },
               "source": {
@@ -2258,10 +2268,12 @@ service:
       docs: Delete a personal (cloned) voice
       source:
         openapi: ../openapi.json
-      path-parameters:
-        id:
-          type: string
-          docs: The ID of the voice to delete
+      request:
+        name: DeleteVoiceRequest
+        path-parameters:
+          id:
+            type: string
+            docs: The ID of the voice to delete
       errors:
         - root.BadRequestError
         - root.NotFoundError

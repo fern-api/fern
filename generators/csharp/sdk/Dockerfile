@@ -1,5 +1,5 @@
 FROM node:22.12-alpine3.20 AS node
-FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine3.21
+FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine
 
 ENV YARN_CACHE_FOLDER=/.yarn
 ENV PATH="$PATH:/root/.dotnet/tools"

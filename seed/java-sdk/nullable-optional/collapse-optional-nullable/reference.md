@@ -1174,15 +1174,15 @@ client.nullableOptional().getSearchResults(
     SearchRequest
         .builder()
         .query("query")
-        .filters(
-            new HashMap<String, Optional<String>>() {{
-                put("filters", Optional.of("filters"));
-            }}
-        )
         .includeTypes(
             Optional.of(
                 Arrays.asList("includeTypes", "includeTypes")
             )
+        )
+        .filters(
+            new HashMap<String, Optional<String>>() {{
+                put("filters", Optional.of("filters"));
+            }}
         )
         .build()
 );

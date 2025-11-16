@@ -1,4 +1,29 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.30.0
+  changelogEntry:
+    - summary: |
+        Add `offsetSemantics` flag, which changes how the `step` attribute in `x-fern-pagination` is interpreted.
+        When `offsetSemantics` is `item-index` (the default), offset is understood as an item index that increases by the number of entities fetched.
+        When `offsetSemantics` is `page-index`, offset is understood as a page index that increases by 1 each time.
+      type: feat
+  createdAt: "2025-11-14"
+  irVersion: 61
+
+- version: 3.29.2
+  changelogEntry:
+    - summary: Improve SDK generation performance.
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 61
+
+- version: 3.29.1
+  changelogEntry:
+    - summary: |
+        When generating `hasNextPage`, use `Math.Floor` to ensure an integer comparison against the number of entities.
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 61
+
 - version: 3.29.0
   changelogEntry:
     - summary: |
@@ -29,7 +54,7 @@
         * .fern
         * dist
         * scripts
-        * jest.config.* 
+        * jest.config.*
         * vitest.config.*
       type: fix
     - summary: |
@@ -51,7 +76,7 @@
   changelogEntry:
     - summary: |
         Set `Accept` header for JSON (`application/json`), text (`text/plain`), and other (`*/*`) response types.
-        This ensures that the `Accept` header is set consistently across runtimes. 
+        This ensures that the `Accept` header is set consistently across runtimes.
         Unlike all other runtimes, Cloudflare Workers and Vercel Edge Runtime do not set a default `Accept` header in their `fetch` implementations.
       type: fix
   createdAt: "2025-11-10"

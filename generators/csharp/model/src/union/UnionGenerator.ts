@@ -69,7 +69,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
             enclosingType: class_,
             summary: "Discriminated union value",
             access: ast.Access.Public,
-            type: this.Primitive.object.toOptionalIfNotAlready(),
+            type: this.Primitive.object.asOptional(),
             origin: class_.explicit("Value"),
             get: "public",
             set: "internal"
@@ -111,7 +111,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 }),
                 this.csharp.parameter({
                     name: "value",
-                    type: this.Primitive.object.toOptionalIfNotAlready()
+                    type: this.Primitive.object.asOptional()
                 })
             ],
             body: this.csharp.codeblock((writer: Writer) => {
@@ -195,7 +195,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 bodyType: ast.Method.BodyType.Expression,
                 body: this.csharp.codeblock((writer: Writer) => {
                     writer.write(`Is${type.discriminantValue.name.pascalCase.unsafeName} ? `);
-                    if (!is.Primitive.object(memberType.unwrapIfOptional())) {
+                    if (!is.Primitive.object(memberType.asNonOptional())) {
                         writer.write("(", memberType, ")");
                     }
                     writer.write(`${value.name}! : throw new `);
@@ -221,18 +221,12 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                     const memberType = this.getCsharpType(type);
                     return this.csharp.parameter({
                         name: `on${type.discriminantValue.name.pascalCase.unsafeName}`,
-                        type: this.Special.func({
-                            typeParameters: [memberType],
-                            returnType: tType
-                        })
+                        type: this.System.Func([memberType], tType)
                     });
                 }),
                 this.csharp.parameter({
                     name: "onUnknown_",
-                    type: this.Special.func({
-                        typeParameters: [this.Primitive.string, this.Primitive.object.toOptionalIfNotAlready()],
-                        returnType: tType
-                    })
+                    type: this.System.Func([this.Primitive.string, this.Primitive.object.asOptional()], tType)
                 })
             ],
             body: this.csharp.codeblock((writer: Writer) => {
@@ -259,16 +253,12 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                     const memberType = this.getCsharpType(type);
                     return this.csharp.parameter({
                         name: `on${type.discriminantValue.name.pascalCase.unsafeName}`,
-                        type: this.Special.action({
-                            typeParameters: [memberType]
-                        })
+                        type: this.System.Action([memberType])
                     });
                 }),
                 this.csharp.parameter({
                     name: "onUnknown_",
-                    type: this.Special.action({
-                        typeParameters: [this.Primitive.string, this.Primitive.object.toOptionalIfNotAlready()]
-                    })
+                    type: this.System.Action([this.Primitive.string, this.Primitive.object.asOptional()])
                 })
             ],
             body: this.csharp.codeblock((writer: Writer) => {
@@ -328,7 +318,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                     writer.writeLine(`if(${discriminant.name} == "${type.discriminantValue.wireValue}")`);
                     writer.pushScope();
                     writer.write("value = ");
-                    if (!is.Primitive.object(memberType.unwrapIfOptional())) {
+                    if (!is.Primitive.object(memberType.asNonOptional())) {
                         writer.write("(", memberType, ")");
                     }
                     writer.writeTextStatement(`${value.name}!`);
@@ -340,7 +330,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 parameters: [
                     this.csharp.parameter({
                         name: "value",
-                        type: memberType.toOptionalIfNotAlready(),
+                        type: memberType.asOptional(),
                         out: true
                     })
                 ]
@@ -353,7 +343,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 this.unionDeclaration.types
                     .map((type) => {
                         const memberType = this.getCsharpType(type);
-                        if (is.Primitive.object(memberType.unwrapIfOptional())) {
+                        if (is.Primitive.object(memberType.asNonOptional())) {
                             // we can't have an implicit cast from object
                             return undefined;
                         }
@@ -434,7 +424,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                     )
                 });
                 // we can't have an implicit cast from object or (IEnumerable<T>)
-                const underlyingType = memberType.unwrapIfOptional();
+                const underlyingType = memberType.asNonOptional();
                 if (!is.Primitive.object(underlyingType) && !is.Collection.list(underlyingType)) {
                     unionTypeClass.addOperator({
                         type: ast.Class.CastOperator.Type.Implicit,
@@ -503,7 +493,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
             parameters: [
                 this.csharp.parameter({
                     name: "typeToConvert",
-                    type: this.Special.systemType
+                    type: this.System.Type
                 })
             ],
             bodyType: ast.Method.BodyType.Expression,
@@ -527,7 +517,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 }),
                 this.csharp.parameter({
                     name: "typeToConvert",
-                    type: this.Special.systemType
+                    type: this.System.Type
                 }),
                 this.csharp.parameter({
                     name: "options",
@@ -591,7 +581,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                             // reference types need to always be deserialized to an optional type
                             // and if it is not optional, then we can tack on the throw condition
                             // (this ensures that the code is valid regardless if it is a record struct or class types)
-                            writer.write(".Deserialize<", csharpType.toOptionalIfNotAlready(), ">(options)");
+                            writer.write(".Deserialize<", csharpType.asOptional(), ">(options)");
 
                             if (!csharpType.isOptional) {
                                 writer.write(' ?? throw new JsonException("Failed to deserialize ', csharpType, '")');

@@ -1,5 +1,6 @@
 package com.seed.oauthClientCredentials;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.oauthClientCredentials.core.ObjectMappers;
 import okhttp3.mockwebserver.MockResponse;
@@ -37,5 +38,30 @@ public class NestedNoAuthApiWireTest {
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
+    }
+
+    /**
+     * Compares two JsonNodes with numeric equivalence.
+     */
+    private boolean jsonEquals(JsonNode a, JsonNode b) {
+        if (a.equals(b)) return true;
+        if (a.isNumber() && b.isNumber()) return Math.abs(a.doubleValue() - b.doubleValue()) < 1e-10;
+        if (a.isObject() && b.isObject()) {
+            if (a.size() != b.size()) return false;
+            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = a.fields();
+            while (iter.hasNext()) {
+                java.util.Map.Entry<String, JsonNode> entry = iter.next();
+                if (!jsonEquals(entry.getValue(), b.get(entry.getKey()))) return false;
+            }
+            return true;
+        }
+        if (a.isArray() && b.isArray()) {
+            if (a.size() != b.size()) return false;
+            for (int i = 0; i < a.size(); i++) {
+                if (!jsonEquals(a.get(i), b.get(i))) return false;
+            }
+            return true;
+        }
+        return false;
     }
 }

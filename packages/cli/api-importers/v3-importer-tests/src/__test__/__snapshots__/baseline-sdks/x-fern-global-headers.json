@@ -753,22 +753,22 @@
           "headers": [],
           "requestBody": {
             "name": {
-              "originalName": "UserGetStreamRequest",
+              "originalName": "GetUserStreamRequest",
               "camelCase": {
-                "unsafeName": "userGetStreamRequest",
-                "safeName": "userGetStreamRequest"
+                "unsafeName": "getUserStreamRequest",
+                "safeName": "getUserStreamRequest"
               },
               "snakeCase": {
-                "unsafeName": "user_get_stream_request",
-                "safeName": "user_get_stream_request"
+                "unsafeName": "get_user_stream_request",
+                "safeName": "get_user_stream_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "USER_GET_STREAM_REQUEST",
-                "safeName": "USER_GET_STREAM_REQUEST"
+                "unsafeName": "GET_USER_STREAM_REQUEST",
+                "safeName": "GET_USER_STREAM_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "UserGetStreamRequest",
-                "safeName": "UserGetStreamRequest"
+                "unsafeName": "GetUserStreamRequest",
+                "safeName": "GetUserStreamRequest"
               }
             },
             "extends": [],
@@ -820,22 +820,22 @@
           "sdkRequest": {
             "shape": {
               "wrapperName": {
-                "originalName": "UserGetStreamRequest",
+                "originalName": "GetUserStreamRequest",
                 "camelCase": {
-                  "unsafeName": "userGetStreamRequest",
-                  "safeName": "userGetStreamRequest"
+                  "unsafeName": "getUserStreamRequest",
+                  "safeName": "getUserStreamRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "user_get_stream_request",
-                  "safeName": "user_get_stream_request"
+                  "unsafeName": "get_user_stream_request",
+                  "safeName": "get_user_stream_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "USER_GET_STREAM_REQUEST",
-                  "safeName": "USER_GET_STREAM_REQUEST"
+                  "unsafeName": "GET_USER_STREAM_REQUEST",
+                  "safeName": "GET_USER_STREAM_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "UserGetStreamRequest",
-                  "safeName": "UserGetStreamRequest"
+                  "unsafeName": "GetUserStreamRequest",
+                  "safeName": "GetUserStreamRequest"
                 }
               },
               "bodyKey": {
@@ -857,7 +857,7 @@
                   "safeName": "Body"
                 }
               },
-              "includePathParameters": false,
+              "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
@@ -1041,22 +1041,22 @@
           "headers": [],
           "requestBody": {
             "name": {
-              "originalName": "UserGetRequest",
+              "originalName": "GetUserRequest",
               "camelCase": {
-                "unsafeName": "userGetRequest",
-                "safeName": "userGetRequest"
+                "unsafeName": "getUserRequest",
+                "safeName": "getUserRequest"
               },
               "snakeCase": {
-                "unsafeName": "user_get_request",
-                "safeName": "user_get_request"
+                "unsafeName": "get_user_request",
+                "safeName": "get_user_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "USER_GET_REQUEST",
-                "safeName": "USER_GET_REQUEST"
+                "unsafeName": "GET_USER_REQUEST",
+                "safeName": "GET_USER_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "UserGetRequest",
-                "safeName": "UserGetRequest"
+                "unsafeName": "GetUserRequest",
+                "safeName": "GetUserRequest"
               }
             },
             "extends": [],
@@ -1108,22 +1108,22 @@
           "sdkRequest": {
             "shape": {
               "wrapperName": {
-                "originalName": "UserGetRequest",
+                "originalName": "GetUserRequest",
                 "camelCase": {
-                  "unsafeName": "userGetRequest",
-                  "safeName": "userGetRequest"
+                  "unsafeName": "getUserRequest",
+                  "safeName": "getUserRequest"
                 },
                 "snakeCase": {
-                  "unsafeName": "user_get_request",
-                  "safeName": "user_get_request"
+                  "unsafeName": "get_user_request",
+                  "safeName": "get_user_request"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "USER_GET_REQUEST",
-                  "safeName": "USER_GET_REQUEST"
+                  "unsafeName": "GET_USER_REQUEST",
+                  "safeName": "GET_USER_REQUEST"
                 },
                 "pascalCase": {
-                  "unsafeName": "UserGetRequest",
-                  "safeName": "UserGetRequest"
+                  "unsafeName": "GetUserRequest",
+                  "safeName": "GetUserRequest"
                 }
               },
               "bodyKey": {
@@ -1145,7 +1145,7 @@
                   "safeName": "Body"
                 }
               },
-              "includePathParameters": false,
+              "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
@@ -1645,22 +1645,22 @@
         "request": {
           "declaration": {
             "name": {
-              "originalName": "UserGetStreamRequest",
+              "originalName": "GetUserStreamRequest",
               "camelCase": {
-                "unsafeName": "userGetStreamRequest",
-                "safeName": "userGetStreamRequest"
+                "unsafeName": "getUserStreamRequest",
+                "safeName": "getUserStreamRequest"
               },
               "snakeCase": {
-                "unsafeName": "user_get_stream_request",
-                "safeName": "user_get_stream_request"
+                "unsafeName": "get_user_stream_request",
+                "safeName": "get_user_stream_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "USER_GET_STREAM_REQUEST",
-                "safeName": "USER_GET_STREAM_REQUEST"
+                "unsafeName": "GET_USER_STREAM_REQUEST",
+                "safeName": "GET_USER_STREAM_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "UserGetStreamRequest",
-                "safeName": "UserGetStreamRequest"
+                "unsafeName": "GetUserStreamRequest",
+                "safeName": "GetUserStreamRequest"
               }
             },
             "fernFilepath": {
@@ -1776,7 +1776,7 @@
             "type": "properties"
           },
           "metadata": {
-            "includePathParameters": false,
+            "includePathParameters": true,
             "onlyPathParameters": false
           },
           "type": "inlined"
@@ -1858,22 +1858,22 @@
         "request": {
           "declaration": {
             "name": {
-              "originalName": "UserGetRequest",
+              "originalName": "GetUserRequest",
               "camelCase": {
-                "unsafeName": "userGetRequest",
-                "safeName": "userGetRequest"
+                "unsafeName": "getUserRequest",
+                "safeName": "getUserRequest"
               },
               "snakeCase": {
-                "unsafeName": "user_get_request",
-                "safeName": "user_get_request"
+                "unsafeName": "get_user_request",
+                "safeName": "get_user_request"
               },
               "screamingSnakeCase": {
-                "unsafeName": "USER_GET_REQUEST",
-                "safeName": "USER_GET_REQUEST"
+                "unsafeName": "GET_USER_REQUEST",
+                "safeName": "GET_USER_REQUEST"
               },
               "pascalCase": {
-                "unsafeName": "UserGetRequest",
-                "safeName": "UserGetRequest"
+                "unsafeName": "GetUserRequest",
+                "safeName": "GetUserRequest"
               }
             },
             "fernFilepath": {
@@ -1989,7 +1989,7 @@
             "type": "properties"
           },
           "metadata": {
-            "includePathParameters": false,
+            "includePathParameters": true,
             "onlyPathParameters": false
           },
           "type": "inlined"
@@ -2002,6 +2002,7 @@
     },
     "pathParameters": []
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_user": {
       "fernFilepath": {

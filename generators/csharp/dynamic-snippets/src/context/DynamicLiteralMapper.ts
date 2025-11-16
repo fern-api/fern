@@ -211,7 +211,7 @@ export class DynamicLiteralMapper extends WithGeneration {
             keyType: this.context.dynamicTypeMapper.convert({ typeReference: map.key }),
             valueType:
                 map.value.type === "unknown"
-                    ? this.context.dynamicTypeMapper.convert({ typeReference: map.value }).toOptionalIfNotAlready()
+                    ? this.context.dynamicTypeMapper.convert({ typeReference: map.value }).asOptional()
                     : this.context.dynamicTypeMapper.convert({ typeReference: map.value }),
             entries: Object.entries(value).map(([key, value]) => {
                 this.context.errors.scope(key);

@@ -10,7 +10,7 @@ import { Annotation } from "../language/Annotation";
 import { CodeBlock } from "../language/CodeBlock";
 import { XmlDocBlock } from "../language/XmlDocBlock";
 import { ClassReference } from "./ClassReference";
-import { type Type } from "./Type";
+import { type Type } from "./IType";
 
 export declare namespace Field {
     export type Accessors = {
@@ -241,7 +241,7 @@ export class Field extends MemberNode {
             writer.write("new ");
         }
         const isOptional = this.type.isOptional;
-        const isCollection = (this.type.underlyingTypeIfOptional() ?? this.type).isCollection;
+        const isCollection = this.type.asNonOptional().isCollection;
         if (this.useRequired && !isOptional && !isCollection && this.initializer == null) {
             writer.write("required ");
         }

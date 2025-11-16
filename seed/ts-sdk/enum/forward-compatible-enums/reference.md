@@ -107,6 +107,7 @@ await client.inlinedRequest.send({
 </dl>
 </details>
 
+## MultipartForm
 ## PathParam
 <details><summary><code>client.pathParam.<a href="/src/api/resources/pathParam/client/Client.ts">send</a>(operand, operandOrColor) -> void</code></summary>
 <dl>

@@ -77,7 +77,7 @@ export class SdkGeneratorContext extends GeneratorContext {
     }
 
     public getAdditionalBodyPropertiesType(): ast.Type {
-        return this.Primitive.object.toOptionalIfNotAlready();
+        return this.Primitive.object.asOptional();
     }
 
     public getSubpackage(subpackageId: SubpackageId): Subpackage | undefined {

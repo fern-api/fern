@@ -64,6 +64,7 @@ export const HttpEndpoint: core.serialization.ObjectSchema<serializers.HttpEndpo
             source: HttpEndpointSource.optional(),
             audiences: core.serialization.list(AudienceReference).optional(),
             retries: RetriesConfiguration.optional(),
+            apiPlayground: core.serialization.boolean().optional(),
         })
         .extend(Declaration);
 
@@ -99,5 +100,6 @@ export declare namespace HttpEndpoint {
         source?: HttpEndpointSource.Raw | null;
         audiences?: AudienceReference.Raw[] | null;
         retries?: RetriesConfiguration.Raw | null;
+        apiPlayground?: boolean | null;
     }
 }

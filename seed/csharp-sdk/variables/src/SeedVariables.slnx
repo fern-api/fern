@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SeedVariables.Test/SeedVariables.Test.csproj" />
+  <Project Path="SeedVariables/SeedVariables.csproj" />
+</Solution>

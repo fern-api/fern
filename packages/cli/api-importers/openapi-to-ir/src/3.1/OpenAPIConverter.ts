@@ -2,7 +2,6 @@ import { AuthScheme, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk
 import { convertApiAuth, convertEnvironments } from "@fern-api/ir-utils";
 import { AbstractSpecConverter, Converters, ServersConverter } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
-
 import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers";
 import { convertGlobalHeadersExtension } from "../utils/convertGlobalHeadersExtension";
 import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1";

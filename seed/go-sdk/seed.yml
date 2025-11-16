@@ -200,6 +200,9 @@ fixtures:
     - outputFolder: default-values
       customConfig:
         useDefaultRequestParameterValues: true
+  nullable-request-body:
+    - outputFolder: dynamic-snippets-disabled
+      disableDynamicSnippetTests: true
 scripts:
   - docker: fernapi/go-seed:1.0.0
     commands:

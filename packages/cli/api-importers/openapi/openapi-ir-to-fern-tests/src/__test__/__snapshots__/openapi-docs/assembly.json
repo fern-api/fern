@@ -6,7 +6,7 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "errors": {
-          "FilesUploadRequestBadRequestError": {
+          "ActionItemsLemurRequestBadRequestError": {
             "docs": "Bad Request",
             "examples": [
               {
@@ -20,12 +20,12 @@
             "status-code": 400,
             "type": "Error",
           },
-          "FilesUploadRequestGatewayTimeoutError": {
+          "ActionItemsLemurRequestGatewayTimeoutError": {
             "docs": "Gateway Timeout",
             "status-code": 504,
             "type": "unknown",
           },
-          "FilesUploadRequestInternalServerError": {
+          "ActionItemsLemurRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
             "examples": [
               {
@@ -39,7 +39,7 @@
             "status-code": 500,
             "type": "Error",
           },
-          "FilesUploadRequestNotFoundError": {
+          "ActionItemsLemurRequestNotFoundError": {
             "docs": "Not found",
             "examples": [
               {
@@ -53,12 +53,12 @@
             "status-code": 404,
             "type": "Error",
           },
-          "FilesUploadRequestServiceUnavailableError": {
+          "ActionItemsLemurRequestServiceUnavailableError": {
             "docs": "Service Unavailable",
             "status-code": 503,
             "type": "unknown",
           },
-          "FilesUploadRequestTooManyRequestsError": {
+          "ActionItemsLemurRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
             "examples": [
               {
@@ -72,7 +72,7 @@
             "status-code": 429,
             "type": "Error",
           },
-          "FilesUploadRequestUnauthorizedError": {
+          "ActionItemsLemurRequestUnauthorizedError": {
             "docs": "Unauthorized",
             "examples": [
               {
@@ -86,7 +86,7 @@
             "status-code": 401,
             "type": "Error",
           },
-          "LemurActionItemsRequestBadRequestError": {
+          "CreateTemporaryTokenRealtimeRequestBadRequestError": {
             "docs": "Bad Request",
             "examples": [
               {
@@ -100,12 +100,12 @@
             "status-code": 400,
             "type": "Error",
           },
-          "LemurActionItemsRequestGatewayTimeoutError": {
+          "CreateTemporaryTokenRealtimeRequestGatewayTimeoutError": {
             "docs": "Gateway Timeout",
             "status-code": 504,
             "type": "unknown",
           },
-          "LemurActionItemsRequestInternalServerError": {
+          "CreateTemporaryTokenRealtimeRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
             "examples": [
               {
@@ -119,7 +119,7 @@
             "status-code": 500,
             "type": "Error",
           },
-          "LemurActionItemsRequestNotFoundError": {
+          "CreateTemporaryTokenRealtimeRequestNotFoundError": {
             "docs": "Not found",
             "examples": [
               {
@@ -133,12 +133,12 @@
             "status-code": 404,
             "type": "Error",
           },
-          "LemurActionItemsRequestServiceUnavailableError": {
+          "CreateTemporaryTokenRealtimeRequestServiceUnavailableError": {
             "docs": "Service Unavailable",
             "status-code": 503,
             "type": "unknown",
           },
-          "LemurActionItemsRequestTooManyRequestsError": {
+          "CreateTemporaryTokenRealtimeRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
             "examples": [
               {
@@ -152,7 +152,7 @@
             "status-code": 429,
             "type": "Error",
           },
-          "LemurActionItemsRequestUnauthorizedError": {
+          "CreateTemporaryTokenRealtimeRequestUnauthorizedError": {
             "docs": "Unauthorized",
             "examples": [
               {
@@ -166,7 +166,7 @@
             "status-code": 401,
             "type": "Error",
           },
-          "LemurPurgeRequestDataRequestBadRequestError": {
+          "CreateTranscriptRequestBadRequestError": {
             "docs": "Bad Request",
             "examples": [
               {
@@ -180,12 +180,12 @@
             "status-code": 400,
             "type": "Error",
           },
-          "LemurPurgeRequestDataRequestGatewayTimeoutError": {
+          "CreateTranscriptRequestGatewayTimeoutError": {
             "docs": "Gateway Timeout",
             "status-code": 504,
             "type": "unknown",
           },
-          "LemurPurgeRequestDataRequestInternalServerError": {
+          "CreateTranscriptRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
             "examples": [
               {
@@ -199,7 +199,7 @@
             "status-code": 500,
             "type": "Error",
           },
-          "LemurPurgeRequestDataRequestNotFoundError": {
+          "CreateTranscriptRequestNotFoundError": {
             "docs": "Not found",
             "examples": [
               {
@@ -213,12 +213,12 @@
             "status-code": 404,
             "type": "Error",
           },
-          "LemurPurgeRequestDataRequestServiceUnavailableError": {
+          "CreateTranscriptRequestServiceUnavailableError": {
             "docs": "Service Unavailable",
             "status-code": 503,
             "type": "unknown",
           },
-          "LemurPurgeRequestDataRequestTooManyRequestsError": {
+          "CreateTranscriptRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
             "examples": [
               {
@@ -232,7 +232,7 @@
             "status-code": 429,
             "type": "Error",
           },
-          "LemurPurgeRequestDataRequestUnauthorizedError": {
+          "CreateTranscriptRequestUnauthorizedError": {
             "docs": "Unauthorized",
             "examples": [
               {
@@ -246,7 +246,7 @@
             "status-code": 401,
             "type": "Error",
           },
-          "LemurQuestionAnswerRequestBadRequestError": {
+          "DeleteTranscriptRequestBadRequestError": {
             "docs": "Bad Request",
             "examples": [
               {
@@ -260,12 +260,12 @@
             "status-code": 400,
             "type": "Error",
           },
-          "LemurQuestionAnswerRequestGatewayTimeoutError": {
+          "DeleteTranscriptRequestGatewayTimeoutError": {
             "docs": "Gateway Timeout",
             "status-code": 504,
             "type": "unknown",
           },
-          "LemurQuestionAnswerRequestInternalServerError": {
+          "DeleteTranscriptRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
             "examples": [
               {
@@ -279,7 +279,7 @@
             "status-code": 500,
             "type": "Error",
           },
-          "LemurQuestionAnswerRequestNotFoundError": {
+          "DeleteTranscriptRequestNotFoundError": {
             "docs": "Not found",
             "examples": [
               {
@@ -293,12 +293,12 @@
             "status-code": 404,
             "type": "Error",
           },
-          "LemurQuestionAnswerRequestServiceUnavailableError": {
+          "DeleteTranscriptRequestServiceUnavailableError": {
             "docs": "Service Unavailable",
             "status-code": 503,
             "type": "unknown",
           },
-          "LemurQuestionAnswerRequestTooManyRequestsError": {
+          "DeleteTranscriptRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
             "examples": [
               {
@@ -312,7 +312,7 @@
             "status-code": 429,
             "type": "Error",
           },
-          "LemurQuestionAnswerRequestUnauthorizedError": {
+          "DeleteTranscriptRequestUnauthorizedError": {
             "docs": "Unauthorized",
             "examples": [
               {
@@ -326,7 +326,7 @@
             "status-code": 401,
             "type": "Error",
           },
-          "LemurSummaryRequestBadRequestError": {
+          "GetParagraphsTranscriptRequestBadRequestError": {
             "docs": "Bad Request",
             "examples": [
               {
@@ -340,12 +340,12 @@
             "status-code": 400,
             "type": "Error",
           },
-          "LemurSummaryRequestGatewayTimeoutError": {
+          "GetParagraphsTranscriptRequestGatewayTimeoutError": {
             "docs": "Gateway Timeout",
             "status-code": 504,
             "type": "unknown",
           },
-          "LemurSummaryRequestInternalServerError": {
+          "GetParagraphsTranscriptRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
             "examples": [
               {
@@ -359,7 +359,7 @@
             "status-code": 500,
             "type": "Error",
           },
-          "LemurSummaryRequestNotFoundError": {
+          "GetParagraphsTranscriptRequestNotFoundError": {
             "docs": "Not found",
             "examples": [
               {
@@ -373,12 +373,12 @@
             "status-code": 404,
             "type": "Error",
           },
-          "LemurSummaryRequestServiceUnavailableError": {
+          "GetParagraphsTranscriptRequestServiceUnavailableError": {
             "docs": "Service Unavailable",
             "status-code": 503,
             "type": "unknown",
           },
-          "LemurSummaryRequestTooManyRequestsError": {
+          "GetParagraphsTranscriptRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
             "examples": [
               {
@@ -392,7 +392,7 @@
             "status-code": 429,
             "type": "Error",
           },
-          "LemurSummaryRequestUnauthorizedError": {
+          "GetParagraphsTranscriptRequestUnauthorizedError": {
             "docs": "Unauthorized",
             "examples": [
               {
@@ -406,7 +406,7 @@
             "status-code": 401,
             "type": "Error",
           },
-          "LemurTaskRequestBadRequestError": {
+          "GetRedactedAudioTranscriptRequestBadRequestError": {
             "docs": "Bad Request",
             "examples": [
               {
@@ -420,12 +420,12 @@
             "status-code": 400,
             "type": "Error",
           },
-          "LemurTaskRequestGatewayTimeoutError": {
+          "GetRedactedAudioTranscriptRequestGatewayTimeoutError": {
             "docs": "Gateway Timeout",
             "status-code": 504,
             "type": "unknown",
           },
-          "LemurTaskRequestInternalServerError": {
+          "GetRedactedAudioTranscriptRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
             "examples": [
               {
@@ -439,7 +439,7 @@
             "status-code": 500,
             "type": "Error",
           },
-          "LemurTaskRequestNotFoundError": {
+          "GetRedactedAudioTranscriptRequestNotFoundError": {
             "docs": "Not found",
             "examples": [
               {
@@ -453,12 +453,12 @@
             "status-code": 404,
             "type": "Error",
           },
-          "LemurTaskRequestServiceUnavailableError": {
+          "GetRedactedAudioTranscriptRequestServiceUnavailableError": {
             "docs": "Service Unavailable",
             "status-code": 503,
             "type": "unknown",
           },
-          "LemurTaskRequestTooManyRequestsError": {
+          "GetRedactedAudioTranscriptRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
             "examples": [
               {
@@ -472,7 +472,7 @@
             "status-code": 429,
             "type": "Error",
           },
-          "LemurTaskRequestUnauthorizedError": {
+          "GetRedactedAudioTranscriptRequestUnauthorizedError": {
             "docs": "Unauthorized",
             "examples": [
               {
@@ -486,7 +486,7 @@
             "status-code": 401,
             "type": "Error",
           },
-          "RealtimeCreateTemporaryTokenRequestBadRequestError": {
+          "GetSentencesTranscriptRequestBadRequestError": {
             "docs": "Bad Request",
             "examples": [
               {
@@ -500,12 +500,12 @@
             "status-code": 400,
             "type": "Error",
           },
-          "RealtimeCreateTemporaryTokenRequestGatewayTimeoutError": {
+          "GetSentencesTranscriptRequestGatewayTimeoutError": {
             "docs": "Gateway Timeout",
             "status-code": 504,
             "type": "unknown",
           },
-          "RealtimeCreateTemporaryTokenRequestInternalServerError": {
+          "GetSentencesTranscriptRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
             "examples": [
               {
@@ -519,7 +519,7 @@
             "status-code": 500,
             "type": "Error",
           },
-          "RealtimeCreateTemporaryTokenRequestNotFoundError": {
+          "GetSentencesTranscriptRequestNotFoundError": {
             "docs": "Not found",
             "examples": [
               {
@@ -533,12 +533,12 @@
             "status-code": 404,
             "type": "Error",
           },
-          "RealtimeCreateTemporaryTokenRequestServiceUnavailableError": {
+          "GetSentencesTranscriptRequestServiceUnavailableError": {
             "docs": "Service Unavailable",
             "status-code": 503,
             "type": "unknown",
           },
-          "RealtimeCreateTemporaryTokenRequestTooManyRequestsError": {
+          "GetSentencesTranscriptRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
             "examples": [
               {
@@ -552,7 +552,7 @@
             "status-code": 429,
             "type": "Error",
           },
-          "RealtimeCreateTemporaryTokenRequestUnauthorizedError": {
+          "GetSentencesTranscriptRequestUnauthorizedError": {
             "docs": "Unauthorized",
             "examples": [
               {
@@ -566,7 +566,7 @@
             "status-code": 401,
             "type": "Error",
           },
-          "TranscriptCreateRequestBadRequestError": {
+          "GetSubtitlesTranscriptRequestBadRequestError": {
             "docs": "Bad Request",
             "examples": [
               {
@@ -580,12 +580,12 @@
             "status-code": 400,
             "type": "Error",
           },
-          "TranscriptCreateRequestGatewayTimeoutError": {
+          "GetSubtitlesTranscriptRequestGatewayTimeoutError": {
             "docs": "Gateway Timeout",
             "status-code": 504,
             "type": "unknown",
           },
-          "TranscriptCreateRequestInternalServerError": {
+          "GetSubtitlesTranscriptRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
             "examples": [
               {
@@ -599,7 +599,7 @@
             "status-code": 500,
             "type": "Error",
           },
-          "TranscriptCreateRequestNotFoundError": {
+          "GetSubtitlesTranscriptRequestNotFoundError": {
             "docs": "Not found",
             "examples": [
               {
@@ -613,12 +613,12 @@
             "status-code": 404,
             "type": "Error",
           },
-          "TranscriptCreateRequestServiceUnavailableError": {
+          "GetSubtitlesTranscriptRequestServiceUnavailableError": {
             "docs": "Service Unavailable",
             "status-code": 503,
             "type": "unknown",
           },
-          "TranscriptCreateRequestTooManyRequestsError": {
+          "GetSubtitlesTranscriptRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
             "examples": [
               {
@@ -632,7 +632,7 @@
             "status-code": 429,
             "type": "Error",
           },
-          "TranscriptCreateRequestUnauthorizedError": {
+          "GetSubtitlesTranscriptRequestUnauthorizedError": {
             "docs": "Unauthorized",
             "examples": [
               {
@@ -646,7 +646,7 @@
             "status-code": 401,
             "type": "Error",
           },
-          "TranscriptDeleteRequestBadRequestError": {
+          "GetTranscriptRequestBadRequestError": {
             "docs": "Bad Request",
             "examples": [
               {
@@ -660,12 +660,12 @@
             "status-code": 400,
             "type": "Error",
           },
-          "TranscriptDeleteRequestGatewayTimeoutError": {
+          "GetTranscriptRequestGatewayTimeoutError": {
             "docs": "Gateway Timeout",
             "status-code": 504,
             "type": "unknown",
           },
-          "TranscriptDeleteRequestInternalServerError": {
+          "GetTranscriptRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
             "examples": [
               {
@@ -679,7 +679,7 @@
             "status-code": 500,
             "type": "Error",
           },
-          "TranscriptDeleteRequestNotFoundError": {
+          "GetTranscriptRequestNotFoundError": {
             "docs": "Not found",
             "examples": [
               {
@@ -693,12 +693,12 @@
             "status-code": 404,
             "type": "Error",
           },
-          "TranscriptDeleteRequestServiceUnavailableError": {
+          "GetTranscriptRequestServiceUnavailableError": {
             "docs": "Service Unavailable",
             "status-code": 503,
             "type": "unknown",
           },
-          "TranscriptDeleteRequestTooManyRequestsError": {
+          "GetTranscriptRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
             "examples": [
               {
@@ -712,7 +712,7 @@
             "status-code": 429,
             "type": "Error",
           },
-          "TranscriptDeleteRequestUnauthorizedError": {
+          "GetTranscriptRequestUnauthorizedError": {
             "docs": "Unauthorized",
             "examples": [
               {
@@ -726,7 +726,7 @@
             "status-code": 401,
             "type": "Error",
           },
-          "TranscriptGetParagraphsRequestBadRequestError": {
+          "ListTranscriptRequestBadRequestError": {
             "docs": "Bad Request",
             "examples": [
               {
@@ -740,12 +740,12 @@
             "status-code": 400,
             "type": "Error",
           },
-          "TranscriptGetParagraphsRequestGatewayTimeoutError": {
+          "ListTranscriptRequestGatewayTimeoutError": {
             "docs": "Gateway Timeout",
             "status-code": 504,
             "type": "unknown",
           },
-          "TranscriptGetParagraphsRequestInternalServerError": {
+          "ListTranscriptRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
             "examples": [
               {
@@ -759,7 +759,7 @@
             "status-code": 500,
             "type": "Error",
           },
-          "TranscriptGetParagraphsRequestNotFoundError": {
+          "ListTranscriptRequestNotFoundError": {
             "docs": "Not found",
             "examples": [
               {
@@ -773,12 +773,12 @@
             "status-code": 404,
             "type": "Error",
           },
-          "TranscriptGetParagraphsRequestServiceUnavailableError": {
+          "ListTranscriptRequestServiceUnavailableError": {
             "docs": "Service Unavailable",
             "status-code": 503,
             "type": "unknown",
           },
-          "TranscriptGetParagraphsRequestTooManyRequestsError": {
+          "ListTranscriptRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
             "examples": [
               {
@@ -792,7 +792,7 @@
             "status-code": 429,
             "type": "Error",
           },
-          "TranscriptGetParagraphsRequestUnauthorizedError": {
+          "ListTranscriptRequestUnauthorizedError": {
             "docs": "Unauthorized",
             "examples": [
               {
@@ -806,7 +806,7 @@
             "status-code": 401,
             "type": "Error",
           },
-          "TranscriptGetRedactedAudioRequestBadRequestError": {
+          "PurgeRequestDataLemurRequestBadRequestError": {
             "docs": "Bad Request",
             "examples": [
               {
@@ -820,12 +820,12 @@
             "status-code": 400,
             "type": "Error",
           },
-          "TranscriptGetRedactedAudioRequestGatewayTimeoutError": {
+          "PurgeRequestDataLemurRequestGatewayTimeoutError": {
             "docs": "Gateway Timeout",
             "status-code": 504,
             "type": "unknown",
           },
-          "TranscriptGetRedactedAudioRequestInternalServerError": {
+          "PurgeRequestDataLemurRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
             "examples": [
               {
@@ -839,7 +839,7 @@
             "status-code": 500,
             "type": "Error",
           },
-          "TranscriptGetRedactedAudioRequestNotFoundError": {
+          "PurgeRequestDataLemurRequestNotFoundError": {
             "docs": "Not found",
             "examples": [
               {
@@ -853,12 +853,12 @@
             "status-code": 404,
             "type": "Error",
           },
-          "TranscriptGetRedactedAudioRequestServiceUnavailableError": {
+          "PurgeRequestDataLemurRequestServiceUnavailableError": {
             "docs": "Service Unavailable",
             "status-code": 503,
             "type": "unknown",
           },
-          "TranscriptGetRedactedAudioRequestTooManyRequestsError": {
+          "PurgeRequestDataLemurRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
             "examples": [
               {
@@ -872,7 +872,7 @@
             "status-code": 429,
             "type": "Error",
           },
-          "TranscriptGetRedactedAudioRequestUnauthorizedError": {
+          "PurgeRequestDataLemurRequestUnauthorizedError": {
             "docs": "Unauthorized",
             "examples": [
               {
@@ -886,7 +886,7 @@
             "status-code": 401,
             "type": "Error",
           },
-          "TranscriptGetRequestBadRequestError": {
+          "QuestionAnswerLemurRequestBadRequestError": {
             "docs": "Bad Request",
             "examples": [
               {
@@ -900,12 +900,12 @@
             "status-code": 400,
             "type": "Error",
           },
-          "TranscriptGetRequestGatewayTimeoutError": {
+          "QuestionAnswerLemurRequestGatewayTimeoutError": {
             "docs": "Gateway Timeout",
             "status-code": 504,
             "type": "unknown",
           },
-          "TranscriptGetRequestInternalServerError": {
+          "QuestionAnswerLemurRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
             "examples": [
               {
@@ -919,7 +919,7 @@
             "status-code": 500,
             "type": "Error",
           },
-          "TranscriptGetRequestNotFoundError": {
+          "QuestionAnswerLemurRequestNotFoundError": {
             "docs": "Not found",
             "examples": [
               {
@@ -933,12 +933,12 @@
             "status-code": 404,
             "type": "Error",
           },
-          "TranscriptGetRequestServiceUnavailableError": {
+          "QuestionAnswerLemurRequestServiceUnavailableError": {
             "docs": "Service Unavailable",
             "status-code": 503,
             "type": "unknown",
           },
-          "TranscriptGetRequestTooManyRequestsError": {
+          "QuestionAnswerLemurRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
             "examples": [
               {
@@ -952,7 +952,7 @@
             "status-code": 429,
             "type": "Error",
           },
-          "TranscriptGetRequestUnauthorizedError": {
+          "QuestionAnswerLemurRequestUnauthorizedError": {
             "docs": "Unauthorized",
             "examples": [
               {
@@ -966,7 +966,7 @@
             "status-code": 401,
             "type": "Error",
           },
-          "TranscriptGetSentencesRequestBadRequestError": {
+          "SummaryLemurRequestBadRequestError": {
             "docs": "Bad Request",
             "examples": [
               {
@@ -980,12 +980,12 @@
             "status-code": 400,
             "type": "Error",
           },
-          "TranscriptGetSentencesRequestGatewayTimeoutError": {
+          "SummaryLemurRequestGatewayTimeoutError": {
             "docs": "Gateway Timeout",
             "status-code": 504,
             "type": "unknown",
           },
-          "TranscriptGetSentencesRequestInternalServerError": {
+          "SummaryLemurRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
             "examples": [
               {
@@ -999,7 +999,7 @@
             "status-code": 500,
             "type": "Error",
           },
-          "TranscriptGetSentencesRequestNotFoundError": {
+          "SummaryLemurRequestNotFoundError": {
             "docs": "Not found",
             "examples": [
               {
@@ -1013,12 +1013,12 @@
             "status-code": 404,
             "type": "Error",
           },
-          "TranscriptGetSentencesRequestServiceUnavailableError": {
+          "SummaryLemurRequestServiceUnavailableError": {
             "docs": "Service Unavailable",
             "status-code": 503,
             "type": "unknown",
           },
-          "TranscriptGetSentencesRequestTooManyRequestsError": {
+          "SummaryLemurRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
             "examples": [
               {
@@ -1032,7 +1032,7 @@
             "status-code": 429,
             "type": "Error",
           },
-          "TranscriptGetSentencesRequestUnauthorizedError": {
+          "SummaryLemurRequestUnauthorizedError": {
             "docs": "Unauthorized",
             "examples": [
               {
@@ -1046,7 +1046,7 @@
             "status-code": 401,
             "type": "Error",
           },
-          "TranscriptGetSubtitlesRequestBadRequestError": {
+          "TaskLemurRequestBadRequestError": {
             "docs": "Bad Request",
             "examples": [
               {
@@ -1060,12 +1060,12 @@
             "status-code": 400,
             "type": "Error",
           },
-          "TranscriptGetSubtitlesRequestGatewayTimeoutError": {
+          "TaskLemurRequestGatewayTimeoutError": {
             "docs": "Gateway Timeout",
             "status-code": 504,
             "type": "unknown",
           },
-          "TranscriptGetSubtitlesRequestInternalServerError": {
+          "TaskLemurRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
             "examples": [
               {
@@ -1079,7 +1079,7 @@
             "status-code": 500,
             "type": "Error",
           },
-          "TranscriptGetSubtitlesRequestNotFoundError": {
+          "TaskLemurRequestNotFoundError": {
             "docs": "Not found",
             "examples": [
               {
@@ -1093,12 +1093,12 @@
             "status-code": 404,
             "type": "Error",
           },
-          "TranscriptGetSubtitlesRequestServiceUnavailableError": {
+          "TaskLemurRequestServiceUnavailableError": {
             "docs": "Service Unavailable",
             "status-code": 503,
             "type": "unknown",
           },
-          "TranscriptGetSubtitlesRequestTooManyRequestsError": {
+          "TaskLemurRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
             "examples": [
               {
@@ -1112,7 +1112,7 @@
             "status-code": 429,
             "type": "Error",
           },
-          "TranscriptGetSubtitlesRequestUnauthorizedError": {
+          "TaskLemurRequestUnauthorizedError": {
             "docs": "Unauthorized",
             "examples": [
               {
@@ -1126,7 +1126,7 @@
             "status-code": 401,
             "type": "Error",
           },
-          "TranscriptListRequestBadRequestError": {
+          "UploadFilesRequestBadRequestError": {
             "docs": "Bad Request",
             "examples": [
               {
@@ -1140,12 +1140,12 @@
             "status-code": 400,
             "type": "Error",
           },
-          "TranscriptListRequestGatewayTimeoutError": {
+          "UploadFilesRequestGatewayTimeoutError": {
             "docs": "Gateway Timeout",
             "status-code": 504,
             "type": "unknown",
           },
-          "TranscriptListRequestInternalServerError": {
+          "UploadFilesRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
             "examples": [
               {
@@ -1159,7 +1159,7 @@
             "status-code": 500,
             "type": "Error",
           },
-          "TranscriptListRequestNotFoundError": {
+          "UploadFilesRequestNotFoundError": {
             "docs": "Not found",
             "examples": [
               {
@@ -1173,12 +1173,12 @@
             "status-code": 404,
             "type": "Error",
           },
-          "TranscriptListRequestServiceUnavailableError": {
+          "UploadFilesRequestServiceUnavailableError": {
             "docs": "Service Unavailable",
             "status-code": 503,
             "type": "unknown",
           },
-          "TranscriptListRequestTooManyRequestsError": {
+          "UploadFilesRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
             "examples": [
               {
@@ -1192,7 +1192,7 @@
             "status-code": 429,
             "type": "Error",
           },
-          "TranscriptListRequestUnauthorizedError": {
+          "UploadFilesRequestUnauthorizedError": {
             "docs": "Unauthorized",
             "examples": [
               {
@@ -1206,7 +1206,7 @@
             "status-code": 401,
             "type": "Error",
           },
-          "TranscriptWordSearchRequestBadRequestError": {
+          "WordSearchTranscriptRequestBadRequestError": {
             "docs": "Bad Request",
             "examples": [
               {
@@ -1220,12 +1220,12 @@
             "status-code": 400,
             "type": "Error",
           },
-          "TranscriptWordSearchRequestGatewayTimeoutError": {
+          "WordSearchTranscriptRequestGatewayTimeoutError": {
             "docs": "Gateway Timeout",
             "status-code": 504,
             "type": "unknown",
           },
-          "TranscriptWordSearchRequestInternalServerError": {
+          "WordSearchTranscriptRequestInternalServerError": {
             "docs": "An error occurred while processing the request",
             "examples": [
               {
@@ -1239,7 +1239,7 @@
             "status-code": 500,
             "type": "Error",
           },
-          "TranscriptWordSearchRequestNotFoundError": {
+          "WordSearchTranscriptRequestNotFoundError": {
             "docs": "Not found",
             "examples": [
               {
@@ -1253,12 +1253,12 @@
             "status-code": 404,
             "type": "Error",
           },
-          "TranscriptWordSearchRequestServiceUnavailableError": {
+          "WordSearchTranscriptRequestServiceUnavailableError": {
             "docs": "Service Unavailable",
             "status-code": 503,
             "type": "unknown",
           },
-          "TranscriptWordSearchRequestTooManyRequestsError": {
+          "WordSearchTranscriptRequestTooManyRequestsError": {
             "docs": "Too Many Requests",
             "examples": [
               {
@@ -1272,7 +1272,7 @@
             "status-code": 429,
             "type": "Error",
           },
-          "TranscriptWordSearchRequestUnauthorizedError": {
+          "WordSearchTranscriptRequestUnauthorizedError": {
             "docs": "Unauthorized",
             "examples": [
               {
@@ -1517,7 +1517,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
                 "docs": "The language of your audio file. Possible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).
 The default value is 'en_us'.
 ",
-                "type": "optional<TranscriptLanguageCode>",
+                "type": "optional<nullable<TranscriptLanguageCode>>",
               },
               "language_detection": {
                 "docs": "Whether [Automatic language detection](https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection) was enabled in the transcription request, either true or false.",
@@ -1546,7 +1546,7 @@ The default value is 'en_us'.
               },
               "redact_pii_sub": {
                 "docs": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
-                "type": "optional<SubstitutionPolicy>",
+                "type": "optional<nullable<SubstitutionPolicy>>",
               },
               "sentiment_analysis": {
                 "docs": "Enable [Sentiment Analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis), can be true or false",
@@ -1558,13 +1558,13 @@ The default value is 'en_us'.
               },
               "speakers_expected": {
                 "docs": "Tells the speaker label model how many speakers it should attempt to identify, up to 10. See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more details.",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "speech_threshold": {
                 "docs": "Reject audio files that contain less than this fraction of speech.
 Valid values are in the range [0, 1] inclusive.
 ",
-                "type": "optional<float>",
+                "type": "optional<nullable<float>>",
               },
               "summarization": {
                 "docs": "Enable [Summarization](https://www.assemblyai.com/docs/Models/summarization), can be true or false",
@@ -1584,11 +1584,11 @@ Valid values are in the range [0, 1] inclusive.
               },
               "webhook_auth_header_name": {
                 "docs": "The header name which should be sent back with webhook calls, if provided in the transcription request.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "webhook_auth_header_value": {
                 "docs": "Defaults to null. Optionally allows a user to specify a header name and value to send back with a webhook call for added security.",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "webhook_url": {
                 "docs": "The URL to which we send webhooks upon trancription completion, if provided in the transcription request.",
@@ -2001,7 +2001,7 @@ Can be any value between 0.0 and 1.0 inclusive.
             "properties": {
               "current_url": "string",
               "limit": "integer",
-              "next_url": "optional<string>",
+              "next_url": "optional<nullable<string>>",
               "prev_url": "string",
               "result_count": "integer",
             },
@@ -2297,7 +2297,7 @@ Can be any value between 0.0 and 1.0 inclusive.
               },
               "speaker": {
                 "docs": "The speaker of the sentence if Speaker Diarization is enabled, else null",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "start": {
                 "docs": "The starting time, in milliseconds, of the sentence",
@@ -2518,15 +2518,15 @@ Can be any value between 0.0 and 1.0 inclusive.
               },
               "audio_duration": {
                 "docs": "The duration of this transcript object's media file, in seconds",
-                "type": "optional<float>",
+                "type": "optional<nullable<float>>",
               },
               "audio_end_at": {
                 "docs": "The point in time, in milliseconds, in the file at which the transcription was terminated, if provided in the transcription request",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "audio_start_from": {
                 "docs": "The point in time, in milliseconds, in the file at which the transcription was started, if provided in the transcription request",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "audio_url": {
                 "docs": "The URL of the media that was transcribed",
@@ -2534,7 +2534,7 @@ Can be any value between 0.0 and 1.0 inclusive.
               },
               "auto_chapters": {
                 "docs": "Enable [Auto Chapters](https://www.assemblyai.com/docs/Models/auto_chapters), can be true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "auto_highlights": {
                 "docs": "Whether Key Phrases was enabled in the transcription request, either true or false",
@@ -2544,19 +2544,19 @@ Can be any value between 0.0 and 1.0 inclusive.
                 "docs": "An array of results for the Key Phrases model, if it was enabled during the transcription request.
 See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.
 ",
-                "type": "optional<AutoHighlightsResult>",
+                "type": "optional<nullable<AutoHighlightsResult>>",
               },
               "boost_param": {
                 "docs": "The word boost parameter value, if provided in the transcription request",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "chapters": {
                 "docs": "An array of temporally sequential chapters for the audio file",
-                "type": "optional<list<Chapter>>",
+                "type": "optional<nullable<list<Chapter>>>",
               },
               "confidence": {
                 "docs": "The confidence score for the transcript, between 0.0 (low confidence) and 1.0 (high confidence)",
-                "type": "optional<double>",
+                "type": "optional<nullable<double>>",
                 "validation": {
                   "exclusiveMax": undefined,
                   "exclusiveMin": undefined,
@@ -2567,39 +2567,39 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
               },
               "content_safety": {
                 "docs": "Enable [Content Moderation](https://www.assemblyai.com/docs/Models/content_moderation), can be true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "content_safety_labels": {
                 "docs": "An array of results for the Content Moderation model, if it was enabled during the transcription request.
 See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderation) for more information.
 ",
-                "type": "optional<TranscriptContentSafetyLabels>",
+                "type": "optional<nullable<TranscriptContentSafetyLabels>>",
               },
               "custom_spelling": {
                 "docs": "Customize how words are spelled and formatted using to and from values",
-                "type": "optional<list<TranscriptCustomSpelling>>",
+                "type": "optional<nullable<list<TranscriptCustomSpelling>>>",
               },
               "custom_topics": {
                 "docs": "Whether custom topics was enabled in the transcription request, either true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "disfluencies": {
                 "docs": "Transcribe Filler Words, like "umm", in your media file; can be true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "dual_channel": {
                 "docs": "Whether [Dual channel transcription](https://www.assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription) was enabled in the transcription request, either true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "entities": {
                 "docs": "An array of results for the Entity Detection model, if it was enabled during the transcription request.
 See [Entity detection](https://www.assemblyai.com/docs/Models/entity_detection) for more information.
 ",
-                "type": "optional<list<Entity>>",
+                "type": "optional<nullable<list<Entity>>>",
               },
               "entity_detection": {
                 "docs": "Enable [Entity Detection](https://www.assemblyai.com/docs/Models/entity_detection), can be true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "error": {
                 "docs": "Error message of why the transcript failed",
@@ -2607,21 +2607,21 @@ See [Entity detection](https://www.assemblyai.com/docs/Models/entity_detection) 
               },
               "filter_profanity": {
                 "docs": "Whether [Profanity Filtering](https://www.assemblyai.com/docs/Models/speech_recognition#profanity-filtering) was enabled in the transcription request, either true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "format_text": {
                 "docs": "Whether Text Formatting was enabled in the transcription request, either true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "iab_categories": {
                 "docs": "Enable [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification), can be true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "iab_categories_result": {
                 "docs": "An array of results for the Topic Detection model, if it was enabled during the transcription request.
 See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification) for more information.
 ",
-                "type": "optional<TranscriptIabCategoriesResult>",
+                "type": "optional<nullable<TranscriptIabCategoriesResult>>",
               },
               "id": {
                 "docs": "The unique identifier of your transcription",
@@ -2632,11 +2632,11 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
 Possible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).
 The default value is 'en_us'.
 ",
-                "type": "optional<TranscriptLanguageCode>",
+                "type": "optional<nullable<TranscriptLanguageCode>>",
               },
               "language_detection": {
                 "docs": "Whether [Automatic language detection](https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection) was enabled in the transcription request, either true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "language_model": {
                 "availability": "deprecated",
@@ -2645,7 +2645,7 @@ The default value is 'en_us'.
               },
               "punctuate": {
                 "docs": "Whether Automatic Punctuation was enabled in the transcription request, either true or false.",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "redact_pii": {
                 "docs": "Whether [PII Redaction](https://www.assemblyai.com/docs/Models/pii_redaction) was enabled in the transcription request, either true or false",
@@ -2655,52 +2655,52 @@ The default value is 'en_us'.
                 "docs": "Whether a redacted version of the audio file was generated (enabled or disabled in the transcription request),
 either true or false. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
 ",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "redact_pii_audio_quality": {
                 "docs": "The audio quality of the PII-redacted audio file, if enabled in the transcription request.
 See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
 ",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "redact_pii_policies": {
                 "docs": "The list of PII Redaction policies that were enabled, if PII Redaction is enabled.
 See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
 ",
-                "type": "optional<list<PiiPolicy>>",
+                "type": "optional<nullable<list<PiiPolicy>>>",
               },
               "redact_pii_sub": {
                 "docs": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
-                "type": "optional<SubstitutionPolicy>",
+                "type": "optional<nullable<SubstitutionPolicy>>",
               },
               "sentiment_analysis": {
                 "docs": "Enable [Sentiment Analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis), can be true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "sentiment_analysis_results": {
                 "docs": "An array of results for the Sentiment Analysis model, if it was enabled during the transcription request.
 See [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis) for more information.
 ",
-                "type": "optional<list<SentimentAnalysisResult>>",
+                "type": "optional<nullable<list<SentimentAnalysisResult>>>",
               },
               "speaker_labels": {
                 "docs": "Enable [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization), can be true or false",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "speakers_expected": {
                 "docs": "Defaults to null. Tells the speaker label model how many speakers it should attempt to identify, up to 10. See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more details.",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "speech_threshold": {
                 "docs": "Defaults to null. Reject audio files that contain less than this fraction of speech.
 Valid values are in the range [0, 1] inclusive.
 ",
-                "type": "optional<float>",
+                "type": "optional<nullable<float>>",
               },
               "speed_boost": {
                 "availability": "deprecated",
                 "docs": "Whether speed boost was enabled in the transcription request",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "status": {
                 "docs": "The status of your transcription. Possible values are queued, processing, completed, or error.",
@@ -2712,25 +2712,25 @@ Valid values are in the range [0, 1] inclusive.
               },
               "summary": {
                 "docs": "The generated summary of the media file, if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "summary_model": {
                 "docs": "The Summarization model used to generate the summary,
 if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request
 ",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "summary_type": {
                 "docs": "The type of summary generated, if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "text": {
                 "docs": "The textual transcript of your media file",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "throttled": {
                 "docs": "True while a request is throttled and false when a request is no longer throttled",
-                "type": "optional<boolean>",
+                "type": "optional<nullable<boolean>>",
               },
               "topics": {
                 "docs": "The list of custom topics provided if custom topics was enabled in the transcription request",
@@ -2740,7 +2740,7 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
                 "docs": "When dual_channel or speaker_labels is enabled, a list of turn-by-turn utterance objects.
 See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more information.
 ",
-                "type": "optional<list<TranscriptUtterance>>",
+                "type": "optional<nullable<list<TranscriptUtterance>>>",
               },
               "webhook_auth": {
                 "docs": "Whether webhook authentication details were provided in the transcription request",
@@ -2748,15 +2748,15 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
               },
               "webhook_auth_header_name": {
                 "docs": "The header name which should be sent back with webhook calls, if provided in the transcription request",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "webhook_status_code": {
                 "docs": "The status code we received from your server when delivering your webhook, if a webhook URL was provided in the transcription request",
-                "type": "optional<integer>",
+                "type": "optional<nullable<integer>>",
               },
               "webhook_url": {
                 "docs": "The URL to which we send webhooks upon trancription completion, if provided in the transcription request",
-                "type": "optional<string>",
+                "type": "optional<nullable<string>>",
               },
               "word_boost": {
                 "docs": "The list of custom vocabulary to boost transcription probability for, if provided in the transcription request",
@@ -2766,7 +2766,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
                 "docs": "An array of temporally-sequential word objects, one for each word in the transcript.
 See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recognition) for more information.
 ",
-                "type": "optional<list<TranscriptWord>>",
+                "type": "optional<nullable<list<TranscriptWord>>>",
               },
             },
             "source": {
@@ -2913,13 +2913,7 @@ The default value is 'en_us'.
               },
               "created_on": {
                 "docs": "Only get transcripts created on this date",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "limit": {
                 "default": 10,
@@ -3049,7 +3043,7 @@ The default value is 'en_us'.
                 },
               },
               "end": "integer",
-              "speaker": "optional<string>",
+              "speaker": "optional<nullable<string>>",
               "start": "integer",
               "text": "string",
             },
@@ -3155,691 +3149,691 @@ The default value is 'en_us'.
         },
       },
       "rawContents": "errors:
-  FilesUploadRequestBadRequestError:
+  UploadFilesRequestBadRequestError:
     status-code: 400
     type: Error
     docs: Bad Request
     examples:
       - value:
           error: error
-  FilesUploadRequestUnauthorizedError:
+  UploadFilesRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
     examples:
       - value:
           error: error
-  FilesUploadRequestNotFoundError:
+  UploadFilesRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
     examples:
       - value:
           error: error
-  FilesUploadRequestTooManyRequestsError:
+  UploadFilesRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
     examples:
       - value:
           error: error
-  FilesUploadRequestInternalServerError:
+  UploadFilesRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
     examples:
       - value:
           error: error
-  FilesUploadRequestServiceUnavailableError:
+  UploadFilesRequestServiceUnavailableError:
     status-code: 503
     type: unknown
     docs: Service Unavailable
-  FilesUploadRequestGatewayTimeoutError:
+  UploadFilesRequestGatewayTimeoutError:
     status-code: 504
     type: unknown
     docs: Gateway Timeout
-  TranscriptListRequestBadRequestError:
+  ListTranscriptRequestBadRequestError:
     status-code: 400
     type: Error
     docs: Bad Request
     examples:
       - value:
           error: error
-  TranscriptListRequestUnauthorizedError:
+  ListTranscriptRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
     examples:
       - value:
           error: error
-  TranscriptListRequestNotFoundError:
+  ListTranscriptRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
     examples:
       - value:
           error: error
-  TranscriptListRequestTooManyRequestsError:
+  ListTranscriptRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
     examples:
       - value:
           error: error
-  TranscriptListRequestInternalServerError:
+  ListTranscriptRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
     examples:
       - value:
           error: error
-  TranscriptListRequestServiceUnavailableError:
+  ListTranscriptRequestServiceUnavailableError:
     status-code: 503
     type: unknown
     docs: Service Unavailable
-  TranscriptListRequestGatewayTimeoutError:
+  ListTranscriptRequestGatewayTimeoutError:
     status-code: 504
     type: unknown
     docs: Gateway Timeout
-  TranscriptCreateRequestBadRequestError:
+  CreateTranscriptRequestBadRequestError:
     status-code: 400
     type: Error
     docs: Bad Request
     examples:
       - value:
           error: error
-  TranscriptCreateRequestUnauthorizedError:
+  CreateTranscriptRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
     examples:
       - value:
           error: error
-  TranscriptCreateRequestNotFoundError:
+  CreateTranscriptRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
     examples:
       - value:
           error: error
-  TranscriptCreateRequestTooManyRequestsError:
+  CreateTranscriptRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
     examples:
       - value:
           error: error
-  TranscriptCreateRequestInternalServerError:
+  CreateTranscriptRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
     examples:
       - value:
           error: error
-  TranscriptCreateRequestServiceUnavailableError:
+  CreateTranscriptRequestServiceUnavailableError:
     status-code: 503
     type: unknown
     docs: Service Unavailable
-  TranscriptCreateRequestGatewayTimeoutError:
+  CreateTranscriptRequestGatewayTimeoutError:
     status-code: 504
     type: unknown
     docs: Gateway Timeout
-  TranscriptGetRequestBadRequestError:
+  GetTranscriptRequestBadRequestError:
     status-code: 400
     type: Error
     docs: Bad Request
     examples:
       - value:
           error: error
-  TranscriptGetRequestUnauthorizedError:
+  GetTranscriptRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
     examples:
       - value:
           error: error
-  TranscriptGetRequestNotFoundError:
+  GetTranscriptRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
     examples:
       - value:
           error: error
-  TranscriptGetRequestTooManyRequestsError:
+  GetTranscriptRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
     examples:
       - value:
           error: error
-  TranscriptGetRequestInternalServerError:
+  GetTranscriptRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
     examples:
       - value:
           error: error
-  TranscriptGetRequestServiceUnavailableError:
+  GetTranscriptRequestServiceUnavailableError:
     status-code: 503
     type: unknown
     docs: Service Unavailable
-  TranscriptGetRequestGatewayTimeoutError:
+  GetTranscriptRequestGatewayTimeoutError:
     status-code: 504
     type: unknown
     docs: Gateway Timeout
-  TranscriptDeleteRequestBadRequestError:
+  DeleteTranscriptRequestBadRequestError:
     status-code: 400
     type: Error
     docs: Bad Request
     examples:
       - value:
           error: error
-  TranscriptDeleteRequestUnauthorizedError:
+  DeleteTranscriptRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
     examples:
       - value:
           error: error
-  TranscriptDeleteRequestNotFoundError:
+  DeleteTranscriptRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
     examples:
       - value:
           error: error
-  TranscriptDeleteRequestTooManyRequestsError:
+  DeleteTranscriptRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
     examples:
       - value:
           error: error
-  TranscriptDeleteRequestInternalServerError:
+  DeleteTranscriptRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
     examples:
       - value:
           error: error
-  TranscriptDeleteRequestServiceUnavailableError:
+  DeleteTranscriptRequestServiceUnavailableError:
     status-code: 503
     type: unknown
     docs: Service Unavailable
-  TranscriptDeleteRequestGatewayTimeoutError:
+  DeleteTranscriptRequestGatewayTimeoutError:
     status-code: 504
     type: unknown
     docs: Gateway Timeout
-  TranscriptGetSubtitlesRequestBadRequestError:
+  GetSubtitlesTranscriptRequestBadRequestError:
     status-code: 400
     type: Error
     docs: Bad Request
     examples:
       - value:
           error: error
-  TranscriptGetSubtitlesRequestUnauthorizedError:
+  GetSubtitlesTranscriptRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
     examples:
       - value:
           error: error
-  TranscriptGetSubtitlesRequestNotFoundError:
+  GetSubtitlesTranscriptRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
     examples:
       - value:
           error: error
-  TranscriptGetSubtitlesRequestTooManyRequestsError:
+  GetSubtitlesTranscriptRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
     examples:
       - value:
           error: error
-  TranscriptGetSubtitlesRequestInternalServerError:
+  GetSubtitlesTranscriptRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
     examples:
       - value:
           error: error
-  TranscriptGetSubtitlesRequestServiceUnavailableError:
+  GetSubtitlesTranscriptRequestServiceUnavailableError:
     status-code: 503
     type: unknown
     docs: Service Unavailable
-  TranscriptGetSubtitlesRequestGatewayTimeoutError:
+  GetSubtitlesTranscriptRequestGatewayTimeoutError:
     status-code: 504
     type: unknown
     docs: Gateway Timeout
-  TranscriptGetSentencesRequestBadRequestError:
+  GetSentencesTranscriptRequestBadRequestError:
     status-code: 400
     type: Error
     docs: Bad Request
     examples:
       - value:
           error: error
-  TranscriptGetSentencesRequestUnauthorizedError:
+  GetSentencesTranscriptRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
     examples:
       - value:
           error: error
-  TranscriptGetSentencesRequestNotFoundError:
+  GetSentencesTranscriptRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
     examples:
       - value:
           error: error
-  TranscriptGetSentencesRequestTooManyRequestsError:
+  GetSentencesTranscriptRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
     examples:
       - value:
           error: error
-  TranscriptGetSentencesRequestInternalServerError:
+  GetSentencesTranscriptRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
     examples:
       - value:
           error: error
-  TranscriptGetSentencesRequestServiceUnavailableError:
+  GetSentencesTranscriptRequestServiceUnavailableError:
     status-code: 503
     type: unknown
     docs: Service Unavailable
-  TranscriptGetSentencesRequestGatewayTimeoutError:
+  GetSentencesTranscriptRequestGatewayTimeoutError:
     status-code: 504
     type: unknown
     docs: Gateway Timeout
-  TranscriptGetParagraphsRequestBadRequestError:
+  GetParagraphsTranscriptRequestBadRequestError:
     status-code: 400
     type: Error
     docs: Bad Request
     examples:
       - value:
           error: error
-  TranscriptGetParagraphsRequestUnauthorizedError:
+  GetParagraphsTranscriptRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
     examples:
       - value:
           error: error
-  TranscriptGetParagraphsRequestNotFoundError:
+  GetParagraphsTranscriptRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
     examples:
       - value:
           error: error
-  TranscriptGetParagraphsRequestTooManyRequestsError:
+  GetParagraphsTranscriptRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
     examples:
       - value:
           error: error
-  TranscriptGetParagraphsRequestInternalServerError:
+  GetParagraphsTranscriptRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
     examples:
       - value:
           error: error
-  TranscriptGetParagraphsRequestServiceUnavailableError:
+  GetParagraphsTranscriptRequestServiceUnavailableError:
     status-code: 503
     type: unknown
     docs: Service Unavailable
-  TranscriptGetParagraphsRequestGatewayTimeoutError:
+  GetParagraphsTranscriptRequestGatewayTimeoutError:
     status-code: 504
     type: unknown
     docs: Gateway Timeout
-  TranscriptWordSearchRequestBadRequestError:
+  WordSearchTranscriptRequestBadRequestError:
     status-code: 400
     type: Error
     docs: Bad Request
     examples:
       - value:
           error: error
-  TranscriptWordSearchRequestUnauthorizedError:
+  WordSearchTranscriptRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
     examples:
       - value:
           error: error
-  TranscriptWordSearchRequestNotFoundError:
+  WordSearchTranscriptRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
     examples:
       - value:
           error: error
-  TranscriptWordSearchRequestTooManyRequestsError:
+  WordSearchTranscriptRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
     examples:
       - value:
           error: error
-  TranscriptWordSearchRequestInternalServerError:
+  WordSearchTranscriptRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
     examples:
       - value:
           error: error
-  TranscriptWordSearchRequestServiceUnavailableError:
+  WordSearchTranscriptRequestServiceUnavailableError:
     status-code: 503
     type: unknown
     docs: Service Unavailable
-  TranscriptWordSearchRequestGatewayTimeoutError:
+  WordSearchTranscriptRequestGatewayTimeoutError:
     status-code: 504
     type: unknown
     docs: Gateway Timeout
-  TranscriptGetRedactedAudioRequestBadRequestError:
+  GetRedactedAudioTranscriptRequestBadRequestError:
     status-code: 400
     type: Error
     docs: Bad Request
     examples:
       - value:
           error: error
-  TranscriptGetRedactedAudioRequestUnauthorizedError:
+  GetRedactedAudioTranscriptRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
     examples:
       - value:
           error: error
-  TranscriptGetRedactedAudioRequestNotFoundError:
+  GetRedactedAudioTranscriptRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
     examples:
       - value:
           error: error
-  TranscriptGetRedactedAudioRequestTooManyRequestsError:
+  GetRedactedAudioTranscriptRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
     examples:
       - value:
           error: error
-  TranscriptGetRedactedAudioRequestInternalServerError:
+  GetRedactedAudioTranscriptRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
     examples:
       - value:
           error: error
-  TranscriptGetRedactedAudioRequestServiceUnavailableError:
+  GetRedactedAudioTranscriptRequestServiceUnavailableError:
     status-code: 503
     type: unknown
     docs: Service Unavailable
-  TranscriptGetRedactedAudioRequestGatewayTimeoutError:
+  GetRedactedAudioTranscriptRequestGatewayTimeoutError:
     status-code: 504
     type: unknown
     docs: Gateway Timeout
-  RealtimeCreateTemporaryTokenRequestBadRequestError:
+  CreateTemporaryTokenRealtimeRequestBadRequestError:
     status-code: 400
     type: Error
     docs: Bad Request
     examples:
       - value:
           error: error
-  RealtimeCreateTemporaryTokenRequestUnauthorizedError:
+  CreateTemporaryTokenRealtimeRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
     examples:
       - value:
           error: error
-  RealtimeCreateTemporaryTokenRequestNotFoundError:
+  CreateTemporaryTokenRealtimeRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
     examples:
       - value:
           error: error
-  RealtimeCreateTemporaryTokenRequestTooManyRequestsError:
+  CreateTemporaryTokenRealtimeRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
     examples:
       - value:
           error: error
-  RealtimeCreateTemporaryTokenRequestInternalServerError:
+  CreateTemporaryTokenRealtimeRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
     examples:
       - value:
           error: error
-  RealtimeCreateTemporaryTokenRequestServiceUnavailableError:
+  CreateTemporaryTokenRealtimeRequestServiceUnavailableError:
     status-code: 503
     type: unknown
     docs: Service Unavailable
-  RealtimeCreateTemporaryTokenRequestGatewayTimeoutError:
+  CreateTemporaryTokenRealtimeRequestGatewayTimeoutError:
     status-code: 504
     type: unknown
     docs: Gateway Timeout
-  LemurSummaryRequestBadRequestError:
+  SummaryLemurRequestBadRequestError:
     status-code: 400
     type: Error
     docs: Bad Request
     examples:
       - value:
           error: error
-  LemurSummaryRequestUnauthorizedError:
+  SummaryLemurRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
     examples:
       - value:
           error: error
-  LemurSummaryRequestNotFoundError:
+  SummaryLemurRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
     examples:
       - value:
           error: error
-  LemurSummaryRequestTooManyRequestsError:
+  SummaryLemurRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
     examples:
       - value:
           error: error
-  LemurSummaryRequestInternalServerError:
+  SummaryLemurRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
     examples:
       - value:
           error: error
-  LemurSummaryRequestServiceUnavailableError:
+  SummaryLemurRequestServiceUnavailableError:
     status-code: 503
     type: unknown
     docs: Service Unavailable
-  LemurSummaryRequestGatewayTimeoutError:
+  SummaryLemurRequestGatewayTimeoutError:
     status-code: 504
     type: unknown
     docs: Gateway Timeout
-  LemurQuestionAnswerRequestBadRequestError:
+  QuestionAnswerLemurRequestBadRequestError:
     status-code: 400
     type: Error
     docs: Bad Request
     examples:
       - value:
           error: error
-  LemurQuestionAnswerRequestUnauthorizedError:
+  QuestionAnswerLemurRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
     examples:
       - value:
           error: error
-  LemurQuestionAnswerRequestNotFoundError:
+  QuestionAnswerLemurRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
     examples:
       - value:
           error: error
-  LemurQuestionAnswerRequestTooManyRequestsError:
+  QuestionAnswerLemurRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
     examples:
       - value:
           error: error
-  LemurQuestionAnswerRequestInternalServerError:
+  QuestionAnswerLemurRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
     examples:
       - value:
           error: error
-  LemurQuestionAnswerRequestServiceUnavailableError:
+  QuestionAnswerLemurRequestServiceUnavailableError:
     status-code: 503
     type: unknown
     docs: Service Unavailable
-  LemurQuestionAnswerRequestGatewayTimeoutError:
+  QuestionAnswerLemurRequestGatewayTimeoutError:
     status-code: 504
     type: unknown
     docs: Gateway Timeout
-  LemurActionItemsRequestBadRequestError:
+  ActionItemsLemurRequestBadRequestError:
     status-code: 400
     type: Error
     docs: Bad Request
     examples:
       - value:
           error: error
-  LemurActionItemsRequestUnauthorizedError:
+  ActionItemsLemurRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
     examples:
       - value:
           error: error
-  LemurActionItemsRequestNotFoundError:
+  ActionItemsLemurRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
     examples:
       - value:
           error: error
-  LemurActionItemsRequestTooManyRequestsError:
+  ActionItemsLemurRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
     examples:
       - value:
           error: error
-  LemurActionItemsRequestInternalServerError:
+  ActionItemsLemurRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
     examples:
       - value:
           error: error
-  LemurActionItemsRequestServiceUnavailableError:
+  ActionItemsLemurRequestServiceUnavailableError:
     status-code: 503
     type: unknown
     docs: Service Unavailable
-  LemurActionItemsRequestGatewayTimeoutError:
+  ActionItemsLemurRequestGatewayTimeoutError:
     status-code: 504
     type: unknown
     docs: Gateway Timeout
-  LemurTaskRequestBadRequestError:
+  TaskLemurRequestBadRequestError:
     status-code: 400
     type: Error
     docs: Bad Request
     examples:
       - value:
           error: error
-  LemurTaskRequestUnauthorizedError:
+  TaskLemurRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
     examples:
       - value:
           error: error
-  LemurTaskRequestNotFoundError:
+  TaskLemurRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
     examples:
       - value:
           error: error
-  LemurTaskRequestTooManyRequestsError:
+  TaskLemurRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
     examples:
       - value:
           error: error
-  LemurTaskRequestInternalServerError:
+  TaskLemurRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
     examples:
       - value:
           error: error
-  LemurTaskRequestServiceUnavailableError:
+  TaskLemurRequestServiceUnavailableError:
     status-code: 503
     type: unknown
     docs: Service Unavailable
-  LemurTaskRequestGatewayTimeoutError:
+  TaskLemurRequestGatewayTimeoutError:
     status-code: 504
     type: unknown
     docs: Gateway Timeout
-  LemurPurgeRequestDataRequestBadRequestError:
+  PurgeRequestDataLemurRequestBadRequestError:
     status-code: 400
     type: Error
     docs: Bad Request
     examples:
       - value:
           error: error
-  LemurPurgeRequestDataRequestUnauthorizedError:
+  PurgeRequestDataLemurRequestUnauthorizedError:
     status-code: 401
     type: Error
     docs: Unauthorized
     examples:
       - value:
           error: error
-  LemurPurgeRequestDataRequestNotFoundError:
+  PurgeRequestDataLemurRequestNotFoundError:
     status-code: 404
     type: Error
     docs: Not found
     examples:
       - value:
           error: error
-  LemurPurgeRequestDataRequestTooManyRequestsError:
+  PurgeRequestDataLemurRequestTooManyRequestsError:
     status-code: 429
     type: Error
     docs: Too Many Requests
     examples:
       - value:
           error: error
-  LemurPurgeRequestDataRequestInternalServerError:
+  PurgeRequestDataLemurRequestInternalServerError:
     status-code: 500
     type: Error
     docs: An error occurred while processing the request
     examples:
       - value:
           error: error
-  LemurPurgeRequestDataRequestServiceUnavailableError:
+  PurgeRequestDataLemurRequestServiceUnavailableError:
     status-code: 503
     type: unknown
     docs: Service Unavailable
-  LemurPurgeRequestDataRequestGatewayTimeoutError:
+  PurgeRequestDataLemurRequestGatewayTimeoutError:
     status-code: 504
     type: unknown
     docs: Gateway Timeout
@@ -3917,7 +3911,7 @@ types:
     docs: The parameters for creating a transcript
     properties:
       language_code:
-        type: optional<TranscriptLanguageCode>
+        type: optional<nullable<TranscriptLanguageCode>>
         docs: >
           The language of your audio file. Possible values are found in
           [Supported
@@ -3942,12 +3936,12 @@ types:
           The URL to which we send webhooks upon trancription completion, if
           provided in the transcription request.
       webhook_auth_header_name:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The header name which should be sent back with webhook calls, if
           provided in the transcription request.
       webhook_auth_header_value:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           Defaults to null. Optionally allows a user to specify a header name
           and value to send back with a webhook call for added security.
@@ -4006,7 +4000,7 @@ types:
           redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for
           more details.
       redact_pii_sub:
-        type: optional<SubstitutionPolicy>
+        type: optional<nullable<SubstitutionPolicy>>
         docs: >-
           The replacement logic for detected PII, can be "entity_type" or
           "hash". See [PII
@@ -4019,7 +4013,7 @@ types:
           diarization](https://www.assemblyai.com/docs/Models/speaker_diarization),
           can be true or false
       speakers_expected:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: >-
           Tells the speaker label model how many speakers it should attempt to
           identify, up to 10. See [Speaker
@@ -4070,7 +4064,7 @@ types:
           Detection](https://www.assemblyai.com/docs/Models/entity_detection),
           can be true or false
       speech_threshold:
-        type: optional<float>
+        type: optional<nullable<float>>
         docs: |
           Reject audio files that contain less than this fraction of speech.
           Valid values are in the range [0, 1] inclusive.
@@ -4300,7 +4294,7 @@ types:
           The status of your transcription. Possible values are queued,
           processing, completed, or error.
       language_code:
-        type: optional<TranscriptLanguageCode>
+        type: optional<nullable<TranscriptLanguageCode>>
         docs: >
           The language of your audio file.
 
@@ -4312,10 +4306,10 @@ types:
         type: string
         docs: The URL of the media that was transcribed
       text:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: The textual transcript of your media file
       words:
-        type: optional<list<TranscriptWord>>
+        type: optional<nullable<list<TranscriptWord>>>
         docs: >
           An array of temporally-sequential word objects, one for each word in
           the transcript.
@@ -4324,7 +4318,7 @@ types:
           recognition](https://www.assemblyai.com/docs/Models/speech_recognition)
           for more information.
       utterances:
-        type: optional<list<TranscriptUtterance>>
+        type: optional<nullable<list<TranscriptUtterance>>>
         docs: >
           When dual_channel or speaker_labels is enabled, a list of turn-by-turn
           utterance objects.
@@ -4333,7 +4327,7 @@ types:
           diarization](https://www.assemblyai.com/docs/Models/speaker_diarization)
           for more information.
       confidence:
-        type: optional<double>
+        type: optional<nullable<double>>
         docs: >-
           The confidence score for the transcript, between 0.0 (low confidence)
           and 1.0 (high confidence)
@@ -4341,31 +4335,31 @@ types:
           min: 0
           max: 1
       audio_duration:
-        type: optional<float>
+        type: optional<nullable<float>>
         docs: The duration of this transcript object's media file, in seconds
       punctuate:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Whether Automatic Punctuation was enabled in the transcription
           request, either true or false.
       format_text:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Whether Text Formatting was enabled in the transcription request,
           either true or false
       dual_channel:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Whether [Dual channel
           transcription](https://www.assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription)
           was enabled in the transcription request, either true or false
       webhook_url:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The URL to which we send webhooks upon trancription completion, if
           provided in the transcription request
       webhook_status_code:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: >-
           The status code we received from your server when delivering your
           webhook, if a webhook URL was provided in the transcription request
@@ -4375,12 +4369,12 @@ types:
           Whether webhook authentication details were provided in the
           transcription request
       webhook_auth_header_name:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The header name which should be sent back with webhook calls, if
           provided in the transcription request
       speed_boost:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: Whether speed boost was enabled in the transcription request
         availability: deprecated
       auto_highlights:
@@ -4389,7 +4383,7 @@ types:
           Whether Key Phrases was enabled in the transcription request, either
           true or false
       auto_highlights_result:
-        type: optional<AutoHighlightsResult>
+        type: optional<nullable<AutoHighlightsResult>>
         docs: >
           An array of results for the Key Phrases model, if it was enabled
           during the transcription request.
@@ -4397,12 +4391,12 @@ types:
           See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases)
           for more information.
       audio_start_from:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: >-
           The point in time, in milliseconds, in the file at which the
           transcription was started, if provided in the transcription request
       audio_end_at:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: >-
           The point in time, in milliseconds, in the file at which the
           transcription was terminated, if provided in the transcription request
@@ -4412,12 +4406,12 @@ types:
           The list of custom vocabulary to boost transcription probability for,
           if provided in the transcription request
       boost_param:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The word boost parameter value, if provided in the transcription
           request
       filter_profanity:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Whether [Profanity
           Filtering](https://www.assemblyai.com/docs/Models/speech_recognition#profanity-filtering)
@@ -4429,7 +4423,7 @@ types:
           Redaction](https://www.assemblyai.com/docs/Models/pii_redaction) was
           enabled in the transcription request, either true or false
       redact_pii_audio:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >
           Whether a redacted version of the audio file was generated (enabled or
           disabled in the transcription request),
@@ -4438,7 +4432,7 @@ types:
           redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for
           more information.
       redact_pii_audio_quality:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >
           The audio quality of the PII-redacted audio file, if enabled in the
           transcription request.
@@ -4447,7 +4441,7 @@ types:
           redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for
           more information.
       redact_pii_policies:
-        type: optional<list<PiiPolicy>>
+        type: optional<nullable<list<PiiPolicy>>>
         docs: >
           The list of PII Redaction policies that were enabled, if PII Redaction
           is enabled.
@@ -4456,33 +4450,33 @@ types:
           redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for
           more information.
       redact_pii_sub:
-        type: optional<SubstitutionPolicy>
+        type: optional<nullable<SubstitutionPolicy>>
         docs: >-
           The replacement logic for detected PII, can be "entity_type" or
           "hash". See [PII
           redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for
           more details.
       speaker_labels:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Enable [Speaker
           diarization](https://www.assemblyai.com/docs/Models/speaker_diarization),
           can be true or false
       speakers_expected:
-        type: optional<integer>
+        type: optional<nullable<integer>>
         docs: >-
           Defaults to null. Tells the speaker label model how many speakers it
           should attempt to identify, up to 10. See [Speaker
           diarization](https://www.assemblyai.com/docs/Models/speaker_diarization)
           for more details.
       content_safety:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Enable [Content
           Moderation](https://www.assemblyai.com/docs/Models/content_moderation),
           can be true or false
       content_safety_labels:
-        type: optional<TranscriptContentSafetyLabels>
+        type: optional<nullable<TranscriptContentSafetyLabels>>
         docs: >
           An array of results for the Content Moderation model, if it was
           enabled during the transcription request.
@@ -4491,13 +4485,13 @@ types:
           moderation](https://www.assemblyai.com/docs/Models/content_moderation)
           for more information.
       iab_categories:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Enable [Topic
           Detection](https://www.assemblyai.com/docs/Models/iab_classification),
           can be true or false
       iab_categories_result:
-        type: optional<TranscriptIabCategoriesResult>
+        type: optional<nullable<TranscriptIabCategoriesResult>>
         docs: >
           An array of results for the Topic Detection model, if it was enabled
           during the transcription request.
@@ -4506,22 +4500,22 @@ types:
           Detection](https://www.assemblyai.com/docs/Models/iab_classification)
           for more information.
       language_detection:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Whether [Automatic language
           detection](https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection)
           was enabled in the transcription request, either true or false
       custom_spelling:
-        type: optional<list<TranscriptCustomSpelling>>
+        type: optional<nullable<list<TranscriptCustomSpelling>>>
         docs: Customize how words are spelled and formatted using to and from values
       auto_chapters:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Enable [Auto
           Chapters](https://www.assemblyai.com/docs/Models/auto_chapters), can
           be true or false
       chapters:
-        type: optional<list<Chapter>>
+        type: optional<nullable<list<Chapter>>>
         docs: An array of temporally sequential chapters for the audio file
       summarization:
         type: boolean
@@ -4530,13 +4524,13 @@ types:
           [Summarization](https://www.assemblyai.com/docs/Models/summarization)
           was enabled in the transcription request, either true or false
       summary_type:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The type of summary generated, if
           [Summarization](https://www.assemblyai.com/docs/Models/summarization)
           was enabled in the transcription request
       summary_model:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >
           The Summarization model used to generate the summary,
 
@@ -4544,13 +4538,13 @@ types:
           [Summarization](https://www.assemblyai.com/docs/Models/summarization)
           was enabled in the transcription request
       summary:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The generated summary of the media file, if
           [Summarization](https://www.assemblyai.com/docs/Models/summarization)
           was enabled in the transcription request
       custom_topics:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Whether custom topics was enabled in the transcription request, either
           true or false
@@ -4560,18 +4554,18 @@ types:
           The list of custom topics provided if custom topics was enabled in the
           transcription request
       disfluencies:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Transcribe Filler Words, like "umm", in your media file; can be true
           or false
       sentiment_analysis:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Enable [Sentiment
           Analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis),
           can be true or false
       sentiment_analysis_results:
-        type: optional<list<SentimentAnalysisResult>>
+        type: optional<nullable<list<SentimentAnalysisResult>>>
         docs: >
           An array of results for the Sentiment Analysis model, if it was
           enabled during the transcription request.
@@ -4580,13 +4574,13 @@ types:
           analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis)
           for more information.
       entity_detection:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           Enable [Entity
           Detection](https://www.assemblyai.com/docs/Models/entity_detection),
           can be true or false
       entities:
-        type: optional<list<Entity>>
+        type: optional<nullable<list<Entity>>>
         docs: >
           An array of results for the Entity Detection model, if it was enabled
           during the transcription request.
@@ -4595,14 +4589,14 @@ types:
           detection](https://www.assemblyai.com/docs/Models/entity_detection)
           for more information.
       speech_threshold:
-        type: optional<float>
+        type: optional<nullable<float>>
         docs: >
           Defaults to null. Reject audio files that contain less than this
           fraction of speech.
 
           Valid values are in the range [0, 1] inclusive.
       throttled:
-        type: optional<boolean>
+        type: optional<nullable<boolean>>
         docs: >-
           True while a request is throttled and false when a request is no
           longer throttled
@@ -4760,7 +4754,7 @@ types:
           min: 0
           max: 1
       speaker:
-        type: optional<string>
+        type: optional<nullable<string>>
         docs: >-
           The speaker of the sentence if Speaker Diarization is enabled, else
           null
@@ -4909,7 +4903,7 @@ types:
       start: integer
       end: integer
       text: string
-      speaker: optional<string>
+      speaker: optional<nullable<string>>
     source:
       openapi: ../openapi.yml
   TranscriptSentence:
@@ -4968,7 +4962,7 @@ types:
       result_count: integer
       current_url: string
       prev_url: string
-      next_url: optional<string>
+      next_url: optional<nullable<string>>
     source:
       openapi: ../openapi.yml
   TranscriptListParameters:
@@ -4981,10 +4975,8 @@ types:
         type: optional<TranscriptStatus>
         docs: Filter by transcript status
       created_on:
-        type: optional<string>
+        type: optional<date>
         docs: Only get transcripts created on this date
-        validation:
-          format: date
       before_id:
         type: optional<string>
         docs: Get transcripts that were created before this transcript ID
@@ -5367,13 +5359,13 @@ types:
               "display-name": "Upload an audio or video file which can be transcribed.",
               "docs": "Upload your audio or video file directly to the AssemblyAI API if it isn't accessible via a URL already.",
               "errors": [
-                "root.FilesUploadRequestBadRequestError",
-                "root.FilesUploadRequestUnauthorizedError",
-                "root.FilesUploadRequestNotFoundError",
-                "root.FilesUploadRequestTooManyRequestsError",
-                "root.FilesUploadRequestInternalServerError",
-                "root.FilesUploadRequestServiceUnavailableError",
-                "root.FilesUploadRequestGatewayTimeoutError",
+                "root.UploadFilesRequestBadRequestError",
+                "root.UploadFilesRequestUnauthorizedError",
+                "root.UploadFilesRequestNotFoundError",
+                "root.UploadFilesRequestTooManyRequestsError",
+                "root.UploadFilesRequestInternalServerError",
+                "root.UploadFilesRequestServiceUnavailableError",
+                "root.UploadFilesRequestGatewayTimeoutError",
               ],
               "method": "POST",
               "pagination": undefined,
@@ -5421,13 +5413,13 @@ service:
         type: root.UploadedFile
         status-code: 200
       errors:
-        - root.FilesUploadRequestBadRequestError
-        - root.FilesUploadRequestUnauthorizedError
-        - root.FilesUploadRequestNotFoundError
-        - root.FilesUploadRequestTooManyRequestsError
-        - root.FilesUploadRequestInternalServerError
-        - root.FilesUploadRequestServiceUnavailableError
-        - root.FilesUploadRequestGatewayTimeoutError
+        - root.UploadFilesRequestBadRequestError
+        - root.UploadFilesRequestUnauthorizedError
+        - root.UploadFilesRequestNotFoundError
+        - root.UploadFilesRequestTooManyRequestsError
+        - root.UploadFilesRequestInternalServerError
+        - root.UploadFilesRequestServiceUnavailableError
+        - root.UploadFilesRequestGatewayTimeoutError
   source:
     openapi: ../openapi.yml
 ",
@@ -5449,13 +5441,13 @@ service:
               "display-name": "Extract action items from one or more meeting transcripts.",
               "docs": "Use LeMUR to generate a list of Action Items from a transcript",
               "errors": [
-                "root.LemurActionItemsRequestBadRequestError",
-                "root.LemurActionItemsRequestUnauthorizedError",
-                "root.LemurActionItemsRequestNotFoundError",
-                "root.LemurActionItemsRequestTooManyRequestsError",
-                "root.LemurActionItemsRequestInternalServerError",
-                "root.LemurActionItemsRequestServiceUnavailableError",
-                "root.LemurActionItemsRequestGatewayTimeoutError",
+                "root.ActionItemsLemurRequestBadRequestError",
+                "root.ActionItemsLemurRequestUnauthorizedError",
+                "root.ActionItemsLemurRequestNotFoundError",
+                "root.ActionItemsLemurRequestTooManyRequestsError",
+                "root.ActionItemsLemurRequestInternalServerError",
+                "root.ActionItemsLemurRequestServiceUnavailableError",
+                "root.ActionItemsLemurRequestGatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -5495,13 +5487,13 @@ service:
 The LLM response data, as well as any context provided in the original request will be removed.
 ",
               "errors": [
-                "root.LemurPurgeRequestDataRequestBadRequestError",
-                "root.LemurPurgeRequestDataRequestUnauthorizedError",
-                "root.LemurPurgeRequestDataRequestNotFoundError",
-                "root.LemurPurgeRequestDataRequestTooManyRequestsError",
-                "root.LemurPurgeRequestDataRequestInternalServerError",
-                "root.LemurPurgeRequestDataRequestServiceUnavailableError",
-                "root.LemurPurgeRequestDataRequestGatewayTimeoutError",
+                "root.PurgeRequestDataLemurRequestBadRequestError",
+                "root.PurgeRequestDataLemurRequestUnauthorizedError",
+                "root.PurgeRequestDataLemurRequestNotFoundError",
+                "root.PurgeRequestDataLemurRequestTooManyRequestsError",
+                "root.PurgeRequestDataLemurRequestInternalServerError",
+                "root.PurgeRequestDataLemurRequestServiceUnavailableError",
+                "root.PurgeRequestDataLemurRequestGatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -5520,10 +5512,13 @@ The LLM response data, as well as any context provided in the original request w
               "method": "DELETE",
               "pagination": undefined,
               "path": "/lemur/v3/{request_id}",
-              "path-parameters": {
-                "request_id": {
-                  "docs": "The ID of the LeMUR request whose data you want to delete. This would be found in the response of the original request.",
-                  "type": "string",
+              "request": {
+                "name": "PurgeRequestDataLemurRequest",
+                "path-parameters": {
+                  "request_id": {
+                    "docs": "The ID of the LeMUR request whose data you want to delete. This would be found in the response of the original request.",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -5540,13 +5535,13 @@ The LLM response data, as well as any context provided in the original request w
               "display-name": "Create answers to one or more questions about one or more transcripts.",
               "docs": "Question & Answer allows you to ask free-form questions about a single transcript or a group of transcripts. The questions can be any whose answers you find useful, such as judging whether a caller is likely to become a customer or whether all items on a meeting's agenda were covered.",
               "errors": [
-                "root.LemurQuestionAnswerRequestBadRequestError",
-                "root.LemurQuestionAnswerRequestUnauthorizedError",
-                "root.LemurQuestionAnswerRequestNotFoundError",
-                "root.LemurQuestionAnswerRequestTooManyRequestsError",
-                "root.LemurQuestionAnswerRequestInternalServerError",
-                "root.LemurQuestionAnswerRequestServiceUnavailableError",
-                "root.LemurQuestionAnswerRequestGatewayTimeoutError",
+                "root.QuestionAnswerLemurRequestBadRequestError",
+                "root.QuestionAnswerLemurRequestUnauthorizedError",
+                "root.QuestionAnswerLemurRequestNotFoundError",
+                "root.QuestionAnswerLemurRequestTooManyRequestsError",
+                "root.QuestionAnswerLemurRequestInternalServerError",
+                "root.QuestionAnswerLemurRequestServiceUnavailableError",
+                "root.QuestionAnswerLemurRequestGatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -5608,13 +5603,13 @@ The LLM response data, as well as any context provided in the original request w
               "display-name": "Generate a custom summary from one or more transcripts.",
               "docs": "Custom Summary allows you to distill a piece of audio into a few impactful sentences. You can give the model context to obtain more targeted results while outputting the results in a variety of formats described in human language.",
               "errors": [
-                "root.LemurSummaryRequestBadRequestError",
-                "root.LemurSummaryRequestUnauthorizedError",
-                "root.LemurSummaryRequestNotFoundError",
-                "root.LemurSummaryRequestTooManyRequestsError",
-                "root.LemurSummaryRequestInternalServerError",
-                "root.LemurSummaryRequestServiceUnavailableError",
-                "root.LemurSummaryRequestGatewayTimeoutError",
+                "root.SummaryLemurRequestBadRequestError",
+                "root.SummaryLemurRequestUnauthorizedError",
+                "root.SummaryLemurRequestNotFoundError",
+                "root.SummaryLemurRequestTooManyRequestsError",
+                "root.SummaryLemurRequestInternalServerError",
+                "root.SummaryLemurRequestServiceUnavailableError",
+                "root.SummaryLemurRequestGatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -5667,13 +5662,13 @@ The LLM response data, as well as any context provided in the original request w
               "display-name": "Ask LeMUR to use one or more transcripts with a Custom Task to handle your specialized task.",
               "docs": "Use LeMUR to ask anything with Custom Task",
               "errors": [
-                "root.LemurTaskRequestBadRequestError",
-                "root.LemurTaskRequestUnauthorizedError",
-                "root.LemurTaskRequestNotFoundError",
-                "root.LemurTaskRequestTooManyRequestsError",
-                "root.LemurTaskRequestInternalServerError",
-                "root.LemurTaskRequestServiceUnavailableError",
-                "root.LemurTaskRequestGatewayTimeoutError",
+                "root.TaskLemurRequestBadRequestError",
+                "root.TaskLemurRequestUnauthorizedError",
+                "root.TaskLemurRequestNotFoundError",
+                "root.TaskLemurRequestTooManyRequestsError",
+                "root.TaskLemurRequestInternalServerError",
+                "root.TaskLemurRequestServiceUnavailableError",
+                "root.TaskLemurRequestGatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -5761,13 +5756,13 @@ service:
         type: root.LemurSummaryResponse
         status-code: 200
       errors:
-        - root.LemurSummaryRequestBadRequestError
-        - root.LemurSummaryRequestUnauthorizedError
-        - root.LemurSummaryRequestNotFoundError
-        - root.LemurSummaryRequestTooManyRequestsError
-        - root.LemurSummaryRequestInternalServerError
-        - root.LemurSummaryRequestServiceUnavailableError
-        - root.LemurSummaryRequestGatewayTimeoutError
+        - root.SummaryLemurRequestBadRequestError
+        - root.SummaryLemurRequestUnauthorizedError
+        - root.SummaryLemurRequestNotFoundError
+        - root.SummaryLemurRequestTooManyRequestsError
+        - root.SummaryLemurRequestInternalServerError
+        - root.SummaryLemurRequestServiceUnavailableError
+        - root.SummaryLemurRequestGatewayTimeoutError
       examples:
         - request:
             transcript_ids:
@@ -5803,13 +5798,13 @@ service:
         type: root.LemurQuestionAnswerResponse
         status-code: 200
       errors:
-        - root.LemurQuestionAnswerRequestBadRequestError
-        - root.LemurQuestionAnswerRequestUnauthorizedError
-        - root.LemurQuestionAnswerRequestNotFoundError
-        - root.LemurQuestionAnswerRequestTooManyRequestsError
-        - root.LemurQuestionAnswerRequestInternalServerError
-        - root.LemurQuestionAnswerRequestServiceUnavailableError
-        - root.LemurQuestionAnswerRequestGatewayTimeoutError
+        - root.QuestionAnswerLemurRequestBadRequestError
+        - root.QuestionAnswerLemurRequestUnauthorizedError
+        - root.QuestionAnswerLemurRequestNotFoundError
+        - root.QuestionAnswerLemurRequestTooManyRequestsError
+        - root.QuestionAnswerLemurRequestInternalServerError
+        - root.QuestionAnswerLemurRequestServiceUnavailableError
+        - root.QuestionAnswerLemurRequestGatewayTimeoutError
       examples:
         - request:
             transcript_ids:
@@ -5837,13 +5832,13 @@ service:
         type: root.LemurActionItemsResponse
         status-code: 200
       errors:
-        - root.LemurActionItemsRequestBadRequestError
-        - root.LemurActionItemsRequestUnauthorizedError
-        - root.LemurActionItemsRequestNotFoundError
-        - root.LemurActionItemsRequestTooManyRequestsError
-        - root.LemurActionItemsRequestInternalServerError
-        - root.LemurActionItemsRequestServiceUnavailableError
-        - root.LemurActionItemsRequestGatewayTimeoutError
+        - root.ActionItemsLemurRequestBadRequestError
+        - root.ActionItemsLemurRequestUnauthorizedError
+        - root.ActionItemsLemurRequestNotFoundError
+        - root.ActionItemsLemurRequestTooManyRequestsError
+        - root.ActionItemsLemurRequestInternalServerError
+        - root.ActionItemsLemurRequestServiceUnavailableError
+        - root.ActionItemsLemurRequestGatewayTimeoutError
       examples:
         - request:
             transcript_ids:
@@ -5878,13 +5873,13 @@ service:
         type: root.LemurTaskResponse
         status-code: 200
       errors:
-        - root.LemurTaskRequestBadRequestError
-        - root.LemurTaskRequestUnauthorizedError
-        - root.LemurTaskRequestNotFoundError
-        - root.LemurTaskRequestTooManyRequestsError
-        - root.LemurTaskRequestInternalServerError
-        - root.LemurTaskRequestServiceUnavailableError
-        - root.LemurTaskRequestGatewayTimeoutError
+        - root.TaskLemurRequestBadRequestError
+        - root.TaskLemurRequestUnauthorizedError
+        - root.TaskLemurRequestNotFoundError
+        - root.TaskLemurRequestTooManyRequestsError
+        - root.TaskLemurRequestInternalServerError
+        - root.TaskLemurRequestServiceUnavailableError
+        - root.TaskLemurRequestGatewayTimeoutError
       examples:
         - request:
             transcript_ids:
@@ -5904,25 +5899,27 @@ service:
         request will be removed.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        request_id:
-          type: string
-          docs: >-
-            The ID of the LeMUR request whose data you want to delete. This
-            would be found in the response of the original request.
       display-name: Delete the data for a previously submitted LeMUR request.
+      request:
+        name: PurgeRequestDataLemurRequest
+        path-parameters:
+          request_id:
+            type: string
+            docs: >-
+              The ID of the LeMUR request whose data you want to delete. This
+              would be found in the response of the original request.
       response:
         docs: LeMUR request data deleted.
         type: root.PurgeLemurRequestDataResponse
         status-code: 200
       errors:
-        - root.LemurPurgeRequestDataRequestBadRequestError
-        - root.LemurPurgeRequestDataRequestUnauthorizedError
-        - root.LemurPurgeRequestDataRequestNotFoundError
-        - root.LemurPurgeRequestDataRequestTooManyRequestsError
-        - root.LemurPurgeRequestDataRequestInternalServerError
-        - root.LemurPurgeRequestDataRequestServiceUnavailableError
-        - root.LemurPurgeRequestDataRequestGatewayTimeoutError
+        - root.PurgeRequestDataLemurRequestBadRequestError
+        - root.PurgeRequestDataLemurRequestUnauthorizedError
+        - root.PurgeRequestDataLemurRequestNotFoundError
+        - root.PurgeRequestDataLemurRequestTooManyRequestsError
+        - root.PurgeRequestDataLemurRequestInternalServerError
+        - root.PurgeRequestDataLemurRequestServiceUnavailableError
+        - root.PurgeRequestDataLemurRequestGatewayTimeoutError
       examples:
         - path-parameters:
             request_id: request_id
@@ -5954,13 +5951,13 @@ docs: LeMUR related operations
               "display-name": "Create a temporary authentication token for real-time transcription",
               "docs": "Create a temporary authentication token for real-time transcription",
               "errors": [
-                "root.RealtimeCreateTemporaryTokenRequestBadRequestError",
-                "root.RealtimeCreateTemporaryTokenRequestUnauthorizedError",
-                "root.RealtimeCreateTemporaryTokenRequestNotFoundError",
-                "root.RealtimeCreateTemporaryTokenRequestTooManyRequestsError",
-                "root.RealtimeCreateTemporaryTokenRequestInternalServerError",
-                "root.RealtimeCreateTemporaryTokenRequestServiceUnavailableError",
-                "root.RealtimeCreateTemporaryTokenRequestGatewayTimeoutError",
+                "root.CreateTemporaryTokenRealtimeRequestBadRequestError",
+                "root.CreateTemporaryTokenRealtimeRequestUnauthorizedError",
+                "root.CreateTemporaryTokenRealtimeRequestNotFoundError",
+                "root.CreateTemporaryTokenRealtimeRequestTooManyRequestsError",
+                "root.CreateTemporaryTokenRealtimeRequestInternalServerError",
+                "root.CreateTemporaryTokenRealtimeRequestServiceUnavailableError",
+                "root.CreateTemporaryTokenRealtimeRequestGatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -6042,13 +6039,13 @@ service:
         type: root.RealtimeTemporaryTokenResponse
         status-code: 200
       errors:
-        - root.RealtimeCreateTemporaryTokenRequestBadRequestError
-        - root.RealtimeCreateTemporaryTokenRequestUnauthorizedError
-        - root.RealtimeCreateTemporaryTokenRequestNotFoundError
-        - root.RealtimeCreateTemporaryTokenRequestTooManyRequestsError
-        - root.RealtimeCreateTemporaryTokenRequestInternalServerError
-        - root.RealtimeCreateTemporaryTokenRequestServiceUnavailableError
-        - root.RealtimeCreateTemporaryTokenRequestGatewayTimeoutError
+        - root.CreateTemporaryTokenRealtimeRequestBadRequestError
+        - root.CreateTemporaryTokenRealtimeRequestUnauthorizedError
+        - root.CreateTemporaryTokenRealtimeRequestNotFoundError
+        - root.CreateTemporaryTokenRealtimeRequestTooManyRequestsError
+        - root.CreateTemporaryTokenRealtimeRequestInternalServerError
+        - root.CreateTemporaryTokenRealtimeRequestServiceUnavailableError
+        - root.CreateTemporaryTokenRealtimeRequestGatewayTimeoutError
       examples:
         - request:
             expires_in: 1
@@ -6078,13 +6075,13 @@ docs: Real-time transcription
               "display-name": "Create a transcript from an audio file",
               "docs": "Create a transcript from an audio or video file that is accessible via a URL.",
               "errors": [
-                "root.TranscriptCreateRequestBadRequestError",
-                "root.TranscriptCreateRequestUnauthorizedError",
-                "root.TranscriptCreateRequestNotFoundError",
-                "root.TranscriptCreateRequestTooManyRequestsError",
-                "root.TranscriptCreateRequestInternalServerError",
-                "root.TranscriptCreateRequestServiceUnavailableError",
-                "root.TranscriptCreateRequestGatewayTimeoutError",
+                "root.CreateTranscriptRequestBadRequestError",
+                "root.CreateTranscriptRequestUnauthorizedError",
+                "root.CreateTranscriptRequestNotFoundError",
+                "root.CreateTranscriptRequestTooManyRequestsError",
+                "root.CreateTranscriptRequestInternalServerError",
+                "root.CreateTranscriptRequestServiceUnavailableError",
+                "root.CreateTranscriptRequestGatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -6301,13 +6298,13 @@ docs: Real-time transcription
               "display-name": "Delete the transcript",
               "docs": "Delete the transcript",
               "errors": [
-                "root.TranscriptDeleteRequestBadRequestError",
-                "root.TranscriptDeleteRequestUnauthorizedError",
-                "root.TranscriptDeleteRequestNotFoundError",
-                "root.TranscriptDeleteRequestTooManyRequestsError",
-                "root.TranscriptDeleteRequestInternalServerError",
-                "root.TranscriptDeleteRequestServiceUnavailableError",
-                "root.TranscriptDeleteRequestGatewayTimeoutError",
+                "root.DeleteTranscriptRequestBadRequestError",
+                "root.DeleteTranscriptRequestUnauthorizedError",
+                "root.DeleteTranscriptRequestNotFoundError",
+                "root.DeleteTranscriptRequestTooManyRequestsError",
+                "root.DeleteTranscriptRequestInternalServerError",
+                "root.DeleteTranscriptRequestServiceUnavailableError",
+                "root.DeleteTranscriptRequestGatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -6492,10 +6489,13 @@ docs: Real-time transcription
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v2/transcript/{transcript_id}",
-              "path-parameters": {
-                "transcript_id": {
-                  "docs": "ID of the transcript",
-                  "type": "string",
+              "request": {
+                "name": "DeleteTranscriptRequest",
+                "path-parameters": {
+                  "transcript_id": {
+                    "docs": "ID of the transcript",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -6512,13 +6512,13 @@ docs: Real-time transcription
               "display-name": "Get the transcript",
               "docs": "Get the transcript resource. The transcript is ready when the "status" is "completed".",
               "errors": [
-                "root.TranscriptGetRequestBadRequestError",
-                "root.TranscriptGetRequestUnauthorizedError",
-                "root.TranscriptGetRequestNotFoundError",
-                "root.TranscriptGetRequestTooManyRequestsError",
-                "root.TranscriptGetRequestInternalServerError",
-                "root.TranscriptGetRequestServiceUnavailableError",
-                "root.TranscriptGetRequestGatewayTimeoutError",
+                "root.GetTranscriptRequestBadRequestError",
+                "root.GetTranscriptRequestUnauthorizedError",
+                "root.GetTranscriptRequestNotFoundError",
+                "root.GetTranscriptRequestTooManyRequestsError",
+                "root.GetTranscriptRequestInternalServerError",
+                "root.GetTranscriptRequestServiceUnavailableError",
+                "root.GetTranscriptRequestGatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -6703,10 +6703,13 @@ docs: Real-time transcription
               "method": "GET",
               "pagination": undefined,
               "path": "/v2/transcript/{transcript_id}",
-              "path-parameters": {
-                "transcript_id": {
-                  "docs": "ID of the transcript",
-                  "type": "string",
+              "request": {
+                "name": "GetTranscriptRequest",
+                "path-parameters": {
+                  "transcript_id": {
+                    "docs": "ID of the transcript",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -6723,13 +6726,13 @@ docs: Real-time transcription
               "display-name": "Get the transcript split by paragraphs",
               "docs": "Get the transcript split by paragraphs. The API will attempt to semantically segment your transcript into paragraphs to create more reader-friendly transcripts.",
               "errors": [
-                "root.TranscriptGetParagraphsRequestBadRequestError",
-                "root.TranscriptGetParagraphsRequestUnauthorizedError",
-                "root.TranscriptGetParagraphsRequestNotFoundError",
-                "root.TranscriptGetParagraphsRequestTooManyRequestsError",
-                "root.TranscriptGetParagraphsRequestInternalServerError",
-                "root.TranscriptGetParagraphsRequestServiceUnavailableError",
-                "root.TranscriptGetParagraphsRequestGatewayTimeoutError",
+                "root.GetParagraphsTranscriptRequestBadRequestError",
+                "root.GetParagraphsTranscriptRequestUnauthorizedError",
+                "root.GetParagraphsTranscriptRequestNotFoundError",
+                "root.GetParagraphsTranscriptRequestTooManyRequestsError",
+                "root.GetParagraphsTranscriptRequestInternalServerError",
+                "root.GetParagraphsTranscriptRequestServiceUnavailableError",
+                "root.GetParagraphsTranscriptRequestGatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -6764,10 +6767,13 @@ docs: Real-time transcription
               "method": "GET",
               "pagination": undefined,
               "path": "/v2/transcript/{transcript_id}/paragraphs",
-              "path-parameters": {
-                "transcript_id": {
-                  "docs": "ID of the transcript",
-                  "type": "string",
+              "request": {
+                "name": "GetParagraphsTranscriptRequest",
+                "path-parameters": {
+                  "transcript_id": {
+                    "docs": "ID of the transcript",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -6784,13 +6790,13 @@ docs: Real-time transcription
               "display-name": "Retrieves the redacted audio object containing the status and URL to the redacted audio.",
               "docs": "Retrieves the redacted audio object containing the status and URL to the redacted audio.",
               "errors": [
-                "root.TranscriptGetRedactedAudioRequestBadRequestError",
-                "root.TranscriptGetRedactedAudioRequestUnauthorizedError",
-                "root.TranscriptGetRedactedAudioRequestNotFoundError",
-                "root.TranscriptGetRedactedAudioRequestTooManyRequestsError",
-                "root.TranscriptGetRedactedAudioRequestInternalServerError",
-                "root.TranscriptGetRedactedAudioRequestServiceUnavailableError",
-                "root.TranscriptGetRedactedAudioRequestGatewayTimeoutError",
+                "root.GetRedactedAudioTranscriptRequestBadRequestError",
+                "root.GetRedactedAudioTranscriptRequestUnauthorizedError",
+                "root.GetRedactedAudioTranscriptRequestNotFoundError",
+                "root.GetRedactedAudioTranscriptRequestTooManyRequestsError",
+                "root.GetRedactedAudioTranscriptRequestInternalServerError",
+                "root.GetRedactedAudioTranscriptRequestServiceUnavailableError",
+                "root.GetRedactedAudioTranscriptRequestGatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -6808,10 +6814,13 @@ docs: Real-time transcription
               "method": "GET",
               "pagination": undefined,
               "path": "/v2/transcript/{transcript_id}/redacted-audio",
-              "path-parameters": {
-                "transcript_id": {
-                  "docs": "ID of the transcript",
-                  "type": "string",
+              "request": {
+                "name": "GetRedactedAudioTranscriptRequest",
+                "path-parameters": {
+                  "transcript_id": {
+                    "docs": "ID of the transcript",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -6828,13 +6837,13 @@ docs: Real-time transcription
               "display-name": "Get the transcript split by sentences",
               "docs": "Get the transcript split by sentences. The API will attempt to semantically segment the transcript into sentences to create more reader-friendly transcripts.",
               "errors": [
-                "root.TranscriptGetSentencesRequestBadRequestError",
-                "root.TranscriptGetSentencesRequestUnauthorizedError",
-                "root.TranscriptGetSentencesRequestNotFoundError",
-                "root.TranscriptGetSentencesRequestTooManyRequestsError",
-                "root.TranscriptGetSentencesRequestInternalServerError",
-                "root.TranscriptGetSentencesRequestServiceUnavailableError",
-                "root.TranscriptGetSentencesRequestGatewayTimeoutError",
+                "root.GetSentencesTranscriptRequestBadRequestError",
+                "root.GetSentencesTranscriptRequestUnauthorizedError",
+                "root.GetSentencesTranscriptRequestNotFoundError",
+                "root.GetSentencesTranscriptRequestTooManyRequestsError",
+                "root.GetSentencesTranscriptRequestInternalServerError",
+                "root.GetSentencesTranscriptRequestServiceUnavailableError",
+                "root.GetSentencesTranscriptRequestGatewayTimeoutError",
               ],
               "examples": [
                 {
@@ -6869,10 +6878,13 @@ docs: Real-time transcription
               "method": "GET",
               "pagination": undefined,
               "path": "/v2/transcript/{transcript_id}/sentences",
-              "path-parameters": {
-                "transcript_id": {
-                  "docs": "ID of the transcript",
-                  "type": "string",
+              "request": {
+                "name": "GetSentencesTranscriptRequest",
+                "path-parameters": {
+                  "transcript_id": {
+                    "docs": "ID of the transcript",
+                    "type": "string",
+                  },
                 },
               },
               "response": {
@@ -6889,29 +6901,29 @@ docs: Real-time transcription
               "display-name": "Export transcript as SRT or VTT captions.",
               "docs": "Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.",
               "errors": [
-                "root.TranscriptGetSubtitlesRequestBadRequestError",
-                "root.TranscriptGetSubtitlesRequestUnauthorizedError",
-                "root.TranscriptGetSubtitlesRequestNotFoundError",
-                "root.TranscriptGetSubtitlesRequestTooManyRequestsError",
-                "root.TranscriptGetSubtitlesRequestInternalServerError",
-                "root.TranscriptGetSubtitlesRequestServiceUnavailableError",
-                "root.TranscriptGetSubtitlesRequestGatewayTimeoutError",
+                "root.GetSubtitlesTranscriptRequestBadRequestError",
+                "root.GetSubtitlesTranscriptRequestUnauthorizedError",
+                "root.GetSubtitlesTranscriptRequestNotFoundError",
+                "root.GetSubtitlesTranscriptRequestTooManyRequestsError",
+                "root.GetSubtitlesTranscriptRequestInternalServerError",
+                "root.GetSubtitlesTranscriptRequestServiceUnavailableError",
+                "root.GetSubtitlesTranscriptRequestGatewayTimeoutError",
               ],
               "method": "GET",
               "pagination": undefined,
               "path": "/v2/transcript/{transcript_id}/{subtitle_format}",
-              "path-parameters": {
-                "subtitle_format": {
-                  "docs": "The format of the captions.",
-                  "type": "root.SubtitleFormat",
-                },
-                "transcript_id": {
-                  "docs": "ID of the transcript",
-                  "type": "string",
-                },
-              },
               "request": {
-                "name": "TranscriptGetSubtitlesRequest",
+                "name": "GetSubtitlesTranscriptRequest",
+                "path-parameters": {
+                  "subtitle_format": {
+                    "docs": "The format of the captions.",
+                    "type": "root.SubtitleFormat",
+                  },
+                  "transcript_id": {
+                    "docs": "ID of the transcript",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "chars_per_caption": {
                     "docs": "The maximum number of characters per caption",
@@ -6933,24 +6945,16 @@ docs: Real-time transcription
               "display-name": "List transcripts",
               "docs": "Retrieve a list of transcripts you have created.",
               "errors": [
-                "root.TranscriptListRequestBadRequestError",
-                "root.TranscriptListRequestUnauthorizedError",
-                "root.TranscriptListRequestNotFoundError",
-                "root.TranscriptListRequestTooManyRequestsError",
-                "root.TranscriptListRequestInternalServerError",
-                "root.TranscriptListRequestServiceUnavailableError",
-                "root.TranscriptListRequestGatewayTimeoutError",
+                "root.ListTranscriptRequestBadRequestError",
+                "root.ListTranscriptRequestUnauthorizedError",
+                "root.ListTranscriptRequestNotFoundError",
+                "root.ListTranscriptRequestTooManyRequestsError",
+                "root.ListTranscriptRequestInternalServerError",
+                "root.ListTranscriptRequestServiceUnavailableError",
+                "root.ListTranscriptRequestGatewayTimeoutError",
               ],
               "examples": [
                 {
-                  "query-parameters": {
-                    "after_id": "after_id",
-                    "before_id": "before_id",
-                    "created_on": "created_on",
-                    "limit": 1000000,
-                    "status": "queued",
-                    "throttled_only": true,
-                  },
                   "response": {
                     "body": {
                       "page_details": {
@@ -6978,7 +6982,7 @@ docs: Real-time transcription
               "pagination": undefined,
               "path": "/v2/transcript",
               "request": {
-                "name": "TranscriptListRequest",
+                "name": "ListTranscriptRequest",
                 "query-parameters": {
                   "after_id": {
                     "docs": "Get transcripts that were created after this transcript ID",
@@ -6990,13 +6994,7 @@ docs: Real-time transcription
                   },
                   "created_on": {
                     "docs": "Only get transcripts created on this date",
-                    "type": "optional<string>",
-                    "validation": {
-                      "format": "date",
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
-                    },
+                    "type": "optional<date>",
                   },
                   "limit": {
                     "default": 10,
@@ -7005,7 +7003,7 @@ docs: Real-time transcription
                   },
                   "status": {
                     "docs": "Filter by transcript status",
-                    "type": "optional<TranscriptListRequestStatus>",
+                    "type": "optional<ListTranscriptRequestStatus>",
                   },
                   "throttled_only": {
                     "docs": "Only get throttled transcripts, overrides the status filter",
@@ -7027,25 +7025,25 @@ docs: Real-time transcription
               "display-name": "Search the given transcript for words, numbers, or phrases",
               "docs": "Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.",
               "errors": [
-                "root.TranscriptWordSearchRequestBadRequestError",
-                "root.TranscriptWordSearchRequestUnauthorizedError",
-                "root.TranscriptWordSearchRequestNotFoundError",
-                "root.TranscriptWordSearchRequestTooManyRequestsError",
-                "root.TranscriptWordSearchRequestInternalServerError",
-                "root.TranscriptWordSearchRequestServiceUnavailableError",
-                "root.TranscriptWordSearchRequestGatewayTimeoutError",
+                "root.WordSearchTranscriptRequestBadRequestError",
+                "root.WordSearchTranscriptRequestUnauthorizedError",
+                "root.WordSearchTranscriptRequestNotFoundError",
+                "root.WordSearchTranscriptRequestTooManyRequestsError",
+                "root.WordSearchTranscriptRequestInternalServerError",
+                "root.WordSearchTranscriptRequestServiceUnavailableError",
+                "root.WordSearchTranscriptRequestGatewayTimeoutError",
               ],
               "method": "GET",
               "pagination": undefined,
               "path": "/v2/transcript/{transcript_id}/word-search",
-              "path-parameters": {
-                "transcript_id": {
-                  "docs": "ID of the transcript",
-                  "type": "string",
-                },
-              },
               "request": {
-                "name": "TranscriptWordSearchRequest",
+                "name": "WordSearchTranscriptRequest",
+                "path-parameters": {
+                  "transcript_id": {
+                    "docs": "ID of the transcript",
+                    "type": "string",
+                  },
+                },
                 "query-parameters": {
                   "words": {
                     "allow-multiple": true,
@@ -7069,7 +7067,7 @@ docs: Real-time transcription
           },
         },
         "types": {
-          "TranscriptListRequestStatus": {
+          "ListTranscriptRequestStatus": {
             "docs": "The status of your transcription. Possible values are queued, processing, completed, or error.",
             "enum": [
               {
@@ -7097,7 +7095,7 @@ docs: Real-time transcription
         },
       },
       "rawContents": "types:
-  TranscriptListRequestStatus:
+  ListTranscriptRequestStatus:
     enum:
       - value: queued
         docs: The audio file is in the queue to be processed by the API.
@@ -7126,20 +7124,18 @@ service:
         openapi: ../openapi.yml
       display-name: List transcripts
       request:
-        name: TranscriptListRequest
+        name: ListTranscriptRequest
         query-parameters:
           limit:
             type: optional<long>
             default: 10
             docs: Maximum amount of transcripts to retrieve
           status:
-            type: optional<TranscriptListRequestStatus>
+            type: optional<ListTranscriptRequestStatus>
             docs: Filter by transcript status
           created_on:
-            type: optional<string>
+            type: optional<date>
             docs: Only get transcripts created on this date
-            validation:
-              format: date
           before_id:
             type: optional<string>
             docs: Get transcripts that were created before this transcript ID
@@ -7154,22 +7150,15 @@ service:
         type: root.TranscriptList
         status-code: 200
       errors:
-        - root.TranscriptListRequestBadRequestError
-        - root.TranscriptListRequestUnauthorizedError
-        - root.TranscriptListRequestNotFoundError
-        - root.TranscriptListRequestTooManyRequestsError
-        - root.TranscriptListRequestInternalServerError
-        - root.TranscriptListRequestServiceUnavailableError
-        - root.TranscriptListRequestGatewayTimeoutError
+        - root.ListTranscriptRequestBadRequestError
+        - root.ListTranscriptRequestUnauthorizedError
+        - root.ListTranscriptRequestNotFoundError
+        - root.ListTranscriptRequestTooManyRequestsError
+        - root.ListTranscriptRequestInternalServerError
+        - root.ListTranscriptRequestServiceUnavailableError
+        - root.ListTranscriptRequestGatewayTimeoutError
       examples:
-        - query-parameters:
-            limit: 1000000
-            status: queued
-            created_on: created_on
-            before_id: before_id
-            after_id: after_id
-            throttled_only: true
-          response:
+        - response:
             body:
               page_details:
                 limit: 1
@@ -7208,13 +7197,13 @@ service:
         type: root.Transcript
         status-code: 201
       errors:
-        - root.TranscriptCreateRequestBadRequestError
-        - root.TranscriptCreateRequestUnauthorizedError
-        - root.TranscriptCreateRequestNotFoundError
-        - root.TranscriptCreateRequestTooManyRequestsError
-        - root.TranscriptCreateRequestInternalServerError
-        - root.TranscriptCreateRequestServiceUnavailableError
-        - root.TranscriptCreateRequestGatewayTimeoutError
+        - root.CreateTranscriptRequestBadRequestError
+        - root.CreateTranscriptRequestUnauthorizedError
+        - root.CreateTranscriptRequestNotFoundError
+        - root.CreateTranscriptRequestTooManyRequestsError
+        - root.CreateTranscriptRequestInternalServerError
+        - root.CreateTranscriptRequestServiceUnavailableError
+        - root.CreateTranscriptRequestGatewayTimeoutError
       examples:
         - request:
             audio_url: audio_url
@@ -7349,23 +7338,25 @@ service:
         is "completed".
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        transcript_id:
-          type: string
-          docs: ID of the transcript
       display-name: Get the transcript
+      request:
+        name: GetTranscriptRequest
+        path-parameters:
+          transcript_id:
+            type: string
+            docs: ID of the transcript
       response:
         docs: The transcript resource
         type: root.Transcript
         status-code: 200
       errors:
-        - root.TranscriptGetRequestBadRequestError
-        - root.TranscriptGetRequestUnauthorizedError
-        - root.TranscriptGetRequestNotFoundError
-        - root.TranscriptGetRequestTooManyRequestsError
-        - root.TranscriptGetRequestInternalServerError
-        - root.TranscriptGetRequestServiceUnavailableError
-        - root.TranscriptGetRequestGatewayTimeoutError
+        - root.GetTranscriptRequestBadRequestError
+        - root.GetTranscriptRequestUnauthorizedError
+        - root.GetTranscriptRequestNotFoundError
+        - root.GetTranscriptRequestTooManyRequestsError
+        - root.GetTranscriptRequestInternalServerError
+        - root.GetTranscriptRequestServiceUnavailableError
+        - root.GetTranscriptRequestGatewayTimeoutError
       examples:
         - path-parameters:
             transcript_id: transcript_id
@@ -7498,23 +7489,25 @@ service:
       docs: Delete the transcript
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        transcript_id:
-          type: string
-          docs: ID of the transcript
       display-name: Delete the transcript
+      request:
+        name: DeleteTranscriptRequest
+        path-parameters:
+          transcript_id:
+            type: string
+            docs: ID of the transcript
       response:
         docs: The deleted transcript response.
         type: root.Transcript
         status-code: 200
       errors:
-        - root.TranscriptDeleteRequestBadRequestError
-        - root.TranscriptDeleteRequestUnauthorizedError
-        - root.TranscriptDeleteRequestNotFoundError
-        - root.TranscriptDeleteRequestTooManyRequestsError
-        - root.TranscriptDeleteRequestInternalServerError
-        - root.TranscriptDeleteRequestServiceUnavailableError
-        - root.TranscriptDeleteRequestGatewayTimeoutError
+        - root.DeleteTranscriptRequestBadRequestError
+        - root.DeleteTranscriptRequestUnauthorizedError
+        - root.DeleteTranscriptRequestNotFoundError
+        - root.DeleteTranscriptRequestTooManyRequestsError
+        - root.DeleteTranscriptRequestInternalServerError
+        - root.DeleteTranscriptRequestServiceUnavailableError
+        - root.DeleteTranscriptRequestGatewayTimeoutError
       examples:
         - path-parameters:
             transcript_id: transcript_id
@@ -7649,16 +7642,16 @@ service:
         player for subtitles and closed captions.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        transcript_id:
-          type: string
-          docs: ID of the transcript
-        subtitle_format:
-          type: root.SubtitleFormat
-          docs: The format of the captions.
       display-name: Export transcript as SRT or VTT captions.
       request:
-        name: TranscriptGetSubtitlesRequest
+        name: GetSubtitlesTranscriptRequest
+        path-parameters:
+          transcript_id:
+            type: string
+            docs: ID of the transcript
+          subtitle_format:
+            type: root.SubtitleFormat
+            docs: The format of the captions.
         query-parameters:
           chars_per_caption:
             type: optional<integer>
@@ -7668,13 +7661,13 @@ service:
         type: text
         status-code: 200
       errors:
-        - root.TranscriptGetSubtitlesRequestBadRequestError
-        - root.TranscriptGetSubtitlesRequestUnauthorizedError
-        - root.TranscriptGetSubtitlesRequestNotFoundError
-        - root.TranscriptGetSubtitlesRequestTooManyRequestsError
-        - root.TranscriptGetSubtitlesRequestInternalServerError
-        - root.TranscriptGetSubtitlesRequestServiceUnavailableError
-        - root.TranscriptGetSubtitlesRequestGatewayTimeoutError
+        - root.GetSubtitlesTranscriptRequestBadRequestError
+        - root.GetSubtitlesTranscriptRequestUnauthorizedError
+        - root.GetSubtitlesTranscriptRequestNotFoundError
+        - root.GetSubtitlesTranscriptRequestTooManyRequestsError
+        - root.GetSubtitlesTranscriptRequestInternalServerError
+        - root.GetSubtitlesTranscriptRequestServiceUnavailableError
+        - root.GetSubtitlesTranscriptRequestGatewayTimeoutError
     getSentences:
       path: /v2/transcript/{transcript_id}/sentences
       method: GET
@@ -7684,23 +7677,25 @@ service:
         reader-friendly transcripts.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        transcript_id:
-          type: string
-          docs: ID of the transcript
       display-name: Get the transcript split by sentences
+      request:
+        name: GetSentencesTranscriptRequest
+        path-parameters:
+          transcript_id:
+            type: string
+            docs: ID of the transcript
       response:
         docs: Exported sentences
         type: root.SentencesResponse
         status-code: 200
       errors:
-        - root.TranscriptGetSentencesRequestBadRequestError
-        - root.TranscriptGetSentencesRequestUnauthorizedError
-        - root.TranscriptGetSentencesRequestNotFoundError
-        - root.TranscriptGetSentencesRequestTooManyRequestsError
-        - root.TranscriptGetSentencesRequestInternalServerError
-        - root.TranscriptGetSentencesRequestServiceUnavailableError
-        - root.TranscriptGetSentencesRequestGatewayTimeoutError
+        - root.GetSentencesTranscriptRequestBadRequestError
+        - root.GetSentencesTranscriptRequestUnauthorizedError
+        - root.GetSentencesTranscriptRequestNotFoundError
+        - root.GetSentencesTranscriptRequestTooManyRequestsError
+        - root.GetSentencesTranscriptRequestInternalServerError
+        - root.GetSentencesTranscriptRequestServiceUnavailableError
+        - root.GetSentencesTranscriptRequestGatewayTimeoutError
       examples:
         - path-parameters:
             transcript_id: transcript_id
@@ -7728,23 +7723,25 @@ service:
         reader-friendly transcripts.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        transcript_id:
-          type: string
-          docs: ID of the transcript
       display-name: Get the transcript split by paragraphs
+      request:
+        name: GetParagraphsTranscriptRequest
+        path-parameters:
+          transcript_id:
+            type: string
+            docs: ID of the transcript
       response:
         docs: Exported paragraphs
         type: root.ParagraphsResponse
         status-code: 200
       errors:
-        - root.TranscriptGetParagraphsRequestBadRequestError
-        - root.TranscriptGetParagraphsRequestUnauthorizedError
-        - root.TranscriptGetParagraphsRequestNotFoundError
-        - root.TranscriptGetParagraphsRequestTooManyRequestsError
-        - root.TranscriptGetParagraphsRequestInternalServerError
-        - root.TranscriptGetParagraphsRequestServiceUnavailableError
-        - root.TranscriptGetParagraphsRequestGatewayTimeoutError
+        - root.GetParagraphsTranscriptRequestBadRequestError
+        - root.GetParagraphsTranscriptRequestUnauthorizedError
+        - root.GetParagraphsTranscriptRequestNotFoundError
+        - root.GetParagraphsTranscriptRequestTooManyRequestsError
+        - root.GetParagraphsTranscriptRequestInternalServerError
+        - root.GetParagraphsTranscriptRequestServiceUnavailableError
+        - root.GetParagraphsTranscriptRequestGatewayTimeoutError
       examples:
         - path-parameters:
             transcript_id: transcript_id
@@ -7772,13 +7769,13 @@ service:
         words or numbers.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        transcript_id:
-          type: string
-          docs: ID of the transcript
       display-name: Search the given transcript for words, numbers, or phrases
       request:
-        name: TranscriptWordSearchRequest
+        name: WordSearchTranscriptRequest
+        path-parameters:
+          transcript_id:
+            type: string
+            docs: ID of the transcript
         query-parameters:
           words:
             type: optional<string>
@@ -7789,13 +7786,13 @@ service:
         type: root.WordSearchResponse
         status-code: 200
       errors:
-        - root.TranscriptWordSearchRequestBadRequestError
-        - root.TranscriptWordSearchRequestUnauthorizedError
-        - root.TranscriptWordSearchRequestNotFoundError
-        - root.TranscriptWordSearchRequestTooManyRequestsError
-        - root.TranscriptWordSearchRequestInternalServerError
-        - root.TranscriptWordSearchRequestServiceUnavailableError
-        - root.TranscriptWordSearchRequestGatewayTimeoutError
+        - root.WordSearchTranscriptRequestBadRequestError
+        - root.WordSearchTranscriptRequestUnauthorizedError
+        - root.WordSearchTranscriptRequestNotFoundError
+        - root.WordSearchTranscriptRequestTooManyRequestsError
+        - root.WordSearchTranscriptRequestInternalServerError
+        - root.WordSearchTranscriptRequestServiceUnavailableError
+        - root.WordSearchTranscriptRequestGatewayTimeoutError
     getRedactedAudio:
       path: /v2/transcript/{transcript_id}/redacted-audio
       method: GET
@@ -7804,13 +7801,15 @@ service:
         redacted audio.
       source:
         openapi: ../openapi.yml
-      path-parameters:
-        transcript_id:
-          type: string
-          docs: ID of the transcript
       display-name: >-
         Retrieves the redacted audio object containing the status and URL to the
         redacted audio.
+      request:
+        name: GetRedactedAudioTranscriptRequest
+        path-parameters:
+          transcript_id:
+            type: string
+            docs: ID of the transcript
       response:
         docs: >-
           The redacted audio object containing the status and URL to the
@@ -7818,13 +7817,13 @@ service:
         type: root.RedactedAudioResponse
         status-code: 200
       errors:
-        - root.TranscriptGetRedactedAudioRequestBadRequestError
-        - root.TranscriptGetRedactedAudioRequestUnauthorizedError
-        - root.TranscriptGetRedactedAudioRequestNotFoundError
-        - root.TranscriptGetRedactedAudioRequestTooManyRequestsError
-        - root.TranscriptGetRedactedAudioRequestInternalServerError
-        - root.TranscriptGetRedactedAudioRequestServiceUnavailableError
-        - root.TranscriptGetRedactedAudioRequestGatewayTimeoutError
+        - root.GetRedactedAudioTranscriptRequestBadRequestError
+        - root.GetRedactedAudioTranscriptRequestUnauthorizedError
+        - root.GetRedactedAudioTranscriptRequestNotFoundError
+        - root.GetRedactedAudioTranscriptRequestTooManyRequestsError
+        - root.GetRedactedAudioTranscriptRequestInternalServerError
+        - root.GetRedactedAudioTranscriptRequestServiceUnavailableError
+        - root.GetRedactedAudioTranscriptRequestGatewayTimeoutError
       examples:
         - path-parameters:
             transcript_id: transcript_id
@@ -7845,9 +7844,6 @@ docs: Transcript related operations
           "auth": false,
           "examples": [
             {
-              "headers": {
-                "Authentication": "Authentication",
-              },
               "messages": [
                 {
                   "body": {
@@ -7863,11 +7859,6 @@ docs: Transcript related operations
                   "type": "publish",
                 },
               ],
-              "query-parameters": {
-                "sample_rate": 1,
-                "token": "token",
-                "word_boost": "word_boost",
-              },
             },
           ],
           "headers": {
@@ -8000,12 +7991,6 @@ The parameter should map to a JSON encoded list of strings.
           body:
             message_type: SessionBegins
             terminate_session: true
-      query-parameters:
-        sample_rate: 1
-        word_boost: word_boost
-        token: token
-      headers:
-        Authentication: Authentication
 imports:
   root: __package__.yml
 types:

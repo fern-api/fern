@@ -272,7 +272,10 @@ public abstract class AbstractHttpResponseParserGenerator {
 
                             @Override
                             public TypeName visitCustom(CustomPagination customPagination) {
-                                throw new RuntimeException("Unknown pagination type custom");
+                                // For custom pagination, return the response type directly
+                                // without wrapping in a Pager. The user is responsible for
+                                // implementing their own pagination logic.
+                                return responseType;
                             }
 
                             @Override
@@ -1547,7 +1550,13 @@ public abstract class AbstractHttpResponseParserGenerator {
 
         @Override
         public Void visitCustom(CustomPagination customPagination) {
-            throw new RuntimeException("Unknown pagination type custom");
+            // For custom pagination, handle the response as non-paginated
+            // and return the parsed response directly. The user is responsible
+            // for implementing their own pagination logic.
+            TypeName responseType = getResponseType(httpEndpoint, clientGeneratorContext);
+            handleSuccessfulResult(httpResponseBuilder, CodeBlock.of("$L", variables.getParsedResponseVariableName()));
+            endpointMethodBuilder.returns(responseType);
+            return null;
         }
 
         @Override
