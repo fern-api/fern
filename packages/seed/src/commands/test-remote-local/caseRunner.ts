@@ -240,6 +240,11 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<void
     logger.info("");
     logger.info(`${LOG_SECTION_SEPARATOR} ${LOG_HEADER_COMPARING_OUTPUTS} ${LOG_SECTION_SEPARATOR}`);
     await compareResults(testCase, localResult, remoteResult);
+
+    // Clean up .git folders from outputs to prevent git submodule warnings
+    logger.debug("Cleaning up .git folders from outputs");
+    await cleanupGitFolders(localResult.outputFolder, logger);
+    await cleanupGitFolders(remoteResult.outputFolder, logger);
 }
 
 async function compareResults(
@@ -291,6 +296,51 @@ async function compareResults(
         logger.error(`${ERROR_DIFF_COMMAND_FAILED} with exit code ${diffResult.exitCode}`);
         logger.error(`stderr: ${diffResult.stderr}`);
         throw new Error(`${ERROR_DIFF_COMMAND_FAILED}: ${diffResult.stderr}`);
+    }
+}
+
+/**
+ * Recursively removes all .git folders from the specified directory
+ * This prevents git submodule warnings when committing test outputs
+ */
+async function cleanupGitFolders(outputFolder: string, logger: Logger): Promise<void> {
+    try {
+        const { readdir } = await import("fs/promises");
+        const gitFolders: string[] = [];
+
+        // Recursively find all .git directories
+        async function findGitFolders(dir: string): Promise<void> {
+            try {
+                const entries = await readdir(dir, { withFileTypes: true });
+                for (const entry of entries) {
+                    const fullPath = path.join(dir, entry.name);
+                    if (entry.isDirectory()) {
+                        if (entry.name === ".git") {
+                            gitFolders.push(fullPath);
+                        } else {
+                            // Recurse into subdirectories
+                            await findGitFolders(fullPath);
+                        }
+                    }
+                }
+            } catch (error) {
+                // Skip directories we can't read (e.g., permission issues)
+                logger.debug(`Skipping directory ${dir}: ${error instanceof Error ? error.message : String(error)}`);
+            }
+        }
+
+        await findGitFolders(outputFolder);
+
+        if (gitFolders.length > 0) {
+            logger.debug(`Found ${gitFolders.length} .git folder(s) to clean up`);
+            for (const gitFolder of gitFolders) {
+                logger.debug(`  Removing: ${gitFolder}`);
+                await rm(gitFolder, { recursive: true, force: true });
+            }
+        }
+    } catch (error) {
+        // Non-fatal - log warning but don't fail the test
+        logger.warn(`Failed to clean up .git folders: ${error instanceof Error ? error.message : String(error)}`);
     }
 }
 
@@ -573,7 +623,7 @@ function getOutputDirectory(testCase: RemoteVsLocalTestCase, generationMode: Gen
 
     // Structure: {workingDirectory}/sdks/{generationMode}/{generator}
     // Example: seed-remote-local/python-sdk/imdb/no-custom-config/local-file-system/sdks/local/python-sdk
-    return path.join(workingDirectory, SDKS_DIRECTORY_NAME, generationMode + GENERATION_MODE_SUFFIX, generator);
+    return path.join(workingDirectory, SDKS_DIRECTORY_NAME, generationMode + GENERATION_MODE_SUFFIX);
 }
 
 async function writeGeneratorsYml(fernDirectory: string, localConfig: unknown, remoteConfig: unknown): Promise<void> {
