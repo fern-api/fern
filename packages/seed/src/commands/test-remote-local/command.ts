@@ -111,46 +111,35 @@ export async function executeTestRemoteLocalCommand({
                 logger.info(`Running test: ${gen} / ${fix} / ${mode}`);
                 logger.info(LOG_SEPARATOR);
 
-                try {
-                    await runTestCase({
-                        generator: gen,
-                        fixture: fix,
-                        outputFolder,
-                        outputMode: mode,
-                        localGeneratorVersions,
-                        remoteGeneratorVersions,
-                        context: {
-                            fernExecutable,
-                            fernRepoDirectory,
-                            workingDirectory: testWorkingDirectory,
-                            logger,
-                            githubToken,
-                            fernToken
-                        }
-                    });
+                const result = await runTestCase({
+                    generator: gen,
+                    fixture: fix,
+                    outputFolder,
+                    outputMode: mode,
+                    localGeneratorVersions,
+                    remoteGeneratorVersions,
+                    context: {
+                        fernExecutable,
+                        fernRepoDirectory,
+                        workingDirectory: testWorkingDirectory,
+                        logger,
+                        githubToken,
+                        fernToken
+                    }
+                });
 
-                    results.push({
-                        generator: gen,
-                        fixture: fix,
-                        outputMode: mode,
-                        success: true
-                    });
+                results.push({
+                    generator: gen,
+                    fixture: fix,
+                    outputMode: mode,
+                    success: result.success,
+                    error: result.error
+                });
 
+                if (result.success) {
                     logger.info(`${MSG_TEST_PASSED_PREFIX}${gen} / ${fix} / ${mode}`);
-                } catch (error) {
-                    const errorMessage = error instanceof Error ? error.message : String(error);
-                    results.push({
-                        generator: gen,
-                        fixture: fix,
-                        outputMode: mode,
-                        success: false,
-                        error: errorMessage
-                    });
-
-                    logger.error(
-                        `${MSG_TEST_FAILED_PREFIX}${gen}:${fix}:${mode}`,
-                        error instanceof Error ? error.message : String(error)
-                    );
+                } else {
+                    logger.error(`${MSG_TEST_FAILED_PREFIX}${gen}:${fix}:${mode}`, result.error || "Unknown error");
                 }
             }
         }

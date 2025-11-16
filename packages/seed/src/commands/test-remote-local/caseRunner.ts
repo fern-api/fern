@@ -123,7 +123,12 @@ interface RemoteLocalSeedConfig {
     };
 }
 
-export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<void> {
+export interface TestCaseResult {
+    success: boolean;
+    error?: string;
+}
+
+export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<TestCaseResult> {
     const { generator, fixture, outputMode, localGeneratorVersions, remoteGeneratorVersions, context } = testCase;
     const { fernRepoDirectory, workingDirectory, logger } = context;
 
@@ -210,48 +215,65 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<void
     logger.debug(`Writing generators.yml with local and remote groups`);
     await writeGeneratorsYml(fernDirectory, localConfig, remoteConfig);
 
-    // Run generations
-    logger.info("");
-    logger.info(`${LOG_SECTION_SEPARATOR} ${LOG_HEADER_LOCAL_GENERATION} ${LOG_SECTION_SEPARATOR}`);
-    const localResult = await runGeneration(testCase, "local");
+    let localResult: GenerationResult | null = null;
+    let remoteResult: GenerationResult | null = null;
 
-    logger.info("");
-    logger.info(`${LOG_SECTION_SEPARATOR} ${LOG_HEADER_REMOTE_GENERATION} ${LOG_SECTION_SEPARATOR}`);
-    const remoteResult = await runGeneration(testCase, "remote");
+    try {
+        // Run generations
+        logger.info("");
+        logger.info(`${LOG_SECTION_SEPARATOR} ${LOG_HEADER_LOCAL_GENERATION} ${LOG_SECTION_SEPARATOR}`);
+        localResult = await runGeneration(testCase, "local");
 
-    // Check for generation failures
-    if (!localResult.success || !remoteResult.success) {
-        const errors: string[] = [];
-        if (!localResult.success) {
-            errors.push(`Local generation failed: ${localResult.error}`);
-            logger.error(`✗ Local generation error: ${localResult.error}`);
+        logger.info("");
+        logger.info(`${LOG_SECTION_SEPARATOR} ${LOG_HEADER_REMOTE_GENERATION} ${LOG_SECTION_SEPARATOR}`);
+        remoteResult = await runGeneration(testCase, "remote");
+
+        // Check for generation failures
+        if (!localResult.success || !remoteResult.success) {
+            const errors: string[] = [];
+            if (!localResult.success) {
+                errors.push(`Local generation failed: ${localResult.error}`);
+                logger.error(`✗ Local generation error: ${localResult.error}`);
+            }
+            if (!remoteResult.success) {
+                errors.push(`Remote generation failed: ${remoteResult.error}`);
+                logger.error(`✗ Remote generation error: ${remoteResult.error}`);
+            }
+            return { success: false, error: errors.join("\n") };
         }
-        if (!remoteResult.success) {
-            errors.push(`Remote generation failed: ${remoteResult.error}`);
-            logger.error(`✗ Remote generation error: ${remoteResult.error}`);
+
+        logger.info("");
+        logger.info(MSG_BOTH_GENERATIONS_SUCCESSFUL);
+
+        // Compare results
+        logger.info("");
+        logger.info(`${LOG_SECTION_SEPARATOR} ${LOG_HEADER_COMPARING_OUTPUTS} ${LOG_SECTION_SEPARATOR}`);
+        const compareResult = await compareResults(testCase, localResult, remoteResult);
+
+        if (!compareResult.success) {
+            return { success: false, error: compareResult.error };
         }
-        throw new Error(errors.join("\n"));
+
+        return { success: true };
+    } finally {
+        // Clean up .git folders from outputs to prevent git submodule warnings
+        // This runs regardless of success/failure
+        if (localResult?.success) {
+            logger.debug("Cleaning up .git folders from local output");
+            await cleanupGitFolders(localResult.outputFolder, logger);
+        }
+        if (remoteResult?.success) {
+            logger.debug("Cleaning up .git folders from remote output");
+            await cleanupGitFolders(remoteResult.outputFolder, logger);
+        }
     }
-
-    logger.info("");
-    logger.info(MSG_BOTH_GENERATIONS_SUCCESSFUL);
-
-    // Compare results
-    logger.info("");
-    logger.info(`${LOG_SECTION_SEPARATOR} ${LOG_HEADER_COMPARING_OUTPUTS} ${LOG_SECTION_SEPARATOR}`);
-    await compareResults(testCase, localResult, remoteResult);
-
-    // Clean up .git folders from outputs to prevent git submodule warnings
-    logger.debug("Cleaning up .git folders from outputs");
-    await cleanupGitFolders(localResult.outputFolder, logger);
-    await cleanupGitFolders(remoteResult.outputFolder, logger);
 }
 
 async function compareResults(
     testCase: RemoteVsLocalTestCase,
     localResult: GenerationResultSuccess,
     remoteResult: GenerationResultSuccess
-): Promise<void> {
+): Promise<TestCaseResult> {
     const { context } = testCase;
     const { logger, workingDirectory } = context;
 
@@ -280,6 +302,7 @@ async function compareResults(
     // 2+ = actual error (e.g., file not found, permission denied)
     if (diffResult.exitCode === 0) {
         logger.info(MSG_OUTPUTS_MATCH);
+        return { success: true };
     } else if (diffResult.exitCode === 1) {
         // Files differ - this is what we're testing for!
         const diffOutput = diffResult.stdout.trim();
@@ -290,12 +313,12 @@ async function compareResults(
         const sampleLines = diffOutput.split("\n").slice(0, 50).join("\n");
         logger.warn(`Sample differences:\n${sampleLines}${lineCount > 50 ? "\n... (truncated)" : ""}`);
 
-        throw new Error(ERROR_OUTPUTS_DIFFER);
+        return { success: false, error: ERROR_OUTPUTS_DIFFER };
     } else {
         // Actual diff error
         logger.error(`${ERROR_DIFF_COMMAND_FAILED} with exit code ${diffResult.exitCode}`);
         logger.error(`stderr: ${diffResult.stderr}`);
-        throw new Error(`${ERROR_DIFF_COMMAND_FAILED}: ${diffResult.stderr}`);
+        return { success: false, error: `${ERROR_DIFF_COMMAND_FAILED}: ${diffResult.stderr}` };
     }
 }
 
@@ -305,8 +328,10 @@ async function compareResults(
  */
 async function cleanupGitFolders(outputFolder: string, logger: Logger): Promise<void> {
     try {
-        const { readdir } = await import("fs/promises");
+        const { readdir, stat } = await import("fs/promises");
         const gitFolders: string[] = [];
+
+        logger.debug(`Searching for .git folders in: ${outputFolder}`);
 
         // Recursively find all .git directories
         async function findGitFolders(dir: string): Promise<void> {
@@ -317,6 +342,7 @@ async function cleanupGitFolders(outputFolder: string, logger: Logger): Promise<
                     if (entry.isDirectory()) {
                         if (entry.name === ".git") {
                             gitFolders.push(fullPath);
+                            logger.debug(`  Found .git folder: ${fullPath}`);
                         } else {
                             // Recurse into subdirectories
                             await findGitFolders(fullPath);
@@ -325,18 +351,29 @@ async function cleanupGitFolders(outputFolder: string, logger: Logger): Promise<
                 }
             } catch (error) {
                 // Skip directories we can't read (e.g., permission issues)
-                logger.debug(`Skipping directory ${dir}: ${error instanceof Error ? error.message : String(error)}`);
+                logger.debug(`  Skipping directory ${dir}: ${error instanceof Error ? error.message : String(error)}`);
             }
+        }
+
+        // Check if the directory exists first
+        try {
+            await stat(outputFolder);
+        } catch (error) {
+            logger.debug(`Output folder does not exist, skipping cleanup: ${outputFolder}`);
+            return;
         }
 
         await findGitFolders(outputFolder);
 
         if (gitFolders.length > 0) {
-            logger.debug(`Found ${gitFolders.length} .git folder(s) to clean up`);
+            logger.debug(`Removing ${gitFolders.length} .git folder(s)...`);
             for (const gitFolder of gitFolders) {
                 logger.debug(`  Removing: ${gitFolder}`);
                 await rm(gitFolder, { recursive: true, force: true });
             }
+            logger.debug(`Successfully removed all .git folders`);
+        } else {
+            logger.debug(`No .git folders found in: ${outputFolder}`);
         }
     } catch (error) {
         // Non-fatal - log warning but don't fail the test
