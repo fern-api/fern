@@ -1,0 +1,4 @@
+name: exhaustive
+auth: bearer
+error-discrimination:
+  strategy: status-code
