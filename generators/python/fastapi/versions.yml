@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 1.11.4
+  changelogEntry:
+    - summary: Fix discriminated union Field(discriminator=...) and UnionMetadata(discriminant=...) to use Python field names instead of JSON aliases for Pydantic v2 compatibility.
+      type: fix
+  createdAt: "2025-11-16"
+  irVersion: 61
+
 - version: 1.11.3
   changelogEntry:
     - summary: Fix circular reference issue for recursive types and unions.
