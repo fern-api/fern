@@ -3,7 +3,7 @@ groups:
   remote:
     generators:
       - name: fernapi/fern-typescript-sdk
-        version: 99.99.99
+        version: 3.29.2
         output:
           location: npm
           package-name: '@fern-fern/test-remote-local-sdk'

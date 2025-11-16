@@ -55,6 +55,7 @@ import {
     GITHUB_TOKEN_ENV_VAR_REFERENCE,
     GO_SDK_MODULE_PATH,
     JAVA_SDK_MAVEN_COORDINATE,
+    LOCAL_BUILD_VERSION,
     LOCAL_GROUP_NAME,
     LOG_HEADER_COMPARING_OUTPUTS,
     LOG_HEADER_LOCAL_GENERATION,
@@ -107,7 +108,8 @@ export interface RemoteVsLocalTestCase {
     fixture: TestFixture;
     outputMode: OutputMode;
     outputFolder?: string;
-    generatorVersions: Record<GeneratorName, string>;
+    localGeneratorVersions: Record<GeneratorName, string>;
+    remoteGeneratorVersions: Record<GeneratorName, string>;
     context: TestCaseContext;
 }
 
@@ -122,7 +124,7 @@ interface RemoteLocalSeedConfig {
 }
 
 export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<void> {
-    const { generator, fixture, outputMode, generatorVersions, context } = testCase;
+    const { generator, fixture, outputMode, localGeneratorVersions, remoteGeneratorVersions, context } = testCase;
     const { fernRepoDirectory, workingDirectory, logger } = context;
 
     logger.debug(`Test configuration: generator=${generator}, fixture=${fixture}, outputMode=${outputMode}`);
@@ -157,13 +159,20 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<void
     logger.debug(`Copying fixture definition from ${fixtureSource}`);
     await cp(fixtureSource, definitionDirectory, { recursive: true });
 
-    // Get generator version from pre-fetched map
+    // Get generator versions from pre-fetched maps
     const generatorName = GeneratorNameFromNickname[generator];
-    const generatorVersion = generatorVersions[generatorName];
-    if (!generatorVersion) {
-        throw new Error(`${ERROR_NO_GENERATOR_VERSION} ${generatorName}`);
+    const localGeneratorVersion = localGeneratorVersions[generatorName];
+    const remoteGeneratorVersion = remoteGeneratorVersions[generatorName];
+
+    if (!localGeneratorVersion) {
+        throw new Error(`${ERROR_NO_GENERATOR_VERSION} ${generatorName} (local)`);
     }
-    logger.debug(`Using generator version: ${generatorVersion}`);
+    if (!remoteGeneratorVersion) {
+        throw new Error(`${ERROR_NO_GENERATOR_VERSION} ${generatorName} (remote)`);
+    }
+
+    logger.debug(`Using local generator version: ${localGeneratorVersion}`);
+    logger.debug(`Using remote generator version: ${remoteGeneratorVersion}`);
 
     // Load custom config
     const customConfig = await loadCustomConfig(generator, fixture, testCase.outputFolder, fernRepoDirectory, logger);
@@ -173,12 +182,12 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<void
 
     const baseConfig = {
         name: GeneratorNameFromNickname[generator],
-        version: generatorVersion,
         config: customConfig
     };
 
     const localConfig = {
         ...baseConfig,
+        version: localGeneratorVersion,
         output: getPackageOutputConfig(testCase, "local"),
         ...(outputMode === "github"
             ? {
@@ -189,6 +198,7 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<void
 
     const remoteConfig = {
         ...baseConfig,
+        version: remoteGeneratorVersion,
         output: getPackageOutputConfig(testCase, "remote"),
         ...(outputMode === "github"
             ? {
@@ -811,4 +821,26 @@ async function getLatestGeneratorVersion(generator: GeneratorName, logger: Logge
             `${ERROR_FAILED_TO_FETCH_VERSION} ${generator} from Docker Hub: ${error instanceof Error ? error.message : String(error)}`
         );
     }
+}
+
+/**
+ * Returns LOCAL_BUILD_VERSION for all generators (used when generators are built locally)
+ */
+export async function getLocalGeneratorVersions(
+    generators: readonly GeneratorNickname[],
+    logger: Logger
+): Promise<Record<GeneratorName, string>> {
+    const generatorNames = generators.map((nickname) => GeneratorNameFromNickname[nickname]);
+    const uniqueGeneratorNames = Array.from(new Set(generatorNames));
+
+    logger.debug(`Using local version ${LOCAL_BUILD_VERSION} for ${uniqueGeneratorNames.length} generator(s)`);
+
+    const versions: Record<GeneratorName, string> = {} as Record<GeneratorName, string>;
+
+    for (const generator of uniqueGeneratorNames) {
+        versions[generator] = LOCAL_BUILD_VERSION;
+        logger.info(`  Using ${generator}: ${LOCAL_BUILD_VERSION} (locally built)`);
+    }
+
+    return versions;
 }

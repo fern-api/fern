@@ -275,6 +275,13 @@ function addTestRemoteLocalCommand(cli: Argv) {
                     string: true,
                     demandOption: false,
                     description: "The Fern token to use for the tests. Defaults to the FERN_TOKEN environment variable."
+                })
+                .option("build-generator", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description:
+                        "Build generator Docker images at version 99.99.99 for local generation mode. Uses 'pnpm seed img' internally."
                 }),
         async (argv) => {
             // Verify that the working directory is a valid path and is the root folder of the fern repo
@@ -313,7 +320,8 @@ function addTestRemoteLocalCommand(cli: Argv) {
                 logLevel: argv.logLevel,
                 fernRepoDirectory,
                 githubToken: githubToken ?? "",
-                fernToken: fernToken ?? ""
+                fernToken: fernToken ?? "",
+                buildGenerator: argv.buildGenerator ?? false
             });
         }
     );

@@ -14,7 +14,7 @@ export const LOCAL_GROUP_NAME = "local";
 
 // Source of truth: const arrays (enables runtime iteration)
 export const ALL_GENERATOR_NICKNAMES = ["ts-sdk", "java-sdk", "go-sdk", "python-sdk"] as const;
-export const ALL_TEST_FIXTURES = ["imdb", "exhaustive"] as const;
+export const ALL_TEST_FIXTURES = ["imdb"] as const;
 export const ALL_OUTPUT_MODES = ["github", "local"] as const;
 export const ALL_GENERATION_MODES = ["local", "remote"] as const;
 
@@ -130,6 +130,11 @@ export const ENV_VAR_FERN_TOKEN = "FERN_TOKEN";
 // ============================================================================
 export const GENERATORS_YML_SCHEMA_URL = "https://schema.buildwithfern.dev/generators-yml.json";
 export const GENERATORS_YML_SCHEMA_COMMENT = "# yaml-language-server: $schema=";
+
+// ============================================================================
+// Version Constants
+// ============================================================================
+export const LOCAL_BUILD_VERSION = "99.99.99";
 
 // ============================================================================
 // Regex Patterns

@@ -1,7 +1,9 @@
 import { LogLevel } from "@fern-api/logger";
 import path from "path";
+import { loadGeneratorWorkspaces } from "../../loadGeneratorWorkspaces";
+import { buildGeneratorImage } from "../img/buildGeneratorImage";
 import { TaskContextFactory } from "../test/TaskContextFactory";
-import { getLatestGeneratorVersions, runTestCase } from "./caseRunner";
+import { getLatestGeneratorVersions, getLocalGeneratorVersions, runTestCase } from "./caseRunner";
 import {
     ALL_GENERATOR_NICKNAMES,
     ALL_OUTPUT_MODES,
@@ -10,6 +12,7 @@ import {
     ERROR_NO_GENERATOR_VERSION,
     GeneratorName,
     GeneratorNickname,
+    LOCAL_BUILD_VERSION,
     LOG_HEADER_TEST_SUMMARY,
     LOG_SEPARATOR,
     MSG_ALL_TESTS_PASSED,
@@ -37,7 +40,8 @@ export async function executeTestRemoteLocalCommand({
     logLevel,
     fernRepoDirectory,
     githubToken,
-    fernToken
+    fernToken,
+    buildGenerator = false
 }: {
     generator: string[];
     fixture: string[];
@@ -46,6 +50,7 @@ export async function executeTestRemoteLocalCommand({
     fernRepoDirectory: string;
     githubToken: string;
     fernToken: string;
+    buildGenerator?: boolean;
 }): Promise<void> {
     const taskContextFactory = new TaskContextFactory(logLevel);
     const taskContext = taskContextFactory.create("test-remote-local");
@@ -62,9 +67,21 @@ export async function executeTestRemoteLocalCommand({
     logger.debug(`Generators: ${generators.join(", ")}`);
     logger.debug(`Fixtures: ${fixtures.join(", ")}`);
 
-    // Fetch latest versions for all generators upfront
-    logger.info("\nFetching latest generator versions from Docker Hub...");
-    const generatorVersions = await getLatestGeneratorVersions(generators, logger);
+    // Build generator Docker images if requested
+    if (buildGenerator) {
+        logger.info(`\nBuilding generator Docker images at version ${LOCAL_BUILD_VERSION}...`);
+        await buildGeneratorsAtVersion(generators, fernRepoDirectory, taskContext, logLevel);
+        logger.info("Successfully built all generator Docker images");
+    }
+
+    // Fetch versions for generators
+    // - Local generation: uses LOCAL_BUILD_VERSION if built locally, otherwise latest from Docker Hub
+    // - Remote generation: always uses latest from Docker Hub
+    logger.info("\nFetching generator versions...");
+    const localGeneratorVersions = buildGenerator
+        ? await getLocalGeneratorVersions(generators, logger)
+        : await getLatestGeneratorVersions(generators, logger);
+    const remoteGeneratorVersions = await getLatestGeneratorVersions(generators, logger);
     logger.info("Successfully fetched all generator versions");
 
     const results: TestResult[] = [];
@@ -95,7 +112,8 @@ export async function executeTestRemoteLocalCommand({
                         fixture: fix,
                         outputFolder,
                         outputMode: mode,
-                        generatorVersions,
+                        localGeneratorVersions,
+                        remoteGeneratorVersions,
                         context: {
                             fernExecutable,
                             fernRepoDirectory,
@@ -159,4 +177,41 @@ export async function executeTestRemoteLocalCommand({
     }
 
     logger.info(`\n${MSG_ALL_TESTS_PASSED}`);
+}
+
+/**
+ * Builds generator Docker images at LOCAL_BUILD_VERSION using the existing seed img command
+ */
+async function buildGeneratorsAtVersion(
+    generatorNicknames: readonly GeneratorNickname[],
+    fernRepoDirectory: string,
+    parentContext: { logger: import("@fern-api/logger").Logger },
+    logLevel: LogLevel
+): Promise<void> {
+    // Load all generator workspaces
+    const allGenerators = await loadGeneratorWorkspaces();
+
+    // Build each generator at LOCAL_BUILD_VERSION
+    const version = LOCAL_BUILD_VERSION;
+
+    for (const nickname of generatorNicknames) {
+        const generator = allGenerators.find((g) => g.workspaceName === nickname);
+        if (!generator) {
+            throw new Error(`Generator ${nickname} not found in loaded workspaces`);
+        }
+
+        const taskContextFactory = new TaskContextFactory(logLevel);
+        const taskContext = taskContextFactory.create(`Building ${nickname}`);
+
+        parentContext.logger.info(`Building ${nickname} at version ${version}...`);
+
+        await buildGeneratorImage({
+            generator,
+            version,
+            context: taskContext,
+            logLevel
+        });
+
+        parentContext.logger.info(`✓ Successfully built ${nickname}:${version}`);
+    }
 }
