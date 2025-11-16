@@ -9,7 +9,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { join } from "path";
 import { LambdaExampleEnhancer } from "./lambdaClient";
 import { SpinnerStatusCoordinator } from "./spinnerStatusCoordinator";
-import { AIExampleEnhancerConfig, ExampleEnhancementBatchRequest } from "./types";
+import { AIExampleEnhancerConfig } from "./types";
 import {
     EnhancedExampleRecord,
     loadExistingOverrideCoverage,
@@ -435,7 +435,9 @@ async function processEndpointsConcurrently(
         // Process results
         for (let j = 0; j < results.length; j++) {
             const result = results[j];
-            if (!result) continue;
+            if (!result) {
+                continue;
+            }
 
             if (result.status === "fulfilled" && result.value) {
                 const { endpointKey, enhancedReq, enhancedRes } = result.value;
