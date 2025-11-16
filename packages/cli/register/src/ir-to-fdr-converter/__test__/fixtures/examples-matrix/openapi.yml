@@ -1,0 +1,160 @@
+openapi: 3.0.3
+info:
+  title: Examples Matrix Test
+  version: 1.0.0
+  description: Test fixture for different example types with nullable fields
+
+paths:
+  /endpoint-with-x-fern-examples:
+    post:
+      operationId: endpointWithXFernExamples
+      summary: Endpoint using x-fern-examples
+      x-fern-examples:
+        - name: ExampleWithNullableField
+          request:
+            name: "Test User"
+            email: "test@example.com"
+            age: null
+          response:
+            body:
+              id: "user123"
+              name: "Test User"
+              nickname: null
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUserRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+
+  /endpoint-with-example:
+    post:
+      operationId: endpointWithExample
+      summary: Endpoint using single example field
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUserRequest"
+            example:
+              name: "Jane Doe"
+              email: "jane@example.com"
+              age: null
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+              example:
+                id: "user456"
+                name: "Jane Doe"
+                nickname: null
+
+  /endpoint-with-examples:
+    post:
+      operationId: endpointWithExamples
+      summary: Endpoint using multiple examples
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUserRequest"
+            examples:
+              withNullAge:
+                summary: User with null age
+                value:
+                  name: "Bob Smith"
+                  email: "bob@example.com"
+                  age: null
+              withAge:
+                summary: User with age
+                value:
+                  name: "Alice Johnson"
+                  email: "alice@example.com"
+                  age: 30
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+              examples:
+                withNullNickname:
+                  summary: User with null nickname
+                  value:
+                    id: "user789"
+                    name: "Bob Smith"
+                    nickname: null
+                withNickname:
+                  summary: User with nickname
+                  value:
+                    id: "user790"
+                    name: "Alice Johnson"
+                    nickname: "Ally"
+
+  /endpoint-without-examples:
+    post:
+      operationId: endpointWithoutExamples
+      summary: Endpoint without any examples
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUserRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+
+components:
+  schemas:
+    CreateUserRequest:
+      type: object
+      required:
+        - name
+        - email
+      properties:
+        name:
+          type: string
+          description: User's full name
+        email:
+          type: string
+          format: email
+          description: User's email address
+        age:
+          type: integer
+          nullable: true
+          description: User's age (nullable)
+
+    UserResponse:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          description: Unique user identifier
+        name:
+          type: string
+          description: User's full name
+        nickname:
+          type: string
+          nullable: true
+          description: User's nickname (nullable)

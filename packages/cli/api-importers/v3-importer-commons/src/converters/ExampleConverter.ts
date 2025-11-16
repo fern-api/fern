@@ -159,7 +159,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 ]
             };
         }
-        if ("nullable" in resolvedSchema && resolvedSchema.nullable === true && this.example === null) {
+        if (
+            !this.generateOptionalProperties &&
+            "nullable" in resolvedSchema &&
+            resolvedSchema.nullable === true &&
+            this.example === null
+        ) {
             return {
                 isValid: true,
                 coerced: false,
@@ -272,6 +277,29 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private convertBoolean(): ExampleConverter.Output {
+        const resolvedSchema = this.context.isReferenceObject(this.schema)
+            ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                  schemaOrReference: this.schema,
+                  breadcrumbs: this.breadcrumbs
+              })
+            : this.schema;
+
+        if (
+            !this.generateOptionalProperties &&
+            resolvedSchema &&
+            "nullable" in resolvedSchema &&
+            resolvedSchema.nullable === true &&
+            this.example === null
+        ) {
+            return {
+                isValid: true,
+                coerced: false,
+                usedProvidedExample: true,
+                validExample: this.example,
+                errors: []
+            };
+        }
+
         const isValid = typeof this.example === "boolean";
         if (isValid) {
             return {
@@ -283,12 +311,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             };
         }
 
-        const resolvedDefault = this.context.isReferenceObject(this.schema)
-            ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
-                  schemaOrReference: this.schema,
-                  breadcrumbs: this.breadcrumbs
-              })?.default
-            : this.schema.default;
+        const resolvedDefault = resolvedSchema?.default;
 
         const resolvedConst = this.context.isReferenceObject(this.schema)
             ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
@@ -366,6 +389,30 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private convertNumber(): ExampleConverter.Output {
+        const resolvedSchema: OpenAPIV3_1.SchemaObject | undefined = this.context.isReferenceObject(this.schema)
+            ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                  schemaOrReference: this.schema,
+                  breadcrumbs: this.breadcrumbs,
+                  skipErrorCollector: true
+              })
+            : this.schema;
+
+        if (
+            !this.generateOptionalProperties &&
+            resolvedSchema &&
+            "nullable" in resolvedSchema &&
+            resolvedSchema.nullable === true &&
+            this.example === null
+        ) {
+            return {
+                isValid: true,
+                coerced: false,
+                usedProvidedExample: true,
+                validExample: this.example,
+                errors: []
+            };
+        }
+
         if (typeof this.example === "number") {
             return {
                 isValid: true,
@@ -377,7 +424,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         }
 
         const num = Number(this.example);
-        if (!isNaN(num)) {
+        if (!isNaN(num) && this.example != null) {
             return {
                 isValid: true,
                 coerced: true,
@@ -386,14 +433,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 errors: []
             };
         }
-
-        const resolvedSchema: OpenAPIV3_1.SchemaObject | undefined = this.context.isReferenceObject(this.schema)
-            ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
-                  schemaOrReference: this.schema,
-                  breadcrumbs: this.breadcrumbs,
-                  skipErrorCollector: true
-              })
-            : this.schema;
 
         const resolvedDefault = resolvedSchema?.default;
 
@@ -489,6 +528,30 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private convertString(): ExampleConverter.Output {
+        const resolvedSchema = this.context.isReferenceObject(this.schema)
+            ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                  schemaOrReference: this.schema,
+                  breadcrumbs: this.breadcrumbs,
+                  skipErrorCollector: true
+              })
+            : this.schema;
+
+        if (
+            !this.generateOptionalProperties &&
+            resolvedSchema &&
+            "nullable" in resolvedSchema &&
+            resolvedSchema.nullable === true &&
+            this.example === null
+        ) {
+            return {
+                isValid: true,
+                coerced: false,
+                usedProvidedExample: true,
+                validExample: this.example,
+                errors: []
+            };
+        }
+
         if (typeof this.example === "string") {
             return {
                 isValid: true,
@@ -510,13 +573,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             };
         }
 
-        const resolvedDefault = this.context.isReferenceObject(this.schema)
-            ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
-                  schemaOrReference: this.schema,
-                  breadcrumbs: this.breadcrumbs,
-                  skipErrorCollector: true
-              })?.default
-            : this.schema.default;
+        const resolvedDefault = resolvedSchema?.default;
 
         if (typeof resolvedDefault === "string") {
             return {
@@ -529,13 +586,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         }
 
         // Check for date formats and use appropriate examples
-        const resolvedSchema = this.context.isReferenceObject(this.schema)
-            ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
-                  schemaOrReference: this.schema,
-                  breadcrumbs: this.breadcrumbs,
-                  skipErrorCollector: true
-              })
-            : this.schema;
 
         const dateFallbackExample =
             resolvedSchema?.format === "date"
@@ -559,6 +609,30 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private convertInteger(): ExampleConverter.Output {
+        const resolvedSchema = this.context.isReferenceObject(this.schema)
+            ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                  schemaOrReference: this.schema,
+                  breadcrumbs: this.breadcrumbs,
+                  skipErrorCollector: true
+              })
+            : this.schema;
+
+        if (
+            !this.generateOptionalProperties &&
+            resolvedSchema &&
+            "nullable" in resolvedSchema &&
+            resolvedSchema.nullable === true &&
+            this.example === null
+        ) {
+            return {
+                isValid: true,
+                coerced: false,
+                usedProvidedExample: true,
+                validExample: this.example,
+                errors: []
+            };
+        }
+
         if (typeof this.example === "number" && Number.isInteger(this.example)) {
             return {
                 isValid: true,
@@ -582,13 +656,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             }
         }
 
-        const resolvedDefault = this.context.isReferenceObject(this.schema)
-            ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
-                  schemaOrReference: this.schema,
-                  breadcrumbs: this.breadcrumbs,
-                  skipErrorCollector: true
-              })?.default
-            : this.schema.default;
+        const resolvedDefault = resolvedSchema?.default;
         if (typeof resolvedDefault === "number" && Number.isInteger(resolvedDefault)) {
             return {
                 isValid: true,
@@ -616,6 +684,21 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     private convertArray({ resolvedSchema }: { resolvedSchema: OpenAPIV3_1.SchemaObject }): ExampleConverter.Output {
         if (resolvedSchema.type != "array") {
             return { isValid: false, coerced: false, usedProvidedExample: false, validExample: null, errors: [] };
+        }
+
+        if (
+            !this.generateOptionalProperties &&
+            "nullable" in resolvedSchema &&
+            resolvedSchema.nullable === true &&
+            this.example === null
+        ) {
+            return {
+                isValid: true,
+                coerced: false,
+                usedProvidedExample: true,
+                validExample: this.example,
+                errors: []
+            };
         }
         if (resolvedSchema.items == null) {
             resolvedSchema.items = { type: "string" };

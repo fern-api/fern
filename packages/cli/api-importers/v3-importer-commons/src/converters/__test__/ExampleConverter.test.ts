@@ -15,7 +15,7 @@ const mockLogger = {
 const mockContext = {
     logger: mockLogger,
     isReferenceObject: vi.fn().mockReturnValue(false),
-    resolveMaybeReference: vi.fn()
+    resolveMaybeReference: vi.fn().mockImplementation((args) => args.schemaOrReference)
 } as unknown as AbstractConverterContext<object>;
 
 describe("ExampleConverter", () => {
@@ -242,6 +242,263 @@ describe("ExampleConverter", () => {
 
             expect(result).toBeGreaterThanOrEqual(0.001);
             expect(result).toBeLessThanOrEqual(0.01);
+        });
+    });
+
+    describe("nullable null handling", () => {
+        it("should accept null for nullable fields", () => {
+            const schema = {
+                type: "number",
+                nullable: true
+            } as OpenAPIV3_1.SchemaObject;
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContext,
+                schema,
+                example: null
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.coerced).toBe(false);
+            expect(result.usedProvidedExample).toBe(true);
+            expect(result.validExample).toBe(null);
+        });
+
+        it("should accept null for nullable array fields", () => {
+            const schema = {
+                type: "array",
+                items: { type: "string" },
+                nullable: true
+            } as OpenAPIV3_1.SchemaObject;
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContext,
+                schema,
+                example: null
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.coerced).toBe(false);
+            expect(result.usedProvidedExample).toBe(true);
+            expect(result.validExample).toBe(null);
+        });
+
+        it("should reject undefined for non-nullable fields", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "number"
+            };
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContext,
+                schema,
+                example: undefined
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(false);
+            expect(result.errors).toHaveLength(1);
+            expect(result.errors[0]?.message).toContain("Example is not a number");
+        });
+    });
+
+    describe("nullable field handling with generateOptionalProperties", () => {
+        describe("user-provided examples (generateOptionalProperties=false)", () => {
+            it("should accept null for nullable boolean field", () => {
+                const schema: OpenAPIV3_1.SchemaObject & { nullable?: boolean } = {
+                    type: "boolean",
+                    nullable: true
+                };
+                const converter = new ExampleConverter({
+                    breadcrumbs: [],
+                    context: mockContext,
+                    schema,
+                    example: null,
+                    generateOptionalProperties: false
+                });
+
+                const result = converter.convert();
+
+                expect(result.isValid).toBe(true);
+                expect(result.usedProvidedExample).toBe(true);
+                expect(result.validExample).toBe(null);
+                expect(result.errors).toEqual([]);
+            });
+
+            it("should accept null for nullable number field", () => {
+                const schema: OpenAPIV3_1.SchemaObject & { nullable?: boolean } = {
+                    type: "number",
+                    nullable: true
+                };
+                const converter = new ExampleConverter({
+                    breadcrumbs: [],
+                    context: mockContext,
+                    schema,
+                    example: null,
+                    generateOptionalProperties: false
+                });
+
+                const result = converter.convert();
+
+                expect(result.isValid).toBe(true);
+                expect(result.usedProvidedExample).toBe(true);
+                expect(result.validExample).toBe(null);
+                expect(result.errors).toEqual([]);
+            });
+
+            it("should accept null for nullable integer field", () => {
+                const schema: OpenAPIV3_1.SchemaObject & { nullable?: boolean } = {
+                    type: "integer",
+                    nullable: true
+                };
+                const converter = new ExampleConverter({
+                    breadcrumbs: [],
+                    context: mockContext,
+                    schema,
+                    example: null,
+                    generateOptionalProperties: false
+                });
+
+                const result = converter.convert();
+
+                expect(result.isValid).toBe(true);
+                expect(result.usedProvidedExample).toBe(true);
+                expect(result.validExample).toBe(null);
+                expect(result.errors).toEqual([]);
+            });
+
+            it("should accept null for nullable array field", () => {
+                const schema: OpenAPIV3_1.SchemaObject & { nullable?: boolean } = {
+                    type: "array",
+                    items: { type: "string" },
+                    nullable: true
+                };
+                const converter = new ExampleConverter({
+                    breadcrumbs: [],
+                    context: mockContext,
+                    schema,
+                    example: null,
+                    generateOptionalProperties: false
+                });
+
+                const result = converter.convert();
+
+                expect(result.isValid).toBe(true);
+                expect(result.usedProvidedExample).toBe(true);
+                expect(result.validExample).toBe(null);
+                expect(result.errors).toEqual([]);
+            });
+        });
+
+        describe("autogenerated examples (generateOptionalProperties=true)", () => {
+            it("should NOT accept null for nullable boolean field and generate fallback", () => {
+                const schema: OpenAPIV3_1.SchemaObject & { nullable?: boolean } = {
+                    type: "boolean",
+                    nullable: true
+                };
+                const converter = new ExampleConverter({
+                    breadcrumbs: [],
+                    context: mockContext,
+                    schema,
+                    example: null,
+                    generateOptionalProperties: true
+                });
+
+                const result = converter.convert();
+
+                expect(result.isValid).toBe(false);
+                expect(result.usedProvidedExample).toBe(false);
+                expect(result.validExample).toBe(true);
+                expect(result.errors.length).toBeGreaterThan(0);
+            });
+
+            it("should NOT accept undefined for nullable string field and generate fallback", () => {
+                const schema: OpenAPIV3_1.SchemaObject & { nullable?: boolean } = {
+                    type: "string",
+                    nullable: true
+                };
+                const converter = new ExampleConverter({
+                    breadcrumbs: [],
+                    context: mockContext,
+                    schema,
+                    example: undefined,
+                    generateOptionalProperties: true
+                });
+
+                const result = converter.convert();
+
+                expect(result.isValid).toBe(false);
+                expect(result.usedProvidedExample).toBe(false);
+                expect(typeof result.validExample).toBe("string");
+                expect(result.errors.length).toBeGreaterThan(0);
+            });
+
+            it("should NOT accept null for nullable number field and generate fallback", () => {
+                const schema: OpenAPIV3_1.SchemaObject & { nullable?: boolean } = {
+                    type: "number",
+                    nullable: true
+                };
+                const converter = new ExampleConverter({
+                    breadcrumbs: [],
+                    context: mockContext,
+                    schema,
+                    example: null,
+                    generateOptionalProperties: true
+                });
+
+                const result = converter.convert();
+
+                expect(result.isValid).toBe(false);
+                expect(result.usedProvidedExample).toBe(false);
+                expect(typeof result.validExample).toBe("number");
+                expect(result.errors.length).toBeGreaterThan(0);
+            });
+
+            it("should NOT accept null for nullable integer field and generate fallback", () => {
+                const schema: OpenAPIV3_1.SchemaObject & { nullable?: boolean } = {
+                    type: "integer",
+                    nullable: true
+                };
+                const converter = new ExampleConverter({
+                    breadcrumbs: [],
+                    context: mockContext,
+                    schema,
+                    example: null,
+                    generateOptionalProperties: true
+                });
+
+                const result = converter.convert();
+
+                expect(result.isValid).toBe(false);
+                expect(result.usedProvidedExample).toBe(false);
+                expect(typeof result.validExample).toBe("number");
+                expect(result.errors.length).toBeGreaterThan(0);
+            });
+
+            it("should NOT accept null for nullable array field and generate fallback", () => {
+                const schema: OpenAPIV3_1.SchemaObject & { nullable?: boolean } = {
+                    type: "array",
+                    items: { type: "string" },
+                    nullable: true
+                };
+                const converter = new ExampleConverter({
+                    breadcrumbs: [],
+                    context: mockContext,
+                    schema,
+                    example: null,
+                    generateOptionalProperties: true
+                });
+
+                const result = converter.convert();
+
+                expect(result.isValid).toBe(false);
+                expect(result.usedProvidedExample).toBe(false);
+                expect(Array.isArray(result.validExample)).toBe(true);
+            });
         });
     });
 });
