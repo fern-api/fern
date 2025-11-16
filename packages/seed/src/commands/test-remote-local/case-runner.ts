@@ -129,17 +129,39 @@ async function copyGithubOutputToOutputDirectory(repository: string, logs: strin
     await cp(tmpDir.path, outputDirectory, { recursive: true });
 }
 
-function getRemoteBranchFromLogs(logs: string): string | undefined{
-    throw new Error("Not implemented");
-    return undefined;
+function getRemoteBranchFromLogs(logs: string): string | undefined {
+    // Example log line: INFO  2025-11-15T23:49:44.180Z [api]: fernapi/fern-typescript-sdk Pushed branch: https://github.com/fern-api/lattice-sdk-javascript/tree/fern-bot/2025-11-15T23-49Z
+    const branchRegex = /Pushed branch: https:\/\/github\.com\/[^\/]+\/[^\/]+\/tree\/([^\s]+)/;
+    const match = logs.match(branchRegex);
+    return match?.[1];
 }
 
 async function getMostRecentlyCreatedBranch(repository: string): Promise<string> {
-    throw new Error("Not implemented");
+    const result = await loggingExeca(
+        { info: () => {}, debug: () => {}, error: () => {}, warn: () => {} } as Logger,
+        "gh",
+        ["api", `repos/${repository}/branches`, "--jq", ".[0].name"],
+        { reject: false }
+    );
+
+    if (result.exitCode !== 0) {
+        throw new Error(`Failed to get most recent branch: ${result.stderr}`);
+    }
+
+    return result.stdout.trim();
 }
 
 async function cloneReposiroty(repository: string, branch: string, targetDirectory: string): Promise<void> {
-    throw new Error("Not implemented");
+    const result = await loggingExeca(
+        { info: () => {}, debug: () => {}, error: () => {}, warn: () => {} } as Logger,
+        "git",
+        ["clone", "--branch", branch, "--depth", "1", `https://github.com/${repository}.git`, targetDirectory],
+        { reject: false }
+    );
+
+    if (result.exitCode !== 0) {
+        throw new Error(`Failed to clone repository: ${result.stderr}`);
+    }
 }
 
 function getOutputDirectory(testCase: RemoteVsLocalTestCase, generationMode: GenerationMode): string {
