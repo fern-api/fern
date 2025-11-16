@@ -17,7 +17,7 @@ export async function executeTestRemoteLocalCommand({
     fixture,
     outputFolder,
     logLevel,
-    workingDirectory,
+    fernRepoDirectory,
     githubToken,
     fernToken
 }: {
@@ -25,7 +25,7 @@ export async function executeTestRemoteLocalCommand({
     fixture: string[];
     outputFolder: string;
     logLevel: LogLevel;
-    workingDirectory: string;
+    fernRepoDirectory: string;
     githubToken: string;
     fernToken: string;
 }): Promise<void> {
@@ -43,8 +43,7 @@ export async function executeTestRemoteLocalCommand({
     logger.debug(`Fixtures: ${fixtures.join(", ")}`);
 
     const results: TestResult[] = [];
-    const fernExecutable = path.join(workingDirectory, "packages", "cli", "cli", "dist", "prod", "cli.cjs");
-    const fernRepoDirectory = workingDirectory;
+    const fernExecutable = path.join(fernRepoDirectory, "packages", "cli", "cli", "dist", "prod", "cli.cjs");
 
     // Sequential execution (no parallelization)
     for (const gen of generators) {
@@ -52,7 +51,7 @@ export async function executeTestRemoteLocalCommand({
             for (const mode of outputModes) {
                 // Working directory includes the output mode subdirectory
                 // Structure: seed-remote-local/{generator}/{fixture}/{outputFolder}/{outputMode}/
-                const testWorkingDirectory = path.join(workingDirectory, "seed-remote-local", gen, fix, outputFolder, mode);
+                const testWorkingDirectory = path.join(fernRepoDirectory, "seed-remote-local", gen, fix, outputFolder, mode + "OutputMode");
 
                 logger.info(`\n${"=".repeat(80)}`);
                 logger.info(`Running test: ${gen} / ${fix} / ${mode}`);

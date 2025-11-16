@@ -350,7 +350,7 @@ function getOutputDirectory(
 
     // Structure: {workingDirectory}/sdks/{generationMode}/{generator}
     // Example: seed-remote-local/python-sdk/imdb/no-custom-config/local-file-system/sdks/local/python-sdk
-    return path.join(workingDirectory, "sdks", generationMode, generator);
+    return path.join(workingDirectory, "sdks", generationMode + "Generation", generator);
 }
 
 async function writeGeneratorsYml(fernDirectory: string, localConfig: unknown, remoteConfig: unknown): Promise<void> {
@@ -436,7 +436,7 @@ function getPackageOutputConfig(
             default:
                 throw new Error(`Generator ${generator} not supported`);
         }
-    } else if (outputMode === "local-file-system") {
+    } else if (outputMode === "local") {
         const absoluteOutputPath = getOutputDirectory(testCase, generationMode);
         const fernDirectory = path.join(workingDirectory, "fern");
         // Calculate relative path from generators.yml location (fern/generators.yml) to output directory

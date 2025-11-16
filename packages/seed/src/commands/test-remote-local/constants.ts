@@ -15,7 +15,7 @@ export const LOCAL_GROUP_NAME = "local";
 // Source of truth: const arrays (enables runtime iteration)
 export const ALL_GENERATOR_NICKNAMES = ["ts-sdk", "java-sdk", "go-sdk", "python-sdk"] as const;
 export const ALL_TEST_FIXTURES = ["imdb", "exhaustive"] as const;
-export const ALL_OUTPUT_MODES = ["github", "local-file-system"] as const;
+export const ALL_OUTPUT_MODES = ["github", "local"] as const;
 export const ALL_GENERATION_MODES = ["local", "remote"] as const;
 
 // Derived types (enables type safety in switch statements)

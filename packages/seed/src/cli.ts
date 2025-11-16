@@ -256,7 +256,7 @@ function addTestRemoteLocalCommand(cli: Argv) {
                     default: LogLevel.Info,
                     choices: LOG_LEVELS
                 })
-                .option("working-directory", {
+                .option("fern-repo-directory", {
                     string: true,
                     demandOption: false,
                     description:
@@ -277,15 +277,15 @@ function addTestRemoteLocalCommand(cli: Argv) {
             // Verify that the working directory is a valid path and is the root folder of the fern repo
             const inputValidationErrors = [];
 
-            const workingDirectory = argv.workingDirectory ?? process.cwd();
-            const isFernRepoResult = isFernRepo(workingDirectory);
+            const fernRepoDirectory = argv.fernRepoDirectory ?? process.cwd();
+            const isFernRepoResult = isFernRepo(fernRepoDirectory);
             if (!isFernRepoResult.success) {
                 inputValidationErrors.push(
-                    `The working directory (${workingDirectory}) is not the root folder of the fern repo. ${isFernRepoResult.error}`
+                    `The working directory (${fernRepoDirectory}) is not the root folder of the fern repo. ${isFernRepoResult.error}`
                 );
             }
 
-            const localFernCliIsBuilt = await isLocalFernCliBuilt(workingDirectory);
+            const localFernCliIsBuilt = await isLocalFernCliBuilt(fernRepoDirectory);
             if (!localFernCliIsBuilt.success) {
                 inputValidationErrors.push(localFernCliIsBuilt.error);
             }
@@ -308,7 +308,7 @@ function addTestRemoteLocalCommand(cli: Argv) {
                 fixture: argv.fixture ?? [],
                 outputFolder: argv.outputFolder ?? "",
                 logLevel: argv.logLevel,
-                workingDirectory,
+                fernRepoDirectory,
                 githubToken: githubToken ?? "",
                 fernToken: fernToken ?? ""
             });
