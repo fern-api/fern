@@ -13,19 +13,19 @@ import (
 type SearchRequest struct {
 	Limit            int                            `query:"limit"`
 	Id               string                         `query:"id"`
-	Date             string                         `query:"date"`
+	Date             time.Time                      `query:"date"`
 	Deadline         time.Time                      `query:"deadline"`
 	Bytes            string                         `query:"bytes"`
 	User             *User                          `query:"user"`
 	UserList         []*User                        `query:"userList"`
 	OptionalDeadline *time.Time                     `query:"optionalDeadline"`
-	KeyValue         map[string]*string             `query:"keyValue"`
+	KeyValue         map[string]string              `query:"keyValue"`
 	OptionalString   *string                        `query:"optionalString"`
 	NestedUser       *NestedUser                    `query:"nestedUser"`
 	OptionalUser     *User                          `query:"optionalUser"`
 	ExcludeUser      []*User                        `query:"excludeUser"`
 	Filter           []*string                      `query:"filter"`
-	Neighbor         *User                          `query:"neighbor"`
+	Neighbor         *SearchRequestNeighbor         `query:"neighbor"`
 	NeighborRequired *SearchRequestNeighborRequired `query:"neighborRequired"`
 }
 
@@ -114,6 +114,110 @@ func (n *NestedUser) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", n)
+}
+
+type SearchRequestNeighbor struct {
+	User       *User
+	NestedUser *NestedUser
+	String     string
+	Integer    int
+
+	typ string
+}
+
+func (s *SearchRequestNeighbor) GetUser() *User {
+	if s == nil {
+		return nil
+	}
+	return s.User
+}
+
+func (s *SearchRequestNeighbor) GetNestedUser() *NestedUser {
+	if s == nil {
+		return nil
+	}
+	return s.NestedUser
+}
+
+func (s *SearchRequestNeighbor) GetString() string {
+	if s == nil {
+		return ""
+	}
+	return s.String
+}
+
+func (s *SearchRequestNeighbor) GetInteger() int {
+	if s == nil {
+		return 0
+	}
+	return s.Integer
+}
+
+func (s *SearchRequestNeighbor) UnmarshalJSON(data []byte) error {
+	valueUser := new(User)
+	if err := json.Unmarshal(data, &valueUser); err == nil {
+		s.typ = "User"
+		s.User = valueUser
+		return nil
+	}
+	valueNestedUser := new(NestedUser)
+	if err := json.Unmarshal(data, &valueNestedUser); err == nil {
+		s.typ = "NestedUser"
+		s.NestedUser = valueNestedUser
+		return nil
+	}
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		s.typ = "String"
+		s.String = valueString
+		return nil
+	}
+	var valueInteger int
+	if err := json.Unmarshal(data, &valueInteger); err == nil {
+		s.typ = "Integer"
+		s.Integer = valueInteger
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, s)
+}
+
+func (s SearchRequestNeighbor) MarshalJSON() ([]byte, error) {
+	if s.typ == "User" || s.User != nil {
+		return json.Marshal(s.User)
+	}
+	if s.typ == "NestedUser" || s.NestedUser != nil {
+		return json.Marshal(s.NestedUser)
+	}
+	if s.typ == "String" || s.String != "" {
+		return json.Marshal(s.String)
+	}
+	if s.typ == "Integer" || s.Integer != 0 {
+		return json.Marshal(s.Integer)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", s)
+}
+
+type SearchRequestNeighborVisitor interface {
+	VisitUser(*User) error
+	VisitNestedUser(*NestedUser) error
+	VisitString(string) error
+	VisitInteger(int) error
+}
+
+func (s *SearchRequestNeighbor) Accept(visitor SearchRequestNeighborVisitor) error {
+	if s.typ == "User" || s.User != nil {
+		return visitor.VisitUser(s.User)
+	}
+	if s.typ == "NestedUser" || s.NestedUser != nil {
+		return visitor.VisitNestedUser(s.NestedUser)
+	}
+	if s.typ == "String" || s.String != "" {
+		return visitor.VisitString(s.String)
+	}
+	if s.typ == "Integer" || s.Integer != 0 {
+		return visitor.VisitInteger(s.Integer)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", s)
 }
 
 type SearchRequestNeighborRequired struct {

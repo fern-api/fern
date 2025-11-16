@@ -377,4 +377,76 @@ export class User {
                 });
         }
     }
+
+    /**
+     * Test endpoint with path parameters listed in different order than found in path
+     *
+     * @param {SeedPathParameters.GetUserSpecificsRequest} request
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.getUserSpecifics({
+     *         userId: "user_id",
+     *         version: 1,
+     *         thought: "thought"
+     *     })
+     */
+    public getUserSpecifics(
+        request: SeedPathParameters.GetUserSpecificsRequest,
+        requestOptions?: User.RequestOptions,
+    ): core.HttpResponsePromise<SeedPathParameters.User> {
+        return core.HttpResponsePromise.fromPromise(this.__getUserSpecifics(request, requestOptions));
+    }
+
+    private async __getUserSpecifics(
+        request: SeedPathParameters.GetUserSpecificsRequest,
+        requestOptions?: User.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
+        const { userId, version, thought } = request;
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `/${core.url.encodePathParam(this._options.tenantId)}/user/${core.url.encodePathParam(userId)}/specifics/${core.url.encodePathParam(version)}/${core.url.encodePathParam(thought)}`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedPathParameters.User, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedPathParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedPathParametersError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedPathParametersTimeoutError(
+                    "Timeout exceeded when calling GET /{tenant_id}/user/{user_id}/specifics/{version}/{thought}.",
+                );
+            case "unknown":
+                throw new errors.SeedPathParametersError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
 }

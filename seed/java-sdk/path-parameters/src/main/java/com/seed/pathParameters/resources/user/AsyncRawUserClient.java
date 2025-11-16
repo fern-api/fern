@@ -14,6 +14,7 @@ import com.seed.pathParameters.core.SeedPathParametersApiException;
 import com.seed.pathParameters.core.SeedPathParametersException;
 import com.seed.pathParameters.core.SeedPathParametersHttpResponse;
 import com.seed.pathParameters.resources.user.requests.GetUserMetadataRequest;
+import com.seed.pathParameters.resources.user.requests.GetUserSpecificsRequest;
 import com.seed.pathParameters.resources.user.requests.GetUsersRequest;
 import com.seed.pathParameters.resources.user.requests.SearchUsersRequest;
 import com.seed.pathParameters.resources.user.requests.UpdateUserRequest;
@@ -305,6 +306,81 @@ public class AsyncRawUserClient {
                 .addPathSegment(userId)
                 .addPathSegments("metadata")
                 .addPathSegment("v" + Integer.toString(version))
+                .build();
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedPathParametersHttpResponse<User>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedPathParametersHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, User.class), response));
+                        return;
+                    }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                    future.completeExceptionally(new SeedPathParametersApiException(
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedPathParametersException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(
+                        new SeedPathParametersException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Test endpoint with path parameters listed in different order than found in path
+     */
+    public CompletableFuture<SeedPathParametersHttpResponse<User>> getUserSpecifics(
+            String userId, int version, String thought) {
+        return getUserSpecifics(
+                userId, version, thought, GetUserSpecificsRequest.builder().build());
+    }
+
+    /**
+     * Test endpoint with path parameters listed in different order than found in path
+     */
+    public CompletableFuture<SeedPathParametersHttpResponse<User>> getUserSpecifics(
+            String userId, int version, String thought, GetUserSpecificsRequest request) {
+        return getUserSpecifics(userId, version, thought, request, null);
+    }
+
+    /**
+     * Test endpoint with path parameters listed in different order than found in path
+     */
+    public CompletableFuture<SeedPathParametersHttpResponse<User>> getUserSpecifics(
+            String userId,
+            int version,
+            String thought,
+            GetUserSpecificsRequest request,
+            RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegment(clientOptions.tenantId())
+                .addPathSegments("user")
+                .addPathSegment(userId)
+                .addPathSegments("specifics")
+                .addPathSegment(Integer.toString(version))
+                .addPathSegment(thought)
                 .build();
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)

@@ -15,7 +15,7 @@ describe("Service", () => {
             .statusCode(200)
             .build();
 
-        const response = await client.service.post("serviceParam", "resourceParam", 1);
+        const response = await client.service.post("serviceParam", 1, "resourceParam");
         expect(response).toEqual(undefined);
     });
 });

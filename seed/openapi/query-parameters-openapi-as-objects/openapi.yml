@@ -63,7 +63,6 @@ paths:
             type: object
             additionalProperties:
               type: string
-              nullable: true
             nullable: true
         - name: optionalString
           in: query

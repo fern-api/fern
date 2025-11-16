@@ -4,6 +4,7 @@ import Foundation
 public final class EnumClient: Sendable {
     public let headers: HeadersClient
     public let inlinedRequest: InlinedRequestClient
+    public let multipartForm: MultipartFormClient
     public let pathParam: PathParamClient
     public let queryParam: QueryParamClient
     public let unknown: UnknownClient
@@ -57,6 +58,7 @@ public final class EnumClient: Sendable {
         )
         self.headers = HeadersClient(config: config)
         self.inlinedRequest = InlinedRequestClient(config: config)
+        self.multipartForm = MultipartFormClient(config: config)
         self.pathParam = PathParamClient(config: config)
         self.queryParam = QueryParamClient(config: config)
         self.unknown = UnknownClient(config: config)

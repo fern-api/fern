@@ -18,7 +18,7 @@ public class PostTest : BaseMockServerTest
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
         Assert.DoesNotThrowAsync(async () =>
-            await Client.Service.PostAsync("pathParam", "serviceParam", "resourceParam", 1)
+            await Client.Service.PostAsync("pathParam", "serviceParam", 1, "resourceParam")
         );
     }
 }

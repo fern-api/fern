@@ -1,5 +1,6 @@
 use crate::{ApiError, ClientConfig};
 
+pub mod empty;
 pub mod realtime;
 pub struct WebsocketClient {
     pub config: ClientConfig,
@@ -13,4 +14,5 @@ impl WebsocketClient {
     }
 }
 
+pub use empty::EmptyClient;
 pub use realtime::RealtimeClient;
