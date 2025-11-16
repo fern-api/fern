@@ -1,3 +1,4 @@
+import { assertDefined } from "@fern-api/core-utils";
 import { IntermediateRepresentation, TypeDeclaration, TypeId, TypeReference } from "@fern-fern/ir-sdk/api";
 
 export class CycleDetector {
@@ -187,23 +188,43 @@ export class CycleDetector {
     }
 
     /**
+     * Computes the set of type IDs that participate in a recursive type cycle,
+     * based on the IR's referencedTypes graph. This is used to determine which
+     * Swift enums (generated for unions / undiscriminated unions) should be
+     * marked as `indirect`.
+     */
+    public computeRecursiveTypeIdsForSwiftEnums(): Set<TypeId> {
+        const nodes = new Set<TypeId>(Object.keys(this.ir.types));
+        const adjacency = new Map<TypeId, TypeId[]>();
+
+        for (const [typeId, typeDeclaration] of Object.entries(this.ir.types)) {
+            const referenced = typeDeclaration.referencedTypes ? Array.from(typeDeclaration.referencedTypes) : [];
+            adjacency.set(typeId, referenced);
+        }
+
+        const sccs = this.computeStronglyConnectedComponents(nodes, adjacency);
+        const recursiveTypeIds = new Set<TypeId>();
+
+        for (const scc of sccs) {
+            if (scc.length > 1) {
+                scc.forEach((typeId) => recursiveTypeIds.add(typeId));
+            } else if (scc.length === 1) {
+                const typeId = scc[0];
+                assertDefined(typeId);
+                const neighbors = adjacency.get(typeId) ?? [];
+                if (neighbors.some((neighbor) => neighbor === typeId)) {
+                    recursiveTypeIds.add(typeId);
+                }
+            }
+        }
+
+        return recursiveTypeIds;
+    }
+
+    /**
      * Returns, for each object type, the set of property wire values that should be
      * generated as `Indirect<...>` in Swift in order to break legal recursive
      * value-type cycles.
-     *
-     * High-level algorithm:
-     * 1. Build a "Swift recursion graph" over object types where edges correspond
-     *    to properties whose Swift type is either:
-     *      - a named object type `B`, or
-     *      - `Optional<B>` / `Nullable<B>`
-     *    (We intentionally treat list/set/map/etc. as *safe* containers and do
-     *     not add edges for those.)
-     * 2. Compute strongly-connected components (SCCs) of that graph.
-     * 3. For each SCC that represents a recursive component:
-     *      - Always box self-edges (self-recursive properties).
-     *      - Among cross-type edges:
-     *          * If there are any non-optional edges, box all non-optional edges.
-     *          * Otherwise (all edges optional), box all of them.
      */
     public computeIndirectPropertiesMapping(): Map<TypeId, Set<string>> {
         type Edge = {
