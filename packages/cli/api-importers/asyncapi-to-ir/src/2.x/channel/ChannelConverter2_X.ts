@@ -15,6 +15,7 @@ import { AbstractChannelConverter } from "../../converters/AbstractChannelConver
 import { ParameterConverter } from "../../converters/ParameterConverter";
 import { ChannelAddressExtension } from "../../extensions/x-fern-channel-address";
 import { DisplayNameExtension } from "../../extensions/x-fern-display-name";
+import { FernRetriesExtension } from "../../extensions/x-fern-retries";
 import { AsyncAPIV2 } from "..";
 
 export declare namespace ChannelConverter2_X {
@@ -39,6 +40,13 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
             context: this.context
         });
         const displayName = displayNameExtension.convert() ?? this.websocketGroup?.join(".");
+
+        const retriesExtension = new FernRetriesExtension({
+            breadcrumbs: this.breadcrumbs,
+            operation: this.channel,
+            context: this.context
+        });
+        retriesExtension.convert();
 
         if (this.channel.parameters) {
             this.convertPathParameters({
@@ -144,6 +152,13 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         let convertedSchema: Converters.SchemaConverters.SchemaConverter.ConvertedSchema | undefined = undefined;
         const action = origin === "server" ? "subscribe" : "publish";
         const breadcrumbs = [...this.breadcrumbs, action];
+
+        const retriesExtension = new FernRetriesExtension({
+            breadcrumbs,
+            operation: operation as object,
+            context: this.context
+        });
+        retriesExtension.convert();
 
         const resolvedMessage = context.resolveMaybeReference<OpenAPIV3.SchemaObject | AsyncAPIV2.MessageV2>({
             schemaOrReference: operation.message,

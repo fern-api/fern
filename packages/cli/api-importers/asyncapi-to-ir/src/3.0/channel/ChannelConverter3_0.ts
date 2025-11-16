@@ -5,6 +5,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter";
 import { ParameterConverter } from "../../converters/ParameterConverter";
 import { DisplayNameExtension } from "../../extensions/x-fern-display-name";
+import { FernRetriesExtension } from "../../extensions/x-fern-retries";
 import { AsyncAPIV3 } from "..";
 import { ChannelParameter } from "../types";
 
@@ -44,6 +45,13 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
         });
         const displayName = displayNameExtension.convert() ?? this.websocketGroup?.join(".") ?? this.channelPath;
 
+        const retriesExtension = new FernRetriesExtension({
+            breadcrumbs: this.breadcrumbs,
+            operation: this.channel,
+            context: this.context
+        });
+        retriesExtension.convert();
+
         if (this.channel.parameters) {
             this.convertChannelParameters({
                 pathParameters,
@@ -69,6 +77,13 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
         const messages: WebSocketMessage[] = [];
 
         for (const [operationId, operation] of Object.entries(channelOperations)) {
+            const operationRetriesExtension = new FernRetriesExtension({
+                breadcrumbs: [...this.breadcrumbs, "operations", operationId],
+                operation: operation as object,
+                context: this.context
+            });
+            operationRetriesExtension.convert();
+
             for (const message of operation.messages) {
                 const resolved = this.context.convertReferenceToTypeReference({ reference: message });
                 if (resolved.ok) {
