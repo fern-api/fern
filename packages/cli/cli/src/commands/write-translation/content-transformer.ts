@@ -10,11 +10,12 @@ export async function transformContentForLanguage(
 ): Promise<string> {
     const { filePath, language, sourceLanguage, originalContent } = transformation;
 
-    cliContext.logger.debug(`[PROCESSING] ${filePath} for language: ${language} (source: ${sourceLanguage})`);
-
     if (stub && !filePath.endsWith(".yml") && !filePath.endsWith(".yaml")) {
+        cliContext.logger.debug(`[STUB] Returning content as-is for  ${filePath} (stub mode enabled)`);
         return originalContent;
     }
+    
+    cliContext.logger.debug(`[PROCESSING] ${filePath} for language: ${language} (source: ${sourceLanguage})`);
 
     try {
         // don't translate generators config

@@ -43,18 +43,19 @@ export function addLanguageSuffixToUrl(url: string, language: Language): string 
         if (hostname.includes(".docs.buildwithfern.com")) {
             const org = hostname.split(".")[0];
             urlObj.hostname = `${org}-${language}.docs.buildwithfern.com`;
-            urlObj.pathname = language + urlObj.pathname;
+            urlObj.pathname = `/${language}${urlObj.pathname}`;
         } else {
             urlObj.hostname = `${language}.${hostname}`;
-            urlObj.pathname = language + urlObj.pathname;
+            urlObj.pathname = `/${language}${urlObj.pathname}`;
         }
 
         let result = urlObj.toString();
 
-        if (!originalHasTrailingSlash && result.endsWith("/") && urlObj.pathname === "/") {
-            result = result.slice(0, -1);
-        } else if (originalHasTrailingSlash && !result.endsWith("/") && urlObj.pathname === "/") {
-            result += "/";
+        if (!originalHasTrailingSlash && result.endsWith("/")) {
+            // only remove trailing slash if the pathname is just the language (e.g., "/de/")
+            if (urlObj.pathname === `/${language}/`) {
+                result = result.slice(0, -1);
+            }
         }
 
         return result;
