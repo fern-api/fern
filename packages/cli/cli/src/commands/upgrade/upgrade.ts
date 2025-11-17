@@ -17,6 +17,29 @@ function ensureFinalNewline(content: string): string {
     return content.endsWith("\n") ? content : content + "\n";
 }
 
+async function getProjectConfigVersionSafe(cliContext: CliContext): Promise<string | undefined> {
+    const fernDirectory = await getFernDirectory();
+    if (fernDirectory == null) {
+        return undefined;
+    }
+    try {
+        const projectConfig = await cliContext.runTask((context) =>
+            loadProjectConfig({ directory: fernDirectory, context })
+        );
+        return projectConfig.version;
+    } catch {
+        return undefined;
+    }
+}
+
+function resolveVersion(
+    flagValue: string | undefined,
+    envVarName: string,
+    configVersion: string | undefined
+): string | undefined {
+    return flagValue ?? process.env[envVarName] ?? configVersion;
+}
+
 /**
  * there are 3 relevant versions:
  *   1. the version of the CLI specified in fern.config.json
@@ -53,43 +76,42 @@ export async function upgrade({
     targetVersion: string | undefined;
     fromVersion: string | undefined;
 }): Promise<void> {
-    if (fromVersion != null) {
-        const currentVersion = cliContext.environment.packageVersion;
-        if (currentVersion === "0.0.0") {
+    const configVersion = await getProjectConfigVersionSafe(cliContext);
+
+    const resolvedFrom = resolveVersion(fromVersion, PREVIOUS_VERSION_ENV_VAR, configVersion);
+    const resolvedTo = resolveVersion(targetVersion, TARGET_VERSION_ENV_VAR, configVersion);
+
+    const inMigrationMode = fromVersion != null || process.env[PREVIOUS_VERSION_ENV_VAR] != null;
+
+    if (inMigrationMode) {
+        if (!resolvedFrom) {
             return cliContext.failAndThrow(
-                "Cannot use --from flag when running from source (version 0.0.0). Please install a published version of the CLI first."
+                "Could not determine 'from' version. Provide --from flag or set FERN_PRE_UPGRADE_VERSION environment variable."
             );
         }
-        cliContext.logger.info(`Running migrations from ${chalk.dim(fromVersion)} → ${chalk.green(currentVersion)}`);
-        await runPostUpgradeSteps({
-            cliContext,
-            previousVersion: fromVersion,
-            newVersion: currentVersion
-        });
-        return;
-    }
 
-    const previousVersion = process.env[PREVIOUS_VERSION_ENV_VAR];
-    if (previousVersion != null) {
-        let targetVersionForMigration = process.env[TARGET_VERSION_ENV_VAR];
-        if (targetVersionForMigration == null) {
-            const fernDirectory = await getFernDirectory();
-            if (fernDirectory != null) {
-                const projectConfig = await cliContext.runTask((context) =>
-                    loadProjectConfig({ directory: fernDirectory, context })
+        let targetVersionForMigration = resolvedTo;
+
+        if (!targetVersionForMigration || targetVersionForMigration === "0.0.0") {
+            const currentVersion = cliContext.environment.packageVersion;
+            if (currentVersion && currentVersion !== "0.0.0") {
+                targetVersionForMigration = currentVersion;
+            } else {
+                return cliContext.failAndThrow(
+                    "Could not determine target version. Provide --to/--version flag, set FERN_POST_UPGRADE_VERSION environment variable, or install a published version of the CLI."
                 );
-                targetVersionForMigration = projectConfig.version;
             }
         }
 
-        if (targetVersionForMigration != null && targetVersionForMigration !== "0.0.0") {
-            await runPostUpgradeSteps({
-                cliContext,
-                previousVersion,
-                newVersion: targetVersionForMigration
-            });
-            return;
-        }
+        cliContext.logger.info(
+            `Running migrations from ${chalk.dim(resolvedFrom)} → ${chalk.green(targetVersionForMigration)}`
+        );
+        await runPostUpgradeSteps({
+            cliContext,
+            previousVersion: resolvedFrom,
+            newVersion: targetVersionForMigration
+        });
+        return;
     }
 
     if (targetVersion != null) {

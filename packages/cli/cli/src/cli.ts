@@ -1010,6 +1010,10 @@ function addUpgradeCommand({
                     string: true,
                     description: "The version to upgrade to. Defaults to the latest release."
                 })
+                .option("to", {
+                    string: true,
+                    hidden: true
+                })
                 .option("from", {
                     string: true,
                     description:
@@ -1019,7 +1023,7 @@ function addUpgradeCommand({
             await upgrade({
                 cliContext,
                 includePreReleases: argv.rc,
-                targetVersion: argv.version,
+                targetVersion: argv.to ?? argv.version,
                 fromVersion: argv.from
             });
             onRun();
