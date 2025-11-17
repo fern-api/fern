@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add support for specifying announcements in InternalProduct and Version navigation objects in docs.yml. This allows announcements to be configured at the product and version level in addition to the top-level docs configuration. Note: Full support requires FDR SDK update to include announcement fields in navigation nodes.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-17"
+  version: 1.3.0
+
+- changelogEntry:
+    - summary: |
         Show AI example generation progress in the spinner line. When generating AI examples, the spinner displays "generating AI examples for {API name} - X/Y" to track progress without creating terminal noise.
       type: feat
   irVersion: 61

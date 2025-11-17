@@ -885,8 +885,8 @@ export class DocsDefinitionResolver {
                 pointsTo: undefined,
                 viewers: product.viewers,
                 orphaned: product.orphaned,
-                featureFlags: product.featureFlags,
-                announcement: product.announcement != null ? { text: product.announcement.message } : undefined
+                featureFlags: product.featureFlags
+                // announcement: product.announcement != null ? { text: product.announcement.message } : undefined
             };
         } else {
             return {
@@ -936,8 +936,8 @@ export class DocsDefinitionResolver {
             orphaned: version.orphaned,
             icon: undefined,
             pointsTo: undefined,
-            featureFlags: version.featureFlags,
-            announcement: version.announcement != null ? { text: version.announcement.message } : undefined
+            featureFlags: version.featureFlags
+            // announcement: version.announcement != null ? { text: version.announcement.message } : undefined
         };
     }
 
