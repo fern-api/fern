@@ -5,6 +5,14 @@
       type: fix
   irVersion: 61
   createdAt: "2025-11-17"
+  version: 1.3.0-rc2
+
+- changelogEntry:
+    - summary: |
+        Make sure `fern upgrade` with `--rc` follows the same migration logic as non-rc upgrades.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-17"
   version: 1.3.0-rc1
 
 - changelogEntry:
@@ -23,7 +31,7 @@
 
 - changelogEntry:
     - summary: |
-        Show AI example generation progress in the spinner line. When generating AI examples, the spinner displays "generating AI examples for {API name} - X/Y" to track progress without creating terminal noise.
+        Show AI example generation progress in the spinner line. When generating AI examples, the spinner displays `generating AI examples for {API name} - X/Y`` to track progress without creating terminal noise.
       type: feat
   irVersion: 61
   createdAt: "2025-11-14"
