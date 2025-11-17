@@ -125,11 +125,9 @@
       "node-fetch@2.x>whatwg-url": "^14.0.0",
       "qs": "6.13.0",
       "url-join": "^4.0.1",
-      "@fern-api/fdr-sdk": "file:/tmp/fern-api-fdr-sdk-0.0.0.tgz",
       "es-toolkit": "^1.39.10",
       "ts-essentials": "^10.1.1",
-      "form-data": "^4.0.4",
-      "@fern-api/ui-core-utils": "file:/tmp/fern-api-ui-core-utils-0.0.0.tgz"
+      "form-data": "^4.0.4"
     }
   },
   "catalog": {

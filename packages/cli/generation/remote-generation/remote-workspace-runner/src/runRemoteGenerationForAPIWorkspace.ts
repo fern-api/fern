@@ -186,7 +186,17 @@ async function uploadDynamicIRsForSdkGeneration({
     const fdr = createFdrService({ token: token.value });
 
     try {
-        const response = await fdr.api.v1.register.getDynamicIrUploadUrls({
+        // biome-ignore lint/suspicious/noExplicitAny: Temporary workaround until FDR SDK is updated with getDynamicIrUploadUrls
+        const register = fdr.api.v1.register as any;
+
+        if (typeof register.getDynamicIrUploadUrls !== "function") {
+            context.logger.debug(
+                "Skipping dynamic IR upload: getDynamicIrUploadUrls not available in current FDR SDK version"
+            );
+            return;
+        }
+
+        const response = await register.getDynamicIrUploadUrls({
             orgId: CjsFdrSdk.OrgId(organization),
             snippetName,
             version: sdkVersion,
