@@ -223,6 +223,23 @@ class SnippetDependencyTracker {
             totalDependencies
         };
     }
+
+    /**
+     * Parse a markdown file and return all files it references (for <Code src> and <Markdown src>)
+     */
+    async getReferencedFilesForMarkdown(
+        markdownFilePath: AbsoluteFilePath,
+        fernFolderPath: AbsoluteFilePath
+    ): Promise<AbsoluteFilePath[]> {
+        try {
+            const content = await readFile(markdownFilePath, "utf-8");
+            const references = this.extractReferences(content, markdownFilePath, fernFolderPath);
+            return Array.from(references).map(AbsoluteFilePath.of);
+        } catch (error) {
+            this.context.logger.debug(`Failed to read markdown file ${markdownFilePath}: ${error}`);
+            return [];
+        }
+    }
 }
 
 export async function runAppPreviewServer({
@@ -602,7 +619,24 @@ export async function runAppPreviewServer({
             return;
         }
 
-        editedAbsoluteFilepaths.push(AbsoluteFilePath.of(targetPath));
+        const absolutePath = AbsoluteFilePath.of(targetPath);
+        editedAbsoluteFilepaths.push(absolutePath);
+
+        // If this is a markdown file, also include any code/snippet files it references
+        if (targetPath.endsWith(".md") || targetPath.endsWith(".mdx")) {
+            const referencedFiles = await snippetTracker.getReferencedFilesForMarkdown(
+                absolutePath,
+                absoluteFilePathToFern
+            );
+            for (const referencedFile of referencedFiles) {
+                editedAbsoluteFilepaths.push(referencedFile);
+            }
+            if (referencedFiles.length > 0) {
+                context.logger.debug(
+                    `Markdown file ${targetPath} references ${referencedFiles.length} snippet/code files`
+                );
+            }
+        }
 
         if (reloadTimer != null) {
             clearTimeout(reloadTimer);
