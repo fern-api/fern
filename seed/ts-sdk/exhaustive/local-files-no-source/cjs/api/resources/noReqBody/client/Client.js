@@ -43,16 +43,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NoReqBody = void 0;
+exports.NoReqBodyClient = void 0;
+const BaseClient_js_1 = require("../../../../BaseClient.js");
 const headers_js_1 = require("../../../../core/headers.js");
 const core = __importStar(require("../../../../core/index.js"));
 const errors = __importStar(require("../../../../errors/index.js"));
-class NoReqBody {
-    constructor(_options) {
-        this._options = _options;
+class NoReqBodyClient {
+    constructor(options) {
+        this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
     }
     /**
-     * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {NoReqBodyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.noReqBody.getWithNoRequestBody()
@@ -106,7 +107,7 @@ class NoReqBody {
         });
     }
     /**
-     * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {NoReqBodyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.noReqBody.postWithNoRequestBody()
@@ -166,4 +167,4 @@ class NoReqBody {
         });
     }
 }
-exports.NoReqBody = NoReqBody;
+exports.NoReqBodyClient = NoReqBodyClient;

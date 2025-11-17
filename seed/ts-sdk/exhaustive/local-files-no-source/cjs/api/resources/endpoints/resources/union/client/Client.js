@@ -43,17 +43,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Union = void 0;
+exports.UnionClient = void 0;
+const BaseClient_js_1 = require("../../../../../../BaseClient.js");
 const headers_js_1 = require("../../../../../../core/headers.js");
 const core = __importStar(require("../../../../../../core/index.js"));
 const errors = __importStar(require("../../../../../../errors/index.js"));
-class Union {
-    constructor(_options) {
-        this._options = _options;
+class UnionClient {
+    constructor(options) {
+        this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
     }
     /**
      * @param {SeedExhaustive.types.Animal} request
-     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.union.getAndReturnUnion({
@@ -120,4 +121,4 @@ class Union {
         });
     }
 }
-exports.Union = Union;
+exports.UnionClient = UnionClient;
