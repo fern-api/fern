@@ -97,16 +97,20 @@ export abstract class AbstractRustGeneratorContext<
 
     /**
      * Detect features from IR and add conditional dependencies
+     * Also respects custom features configuration from customConfig
      */
     private detectAndAddFeatureDependencies(): void {
         const hasFileUpload = this.hasFileUploadEndpoints();
         const hasStreaming = this.hasStreamingEndpoints();
 
+        // Track auto-detected default features
+        const autoDetectedDefaults: string[] = [];
+
         // Always declare multipart feature (empty if not used, to avoid cfg warnings)
         if (hasFileUpload) {
             // Add multipart feature that enables reqwest/multipart
             this.dependencyManager.addFeature("multipart", ["reqwest/multipart"]);
-            this.dependencyManager.enableDefaultFeature("multipart");
+            autoDetectedDefaults.push("multipart");
         } else {
             // Add empty multipart feature to satisfy cfg checks
             this.dependencyManager.addFeature("multipart", []);
@@ -120,10 +124,23 @@ export abstract class AbstractRustGeneratorContext<
 
             // Add sse feature that enables SSE dependencies
             this.dependencyManager.addFeature("sse", ["reqwest-sse", "pin-project"]);
-            this.dependencyManager.enableDefaultFeature("sse");
+            autoDetectedDefaults.push("sse");
         } else {
             // Add empty sse feature to satisfy cfg checks
             this.dependencyManager.addFeature("sse", []);
+        }
+
+        // Add custom features from configuration
+        if (this.customConfig.features) {
+            for (const [featureName, dependencies] of Object.entries(this.customConfig.features)) {
+                this.dependencyManager.addFeature(featureName, dependencies);
+            }
+        }
+
+        // Apply default features (custom override or auto-detected)
+        const defaultFeatures = this.customConfig.defaultFeatures ?? autoDetectedDefaults;
+        for (const feature of defaultFeatures) {
+            this.dependencyManager.enableDefaultFeature(feature);
         }
     }
 
