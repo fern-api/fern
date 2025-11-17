@@ -1,6 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Enable local generation with preview mode by removing incompatibility restriction and migrating github
+        operations handling from generator-cli to fern-cli.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-17"
+  version: 1.4.0
+
+- changelogEntry:
+    - summary: |
         Made `fern upgrade` safer by running migrations before updating `fern.config.json`. If migrations fail, your config stays unchanged.
       type: fix
     - summary: |

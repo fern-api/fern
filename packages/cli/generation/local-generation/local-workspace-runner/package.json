@@ -43,6 +43,7 @@
     "@fern-api/csharp-dynamic-snippets": "workspace:*",
     "@fern-api/docker-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/github": "workspace:*",
     "@fern-api/go-dynamic-snippets": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-migrations": "workspace:*",
@@ -61,6 +62,7 @@
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-sdk": "0.0.656",
     "@fern-fern/generator-exec-sdk": "^0.0.1167",
+    "@octokit/rest": "^20.1.2",
     "chalk": "^5.3.0",
     "decompress": "^4.2.1",
     "tmp-promise": "^3.0.3"

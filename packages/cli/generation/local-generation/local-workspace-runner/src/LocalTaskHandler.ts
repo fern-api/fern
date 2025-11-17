@@ -46,11 +46,19 @@ export class LocalTaskHandler {
     }
 
     public async copyGeneratedFiles(): Promise<void> {
-        if (await this.isFernIgnorePresent()) {
-            await this.copyGeneratedFilesWithFernIgnore();
+        const isFernIgnorePresent = await this.isFernIgnorePresent();
+        const isExistingGitRepo = await this.isGitRepository();
+
+        if (isFernIgnorePresent && isExistingGitRepo) {
+            await this.copyGeneratedFilesWithFernIgnoreInExistingRepo();
+        } else if (isFernIgnorePresent && !isExistingGitRepo) {
+            await this.copyGeneratedFilesWithFernIgnoreInTempRepo();
+        } else if (!isFernIgnorePresent && isExistingGitRepo) {
+            await this.copyGeneratedFilesNoFernIgnorePreservingGit();
         } else {
-            await this.copyGeneratedFilesNoFernIgnore();
+            await this.copyGeneratedFilesNoFernIgnoreDeleteAll();
         }
+
         if (
             this.absolutePathToTmpSnippetJSON != null &&
             this.absolutePathToLocalSnippetJSON != null &&
@@ -70,7 +78,44 @@ export class LocalTaskHandler {
         return await doesPathExist(absolutePathToFernignore);
     }
 
-    private async copyGeneratedFilesWithFernIgnore(): Promise<void> {
+    private async isGitRepository(): Promise<boolean> {
+        const absolutePathToGitDir = AbsoluteFilePath.of(
+            join(this.absolutePathToLocalOutput, RelativeFilePath.of(".git"))
+        );
+        return await doesPathExist(absolutePathToGitDir);
+    }
+
+    private async copyGeneratedFilesWithFernIgnoreInExistingRepo(): Promise<void> {
+        // Read all .fernignore paths
+        const absolutePathToFernignore = AbsoluteFilePath.of(
+            join(this.absolutePathToLocalOutput, RelativeFilePath.of(FERNIGNORE_FILENAME))
+        );
+        const fernIgnorePaths = await getFernIgnorePaths({ absolutePathToFernignore });
+
+        const response = await this.runGitCommand(["config", "--list"], this.absolutePathToLocalOutput);
+        if (!response.includes("user.name")) {
+            await this.runGitCommand(["config", "user.name", "fern-api"], this.absolutePathToLocalOutput);
+            await this.runGitCommand(
+                ["config", "user.email", "info@buildwithfern.com"],
+                this.absolutePathToLocalOutput
+            );
+        }
+
+        // Stage deletions `git rm -rf .`
+        await this.runGitCommand(["rm", "-rf", "."], this.absolutePathToLocalOutput);
+
+        // Copy all files from generated temp dir
+        await this.copyGeneratedFilesToDirectory(this.absolutePathToLocalOutput);
+
+        // If absolutePathToLocalOutput is already a git repository, work directly in it
+        await this.runGitCommand(["add", "."], this.absolutePathToLocalOutput);
+
+        // Undo changes to fernignore paths
+        await this.runGitCommand(["reset", "--", ...fernIgnorePaths], this.absolutePathToLocalOutput);
+        await this.runGitCommand(["restore", "."], this.absolutePathToLocalOutput);
+    }
+
+    private async copyGeneratedFilesWithFernIgnoreInTempRepo(): Promise<void> {
         // Create temp directory to resolve .fernignore
         const tmpOutputResolutionDir = AbsoluteFilePath.of((await tmp.dir({})).path);
 
@@ -112,11 +157,29 @@ export class LocalTaskHandler {
         await cp(tmpOutputResolutionDir, this.absolutePathToLocalOutput, { recursive: true });
     }
 
-    /**
-     * If no `.fernignore` is present we can delete the local output directory entirely and
-     * copy the generated output from the tmp directory.
-     */
-    private async copyGeneratedFilesNoFernIgnore(): Promise<void> {
+    private async copyGeneratedFilesNoFernIgnorePreservingGit(): Promise<void> {
+        // If absolutePathToLocalOutput is a git repository, preserve the .git folder
+
+        // Read directory contents
+        const contents = await readdir(this.absolutePathToLocalOutput);
+
+        // Delete everything except .git
+        await Promise.all(
+            contents
+                .filter((item) => item !== ".git")
+                .map((item) =>
+                    rm(join(this.absolutePathToLocalOutput, RelativeFilePath.of(item)), {
+                        force: true,
+                        recursive: true
+                    })
+                )
+        );
+
+        // Copy generated files
+        await this.copyGeneratedFilesToDirectory(this.absolutePathToLocalOutput);
+    }
+
+    private async copyGeneratedFilesNoFernIgnoreDeleteAll(): Promise<void> {
         this.context.logger.debug(`rm -rf ${this.absolutePathToLocalOutput}`);
         await rm(this.absolutePathToLocalOutput, { force: true, recursive: true });
         await this.copyGeneratedFilesToDirectory(this.absolutePathToLocalOutput);
