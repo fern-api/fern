@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.37.0
+  changelogEntry:
+    - summary: |
+        Add response-to-page functionality for pagination, allowing users to access the underlying typed API response object from paginated results. The pager's `response` field now contains the typed/parsed response body (e.g., `ListUsersPaginationResponse`) instead of the raw HTTP response wrapper. This provides access to pagination metadata and the data array.
+        
+        **Breaking Change**: Pager type signature changed from `SyncPager[T]` to `SyncPager[T, R]` where `R` is the response type. Users who explicitly referenced pager types in their code will need to update their type annotations to include both type parameters (e.g., `SyncPager[User, ListUsersResponse]` or `SyncPager[User, Any]`). Most users who just iterate over pagers won't be affected.
+      type: feat
+  createdAt: "2025-11-17"
+  irVersion: 61
+
 - version: 4.36.2
   changelogEntry:
     - summary: Fix circular reference issue for recursive types and unions.
