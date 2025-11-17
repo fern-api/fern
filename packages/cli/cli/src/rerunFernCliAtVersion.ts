@@ -7,11 +7,15 @@ import { FERN_CWD_ENV_VAR } from "./cwd";
 export async function rerunFernCliAtVersion({
     version,
     cliContext,
-    env
+    env,
+    args,
+    context
 }: {
     version: string;
     cliContext: CliContext;
     env?: Record<string, string>;
+    args?: string[];
+    context?: "upgrade" | undefined;
 }): Promise<void> {
     cliContext.suppressUpgradeMessage();
 
@@ -19,7 +23,7 @@ export async function rerunFernCliAtVersion({
         "--quiet",
         "--yes",
         `${cliContext.environment.packageName}@${version}`,
-        ...process.argv.slice(2)
+        ...(args ?? process.argv.slice(2))
     ];
     cliContext.logger.debug(
         [
@@ -28,23 +32,33 @@ export async function rerunFernCliAtVersion({
         ].join("\n")
     );
 
-    const { failed, stdout, stderr } = await loggingExeca(cliContext.logger, "npx", ["--quiet", ...commandLineArgs], {
+    const { failed, stdout, stderr } = await loggingExeca(cliContext.logger, "npx", commandLineArgs, {
         stdio: "inherit",
         reject: false,
         env: {
             ...env,
-            [FERN_CWD_ENV_VAR]: process.env[FERN_CWD_ENV_VAR] ?? process.cwd()
+            [FERN_CWD_ENV_VAR]: process.env[FERN_CWD_ENV_VAR] ?? process.cwd(),
+            FERN_NO_VERSION_REDIRECTION: "true"
         }
     });
     if (stdout.includes("code EEXIST") || stderr.includes("code EEXIST")) {
         // try again if there is a npx conflict
         return await rerunFernCliAtVersion({
             version,
-            cliContext
+            cliContext,
+            env,
+            args,
+            context
         });
     }
 
     if (failed) {
+        // Check if it's a version not found error and provide context-specific message
+        if (context === "upgrade" && (stderr.includes("ETARGET") || stderr.includes("No matching version found"))) {
+            return cliContext.failAndThrow(
+                `Failed to upgrade to ${version} because it does not exist. See https://www.npmjs.com/package/${cliContext.environment.packageName}?activeTab=versions.`
+            );
+        }
         cliContext.failWithoutThrowing();
     }
 }
