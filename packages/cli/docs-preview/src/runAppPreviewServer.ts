@@ -622,18 +622,21 @@ export async function runAppPreviewServer({
         const absolutePath = AbsoluteFilePath.of(targetPath);
         editedAbsoluteFilepaths.push(absolutePath);
 
-        // If this is a markdown file, also include any code/snippet files it references
+        // If this is a markdown file, include any code files it references to force full rebuild
         if (targetPath.endsWith(".md") || targetPath.endsWith(".mdx")) {
             const referencedFiles = await snippetTracker.getReferencedFilesForMarkdown(
                 absolutePath,
                 absoluteFilePathToFern
             );
-            for (const referencedFile of referencedFiles) {
-                editedAbsoluteFilepaths.push(referencedFile);
+            const codeFiles = referencedFiles.filter(
+                (file) => !file.endsWith(".md") && !file.endsWith(".mdx")
+            );
+            for (const codeFile of codeFiles) {
+                editedAbsoluteFilepaths.push(codeFile);
             }
-            if (referencedFiles.length > 0) {
+            if (codeFiles.length > 0) {
                 context.logger.debug(
-                    `Markdown file ${targetPath} references ${referencedFiles.length} snippet/code files`
+                    `Markdown file ${targetPath} references ${codeFiles.length} code files, forcing full rebuild`
                 );
             }
         }
