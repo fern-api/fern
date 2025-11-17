@@ -28,7 +28,7 @@ if [ ! -f "package.json" ] || [ ! -d ".git" ]; then
 fi
 
 print_info "Initializing sparse checkout..."
-git sparse-checkout init --no-cone
+git sparse-checkout init --no-cone 2>/dev/null || true
 print_success "Sparse checkout initialized"
 
 print_info "Configuring sparse checkout patterns..."

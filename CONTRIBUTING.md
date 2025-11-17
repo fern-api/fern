@@ -31,11 +31,12 @@ Instead of a regular `git clone`, use sparse checkout from the start:
 git clone --filter=blob:none --sparse https://github.com/fern-api/fern.git
 cd fern
 
-# Run the automated setup script
+# Run the automated setup script (from the repository root)
 ./scripts/setup-repo.sh
+# Or alternatively: pnpm run setup
 ```
 
-The `setup-repo.sh` script will:
+The setup script will:
 - Configure git settings for large repositories
 - Set up sparse checkout to exclude large generated directories
 - Install dependencies and run initial builds
