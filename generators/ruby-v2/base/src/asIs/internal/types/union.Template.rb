@@ -67,7 +67,16 @@ module <%= gem_namespace %>
 
                 # Try to coerce the hash into this model type with strict mode
                 begin
-                  Utils.coerce(member_type, value, strict: true)
+                  candidate = Utils.coerce(member_type, value, strict: true)
+
+                  # Validate that all required (non-optional) fields are present
+                  # This ensures undiscriminated unions properly distinguish between member types
+                  member_type.fields.each do |field_name, field|
+                    if candidate.instance_variable_get(:@data)[field_name].nil? && !field.optional
+                      raise Errors::TypeError, "Required field `#{field_name}` missing for union member #{member_type.name}"
+                    end
+                  end
+
                   true
                 rescue Errors::TypeError
                   false
