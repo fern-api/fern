@@ -32,22 +32,12 @@ git clone --filter=blob:none --sparse https://github.com/fern-api/fern.git
 cd fern
 
 # Configure sparse checkout to exclude large directories
-git sparse-checkout set --no-cone \
-  '/*' \
-  '!seed' \
-  '!seed-remote-local' \
-  'packages/seed/**' \
-  'seed/**/seed.yml' \
-  'seed-remote-local/**/seed.yml' \
-  '!**/__snapshots__/**'
+bash ./setup-sparse-checkout.sh
 ```
 
 This configuration:
 - Includes all root files and directories
-- Excludes the `seed/` directory (except `seed.yml` files needed for testing)
-- Excludes the `seed-remote-local/` directory (except `seed.yml` files)
-- Excludes all `__snapshots__/` directories
-- Keeps `packages/seed/**` (the seed CLI source code)
+- Excludes most if not all of the large snapshot outputs used in integration tests
 
 If you need to reset your sparse checkout configuration later, you can run:
 ```sh
