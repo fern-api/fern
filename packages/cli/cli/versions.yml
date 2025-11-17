@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Add `--from` flag to `fern upgrade` command to manually specify the previous version for migration execution. This allows users to run migrations when upgrading from older CLI versions that don't correctly pass version information. Usage: `fern upgrade --from 0.84.1`
+        Add `--from` and `--to` flags to `fern upgrade` command for manual migration execution. The upgrade flow now updates `fern.config.json` AFTER migrations run (not before), making upgrades safer - if migrations fail, the config remains unchanged. The re-run now passes explicit `--from` and `--to` flags instead of only environment variables, making the flow clearer and self-documenting. Usage: `fern upgrade --from 0.84.1 --to 1.2.0`
       type: feat
   irVersion: 61
   createdAt: "2025-11-17"
