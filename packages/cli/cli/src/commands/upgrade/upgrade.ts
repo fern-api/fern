@@ -67,17 +67,17 @@ export async function upgrade({
     targetVersion: string | undefined;
     fromVersion: string | undefined;
 }): Promise<void> {
-    const previousEnvVar = process.env[PREVIOUS_VERSION_ENV_VAR];
-    const previousEnvVarSet = previousEnvVar != null && previousEnvVar.trim() !== "";
-    const fromFlagSet = fromVersion != null && fromVersion.trim() !== "";
-    const hasExplicitTo = targetVersion != null && targetVersion.trim() !== "";
+    const previousEnvVar = process.env[PREVIOUS_VERSION_ENV_VAR]?.trim() || undefined;
+    const fromVersionTrimmed = fromVersion?.trim() || undefined;
+    const targetVersionTrimmed = targetVersion?.trim() || undefined;
     const isPublishedCli = cliContext.environment.packageVersion !== "0.0.0";
-    const inMigrationMode = (fromFlagSet || previousEnvVarSet) && (isPublishedCli || hasExplicitTo);
+    const inMigrationMode = (fromVersionTrimmed || previousEnvVar) && (isPublishedCli || targetVersionTrimmed);
 
     if (inMigrationMode) {
-        const resolvedFrom = fromFlagSet ? (fromVersion?.trim() ?? "") : (previousEnvVar?.trim() ?? "");
+        const resolvedFrom = fromVersionTrimmed ?? previousEnvVar ?? "";
 
-        let targetVersionForMigration = targetVersion ?? (await getProjectConfigVersionSafe(cliContext)) ?? undefined;
+        let targetVersionForMigration =
+            targetVersionTrimmed ?? (await getProjectConfigVersionSafe(cliContext)) ?? undefined;
 
         if (!targetVersionForMigration || targetVersionForMigration === "0.0.0") {
             const currentVersion = cliContext.environment.packageVersion;
@@ -101,26 +101,28 @@ export async function upgrade({
         return;
     }
 
-    if (targetVersion != null) {
+    if (targetVersionTrimmed) {
         const versionExists = await doesVersionOfCliExist({
             cliEnvironment: cliContext.environment,
-            version: targetVersion
+            version: targetVersionTrimmed
         });
         if (!versionExists) {
             cliContext.failAndThrow(
-                `Failed to upgrade to ${targetVersion} because it does not exist. See https://www.npmjs.com/package/${cliContext.environment.packageName}?activeTab=versions.`
+                `Failed to upgrade to ${targetVersionTrimmed} because it does not exist. See https://www.npmjs.com/package/${cliContext.environment.packageName}?activeTab=versions.`
             );
         }
 
-        const versionAhead = isVersionAhead(targetVersion, cliContext.environment.packageVersion);
+        const versionAhead = isVersionAhead(targetVersionTrimmed, cliContext.environment.packageVersion);
         if (!versionAhead) {
             cliContext.failAndThrow(
-                `Cannot upgrade because target version (${targetVersion}) is not ahead of existing version ${cliContext.environment.packageVersion}`
+                `Cannot upgrade because target version (${targetVersionTrimmed}) is not ahead of existing version ${cliContext.environment.packageVersion}`
             );
         }
     }
 
-    let fernCliUpgradeInfo = targetVersion != null ? { targetVersion, isUpgradeAvailable: true } : undefined;
+    let fernCliUpgradeInfo = targetVersionTrimmed
+        ? { targetVersion: targetVersionTrimmed, isUpgradeAvailable: true }
+        : undefined;
     if (fernCliUpgradeInfo == null) {
         const fernUpgradeInfo = await cliContext.isUpgradeAvailable({
             includePreReleases
