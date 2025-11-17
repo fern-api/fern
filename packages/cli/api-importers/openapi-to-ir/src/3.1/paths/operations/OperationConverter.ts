@@ -290,14 +290,14 @@ export class OperationConverter extends AbstractOperationConverter {
         // We'll need to update it to parse all successful responses.
         let hasSuccessfulResponse = false;
         for (const [statusCode, response] of Object.entries(this.operation.responses)) {
-            const isWildcardStatusCode = /^[1-5]XX$/i.test(statusCode);
+            const isWildcardStatusCode = /^[45]XX$/i.test(statusCode);
             let statusCodeNum: number;
             let isErrorResponse = false;
 
             if (isWildcardStatusCode) {
                 const firstDigit = parseInt(statusCode.charAt(0));
                 statusCodeNum = firstDigit * 100;
-                isErrorResponse = firstDigit === 4 || firstDigit === 5;
+                isErrorResponse = true;
             } else {
                 statusCodeNum = parseInt(statusCode);
                 if (isNaN(statusCodeNum) || statusCodeNum < 200 || (statusCodeNum >= 300 && statusCodeNum < 400)) {
