@@ -8,7 +8,34 @@ vi.mock("../translation-service", () => ({
 }));
 
 vi.mock("../yaml-processor", () => ({
-    translateYamlContent: vi.fn((content: string) => Promise.resolve(`[TRANSLATED] ${content}`))
+    translateYamlContent: vi.fn(
+        (
+            content: string,
+            language: string,
+            sourceLanguage: string,
+            filePath: string,
+            cliContext: any,
+            stub: boolean
+        ) => {
+            // In stub mode, add slugs to YAML content but don't translate
+            if (stub && content.includes("page:")) {
+                const lines = content.split("\n");
+                const result = [];
+                for (let i = 0; i < lines.length; i++) {
+                    result.push(lines[i]);
+                    if (lines[i].includes("page:")) {
+                        const pageName = lines[i].split("page:")[1]?.trim();
+                        if (pageName) {
+                            const slug = pageName.toLowerCase().replace(/\s+/g, "-");
+                            result.push(`    slug: ${slug}`);
+                        }
+                    }
+                }
+                return Promise.resolve(result.join("\n"));
+            }
+            return Promise.resolve(`[TRANSLATED] ${content}`);
+        }
+    )
 }));
 
 describe("content-transformer", () => {
@@ -28,9 +55,8 @@ describe("content-transformer", () => {
     });
 
     describe("Stub Mode", () => {
-        it("should return content as-is for YAML files when stub mode is enabled", async () => {
-            const originalContent = `
-navigation:
+        it("should process YAML files to add slugs even when stub mode is enabled", async () => {
+            const originalContent = `navigation:
   - page: Hello World
     path: ./hello.mdx
 `;
@@ -44,9 +70,11 @@ navigation:
 
             const result = await transformContentForLanguage(transformation, mockCliContext, true);
 
-            expect(result).toBe(originalContent);
+            // YAML files should be processed in stub mode to add slugs
+            expect(result).toContain("slug: hello-world");
+            expect(result).toContain("page: Hello World");
             expect(mockCliContext.logger.debug).toHaveBeenCalledWith(
-                "[STUB] Returning content as-is for nav.yml (stub mode enabled)"
+                "[PROCESSING] nav.yml for language: es (source: en)"
             );
         });
 
@@ -120,7 +148,7 @@ This is a test document.`;
             const result = await transformContentForLanguage(transformation, mockCliContext, false);
 
             expect(result).toBe(originalContent);
-            expect(mockCliContext.logger.error).toHaveBeenCalledWith(
+            expect(mockCliContext.logger.info).toHaveBeenCalledWith(
                 '[SKIP] Skipping file "test.txt" - unsupported file type for translation.'
             );
         });

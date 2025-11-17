@@ -9,5 +9,6 @@ title: Path URL Test Documentation
 navigation:
   - page: Welcome
     path: ./welcome.md
+    slug: welcome
 settings:
   language: es

@@ -12,9 +12,7 @@ export async function transformContentForLanguage(
 
     cliContext.logger.debug(`[PROCESSING] ${filePath} for language: ${language} (source: ${sourceLanguage})`);
 
-    // If stub mode is enabled, return content as-is
-    if (stub) {
-        cliContext.logger.debug(`[STUB] Returning content as-is for ${filePath} (stub mode enabled)`);
+    if (stub && !filePath.endsWith(".yml") && !filePath.endsWith(".yaml")) {
         return originalContent;
     }
 
@@ -25,7 +23,6 @@ export async function transformContentForLanguage(
         }
 
         if (filePath.endsWith(".md") || filePath.endsWith(".mdx")) {
-            // todo: create MDX translate stub
             return translateText({ text: originalContent, language, sourceLanguage, fileType: "MDX", cliContext });
         }
 

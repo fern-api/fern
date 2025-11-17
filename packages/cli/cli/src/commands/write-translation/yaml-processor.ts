@@ -160,9 +160,7 @@ export async function translateYamlObject(
             typeof sourceObj === "object" && sourceObj !== null ? (sourceObj as Record<string, unknown>) : undefined;
 
         let computedSlug: string | undefined;
-        if (sourceRecord) {
-            computedSlug = computeSlugForNavigationItem(sourceRecord);
-        }
+        computedSlug = computeSlugForNavigationItem(obj);
 
         for (const [key, value] of Object.entries(obj)) {
             if (key === "slug") {
