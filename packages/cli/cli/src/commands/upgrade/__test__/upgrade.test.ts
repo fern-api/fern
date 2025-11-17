@@ -970,6 +970,83 @@ describe("upgrade", () => {
                 throwOnError: true
             });
         });
+
+        it("should detect faulty upgrade when using --rc without explicit version", async () => {
+            mockCliContext.environment.packageVersion = "1.3.0-rc0";
+            process.env[PREVIOUS_VERSION_ENV_VAR] = "1.3.0-rc0"; // Faulty upgrade: env var equals current version
+            mockCliContext.isUpgradeAvailable = vi.fn().mockResolvedValue({
+                cliUpgradeInfo: {
+                    latestVersion: "1.3.0-rc0",
+                    isUpgradeAvailable: false
+                }
+            });
+            vi.mocked(loadProjectConfig).mockResolvedValue({
+                version: "1.3.0-rc0", // Config was already updated by faulty CLI
+                rawConfig: { version: "1.3.0-rc0", organization: "test-org" },
+                _absolutePath: "/test/fern/fern.config.json" as AbsoluteFilePath,
+                organization: "test-org"
+            });
+
+            vi.mocked(loggingExeca).mockResolvedValue({
+                stdout: '{"version":"0.84.1"}', // Real previous version from git
+                stderr: ""
+            } as loggingExeca.ReturnValue);
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: true,
+                targetVersion: undefined, // No explicit version, using --rc only
+                fromVersion: undefined
+            });
+
+            expect(mockLogger.info).toHaveBeenCalledWith(expect.stringContaining("Detected faulty upgrade"));
+            expect(runMigrations).toHaveBeenCalledWith({
+                fromVersion: "0.84.1", // Should use git history, not env var
+                toVersion: "1.3.0-rc0",
+                context: {}
+            });
+            expect(writeFile).toHaveBeenCalled();
+        });
+
+        it("should detect faulty upgrade via 'no upgrade' path and fallback to config when git fails", async () => {
+            mockCliContext.environment.packageVersion = "1.3.0-rc0";
+            process.env[PREVIOUS_VERSION_ENV_VAR] = "1.3.0-rc0"; // Faulty upgrade
+            mockCliContext.isUpgradeAvailable = vi.fn().mockResolvedValue({
+                cliUpgradeInfo: {
+                    latestVersion: "1.3.0-rc0",
+                    isUpgradeAvailable: false
+                }
+            });
+            vi.mocked(loadProjectConfig).mockResolvedValue({
+                version: "1.3.0-rc0", // Config was already updated by faulty CLI
+                rawConfig: { version: "1.3.0-rc0", organization: "test-org" },
+                _absolutePath: "/test/fern/fern.config.json" as AbsoluteFilePath,
+                organization: "test-org"
+            });
+
+            // Mock git to fail
+            vi.mocked(loggingExeca).mockResolvedValue({
+                stdout: "",
+                stderr: "",
+                failed: true
+            } as loggingExeca.ReturnValue);
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: true,
+                targetVersion: undefined,
+                fromVersion: undefined
+            });
+
+            expect(mockLogger.info).toHaveBeenCalledWith(expect.stringContaining("Detected faulty upgrade"));
+            expect(mockLogger.warn).toHaveBeenCalledWith(expect.stringContaining("not a git repository"));
+            // Should still run migrations, falling back to config version
+            expect(runMigrations).toHaveBeenCalledWith({
+                fromVersion: "1.3.0-rc0", // Falls back to config version (same as target, but migrations should still run)
+                toVersion: "1.3.0-rc0",
+                context: {}
+            });
+        });
     });
 
     describe("--from-git flag", () => {
