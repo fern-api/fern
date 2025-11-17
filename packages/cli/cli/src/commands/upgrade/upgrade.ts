@@ -11,10 +11,9 @@ import { isVersionAhead } from "@fern-api/semver-utils";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import { produce } from "immer";
-import yargs from "yargs";
 
 import { CliContext } from "../../cli-context/CliContext";
-import { rerunFernCliAtVersion } from "../../rerunFernCliAtVersion";
+import { RerunCliError, rerunFernCliAtVersion } from "../../rerunFernCliAtVersion";
 
 export const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
 
@@ -252,39 +251,90 @@ export async function upgrade({
         `Upgrading from ${chalk.dim(cliContext.environment.packageVersion)} → ${chalk.green(resolvedTargetVersion)}`
     );
 
-    // Preserve original args except for --version/--to/--from which we replace
-    const rerunArgs = ["upgrade", "--from", resolvedFromVersion, "--to", resolvedTargetVersion];
+    // Build rerun args by passing through original args and replacing/adding --from and --to
+    const originalArgs = process.argv.slice(2); // Remove 'node' and script path
+    const otherArgs: string[] = [];
 
-    // Re-parse process.argv with yargs to get structured arguments
-    const parsedArgv = yargs(process.argv.slice(2))
-        .exitProcess(false) // Don't exit on parse
-        .help(false) // Don't process --help
-        .version(false) // Don't process --version
-        .parserConfiguration({ "camel-case-expansion": false }) // Preserve dash-case
-        .parseSync();
+    let i = 0;
 
-    // Preserve all flags except the ones we explicitly replace
-    const excludeKeys = new Set(["_", "$0", "version", "to", "from"]);
+    while (i < originalArgs.length) {
+        const arg = originalArgs[i];
 
-    for (const [key, value] of Object.entries(parsedArgv)) {
-        if (excludeKeys.has(key)) {
+        // Skip "upgrade" command as we'll add it at the beginning
+        if (arg === "upgrade" && i === 0) {
+            i++;
             continue;
         }
 
-        // Add the flag and its value
-        rerunArgs.push(`--${key}`);
-        if (value !== true) {
-            rerunArgs.push(String(value));
+        // Skip --version, --to, and --from flags as we'll add them ourselves
+        if (arg === "--version" || arg === "--to") {
+            // Skip the next arg if it's the value (not starting with --)
+            if (i + 1 < originalArgs.length && !originalArgs[i + 1]?.startsWith("--")) {
+                i += 2;
+            } else {
+                i++;
+            }
+        }
+        // Handle --version=value or --to=value format
+        else if (arg?.startsWith("--version=") || arg?.startsWith("--to=")) {
+            i++;
+        }
+        // Handle --from flag
+        else if (arg === "--from") {
+            // Skip the next arg if it's the value
+            if (i + 1 < originalArgs.length && !originalArgs[i + 1]?.startsWith("--")) {
+                i += 2;
+            } else {
+                i++;
+            }
+        }
+        // Handle --from=value format
+        else if (arg?.startsWith("--from=")) {
+            i++;
+        }
+        // Pass through all other args unchanged
+        else if (arg != null) {
+            otherArgs.push(arg);
+            i++;
+        } else {
+            i++;
         }
     }
 
-    await rerunFernCliAtVersion({
-        version: resolvedTargetVersion,
-        cliContext,
-        env: {
-            [PREVIOUS_VERSION_ENV_VAR]: resolvedFromVersion
-        },
-        args: rerunArgs,
-        context: "upgrade"
-    });
+    // Build final args: upgrade command, then --from and --to, then all other args
+    const rerunArgs = ["upgrade", "--from", resolvedFromVersion, "--to", resolvedTargetVersion, ...otherArgs];
+
+    try {
+        await rerunFernCliAtVersion({
+            version: resolvedTargetVersion,
+            cliContext,
+            env: {
+                [PREVIOUS_VERSION_ENV_VAR]: resolvedFromVersion
+            },
+            args: rerunArgs,
+            throwOnError: true
+        });
+    } catch (error) {
+        if (error instanceof RerunCliError) {
+            // Log error output for debugging
+            cliContext.logger.debug(`Rerun CLI failed with stdout: ${error.stdout}`);
+            cliContext.logger.debug(`Rerun CLI failed with stderr: ${error.stderr}`);
+
+            // Check if it's a version not found error by looking for common npm error patterns
+            const errorOutput = (error.stderr ?? "") + (error.stdout ?? "");
+            const isVersionNotFound =
+                errorOutput.includes("ETARGET") ||
+                errorOutput.includes("E404") ||
+                errorOutput.includes("404 Not Found") ||
+                errorOutput.includes("No matching version found") ||
+                errorOutput.includes("version not found");
+
+            if (isVersionNotFound) {
+                return cliContext.failAndThrow(
+                    `Failed to upgrade to ${resolvedTargetVersion} because it does not exist. See https://www.npmjs.com/package/${cliContext.environment.packageName}?activeTab=versions.`
+                );
+            }
+        }
+        throw error;
+    }
 }

@@ -4,18 +4,32 @@ import chalk from "chalk";
 import { CliContext } from "./cli-context/CliContext";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 
+export class RerunCliError extends Error {
+    public readonly stdout: string;
+    public readonly stderr: string;
+    public readonly version: string;
+
+    constructor({ version, stdout, stderr }: { version: string; stdout: string; stderr: string }) {
+        super(`Failed to rerun CLI at version ${version}`);
+        this.name = "RerunCliError";
+        this.version = version;
+        this.stdout = stdout;
+        this.stderr = stderr;
+    }
+}
+
 export async function rerunFernCliAtVersion({
     version,
     cliContext,
     env,
     args,
-    context
+    throwOnError = false
 }: {
     version: string;
     cliContext: CliContext;
     env?: Record<string, string>;
     args?: string[];
-    context?: "upgrade" | undefined;
+    throwOnError?: boolean;
 }): Promise<void> {
     cliContext.suppressUpgradeMessage();
 
@@ -48,16 +62,13 @@ export async function rerunFernCliAtVersion({
             cliContext,
             env,
             args,
-            context
+            throwOnError
         });
     }
 
     if (failed) {
-        // Check if it's a version not found error and provide context-specific message
-        if (context === "upgrade" && (stderr.includes("ETARGET") || stderr.includes("No matching version found"))) {
-            return cliContext.failAndThrow(
-                `Failed to upgrade to ${version} because it does not exist. See https://www.npmjs.com/package/${cliContext.environment.packageName}?activeTab=versions.`
-            );
+        if (throwOnError) {
+            throw new RerunCliError({ version, stdout, stderr });
         }
         cliContext.failWithoutThrowing();
     }
