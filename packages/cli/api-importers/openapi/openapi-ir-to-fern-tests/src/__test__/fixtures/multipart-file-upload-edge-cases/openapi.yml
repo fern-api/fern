@@ -33,7 +33,7 @@ paths:
                     type: string
                   url:
                     type: string
-  
+
   /upload-multiple:
     post:
       operationId: uploadMultipleFiles
@@ -70,7 +70,7 @@ paths:
                 properties:
                   uploadedCount:
                     type: integer
-  
+
   /upload-with-json:
     post:
       operationId: uploadWithJson

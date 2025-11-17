@@ -19,7 +19,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Node"
-  
+
   /author:
     post:
       operationId: createAuthor
@@ -35,7 +35,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Author"
-  
+
   /tree:
     post:
       operationId: createTree
@@ -63,7 +63,7 @@ components:
           type: string
         next:
           $ref: "#/components/schemas/Node"
-    
+
     Author:
       type: object
       properties:
@@ -75,7 +75,7 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Book"
-    
+
     Book:
       type: object
       properties:
@@ -85,7 +85,7 @@ components:
           type: string
         author:
           $ref: "#/components/schemas/Author"
-    
+
     TreeNode:
       type: object
       properties:
@@ -99,7 +99,7 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TreeNode"
-    
+
     Level1:
       type: object
       properties:
@@ -107,7 +107,7 @@ components:
           type: string
         level2:
           $ref: "#/components/schemas/Level2"
-    
+
     Level2:
       type: object
       properties:
@@ -115,7 +115,7 @@ components:
           type: string
         level3:
           $ref: "#/components/schemas/Level3"
-    
+
     Level3:
       type: object
       properties:
@@ -123,7 +123,7 @@ components:
           type: string
         level4:
           $ref: "#/components/schemas/Level4"
-    
+
     Level4:
       type: object
       properties:
@@ -131,7 +131,7 @@ components:
           type: string
         level5:
           $ref: "#/components/schemas/Level5"
-    
+
     Level5:
       type: object
       properties:
@@ -139,7 +139,7 @@ components:
           type: string
         value:
           type: string
-    
+
     BaseEntity:
       type: object
       properties:
@@ -148,7 +148,7 @@ components:
         createdAt:
           type: string
           format: date-time
-    
+
     Category:
       allOf:
         - $ref: "#/components/schemas/BaseEntity"

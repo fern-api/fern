@@ -19,7 +19,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Extended"
-  
+
   /pet:
     post:
       operationId: createPet
@@ -35,7 +35,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Pet"
-  
+
   /flexible:
     post:
       operationId: createFlexible
@@ -64,7 +64,7 @@ components:
           format: date-time
       required:
         - id
-    
+
     Extended:
       allOf:
         - $ref: "#/components/schemas/Base"
@@ -77,13 +77,13 @@ components:
               format: email
           required:
             - name
-    
+
     Level1:
       type: object
       properties:
         field1:
           type: string
-    
+
     Level2:
       allOf:
         - $ref: "#/components/schemas/Level1"
@@ -91,7 +91,7 @@ components:
           properties:
             field2:
               type: string
-    
+
     Level3:
       allOf:
         - $ref: "#/components/schemas/Level2"
@@ -99,7 +99,7 @@ components:
           properties:
             field3:
               type: string
-    
+
     Dog:
       type: object
       properties:
@@ -111,7 +111,7 @@ components:
           type: boolean
       required:
         - petType
-    
+
     Cat:
       type: object
       properties:
@@ -123,14 +123,14 @@ components:
           type: boolean
       required:
         - petType
-    
+
     Pet:
       oneOf:
         - $ref: "#/components/schemas/Dog"
         - $ref: "#/components/schemas/Cat"
       discriminator:
         propertyName: petType
-    
+
     Response:
       oneOf:
         - type: object
@@ -145,7 +145,7 @@ components:
               type: string
             code:
               type: integer
-    
+
     FlexibleValue:
       anyOf:
         - type: string
@@ -154,13 +154,13 @@ components:
           properties:
             complex:
               type: boolean
-    
+
     NullableAnyOf:
       anyOf:
         - type: string
         - type: number
       nullable: true
-    
+
     Complex:
       allOf:
         - $ref: "#/components/schemas/Base"

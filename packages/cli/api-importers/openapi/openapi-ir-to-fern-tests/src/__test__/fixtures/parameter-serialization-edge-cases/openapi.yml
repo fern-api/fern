@@ -19,7 +19,7 @@ paths:
       responses:
         "200":
           description: Success
-  
+
   /search:
     get:
       operationId: search
@@ -35,7 +35,7 @@ paths:
       responses:
         "200":
           description: Success
-  
+
   /filter:
     get:
       operationId: filter
@@ -51,7 +51,7 @@ paths:
       responses:
         "200":
           description: Success
-  
+
   /items/{id}:
     get:
       operationId: getItemById
@@ -65,7 +65,7 @@ paths:
       responses:
         "200":
           description: Success
-  
+
   /data:
     get:
       operationId: getData
@@ -81,7 +81,7 @@ paths:
       responses:
         "200":
           description: Success
-  
+
   /complex:
     get:
       operationId: getComplex
@@ -102,7 +102,7 @@ paths:
       responses:
         "200":
           description: Success
-  
+
   /files/{path}:
     get:
       operationId: getFile
@@ -116,7 +116,7 @@ paths:
       responses:
         "200":
           description: Success
-  
+
   /session:
     get:
       operationId: getSession
@@ -128,7 +128,7 @@ paths:
       responses:
         "200":
           description: Success
-  
+
   /users/{userId}/posts/{postId}:
     get:
       operationId: getUserPost

@@ -19,7 +19,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
-  
+
   /account:
     post:
       operationId: createAccount
@@ -60,7 +60,7 @@ components:
         - id
         - name
         - email
-    
+
     UserCreate:
       type: object
       properties:
@@ -78,7 +78,7 @@ components:
         - username
         - password
         - email
-    
+
     Account:
       type: object
       properties:

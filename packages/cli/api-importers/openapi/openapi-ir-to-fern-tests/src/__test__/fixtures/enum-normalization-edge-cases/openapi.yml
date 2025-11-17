@@ -44,7 +44,7 @@ components:
         - inactive
         - pending
         - archived
-    
+
     SpecialEnum:
       type: string
       enum:
@@ -52,7 +52,7 @@ components:
         - value_with_underscore
         - value.with.dot
         - value with space
-    
+
     Priority:
       type: integer
       enum:
@@ -61,14 +61,14 @@ components:
         - 3
         - 4
         - 5
-    
+
     EmptyEnum:
       type: string
       enum:
         - ""
         - value1
         - value2
-    
+
     NumericStrings:
       type: string
       enum:
@@ -77,14 +77,14 @@ components:
         - "3"
         - "100"
         - "999"
-    
+
     Color:
       type: string
       enum:
         - red
         - green
         - blue
-    
+
     Role:
       type: string
       enum:
@@ -101,14 +101,14 @@ components:
         guest:
           name: GuestUser
           description: Limited access
-    
+
     ApiVersion:
       type: string
       enum:
         - v1
         - v2
         - v3
-    
+
     MixedCase:
       type: string
       enum:

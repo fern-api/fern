@@ -37,7 +37,7 @@ components:
       required:
         - id
         - name
-    
+
     Address:
       type: object
       properties:

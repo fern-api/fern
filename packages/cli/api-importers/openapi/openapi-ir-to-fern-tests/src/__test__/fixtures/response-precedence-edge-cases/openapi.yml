@@ -35,7 +35,7 @@ paths:
                 properties:
                   message:
                     type: string
-  
+
   /export:
     get:
       operationId: exportData
@@ -57,7 +57,7 @@ paths:
             application/xml:
               schema:
                 type: string
-  
+
   /items:
     get:
       operationId: getItems
@@ -91,7 +91,7 @@ paths:
                 properties:
                   error:
                     type: string
-  
+
   /users:
     get:
       operationId: getUsers
@@ -100,7 +100,7 @@ paths:
           $ref: "#/components/responses/UserListResponse"
         "404":
           $ref: "#/components/responses/NotFoundError"
-  
+
   /delete:
     delete:
       operationId: deleteItem
@@ -109,7 +109,7 @@ paths:
           description: No content
         "404":
           description: Not found
-  
+
   /rate-limited:
     get:
       operationId: getRateLimited
@@ -148,7 +148,7 @@ components:
                   type: string
                 name:
                   type: string
-    
+
     NotFoundError:
       description: Resource not found
       content:

@@ -10,7 +10,7 @@ paths:
       responses:
         "200":
           description: Success
-  
+
   /public:
     get:
       operationId: getPublic
@@ -18,7 +18,7 @@ paths:
       responses:
         "200":
           description: Success
-  
+
   /protected:
     get:
       operationId: getProtected
@@ -27,7 +27,7 @@ paths:
       responses:
         "200":
           description: Success
-  
+
   /secure:
     get:
       operationId: getSecure
@@ -37,7 +37,7 @@ paths:
       responses:
         "200":
           description: Success
-  
+
   /flexible:
     get:
       operationId: getFlexible
@@ -59,16 +59,16 @@ components:
       type: apiKey
       in: header
       name: X-API-Key
-    
+
     BearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
-    
+
     BasicAuth:
       type: http
       scheme: basic
-    
+
     OAuth2:
       type: oauth2
       flows:
@@ -88,17 +88,17 @@ components:
           tokenUrl: https://example.com/oauth/token
           scopes:
             api: API access
-    
+
     ApiKeyHeader:
       type: apiKey
       in: header
       name: X-API-Key
-    
+
     ApiKeyQuery:
       type: apiKey
       in: query
       name: api_key
-    
+
     ApiKeyCookie:
       type: apiKey
       in: cookie

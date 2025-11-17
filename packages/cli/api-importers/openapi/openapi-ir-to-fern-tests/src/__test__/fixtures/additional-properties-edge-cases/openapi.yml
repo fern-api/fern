@@ -19,7 +19,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FlexibleObject"
-  
+
   /strict:
     post:
       operationId: createStrict
@@ -35,7 +35,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/StrictObject"
-  
+
   /string-map:
     post:
       operationId: createStringMap
@@ -51,7 +51,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/StringMap"
-  
+
   /object-map:
     post:
       operationId: createObjectMap
@@ -67,7 +67,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ObjectMap"
-  
+
   /user-map:
     post:
       operationId: createUserMap
@@ -83,7 +83,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserMap"
-  
+
   /array-map:
     post:
       operationId: createArrayMap
@@ -110,7 +110,7 @@ components:
         name:
           type: string
       additionalProperties: true
-    
+
     StrictObject:
       type: object
       properties:
@@ -119,7 +119,7 @@ components:
         name:
           type: string
       additionalProperties: false
-    
+
     StringMap:
       type: object
       properties:
@@ -127,7 +127,7 @@ components:
           type: string
       additionalProperties:
         type: string
-    
+
     ObjectMap:
       type: object
       additionalProperties:
@@ -137,7 +137,7 @@ components:
             type: string
           count:
             type: integer
-    
+
     User:
       type: object
       properties:
@@ -145,12 +145,12 @@ components:
           type: string
         name:
           type: string
-    
+
     UserMap:
       type: object
       additionalProperties:
         $ref: "#/components/schemas/User"
-    
+
     ArrayMap:
       type: object
       additionalProperties:

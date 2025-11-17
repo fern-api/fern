@@ -19,7 +19,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Animal"
-  
+
   /shape:
     post:
       operationId: createShape
@@ -35,7 +35,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Shape"
-  
+
   /payment:
     post:
       operationId: createPayment
@@ -68,7 +68,7 @@ components:
       required:
         - animalType
         - breed
-    
+
     Cat:
       type: object
       properties:
@@ -82,7 +82,7 @@ components:
           type: boolean
       required:
         - animalType
-    
+
     Bird:
       type: object
       properties:
@@ -97,7 +97,7 @@ components:
       required:
         - animalType
         - canFly
-    
+
     Animal:
       oneOf:
         - $ref: "#/components/schemas/Dog"
@@ -109,7 +109,7 @@ components:
           dog: "#/components/schemas/Dog"
           cat: "#/components/schemas/Cat"
           bird: "#/components/schemas/Bird"
-    
+
     Circle:
       type: object
       properties:
@@ -120,7 +120,7 @@ components:
       required:
         - shapeType
         - radius
-    
+
     Square:
       type: object
       properties:
@@ -131,14 +131,14 @@ components:
       required:
         - shapeType
         - sideLength
-    
+
     Shape:
       oneOf:
         - $ref: "#/components/schemas/Circle"
         - $ref: "#/components/schemas/Square"
       discriminator:
         propertyName: shapeType
-    
+
     CreditCardPayment:
       type: object
       properties:
@@ -155,7 +155,7 @@ components:
       required:
         - paymentMethod
         - cardNumber
-    
+
     BankTransferPayment:
       type: object
       properties:
@@ -172,7 +172,7 @@ components:
       required:
         - paymentMethod
         - accountNumber
-    
+
     CryptoPayment:
       type: object
       properties:
@@ -194,7 +194,7 @@ components:
         - paymentMethod
         - walletAddress
         - currency
-    
+
     Payment:
       oneOf:
         - $ref: "#/components/schemas/CreditCardPayment"

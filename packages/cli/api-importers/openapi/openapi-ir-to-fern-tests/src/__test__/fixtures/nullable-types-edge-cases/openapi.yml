@@ -30,7 +30,7 @@ components:
     NullableString:
       type: string
       nullable: true
-    
+
     NullableUser:
       type: object
       nullable: true
@@ -39,13 +39,13 @@ components:
           type: string
         name:
           type: string
-    
+
     NullableArray:
       type: array
       nullable: true
       items:
         type: string
-    
+
     User:
       type: object
       properties:
@@ -53,12 +53,12 @@ components:
           type: string
         name:
           type: string
-    
+
     NullableUserRef:
       allOf:
         - $ref: "#/components/schemas/User"
       nullable: true
-    
+
     NullableStatus:
       type: string
       enum:
@@ -66,7 +66,7 @@ components:
         - inactive
         - pending
       nullable: true
-    
+
     Profile:
       type: object
       properties:
@@ -86,7 +86,7 @@ components:
       required:
         - id
         - name
-    
+
     Address:
       type: object
       properties:
@@ -94,7 +94,7 @@ components:
           type: string
         city:
           type: string
-    
+
     UserWithAddress:
       type: object
       properties:
