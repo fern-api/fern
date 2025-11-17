@@ -1,0 +1,2154 @@
+{
+  "apiDisplayName": undefined,
+  "apiDocs": undefined,
+  "apiName": {
+    "camelCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+    "originalName": "",
+    "pascalCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+    "screamingSnakeCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+    "snakeCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+  },
+  "apiPlayground": undefined,
+  "apiVersion": undefined,
+  "audiences": undefined,
+  "auth": {
+    "docs": undefined,
+    "requirement": "ALL",
+    "schemes": [],
+  },
+  "basePath": undefined,
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "dynamic": undefined,
+  "environments": {
+    "defaultEnvironment": "Production server",
+    "environments": {
+      "_visit": [Function],
+      "environments": [
+        {
+          "docs": "Production server",
+          "id": "Production server",
+          "name": {
+            "camelCase": {
+              "safeName": "productionServer",
+              "unsafeName": "productionServer",
+            },
+            "originalName": "Production server",
+            "pascalCase": {
+              "safeName": "ProductionServer",
+              "unsafeName": "ProductionServer",
+            },
+            "screamingSnakeCase": {
+              "safeName": "PRODUCTION_SERVER",
+              "unsafeName": "PRODUCTION_SERVER",
+            },
+            "snakeCase": {
+              "safeName": "production_server",
+              "unsafeName": "production_server",
+            },
+          },
+          "url": "https://api.example.com/v1",
+        },
+      ],
+      "type": "singleBaseUrl",
+    },
+  },
+  "errorDiscriminationStrategy": {
+    "_visit": [Function],
+    "type": "statusCode",
+  },
+  "errors": {
+    "CreateItemRequestBadRequestError": {
+      "discriminantValue": {
+        "name": {
+          "camelCase": {
+            "safeName": "createItemRequestBadRequestError",
+            "unsafeName": "createItemRequestBadRequestError",
+          },
+          "originalName": "CreateItemRequestBadRequestError",
+          "pascalCase": {
+            "safeName": "CreateItemRequestBadRequestError",
+            "unsafeName": "CreateItemRequestBadRequestError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_ITEM_REQUEST_BAD_REQUEST_ERROR",
+            "unsafeName": "CREATE_ITEM_REQUEST_BAD_REQUEST_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "create_item_request_bad_request_error",
+            "unsafeName": "create_item_request_bad_request_error",
+          },
+        },
+        "wireValue": "CreateItemRequestBadRequestError",
+      },
+      "displayName": "BadRequestError",
+      "docs": "Client error (validation failed, unauthorized, etc.)",
+      "examples": [],
+      "name": {
+        "errorId": "CreateItemRequestBadRequestError",
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "createItemRequestBadRequestError",
+            "unsafeName": "createItemRequestBadRequestError",
+          },
+          "originalName": "CreateItemRequestBadRequestError",
+          "pascalCase": {
+            "safeName": "CreateItemRequestBadRequestError",
+            "unsafeName": "CreateItemRequestBadRequestError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_ITEM_REQUEST_BAD_REQUEST_ERROR",
+            "unsafeName": "CREATE_ITEM_REQUEST_BAD_REQUEST_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "create_item_request_bad_request_error",
+            "unsafeName": "create_item_request_bad_request_error",
+          },
+        },
+      },
+      "statusCode": 400,
+      "type": {
+        "_visit": [Function],
+        "default": undefined,
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "inline": false,
+        "name": {
+          "camelCase": {
+            "safeName": "clientError",
+            "unsafeName": "clientError",
+          },
+          "originalName": "ClientError",
+          "pascalCase": {
+            "safeName": "ClientError",
+            "unsafeName": "ClientError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CLIENT_ERROR",
+            "unsafeName": "CLIENT_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "client_error",
+            "unsafeName": "client_error",
+          },
+        },
+        "type": "named",
+        "typeId": "ClientError",
+      },
+      "v2Examples": {
+        "autogeneratedExamples": {},
+        "userSpecifiedExamples": {},
+      },
+    },
+    "CreateItemRequestInternalServerError": {
+      "discriminantValue": {
+        "name": {
+          "camelCase": {
+            "safeName": "createItemRequestInternalServerError",
+            "unsafeName": "createItemRequestInternalServerError",
+          },
+          "originalName": "CreateItemRequestInternalServerError",
+          "pascalCase": {
+            "safeName": "CreateItemRequestInternalServerError",
+            "unsafeName": "CreateItemRequestInternalServerError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_ITEM_REQUEST_INTERNAL_SERVER_ERROR",
+            "unsafeName": "CREATE_ITEM_REQUEST_INTERNAL_SERVER_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "create_item_request_internal_server_error",
+            "unsafeName": "create_item_request_internal_server_error",
+          },
+        },
+        "wireValue": "CreateItemRequestInternalServerError",
+      },
+      "displayName": "InternalServerError",
+      "docs": "Server error (database error, service unavailable, etc.)",
+      "examples": [],
+      "name": {
+        "errorId": "CreateItemRequestInternalServerError",
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "createItemRequestInternalServerError",
+            "unsafeName": "createItemRequestInternalServerError",
+          },
+          "originalName": "CreateItemRequestInternalServerError",
+          "pascalCase": {
+            "safeName": "CreateItemRequestInternalServerError",
+            "unsafeName": "CreateItemRequestInternalServerError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_ITEM_REQUEST_INTERNAL_SERVER_ERROR",
+            "unsafeName": "CREATE_ITEM_REQUEST_INTERNAL_SERVER_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "create_item_request_internal_server_error",
+            "unsafeName": "create_item_request_internal_server_error",
+          },
+        },
+      },
+      "statusCode": 500,
+      "type": {
+        "_visit": [Function],
+        "default": undefined,
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "inline": false,
+        "name": {
+          "camelCase": {
+            "safeName": "serverError",
+            "unsafeName": "serverError",
+          },
+          "originalName": "ServerError",
+          "pascalCase": {
+            "safeName": "ServerError",
+            "unsafeName": "ServerError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "SERVER_ERROR",
+            "unsafeName": "SERVER_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "server_error",
+            "unsafeName": "server_error",
+          },
+        },
+        "type": "named",
+        "typeId": "ServerError",
+      },
+      "v2Examples": {
+        "autogeneratedExamples": {},
+        "userSpecifiedExamples": {},
+      },
+    },
+    "GetItemRequestBadRequestError": {
+      "discriminantValue": {
+        "name": {
+          "camelCase": {
+            "safeName": "getItemRequestBadRequestError",
+            "unsafeName": "getItemRequestBadRequestError",
+          },
+          "originalName": "GetItemRequestBadRequestError",
+          "pascalCase": {
+            "safeName": "GetItemRequestBadRequestError",
+            "unsafeName": "GetItemRequestBadRequestError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "GET_ITEM_REQUEST_BAD_REQUEST_ERROR",
+            "unsafeName": "GET_ITEM_REQUEST_BAD_REQUEST_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "get_item_request_bad_request_error",
+            "unsafeName": "get_item_request_bad_request_error",
+          },
+        },
+        "wireValue": "GetItemRequestBadRequestError",
+      },
+      "displayName": "BadRequestError",
+      "docs": "Client error",
+      "examples": [],
+      "name": {
+        "errorId": "GetItemRequestBadRequestError",
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "getItemRequestBadRequestError",
+            "unsafeName": "getItemRequestBadRequestError",
+          },
+          "originalName": "GetItemRequestBadRequestError",
+          "pascalCase": {
+            "safeName": "GetItemRequestBadRequestError",
+            "unsafeName": "GetItemRequestBadRequestError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "GET_ITEM_REQUEST_BAD_REQUEST_ERROR",
+            "unsafeName": "GET_ITEM_REQUEST_BAD_REQUEST_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "get_item_request_bad_request_error",
+            "unsafeName": "get_item_request_bad_request_error",
+          },
+        },
+      },
+      "statusCode": 400,
+      "type": {
+        "_visit": [Function],
+        "default": undefined,
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "inline": false,
+        "name": {
+          "camelCase": {
+            "safeName": "clientError",
+            "unsafeName": "clientError",
+          },
+          "originalName": "ClientError",
+          "pascalCase": {
+            "safeName": "ClientError",
+            "unsafeName": "ClientError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CLIENT_ERROR",
+            "unsafeName": "CLIENT_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "client_error",
+            "unsafeName": "client_error",
+          },
+        },
+        "type": "named",
+        "typeId": "ClientError",
+      },
+      "v2Examples": {
+        "autogeneratedExamples": {},
+        "userSpecifiedExamples": {},
+      },
+    },
+    "GetItemRequestInternalServerError": {
+      "discriminantValue": {
+        "name": {
+          "camelCase": {
+            "safeName": "getItemRequestInternalServerError",
+            "unsafeName": "getItemRequestInternalServerError",
+          },
+          "originalName": "GetItemRequestInternalServerError",
+          "pascalCase": {
+            "safeName": "GetItemRequestInternalServerError",
+            "unsafeName": "GetItemRequestInternalServerError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "GET_ITEM_REQUEST_INTERNAL_SERVER_ERROR",
+            "unsafeName": "GET_ITEM_REQUEST_INTERNAL_SERVER_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "get_item_request_internal_server_error",
+            "unsafeName": "get_item_request_internal_server_error",
+          },
+        },
+        "wireValue": "GetItemRequestInternalServerError",
+      },
+      "displayName": "InternalServerError",
+      "docs": "Server error",
+      "examples": [],
+      "name": {
+        "errorId": "GetItemRequestInternalServerError",
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "getItemRequestInternalServerError",
+            "unsafeName": "getItemRequestInternalServerError",
+          },
+          "originalName": "GetItemRequestInternalServerError",
+          "pascalCase": {
+            "safeName": "GetItemRequestInternalServerError",
+            "unsafeName": "GetItemRequestInternalServerError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "GET_ITEM_REQUEST_INTERNAL_SERVER_ERROR",
+            "unsafeName": "GET_ITEM_REQUEST_INTERNAL_SERVER_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "get_item_request_internal_server_error",
+            "unsafeName": "get_item_request_internal_server_error",
+          },
+        },
+      },
+      "statusCode": 500,
+      "type": {
+        "_visit": [Function],
+        "default": undefined,
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "inline": false,
+        "name": {
+          "camelCase": {
+            "safeName": "serverError",
+            "unsafeName": "serverError",
+          },
+          "originalName": "ServerError",
+          "pascalCase": {
+            "safeName": "ServerError",
+            "unsafeName": "ServerError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "SERVER_ERROR",
+            "unsafeName": "SERVER_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "server_error",
+            "unsafeName": "server_error",
+          },
+        },
+        "type": "named",
+        "typeId": "ServerError",
+      },
+      "v2Examples": {
+        "autogeneratedExamples": {},
+        "userSpecifiedExamples": {},
+      },
+    },
+  },
+  "fdrApiDefinitionId": undefined,
+  "generationMetadata": undefined,
+  "headers": [],
+  "idempotencyHeaders": [],
+  "pathParameters": [],
+  "publishConfig": undefined,
+  "readmeConfig": undefined,
+  "rootPackage": {
+    "docs": undefined,
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": undefined,
+      "packagePath": [],
+    },
+    "hasEndpointsInTree": false,
+    "navigationConfig": undefined,
+    "service": "service_",
+    "subpackages": [],
+    "types": [
+      "Item",
+      "CreateItemRequest",
+      "ClientError",
+      "ServerError",
+    ],
+    "webhooks": undefined,
+    "websocket": undefined,
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": true,
+    "platformHeaders": {
+      "language": "",
+      "sdkName": "",
+      "sdkVersion": "",
+      "userAgent": undefined,
+    },
+  },
+  "selfHosted": false,
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {},
+  },
+  "services": {
+    "service_": {
+      "audiences": undefined,
+      "availability": undefined,
+      "basePath": {
+        "head": "",
+        "parts": [],
+      },
+      "displayName": undefined,
+      "encoding": undefined,
+      "endpoints": [
+        {
+          "allPathParameters": [
+            {
+              "docs": "The unique identifier of the item",
+              "location": "ENDPOINT",
+              "name": {
+                "camelCase": {
+                  "safeName": "itemId",
+                  "unsafeName": "itemId",
+                },
+                "originalName": "itemId",
+                "pascalCase": {
+                  "safeName": "ItemId",
+                  "unsafeName": "ItemId",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ITEM_ID",
+                  "unsafeName": "ITEM_ID",
+                },
+                "snakeCase": {
+                  "safeName": "item_id",
+                  "unsafeName": "item_id",
+                },
+              },
+              "v2Examples": {
+                "autogeneratedExamples": {
+                  "itemId_example": "item123",
+                },
+                "userSpecifiedExamples": {},
+              },
+              "valueType": {
+                "_visit": [Function],
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "_visit": [Function],
+                    "default": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                },
+                "type": "primitive",
+              },
+              "variable": undefined,
+            },
+          ],
+          "apiPlayground": undefined,
+          "audiences": [],
+          "auth": false,
+          "autogeneratedExamples": [],
+          "availability": undefined,
+          "basePath": undefined,
+          "baseUrl": "Production server",
+          "displayName": "Get item by ID",
+          "docs": "Retrieves an item by its unique identifier",
+          "errors": [
+            {
+              "docs": "Client error",
+              "error": {
+                "errorId": "GetItemRequestBadRequestError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "file": undefined,
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "getItemRequestBadRequestError",
+                    "unsafeName": "getItemRequestBadRequestError",
+                  },
+                  "originalName": "GetItemRequestBadRequestError",
+                  "pascalCase": {
+                    "safeName": "GetItemRequestBadRequestError",
+                    "unsafeName": "GetItemRequestBadRequestError",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "GET_ITEM_REQUEST_BAD_REQUEST_ERROR",
+                    "unsafeName": "GET_ITEM_REQUEST_BAD_REQUEST_ERROR",
+                  },
+                  "snakeCase": {
+                    "safeName": "get_item_request_bad_request_error",
+                    "unsafeName": "get_item_request_bad_request_error",
+                  },
+                },
+              },
+            },
+            {
+              "docs": "Server error",
+              "error": {
+                "errorId": "GetItemRequestInternalServerError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "file": undefined,
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "getItemRequestInternalServerError",
+                    "unsafeName": "getItemRequestInternalServerError",
+                  },
+                  "originalName": "GetItemRequestInternalServerError",
+                  "pascalCase": {
+                    "safeName": "GetItemRequestInternalServerError",
+                    "unsafeName": "GetItemRequestInternalServerError",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "GET_ITEM_REQUEST_INTERNAL_SERVER_ERROR",
+                    "unsafeName": "GET_ITEM_REQUEST_INTERNAL_SERVER_ERROR",
+                  },
+                  "snakeCase": {
+                    "safeName": "get_item_request_internal_server_error",
+                    "unsafeName": "get_item_request_internal_server_error",
+                  },
+                },
+              },
+            },
+          ],
+          "fullPath": {
+            "head": "/items/",
+            "parts": [
+              {
+                "pathParameter": "itemId",
+                "tail": "",
+              },
+            ],
+          },
+          "headers": [],
+          "id": "endpoint_.getItem",
+          "idempotent": false,
+          "method": "GET",
+          "name": {
+            "camelCase": {
+              "safeName": "getItem",
+              "unsafeName": "getItem",
+            },
+            "originalName": "getItem",
+            "pascalCase": {
+              "safeName": "GetItem",
+              "unsafeName": "GetItem",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET_ITEM",
+              "unsafeName": "GET_ITEM",
+            },
+            "snakeCase": {
+              "safeName": "get_item",
+              "unsafeName": "get_item",
+            },
+          },
+          "pagination": undefined,
+          "path": {
+            "head": "/items/",
+            "parts": [
+              {
+                "pathParameter": "itemId",
+                "tail": "",
+              },
+            ],
+          },
+          "pathParameters": [
+            {
+              "docs": "The unique identifier of the item",
+              "location": "ENDPOINT",
+              "name": {
+                "camelCase": {
+                  "safeName": "itemId",
+                  "unsafeName": "itemId",
+                },
+                "originalName": "itemId",
+                "pascalCase": {
+                  "safeName": "ItemId",
+                  "unsafeName": "ItemId",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ITEM_ID",
+                  "unsafeName": "ITEM_ID",
+                },
+                "snakeCase": {
+                  "safeName": "item_id",
+                  "unsafeName": "item_id",
+                },
+              },
+              "v2Examples": {
+                "autogeneratedExamples": {
+                  "itemId_example": "item123",
+                },
+                "userSpecifiedExamples": {},
+              },
+              "valueType": {
+                "_visit": [Function],
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "_visit": [Function],
+                    "default": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                },
+                "type": "primitive",
+              },
+              "variable": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "requestBody": undefined,
+          "response": {
+            "body": {
+              "_visit": [Function],
+              "type": "json",
+              "value": {
+                "_visit": [Function],
+                "docs": "Item found successfully",
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "item",
+                      "unsafeName": "item",
+                    },
+                    "originalName": "Item",
+                    "pascalCase": {
+                      "safeName": "Item",
+                      "unsafeName": "Item",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "ITEM",
+                      "unsafeName": "ITEM",
+                    },
+                    "snakeCase": {
+                      "safeName": "item",
+                      "unsafeName": "item",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "Item",
+                },
+                "type": "response",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "getItemExample": {
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "description": "This is a sample item",
+                      "id": "item123",
+                      "name": "Sample Item",
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            },
+            "statusCode": 200,
+          },
+          "retries": undefined,
+          "sdkRequest": undefined,
+          "security": undefined,
+          "source": {
+            "_visit": [Function],
+            "type": "openapi",
+          },
+          "transport": undefined,
+          "userSpecifiedExamples": [],
+          "v2BaseUrls": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "base_getItemExample_200": {
+                "codeSamples": undefined,
+                "displayName": "getItemExample",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "GET",
+                    "path": "/items/item123",
+                  },
+                  "environment": "Production server",
+                  "headers": {},
+                  "pathParameters": {
+                    "itemId": "item123",
+                  },
+                  "queryParameters": {},
+                  "requestBody": undefined,
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "description": "This is a sample item",
+                      "id": "item123",
+                      "name": "Sample Item",
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 200,
+                },
+              },
+            },
+            "userSpecifiedExamples": {},
+          },
+          "v2RequestBodies": {
+            "requestBodies": undefined,
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "body": {
+                  "_visit": [Function],
+                  "type": "json",
+                  "value": {
+                    "_visit": [Function],
+                    "docs": "Item found successfully",
+                    "responseBodyType": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "displayName": undefined,
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": undefined,
+                        "packagePath": [],
+                      },
+                      "inline": false,
+                      "name": {
+                        "camelCase": {
+                          "safeName": "item",
+                          "unsafeName": "item",
+                        },
+                        "originalName": "Item",
+                        "pascalCase": {
+                          "safeName": "Item",
+                          "unsafeName": "Item",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "ITEM",
+                          "unsafeName": "ITEM",
+                        },
+                        "snakeCase": {
+                          "safeName": "item",
+                          "unsafeName": "item",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "Item",
+                    },
+                    "type": "response",
+                    "v2Examples": {
+                      "autogeneratedExamples": {
+                        "getItemExample": {
+                          "createdAt": "2024-01-15T09:30:00Z",
+                          "description": "This is a sample item",
+                          "id": "item123",
+                          "name": "Sample Item",
+                        },
+                      },
+                      "userSpecifiedExamples": {},
+                    },
+                  },
+                },
+                "statusCode": 200,
+              },
+            ],
+          },
+        },
+        {
+          "allPathParameters": [],
+          "apiPlayground": undefined,
+          "audiences": [],
+          "auth": false,
+          "autogeneratedExamples": [],
+          "availability": undefined,
+          "basePath": undefined,
+          "baseUrl": "Production server",
+          "displayName": "Create a new item",
+          "docs": "Creates a new item with the provided information",
+          "errors": [
+            {
+              "docs": "Client error (validation failed, unauthorized, etc.)",
+              "error": {
+                "errorId": "CreateItemRequestBadRequestError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "file": undefined,
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "createItemRequestBadRequestError",
+                    "unsafeName": "createItemRequestBadRequestError",
+                  },
+                  "originalName": "CreateItemRequestBadRequestError",
+                  "pascalCase": {
+                    "safeName": "CreateItemRequestBadRequestError",
+                    "unsafeName": "CreateItemRequestBadRequestError",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "CREATE_ITEM_REQUEST_BAD_REQUEST_ERROR",
+                    "unsafeName": "CREATE_ITEM_REQUEST_BAD_REQUEST_ERROR",
+                  },
+                  "snakeCase": {
+                    "safeName": "create_item_request_bad_request_error",
+                    "unsafeName": "create_item_request_bad_request_error",
+                  },
+                },
+              },
+            },
+            {
+              "docs": "Server error (database error, service unavailable, etc.)",
+              "error": {
+                "errorId": "CreateItemRequestInternalServerError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "file": undefined,
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "createItemRequestInternalServerError",
+                    "unsafeName": "createItemRequestInternalServerError",
+                  },
+                  "originalName": "CreateItemRequestInternalServerError",
+                  "pascalCase": {
+                    "safeName": "CreateItemRequestInternalServerError",
+                    "unsafeName": "CreateItemRequestInternalServerError",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "CREATE_ITEM_REQUEST_INTERNAL_SERVER_ERROR",
+                    "unsafeName": "CREATE_ITEM_REQUEST_INTERNAL_SERVER_ERROR",
+                  },
+                  "snakeCase": {
+                    "safeName": "create_item_request_internal_server_error",
+                    "unsafeName": "create_item_request_internal_server_error",
+                  },
+                },
+              },
+            },
+          ],
+          "fullPath": {
+            "head": "/items",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_.createItem",
+          "idempotent": false,
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "createItem",
+              "unsafeName": "createItem",
+            },
+            "originalName": "createItem",
+            "pascalCase": {
+              "safeName": "CreateItem",
+              "unsafeName": "CreateItem",
+            },
+            "screamingSnakeCase": {
+              "safeName": "CREATE_ITEM",
+              "unsafeName": "CREATE_ITEM",
+            },
+            "snakeCase": {
+              "safeName": "create_item",
+              "unsafeName": "create_item",
+            },
+          },
+          "pagination": undefined,
+          "path": {
+            "head": "/items",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": {
+            "_visit": [Function],
+            "contentType": "application/json",
+            "docs": undefined,
+            "requestBodyType": {
+              "_visit": [Function],
+              "default": undefined,
+              "displayName": undefined,
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "inline": false,
+              "name": {
+                "camelCase": {
+                  "safeName": "createItemRequest",
+                  "unsafeName": "createItemRequest",
+                },
+                "originalName": "CreateItemRequest",
+                "pascalCase": {
+                  "safeName": "CreateItemRequest",
+                  "unsafeName": "CreateItemRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CREATE_ITEM_REQUEST",
+                  "unsafeName": "CREATE_ITEM_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "create_item_request",
+                  "unsafeName": "create_item_request",
+                },
+              },
+              "type": "named",
+              "typeId": "CreateItemRequest",
+            },
+            "type": "reference",
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "createItemExample": {
+                  "name": "New Item",
+                },
+              },
+              "userSpecifiedExamples": {},
+            },
+          },
+          "response": {
+            "body": {
+              "_visit": [Function],
+              "type": "json",
+              "value": {
+                "_visit": [Function],
+                "docs": "Item created successfully",
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "item",
+                      "unsafeName": "item",
+                    },
+                    "originalName": "Item",
+                    "pascalCase": {
+                      "safeName": "Item",
+                      "unsafeName": "Item",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "ITEM",
+                      "unsafeName": "ITEM",
+                    },
+                    "snakeCase": {
+                      "safeName": "item",
+                      "unsafeName": "item",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "Item",
+                },
+                "type": "response",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "createItemExample": {
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "description": "This is a sample item",
+                      "id": "item123",
+                      "name": "Sample Item",
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            },
+            "statusCode": 201,
+          },
+          "retries": undefined,
+          "sdkRequest": undefined,
+          "security": undefined,
+          "source": {
+            "_visit": [Function],
+            "type": "openapi",
+          },
+          "transport": undefined,
+          "userSpecifiedExamples": [],
+          "v2BaseUrls": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "createItemExample_201": {
+                "codeSamples": undefined,
+                "displayName": "createItemExample",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "POST",
+                    "path": "/items",
+                  },
+                  "environment": "Production server",
+                  "headers": {},
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "requestBody": {
+                    "name": "New Item",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "description": "This is a sample item",
+                      "id": "item123",
+                      "name": "Sample Item",
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 201,
+                },
+              },
+            },
+            "userSpecifiedExamples": {},
+          },
+          "v2RequestBodies": {
+            "requestBodies": [
+              {
+                "_visit": [Function],
+                "contentType": "application/json",
+                "docs": undefined,
+                "requestBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "createItemRequest",
+                      "unsafeName": "createItemRequest",
+                    },
+                    "originalName": "CreateItemRequest",
+                    "pascalCase": {
+                      "safeName": "CreateItemRequest",
+                      "unsafeName": "CreateItemRequest",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "CREATE_ITEM_REQUEST",
+                      "unsafeName": "CREATE_ITEM_REQUEST",
+                    },
+                    "snakeCase": {
+                      "safeName": "create_item_request",
+                      "unsafeName": "create_item_request",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "CreateItemRequest",
+                },
+                "type": "reference",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "createItemExample": {
+                      "name": "New Item",
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            ],
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "body": {
+                  "_visit": [Function],
+                  "type": "json",
+                  "value": {
+                    "_visit": [Function],
+                    "docs": "Item created successfully",
+                    "responseBodyType": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "displayName": undefined,
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": undefined,
+                        "packagePath": [],
+                      },
+                      "inline": false,
+                      "name": {
+                        "camelCase": {
+                          "safeName": "item",
+                          "unsafeName": "item",
+                        },
+                        "originalName": "Item",
+                        "pascalCase": {
+                          "safeName": "Item",
+                          "unsafeName": "Item",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "ITEM",
+                          "unsafeName": "ITEM",
+                        },
+                        "snakeCase": {
+                          "safeName": "item",
+                          "unsafeName": "item",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "Item",
+                    },
+                    "type": "response",
+                    "v2Examples": {
+                      "autogeneratedExamples": {
+                        "createItemExample": {
+                          "createdAt": "2024-01-15T09:30:00Z",
+                          "description": "This is a sample item",
+                          "id": "item123",
+                          "name": "Sample Item",
+                        },
+                      },
+                      "userSpecifiedExamples": {},
+                    },
+                  },
+                },
+                "statusCode": 201,
+              },
+            ],
+          },
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+      "transport": undefined,
+    },
+  },
+  "sourceConfig": undefined,
+  "subpackages": {},
+  "types": {
+    "ClientError": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "clientError",
+            "unsafeName": "clientError",
+          },
+          "originalName": "ClientError",
+          "pascalCase": {
+            "safeName": "ClientError",
+            "unsafeName": "ClientError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CLIENT_ERROR",
+            "unsafeName": "CLIENT_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "client_error",
+            "unsafeName": "client_error",
+          },
+        },
+        "typeId": "ClientError",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Error code",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "code",
+                  "unsafeName": "code",
+                },
+                "originalName": "code",
+                "pascalCase": {
+                  "safeName": "Code",
+                  "unsafeName": "Code",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CODE",
+                  "unsafeName": "CODE",
+                },
+                "snakeCase": {
+                  "safeName": "code",
+                  "unsafeName": "code",
+                },
+              },
+              "wireValue": "code",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ClientErrorCode_example_0": "VALIDATION_ERROR",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Human-readable error message",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+                "originalName": "message",
+                "pascalCase": {
+                  "safeName": "Message",
+                  "unsafeName": "Message",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MESSAGE",
+                  "unsafeName": "MESSAGE",
+                },
+                "snakeCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+              },
+              "wireValue": "message",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ClientErrorMessage_example_0": "The request validation failed",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Additional error details",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "details",
+                  "unsafeName": "details",
+                },
+                "originalName": "details",
+                "pascalCase": {
+                  "safeName": "Details",
+                  "unsafeName": "Details",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "DETAILS",
+                  "unsafeName": "DETAILS",
+                },
+                "snakeCase": {
+                  "safeName": "details",
+                  "unsafeName": "details",
+                },
+              },
+              "wireValue": "details",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ClientErrorDetails_example_autogenerated": {},
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "container": {
+                    "_visit": [Function],
+                    "keyType": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "type": "string",
+                          "validation": undefined,
+                        },
+                      },
+                      "type": "primitive",
+                    },
+                    "type": "map",
+                    "valueType": {
+                      "_visit": [Function],
+                      "type": "unknown",
+                    },
+                  },
+                  "type": "container",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "ClientError_example_autogenerated": {
+            "code": "VALIDATION_ERROR",
+            "message": "The request validation failed",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "CreateItemRequest": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "createItemRequest",
+            "unsafeName": "createItemRequest",
+          },
+          "originalName": "CreateItemRequest",
+          "pascalCase": {
+            "safeName": "CreateItemRequest",
+            "unsafeName": "CreateItemRequest",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_ITEM_REQUEST",
+            "unsafeName": "CREATE_ITEM_REQUEST",
+          },
+          "snakeCase": {
+            "safeName": "create_item_request",
+            "unsafeName": "create_item_request",
+          },
+        },
+        "typeId": "CreateItemRequest",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Item name",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+                "originalName": "name",
+                "pascalCase": {
+                  "safeName": "Name",
+                  "unsafeName": "Name",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "NAME",
+                  "unsafeName": "NAME",
+                },
+                "snakeCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+              },
+              "wireValue": "name",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "CreateItemRequestName_example_0": "New Item",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Item description",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "description",
+                  "unsafeName": "description",
+                },
+                "originalName": "description",
+                "pascalCase": {
+                  "safeName": "Description",
+                  "unsafeName": "Description",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "DESCRIPTION",
+                  "unsafeName": "DESCRIPTION",
+                },
+                "snakeCase": {
+                  "safeName": "description",
+                  "unsafeName": "description",
+                },
+              },
+              "wireValue": "description",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "CreateItemRequestDescription_example_0": "This is a new item",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "CreateItemRequest_example_autogenerated": {
+            "name": "New Item",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "Item": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "item",
+            "unsafeName": "item",
+          },
+          "originalName": "Item",
+          "pascalCase": {
+            "safeName": "Item",
+            "unsafeName": "Item",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ITEM",
+            "unsafeName": "ITEM",
+          },
+          "snakeCase": {
+            "safeName": "item",
+            "unsafeName": "item",
+          },
+        },
+        "typeId": "Item",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Unique item identifier",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "wireValue": "id",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ItemId_example_0": "item123",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Item name",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+                "originalName": "name",
+                "pascalCase": {
+                  "safeName": "Name",
+                  "unsafeName": "Name",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "NAME",
+                  "unsafeName": "NAME",
+                },
+                "snakeCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+              },
+              "wireValue": "name",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ItemName_example_0": "Sample Item",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Item description",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "description",
+                  "unsafeName": "description",
+                },
+                "originalName": "description",
+                "pascalCase": {
+                  "safeName": "Description",
+                  "unsafeName": "Description",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "DESCRIPTION",
+                  "unsafeName": "DESCRIPTION",
+                },
+                "snakeCase": {
+                  "safeName": "description",
+                  "unsafeName": "description",
+                },
+              },
+              "wireValue": "description",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ItemDescription_example_0": "This is a sample item",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "When the item was created",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "createdAt",
+                  "unsafeName": "createdAt",
+                },
+                "originalName": "createdAt",
+                "pascalCase": {
+                  "safeName": "CreatedAt",
+                  "unsafeName": "CreatedAt",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CREATED_AT",
+                  "unsafeName": "CREATED_AT",
+                },
+                "snakeCase": {
+                  "safeName": "created_at",
+                  "unsafeName": "created_at",
+                },
+              },
+              "wireValue": "createdAt",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ItemCreatedAt_example_autogenerated": "2024-01-15T09:30:00Z",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "DATE_TIME",
+                "v2": {
+                  "_visit": [Function],
+                  "type": "dateTime",
+                },
+              },
+              "type": "primitive",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "Item_example_autogenerated": {
+            "createdAt": "2024-01-15T09:30:00Z",
+            "id": "item123",
+            "name": "Sample Item",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "ServerError": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "serverError",
+            "unsafeName": "serverError",
+          },
+          "originalName": "ServerError",
+          "pascalCase": {
+            "safeName": "ServerError",
+            "unsafeName": "ServerError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "SERVER_ERROR",
+            "unsafeName": "SERVER_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "server_error",
+            "unsafeName": "server_error",
+          },
+        },
+        "typeId": "ServerError",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Error code",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "code",
+                  "unsafeName": "code",
+                },
+                "originalName": "code",
+                "pascalCase": {
+                  "safeName": "Code",
+                  "unsafeName": "Code",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CODE",
+                  "unsafeName": "CODE",
+                },
+                "snakeCase": {
+                  "safeName": "code",
+                  "unsafeName": "code",
+                },
+              },
+              "wireValue": "code",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ServerErrorCode_example_0": "INTERNAL_SERVER_ERROR",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Human-readable error message",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+                "originalName": "message",
+                "pascalCase": {
+                  "safeName": "Message",
+                  "unsafeName": "Message",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MESSAGE",
+                  "unsafeName": "MESSAGE",
+                },
+                "snakeCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+              },
+              "wireValue": "message",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ServerErrorMessage_example_0": "An internal server error occurred",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Request ID for debugging",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "requestId",
+                  "unsafeName": "requestId",
+                },
+                "originalName": "requestId",
+                "pascalCase": {
+                  "safeName": "RequestId",
+                  "unsafeName": "RequestId",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "REQUEST_ID",
+                  "unsafeName": "REQUEST_ID",
+                },
+                "snakeCase": {
+                  "safeName": "request_id",
+                  "unsafeName": "request_id",
+                },
+              },
+              "wireValue": "requestId",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "ServerErrorRequestId_example_0": "req_123456",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "ServerError_example_autogenerated": {
+            "code": "INTERNAL_SERVER_ERROR",
+            "message": "An internal server error occurred",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+  },
+  "variables": [],
+  "webhookGroups": {},
+  "websocketChannels": undefined,
+}

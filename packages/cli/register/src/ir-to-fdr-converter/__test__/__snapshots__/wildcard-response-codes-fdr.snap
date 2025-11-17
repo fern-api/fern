@@ -1,0 +1,639 @@
+{
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": "Production server",
+        "description": "Retrieves an item by its unique identifier",
+        "environments": [
+          {
+            "baseUrl": "https://api.example.com/v1",
+            "id": "Production server",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [
+          {
+            "availability": undefined,
+            "description": "Client error",
+            "examples": [],
+            "name": "BadRequestError",
+            "statusCode": 400,
+            "type": {
+              "type": "alias",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "ClientError",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Server error",
+            "examples": [],
+            "name": "InternalServerError",
+            "statusCode": 500,
+            "type": {
+              "type": "alias",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "ServerError",
+              },
+            },
+          },
+        ],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/items/item123",
+            "pathParameters": {
+              "itemId": "item123",
+            },
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
+            "responseBody": {
+              "createdAt": "2024-01-15T09:30:00Z",
+              "description": "This is a sample item",
+              "id": "item123",
+              "name": "Sample Item",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "createdAt": "2024-01-15T09:30:00Z",
+                "description": "This is a sample item",
+                "id": "item123",
+                "name": "Sample Item",
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "getItem",
+        "includeInApiExplorer": undefined,
+        "method": "GET",
+        "multiAuth": undefined,
+        "name": "Get item by ID",
+        "originalEndpointId": "endpoint_.getItem",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/items/",
+            },
+            {
+              "type": "pathParameter",
+              "value": "itemId",
+            },
+            {
+              "type": "literal",
+              "value": "",
+            },
+          ],
+          "pathParameters": [
+            {
+              "availability": undefined,
+              "description": "The unique identifier of the item",
+              "explode": undefined,
+              "key": "itemId",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+            },
+          ],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": undefined,
+        "requestsV2": {
+          "requests": undefined,
+        },
+        "response": {
+          "description": "Item found successfully",
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "Item",
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Item found successfully",
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "Item",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": "Production server",
+        "description": "Creates a new item with the provided information",
+        "environments": [
+          {
+            "baseUrl": "https://api.example.com/v1",
+            "id": "Production server",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [
+          {
+            "availability": undefined,
+            "description": "Client error (validation failed, unauthorized, etc.)",
+            "examples": [],
+            "name": "BadRequestError",
+            "statusCode": 400,
+            "type": {
+              "type": "alias",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "ClientError",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Server error (database error, service unavailable, etc.)",
+            "examples": [],
+            "name": "InternalServerError",
+            "statusCode": 500,
+            "type": {
+              "type": "alias",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "ServerError",
+              },
+            },
+          },
+        ],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/items",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": {
+              "name": "New Item",
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "name": "New Item",
+              },
+            },
+            "responseBody": {
+              "createdAt": "2024-01-15T09:30:00Z",
+              "description": "This is a sample item",
+              "id": "item123",
+              "name": "Sample Item",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "createdAt": "2024-01-15T09:30:00Z",
+                "description": "This is a sample item",
+                "id": "item123",
+                "name": "Sample Item",
+              },
+            },
+            "responseStatusCode": 201,
+          },
+        ],
+        "headers": [],
+        "id": "createItem",
+        "includeInApiExplorer": undefined,
+        "method": "POST",
+        "multiAuth": undefined,
+        "name": "Create a new item",
+        "originalEndpointId": "endpoint_.createItem",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/items",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": {
+          "description": undefined,
+          "type": {
+            "contentType": "application/json",
+            "description": undefined,
+            "shape": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "CreateItemRequest",
+              },
+            },
+            "type": "json",
+          },
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "description": undefined,
+              "type": {
+                "contentType": "application/json",
+                "description": undefined,
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "CreateItemRequest",
+                  },
+                },
+                "type": "json",
+              },
+            },
+          ],
+        },
+        "response": {
+          "description": "Item created successfully",
+          "statusCode": 201,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "Item",
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Item created successfully",
+              "statusCode": 201,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "Item",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+    ],
+    "pointsTo": undefined,
+    "subpackages": [],
+    "types": [
+      "Item",
+      "CreateItemRequest",
+      "ClientError",
+      "ServerError",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {},
+  "types": {
+    "ClientError": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "ClientError",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Error code",
+            "key": "code",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Human-readable error message",
+            "key": "message",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Additional error details",
+            "key": "details",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "regex": undefined,
+                    "type": "string",
+                  },
+                },
+                "type": "map",
+                "valueType": {
+                  "type": "unknown",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "CreateItemRequest": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "CreateItemRequest",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Item name",
+            "key": "name",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Item description",
+            "key": "description",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "Item": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "Item",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Unique item identifier",
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Item name",
+            "key": "name",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Item description",
+            "key": "description",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "When the item was created",
+            "key": "createdAt",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "type": "datetime",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "ServerError": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "ServerError",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Error code",
+            "key": "code",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Human-readable error message",
+            "key": "message",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Request ID for debugging",
+            "key": "requestId",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}

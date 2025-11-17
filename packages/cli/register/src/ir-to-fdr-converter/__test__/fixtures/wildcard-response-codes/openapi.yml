@@ -1,0 +1,152 @@
+openapi: 3.0.3
+info:
+  title: Wildcard Response Codes Test
+  version: 1.0.0
+  description: OpenAPI spec for testing 4XX and 5XX wildcard response codes
+
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+
+paths:
+  /items/{itemId}:
+    get:
+      operationId: getItem
+      summary: Get item by ID
+      description: Retrieves an item by its unique identifier
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          description: The unique identifier of the item
+          schema:
+            type: string
+            example: "item123"
+      responses:
+        "200":
+          description: Item found successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientError"
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerError"
+
+  /items:
+    post:
+      operationId: createItem
+      summary: Create a new item
+      description: Creates a new item with the provided information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateItemRequest"
+      responses:
+        "201":
+          description: Item created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+        "4XX":
+          description: Client error (validation failed, unauthorized, etc.)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientError"
+        "5XX":
+          description: Server error (database error, service unavailable, etc.)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerError"
+
+components:
+  schemas:
+    Item:
+      type: object
+      required:
+        - id
+        - name
+        - createdAt
+      properties:
+        id:
+          type: string
+          description: Unique item identifier
+          example: "item123"
+        name:
+          type: string
+          description: Item name
+          example: "Sample Item"
+        description:
+          type: string
+          description: Item description
+          example: "This is a sample item"
+        createdAt:
+          type: string
+          format: date-time
+          description: When the item was created
+
+    CreateItemRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Item name
+          example: "New Item"
+        description:
+          type: string
+          description: Item description
+          example: "This is a new item"
+
+    ClientError:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          description: Error code
+          example: "VALIDATION_ERROR"
+        message:
+          type: string
+          description: Human-readable error message
+          example: "The request validation failed"
+        details:
+          type: object
+          description: Additional error details
+          additionalProperties: true
+
+    ServerError:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          description: Error code
+          example: "INTERNAL_SERVER_ERROR"
+        message:
+          type: string
+          description: Human-readable error message
+          example: "An internal server error occurred"
+        requestId:
+          type: string
+          description: Request ID for debugging
+          example: "req_123456"

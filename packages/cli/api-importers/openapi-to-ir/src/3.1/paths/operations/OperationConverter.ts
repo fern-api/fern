@@ -290,10 +290,22 @@ export class OperationConverter extends AbstractOperationConverter {
         // We'll need to update it to parse all successful responses.
         let hasSuccessfulResponse = false;
         for (const [statusCode, response] of Object.entries(this.operation.responses)) {
-            const statusCodeNum = parseInt(statusCode);
-            if (isNaN(statusCodeNum) || statusCodeNum < 200 || (statusCodeNum >= 300 && statusCodeNum < 400)) {
-                continue;
+            const isWildcardStatusCode = /^[1-5]XX$/i.test(statusCode);
+            let statusCodeNum: number;
+            let isErrorResponse = false;
+
+            if (isWildcardStatusCode) {
+                const firstDigit = parseInt(statusCode.charAt(0));
+                statusCodeNum = firstDigit * 100;
+                isErrorResponse = firstDigit === 4 || firstDigit === 5;
+            } else {
+                statusCodeNum = parseInt(statusCode);
+                if (isNaN(statusCodeNum) || statusCodeNum < 200 || (statusCodeNum >= 300 && statusCodeNum < 400)) {
+                    continue;
+                }
+                isErrorResponse = statusCodeNum >= 400 && statusCodeNum < 600;
             }
+
             if (convertedResponseBody == null) {
                 convertedResponseBody = {
                     response: undefined,
@@ -353,8 +365,8 @@ export class OperationConverter extends AbstractOperationConverter {
                     ];
                 }
             }
-            // Convert Error Responses (4xx and 5xx)
-            if (statusCodeNum >= 400 && statusCodeNum < 600) {
+
+            if (isErrorResponse) {
                 const resolvedResponse = this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
                     schemaOrReference: response,
                     breadcrumbs: [...breadcrumbs, statusCode]

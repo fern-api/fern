@@ -434,4 +434,82 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/grpc-comments-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/grpc-comments-ir.snap");
     });
+
+    it("should handle OpenAPI with 4XX and 5XX wildcard response codes", async () => {
+        // Test OpenAPI spec with 4XX and 5XX wildcard status codes
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/wildcard-response-codes")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "wildcard-response-codes"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate that services were created
+        expect(intermediateRepresentation.services).toBeDefined();
+        expect(Object.keys(intermediateRepresentation.services)).toHaveLength(1);
+
+        const service = Object.values(intermediateRepresentation.services)[0];
+        expect(service).toBeDefined();
+
+        // Validate that endpoints were created (should have 2 endpoints: getItem and createItem)
+        if (service && typeof service === "object" && "endpoints" in service) {
+            const serviceWithEndpoints = service as { endpoints?: unknown[] };
+            expect(serviceWithEndpoints.endpoints).toBeDefined();
+            expect(serviceWithEndpoints.endpoints?.length).toBe(2);
+        }
+
+        // Validate that error types were created for 4XX and 5XX responses
+        expect(intermediateRepresentation.errors).toBeDefined();
+        const errorNames = Object.values(intermediateRepresentation.errors).map(
+            (error) => error.name.name.originalName
+        );
+
+        // Should have error types for ClientError and ServerError
+        expect(errorNames.length).toBeGreaterThan(0);
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/wildcard-response-codes-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/wildcard-response-codes-ir.snap");
+    });
 });
