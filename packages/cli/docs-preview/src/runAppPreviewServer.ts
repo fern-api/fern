@@ -628,9 +628,7 @@ export async function runAppPreviewServer({
                 absolutePath,
                 absoluteFilePathToFern
             );
-            const codeFiles = referencedFiles.filter(
-                (file) => !file.endsWith(".md") && !file.endsWith(".mdx")
-            );
+            const codeFiles = referencedFiles.filter((file) => !file.endsWith(".md") && !file.endsWith(".mdx"));
             for (const codeFile of codeFiles) {
                 editedAbsoluteFilepaths.push(codeFile);
             }
