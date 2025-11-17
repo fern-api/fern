@@ -289,7 +289,8 @@ client.Union.NestedUnions(
 request := &undiscriminated.PaymentRequest{
         PaymentMethod: &undiscriminated.PaymentMethodUnion{
             TokenizeCard: &undiscriminated.TokenizeCard{
-                Method: "card",
+                Method: "method",
+                CardNumber: "cardNumber",
             },
         },
     }

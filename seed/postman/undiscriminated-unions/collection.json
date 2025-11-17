@@ -605,7 +605,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"paymentMethod\": {\n        \"method\": \"card\",\n        \"tokenId\": \"tok_123\"\n    }\n}",
+              "raw": "{\n    \"paymentMethod\": {\n        \"method\": \"method\",\n        \"cardNumber\": \"cardNumber\"\n    }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -614,46 +614,6 @@
             }
           },
           "response": [
-            {
-              "name": "Success",
-              "status": "OK",
-              "code": 200,
-              "originalRequest": {
-                "description": null,
-                "url": {
-                  "raw": "{{baseUrl}}/camel-case",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "camel-case"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "type": "text",
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "auth": null,
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n    \"paymentMethod\": {\n        \"method\": \"card\",\n        \"tokenId\": \"tok_123\"\n    }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "description": null,
-              "body": "\"success\"",
-              "_postman_previewlanguage": "json"
-            },
             {
               "name": "Success",
               "status": "OK",

@@ -20,28 +20,28 @@ export class Service {
 
     /**
      * @param {string} serviceParam
-     * @param {string} resourceParam
      * @param {number} endpointParam
+     * @param {string} resourceParam
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.post("serviceParam", "resourceParam", 1)
+     *     await client.service.post("serviceParam", 1, "resourceParam")
      */
     public post(
         serviceParam: string,
-        resourceParam: string,
         endpointParam: number,
+        resourceParam: string,
         requestOptions?: Service.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(
-            this.__post(serviceParam, resourceParam, endpointParam, requestOptions),
+            this.__post(serviceParam, endpointParam, resourceParam, requestOptions),
         );
     }
 
     private async __post(
         serviceParam: string,
-        resourceParam: string,
         endpointParam: number,
+        resourceParam: string,
         requestOptions?: Service.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);

@@ -289,7 +289,8 @@ client.Union.NestedUnions(
 request := &fern.PaymentRequest{
         PaymentMethod: &fern.PaymentMethodUnion{
             TokenizeCard: &fern.TokenizeCard{
-                Method: "card",
+                Method: "method",
+                CardNumber: "cardNumber",
             },
         },
     }

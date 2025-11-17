@@ -146,9 +146,6 @@ paths:
             application/json:
               schema:
                 type: string
-              examples:
-                Example1:
-                  value: success
       requestBody:
         required: true
         content:
@@ -160,12 +157,6 @@ paths:
                   $ref: '#/components/schemas/PaymentMethodUnion'
               required:
                 - paymentMethod
-            examples:
-              Example1:
-                value:
-                  paymentMethod:
-                    method: card
-                    tokenId: tok_123
 components:
   schemas:
     Request:

@@ -215,15 +215,15 @@ class UnionClient:
         Examples
         --------
         from seed import SeedUndiscriminatedUnions
-        from seed.union import ConvertToken
+        from seed.union import TokenizeCard
 
         client = SeedUndiscriminatedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
         client.union.test_camel_case_properties(
-            payment_method=ConvertToken(
-                method="card",
-                token_id="tok_123",
+            payment_method=TokenizeCard(
+                method="method",
+                card_number="cardNumber",
             ),
         )
         """
@@ -482,7 +482,7 @@ class AsyncUnionClient:
         import asyncio
 
         from seed import AsyncSeedUndiscriminatedUnions
-        from seed.union import ConvertToken
+        from seed.union import TokenizeCard
 
         client = AsyncSeedUndiscriminatedUnions(
             base_url="https://yourhost.com/path/to/api",
@@ -491,9 +491,9 @@ class AsyncUnionClient:
 
         async def main() -> None:
             await client.union.test_camel_case_properties(
-                payment_method=ConvertToken(
-                    method="card",
-                    token_id="tok_123",
+                payment_method=TokenizeCard(
+                    method="method",
+                    card_number="cardNumber",
                 ),
             )
 

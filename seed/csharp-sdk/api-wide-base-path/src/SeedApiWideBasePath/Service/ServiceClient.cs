@@ -12,13 +12,13 @@ public partial class ServiceClient
     }
 
     /// <example><code>
-    /// await client.Service.PostAsync("pathParam", "serviceParam", "resourceParam", 1);
+    /// await client.Service.PostAsync("pathParam", "serviceParam", 1, "resourceParam");
     /// </code></example>
     public async Task PostAsync(
         string pathParam,
         string serviceParam,
-        string resourceParam,
         int endpointParam,
+        string resourceParam,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

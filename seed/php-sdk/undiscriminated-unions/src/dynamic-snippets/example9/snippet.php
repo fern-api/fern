@@ -14,7 +14,8 @@ $client = new SeedClient(
 $client->union->testCamelCaseProperties(
     new PaymentRequest([
         'paymentMethod' => new TokenizeCard([
-            'method' => 'card',
+            'method' => 'method',
+            'cardNumber' => 'cardNumber',
         ]),
     ]),
 );

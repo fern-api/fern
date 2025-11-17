@@ -16,7 +16,7 @@ func do() {
         context.TODO(),
         "pathParam",
         "serviceParam",
-        "resourceParam",
         1,
+        "resourceParam",
     )
 }
