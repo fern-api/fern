@@ -8,6 +8,14 @@
       type: feat
   irVersion: 61
   createdAt: "2025-11-17"
+  version: 1.6.0
+
+- changelogEntry:
+    - summary: |
+        Add `fern downgrade <version>` command to set the CLI version in fern.config.json. This allows users to pin their project to a specific CLI version without running migrations.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-17"
   version: 1.5.0
 
 - changelogEntry:
