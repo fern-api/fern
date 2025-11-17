@@ -2,6 +2,7 @@ import { LogLevel } from "@fern-api/logger";
 import { printTable } from "console-table-printer";
 import path from "path";
 import { loadGeneratorWorkspaces } from "../../loadGeneratorWorkspaces";
+import { Semaphore } from "../../Semaphore";
 import { buildGeneratorImage } from "../img/buildGeneratorImage";
 import { TaskContextFactory } from "../test/TaskContextFactory";
 import {
@@ -37,7 +38,8 @@ export async function executeTestRemoteLocalCommand({
     fernRepoDirectory,
     githubToken,
     fernToken,
-    buildGenerator = false
+    buildGenerator = false,
+    parallel = 4
 }: {
     generator: string[];
     fixture: string[];
@@ -48,6 +50,7 @@ export async function executeTestRemoteLocalCommand({
     githubToken: string;
     fernToken: string;
     buildGenerator?: boolean;
+    parallel?: number;
 }): Promise<void> {
     const taskContextFactory = new TaskContextFactory(logLevel);
     const taskContext = taskContextFactory.create("test-remote-local");
@@ -84,10 +87,18 @@ export async function executeTestRemoteLocalCommand({
     const remoteGeneratorVersions = await getLatestGeneratorVersions(generators, logger);
     logger.info("Successfully fetched all generator versions");
 
-    const results: TestResult[] = [];
     const fernExecutable = path.join(fernRepoDirectory, CLI_RELATIVE_PATH);
+    const lock = new Semaphore(parallel);
 
-    // Sequential execution (no parallelization)
+    // Collect all test cases to run
+    interface TestCase {
+        generator: GeneratorNickname;
+        fixture: TestFixture;
+        outputMode: OutputMode;
+        workingDirectory: string;
+    }
+
+    const testCases: TestCase[] = [];
     for (const gen of generators) {
         for (const fix of fixtures) {
             for (const mode of outputModes) {
@@ -102,37 +113,60 @@ export async function executeTestRemoteLocalCommand({
                     mode + OUTPUT_MODE_SUFFIX
                 );
 
-                logger.info(`\n${LOG_SEPARATOR}`);
-                logger.info(`Running test: ${gen} / ${fix} / ${mode}`);
-                logger.info(LOG_SEPARATOR);
-
-                const result = await runTestCase({
+                testCases.push({
                     generator: gen,
                     fixture: fix,
-                    outputFolder,
                     outputMode: mode,
+                    workingDirectory: testWorkingDirectory
+                });
+            }
+        }
+    }
+
+    // Run test cases in parallel with semaphore limiting concurrency
+    const results: TestResult[] = await Promise.all(
+        testCases.map(async (testCase) => {
+            await lock.acquire();
+            try {
+                // Create a unique task context for each test case so they get different colored prefixes
+                const testTaskContext = taskContextFactory.create(
+                    `${testCase.generator}/${testCase.fixture}/${testCase.outputMode}`
+                );
+                const testLogger = testTaskContext.logger;
+
+                testLogger.info(`\n${LOG_SEPARATOR}`);
+                testLogger.info(`Running test: ${testCase.generator} / ${testCase.fixture} / ${testCase.outputMode}`);
+                testLogger.info(LOG_SEPARATOR);
+
+                const result = await runTestCase({
+                    generator: testCase.generator,
+                    fixture: testCase.fixture,
+                    outputFolder,
+                    outputMode: testCase.outputMode,
                     localGeneratorVersions,
                     remoteGeneratorVersions,
                     context: {
                         fernExecutable,
                         fernRepoDirectory,
-                        workingDirectory: testWorkingDirectory,
-                        logger,
+                        workingDirectory: testCase.workingDirectory,
+                        logger: testLogger,
                         githubToken,
                         fernToken
                     }
                 });
 
-                results.push({
-                    generator: gen,
-                    fixture: fix,
-                    outputMode: mode,
+                return {
+                    generator: testCase.generator,
+                    fixture: testCase.fixture,
+                    outputMode: testCase.outputMode,
                     success: result.success,
                     error: result.error
-                });
+                };
+            } finally {
+                lock.release();
             }
-        }
-    }
+        })
+    );
 
     // Print results table
     const tableItems = results.map((r) => {

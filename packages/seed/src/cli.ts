@@ -244,6 +244,12 @@ function addTestRemoteLocalCommand(cli: Argv) {
                     alias: "g",
                     description: "The generators to run tests for"
                 })
+                .option("parallel", {
+                    type: "number",
+                    default: 4,
+                    alias: "p",
+                    description: "Number of parallel test cases to run"
+                })
                 .option("fixture", {
                     type: "array",
                     string: true,
@@ -329,7 +335,8 @@ function addTestRemoteLocalCommand(cli: Argv) {
                 fernRepoDirectory,
                 githubToken: githubToken ?? "",
                 fernToken: fernToken ?? "",
-                buildGenerator: argv.buildGenerator ?? false
+                buildGenerator: argv.buildGenerator ?? false,
+                parallel: argv.parallel
             });
         }
     );
