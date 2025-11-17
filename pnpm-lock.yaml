@@ -6218,6 +6218,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../../commons/fs-utils
+      '@fern-api/github':
+        specifier: workspace:*
+        version: link:../../../../commons/github
       '@fern-api/go-dynamic-snippets':
         specifier: workspace:*
         version: link:../../../../../generators/go-v2/dynamic-snippets
@@ -6272,6 +6275,9 @@ importers:
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1167
         version: 0.0.1167
+      '@octokit/rest':
+        specifier: ^20.1.2
+        version: 20.1.2
       chalk:
         specifier: ^5.3.0
         version: 5.6.2
