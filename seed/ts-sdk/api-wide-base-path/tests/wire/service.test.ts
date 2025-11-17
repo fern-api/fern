@@ -3,7 +3,7 @@
 import { SeedApiWideBasePathClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Service", () => {
+describe("ServiceClient", () => {
     test("post", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiWideBasePathClient({ pathParam: "pathParam", environment: server.baseUrl });

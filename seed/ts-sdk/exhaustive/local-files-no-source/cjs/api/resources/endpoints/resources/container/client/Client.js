@@ -43,17 +43,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Container = void 0;
+exports.ContainerClient = void 0;
+const BaseClient_js_1 = require("../../../../../../BaseClient.js");
 const headers_js_1 = require("../../../../../../core/headers.js");
 const core = __importStar(require("../../../../../../core/index.js"));
 const errors = __importStar(require("../../../../../../errors/index.js"));
-class Container {
-    constructor(_options) {
-        this._options = _options;
+class ContainerClient {
+    constructor(options) {
+        this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
     }
     /**
      * @param {string[]} request
-     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"])
@@ -108,7 +109,7 @@ class Container {
     }
     /**
      * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
-     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.container.getAndReturnListOfObjects([{
@@ -170,7 +171,7 @@ class Container {
     }
     /**
      * @param {string[]} request
-     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.container.getAndReturnSetOfPrimitives(["string"])
@@ -225,7 +226,7 @@ class Container {
     }
     /**
      * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
-     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.container.getAndReturnSetOfObjects([{
@@ -285,7 +286,7 @@ class Container {
     }
     /**
      * @param {Record<string, string>} request
-     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.container.getAndReturnMapPrimToPrim({
@@ -342,7 +343,7 @@ class Container {
     }
     /**
      * @param {Record<string, SeedExhaustive.types.ObjectWithRequiredField>} request
-     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.container.getAndReturnMapOfPrimToObject({
@@ -404,7 +405,7 @@ class Container {
     }
     /**
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
-     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.container.getAndReturnOptional({
@@ -472,4 +473,4 @@ class Container {
         });
     }
 }
-exports.Container = Container;
+exports.ContainerClient = ContainerClient;
