@@ -50,6 +50,29 @@ function getGitFailureMessage(reason: GitVersionResult["failureReason"]): string
 }
 
 /**
+ * Detects if the current upgrade came from a faulty CLI version.
+ * A faulty upgrade is when FERN_PRE_UPGRADE_VERSION equals the current CLI version,
+ * indicating the previous CLI set the env var incorrectly.
+ */
+function isFaultyUpgrade({
+    cliVersion,
+    fromVersion,
+    isLocalDev
+}: {
+    cliVersion: string;
+    fromVersion: string | undefined;
+    isLocalDev: boolean;
+}): boolean {
+    // Only check if --from flag was not explicitly provided
+    if (fromVersion) {
+        return false;
+    }
+
+    const envVersion = process.env[PREVIOUS_VERSION_ENV_VAR]?.trim();
+    return !isLocalDev && envVersion === cliVersion;
+}
+
+/**
  * Retrieves the previous version from git history of fern.config.json.
  * Returns version and optional failure reason for better error messages.
  */
@@ -153,20 +176,21 @@ async function resolveSourceVersion({
     let resolvedFromVersion = fromVersion?.trim();
     const envVersion = process.env[PREVIOUS_VERSION_ENV_VAR]?.trim();
 
-    // Detect faulty upgrade: if FERN_PRE_UPGRADE_VERSION equals current CLI version,
-    // the upgrade came from a faulty version. Fall back to git history.
-    // But only if --from flag was not explicitly provided
-    const isFaultyUpgrade = !fromVersion && envVersion === cliContext.environment.packageVersion && !isLocalDev;
+    const hasFaultyUpgrade = isFaultyUpgrade({
+        cliVersion: cliContext.environment.packageVersion,
+        fromVersion,
+        isLocalDev
+    });
 
     // Don't use env var if it's 0.0.0 (local dev version) or if it indicates a faulty upgrade
-    if (!resolvedFromVersion && envVersion && envVersion !== "0.0.0" && !isFaultyUpgrade && !fromGit) {
+    if (!resolvedFromVersion && envVersion && envVersion !== "0.0.0" && !hasFaultyUpgrade && !fromGit) {
         resolvedFromVersion = envVersion;
     }
 
-    if (!resolvedFromVersion || isFaultyUpgrade || fromGit) {
+    if (!resolvedFromVersion || hasFaultyUpgrade || fromGit) {
         const gitResult = await getPreviousVersionFromGit(fernDirectory, cliContext.logger);
         if (gitResult.version != null) {
-            if (isFaultyUpgrade) {
+            if (hasFaultyUpgrade) {
                 cliContext.logger.debug(
                     `Detected faulty upgrade (FERN_PRE_UPGRADE_VERSION=${process.env[PREVIOUS_VERSION_ENV_VAR]}). Using version from git history: ${gitResult.version}`
                 );
@@ -174,7 +198,7 @@ async function resolveSourceVersion({
             resolvedFromVersion = gitResult.version;
         } else {
             // Fallback to projectConfig.version if git retrieval fails
-            if (isFaultyUpgrade) {
+            if (hasFaultyUpgrade) {
                 const reason = getGitFailureMessage(gitResult.failureReason);
                 cliContext.logger.warn(
                     `Detected potential faulty upgrade but could not retrieve version from git history${reason}. Using current config version: ${projectConfig.version}`
@@ -308,12 +332,28 @@ export async function upgrade({
                 loadProjectConfig({ directory: fernDirectory, context })
             );
 
+            // Check for faulty upgrade scenario: if FERN_PRE_UPGRADE_VERSION equals current CLI version,
+            // it means we upgraded from a faulty CLI that set the env var incorrectly.
+            // In this case, we need to check git history to find the real previous version.
+            const hasFaultyUpgrade = isFaultyUpgrade({
+                cliVersion: cliContext.environment.packageVersion,
+                fromVersion,
+                isLocalDev
+            });
+
             // If config version differs from CLI version, run migrations to bring it up to date
-            if (projectConfig.version !== cliContext.environment.packageVersion) {
+            // Also run migrations if we detect a faulty upgrade (even if versions match)
+            if (projectConfig.version !== cliContext.environment.packageVersion || hasFaultyUpgrade) {
                 resolvedTargetVersion = cliContext.environment.packageVersion;
-                cliContext.logger.info(
-                    `No newer version available, but config version (${projectConfig.version}) differs from CLI version (${cliContext.environment.packageVersion})`
-                );
+                if (hasFaultyUpgrade) {
+                    cliContext.logger.info(
+                        `Detected faulty upgrade. Config version is ${projectConfig.version}, CLI version is ${cliContext.environment.packageVersion}`
+                    );
+                } else {
+                    cliContext.logger.info(
+                        `No newer version available, but config version (${projectConfig.version}) differs from CLI version (${cliContext.environment.packageVersion})`
+                    );
+                }
             } else {
                 cliContext.logger.info("No upgrade available.");
                 return;
