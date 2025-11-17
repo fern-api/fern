@@ -31,30 +31,101 @@ async function getProjectConfigVersionSafe(cliContext: CliContext): Promise<stri
     }
 }
 
+async function validateTargetVersion({
+    cliContext,
+    targetVersion,
+    currentVersion
+}: {
+    cliContext: CliContext;
+    targetVersion: string;
+    currentVersion: string;
+}): Promise<void> {
+    const versionExists = await doesVersionOfCliExist({
+        cliEnvironment: cliContext.environment,
+        version: targetVersion
+    });
+    if (!versionExists) {
+        return cliContext.failAndThrow(
+            `Failed to upgrade to ${targetVersion} because it does not exist. See https://www.npmjs.com/package/${cliContext.environment.packageName}?activeTab=versions.`
+        );
+    }
+
+    const versionAhead = isVersionAhead(targetVersion, currentVersion);
+    if (!versionAhead) {
+        return cliContext.failAndThrow(
+            `Cannot upgrade because target version (${targetVersion}) is not ahead of existing version ${currentVersion}`
+        );
+    }
+}
+
+async function ensureRunningAtTargetVersionForManualUpgrade({
+    cliContext,
+    fromVersion,
+    targetVersion
+}: {
+    cliContext: CliContext;
+    fromVersion: string;
+    targetVersion: string;
+}): Promise<void> {
+    await validateTargetVersion({
+        cliContext,
+        targetVersion,
+        currentVersion: cliContext.environment.packageVersion
+    });
+
+    cliContext.logger.info(
+        `Upgrading from ${chalk.dim(cliContext.environment.packageVersion)} → ${chalk.green(targetVersion)}`
+    );
+
+    await loggingExeca(cliContext.logger, "npm", [
+        "install",
+        "-g",
+        `${cliContext.environment.packageName}@${targetVersion}`
+    ]);
+
+    cliContext.logger.info(
+        `Re-running CLI at ${chalk.green(targetVersion)} with --from ${chalk.dim(fromVersion)} --to ${chalk.green(targetVersion)}`
+    );
+
+    await rerunFernCliAtVersion({
+        version: targetVersion,
+        cliContext,
+        env: {
+            [PREVIOUS_VERSION_ENV_VAR]: fromVersion
+        },
+        args: ["upgrade", "--from", fromVersion, "--to", targetVersion]
+    });
+}
+
 /**
- * there are 3 relevant versions:
+ * Handles CLI upgrades and migrations between versions.
+ *
+ * There are 3 relevant versions:
  *   1. the version of the CLI specified in fern.config.json
- *   2. the version of the CLI being run right now.
- *   3. the version of the CLI we're upgrading to (can be passed in, but default
- *      to the latest published version)
+ *   2. the version of the CLI being run right now
+ *   3. the version of the CLI we're upgrading to (can be passed in via --to/--version,
+ *      or defaults to the latest published version)
  *
  * When the CLI is first invoked, if the version of the CLI is not equal to
  * the version in fern.config.json, we immediately re-run the CLI at the
  * version specified in fern.config.json. So by the time we're here, we can
  * assume that version #1 == version #2.
  *
- * if #3 is the same version as #1 and #2 (i.e. we're already at the target version),
+ * If #3 is the same version as #1 and #2 (i.e. we're already at the target version),
  * then this function simply prints "No upgrade available." and returns.
  *
- * otherwise, if an upgrade is available, this function:
- *   1. upgrades the globally-installed version of the CLI to the target version
- *   2. change the version in fern.config.json to the target version
- *   3. re-runs `fern upgrade` using the latest version the CLI
- *        implementation detail: when doing so, we set the PREVIOUS_VERSION_ENV_VAR
- *        so we know what version we just upgraded from
- *   4. During this re-run, this function is invoked again. During this re-run,
- *      we run any migrations between PREVIOUS_VERSION_ENV_VAR and the target
- *      version of the CLI.
+ * Otherwise, if an upgrade is available, this function:
+ *   1. Upgrades the globally-installed version of the CLI to the target version
+ *   2. Re-runs `fern upgrade` at the target version with explicit --from and --to flags
+ *      (also sets PREVIOUS_VERSION_ENV_VAR for backwards compatibility)
+ *   3. During this re-run, migrations are executed from the previous version to the target
+ *   4. After migrations complete successfully, fern.config.json is updated to the target version
+ *
+ * Manual upgrade mode (--from and --to flags):
+ *   - If both flags are provided and the current CLI is not at the target version,
+ *     the CLI installs the target version globally and re-runs at that version
+ *   - This ensures migrations run using the target CLI's code, not the current CLI's code
+ *   - If already at the target version, migrations run directly and config is updated after
  */
 export async function upgrade({
     cliContext,
@@ -97,43 +168,11 @@ export async function upgrade({
             targetVersionTrimmed &&
             cliContext.environment.packageVersion !== targetVersionForMigration
         ) {
-            const versionExists = await doesVersionOfCliExist({
-                cliEnvironment: cliContext.environment,
-                version: targetVersionForMigration
-            });
-            if (!versionExists) {
-                return cliContext.failAndThrow(
-                    `Failed to upgrade to ${targetVersionForMigration} because it does not exist. See https://www.npmjs.com/package/${cliContext.environment.packageName}?activeTab=versions.`
-                );
-            }
-
-            const versionAhead = isVersionAhead(targetVersionForMigration, cliContext.environment.packageVersion);
-            if (!versionAhead) {
-                return cliContext.failAndThrow(
-                    `Cannot upgrade because target version (${targetVersionForMigration}) is not ahead of existing version ${cliContext.environment.packageVersion}`
-                );
-            }
-
-            cliContext.logger.info(
-                `Upgrading from ${chalk.dim(cliContext.environment.packageVersion)} → ${chalk.green(targetVersionForMigration)}`
-            );
-
-            await loggingExeca(cliContext.logger, "npm", [
-                "install",
-                "-g",
-                `${cliContext.environment.packageName}@${targetVersionForMigration}`
-            ]);
-
-            // Re-run at target version
-            await rerunFernCliAtVersion({
-                version: targetVersionForMigration,
+            await ensureRunningAtTargetVersionForManualUpgrade({
                 cliContext,
-                env: {
-                    [PREVIOUS_VERSION_ENV_VAR]: resolvedFrom
-                },
-                args: ["upgrade", "--from", resolvedFrom, "--to", targetVersionForMigration]
+                fromVersion: resolvedFrom,
+                targetVersion: targetVersionForMigration
             });
-
             return;
         }
 
@@ -167,22 +206,11 @@ export async function upgrade({
     }
 
     if (targetVersionTrimmed) {
-        const versionExists = await doesVersionOfCliExist({
-            cliEnvironment: cliContext.environment,
-            version: targetVersionTrimmed
+        await validateTargetVersion({
+            cliContext,
+            targetVersion: targetVersionTrimmed,
+            currentVersion: cliContext.environment.packageVersion
         });
-        if (!versionExists) {
-            cliContext.failAndThrow(
-                `Failed to upgrade to ${targetVersionTrimmed} because it does not exist. See https://www.npmjs.com/package/${cliContext.environment.packageName}?activeTab=versions.`
-            );
-        }
-
-        const versionAhead = isVersionAhead(targetVersionTrimmed, cliContext.environment.packageVersion);
-        if (!versionAhead) {
-            cliContext.failAndThrow(
-                `Cannot upgrade because target version (${targetVersionTrimmed}) is not ahead of existing version ${cliContext.environment.packageVersion}`
-            );
-        }
     }
 
     let fernCliUpgradeInfo = targetVersionTrimmed
@@ -213,6 +241,7 @@ export async function upgrade({
         );
 
         const previousVersionBeforeUpgrade = projectConfig.version;
+        const isLocalDev = cliContext.environment.packageVersion === "0.0.0";
 
         cliContext.logger.info(
             `Upgrading from ${chalk.dim(cliContext.environment.packageVersion)} → ${chalk.green(
@@ -221,8 +250,7 @@ export async function upgrade({
         );
 
         cliContext.environment.packageVersion = fernCliUpgradeInfo.targetVersion;
-        // special case: if we're running the local-dev version of the CLI, simulate a re-run
-        if (cliContext.environment.packageVersion === "0.0.0") {
+        if (isLocalDev) {
             await runPostUpgradeSteps({
                 cliContext,
                 previousVersion: previousVersionBeforeUpgrade,
