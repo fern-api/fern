@@ -13,11 +13,13 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.GetUsersRequest{
+    request := &fern.GetUserSpecificsRequest{
         TenantId: "tenant_id",
         UserId: "user_id",
+        Version: 1,
+        Thought: "thought",
     }
-    client.User.GetUser(
+    client.User.GetUserSpecifics(
         context.TODO(),
         request,
     )
