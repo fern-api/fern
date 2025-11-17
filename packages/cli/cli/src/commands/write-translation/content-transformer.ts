@@ -14,7 +14,7 @@ export async function transformContentForLanguage(
         cliContext.logger.debug(`[STUB] Returning content as-is for  ${filePath} (stub mode enabled)`);
         return originalContent;
     }
-    
+
     cliContext.logger.debug(`[PROCESSING] ${filePath} for language: ${language} (source: ${sourceLanguage})`);
 
     try {
