@@ -30,7 +30,7 @@ export async function rerunFernCliAtVersion({
         ].join("\n")
     );
 
-    const { failed, stdout, stderr } = await loggingExeca(cliContext.logger, "npx", ["--quiet", ...commandLineArgs], {
+    const { failed, stdout, stderr } = await loggingExeca(cliContext.logger, "npx", commandLineArgs, {
         stdio: "inherit",
         reject: false,
         env: {
@@ -43,7 +43,9 @@ export async function rerunFernCliAtVersion({
         // try again if there is a npx conflict
         return await rerunFernCliAtVersion({
             version,
-            cliContext
+            cliContext,
+            env,
+            args
         });
     }
 
