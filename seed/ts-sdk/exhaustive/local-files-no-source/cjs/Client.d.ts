@@ -1,8 +1,8 @@
-import { Endpoints } from "./api/resources/endpoints/client/Client.js";
-import { InlinedRequests } from "./api/resources/inlinedRequests/client/Client.js";
-import { NoAuth } from "./api/resources/noAuth/client/Client.js";
-import { NoReqBody } from "./api/resources/noReqBody/client/Client.js";
-import { ReqWithHeaders } from "./api/resources/reqWithHeaders/client/Client.js";
+import { EndpointsClient } from "./api/resources/endpoints/client/Client.js";
+import { InlinedRequestsClient } from "./api/resources/inlinedRequests/client/Client.js";
+import { NoAuthClient } from "./api/resources/noAuth/client/Client.js";
+import { NoReqBodyClient } from "./api/resources/noReqBody/client/Client.js";
+import { ReqWithHeadersClient } from "./api/resources/reqWithHeaders/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 export declare namespace SeedExhaustiveClient {
     interface Options extends BaseClientOptions {
@@ -12,15 +12,15 @@ export declare namespace SeedExhaustiveClient {
 }
 export declare class SeedExhaustiveClient {
     protected readonly _options: SeedExhaustiveClient.Options;
-    protected _endpoints: Endpoints | undefined;
-    protected _inlinedRequests: InlinedRequests | undefined;
-    protected _noAuth: NoAuth | undefined;
-    protected _noReqBody: NoReqBody | undefined;
-    protected _reqWithHeaders: ReqWithHeaders | undefined;
-    constructor(_options: SeedExhaustiveClient.Options);
-    get endpoints(): Endpoints;
-    get inlinedRequests(): InlinedRequests;
-    get noAuth(): NoAuth;
-    get noReqBody(): NoReqBody;
-    get reqWithHeaders(): ReqWithHeaders;
+    protected _endpoints: EndpointsClient | undefined;
+    protected _inlinedRequests: InlinedRequestsClient | undefined;
+    protected _noAuth: NoAuthClient | undefined;
+    protected _noReqBody: NoReqBodyClient | undefined;
+    protected _reqWithHeaders: ReqWithHeadersClient | undefined;
+    constructor(options: SeedExhaustiveClient.Options);
+    get endpoints(): EndpointsClient;
+    get inlinedRequests(): InlinedRequestsClient;
+    get noAuth(): NoAuthClient;
+    get noReqBody(): NoReqBodyClient;
+    get reqWithHeaders(): ReqWithHeadersClient;
 }

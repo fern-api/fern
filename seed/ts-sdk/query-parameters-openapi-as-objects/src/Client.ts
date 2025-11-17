@@ -2,6 +2,7 @@
 
 import type * as SeedApi from "./api/index.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
+import { normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import { toJson } from "./core/json.js";
@@ -16,22 +17,8 @@ export declare namespace SeedApiClient {
 export class SeedApiClient {
     protected readonly _options: SeedApiClient.Options;
 
-    constructor(_options: SeedApiClient.Options) {
-        this._options = {
-            ..._options,
-            logging: core.logging.createLogger(_options?.logging),
-            headers: mergeHeaders(
-                {
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/query-parameters-openapi-as-objects",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/query-parameters-openapi-as-objects/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                _options?.headers,
-            ),
-        };
+    constructor(options: SeedApiClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     /**

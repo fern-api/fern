@@ -53,7 +53,7 @@ await client.fileUploadExample.uploadFile({
 <dl>
 <dd>
 
-**requestOptions:** `FileUploadExample.RequestOptions` 
+**requestOptions:** `FileUploadExampleClient.RequestOptions` 
     
 </dd>
 </dl>

@@ -3,7 +3,7 @@
 import { SeedInferredAuthImplicitClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
-describe("Api", () => {
+describe("ApiClient", () => {
     test("getSomething", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedInferredAuthImplicitClient({

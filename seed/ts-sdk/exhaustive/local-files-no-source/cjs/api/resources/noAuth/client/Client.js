@@ -43,20 +43,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NoAuth = void 0;
+exports.NoAuthClient = void 0;
+const BaseClient_js_1 = require("../../../../BaseClient.js");
 const headers_js_1 = require("../../../../core/headers.js");
 const core = __importStar(require("../../../../core/index.js"));
 const errors = __importStar(require("../../../../errors/index.js"));
 const SeedExhaustive = __importStar(require("../../../index.js"));
-class NoAuth {
-    constructor(_options) {
-        this._options = _options;
+class NoAuthClient {
+    constructor(options) {
+        this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
     }
     /**
      * POST request with no auth
      *
      * @param {unknown} request
-     * @param {NoAuth.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {NoAuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link SeedExhaustive.BadRequestBody}
      *
@@ -128,4 +129,4 @@ class NoAuth {
         });
     }
 }
-exports.NoAuth = NoAuth;
+exports.NoAuthClient = NoAuthClient;

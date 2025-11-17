@@ -42,7 +42,7 @@ await client.headers.send({
 <dl>
 <dd>
 
-**requestOptions:** `Headers.RequestOptions` 
+**requestOptions:** `HeadersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -95,7 +95,7 @@ await client.inlinedRequest.send({
 <dl>
 <dd>
 
-**requestOptions:** `InlinedRequest.RequestOptions` 
+**requestOptions:** `InlinedRequestClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -154,7 +154,7 @@ await client.pathParam.send(">", "red");
 <dl>
 <dd>
 
-**requestOptions:** `PathParam.RequestOptions` 
+**requestOptions:** `PathParamClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -207,7 +207,7 @@ await client.queryParam.send({
 <dl>
 <dd>
 
-**requestOptions:** `QueryParam.RequestOptions` 
+**requestOptions:** `QueryParamClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -261,7 +261,7 @@ await client.queryParam.sendList({
 <dl>
 <dd>
 
-**requestOptions:** `QueryParam.RequestOptions` 
+**requestOptions:** `QueryParamClient.RequestOptions` 
     
 </dd>
 </dl>

@@ -3,7 +3,7 @@
 import { SeedExhaustiveClient } from "../../../Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
-describe("Params", () => {
+describe("ParamsClient", () => {
     test("getWithPath", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });

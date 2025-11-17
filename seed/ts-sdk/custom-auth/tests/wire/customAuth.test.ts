@@ -4,7 +4,7 @@ import * as SeedCustomAuth from "../../src/api/index";
 import { SeedCustomAuthClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("CustomAuth", () => {
+describe("CustomAuthClient", () => {
     test("getWithCustomAuth (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedCustomAuthClient({ customAuthScheme: "test", environment: server.baseUrl });
