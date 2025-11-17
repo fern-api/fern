@@ -118,4 +118,27 @@ describe("UnionClient", () => {
         const response = await client.union.nestedUnions("string");
         expect(response).toEqual("string");
     });
+
+    test("testCamelCaseProperties", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedUndiscriminatedUnionsClient({ environment: server.baseUrl });
+        const rawRequestBody = { paymentMethod: { method: "method", cardNumber: "cardNumber" } };
+        const rawResponseBody = "string";
+        server
+            .mockEndpoint()
+            .post("/camel-case")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.union.testCamelCaseProperties({
+            paymentMethod: {
+                method: "method",
+                cardNumber: "cardNumber",
+            },
+        });
+        expect(response).toEqual("string");
+    });
 });
