@@ -59,4 +59,16 @@ public final class UserClient: Sendable {
             responseType: User.self
         )
     }
+
+    /// Test endpoint with path parameters listed in different order than found in path
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func getUserSpecifics(tenantId: String, userId: String, version: String, thought: String, requestOptions: RequestOptions? = nil) async throws -> User {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/\(tenantId)/user/\(userId)/specifics/\(version)/\(thought)",
+            requestOptions: requestOptions,
+            responseType: User.self
+        )
+    }
 }

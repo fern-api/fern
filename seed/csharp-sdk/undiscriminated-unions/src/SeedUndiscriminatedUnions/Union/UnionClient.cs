@@ -339,4 +339,54 @@ public partial class UnionClient
             );
         }
     }
+
+    /// <example><code>
+    /// await client.Union.TestCamelCasePropertiesAsync(
+    ///     new PaymentRequest
+    ///     {
+    ///         PaymentMethod = new TokenizeCard { Method = "method", CardNumber = "cardNumber" },
+    ///     }
+    /// );
+    /// </code></example>
+    public async Task<string> TestCamelCasePropertiesAsync(
+        PaymentRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/camel-case",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedUndiscriminatedUnionsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
 }

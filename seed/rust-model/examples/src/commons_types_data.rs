@@ -8,6 +8,6 @@ pub enum Data {
         },
 
         Base64 {
-            value: String,
+            value: Vec<u8>,
         },
 }

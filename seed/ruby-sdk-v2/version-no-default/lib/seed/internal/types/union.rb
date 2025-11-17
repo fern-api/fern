@@ -50,11 +50,30 @@ module Seed
 
             members.to_h[discriminant_value]&.call
           else
-            members.find do |_key, mem|
+            # First try exact type matching
+            result = members.find do |_key, mem|
               member_type = Utils.unwrap_type(mem)
-
               value.is_a?(member_type)
             end&.last&.call
+
+            return result if result
+
+            # For Hash values, try to coerce into Model member types
+            if value.is_a?(::Hash)
+              members.find do |_key, mem|
+                member_type = Utils.unwrap_type(mem)
+                # Check if member_type is a Model class
+                next unless member_type.is_a?(Class) && member_type <= Model
+
+                # Try to coerce the hash into this model type with strict mode
+                begin
+                  Utils.coerce(member_type, value, strict: true)
+                  true
+                rescue Errors::TypeError
+                  false
+                end
+              end&.last&.call
+            end
           end
         end
 

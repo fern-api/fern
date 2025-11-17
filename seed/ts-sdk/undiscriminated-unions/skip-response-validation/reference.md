@@ -295,3 +295,57 @@ await client.union.nestedUnions("string");
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">testCamelCaseProperties</a>({ ...params }) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.union.testCamelCaseProperties({
+    paymentMethod: {
+        method: "method",
+        cardNumber: "cardNumber"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedUndiscriminatedUnions.PaymentRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Union.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>

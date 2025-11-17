@@ -14,7 +14,7 @@ public record SearchRequest
     public required string Id { get; set; }
 
     [JsonIgnore]
-    public required string Date { get; set; }
+    public required DateOnly Date { get; set; }
 
     [JsonIgnore]
     public required DateTime Deadline { get; set; }
@@ -32,7 +32,7 @@ public record SearchRequest
     public DateTime? OptionalDeadline { get; set; }
 
     [JsonIgnore]
-    public Dictionary<string, string?>? KeyValue { get; set; }
+    public Dictionary<string, string>? KeyValue { get; set; }
 
     [JsonIgnore]
     public string? OptionalString { get; set; }

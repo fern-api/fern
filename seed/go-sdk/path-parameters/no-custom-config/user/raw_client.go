@@ -259,3 +259,49 @@ func (r *RawClient) GetUserMetadata(
 		Body:       response,
 	}, nil
 }
+
+func (r *RawClient) GetUserSpecifics(
+	ctx context.Context,
+	request *fern.GetUserSpecificsRequest,
+	opts ...option.RequestOption,
+) (*core.Response[*fern.User], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/%v/user/%v/specifics/%v/%v",
+		request.TenantId,
+		request.UserId,
+		request.Version,
+		request.Thought,
+	)
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *fern.User
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*fern.User]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
