@@ -23,8 +23,8 @@ export class FernApiClient {
                 {
                     "X-Fern-Language": "JavaScript",
                     "X-Fern-SDK-Name": "@fern-fern/test-remote-local-sdk",
-                    "X-Fern-SDK-Version": "0.0.17386",
-                    "User-Agent": "@fern-fern/test-remote-local-sdk/0.0.17386",
+                    "X-Fern-SDK-Version": "0.0.17399",
+                    "User-Agent": "@fern-fern/test-remote-local-sdk/0.0.17399",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },
