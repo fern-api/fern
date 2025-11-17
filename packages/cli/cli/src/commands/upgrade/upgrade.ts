@@ -98,6 +98,25 @@ export async function upgrade({
             previousVersion: resolvedFrom,
             newVersion: targetVersionForMigration
         });
+
+        // If explicit target version was provided, update fern.config.json
+        if (hasExplicitTo) {
+            const fernDirectory = await getFernDirectory();
+            if (fernDirectory != null) {
+                const projectConfig = await cliContext.runTask((context) =>
+                    loadProjectConfig({ directory: fernDirectory, context })
+                );
+                const newProjectConfig = produce(projectConfig.rawConfig, (draft) => {
+                    draft.version = targetVersionForMigration;
+                });
+                await writeFile(
+                    projectConfig._absolutePath,
+                    ensureFinalNewline(JSON.stringify(newProjectConfig, undefined, 2))
+                );
+                cliContext.logger.info(`Updated fern.config.json to version ${chalk.green(targetVersionForMigration)}`);
+            }
+        }
+
         return;
     }
 
