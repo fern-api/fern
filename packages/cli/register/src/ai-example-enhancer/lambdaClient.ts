@@ -1,12 +1,6 @@
 import { FernToken } from "@fern-api/auth";
 import { TaskContext } from "@fern-api/task-context";
-import {
-    AIExampleEnhancerConfig,
-    ExampleEnhancementBatchRequest,
-    ExampleEnhancementBatchResponse,
-    ExampleEnhancementRequest,
-    ExampleEnhancementResponse
-} from "./types";
+import { AIExampleEnhancerConfig, ExampleEnhancementRequest, ExampleEnhancementResponse } from "./types";
 
 type AIEnhancerResolvedConfig = Required<Omit<AIExampleEnhancerConfig, "openaiApiKey">> &
     Pick<AIExampleEnhancerConfig, "openaiApiKey">;
@@ -22,14 +16,19 @@ export class LambdaExampleEnhancer {
             enabled: config.enabled,
             openaiApiKey: config.openaiApiKey,
             model: config.model ?? "gpt-4o-mini",
-            maxRetries: config.maxRetries ?? 3,
-            requestTimeoutMs: config.requestTimeoutMs ?? 25000
+            maxRetries: config.maxRetries ?? 1, // Single retry - caller handles additional retries
+            requestTimeoutMs: 75000 // Increased timeout for larger batches
         };
         this.context = context;
-        this.lambdaOrigin =
-            process.env.OVERRIDE_FDR_LAMBDA_ORIGIN ??
-            process.env.DEFAULT_FDR_LAMBDA_ORIGIN ??
-            "https://registry-v2.buildwithfern.com";
+
+        // Get Lambda origin - throw error if not configured
+        const lambdaOrigin = process.env.DEFAULT_FDR_LAMBDA_DOCS_ORIGIN;
+        if (!lambdaOrigin) {
+            throw new Error(
+                "DEFAULT_FDR_LAMBDA_DOCS_ORIGIN environment variable is not set. AI example enhancement requires this to be configured."
+            );
+        }
+        this.lambdaOrigin = lambdaOrigin;
         this.token = token;
     }
 
@@ -113,69 +112,5 @@ export class LambdaExampleEnhancer {
             enhancedRequestExample: request.originalRequestExample,
             enhancedResponseExample: request.originalResponseExample
         };
-    }
-
-    async enhanceExamplesBatch(request: ExampleEnhancementBatchRequest): Promise<ExampleEnhancementBatchResponse> {
-        if (!this.config.enabled) {
-            return {
-                results: request.endpoints.map((endpoint) => ({
-                    enhancedRequestExample: endpoint.originalRequestExample,
-                    enhancedResponseExample: endpoint.originalResponseExample
-                }))
-            };
-        }
-
-        // Single attempt only - let adaptive retry strategy in processBatchedWorkItems handle retries
-        try {
-            this.context.logger.debug(`Enhancing batch of ${request.endpoints.length} endpoints via lambda`);
-
-            const requestBody = {
-                openApiSpec: request.openApiSpec,
-                endpoints: request.endpoints.map((endpoint) => ({
-                    method: endpoint.method,
-                    endpointPath: endpoint.endpointPath,
-                    organizationId: endpoint.organizationId,
-                    operationSummary: endpoint.operationSummary,
-                    operationDescription: endpoint.operationDescription,
-                    originalRequestExample: endpoint.originalRequestExample,
-                    originalResponseExample: endpoint.originalResponseExample
-                }))
-            };
-
-            this.context.logger.debug(
-                `Sending batch to enhanceExamples: ${JSON.stringify(
-                    {
-                        openApiSpec: request.openApiSpec
-                            ? `[OpenAPI spec present: ${request.openApiSpec.length} chars]`
-                            : "[No OpenAPI spec]",
-                        endpoints: `[${request.endpoints.length} endpoints]`
-                    },
-                    null,
-                    2
-                )}`
-            );
-
-            const response = await fetch(`${this.lambdaOrigin}/v2/registry/ai/enhance-example`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${this.token.value}`
-                },
-                body: JSON.stringify(requestBody),
-                signal: AbortSignal.timeout(this.config.requestTimeoutMs)
-            });
-
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`Lambda returned ${response.status}: ${errorText || response.statusText}`);
-            }
-
-            const result = await response.json();
-            return result;
-        } catch (error) {
-            this.context.logger.warn(`Batch lambda call failed: ${error}`);
-            // Throw the error to let adaptive retry strategy handle it
-            throw error;
-        }
     }
 }

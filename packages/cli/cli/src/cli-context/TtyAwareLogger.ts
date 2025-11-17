@@ -127,6 +127,11 @@ export class TtyAwareLogger {
             return "";
         }
 
+        const spinnerStatus = process.env.FERN_SPINNER_STATUS;
+        if (spinnerStatus && taskLines.length > 0) {
+            taskLines[0] = `${taskLines[0]} - ${spinnerStatus}`;
+        }
+
         const paint =
             [
                 "┌─",
