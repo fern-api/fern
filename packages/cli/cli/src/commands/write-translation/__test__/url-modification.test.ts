@@ -115,7 +115,7 @@ describe("addLanguageSuffixToUrl", () => {
 
             // Custom domain examples
             expect(addLanguageSuffixToUrl("https://api.example.com/docs", "fr")).toBe(
-                "https://fr.api.example.com/docs/fr"
+                "https://fr.api.example.com/fr/docs"
             );
             expect(addLanguageSuffixToUrl("https://company.github.io/docs/", "es")).toBe(
                 "https://es.company.github.io/es/docs/"
