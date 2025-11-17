@@ -89,6 +89,8 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<Test
 
     const localConfig = {
         ...baseConfig,
+        // Deep clone config to prevent YAML anchor references
+        config: customConfig ? JSON.parse(JSON.stringify(customConfig)) : customConfig,
         version: localGeneratorVersion,
         output: getPackageOutputConfig(testCase, "local"),
         ...(outputMode === "github"
@@ -100,6 +102,8 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<Test
 
     const remoteConfig = {
         ...baseConfig,
+        // Deep clone config to prevent YAML anchor references
+        config: customConfig ? JSON.parse(JSON.stringify(customConfig)) : customConfig,
         version: remoteGeneratorVersion,
         output: getPackageOutputConfig(testCase, "remote"),
         ...(outputMode === "github"
