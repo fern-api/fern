@@ -12,7 +12,7 @@
   },
   "scripts": {
     "bootstrap": "./scripts/bootstrap.sh",
-    "setup-sparse-checkout": "./scripts/setup-sparse-checkout.sh",
+    "sparse-checkout": "./scripts/sparse-checkout.sh",
     "clean": "turbo clean",
     "compile": "turbo compile",
     "compile:debug": "turbo compile:debug",

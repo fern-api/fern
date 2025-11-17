@@ -37,7 +37,7 @@ git clone --filter=blob:none --sparse https://github.com/fern-api/fern.git
 cd fern
 
 # Configure sparse checkout to exclude large directories
-bash ./setup-sparse-checkout.sh
+bash ./sparse-checkout.sh
 ```
 
 This configuration:
@@ -46,7 +46,7 @@ This configuration:
 
 If you need to reset your sparse checkout configuration later, you can run:
 ```sh
-pnpm run setup-sparse-checkout
+pnpm sparse-checkout
 ```
 
 #### Already Cloned Without Sparse Checkout?
@@ -55,7 +55,7 @@ If you've already cloned the repository without sparse checkout, you can configu
 
 ```sh
 # From the repository root
-pnpm run setup-sparse-checkout
+pnpm sparse-checkout
 ```
 
 #### Additional Performance Tips (Optional)
