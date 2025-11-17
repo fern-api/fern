@@ -45,12 +45,30 @@ function ensureFinalNewline(content: string): string {
 export async function upgrade({
     cliContext,
     includePreReleases,
-    targetVersion
+    targetVersion,
+    fromVersion
 }: {
     cliContext: CliContext;
     includePreReleases: boolean;
     targetVersion: string | undefined;
+    fromVersion: string | undefined;
 }): Promise<void> {
+    if (fromVersion != null) {
+        const currentVersion = cliContext.environment.packageVersion;
+        if (currentVersion === "0.0.0") {
+            return cliContext.failAndThrow(
+                "Cannot use --from flag when running from source (version 0.0.0). Please install a published version of the CLI first."
+            );
+        }
+        cliContext.logger.info(`Running migrations from ${chalk.dim(fromVersion)} → ${chalk.green(currentVersion)}`);
+        await runPostUpgradeSteps({
+            cliContext,
+            previousVersion: fromVersion,
+            newVersion: currentVersion
+        });
+        return;
+    }
+
     const previousVersion = process.env[PREVIOUS_VERSION_ENV_VAR];
     if (previousVersion != null) {
         let targetVersionForMigration = process.env[TARGET_VERSION_ENV_VAR];

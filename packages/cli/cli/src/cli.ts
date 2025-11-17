@@ -1009,12 +1009,18 @@ function addUpgradeCommand({
                 .option("version", {
                     string: true,
                     description: "The version to upgrade to. Defaults to the latest release."
+                })
+                .option("from", {
+                    string: true,
+                    description:
+                        "The version to migrate from. Use this to manually run migrations when upgrading from an older CLI version."
                 }),
         async (argv) => {
             await upgrade({
                 cliContext,
                 includePreReleases: argv.rc,
-                targetVersion: argv.version
+                targetVersion: argv.version,
+                fromVersion: argv.from
             });
             onRun();
         }
