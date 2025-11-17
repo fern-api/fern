@@ -16,8 +16,8 @@ func do() {
     request := &undiscriminated.PaymentRequest{
         PaymentMethod: &undiscriminated.PaymentMethodUnion{
             TokenizeCard: &undiscriminated.TokenizeCard{
-                Method: "card",
-                CardNumber: "1234567890123456",
+                Method: "method",
+                CardNumber: "cardNumber",
             },
         },
     }
