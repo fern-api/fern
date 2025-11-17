@@ -4,6 +4,20 @@
 
 The Seed Go library provides convenient access to the Seed APIs from Go.
 
+## Table of Contents
+
+- [Reference](#reference)
+- [Usage](#usage)
+- [Environments](#environments)
+- [Errors](#errors)
+- [Request Options](#request-options)
+- [Advanced](#advanced)
+  - [Response Headers](#response-headers)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Explicit Null](#explicit-null)
+- [Contributing](#contributing)
+
 ## Reference
 
 A full reference for this library is available [here](./reference.md).
@@ -26,7 +40,9 @@ func do() {
     request := &fern.SearchRequest{
         Limit: 1,
         Id: "id",
-        Date: "date",
+        Date: fern.MustParseDateTime(
+            "2023-01-15",
+        ),
         Deadline: fern.MustParseDateTime(
             "2024-01-15T09:30:00Z",
         ),
@@ -56,10 +72,8 @@ func do() {
                 "2024-01-15T09:30:00Z",
             ),
         ),
-        KeyValue: map[string]*string{
-            "keyValue": fern.String(
-                "keyValue",
-            ),
+        KeyValue: map[string]string{
+            "keyValue": "keyValue",
         },
         OptionalString: fern.String(
             "optionalString",
@@ -103,13 +117,15 @@ func do() {
                 "filter",
             ),
         },
-        Neighbor: &fern.User{
-            Name: fern.String(
-                "name",
-            ),
-            Tags: []string{
-                "tags",
-                "tags",
+        Neighbor: &fern.SearchRequestNeighbor{
+            User: &fern.User{
+                Name: fern.String(
+                    "name",
+                ),
+                Tags: []string{
+                    "tags",
+                    "tags",
+                },
             },
         },
         NeighborRequired: &fern.SearchRequestNeighborRequired{

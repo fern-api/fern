@@ -4,7 +4,7 @@ namespace Example;
 
 use Seed\SeedClient;
 use Seed\Union\Requests\PaymentRequest;
-use Seed\Union\Types\ConvertToken;
+use Seed\Union\Types\TokenizeCard;
 
 $client = new SeedClient(
     options: [
@@ -13,9 +13,9 @@ $client = new SeedClient(
 );
 $client->union->testCamelCaseProperties(
     new PaymentRequest([
-        'paymentMethod' => new ConvertToken([
-            'method' => 'card',
-            'tokenId' => 'tok_123',
+        'paymentMethod' => new TokenizeCard([
+            'method' => 'method',
+            'cardNumber' => 'cardNumber',
         ]),
     ]),
 );
