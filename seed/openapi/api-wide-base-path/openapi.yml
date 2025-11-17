@@ -19,16 +19,16 @@ paths:
           required: true
           schema:
             type: string
-        - name: resourceParam
-          in: path
-          required: true
-          schema:
-            type: string
         - name: endpointParam
           in: path
           required: true
           schema:
             type: integer
+        - name: resourceParam
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         '204':
           description: ''

@@ -3,7 +3,7 @@
 import { SeedSingleUrlEnvironmentDefaultClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Dummy", () => {
+describe("DummyClient", () => {
     test("getDummy", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedSingleUrlEnvironmentDefaultClient({ token: "test", environment: server.baseUrl });

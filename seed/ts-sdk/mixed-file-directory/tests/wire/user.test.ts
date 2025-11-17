@@ -3,7 +3,7 @@
 import { SeedMixedFileDirectoryClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("User", () => {
+describe("UserClient", () => {
     test("list", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedMixedFileDirectoryClient({ environment: server.baseUrl });

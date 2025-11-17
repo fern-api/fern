@@ -43,17 +43,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ReqWithHeaders = void 0;
+exports.ReqWithHeadersClient = void 0;
+const BaseClient_js_1 = require("../../../../BaseClient.js");
 const headers_js_1 = require("../../../../core/headers.js");
 const core = __importStar(require("../../../../core/index.js"));
 const errors = __importStar(require("../../../../errors/index.js"));
-class ReqWithHeaders {
-    constructor(_options) {
-        this._options = _options;
+class ReqWithHeadersClient {
+    constructor(options) {
+        this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
     }
     /**
      * @param {SeedExhaustive.ReqWithHeaders} request
-     * @param {ReqWithHeaders.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ReqWithHeadersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.reqWithHeaders.getWithCustomHeader({
@@ -125,4 +126,4 @@ class ReqWithHeaders {
         });
     }
 }
-exports.ReqWithHeaders = ReqWithHeaders;
+exports.ReqWithHeadersClient = ReqWithHeadersClient;

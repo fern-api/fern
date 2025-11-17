@@ -4,7 +4,7 @@ import * as SeedErrorProperty from "../../src/api/index";
 import { SeedErrorPropertyClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("PropertyBasedError", () => {
+describe("PropertyBasedErrorClient", () => {
     test("ThrowError (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorPropertyClient({ environment: server.baseUrl });

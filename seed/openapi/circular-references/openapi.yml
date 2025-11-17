@@ -129,4 +129,21 @@ components:
         - type: string
         - type: integer
         - type: boolean
+    JsonLikeWithNullAndUndefined:
+      title: JsonLikeWithNullAndUndefined
+      oneOf:
+        - type: array
+          items:
+            $ref: '#/components/schemas/JsonLikeWithNullAndUndefined'
+            nullable: true
+        - type: object
+          additionalProperties:
+            $ref: '#/components/schemas/JsonLikeWithNullAndUndefined'
+            nullable: true
+        - type: string
+          nullable: true
+        - type: integer
+          nullable: true
+        - type: boolean
+          nullable: true
   securitySchemes: {}

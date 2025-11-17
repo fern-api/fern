@@ -509,3 +509,88 @@ client.User.GetUserMetadata(
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.User.GetUserSpecifics(TenantId, UserId, Version, Thought) -> *path.User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Test endpoint with path parameters listed in different order than found in path
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.User.GetUserSpecifics(
+        context.TODO(),
+        "tenant_id",
+        "user_id",
+        1,
+        "thought",
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenantId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**thought:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>

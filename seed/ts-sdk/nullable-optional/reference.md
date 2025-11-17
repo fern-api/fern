@@ -51,7 +51,7 @@ await client.nullableOptional.getUser("userId");
 <dl>
 <dd>
 
-**requestOptions:** `NullableOptional.RequestOptions` 
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -127,7 +127,7 @@ await client.nullableOptional.createUser({
 <dl>
 <dd>
 
-**requestOptions:** `NullableOptional.RequestOptions` 
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -211,7 +211,7 @@ await client.nullableOptional.updateUser("userId", {
 <dl>
 <dd>
 
-**requestOptions:** `NullableOptional.RequestOptions` 
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -279,7 +279,7 @@ await client.nullableOptional.listUsers({
 <dl>
 <dd>
 
-**requestOptions:** `NullableOptional.RequestOptions` 
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -347,7 +347,7 @@ await client.nullableOptional.searchUsers({
 <dl>
 <dd>
 
-**requestOptions:** `NullableOptional.RequestOptions` 
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -501,7 +501,7 @@ await client.nullableOptional.createComplexProfile({
 <dl>
 <dd>
 
-**requestOptions:** `NullableOptional.RequestOptions` 
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -564,7 +564,7 @@ await client.nullableOptional.getComplexProfile("profileId");
 <dl>
 <dd>
 
-**requestOptions:** `NullableOptional.RequestOptions` 
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -663,7 +663,7 @@ await client.nullableOptional.updateComplexProfile("profileId", {
 <dl>
 <dd>
 
-**requestOptions:** `NullableOptional.RequestOptions` 
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -776,7 +776,7 @@ await client.nullableOptional.testDeserialization({
 <dl>
 <dd>
 
-**requestOptions:** `NullableOptional.RequestOptions` 
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -843,7 +843,7 @@ await client.nullableOptional.filterByRole({
 <dl>
 <dd>
 
-**requestOptions:** `NullableOptional.RequestOptions` 
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -906,7 +906,7 @@ await client.nullableOptional.getNotificationSettings("userId");
 <dl>
 <dd>
 
-**requestOptions:** `NullableOptional.RequestOptions` 
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -981,7 +981,7 @@ await client.nullableOptional.updateTags("userId", {
 <dl>
 <dd>
 
-**requestOptions:** `NullableOptional.RequestOptions` 
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1050,7 +1050,7 @@ await client.nullableOptional.getSearchResults({
 <dl>
 <dd>
 
-**requestOptions:** `NullableOptional.RequestOptions` 
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>

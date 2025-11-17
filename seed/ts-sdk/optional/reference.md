@@ -41,7 +41,7 @@ await client.optional.sendOptionalBody({
 <dl>
 <dd>
 
-**requestOptions:** `Optional.RequestOptions` 
+**requestOptions:** `OptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -92,7 +92,7 @@ await client.optional.sendOptionalTypedBody({
 <dl>
 <dd>
 
-**requestOptions:** `Optional.RequestOptions` 
+**requestOptions:** `OptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -174,7 +174,7 @@ await client.optional.sendOptionalNullableWithAllOptionalProperties("actionId", 
 <dl>
 <dd>
 
-**requestOptions:** `Optional.RequestOptions` 
+**requestOptions:** `OptionalClient.RequestOptions` 
     
 </dd>
 </dl>

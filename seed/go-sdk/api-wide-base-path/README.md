@@ -4,6 +4,20 @@
 
 The Seed Go library provides convenient access to the Seed APIs from Go.
 
+## Table of Contents
+
+- [Reference](#reference)
+- [Usage](#usage)
+- [Environments](#environments)
+- [Errors](#errors)
+- [Request Options](#request-options)
+- [Advanced](#advanced)
+  - [Response Headers](#response-headers)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Explicit Null](#explicit-null)
+- [Contributing](#contributing)
+
 ## Reference
 
 A full reference for this library is available [here](./reference.md).
@@ -26,8 +40,8 @@ func do() {
         context.TODO(),
         "pathParam",
         "serviceParam",
-        "resourceParam",
         1,
+        "resourceParam",
     )
 }
 ```

@@ -8,16 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { normalizeClientOptions } from "../../../../../../BaseClient.mjs";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.mjs";
 import * as core from "../../../../../../core/index.mjs";
 import * as errors from "../../../../../../errors/index.mjs";
-export class HttpMethods {
-    constructor(_options) {
-        this._options = _options;
+export class HttpMethodsClient {
+    constructor(options) {
+        this._options = normalizeClientOptions(options);
     }
     /**
      * @param {string} id
-     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.httpMethods.testGet("id")
@@ -69,7 +70,7 @@ export class HttpMethods {
     }
     /**
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
-     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.httpMethods.testPost({
@@ -130,7 +131,7 @@ export class HttpMethods {
     /**
      * @param {string} id
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
-     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.httpMethods.testPut("id", {
@@ -191,7 +192,7 @@ export class HttpMethods {
     /**
      * @param {string} id
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
-     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.httpMethods.testPatch("id", {
@@ -265,7 +266,7 @@ export class HttpMethods {
     }
     /**
      * @param {string} id
-     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.httpMethods.testDelete("id")

@@ -17,6 +17,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Union\Types\KeyType;
 use Seed\Union\Types\NamedMetadata;
 use Seed\Union\Types\Request;
+use Seed\Union\Requests\PaymentRequest;
 
 class UnionClient
 {
@@ -378,6 +379,60 @@ class UnionClient
                     path: "/nested",
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeUnion($request, new Union('string', ['string'], 'integer', 'bool')),
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                return JsonDecoder::decodeString($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param PaymentRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return string
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function testCamelCaseProperties(PaymentRequest $request, ?array $options = null): string
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/camel-case",
+                    method: HttpMethod::POST,
+                    body: $request,
                 ),
                 $options,
             );

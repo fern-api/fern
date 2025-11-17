@@ -3,7 +3,7 @@
 import { SeedNoRetriesClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Retries", () => {
+describe("RetriesClient", () => {
     test("getUsers", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedNoRetriesClient({ environment: server.baseUrl });

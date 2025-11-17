@@ -3,7 +3,7 @@
 import { SeedPaginationClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Users", () => {
+describe("UsersClient", () => {
     test("listWithCursorPagination", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
