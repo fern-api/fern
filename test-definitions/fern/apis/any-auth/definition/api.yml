@@ -24,6 +24,9 @@ auth-schemes:
     client-secret-env: MY_CLIENT_SECRET
     get-token:
       endpoint: auth.getToken
+      request-properties:
+        client-id: $request.client_id
+        client-secret: $request.client_secret
       response-properties:
         access-token: $response.access_token
         expires-in: $response.expires_in
