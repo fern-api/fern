@@ -43,7 +43,7 @@ await client.propertyBasedError.throwError();
 <dl>
 <dd>
 
-**requestOptions:** `PropertyBasedError.RequestOptions` 
+**requestOptions:** `PropertyBasedErrorClient.RequestOptions` 
     
 </dd>
 </dl>

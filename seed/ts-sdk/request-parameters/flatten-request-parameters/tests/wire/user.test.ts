@@ -3,7 +3,7 @@
 import { SeedRequestParametersClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("User", () => {
+describe("UserClient", () => {
     test("createUsername", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedRequestParametersClient({ environment: server.baseUrl });

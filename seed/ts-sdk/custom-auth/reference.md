@@ -43,7 +43,7 @@ await client.customAuth.getWithCustomAuth();
 <dl>
 <dd>
 
-**requestOptions:** `CustomAuth.RequestOptions` 
+**requestOptions:** `CustomAuthClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -108,7 +108,7 @@ await client.customAuth.postWithCustomAuth({
 <dl>
 <dd>
 
-**requestOptions:** `CustomAuth.RequestOptions` 
+**requestOptions:** `CustomAuthClient.RequestOptions` 
     
 </dd>
 </dl>

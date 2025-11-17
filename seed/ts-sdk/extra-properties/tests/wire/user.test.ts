@@ -3,7 +3,7 @@
 import { SeedExtraPropertiesClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("User", () => {
+describe("UserClient", () => {
     test("createUser", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExtraPropertiesClient({ environment: server.baseUrl });
