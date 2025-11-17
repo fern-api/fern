@@ -87,12 +87,10 @@ func (p *Pager[
 
 	if p.mode == PagerModeOffset {
 		return &core.Page[Cursor, Results]{
-			Results: pageResponse.Results,
+			Results:     pageResponse.Results,
 			RawResponse: *pageResponse,
-			HTTPRawResponse: core.HTTPPageResponse{
-				StatusCode: httpResponse.StatusCode,
-				Header:     httpResponse.Header,
-			},
+			StatusCode:  httpResponse.StatusCode,
+			Header:      httpResponse.Header,
 			NextPageFunc: func(ctx context.Context) (*core.Page[Cursor, Results], error) {
 				page, err := p.GetPage(ctx, pageResponse.Next)
 				if err != nil {
@@ -107,12 +105,10 @@ func (p *Pager[
 	}
 
 	return &core.Page[Cursor, Results]{
-		Results: pageResponse.Results,
+		Results:     pageResponse.Results,
 		RawResponse: *pageResponse,
-		HTTPRawResponse: core.HTTPPageResponse{
-			StatusCode: httpResponse.StatusCode,
-			Header:     httpResponse.Header,
-		},
+		StatusCode:  httpResponse.StatusCode,
+		Header:      httpResponse.Header,
 		NextPageFunc: func(ctx context.Context) (*core.Page[Cursor, Results], error) {
 			if pageResponse.Done {
 				return nil, core.ErrNoPages
