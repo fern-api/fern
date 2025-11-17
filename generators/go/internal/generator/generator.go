@@ -632,6 +632,20 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				// Merge this client's endpoints with the root generated client.
 				generatedRootClient.Endpoints = append(generatedRootClient.Endpoints, generatedClient.Endpoints...)
 
+				// Generate the raw client for the root service
+				rawFile, err := g.generateRawRootService(
+					ir,
+					ir.Services[*ir.RootPackage.Service],
+					ir.RootPackage.FernFilepath,
+					rootPackageName,
+				)
+				if err != nil {
+					return nil, err
+				}
+				if rawFile != nil {
+					files = append(files, rawFile)
+				}
+
 			} else {
 				_, generatedClient, err := g.generateRootServiceWithoutEndpoints(
 					ir,
@@ -695,6 +709,19 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 
 			// Merge this client's endpoints with the root generated client.
 			generatedRootClient.Endpoints = append(generatedRootClient.Endpoints, generatedClient.Endpoints...)
+
+			// Generate the raw client for this service
+			rawFile, err := g.generateRawService(
+				ir,
+				ir.Services[*irSubpackage.Service],
+				subpackageToGenerate.OriginalFernFilepath,
+			)
+			if err != nil {
+				return nil, err
+			}
+			if rawFile != nil {
+				files = append(files, rawFile)
+			}
 		}
 	}
 	// Write the snippets, if any.
@@ -828,6 +855,95 @@ func (g *Generator) generateService(
 		return nil, nil, err
 	}
 	return file, generatedClient, nil
+}
+
+func (g *Generator) generateRawRootService(
+	ir *fernir.IntermediateRepresentation,
+	irService *fernir.HttpService,
+	originalFernFilepath *common.FernFilepath,
+	rootPackageName string,
+) (*File, error) {
+	fileInfo := fileInfoForRawRootService(irService.Name.FernFilepath, rootPackageName)
+	writer := newFileWriter(
+		fileInfo.filename,
+		fileInfo.packageName,
+		g.config.FullImportPath,
+		g.config.Whitelabel,
+		g.config.AlwaysSendRequiredProperties,
+		g.config.InlinePathParameters,
+		g.config.InlineFileProperties,
+		g.config.UseReaderForBytesRequest,
+		g.config.GettersPassByValue,
+		g.config.ExportAllRequestsAtRoot,
+		g.config.UnionVersion,
+		ir.Types,
+		ir.Errors,
+		g.coordinator,
+	)
+	err := writer.WriteRawClient(
+		irService.Endpoints,
+		ir.Headers,
+		irService.Headers,
+		ir.IdempotencyHeaders,
+		ir.Environments,
+		ir.ErrorDiscriminationStrategy,
+		originalFernFilepath,
+		g.config.InlinePathParameters,
+		g.config.InlineFileProperties,
+		g.config.ClientName,
+	)
+	if err != nil {
+		return nil, err
+	}
+	file, err := writer.File()
+	if err != nil {
+		return nil, err
+	}
+	return file, nil
+}
+
+func (g *Generator) generateRawService(
+	ir *fernir.IntermediateRepresentation,
+	irService *fernir.HttpService,
+	originalFernFilepath *common.FernFilepath,
+) (*File, error) {
+	fileInfo := fileInfoForRawService(irService.Name.FernFilepath)
+	writer := newFileWriter(
+		fileInfo.filename,
+		fileInfo.packageName,
+		g.config.FullImportPath,
+		g.config.Whitelabel,
+		g.config.AlwaysSendRequiredProperties,
+		g.config.InlinePathParameters,
+		g.config.InlineFileProperties,
+		g.config.UseReaderForBytesRequest,
+		g.config.GettersPassByValue,
+		g.config.ExportAllRequestsAtRoot,
+		g.config.UnionVersion,
+		ir.Types,
+		ir.Errors,
+		g.coordinator,
+	)
+	err := writer.WriteRawClient(
+		irService.Endpoints,
+		ir.Headers,
+		irService.Headers,
+		ir.IdempotencyHeaders,
+		ir.Environments,
+		ir.ErrorDiscriminationStrategy,
+		originalFernFilepath,
+		g.config.InlinePathParameters,
+		g.config.InlineFileProperties,
+		"",
+	)
+	if err != nil {
+		return nil, err
+	}
+	file, err := writer.File()
+	if err != nil {
+		return nil, err
+	}
+	return file, nil
 }
 
 // generateServiceWithoutEndpoints is behaviorally similar to g.generateService, but
@@ -1459,6 +1575,21 @@ func fileInfoForService(fernFilepath *common.FernFilepath) *fileInfo {
 	packagePath := packagePathForClient(fernFilepath)
 	return &fileInfo{
 		filename:    filepath.Join(append(packagePath, "client.go")...),
+		packageName: packagePath[len(packagePath)-1],
+	}
+}
+
+func fileInfoForRawRootService(fernFilepath *common.FernFilepath, rootPackageName string) *fileInfo {
+	return &fileInfo{
+		filename:    "raw_client.go",
+		packageName: rootPackageName,
+	}
+}
+
+func fileInfoForRawService(fernFilepath *common.FernFilepath) *fileInfo {
+	packagePath := packagePathForClient(fernFilepath)
+	return &fileInfo{
+		filename:    filepath.Join(append(packagePath, "raw_client.go")...),
 		packageName: packagePath[len(packagePath)-1],
 	}
 }

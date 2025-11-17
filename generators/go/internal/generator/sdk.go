@@ -1490,6 +1490,407 @@ func (f *fileWriter) WriteClient(
 	)
 }
 
+// WriteRawClient writes a raw client for interacting with the given service.
+func (f *fileWriter) WriteRawClient(
+	irEndpoints []*ir.HttpEndpoint,
+	headers []*ir.HttpHeader,
+	serviceHeaders []*ir.HttpHeader,
+	idempotencyHeaders []*ir.HttpHeader,
+	environmentsConfig *common.EnvironmentsConfig,
+	errorDiscriminationStrategy *ir.ErrorDiscriminationStrategy,
+	fernFilepath *common.FernFilepath,
+	inlinePathParameters bool,
+	inlineFileProperties bool,
+	clientNameOverride string,
+) error {
+	var errorDiscriminationByPropertyStrategy *ir.ErrorDiscriminationByPropertyStrategy
+	if errorDiscriminationStrategy != nil && errorDiscriminationStrategy.Property != nil {
+		errorDiscriminationByPropertyStrategy = errorDiscriminationStrategy.Property
+	}
+
+	// Reformat the endpoint data into a structure that's suitable for code generation.
+	var endpoints []*endpoint
+	for _, irEndpoint := range irEndpoints {
+		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, errorDiscriminationStrategy, serviceHeaders, idempotencyHeaders, inlinePathParameters, inlineFileProperties)
+		if err != nil {
+			return err
+		}
+		if endpoint.StreamingInfo != nil || endpoint.PaginationInfo != nil {
+			continue
+		}
+		endpoints = append(endpoints, endpoint)
+	}
+
+	if len(endpoints) == 0 {
+		return nil
+	}
+
+	var (
+		rawClientName            = "RawClient"
+		rawClientConstructorName = "NewRawClient"
+	)
+	if clientNameOverride != "" {
+		rawClientName = "Raw" + clientNameOverride
+		rawClientConstructorName = "New" + rawClientName
+	}
+
+	receiver := typeNameToReceiver(rawClientName)
+
+	// Generate the raw client implementation.
+	f.P("type ", rawClientName, " struct {")
+	f.P("baseURL string")
+	f.P("caller *internal.Caller")
+	f.P("options *core.RequestOptions")
+	f.P("}")
+	f.P()
+
+	// Generate the raw client constructor.
+	f.P("func ", rawClientConstructorName, "(options *core.RequestOptions) *", rawClientName, " {")
+	f.P("return &", rawClientName, "{")
+	f.P("options: options,")
+	f.P("baseURL: options.BaseURL,")
+	f.P("caller: internal.NewCaller(")
+	f.P("&internal.CallerParams{")
+	f.P("Client: options.HTTPClient,")
+	f.P("MaxAttempts: options.MaxAttempts,")
+	f.P("},")
+	f.P("),")
+	f.P("}")
+	f.P("}")
+	f.P()
+
+	// Implement this service's raw methods.
+	for _, endpoint := range endpoints {
+		f.WriteDocs(endpoint.Docs)
+		f.P("func (", receiver, " *", rawClientName, ") ", endpoint.Name.PascalCase.UnsafeName, "(")
+		for _, signatureParameter := range endpoint.SignatureParameters {
+			f.WriteDocs(signatureParameter.docs)
+			f.P(signatureParameter.parameter, ",")
+		}
+		
+		// Determine the response type for the raw response wrapper
+		responseType := "any"
+		if endpoint.ResponseType != "" {
+			responseType = endpoint.ResponseType
+		}
+		
+		f.P(") (*core.Response[", responseType, "], error) {")
+		f.P("options := ", endpoint.OptionConstructor)
+		f.P("baseURL := internal.ResolveBaseURL(")
+		f.P("options.BaseURL,")
+		f.P(receiver, ".baseURL,")
+		f.P(fmt.Sprintf("%q,", endpoint.BaseURL))
+		f.P(")")
+		baseURLVariable := "baseURL"
+		if len(endpoint.PathSuffix) > 0 {
+			baseURLVariable = `baseURL + ` + fmt.Sprintf(`"/%s"`, endpoint.PathSuffix)
+		}
+		if len(endpoint.PathParameterNames) > 0 {
+			f.P("endpointURL := internal.EncodeURL(")
+			f.P(baseURLVariable, ", ")
+			for _, pathParameterName := range endpoint.PathParameterNames {
+				f.P(pathParameterName, ",")
+			}
+			f.P(")")
+		} else {
+			f.P(fmt.Sprintf("endpointURL := %s", baseURLVariable))
+		}
+		if len(endpoint.QueryParameters) > 0 {
+			f.P("queryParams, err := internal.QueryValues(", endpoint.RequestParameterName, ")")
+			f.P("if err != nil {")
+			f.P("return nil, err")
+			f.P("}")
+			for _, queryParameter := range endpoint.QueryParameters {
+				if isLiteral := (queryParameter.ValueType.Container != nil && queryParameter.ValueType.Container.Literal != nil); isLiteral {
+					f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, literalToValue(queryParameter.ValueType.Container.Literal), "))")
+				}
+			}
+			f.P("if len(queryParams) > 0 {")
+			f.P(`endpointURL += "?" + queryParams.Encode()`)
+			f.P("}")
+		}
+
+		headersParameter := "headers"
+		f.P(headersParameter, " := internal.MergeHeaders(")
+		f.P(receiver, ".options.ToHeader(),")
+		f.P("options.ToHeader(),")
+		f.P(")")
+		if len(endpoint.Headers) > 0 {
+			// Add endpoint-specific headers from the request, if any.
+			for _, header := range endpoint.Headers {
+				valueTypeFormat := formatForValueType(header.ValueType, f.types)
+				requestField := valueTypeFormat.Prefix + endpoint.RequestParameterName + "." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
+				if valueTypeFormat.IsOptional {
+					f.P("if ", endpoint.RequestParameterName, ".", header.Name.Name.PascalCase.UnsafeName, "!= nil {")
+					f.P(`headers.Add("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
+					f.P("}")
+				} else if isLiteral := (header.ValueType.Container != nil && header.ValueType.Container.Literal != nil); isLiteral {
+					f.P(`headers.Add("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, literalToValue(header.ValueType.Container.Literal), "))")
+				} else {
+					f.P(`headers.Add("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
+				}
+			}
+		}
+		if endpoint.Accept != "" {
+			f.P(fmt.Sprintf(`%s.Set("Accept", %q)`, headersParameter, endpoint.Accept))
+		}
+		if endpoint.ContentType != "" {
+			f.P(fmt.Sprintf(`%s.Set("Content-Type", %q)`, headersParameter, endpoint.ContentType))
+		}
+
+		// Include the error decoder, if any.
+		if len(endpoint.Errors) > 0 {
+			if errorDiscriminationByPropertyStrategy == nil {
+				f.P("errorCodes := ErrorCodes{")
+				for _, responseError := range endpoint.Errors {
+					var errorType string
+					errorDeclaration := f.errors[responseError.Error.ErrorId]
+					errorImportPath := fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
+					errorType = f.scope.AddImport(errorImportPath) + "." + errorDeclaration.Name.Name.PascalCase.UnsafeName
+					f.P(fmt.Sprintf("%d: func(apiError *core.APIError) error {", errorDeclaration.StatusCode))
+					f.P("return &", errorType, "{")
+					f.P("APIError: apiError,")
+					f.P("}")
+					f.P("},")
+				}
+				f.P("}")
+			} else {
+				var (
+					switchValue              = "statusCode"
+					discriminantContentField = ""
+					discriminant             = errorDiscriminationByPropertyStrategy.Discriminant
+					content                  = errorDiscriminationByPropertyStrategy.ContentProperty
+				)
+				switchValue = fmt.Sprintf("discriminant.%s", discriminant.Name.PascalCase.UnsafeName)
+				discriminantContentField = fmt.Sprintf("discriminant.%s", content.Name.PascalCase.UnsafeName)
+				f.P("errorDecoder := func(statusCode int, header http.Header,body io.Reader) error {")
+				f.P("raw, err := io.ReadAll(body)")
+				f.P("if err != nil {")
+				f.P("return err")
+				f.P("}")
+				f.P("apiError := core.NewAPIError(statusCode, header, errors.New(string(raw)))")
+				f.P("decoder := json.NewDecoder(bytes.NewReader(raw))")
+				f.P("var discriminant struct {")
+				f.P(discriminant.Name.PascalCase.UnsafeName, " string `json:\"", discriminant.WireValue, "\"`")
+				f.P(content.Name.PascalCase.UnsafeName, " json.RawMessage `json:\"", content.WireValue, "\"`")
+				f.P("}")
+				f.P("if err := decoder.Decode(&discriminant); err != nil {")
+				f.P("return apiError")
+				f.P("}")
+				f.P("switch ", switchValue, " {")
+				for _, responseError := range endpoint.Errors {
+					var errorType string
+					errorDeclaration := f.errors[responseError.Error.ErrorId]
+					errorImportPath := fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
+					errorType = f.scope.AddImport(errorImportPath) + "." + errorDeclaration.Name.Name.PascalCase.UnsafeName
+					if errorDiscriminationByPropertyStrategy != nil {
+						f.P(`case "`, errorDeclaration.DiscriminantValue.WireValue, `":`)
+					} else {
+						f.P("case ", errorDeclaration.StatusCode, ":")
+					}
+					f.P("value := new(", errorType, ")")
+					f.P("value.APIError = apiError")
+					if discriminantContentField != "" {
+						f.P("if err := json.Unmarshal(", discriminantContentField, ", value); err != nil {")
+					} else {
+						f.P("if err := decoder.Decode(value); err != nil {")
+					}
+					f.P("return apiError")
+					f.P("}")
+					f.P("return value")
+				}
+				// Close the switch statement.
+				f.P("}")
+				f.P("return apiError")
+				f.P("}")
+			}
+		}
+
+		if endpoint.RequestIsBytes {
+			if f.useReaderForBytesRequest {
+				// The io.Reader is already specified by the caller, so we don't need to
+				// do anything.
+			} else if endpoint.RequestIsOptional {
+				f.P("var requestBuffer io.Reader")
+				f.P("if ", endpoint.RequestBytesParameterName, " != nil {")
+				f.P("requestBuffer = bytes.NewBuffer(", endpoint.RequestBytesParameterName, ")")
+				f.P("}")
+			} else {
+				f.P("requestBuffer := bytes.NewBuffer(", endpoint.RequestBytesParameterName, ")")
+			}
+		}
+
+		if len(endpoint.FileProperties) > 0 || len(endpoint.FileBodyProperties) > 0 {
+			f.P("writer := internal.NewMultipartWriter()")
+			for _, fileProperty := range endpoint.FileProperties {
+				filePropertyInfo, err := filePropertyToInfo(fileProperty)
+				if err != nil {
+					return err
+				}
+				fileVariable := getFileVariableName(endpoint, filePropertyInfo, inlineFileProperties)
+				if filePropertyInfo.IsArray {
+					f.P("for _, f := range ", fileVariable, " {")
+					if filePropertyInfo.ContentType != "" {
+						f.P("if err := writer.WriteFile(\"", filePropertyInfo.Key.WireValue, "\", f, internal.WithDefaultContentType(\"", filePropertyInfo.ContentType, "\")); err != nil {")
+						f.P("return nil, err")
+						f.P("}")
+					} else {
+						f.P("if err := writer.WriteFile(\"", filePropertyInfo.Key.WireValue, "\", f); err != nil {")
+						f.P("return nil, err")
+						f.P("}")
+					}
+					f.P("}")
+				} else {
+					if filePropertyInfo.IsOptional {
+						f.P("if ", fileVariable, " != nil {")
+					}
+					if filePropertyInfo.ContentType != "" {
+						f.P("if err := writer.WriteFile(\"", filePropertyInfo.Key.WireValue, "\", ", fileVariable, ", internal.WithDefaultContentType(\"", filePropertyInfo.ContentType, "\")); err != nil {")
+						f.P("return nil, err")
+						f.P("}")
+					} else {
+						f.P("if err := writer.WriteFile(\"", filePropertyInfo.Key.WireValue, "\", ", fileVariable, "); err != nil {")
+						f.P("return nil, err")
+						f.P("}")
+					}
+					if filePropertyInfo.IsOptional {
+						f.P("}")
+					}
+				}
+			}
+
+			for _, fileBodyProperty := range endpoint.FileBodyProperties {
+				if isLiteral := (fileBodyProperty.ValueType.Container != nil && fileBodyProperty.ValueType.Container.Literal != nil); isLiteral {
+					f.P(`if err := writer.WriteField("`, fileBodyProperty.Name.WireValue, `", fmt.Sprintf("%v", `, literalToValue(fileBodyProperty.ValueType.Container.Literal), ")); err != nil {")
+					f.P("return nil, err")
+					f.P("}")
+					continue
+				}
+				valueTypeFormat := formatForValueType(fileBodyProperty.ValueType, f.types)
+				requestField := valueTypeFormat.Prefix + endpoint.RequestParameterName + "." + fileBodyProperty.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
+
+				// Encapsulate the multipart form WriteField in a closure so that we can easily
+				// wrap it with an optional nil check below.
+				writeField := func() {
+					field := requestField
+					if valueTypeFormat.IsIterable {
+						field = "part"
+					}
+					if valueTypeFormat.IsPrimitive {
+						f.P(`if err := writer.WriteField("`, fileBodyProperty.Name.WireValue, `", fmt.Sprintf("%v", `, field, ")); err != nil {")
+					} else if fileBodyProperty.ContentType != nil {
+						f.P(`if err := writer.WriteJSON("`, fileBodyProperty.Name.WireValue, `", `, field, `, internal.WithDefaultContentType("`, *fileBodyProperty.ContentType, `")); err != nil {`)
+					} else {
+						f.P(`if err := writer.WriteJSON("`, fileBodyProperty.Name.WireValue, `", `, field, "); err != nil {")
+					}
+					f.P("return nil, err")
+					f.P("}")
+				}
+
+				if valueTypeFormat.IsOptional {
+					f.P("if ", endpoint.RequestParameterName, ".", fileBodyProperty.Name.Name.PascalCase.UnsafeName, "!= nil {")
+				}
+				if valueTypeFormat.IsIterable {
+					f.P("for _, part := range ", endpoint.RequestParameterName, ".", fileBodyProperty.Name.Name.PascalCase.UnsafeName, " {")
+				}
+				writeField()
+				if valueTypeFormat.IsIterable {
+					f.P("}")
+				}
+				if valueTypeFormat.IsOptional {
+					f.P("}")
+				}
+			}
+			f.P("if err := writer.Close(); err != nil {")
+			f.P("return nil, err")
+			f.P("}")
+			f.P(headersParameter, `.Set("Content-Type", writer.ContentType())`)
+		}
+
+		if endpoint.Method == "http.MethodHead" {
+			// HEAD requests don't have a response body, so we can simply return the raw
+			// response headers.
+			f.P("response, err := ", receiver, ".caller.Call(")
+			f.P("ctx,")
+			f.P("&internal.CallParams{")
+			f.P("URL: endpointURL, ")
+			f.P("Method:", endpoint.Method, ",")
+			f.P("Headers:", headersParameter, ",")
+			f.P("MaxAttempts: options.MaxAttempts,")
+			f.P("BodyProperties: options.BodyProperties,")
+			f.P("QueryParameters: options.QueryParameters,")
+			f.P("Client: options.HTTPClient,")
+			if endpoint.RequestValueName != "" {
+				f.P("Request: ", endpoint.RequestValueName, ",")
+			}
+			if endpoint.ErrorDecoderParameterName != "" {
+				f.P("ErrorDecoder:", endpoint.ErrorDecoderParameterName, ",")
+			}
+			f.P("},")
+			f.P(")")
+			f.P("if err != nil {")
+			f.P("return nil, err")
+			f.P("}")
+			f.P("return &core.Response[", responseType, "]{")
+			f.P("StatusCode: response.StatusCode,")
+			f.P("Header: response.Header,")
+			f.P("}, nil")
+			f.P("}")
+			f.P()
+
+			continue
+		}
+
+		f.P()
+
+		// Prepare a response variable.
+		if endpoint.ResponseType != "" {
+			f.P(fmt.Sprintf(endpoint.ResponseInitializerFormat, endpoint.ResponseType))
+		}
+
+		// Issue the request and return the raw response.
+		f.P("raw, err := ", receiver, ".caller.Call(")
+		f.P("ctx,")
+		f.P("&internal.CallParams{")
+		f.P("URL: endpointURL, ")
+		f.P("Method:", endpoint.Method, ",")
+		f.P("Headers:", headersParameter, ",")
+		f.P("MaxAttempts: options.MaxAttempts,")
+		f.P("BodyProperties: options.BodyProperties,")
+		f.P("QueryParameters: options.QueryParameters,")
+		f.P("Client: options.HTTPClient,")
+		if endpoint.RequestValueName != "" {
+			f.P("Request: ", endpoint.RequestValueName, ",")
+		}
+		if endpoint.ResponseParameterName != "" {
+			f.P("Response: ", endpoint.ResponseParameterName, ",")
+		}
+		if endpoint.ResponseIsOptionalParameter {
+			f.P("ResponseIsOptional: true,")
+		}
+		if endpoint.ErrorDecoderParameterName != "" {
+			f.P("ErrorDecoder:", endpoint.ErrorDecoderParameterName, ",")
+		}
+		f.P("},")
+		f.P(")")
+		f.P("if err != nil {")
+		f.P("return nil, err")
+		f.P("}")
+		f.P("return &core.Response[", responseType, "]{")
+		f.P("StatusCode: raw.StatusCode,")
+		f.P("Header: raw.Header,")
+		if endpoint.ResponseType != "" {
+			f.P("Body: ", endpoint.ResponseParameterName, ",")
+		} else {
+			f.P("Body: nil,")
+		}
+		f.P("}, nil")
+		f.P("}")
+		f.P()
+	}
+	return nil
+}
+
 func getFileVariableName(
 	endpoint *endpoint,
 	filePropertyInfo *filePropertyInfo,
