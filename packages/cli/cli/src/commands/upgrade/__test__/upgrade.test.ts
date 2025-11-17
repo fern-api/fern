@@ -386,6 +386,42 @@ describe("upgrade", () => {
             expect(rerunFernCliAtVersion).not.toHaveBeenCalled();
             expect(runMigrations).not.toHaveBeenCalled();
         });
+
+        it("should run migrations when no upgrade available but config version differs from CLI version", async () => {
+            mockCliContext.environment.packageVersion = "1.3.0-rc0";
+            mockCliContext.isUpgradeAvailable = vi.fn().mockResolvedValue({
+                cliUpgradeInfo: {
+                    latestVersion: "1.3.0-rc0",
+                    isUpgradeAvailable: false
+                }
+            });
+            vi.mocked(loadProjectConfig).mockResolvedValue({
+                version: "0.84.1", // Different from CLI version
+                rawConfig: { version: "0.84.1", organization: "test-org" },
+                _absolutePath: "/test/fern/fern.config.json" as AbsoluteFilePath,
+                organization: "test-org"
+            });
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: true,
+                targetVersion: undefined,
+                fromVersion: undefined
+            });
+
+            expect(mockLogger.info).toHaveBeenCalledWith(
+                "No newer version available, but config version (0.84.1) differs from CLI version (1.3.0-rc0)"
+            );
+            expect(runMigrations).toHaveBeenCalledWith({
+                fromVersion: "0.84.1",
+                toVersion: "1.3.0-rc0",
+                context: {}
+            });
+            expect(writeFile).toHaveBeenCalledWith(
+                "/test/fern/fern.config.json",
+                expect.stringContaining('"version": "1.3.0-rc0"')
+            );
+        });
     });
 
     describe("version validation", () => {

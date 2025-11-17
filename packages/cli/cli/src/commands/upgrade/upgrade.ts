@@ -288,11 +288,37 @@ export async function upgrade({
     let resolvedTargetVersion = targetVersion?.trim();
     if (!resolvedTargetVersion) {
         const fernUpgradeInfo = await cliContext.isUpgradeAvailable({ includePreReleases });
-        if (fernUpgradeInfo.cliUpgradeInfo == null || !fernUpgradeInfo.cliUpgradeInfo.isUpgradeAvailable) {
-            cliContext.logger.info("No upgrade available.");
-            return;
+        const cliUpgradeInfo = fernUpgradeInfo.cliUpgradeInfo;
+        const hasUpgradeAvailable = cliUpgradeInfo != null && cliUpgradeInfo.isUpgradeAvailable;
+
+        if (hasUpgradeAvailable) {
+            resolvedTargetVersion = cliUpgradeInfo.latestVersion;
+        } else {
+            // No newer version available - check if we should run migrations for current version
+            if (isLocalDev) {
+                cliContext.logger.info("No upgrade available.");
+                return;
+            }
+
+            const fernDirectory = await getFernDirectory();
+            if (fernDirectory == null) {
+                return cliContext.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
+            }
+            const projectConfig = await cliContext.runTask((context) =>
+                loadProjectConfig({ directory: fernDirectory, context })
+            );
+
+            // If config version differs from CLI version, run migrations to bring it up to date
+            if (projectConfig.version !== cliContext.environment.packageVersion) {
+                resolvedTargetVersion = cliContext.environment.packageVersion;
+                cliContext.logger.info(
+                    `No newer version available, but config version (${projectConfig.version}) differs from CLI version (${cliContext.environment.packageVersion})`
+                );
+            } else {
+                cliContext.logger.info("No upgrade available.");
+                return;
+            }
         }
-        resolvedTargetVersion = fernUpgradeInfo.cliUpgradeInfo.latestVersion;
     }
 
     // Early return if already at target version
