@@ -1,115 +1,171 @@
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import chalk from "chalk";
+import { realpath } from "fs/promises";
+import { dirname } from "path";
 import { CliContext } from "../../cli-context/CliContext";
 
 export interface InstallationMethod {
     type: "npm" | "pnpm" | "yarn" | "bun" | "brew" | "unknown";
     command: string;
+    detectedPath?: string;
+    resolvedPath?: string;
+}
+
+async function getPackageManagerBinDir(logger: Logger, pm: "npm" | "pnpm" | "yarn" | "bun"): Promise<string | null> {
+    let command: string;
+    let args: string[];
+
+    switch (pm) {
+        case "npm":
+            command = "npm";
+            args = ["bin", "-g"];
+            break;
+        case "pnpm":
+            command = "pnpm";
+            args = ["bin", "-g"];
+            break;
+        case "yarn":
+            command = "yarn";
+            args = ["global", "bin"];
+            break;
+        case "bun":
+            command = "bun";
+            args = ["pm", "bin", "-g"];
+            break;
+    }
+
+    const { stdout, failed } = await loggingExeca(logger, command, args, {
+        doNotPipeOutput: true,
+        reject: false
+    });
+
+    if (failed || !stdout.trim()) {
+        return null;
+    }
+
+    return stdout.trim();
 }
 
 async function detectInstallationMethod(logger: Logger): Promise<InstallationMethod> {
-    const npmPath = process.env.npm_execpath;
-    const npmConfigUserAgent = process.env.npm_config_user_agent;
-
-    if (npmConfigUserAgent != null) {
-        if (npmConfigUserAgent.includes("pnpm")) {
-            return { type: "pnpm", command: "pnpm" };
-        }
-        if (npmConfigUserAgent.includes("yarn")) {
-            return { type: "yarn", command: "yarn" };
-        }
-        if (npmConfigUserAgent.includes("bun")) {
-            return { type: "bun", command: "bun" };
-        }
-        if (npmConfigUserAgent.includes("npm")) {
-            return { type: "npm", command: "npm" };
-        }
-    }
-
-    if (npmPath != null) {
-        if (npmPath.includes("pnpm")) {
-            return { type: "pnpm", command: "pnpm" };
-        }
-        if (npmPath.includes("yarn")) {
-            return { type: "yarn", command: "yarn" };
-        }
-        if (npmPath.includes("bun")) {
-            return { type: "bun", command: "bun" };
-        }
-    }
-
     const { stdout: whichFern, failed: whichFailed } = await loggingExeca(logger, "which", ["fern"], {
         doNotPipeOutput: true,
         reject: false
     });
 
-    if (!whichFailed && whichFern.trim()) {
-        const fernPath = whichFern.trim();
+    if (whichFailed || !whichFern.trim()) {
+        return { type: "unknown", command: "" };
+    }
 
-        if (fernPath.includes("homebrew") || fernPath.includes("Homebrew") || fernPath.includes("/opt/homebrew")) {
-            return { type: "brew", command: "brew" };
+    const fernPath = whichFern.trim();
+    logger.debug(`Found fern at: ${fernPath}`);
+
+    let resolvedPath: string;
+    try {
+        resolvedPath = await realpath(fernPath);
+        logger.debug(`Resolved to: ${resolvedPath}`);
+    } catch (error) {
+        logger.debug(`Failed to resolve symlink: ${error}`);
+        resolvedPath = fernPath;
+    }
+
+    if (
+        resolvedPath.includes("/Cellar/") ||
+        resolvedPath.includes("/Homebrew/") ||
+        resolvedPath.includes("/opt/homebrew/") ||
+        resolvedPath.includes("/usr/local/Cellar/")
+    ) {
+        const { failed: brewCheckFailed } = await loggingExeca(logger, "brew", ["list", "--versions", "fern-api"], {
+            doNotPipeOutput: true,
+            reject: false
+        });
+
+        if (!brewCheckFailed) {
+            return {
+                type: "brew",
+                command: "brew",
+                detectedPath: fernPath,
+                resolvedPath
+            };
         }
 
-        const { stdout: readlinkOutput, failed: readlinkFailed } = await loggingExeca(
-            logger,
-            "readlink",
-            ["-f", fernPath],
-            {
-                doNotPipeOutput: true,
-                reject: false
-            }
-        );
+        const { failed: brewCheckFernFailed } = await loggingExeca(logger, "brew", ["list", "--versions", "fern"], {
+            doNotPipeOutput: true,
+            reject: false
+        });
 
-        if (!readlinkFailed && readlinkOutput.trim()) {
-            const resolvedPath = readlinkOutput.trim();
-            if (
-                resolvedPath.includes("homebrew") ||
-                resolvedPath.includes("Homebrew") ||
-                resolvedPath.includes("/opt/homebrew")
-            ) {
-                return { type: "brew", command: "brew" };
+        if (!brewCheckFernFailed) {
+            return {
+                type: "brew",
+                command: "brew",
+                detectedPath: fernPath,
+                resolvedPath
+            };
+        }
+    }
+
+    const fernDir = dirname(resolvedPath);
+    logger.debug(`fern directory: ${fernDir}`);
+
+    const packageManagers: Array<"pnpm" | "yarn" | "bun" | "npm"> = ["pnpm", "yarn", "bun", "npm"];
+
+    for (const pm of packageManagers) {
+        const binDir = await getPackageManagerBinDir(logger, pm);
+        if (binDir != null) {
+            logger.debug(`${pm} bin dir: ${binDir}`);
+            if (fernDir === binDir || fernDir.startsWith(binDir + "/")) {
+                return {
+                    type: pm,
+                    command: pm,
+                    detectedPath: fernPath,
+                    resolvedPath
+                };
             }
         }
     }
 
-    const { failed: npmCheckFailed } = await loggingExeca(logger, "npm", ["list", "-g", "fern-api"], {
-        doNotPipeOutput: true,
-        reject: false
-    });
-
-    if (!npmCheckFailed) {
-        return { type: "npm", command: "npm" };
+    if (resolvedPath.includes(".pnpm") || resolvedPath.includes("pnpm-global") || resolvedPath.includes("/pnpm/")) {
+        return {
+            type: "pnpm",
+            command: "pnpm",
+            detectedPath: fernPath,
+            resolvedPath
+        };
     }
 
-    const { failed: pnpmCheckFailed } = await loggingExeca(logger, "pnpm", ["list", "-g", "fern-api"], {
-        doNotPipeOutput: true,
-        reject: false
-    });
-
-    if (!pnpmCheckFailed) {
-        return { type: "pnpm", command: "pnpm" };
+    if (resolvedPath.includes("/.yarn/") || resolvedPath.includes("/yarn/")) {
+        return {
+            type: "yarn",
+            command: "yarn",
+            detectedPath: fernPath,
+            resolvedPath
+        };
     }
 
-    const { failed: yarnCheckFailed } = await loggingExeca(logger, "yarn", ["global", "list"], {
-        doNotPipeOutput: true,
-        reject: false
-    });
-
-    if (!yarnCheckFailed) {
-        return { type: "yarn", command: "yarn" };
+    if (resolvedPath.includes("/.bun/") || resolvedPath.includes("/bun/")) {
+        return {
+            type: "bun",
+            command: "bun",
+            detectedPath: fernPath,
+            resolvedPath
+        };
     }
 
-    const { failed: bunCheckFailed } = await loggingExeca(logger, "bun", ["pm", "ls", "-g"], {
-        doNotPipeOutput: true,
-        reject: false
-    });
-
-    if (!bunCheckFailed) {
-        return { type: "bun", command: "bun" };
+    if (resolvedPath.includes("/lib/node_modules/")) {
+        return {
+            type: "npm",
+            command: "npm",
+            detectedPath: fernPath,
+            resolvedPath
+        };
     }
 
-    return { type: "unknown", command: "" };
+    return {
+        type: "unknown",
+        command: "",
+        detectedPath: fernPath,
+        resolvedPath
+    };
 }
 
 function getUpdateCommand(method: InstallationMethod, version: string | undefined): string[] {
@@ -146,12 +202,30 @@ export async function selfUpdate({
     const installationMethod = await detectInstallationMethod(cliContext.logger);
 
     if (installationMethod.type === "unknown") {
-        return cliContext.failAndThrow(
-            "Could not detect how Fern CLI was installed. Please manually update using your package manager (npm, pnpm, yarn, bun, or brew)."
-        );
+        let errorMessage = "Could not detect how Fern CLI was installed.";
+        if (installationMethod.detectedPath != null) {
+            errorMessage += `\nFound fern at: ${installationMethod.detectedPath}`;
+            if (
+                installationMethod.resolvedPath != null &&
+                installationMethod.resolvedPath !== installationMethod.detectedPath
+            ) {
+                errorMessage += `\nResolved to: ${installationMethod.resolvedPath}`;
+            }
+        }
+        errorMessage += "\nPlease manually update using your package manager (npm, pnpm, yarn, bun, or brew).";
+        return cliContext.failAndThrow(errorMessage);
     }
 
     cliContext.logger.info(`Detected installation method: ${chalk.cyan(installationMethod.type)}`);
+    if (installationMethod.detectedPath != null) {
+        cliContext.logger.debug(`Found fern at: ${installationMethod.detectedPath}`);
+    }
+    if (
+        installationMethod.resolvedPath != null &&
+        installationMethod.resolvedPath !== installationMethod.detectedPath
+    ) {
+        cliContext.logger.debug(`Resolved to: ${installationMethod.resolvedPath}`);
+    }
 
     const updateCommand = getUpdateCommand(installationMethod, version);
 
