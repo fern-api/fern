@@ -1,16 +1,25 @@
 import { FernToken } from "@fern-api/auth";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
+import { createFdrService } from "@fern-api/core";
+import { APIV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { TaskContext } from "@fern-api/task-context";
 import {
     AbstractAPIWorkspace,
+    FernWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
 } from "@fern-api/workspace-loader";
 
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
 import { downloadSnippetsForTask } from "./downloadSnippetsForTask";
+import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator";
+
+type DynamicIr = APIV1Write.DynamicIr;
+type DynamicIrUpload = APIV1Write.DynamicIrUpload;
 
 export interface RemoteGenerationForAPIWorkspaceResponse {
     snippetsProducedBy: generatorsYml.GeneratorInvocation[];
@@ -116,7 +125,220 @@ export async function runRemoteGenerationForAPIWorkspace({
         context.failAndThrow();
     }
 
+    await uploadDynamicIRsForSdkGeneration({
+        projectConfig,
+        organization,
+        workspace,
+        context,
+        generatorGroup,
+        version,
+        token
+    });
+
     return {
         snippetsProducedBy
     };
+}
+
+async function uploadDynamicIRsForSdkGeneration({
+    projectConfig,
+    organization,
+    workspace,
+    context,
+    generatorGroup,
+    version,
+    token
+}: {
+    projectConfig: fernConfigJson.ProjectConfig;
+    organization: string;
+    workspace: AbstractAPIWorkspace<unknown>;
+    context: TaskContext;
+    generatorGroup: generatorsYml.GeneratorGroup;
+    version: string | undefined;
+    token: FernToken;
+}): Promise<void> {
+    if (generatorGroup.generators.length === 0) {
+        return;
+    }
+
+    const settings = getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorGroup.generators[0]);
+    const fernWorkspace = await workspace.toFernWorkspace({ context }, settings);
+
+    const dynamicIRs = await generateDynamicIRsForSdkGenerators({
+        workspace: fernWorkspace,
+        organization,
+        context,
+        generatorGroup
+    });
+
+    if (!dynamicIRs || Object.keys(dynamicIRs).length === 0) {
+        return;
+    }
+
+    const snippetName = fernWorkspace.workspaceName ?? projectConfig.organization;
+    const sdkVersion = version ?? "latest";
+
+    const fdr = createFdrService({ token: token.value });
+
+    try {
+        const response = await fdr.api.v1.register.getDynamicIrUploadUrls({
+            orgId: organization,
+            snippetName,
+            version: sdkVersion,
+            languages: Object.keys(dynamicIRs)
+        });
+
+        await uploadDynamicIRs({
+            dynamicIRs,
+            dynamicIRUploadUrls: response.uploadUrls,
+            context,
+            snippetName
+        });
+    } catch (error) {
+        context.logger.warn(`Failed to upload dynamic IRs for SDK generation: ${error}`);
+    }
+}
+
+async function generateDynamicIRsForSdkGenerators({
+    workspace,
+    organization,
+    context,
+    generatorGroup
+}: {
+    workspace: FernWorkspace;
+    organization: string;
+    context: TaskContext;
+    generatorGroup: generatorsYml.GeneratorGroup;
+}): Promise<Record<string, DynamicIr> | undefined> {
+    const languageSpecificIRs: Record<string, DynamicIr> = {};
+
+    for (const generatorInvocation of generatorGroup.generators) {
+        if (!generatorInvocation.language) {
+            continue;
+        }
+
+        const dynamicGeneratorConfig = getDynamicGeneratorConfig({
+            apiName: workspace.workspaceName ?? "",
+            organization,
+            generatorInvocation
+        });
+
+        let packageName = "";
+        if (dynamicGeneratorConfig?.outputConfig.type === "publish") {
+            switch (dynamicGeneratorConfig.outputConfig.value.type) {
+                case "npm":
+                case "nuget":
+                case "pypi":
+                case "rubygems":
+                    packageName = dynamicGeneratorConfig.outputConfig.value.packageName;
+                    break;
+                case "maven":
+                    packageName = dynamicGeneratorConfig.outputConfig.value.coordinate;
+                    break;
+                case "go":
+                    packageName = dynamicGeneratorConfig.outputConfig.value.repoUrl;
+                    break;
+                case "swift":
+                    packageName = dynamicGeneratorConfig.outputConfig.value.repoUrl;
+                    break;
+                case "crates":
+                    packageName = dynamicGeneratorConfig.outputConfig.value.packageName;
+                    break;
+            }
+        }
+
+        if (
+            generatorInvocation.language === "php" &&
+            generatorInvocation.config &&
+            typeof generatorInvocation.config === "object" &&
+            "packageName" in generatorInvocation.config
+        ) {
+            packageName = (generatorInvocation.config as { packageName?: string }).packageName ?? "";
+        }
+
+        try {
+            const irForDynamicSnippets = generateIntermediateRepresentation({
+                workspace,
+                generationLanguage: generatorInvocation.language,
+                keywords: undefined,
+                smartCasing: generatorInvocation.smartCasing,
+                exampleGeneration: {
+                    disabled: true,
+                    skipAutogenerationIfManualExamplesExist: true,
+                    skipErrorAutogenerationIfManualErrorExamplesExist: true
+                },
+                audiences: {
+                    type: "all"
+                },
+                readme: undefined,
+                packageName,
+                version: undefined,
+                context,
+                sourceResolver: new SourceResolverImpl(context, workspace),
+                dynamicGeneratorConfig
+            });
+
+            const dynamicIR = convertIrToDynamicSnippetsIr({
+                ir: irForDynamicSnippets,
+                disableExamples: true,
+                smartCasing: generatorInvocation.smartCasing,
+                generationLanguage: generatorInvocation.language,
+                generatorConfig: dynamicGeneratorConfig
+            });
+
+            if (dynamicIR) {
+                languageSpecificIRs[generatorInvocation.language] = {
+                    dynamicIR
+                };
+                context.logger.debug(`Generated dynamic IR for ${generatorInvocation.language}`);
+            } else {
+                context.logger.debug(`Failed to create dynamic IR for ${generatorInvocation.language}`);
+            }
+        } catch (error) {
+            context.logger.warn(`Error generating dynamic IR for ${generatorInvocation.language}: ${error}`);
+        }
+    }
+
+    if (Object.keys(languageSpecificIRs).length > 0) {
+        return languageSpecificIRs;
+    }
+
+    return undefined;
+}
+
+async function uploadDynamicIRs({
+    dynamicIRs,
+    dynamicIRUploadUrls,
+    context,
+    snippetName
+}: {
+    dynamicIRs: Record<string, DynamicIr>;
+    dynamicIRUploadUrls: Record<string, DynamicIrUpload>;
+    context: TaskContext;
+    snippetName: string;
+}): Promise<void> {
+    if (Object.keys(dynamicIRUploadUrls).length > 0) {
+        for (const [language, source] of Object.entries(dynamicIRUploadUrls)) {
+            const dynamicIR = dynamicIRs[language]?.dynamicIR;
+
+            if (dynamicIR) {
+                const response = await fetch(source.uploadUrl, {
+                    method: "PUT",
+                    body: JSON.stringify(dynamicIR),
+                    headers: {
+                        "Content-Type": "application/octet-stream",
+                        "Content-Length": JSON.stringify(dynamicIR).length.toString()
+                    }
+                });
+
+                if (response.ok) {
+                    context.logger.debug(`Uploaded dynamic IR for ${snippetName}:${language}`);
+                } else {
+                    context.logger.warn(`Failed to upload dynamic IR for ${snippetName}:${language}`);
+                }
+            } else {
+                context.logger.warn(`Could not find matching dynamic IR to upload for ${snippetName}:${language}`);
+            }
+        }
+    }
 }
