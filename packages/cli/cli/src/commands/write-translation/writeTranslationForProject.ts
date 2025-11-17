@@ -40,13 +40,13 @@ export function addLanguageSuffixToUrl(url: string, language: Language): string 
         const hostname = urlObj.hostname;
         const originalHasTrailingSlash = url.endsWith("/");
 
-        if (hostname.endsWith(".docs.buildwithfern.com")) {
-            const org = hostname.replace(".docs.buildwithfern.com", "");
+        if (hostname.includes(".docs.buildwithfern.com")) {
+            const org = hostname.split(".")[0];
             urlObj.hostname = `${org}-${language}.docs.buildwithfern.com`;
-            urlObj.pathname = language;
+            urlObj.pathname = language + urlObj.pathname;
         } else {
             urlObj.hostname = `${language}.${hostname}`;
-            urlObj.pathname = language;
+            urlObj.pathname = language + +urlObj.pathname;
         }
 
         let result = urlObj.toString();
@@ -72,8 +72,8 @@ export function addLanguageSuffixToUrl(url: string, language: Language): string 
             }
 
             let newHostname: string;
-            if (hostname.endsWith(".docs.buildwithfern.com")) {
-                const orgPart = hostname.replace(".docs.buildwithfern.com", "");
+            if (hostname.includes(".docs.buildwithfern.com")) {
+                const orgPart = hostname.split(".")[0];
                 newHostname = `${orgPart}-${language}.docs.buildwithfern.com/${language}`;
             } else {
                 newHostname = `${language}.${hostname}/${language}`;
@@ -100,8 +100,8 @@ export function addLanguageSuffixToUrl(url: string, language: Language): string 
                 const pathParts = parts.slice(1);
 
                 let newHostname: string;
-                if (hostname?.endsWith(".docs.buildwithfern.com")) {
-                    const orgPart = hostname.replace(".docs.buildwithfern.com", "");
+                if (hostname?.includes(".docs.buildwithfern.com")) {
+                    const orgPart = hostname.split(".")[0];
                     newHostname = `${orgPart}-${language}.docs.buildwithfern.com/${language}`;
                 } else {
                     newHostname = `${language}.${hostname}/${language}`;
@@ -115,8 +115,8 @@ export function addLanguageSuffixToUrl(url: string, language: Language): string 
                     return newHostname;
                 }
             } else {
-                if (url.endsWith(".docs.buildwithfern.com")) {
-                    const orgPart = url.replace(".docs.buildwithfern.com", "");
+                if (url.includes(".docs.buildwithfern.com")) {
+                    const orgPart = url.split(".")[0];
                     return `${orgPart}-${language}.docs.buildwithfern.com/${language}`;
                 } else {
                     return `${language}.${url}/${language}`;
