@@ -70,6 +70,7 @@ export async function upgrade({
     const previousEnvVar = process.env[PREVIOUS_VERSION_ENV_VAR]?.trim() || undefined;
     const fromVersionTrimmed = fromVersion?.trim() || undefined;
     const targetVersionTrimmed = targetVersion?.trim() || undefined;
+    const hasExplicitTo = targetVersionTrimmed != null;
     const isPublishedCli = cliContext.environment.packageVersion !== "0.0.0";
     const inMigrationMode = (fromVersionTrimmed || previousEnvVar) && (isPublishedCli || targetVersionTrimmed);
 
