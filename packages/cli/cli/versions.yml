@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Make sure `fern upgrade` with `--rc` follows the same migration logic as non-rc upgrades.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-17"
+  version: 1.3.0-rc1
+
+- changelogEntry:
+    - summary: |
         Made `fern upgrade` safer by running migrations before updating `fern.config.json`. If migrations fail, your config stays unchanged.
       type: fix
     - summary: |
