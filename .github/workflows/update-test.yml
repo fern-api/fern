@@ -1,0 +1,86 @@
+name: Update Test
+
+on:
+  workflow_dispatch:
+
+# Cancel previous workflows on previous push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  update-test:
+    if: github.repository == 'fern-api/fern'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - uses: bufbuild/buf-setup-action@v1.50.0
+        with:
+          github_token: ${{ github.token }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+          cache-dependency-path: generators/go/go.sum
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+
+      - name: Run test:update
+        run: pnpm test:update
+
+      - name: Run test:ete:update
+        env:
+          FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
+        run: FERN_TOKEN=${{ secrets.FERN_ORG_TOKEN_DEV }} pnpm test:ete:update
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.ACTIONS_PAT }}
+          commit-message: "chore: update test snapshots"
+          title: "chore(ci): update test snapshots"
+          body: |
+            This PR updates test snapshots by running:
+            - `pnpm test:update`
+            - `pnpm test:ete:update`
+          branch: update-test-snapshots
+          delete-branch: true
+
+      - name: Log No PR Created
+        if: steps.cpr.outputs.pull-request-operation != 'created'
+        shell: bash
+        run: |
+          echo "PR was not created, likely due to no diff for the test snapshots"
+
+      - name: Log PR Creation Details
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        shell: bash
+        run: |
+          echo "PR Created: ${{ steps.cpr.outputs.pull-request-url }}"
+
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.ACTIONS_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
