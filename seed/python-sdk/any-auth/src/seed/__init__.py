@@ -7,12 +7,13 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import auth, user
-    from .auth import TokenResponse
+    from .auth import GrantType, TokenResponse
     from .client import AsyncSeedAnyAuth, SeedAnyAuth
     from .user import User
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedAnyAuth": ".client",
+    "GrantType": ".auth",
     "SeedAnyAuth": ".client",
     "TokenResponse": ".auth",
     "User": ".user",
@@ -43,4 +44,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AsyncSeedAnyAuth", "SeedAnyAuth", "TokenResponse", "User", "__version__", "auth", "user"]
+__all__ = ["AsyncSeedAnyAuth", "GrantType", "SeedAnyAuth", "TokenResponse", "User", "__version__", "auth", "user"]

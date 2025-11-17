@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "da0efff3",
+            "example_identifier": "921d7b7",
             "id": {
                 "method": "POST",
                 "path": "/token",
@@ -9,8 +9,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.anyAuth.SeedAnyAuthClient;\nimport com.seed.anyAuth.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAnyAuthClient client = SeedAnyAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.auth().getToken(\n            GetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.anyAuth.SeedAnyAuthClient;\nimport com.seed.anyAuth.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAnyAuthClient client = SeedAnyAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.auth().getToken(\n            GetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.anyAuth.SeedAnyAuthClient;\nimport com.seed.anyAuth.resources.auth.requests.GetTokenRequest;\nimport com.seed.anyAuth.resources.auth.types.GrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAnyAuthClient client = SeedAnyAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.auth().getToken(\n            GetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .grantType(GrantType.AUTHORIZATION_CODE)\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.anyAuth.SeedAnyAuthClient;\nimport com.seed.anyAuth.resources.auth.requests.GetTokenRequest;\nimport com.seed.anyAuth.resources.auth.types.GrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAnyAuthClient client = SeedAnyAuthClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.auth().getToken(\n            GetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .grantType(GrantType.AUTHORIZATION_CODE)\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {

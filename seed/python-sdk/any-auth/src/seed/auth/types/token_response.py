@@ -12,7 +12,7 @@ class TokenResponse(UniversalBaseModel):
     """
 
     access_token: str
-    expires_in: int
+    expires_in: typing.Optional[int] = None
     refresh_token: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

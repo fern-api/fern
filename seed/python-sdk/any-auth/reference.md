@@ -23,6 +23,7 @@ client = SeedAnyAuth(
 client.auth.get_token(
     client_id="client_id",
     client_secret="client_secret",
+    grant_type="authorization_code",
     scope="scope",
 )
 
@@ -49,6 +50,14 @@ client.auth.get_token(
 <dd>
 
 **client_secret:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**grant_type:** `GrantType` 
     
 </dd>
 </dl>

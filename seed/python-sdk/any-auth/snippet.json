@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_auth.getToken"
             },
             "snippet": {
-                "sync_client": "from seed import SeedAnyAuth\n\nclient = SeedAnyAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.auth.get_token(\n    client_id=\"client_id\",\n    client_secret=\"client_secret\",\n    scope=\"scope\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAnyAuth\n\nclient = AsyncSeedAnyAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.auth.get_token(\n        client_id=\"client_id\",\n        client_secret=\"client_secret\",\n        scope=\"scope\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedAnyAuth\n\nclient = SeedAnyAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.auth.get_token(\n    client_id=\"client_id\",\n    client_secret=\"client_secret\",\n    grant_type=\"authorization_code\",\n    scope=\"scope\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAnyAuth\n\nclient = AsyncSeedAnyAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.auth.get_token(\n        client_id=\"client_id\",\n        client_secret=\"client_secret\",\n        grant_type=\"authorization_code\",\n        scope=\"scope\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },

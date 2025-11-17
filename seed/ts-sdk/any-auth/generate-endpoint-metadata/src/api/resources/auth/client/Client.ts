@@ -28,6 +28,7 @@ export class AuthClient {
      *     await client.auth.getToken({
      *         client_id: "client_id",
      *         client_secret: "client_secret",
+     *         grant_type: "authorization_code",
      *         scope: "scope"
      *     })
      */
@@ -62,7 +63,7 @@ export class AuthClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: { ...request, audience: "https://api.example.com", grant_type: "client_credentials" },
+            body: { ...request, audience: "https://api.example.com" },
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

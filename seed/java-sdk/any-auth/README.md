@@ -57,6 +57,7 @@ package com.example.usage;
 
 import com.seed.anyAuth.SeedAnyAuthClient;
 import com.seed.anyAuth.resources.auth.requests.GetTokenRequest;
+import com.seed.anyAuth.resources.auth.types.GrantType;
 
 public class Example {
     public static void main(String[] args) {
@@ -70,6 +71,7 @@ public class Example {
                 .builder()
                 .clientId("client_id")
                 .clientSecret("client_secret")
+                .grantType(GrantType.AUTHORIZATION_CODE)
                 .scope("scope")
                 .build()
         );

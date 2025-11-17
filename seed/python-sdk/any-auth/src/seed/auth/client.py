@@ -5,6 +5,7 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from .raw_client import AsyncRawAuthClient, RawAuthClient
+from .types.grant_type import GrantType
 from .types.token_response import TokenResponse
 
 # this is used as the default value for optional parameters
@@ -31,6 +32,7 @@ class AuthClient:
         *,
         client_id: str,
         client_secret: str,
+        grant_type: GrantType,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponse:
@@ -40,6 +42,8 @@ class AuthClient:
         client_id : str
 
         client_secret : str
+
+        grant_type : GrantType
 
         scope : typing.Optional[str]
 
@@ -62,11 +66,16 @@ class AuthClient:
         client.auth.get_token(
             client_id="client_id",
             client_secret="client_secret",
+            grant_type="authorization_code",
             scope="scope",
         )
         """
         _response = self._raw_client.get_token(
-            client_id=client_id, client_secret=client_secret, scope=scope, request_options=request_options
+            client_id=client_id,
+            client_secret=client_secret,
+            grant_type=grant_type,
+            scope=scope,
+            request_options=request_options,
         )
         return _response.data
 
@@ -91,6 +100,7 @@ class AsyncAuthClient:
         *,
         client_id: str,
         client_secret: str,
+        grant_type: GrantType,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponse:
@@ -100,6 +110,8 @@ class AsyncAuthClient:
         client_id : str
 
         client_secret : str
+
+        grant_type : GrantType
 
         scope : typing.Optional[str]
 
@@ -127,6 +139,7 @@ class AsyncAuthClient:
             await client.auth.get_token(
                 client_id="client_id",
                 client_secret="client_secret",
+                grant_type="authorization_code",
                 scope="scope",
             )
 
@@ -134,6 +147,10 @@ class AsyncAuthClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get_token(
-            client_id=client_id, client_secret=client_secret, scope=scope, request_options=request_options
+            client_id=client_id,
+            client_secret=client_secret,
+            grant_type=grant_type,
+            scope=scope,
+            request_options=request_options,
         )
         return _response.data

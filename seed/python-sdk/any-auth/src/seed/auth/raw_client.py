@@ -8,6 +8,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
+from .types.grant_type import GrantType
 from .types.token_response import TokenResponse
 
 # this is used as the default value for optional parameters
@@ -23,6 +24,7 @@ class RawAuthClient:
         *,
         client_id: str,
         client_secret: str,
+        grant_type: GrantType,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[TokenResponse]:
@@ -32,6 +34,8 @@ class RawAuthClient:
         client_id : str
 
         client_secret : str
+
+        grant_type : GrantType
 
         scope : typing.Optional[str]
 
@@ -48,9 +52,9 @@ class RawAuthClient:
             json={
                 "client_id": client_id,
                 "client_secret": client_secret,
+                "grant_type": grant_type,
                 "scope": scope,
                 "audience": "https://api.example.com",
-                "grant_type": "client_credentials",
             },
             request_options=request_options,
             omit=OMIT,
@@ -80,6 +84,7 @@ class AsyncRawAuthClient:
         *,
         client_id: str,
         client_secret: str,
+        grant_type: GrantType,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[TokenResponse]:
@@ -89,6 +94,8 @@ class AsyncRawAuthClient:
         client_id : str
 
         client_secret : str
+
+        grant_type : GrantType
 
         scope : typing.Optional[str]
 
@@ -105,9 +112,9 @@ class AsyncRawAuthClient:
             json={
                 "client_id": client_id,
                 "client_secret": client_secret,
+                "grant_type": grant_type,
                 "scope": scope,
                 "audience": "https://api.example.com",
-                "grant_type": "client_credentials",
             },
             request_options=request_options,
             omit=OMIT,

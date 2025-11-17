@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.anyAuth.core.ObjectMappers;
+import com.seed.anyAuth.resources.auth.types.GrantType;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -25,14 +26,21 @@ public final class GetTokenRequest {
 
     private final String clientSecret;
 
+    private final GrantType grantType;
+
     private final Optional<String> scope;
 
     private final Map<String, Object> additionalProperties;
 
     private GetTokenRequest(
-            String clientId, String clientSecret, Optional<String> scope, Map<String, Object> additionalProperties) {
+            String clientId,
+            String clientSecret,
+            GrantType grantType,
+            Optional<String> scope,
+            Map<String, Object> additionalProperties) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
+        this.grantType = grantType;
         this.scope = scope;
         this.additionalProperties = additionalProperties;
     }
@@ -53,8 +61,8 @@ public final class GetTokenRequest {
     }
 
     @JsonProperty("grant_type")
-    public String getGrantType() {
-        return "client_credentials";
+    public GrantType getGrantType() {
+        return grantType;
     }
 
     @JsonProperty("scope")
@@ -74,12 +82,15 @@ public final class GetTokenRequest {
     }
 
     private boolean equalTo(GetTokenRequest other) {
-        return clientId.equals(other.clientId) && clientSecret.equals(other.clientSecret) && scope.equals(other.scope);
+        return clientId.equals(other.clientId)
+                && clientSecret.equals(other.clientSecret)
+                && grantType.equals(other.grantType)
+                && scope.equals(other.scope);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.clientId, this.clientSecret, this.scope);
+        return Objects.hash(this.clientId, this.clientSecret, this.grantType, this.scope);
     }
 
     @java.lang.Override
@@ -98,7 +109,11 @@ public final class GetTokenRequest {
     }
 
     public interface ClientSecretStage {
-        _FinalStage clientSecret(@NotNull String clientSecret);
+        GrantTypeStage clientSecret(@NotNull String clientSecret);
+    }
+
+    public interface GrantTypeStage {
+        _FinalStage grantType(@NotNull GrantType grantType);
     }
 
     public interface _FinalStage {
@@ -110,10 +125,12 @@ public final class GetTokenRequest {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements ClientIdStage, ClientSecretStage, _FinalStage {
+    public static final class Builder implements ClientIdStage, ClientSecretStage, GrantTypeStage, _FinalStage {
         private String clientId;
 
         private String clientSecret;
+
+        private GrantType grantType;
 
         private Optional<String> scope = Optional.empty();
 
@@ -126,6 +143,7 @@ public final class GetTokenRequest {
         public Builder from(GetTokenRequest other) {
             clientId(other.getClientId());
             clientSecret(other.getClientSecret());
+            grantType(other.getGrantType());
             scope(other.getScope());
             return this;
         }
@@ -139,8 +157,15 @@ public final class GetTokenRequest {
 
         @java.lang.Override
         @JsonSetter("client_secret")
-        public _FinalStage clientSecret(@NotNull String clientSecret) {
+        public GrantTypeStage clientSecret(@NotNull String clientSecret) {
             this.clientSecret = Objects.requireNonNull(clientSecret, "clientSecret must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("grant_type")
+        public _FinalStage grantType(@NotNull GrantType grantType) {
+            this.grantType = Objects.requireNonNull(grantType, "grantType must not be null");
             return this;
         }
 
@@ -159,7 +184,7 @@ public final class GetTokenRequest {
 
         @java.lang.Override
         public GetTokenRequest build() {
-            return new GetTokenRequest(clientId, clientSecret, scope, additionalProperties);
+            return new GetTokenRequest(clientId, clientSecret, grantType, scope, additionalProperties);
         }
     }
 }

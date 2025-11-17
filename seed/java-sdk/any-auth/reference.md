@@ -18,6 +18,7 @@ client.auth().getToken(
         .builder()
         .clientId("client_id")
         .clientSecret("client_secret")
+        .grantType(GrantType.AUTHORIZATION_CODE)
         .scope("scope")
         .build()
 );
@@ -59,7 +60,7 @@ client.auth().getToken(
 <dl>
 <dd>
 
-**grantType:** `String` 
+**grantType:** `GrantType` 
     
 </dd>
 </dl>

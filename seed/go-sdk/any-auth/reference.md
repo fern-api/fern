@@ -16,6 +16,7 @@
 request := &fern.GetTokenRequest{
         ClientId: "client_id",
         ClientSecret: "client_secret",
+        GrantType: fern.GrantTypeAuthorizationCode,
         Scope: fern.String(
             "scope",
         ),
@@ -63,7 +64,7 @@ client.Auth.GetToken(
 <dl>
 <dd>
 
-**grantType:** `string` 
+**grantType:** `*fern.GrantType` 
     
 </dd>
 </dl>
