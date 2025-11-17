@@ -471,7 +471,7 @@ export function buildReferenceTypeReference({
 
     let type = typeWithPrefix;
     if (resolvedSchema.type === "nullable") {
-        type = context.wrapReferencesToNullableInOptional ? `optional<${type}>` : `nullable<${type}>`;
+        type = context.options.wrapReferencesToNullableInOptional ? `optional<${type}>` : `nullable<${type}>`;
     }
     if (resolvedSchema.type === "optional" && !type.startsWith("optional<")) {
         type = `optional<${type}>`;
@@ -580,7 +580,7 @@ export function buildNullableTypeReference({
     namespace: string | undefined;
     declarationDepth: number;
 }): RawSchemas.TypeReferenceSchema {
-    if (!context.respectNullableSchemas) {
+    if (!context.options.respectNullableSchemas) {
         return buildOptionalTypeReference({
             schema,
             fileContainingReference,
@@ -604,7 +604,7 @@ export function buildNullableTypeReference({
     const itemDefault = getDefaultFromTypeReference(itemTypeReference);
     const itemValidation = getValidationFromTypeReference(itemTypeReference);
     let type = wrapTypeReferenceAsNullable(itemType);
-    if (context.wrapReferencesToNullableInOptional) {
+    if (context.options.wrapReferencesToNullableInOptional) {
         type = wrapTypeReferenceAsOptional(type);
     }
     if (

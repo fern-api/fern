@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package fern;
+
+import "google/protobuf/descriptor.proto";
+
+option go_package = "github.com/fern-api/protoc-gen-openapi/extensions/fern";
+
+extend google.protobuf.MethodOptions {
+  // Custom summary for the RPC method that will be used as the OpenAPI operation summary.
+  // This overrides any auto-generated summary.
+  string summary = 51001;
+}

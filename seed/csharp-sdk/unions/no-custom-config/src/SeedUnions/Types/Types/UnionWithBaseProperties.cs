@@ -198,12 +198,12 @@ public record UnionWithBaseProperties
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithBaseProperties>
     {
-        public override bool CanConvert(global::System.Type typeToConvert) =>
+        public override bool CanConvert(System.Type typeToConvert) =>
             typeof(UnionWithBaseProperties).IsAssignableFrom(typeToConvert);
 
         public override UnionWithBaseProperties Read(
             ref Utf8JsonReader reader,
-            global::System.Type typeToConvert,
+            System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

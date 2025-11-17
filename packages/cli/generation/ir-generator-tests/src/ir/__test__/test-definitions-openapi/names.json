@@ -57,26 +57,26 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_telemetry:TelemetryGetTelemetryDataResponse": {
+        "type_telemetry:GetTelemetryDataTelemetryResponse": {
             "inline": null,
             "name": {
                 "name": {
-                    "originalName": "TelemetryGetTelemetryDataResponse",
+                    "originalName": "GetTelemetryDataTelemetryResponse",
                     "camelCase": {
-                        "unsafeName": "telemetryGetTelemetryDataResponse",
-                        "safeName": "telemetryGetTelemetryDataResponse"
+                        "unsafeName": "getTelemetryDataTelemetryResponse",
+                        "safeName": "getTelemetryDataTelemetryResponse"
                     },
                     "snakeCase": {
-                        "unsafeName": "telemetry_get_telemetry_data_response",
-                        "safeName": "telemetry_get_telemetry_data_response"
+                        "unsafeName": "get_telemetry_data_telemetry_response",
+                        "safeName": "get_telemetry_data_telemetry_response"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE",
-                        "safeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE"
+                        "unsafeName": "GET_TELEMETRY_DATA_TELEMETRY_RESPONSE",
+                        "safeName": "GET_TELEMETRY_DATA_TELEMETRY_RESPONSE"
                     },
                     "pascalCase": {
-                        "unsafeName": "TelemetryGetTelemetryDataResponse",
-                        "safeName": "TelemetryGetTelemetryDataResponse"
+                        "unsafeName": "GetTelemetryDataTelemetryResponse",
+                        "safeName": "GetTelemetryDataTelemetryResponse"
                     }
                 },
                 "fernFilepath": {
@@ -123,7 +123,7 @@
                     }
                 },
                 "displayName": null,
-                "typeId": "type_telemetry:TelemetryGetTelemetryDataResponse"
+                "typeId": "type_telemetry:GetTelemetryDataTelemetryResponse"
             },
             "shape": {
                 "_type": "object",
@@ -803,22 +803,22 @@
                         "shape": {
                             "type": "wrapper",
                             "wrapperName": {
-                                "originalName": "TelemetryGetTelemetryDataRequest",
+                                "originalName": "GetTelemetryDataTelemetryRequest",
                                 "camelCase": {
-                                    "unsafeName": "telemetryGetTelemetryDataRequest",
-                                    "safeName": "telemetryGetTelemetryDataRequest"
+                                    "unsafeName": "getTelemetryDataTelemetryRequest",
+                                    "safeName": "getTelemetryDataTelemetryRequest"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "telemetry_get_telemetry_data_request",
-                                    "safeName": "telemetry_get_telemetry_data_request"
+                                    "unsafeName": "get_telemetry_data_telemetry_request",
+                                    "safeName": "get_telemetry_data_telemetry_request"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "TELEMETRY_GET_TELEMETRY_DATA_REQUEST",
-                                    "safeName": "TELEMETRY_GET_TELEMETRY_DATA_REQUEST"
+                                    "unsafeName": "GET_TELEMETRY_DATA_TELEMETRY_REQUEST",
+                                    "safeName": "GET_TELEMETRY_DATA_TELEMETRY_REQUEST"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "TelemetryGetTelemetryDataRequest",
-                                    "safeName": "TelemetryGetTelemetryDataRequest"
+                                    "unsafeName": "GetTelemetryDataTelemetryRequest",
+                                    "safeName": "GetTelemetryDataTelemetryRequest"
                                 }
                             },
                             "bodyKey": {
@@ -872,22 +872,22 @@
                                 "responseBodyType": {
                                     "_type": "named",
                                     "name": {
-                                        "originalName": "TelemetryGetTelemetryDataResponse",
+                                        "originalName": "GetTelemetryDataTelemetryResponse",
                                         "camelCase": {
-                                            "unsafeName": "telemetryGetTelemetryDataResponse",
-                                            "safeName": "telemetryGetTelemetryDataResponse"
+                                            "unsafeName": "getTelemetryDataTelemetryResponse",
+                                            "safeName": "getTelemetryDataTelemetryResponse"
                                         },
                                         "snakeCase": {
-                                            "unsafeName": "telemetry_get_telemetry_data_response",
-                                            "safeName": "telemetry_get_telemetry_data_response"
+                                            "unsafeName": "get_telemetry_data_telemetry_response",
+                                            "safeName": "get_telemetry_data_telemetry_response"
                                         },
                                         "screamingSnakeCase": {
-                                            "unsafeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE",
-                                            "safeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE"
+                                            "unsafeName": "GET_TELEMETRY_DATA_TELEMETRY_RESPONSE",
+                                            "safeName": "GET_TELEMETRY_DATA_TELEMETRY_RESPONSE"
                                         },
                                         "pascalCase": {
-                                            "unsafeName": "TelemetryGetTelemetryDataResponse",
-                                            "safeName": "TelemetryGetTelemetryDataResponse"
+                                            "unsafeName": "GetTelemetryDataTelemetryResponse",
+                                            "safeName": "GetTelemetryDataTelemetryResponse"
                                         }
                                     },
                                     "fernFilepath": {
@@ -934,7 +934,7 @@
                                         }
                                     },
                                     "displayName": null,
-                                    "typeId": "type_telemetry:TelemetryGetTelemetryDataResponse",
+                                    "typeId": "type_telemetry:GetTelemetryDataTelemetryResponse",
                                     "default": null,
                                     "inline": null
                                 },
@@ -949,7 +949,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "604d6e38",
+                                "id": "64dee517",
                                 "name": null,
                                 "url": "/telemetry",
                                 "rootPathParameters": [],
@@ -957,64 +957,7 @@
                                 "servicePathParameters": [],
                                 "endpointHeaders": [],
                                 "serviceHeaders": [],
-                                "queryParameters": [
-                                    {
-                                        "name": {
-                                            "name": {
-                                                "originalName": "anonymize",
-                                                "camelCase": {
-                                                    "unsafeName": "anonymize",
-                                                    "safeName": "anonymize"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "anonymize",
-                                                    "safeName": "anonymize"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "ANONYMIZE",
-                                                    "safeName": "ANONYMIZE"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Anonymize",
-                                                    "safeName": "Anonymize"
-                                                }
-                                            },
-                                            "wireValue": "anonymize"
-                                        },
-                                        "value": {
-                                            "shape": {
-                                                "type": "container",
-                                                "container": {
-                                                    "type": "optional",
-                                                    "optional": {
-                                                        "shape": {
-                                                            "type": "primitive",
-                                                            "primitive": {
-                                                                "type": "boolean",
-                                                                "boolean": true
-                                                            }
-                                                        },
-                                                        "jsonExample": true
-                                                    },
-                                                    "valueType": {
-                                                        "_type": "primitive",
-                                                        "primitive": {
-                                                            "v1": "BOOLEAN",
-                                                            "v2": {
-                                                                "type": "boolean",
-                                                                "default": null
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            },
-                                            "jsonExample": true
-                                        },
-                                        "shape": {
-                                            "type": "single"
-                                        }
-                                    }
-                                ],
+                                "queryParameters": [],
                                 "request": null,
                                 "response": {
                                     "type": "ok",
@@ -1024,7 +967,7 @@
                                             "shape": {
                                                 "type": "named",
                                                 "typeName": {
-                                                    "typeId": "type_telemetry:TelemetryGetTelemetryDataResponse",
+                                                    "typeId": "type_telemetry:GetTelemetryDataTelemetryResponse",
                                                     "fernFilepath": {
                                                         "allParts": [
                                                             {
@@ -1069,22 +1012,22 @@
                                                         }
                                                     },
                                                     "name": {
-                                                        "originalName": "TelemetryGetTelemetryDataResponse",
+                                                        "originalName": "GetTelemetryDataTelemetryResponse",
                                                         "camelCase": {
-                                                            "unsafeName": "telemetryGetTelemetryDataResponse",
-                                                            "safeName": "telemetryGetTelemetryDataResponse"
+                                                            "unsafeName": "getTelemetryDataTelemetryResponse",
+                                                            "safeName": "getTelemetryDataTelemetryResponse"
                                                         },
                                                         "snakeCase": {
-                                                            "unsafeName": "telemetry_get_telemetry_data_response",
-                                                            "safeName": "telemetry_get_telemetry_data_response"
+                                                            "unsafeName": "get_telemetry_data_telemetry_response",
+                                                            "safeName": "get_telemetry_data_telemetry_response"
                                                         },
                                                         "screamingSnakeCase": {
-                                                            "unsafeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE",
-                                                            "safeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE"
+                                                            "unsafeName": "GET_TELEMETRY_DATA_TELEMETRY_RESPONSE",
+                                                            "safeName": "GET_TELEMETRY_DATA_TELEMETRY_RESPONSE"
                                                         },
                                                         "pascalCase": {
-                                                            "unsafeName": "TelemetryGetTelemetryDataResponse",
-                                                            "safeName": "TelemetryGetTelemetryDataResponse"
+                                                            "unsafeName": "GetTelemetryDataTelemetryResponse",
+                                                            "safeName": "GetTelemetryDataTelemetryResponse"
                                                         }
                                                     },
                                                     "displayName": null
@@ -1142,7 +1085,7 @@
                                                                 "jsonExample": 1.1
                                                             },
                                                             "originalTypeDeclaration": {
-                                                                "typeId": "type_telemetry:TelemetryGetTelemetryDataResponse",
+                                                                "typeId": "type_telemetry:GetTelemetryDataTelemetryResponse",
                                                                 "fernFilepath": {
                                                                     "allParts": [
                                                                         {
@@ -1187,22 +1130,22 @@
                                                                     }
                                                                 },
                                                                 "name": {
-                                                                    "originalName": "TelemetryGetTelemetryDataResponse",
+                                                                    "originalName": "GetTelemetryDataTelemetryResponse",
                                                                     "camelCase": {
-                                                                        "unsafeName": "telemetryGetTelemetryDataResponse",
-                                                                        "safeName": "telemetryGetTelemetryDataResponse"
+                                                                        "unsafeName": "getTelemetryDataTelemetryResponse",
+                                                                        "safeName": "getTelemetryDataTelemetryResponse"
                                                                     },
                                                                     "snakeCase": {
-                                                                        "unsafeName": "telemetry_get_telemetry_data_response",
-                                                                        "safeName": "telemetry_get_telemetry_data_response"
+                                                                        "unsafeName": "get_telemetry_data_telemetry_response",
+                                                                        "safeName": "get_telemetry_data_telemetry_response"
                                                                     },
                                                                     "screamingSnakeCase": {
-                                                                        "unsafeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE",
-                                                                        "safeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE"
+                                                                        "unsafeName": "GET_TELEMETRY_DATA_TELEMETRY_RESPONSE",
+                                                                        "safeName": "GET_TELEMETRY_DATA_TELEMETRY_RESPONSE"
                                                                     },
                                                                     "pascalCase": {
-                                                                        "unsafeName": "TelemetryGetTelemetryDataResponse",
-                                                                        "safeName": "TelemetryGetTelemetryDataResponse"
+                                                                        "unsafeName": "GetTelemetryDataTelemetryResponse",
+                                                                        "safeName": "GetTelemetryDataTelemetryResponse"
                                                                     }
                                                                 },
                                                                 "displayName": null
@@ -1265,7 +1208,7 @@
                                                                 "jsonExample": "status"
                                                             },
                                                             "originalTypeDeclaration": {
-                                                                "typeId": "type_telemetry:TelemetryGetTelemetryDataResponse",
+                                                                "typeId": "type_telemetry:GetTelemetryDataTelemetryResponse",
                                                                 "fernFilepath": {
                                                                     "allParts": [
                                                                         {
@@ -1310,22 +1253,22 @@
                                                                     }
                                                                 },
                                                                 "name": {
-                                                                    "originalName": "TelemetryGetTelemetryDataResponse",
+                                                                    "originalName": "GetTelemetryDataTelemetryResponse",
                                                                     "camelCase": {
-                                                                        "unsafeName": "telemetryGetTelemetryDataResponse",
-                                                                        "safeName": "telemetryGetTelemetryDataResponse"
+                                                                        "unsafeName": "getTelemetryDataTelemetryResponse",
+                                                                        "safeName": "getTelemetryDataTelemetryResponse"
                                                                     },
                                                                     "snakeCase": {
-                                                                        "unsafeName": "telemetry_get_telemetry_data_response",
-                                                                        "safeName": "telemetry_get_telemetry_data_response"
+                                                                        "unsafeName": "get_telemetry_data_telemetry_response",
+                                                                        "safeName": "get_telemetry_data_telemetry_response"
                                                                     },
                                                                     "screamingSnakeCase": {
-                                                                        "unsafeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE",
-                                                                        "safeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE"
+                                                                        "unsafeName": "GET_TELEMETRY_DATA_TELEMETRY_RESPONSE",
+                                                                        "safeName": "GET_TELEMETRY_DATA_TELEMETRY_RESPONSE"
                                                                     },
                                                                     "pascalCase": {
-                                                                        "unsafeName": "TelemetryGetTelemetryDataResponse",
-                                                                        "safeName": "TelemetryGetTelemetryDataResponse"
+                                                                        "unsafeName": "GetTelemetryDataTelemetryResponse",
+                                                                        "safeName": "GetTelemetryDataTelemetryResponse"
                                                                     }
                                                                 },
                                                                 "displayName": null
@@ -2066,7 +2009,7 @@
                                                                 }
                                                             },
                                                             "originalTypeDeclaration": {
-                                                                "typeId": "type_telemetry:TelemetryGetTelemetryDataResponse",
+                                                                "typeId": "type_telemetry:GetTelemetryDataTelemetryResponse",
                                                                 "fernFilepath": {
                                                                     "allParts": [
                                                                         {
@@ -2111,22 +2054,22 @@
                                                                     }
                                                                 },
                                                                 "name": {
-                                                                    "originalName": "TelemetryGetTelemetryDataResponse",
+                                                                    "originalName": "GetTelemetryDataTelemetryResponse",
                                                                     "camelCase": {
-                                                                        "unsafeName": "telemetryGetTelemetryDataResponse",
-                                                                        "safeName": "telemetryGetTelemetryDataResponse"
+                                                                        "unsafeName": "getTelemetryDataTelemetryResponse",
+                                                                        "safeName": "getTelemetryDataTelemetryResponse"
                                                                     },
                                                                     "snakeCase": {
-                                                                        "unsafeName": "telemetry_get_telemetry_data_response",
-                                                                        "safeName": "telemetry_get_telemetry_data_response"
+                                                                        "unsafeName": "get_telemetry_data_telemetry_response",
+                                                                        "safeName": "get_telemetry_data_telemetry_response"
                                                                     },
                                                                     "screamingSnakeCase": {
-                                                                        "unsafeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE",
-                                                                        "safeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE"
+                                                                        "unsafeName": "GET_TELEMETRY_DATA_TELEMETRY_RESPONSE",
+                                                                        "safeName": "GET_TELEMETRY_DATA_TELEMETRY_RESPONSE"
                                                                     },
                                                                     "pascalCase": {
-                                                                        "unsafeName": "TelemetryGetTelemetryDataResponse",
-                                                                        "safeName": "TelemetryGetTelemetryDataResponse"
+                                                                        "unsafeName": "GetTelemetryDataTelemetryResponse",
+                                                                        "safeName": "GetTelemetryDataTelemetryResponse"
                                                                     }
                                                                 },
                                                                 "displayName": null
@@ -2157,7 +2100,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "cccf5785",
+                                "id": "8ec4bd05",
                                 "url": "/telemetry",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -2202,22 +2145,22 @@
                                                             },
                                                             "originalTypeDeclaration": {
                                                                 "name": {
-                                                                    "originalName": "TelemetryGetTelemetryDataResponse",
+                                                                    "originalName": "GetTelemetryDataTelemetryResponse",
                                                                     "camelCase": {
-                                                                        "unsafeName": "telemetryGetTelemetryDataResponse",
-                                                                        "safeName": "telemetryGetTelemetryDataResponse"
+                                                                        "unsafeName": "getTelemetryDataTelemetryResponse",
+                                                                        "safeName": "getTelemetryDataTelemetryResponse"
                                                                     },
                                                                     "snakeCase": {
-                                                                        "unsafeName": "telemetry_get_telemetry_data_response",
-                                                                        "safeName": "telemetry_get_telemetry_data_response"
+                                                                        "unsafeName": "get_telemetry_data_telemetry_response",
+                                                                        "safeName": "get_telemetry_data_telemetry_response"
                                                                     },
                                                                     "screamingSnakeCase": {
-                                                                        "unsafeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE",
-                                                                        "safeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE"
+                                                                        "unsafeName": "GET_TELEMETRY_DATA_TELEMETRY_RESPONSE",
+                                                                        "safeName": "GET_TELEMETRY_DATA_TELEMETRY_RESPONSE"
                                                                     },
                                                                     "pascalCase": {
-                                                                        "unsafeName": "TelemetryGetTelemetryDataResponse",
-                                                                        "safeName": "TelemetryGetTelemetryDataResponse"
+                                                                        "unsafeName": "GetTelemetryDataTelemetryResponse",
+                                                                        "safeName": "GetTelemetryDataTelemetryResponse"
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
@@ -2264,7 +2207,7 @@
                                                                     }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_telemetry:TelemetryGetTelemetryDataResponse"
+                                                                "typeId": "type_telemetry:GetTelemetryDataTelemetryResponse"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2319,22 +2262,22 @@
                                                             },
                                                             "originalTypeDeclaration": {
                                                                 "name": {
-                                                                    "originalName": "TelemetryGetTelemetryDataResponse",
+                                                                    "originalName": "GetTelemetryDataTelemetryResponse",
                                                                     "camelCase": {
-                                                                        "unsafeName": "telemetryGetTelemetryDataResponse",
-                                                                        "safeName": "telemetryGetTelemetryDataResponse"
+                                                                        "unsafeName": "getTelemetryDataTelemetryResponse",
+                                                                        "safeName": "getTelemetryDataTelemetryResponse"
                                                                     },
                                                                     "snakeCase": {
-                                                                        "unsafeName": "telemetry_get_telemetry_data_response",
-                                                                        "safeName": "telemetry_get_telemetry_data_response"
+                                                                        "unsafeName": "get_telemetry_data_telemetry_response",
+                                                                        "safeName": "get_telemetry_data_telemetry_response"
                                                                     },
                                                                     "screamingSnakeCase": {
-                                                                        "unsafeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE",
-                                                                        "safeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE"
+                                                                        "unsafeName": "GET_TELEMETRY_DATA_TELEMETRY_RESPONSE",
+                                                                        "safeName": "GET_TELEMETRY_DATA_TELEMETRY_RESPONSE"
                                                                     },
                                                                     "pascalCase": {
-                                                                        "unsafeName": "TelemetryGetTelemetryDataResponse",
-                                                                        "safeName": "TelemetryGetTelemetryDataResponse"
+                                                                        "unsafeName": "GetTelemetryDataTelemetryResponse",
+                                                                        "safeName": "GetTelemetryDataTelemetryResponse"
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
@@ -2381,7 +2324,7 @@
                                                                     }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_telemetry:TelemetryGetTelemetryDataResponse"
+                                                                "typeId": "type_telemetry:GetTelemetryDataTelemetryResponse"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2442,22 +2385,22 @@
                                                             },
                                                             "originalTypeDeclaration": {
                                                                 "name": {
-                                                                    "originalName": "TelemetryGetTelemetryDataResponse",
+                                                                    "originalName": "GetTelemetryDataTelemetryResponse",
                                                                     "camelCase": {
-                                                                        "unsafeName": "telemetryGetTelemetryDataResponse",
-                                                                        "safeName": "telemetryGetTelemetryDataResponse"
+                                                                        "unsafeName": "getTelemetryDataTelemetryResponse",
+                                                                        "safeName": "getTelemetryDataTelemetryResponse"
                                                                     },
                                                                     "snakeCase": {
-                                                                        "unsafeName": "telemetry_get_telemetry_data_response",
-                                                                        "safeName": "telemetry_get_telemetry_data_response"
+                                                                        "unsafeName": "get_telemetry_data_telemetry_response",
+                                                                        "safeName": "get_telemetry_data_telemetry_response"
                                                                     },
                                                                     "screamingSnakeCase": {
-                                                                        "unsafeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE",
-                                                                        "safeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE"
+                                                                        "unsafeName": "GET_TELEMETRY_DATA_TELEMETRY_RESPONSE",
+                                                                        "safeName": "GET_TELEMETRY_DATA_TELEMETRY_RESPONSE"
                                                                     },
                                                                     "pascalCase": {
-                                                                        "unsafeName": "TelemetryGetTelemetryDataResponse",
-                                                                        "safeName": "TelemetryGetTelemetryDataResponse"
+                                                                        "unsafeName": "GetTelemetryDataTelemetryResponse",
+                                                                        "safeName": "GetTelemetryDataTelemetryResponse"
                                                                     }
                                                                 },
                                                                 "fernFilepath": {
@@ -2504,7 +2447,7 @@
                                                                     }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_telemetry:TelemetryGetTelemetryDataResponse"
+                                                                "typeId": "type_telemetry:GetTelemetryDataTelemetryResponse"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -3223,22 +3166,22 @@
                                                 },
                                                 "typeName": {
                                                     "name": {
-                                                        "originalName": "TelemetryGetTelemetryDataResponse",
+                                                        "originalName": "GetTelemetryDataTelemetryResponse",
                                                         "camelCase": {
-                                                            "unsafeName": "telemetryGetTelemetryDataResponse",
-                                                            "safeName": "telemetryGetTelemetryDataResponse"
+                                                            "unsafeName": "getTelemetryDataTelemetryResponse",
+                                                            "safeName": "getTelemetryDataTelemetryResponse"
                                                         },
                                                         "snakeCase": {
-                                                            "unsafeName": "telemetry_get_telemetry_data_response",
-                                                            "safeName": "telemetry_get_telemetry_data_response"
+                                                            "unsafeName": "get_telemetry_data_telemetry_response",
+                                                            "safeName": "get_telemetry_data_telemetry_response"
                                                         },
                                                         "screamingSnakeCase": {
-                                                            "unsafeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE",
-                                                            "safeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE"
+                                                            "unsafeName": "GET_TELEMETRY_DATA_TELEMETRY_RESPONSE",
+                                                            "safeName": "GET_TELEMETRY_DATA_TELEMETRY_RESPONSE"
                                                         },
                                                         "pascalCase": {
-                                                            "unsafeName": "TelemetryGetTelemetryDataResponse",
-                                                            "safeName": "TelemetryGetTelemetryDataResponse"
+                                                            "unsafeName": "GetTelemetryDataTelemetryResponse",
+                                                            "safeName": "GetTelemetryDataTelemetryResponse"
                                                         }
                                                     },
                                                     "fernFilepath": {
@@ -3285,7 +3228,7 @@
                                                         }
                                                     },
                                                     "displayName": null,
-                                                    "typeId": "type_telemetry:TelemetryGetTelemetryDataResponse"
+                                                    "typeId": "type_telemetry:GetTelemetryDataTelemetryResponse"
                                                 }
                                             },
                                             "jsonExample": {
@@ -3352,7 +3295,7 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_telemetry": [
-                "type_telemetry:TelemetryGetTelemetryDataResponse",
+                "type_telemetry:GetTelemetryDataTelemetryResponse",
                 "type_infra/telemetry:TelemetryData"
             ]
         },
@@ -3366,26 +3309,26 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_telemetry:TelemetryGetTelemetryDataResponse": {
+            "type_telemetry:GetTelemetryDataTelemetryResponse": {
                 "type": "object",
                 "declaration": {
                     "name": {
-                        "originalName": "TelemetryGetTelemetryDataResponse",
+                        "originalName": "GetTelemetryDataTelemetryResponse",
                         "camelCase": {
-                            "unsafeName": "telemetryGetTelemetryDataResponse",
-                            "safeName": "telemetryGetTelemetryDataResponse"
+                            "unsafeName": "getTelemetryDataTelemetryResponse",
+                            "safeName": "getTelemetryDataTelemetryResponse"
                         },
                         "snakeCase": {
-                            "unsafeName": "telemetry_get_telemetry_data_response",
-                            "safeName": "telemetry_get_telemetry_data_response"
+                            "unsafeName": "get_telemetry_data_telemetry_response",
+                            "safeName": "get_telemetry_data_telemetry_response"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE",
-                            "safeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE"
+                            "unsafeName": "GET_TELEMETRY_DATA_TELEMETRY_RESPONSE",
+                            "safeName": "GET_TELEMETRY_DATA_TELEMETRY_RESPONSE"
                         },
                         "pascalCase": {
-                            "unsafeName": "TelemetryGetTelemetryDataResponse",
-                            "safeName": "TelemetryGetTelemetryDataResponse"
+                            "unsafeName": "GetTelemetryDataTelemetryResponse",
+                            "safeName": "GetTelemetryDataTelemetryResponse"
                         }
                     },
                     "fernFilepath": {
@@ -3841,22 +3784,22 @@
                     "type": "inlined",
                     "declaration": {
                         "name": {
-                            "originalName": "TelemetryGetTelemetryDataRequest",
+                            "originalName": "GetTelemetryDataTelemetryRequest",
                             "camelCase": {
-                                "unsafeName": "telemetryGetTelemetryDataRequest",
-                                "safeName": "telemetryGetTelemetryDataRequest"
+                                "unsafeName": "getTelemetryDataTelemetryRequest",
+                                "safeName": "getTelemetryDataTelemetryRequest"
                             },
                             "snakeCase": {
-                                "unsafeName": "telemetry_get_telemetry_data_request",
-                                "safeName": "telemetry_get_telemetry_data_request"
+                                "unsafeName": "get_telemetry_data_telemetry_request",
+                                "safeName": "get_telemetry_data_telemetry_request"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "TELEMETRY_GET_TELEMETRY_DATA_REQUEST",
-                                "safeName": "TELEMETRY_GET_TELEMETRY_DATA_REQUEST"
+                                "unsafeName": "GET_TELEMETRY_DATA_TELEMETRY_REQUEST",
+                                "safeName": "GET_TELEMETRY_DATA_TELEMETRY_REQUEST"
                             },
                             "pascalCase": {
-                                "unsafeName": "TelemetryGetTelemetryDataRequest",
-                                "safeName": "TelemetryGetTelemetryDataRequest"
+                                "unsafeName": "GetTelemetryDataTelemetryRequest",
+                                "safeName": "GetTelemetryDataTelemetryRequest"
                             }
                         },
                         "fernFilepath": {
@@ -4027,7 +3970,7 @@
             },
             "service": "service_telemetry",
             "types": [
-                "type_telemetry:TelemetryGetTelemetryDataResponse"
+                "type_telemetry:GetTelemetryDataTelemetryResponse"
             ],
             "errors": [],
             "subpackages": [],

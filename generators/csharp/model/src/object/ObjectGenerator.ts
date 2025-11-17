@@ -81,7 +81,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
                 type: this.Collection.idictionary(
                     this.Primitive.string,
                     this.objectDeclaration.extraProperties
-                        ? this.Primitive.object.toOptionalIfNotAlready()
+                        ? this.Primitive.object.asOptional()
                         : this.System.Text.Json.JsonElement,
                     {
                         dontSimplify: true
@@ -90,7 +90,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
                 initializer: this.objectDeclaration.extraProperties
                     ? this.System.Collections.Generic.Dictionary(
                           this.Primitive.string,
-                          this.Primitive.object.toOptionalIfNotAlready()
+                          this.Primitive.object.asOptional()
                       ).new()
                     : this.System.Collections.Generic.Dictionary(
                           this.Primitive.string,

@@ -320,7 +320,6 @@ impl HttpClient {
         serde_json::from_str(&text).map_err(ApiError::Serialization)
     }
 
-
     /// Execute a request and return a streaming response (for large file downloads)
     ///
     /// This method returns a `ByteStream` that can be used to download large files
@@ -499,9 +498,7 @@ impl HttpClient {
         );
         req.headers_mut().insert(
             "Cache-Control",
-            "no-store"
-                .parse()
-                .map_err(|_| ApiError::InvalidHeader)?,
+            "no-store".parse().map_err(|_| ApiError::InvalidHeader)?,
         );
 
         // Execute with retries

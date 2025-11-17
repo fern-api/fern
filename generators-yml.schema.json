@@ -728,6 +728,13 @@
         "never"
       ]
     },
+    "generators.PathParameterOrder": {
+      "type": "string",
+      "enum": [
+        "url-order",
+        "spec-order"
+      ]
+    },
     "generators.APIDefinitionSettingsSchema": {
       "type": "object",
       "properties": {
@@ -835,6 +842,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/generators.RemoveDiscriminantsFromSchemas"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "path-parameter-order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.PathParameterOrder"
             },
             {
               "type": "null"
@@ -1668,6 +1685,16 @@
             }
           ]
         },
+        "path-parameter-order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.PathParameterOrder"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "only-include-referenced-schemas": {
           "oneOf": [
             {
@@ -1970,6 +1997,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/generators.RemoveDiscriminantsFromSchemas"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "path-parameter-order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.PathParameterOrder"
             },
             {
               "type": "null"
@@ -2373,6 +2410,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/generators.RemoveDiscriminantsFromSchemas"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "path-parameter-order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.PathParameterOrder"
             },
             {
               "type": "null"

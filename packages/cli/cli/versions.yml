@@ -1,6 +1,113 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Show AI example generation progress in the spinner line. When generating AI examples, the spinner displays "generating AI examples for {API name} - X/Y" to track progress without creating terminal noise.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-14"
+  version: 1.2.0
+
+- changelogEntry:
+    - summary: |
+        Add `path-parameter-order`, which configures how path parameters are ordered in generated code.
+        If set to `url-order` (the default), path parameters are ordered in the same order as they appear in the URL.
+        If set to `spec-order`, path parameters are ordered in the same order as they are listed in the spec.
+
+        Can be configured as follows in `generators.yml`:
+        ```yaml
+        api:
+          settings:
+            path-parameter-order: url-order
+        ```
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 1.1.0
+
+- changelogEntry:
+    - summary: |
+        Ensure 1.0.0 settings migration runs for users upgrading from pre-1.0.0 versions. This addresses a previous off-by-one error in migration selection that could cause the 1.0.0 migration to be skipped.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-14"
+  version: 1.0.5
+
+- changelogEntry:
+    - summary: |
+        Fix CLI migration selection to include the target version's migrations during `fern upgrade`.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-14"
+  version: 1.0.4
+
+- changelogEntry:
+    - summary: |
+        Specify the target of links throughout the docs navigation.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-14"
+  version: 1.0.3
+
+- changelogEntry:
+    - summary: |
+        Display OpenAPI validation warnings when using the --warnings flag with fern check. Previously, warnings were counted but not shown; now they are logged with location details when --warnings is specified.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 1.0.2
+
+- changelogEntry:
+    - summary: |
+        Update OpenAPI operation converter to use `x-fern-explorer` extension instead of `x-fern-explorer-enabled` for setting `apiPlayground` property in the IR. Operations now check for the `x-fern-explorer` boolean value to determine API playground availability.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 1.0.1
+
+- changelogEntry:
+    - summary: |
+        Change defaults for OpenAPI and AsyncAPI parsing settings:
+          - `title-as-schema-name`: `false` (was `true`)
+          - `respect-nullable-schemas`: `true` (was `false`)
+          - `inline-path-parameters`: `true` (was `false`)
+          - `idiomatic-request-names`: `true` (was `false`)
+          - `type-dates-as-strings`: `true` (was `false`)
+          - `wrap-references-to-nullable-in-optional`: `false` (was `true`)
+          - `coerce-optional-schemas-to-nullable`: `false` (was `true`)
+          - `object-query-parameters`: `true` (was `false`)
+        The CLI will automatically upgrade your _generators.yml_ to explicitly set the old defaults to preserve
+        existing behavior. New users will get the new defaults.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 1.0.0
+
+- changelogEntry:
+    - summary: |
+        Refactor how settings from specs are parsed and applied in the CLI.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 0.121.2
+
+- changelogEntry:
+    - summary: |
+        Match endpoints to AI overrides examples.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 0.121.1
+
+- changelogEntry:
+    - summary: |
+        Add batching support for AI example enhancement. The CLI now processes up to 10 endpoints at once with a single pruned OpenAPI spec, improving performance. Non-OpenAPI specs are automatically skipped.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 0.121.0
+
+- changelogEntry:
+    - summary: |
         Support adding arbitrary metadata to `<Code />` components. Title and language are set by default, but can be overridden with `title` and `language` props.
       type: fix
   irVersion: 61

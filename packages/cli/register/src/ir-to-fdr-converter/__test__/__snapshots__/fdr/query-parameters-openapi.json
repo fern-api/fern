@@ -1,5 +1,45 @@
 {
   "types": {
+    "type_:SearchRequestNeighbor": {
+      "name": "SearchRequestNeighbor",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "User",
+            "type": {
+              "type": "id",
+              "value": "type_:User"
+            },
+            "displayName": "User"
+          },
+          {
+            "typeName": "NestedUser",
+            "type": {
+              "type": "id",
+              "value": "type_:NestedUser"
+            },
+            "displayName": "Nested User"
+          },
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      }
+    },
     "type_:SearchRequestNeighborRequired": {
       "name": "SearchRequestNeighborRequired",
       "shape": {
@@ -178,8 +218,7 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "string",
-                "format": "date"
+                "type": "date"
               }
             }
           },
@@ -243,12 +282,9 @@
                   }
                 },
                 "valueType": {
-                  "type": "optional",
-                  "itemType": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
                   }
                 }
               }
@@ -314,7 +350,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "type_:User"
+                "value": "type_:SearchRequestNeighbor"
               }
             }
           },
@@ -348,7 +384,7 @@
             "queryParameters": {
               "limit": 1,
               "id": "id",
-              "date": "date",
+              "date": "2023-01-15",
               "deadline": "2024-01-15T09:30:00Z",
               "bytes": "bytes",
               "user": {},
@@ -379,6 +415,7 @@
     "webhooks": [],
     "websockets": [],
     "types": [
+      "type_:SearchRequestNeighbor",
       "type_:SearchRequestNeighborRequired",
       "type_:SearchResponse",
       "type_:User",

@@ -1162,9 +1162,7 @@
         "value": {
           "type": "primitive",
           "value": {
-            "type": "string",
-            "format": "date",
-            "regex": "^\\d{4}-\\d{2}-\\d{2}$"
+            "type": "date"
           }
         }
       }
@@ -1177,9 +1175,7 @@
         "value": {
           "type": "primitive",
           "value": {
-            "type": "string",
-            "format": "date",
-            "regex": "^\\d{4}-\\d{2}-\\d{2}$"
+            "type": "date"
           }
         }
       }
@@ -1192,9 +1188,7 @@
         "value": {
           "type": "primitive",
           "value": {
-            "type": "string",
-            "format": "date",
-            "regex": "^\\d{4}-\\d{2}-\\d{2}$"
+            "type": "date"
           }
         }
       }
@@ -1207,8 +1201,7 @@
         "value": {
           "type": "primitive",
           "value": {
-            "type": "string",
-            "format": "date-time"
+            "type": "datetime"
           }
         }
       }
@@ -1221,8 +1214,7 @@
         "value": {
           "type": "primitive",
           "value": {
-            "type": "string",
-            "format": "date-time"
+            "type": "datetime"
           }
         }
       }
@@ -14325,8 +14317,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "string",
-                  "format": "date-time"
+                  "type": "datetime"
                 }
               }
             }
@@ -15057,8 +15048,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "string",
-                "format": "date"
+                "type": "date"
               }
             }
           },

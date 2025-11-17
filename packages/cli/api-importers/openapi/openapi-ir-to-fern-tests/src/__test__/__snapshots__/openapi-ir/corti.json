@@ -75,7 +75,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -98,7 +98,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -121,7 +121,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -144,7 +144,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -167,7 +167,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -190,7 +190,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -216,7 +216,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -305,68 +305,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "sort",
-              "value": {
-                "value": {
-                  "value": "sort",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "direction",
-              "value": {
-                "value": {
-                  "value": "direction",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "pageSize",
-              "value": {
-                "value": {
-                  "value": 1000000,
-                  "type": "int64"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "index",
-              "value": {
-                "value": {
-                  "value": 1000000,
-                  "type": "int64"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "encounterStatus",
-              "value": {
-                "value": {
-                  "value": "encounterStatus",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "patient",
-              "value": {
-                "value": {
-                  "value": "patient",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "Tenant-Name",
@@ -525,7 +464,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -808,7 +747,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -1114,7 +1053,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -1304,7 +1243,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -1633,7 +1572,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -1869,7 +1808,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -2080,7 +2019,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -2298,7 +2237,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -2546,7 +2485,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -2569,7 +2508,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -2592,7 +2531,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -2615,7 +2554,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -2638,7 +2577,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -2664,7 +2603,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -2839,58 +2778,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "sort",
-              "value": {
-                "value": {
-                  "value": "sort",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "direction",
-              "value": {
-                "value": {
-                  "value": "direction",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "pageSize",
-              "value": {
-                "value": {
-                  "value": 1000000,
-                  "type": "int64"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "index",
-              "value": {
-                "value": {
-                  "value": 1000000,
-                  "type": "int64"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "full",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "Tenant-Name",
@@ -2988,7 +2876,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -3372,7 +3260,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -3721,7 +3609,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -3978,7 +3866,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -4148,7 +4036,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -4369,7 +4257,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -4622,7 +4510,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -4892,7 +4780,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -5139,7 +5027,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -5431,7 +5319,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -5869,7 +5757,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -5895,7 +5783,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -6055,18 +5943,7 @@
               }
             }
           ],
-          "queryParameters": [
-            {
-              "name": "context",
-              "value": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "Tenant-Name",
@@ -6258,7 +6135,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -6524,7 +6401,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -6861,7 +6738,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -6884,7 +6761,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -6910,7 +6787,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -6999,28 +6876,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "org",
-              "value": {
-                "value": {
-                  "value": "org",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "lang",
-              "value": {
-                "value": {
-                  "value": "lang",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "Tenant-Name",
@@ -7140,7 +6996,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -7163,7 +7019,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -7186,7 +7042,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -7212,7 +7068,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -7301,38 +7157,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "org",
-              "value": {
-                "value": {
-                  "value": "org",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "lang",
-              "value": {
-                "value": {
-                  "value": "lang",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "templateStatus",
-              "value": {
-                "value": {
-                  "value": "templateStatus",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [
             {
               "name": "Tenant-Name",
@@ -7469,7 +7294,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -7726,7 +7551,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -8005,7 +7830,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -8356,7 +8181,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../swagger.json",
@@ -8631,7 +8456,6 @@
                 "type": "string"
               },
               "generatedName": "Token",
-              "nameOverride": "StreamToken",
               "title": "StreamToken",
               "namespace": "stream",
               "groupName": [
@@ -8656,7 +8480,6 @@
                 "type": "string"
               },
               "generatedName": "TenantName",
-              "nameOverride": "StreamTenantName",
               "title": "StreamTenantName",
               "namespace": "stream",
               "groupName": [
@@ -8683,7 +8506,6 @@
                 "type": "string"
               },
               "generatedName": "Id",
-              "nameOverride": "StreamId",
               "title": "StreamId",
               "namespace": "stream",
               "groupName": [
@@ -9537,7 +9359,6 @@
                 "type": "reference"
               },
               "generatedName": "DocumentContextDataZero",
-              "nameOverride": "Facts",
               "title": "Facts",
               "groupName": [],
               "type": "array"
@@ -9558,7 +9379,6 @@
                 "type": "string"
               },
               "generatedName": "DocumentContextDataTwo",
-              "nameOverride": "Text",
               "title": "Text",
               "groupName": [],
               "type": "primitive"

@@ -40,13 +40,15 @@ public class Example19 {
                         .castMember(CastMember.of(
                                 Actor.builder().name("name").id("id").build()))
                         .extendedMovie(ExtendedMovie.builder()
-                                .cast(Arrays.asList("cast", "cast"))
                                 .id("id")
                                 .title("title")
                                 .from("from")
                                 .rating(1.1)
-                                .type("movie")
                                 .tag("tag")
+                                .revenue(1000000L)
+                                .cast(Arrays.asList("cast", "cast"))
+                                .prequel("prequel")
+                                .book("book")
                                 .metadata(new HashMap<String, Object>() {
                                     {
                                         put("metadata", new HashMap<String, Object>() {
@@ -56,9 +58,6 @@ public class Example19 {
                                         });
                                     }
                                 })
-                                .revenue(1000000L)
-                                .prequel("prequel")
-                                .book("book")
                                 .build())
                         .entity(Entity.builder()
                                 .type(Type.of(BasicType.PRIMITIVE))

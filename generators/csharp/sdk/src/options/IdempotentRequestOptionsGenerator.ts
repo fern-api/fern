@@ -42,7 +42,7 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<CSharpFile>
                 writer.pushScope();
                 for (const header of this.context.getIdempotencyHeaders()) {
                     const type = this.context.csharpTypeMapper.convert({ reference: header.valueType });
-                    const isString = is.Primitive.string(type.unwrapIfOptional());
+                    const isString = is.Primitive.string(type.asNonOptional());
                     const toString = isString ? "" : ".ToString()";
                     // In header values, we only accept simple types, so we can assume that none are nullable (apart from string),
                     // unless the type is optional

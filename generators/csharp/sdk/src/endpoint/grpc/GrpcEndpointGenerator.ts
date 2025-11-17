@@ -28,7 +28,7 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
         const parameters = [...endpointSignatureInfo.baseParameters];
         parameters.push(
             this.csharp.parameter({
-                type: this.Types.GrpcRequestOptions.toOptionalIfNotAlready(),
+                type: this.Types.GrpcRequestOptions.asOptional(),
                 name: this.names.parameters.requestOptions,
                 initializer: "null"
             })

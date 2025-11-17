@@ -159,6 +159,11 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: default
+  unions-with-local-date:
+    - customConfig:
+        use-local-date-for-dates: true
+        package-prefix: com.seed.unions
+      outputFolder: default
   accept-header:
     - outputFolder: accept-header
   client-side-params:
@@ -265,6 +270,10 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: wire-tests
+  streaming:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: streaming
 scripts:
   - docker: fernapi/java-seed
     commands:
@@ -314,7 +323,6 @@ allowedFailures:
   - oauth-client-credentials-nested-root
   - pagination-custom
   - query-parameters
-  - streaming
 
   - java-pagination-deep-cursor-path:wire-tests
 

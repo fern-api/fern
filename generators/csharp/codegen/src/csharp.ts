@@ -31,7 +31,7 @@ import {
     TestClass,
     XmlDocBlock
 } from "./ast";
-import { Type } from "./ast/types/Type";
+import { Type } from "./ast/types/IType";
 import { Generation } from "./context/generation-info";
 import { IrNode, Origin } from "./context/model-navigator";
 import { NameRegistry } from "./context/name-registry";

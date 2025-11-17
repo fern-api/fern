@@ -90,8 +90,4 @@ export class WithGeneration {
     public get Collection() {
         return this.generation.Collection;
     }
-    /** Provides access to special types */
-    public get Special() {
-        return this.generation.Special;
-    }
 }

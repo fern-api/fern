@@ -1,4 +1,4 @@
-use crate::api::resources::ServiceClient;
+use crate::api::resources::PublicObjectClient;
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
@@ -86,7 +86,7 @@ impl ApiClientBuilder {
     }
 
     /// Build the client with validation
-    pub fn build(self) -> Result<ServiceClient, ApiError> {
-        ServiceClient::new(self.config)
+    pub fn build(self) -> Result<PublicObjectClient, ApiError> {
+        PublicObjectClient::new(self.config)
     }
 }

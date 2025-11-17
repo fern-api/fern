@@ -15,6 +15,8 @@ public class Example23 {
 
         client.problem()
                 .getDefaultStarterFiles(GetDefaultStarterFilesRequest.builder()
+                        .outputType(VariableType.integerType())
+                        .methodName("methodName")
                         .inputParams(Arrays.asList(
                                 VariableTypeAndName.builder()
                                         .variableType(VariableType.integerType())
@@ -24,8 +26,6 @@ public class Example23 {
                                         .variableType(VariableType.integerType())
                                         .name("name")
                                         .build()))
-                        .outputType(VariableType.integerType())
-                        .methodName("methodName")
                         .build());
     }
 }

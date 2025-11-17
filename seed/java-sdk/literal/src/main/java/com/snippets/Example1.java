@@ -9,10 +9,6 @@ public class Example1 {
                 SeedLiteralClient.builder().url("https://api.fern.com").build();
 
         client.headers()
-                .send(SendLiteralsInHeadersRequest.builder()
-                        .endpointVersion("02-12-2024")
-                        .async(true)
-                        .query("query")
-                        .build());
+                .send(SendLiteralsInHeadersRequest.builder().query("query").build());
     }
 }

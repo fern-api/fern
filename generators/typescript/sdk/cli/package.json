@@ -27,10 +27,7 @@
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
     "dist:cli": "pnpm clean && pnpm compile && node build.mjs",
-    "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-typescript-node-sdk:latest -t fernapi/fern-typescript-sdk:latest ../../../..",
-    "test": "vitest --passWithNoTests --run",
-    "test:debug": "pnpm run test --inspect --no-file-parallelism",
-    "test:update": "vitest --passWithNoTests --run -u"
+    "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-typescript-node-sdk:latest -t fernapi/fern-typescript-sdk:latest ../../../.."
   },
   "devDependencies": {
     "@fern-api/base-generator": "workspace:*",
@@ -47,7 +44,6 @@
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "tsup": "^8.5.0",
-    "typescript": "5.9.3",
-    "vitest": "^2.1.9"
+    "typescript": "5.9.3"
   }
 }

@@ -25,6 +25,13 @@ public class Example0 {
                                 .name("name")
                                 .tags(Arrays.asList("tags", "tags"))
                                 .build())
+                        .nestedUser(NestedUser.builder()
+                                .name("name")
+                                .user(User.builder()
+                                        .name("name")
+                                        .tags(Arrays.asList("tags", "tags"))
+                                        .build())
+                                .build())
                         .userList(Arrays.asList(
                                 User.builder()
                                         .name("name")
@@ -39,13 +46,6 @@ public class Example0 {
                                 put("keyValue", "keyValue");
                             }
                         })
-                        .nestedUser(NestedUser.builder()
-                                .name("name")
-                                .user(User.builder()
-                                        .name("name")
-                                        .tags(Arrays.asList("tags", "tags"))
-                                        .build())
-                                .build())
                         .excludeUser(Arrays.asList(User.builder()
                                 .name("name")
                                 .tags(Arrays.asList("tags", "tags"))

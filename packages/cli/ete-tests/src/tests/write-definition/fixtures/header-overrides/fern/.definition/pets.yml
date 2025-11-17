@@ -18,8 +18,6 @@ service:
       examples:
         - headers:
             X-Dummy-Header: X-Dummy-Header
-          query-parameters:
-            limit: 1
           response:
             body:
               - id: 1000000
@@ -55,10 +53,12 @@ service:
               tag: tag
       method: GET
       path: /pets/{petId}
-      path-parameters:
-        petId:
-          docs: The id of the pet to retrieve
-          type: string
+      request:
+        name: ShowPetByIdRequest
+        path-parameters:
+          petId:
+            docs: The id of the pet to retrieve
+            type: string
       response:
         docs: Expected response to a valid request
         status-code: 200

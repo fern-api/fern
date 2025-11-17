@@ -541,6 +541,32 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             }
         }
 
+        // Add request types for endpoints with referenced body AND query parameters
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                // Check for referenced body + query parameters
+                if (endpoint.requestBody?.type === "reference" && endpoint.queryParameters.length > 0) {
+                    // Get the unique type name (may have suffix if there's a collision)
+                    const uniqueRequestName = context.getReferencedRequestWithQueryTypeName(endpoint.id);
+                    const rawModuleName = context.getModuleNameForReferencedRequestWithQuery(endpoint.id);
+                    const escapedModuleName = context.escapeRustKeyword(rawModuleName);
+
+                    // Only add if we haven't seen this module name before
+                    if (!uniqueModuleNames.has(escapedModuleName)) {
+                        uniqueModuleNames.add(escapedModuleName);
+                        moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
+                        useStatements.push(
+                            new UseStatement({
+                                path: escapedModuleName,
+                                items: [uniqueRequestName],
+                                isPublic: true
+                            })
+                        );
+                    }
+                }
+            }
+        }
+
         return new Module({
             moduleDeclarations,
             useStatements,
@@ -563,10 +589,19 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                 return;
             }
 
+            // Generate endpoint snippets
+            const endpointSnippets = this.generateSnippets(context);
+
+            // If there are no endpoint snippets (i.e., no examples defined), skip README generation
+            if (endpointSnippets.length === 0) {
+                context.logger.debug(`Skipping README.md generation - no endpoint examples defined`);
+                return;
+            }
+
             // Generate README content using the agent
             const readmeContent = await context.generatorAgent.generateReadme({
                 context,
-                endpointSnippets: this.generateSnippets(context)
+                endpointSnippets
             });
 
             context.logger.debug(

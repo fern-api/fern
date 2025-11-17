@@ -50,7 +50,7 @@ export class ExampleGenerator extends WithGeneration {
                     const values = unknownExample.map((value) => this.getSnippetForUnknown(value));
                     return this.csharp.list({
                         entries: values,
-                        itemType: this.Primitive.object.toOptionalIfNotAlready()
+                        itemType: this.Primitive.object.asOptional()
                     });
                 } else if (unknownExample != null && unknownExample instanceof Object) {
                     const keys = Object.keys(unknownExample).sort();
@@ -60,7 +60,7 @@ export class ExampleGenerator extends WithGeneration {
                     }));
                     return this.csharp.dictionary({
                         keyType: this.Primitive.object,
-                        valueType: this.Primitive.object.toOptionalIfNotAlready(),
+                        valueType: this.Primitive.object.asOptional(),
                         values: {
                             type: "entries",
                             entries
@@ -222,7 +222,7 @@ export class ExampleGenerator extends WithGeneration {
                     keyType: this.context.csharpTypeMapper.convert({ reference: p.keyType }),
                     valueType:
                         p.valueType.type === "unknown"
-                            ? this.context.csharpTypeMapper.convert({ reference: p.valueType }).toOptionalIfNotAlready()
+                            ? this.context.csharpTypeMapper.convert({ reference: p.valueType }).asOptional()
                             : this.context.csharpTypeMapper.convert({ reference: p.valueType }),
                     values: {
                         type: "entries",

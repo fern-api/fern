@@ -190,9 +190,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             parameters.push(
                 this.csharp.parameter({
                     name: param.name,
-                    type: this.context.csharpTypeMapper
-                        .convert({ reference: param.typeReference })
-                        .toOptionalIfNotAlready(),
+                    type: this.context.csharpTypeMapper.convert({ reference: param.typeReference }).asOptional(),
                     docs: param.docs,
                     initializer: "null"
                 })
@@ -202,7 +200,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         parameters.push(
             this.csharp.parameter({
                 name: this.members.clientOptionsParameterName,
-                type: this.Types.ClientOptions.toOptionalIfNotAlready(),
+                type: this.Types.ClientOptions.asOptional(),
                 initializer: "null"
             })
         );

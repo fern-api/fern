@@ -148,6 +148,7 @@ impl HttpClient {
         self.parse_response(response).await
     }
 
+<<<<<<< HEAD
     /// Execute a multipart/form-data request with the given method, path, and options
     ///
     /// This method is used for file uploads using reqwest's built-in multipart support.
@@ -215,6 +216,8 @@ impl HttpClient {
         self.parse_response(response).await
     }
 
+=======
+>>>>>>> @{-1}
     fn apply_auth_headers(
         &self,
         request: &mut Request,
