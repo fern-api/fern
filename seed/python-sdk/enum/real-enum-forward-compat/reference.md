@@ -164,6 +164,7 @@ client.inlined_request.send(
 </dl>
 </details>
 
+## MultipartForm
 ## PathParam
 <details><summary><code>client.path_param.<a href="src/seed/path_param/client.py">send</a>(...)</code></summary>
 <dl>

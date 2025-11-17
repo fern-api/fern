@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        ConvertToken,
         Key,
         KeyType,
         Metadata,
@@ -17,13 +18,16 @@ if typing.TYPE_CHECKING:
         NestedUnionL2,
         NestedUnionRoot,
         OptionalMetadata,
+        PaymentMethodUnion,
         Request,
+        TokenizeCard,
         TypeWithOptionalUnion,
         UnionWithDuplicateTypes,
         UnionWithIdenticalPrimitives,
         UnionWithIdenticalStrings,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "ConvertToken": ".types",
     "Key": ".types",
     "KeyType": ".types",
     "Metadata": ".types",
@@ -34,7 +38,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "NestedUnionL2": ".types",
     "NestedUnionRoot": ".types",
     "OptionalMetadata": ".types",
+    "PaymentMethodUnion": ".types",
     "Request": ".types",
+    "TokenizeCard": ".types",
     "TypeWithOptionalUnion": ".types",
     "UnionWithDuplicateTypes": ".types",
     "UnionWithIdenticalPrimitives": ".types",
@@ -64,6 +70,7 @@ def __dir__():
 
 
 __all__ = [
+    "ConvertToken",
     "Key",
     "KeyType",
     "Metadata",
@@ -74,7 +81,9 @@ __all__ = [
     "NestedUnionL2",
     "NestedUnionRoot",
     "OptionalMetadata",
+    "PaymentMethodUnion",
     "Request",
+    "TokenizeCard",
     "TypeWithOptionalUnion",
     "UnionWithDuplicateTypes",
     "UnionWithIdenticalPrimitives",

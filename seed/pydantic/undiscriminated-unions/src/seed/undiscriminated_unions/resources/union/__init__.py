@@ -2,6 +2,7 @@
 
 # isort: skip_file
 
+from .convert_token import ConvertToken
 from .key import Key
 from .key_type import KeyType
 from .metadata import Metadata
@@ -12,13 +13,16 @@ from .nested_union_l_1 import NestedUnionL1
 from .nested_union_l_2 import NestedUnionL2
 from .nested_union_root import NestedUnionRoot
 from .optional_metadata import OptionalMetadata
+from .payment_method_union import PaymentMethodUnion
 from .request import Request
+from .tokenize_card import TokenizeCard
 from .type_with_optional_union import TypeWithOptionalUnion
 from .union_with_duplicate_types import UnionWithDuplicateTypes
 from .union_with_identical_primitives import UnionWithIdenticalPrimitives
 from .union_with_identical_strings import UnionWithIdenticalStrings
 
 __all__ = [
+    "ConvertToken",
     "Key",
     "KeyType",
     "Metadata",
@@ -29,7 +33,9 @@ __all__ = [
     "NestedUnionL2",
     "NestedUnionRoot",
     "OptionalMetadata",
+    "PaymentMethodUnion",
     "Request",
+    "TokenizeCard",
     "TypeWithOptionalUnion",
     "UnionWithDuplicateTypes",
     "UnionWithIdenticalPrimitives",

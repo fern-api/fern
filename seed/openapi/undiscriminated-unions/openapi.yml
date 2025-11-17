@@ -133,6 +133,30 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/NestedUnionRoot'
+  /camel-case:
+    post:
+      operationId: union_testCamelCaseProperties
+      tags:
+        - Union
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                paymentMethod:
+                  $ref: '#/components/schemas/PaymentMethodUnion'
+              required:
+                - paymentMethod
 components:
   schemas:
     Request:
@@ -271,4 +295,34 @@ components:
           format: double
         - type: string
       description: Mix of primitives where some resolve to the same Java type.
+    PaymentMethodUnion:
+      title: PaymentMethodUnion
+      oneOf:
+        - $ref: '#/components/schemas/TokenizeCard'
+        - $ref: '#/components/schemas/ConvertToken'
+      description: |-
+        Tests that nested properties with camelCase wire names are properly
+        converted from snake_case Ruby keys when passed as Hash values.
+    TokenizeCard:
+      title: TokenizeCard
+      type: object
+      properties:
+        method:
+          type: string
+        cardNumber:
+          type: string
+      required:
+        - method
+        - cardNumber
+    ConvertToken:
+      title: ConvertToken
+      type: object
+      properties:
+        method:
+          type: string
+        tokenId:
+          type: string
+      required:
+        - method
+        - tokenId
   securitySchemes: {}

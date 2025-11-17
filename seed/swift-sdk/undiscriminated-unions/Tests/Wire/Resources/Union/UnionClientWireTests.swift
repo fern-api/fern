@@ -243,4 +243,30 @@ import UndiscriminatedUnions
         )
         try #require(response == expectedResponse)
     }
+
+    @Test func testCamelCaseProperties1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                string
+                """.utf8
+            )
+        )
+        let client = UndiscriminatedUnionsClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = "string"
+        let response = try await client.union.testCamelCaseProperties(
+            request: .init(paymentMethod: PaymentMethodUnion.tokenizeCard(
+                TokenizeCard(
+                    method: "method",
+                    cardNumber: "cardNumber"
+                )
+            )),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
 }

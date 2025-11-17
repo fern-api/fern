@@ -422,4 +422,77 @@ export class UnionClient {
                 });
         }
     }
+
+    /**
+     * @param {SeedUndiscriminatedUnions.PaymentRequest} request
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.union.testCamelCaseProperties({
+     *         paymentMethod: {
+     *             method: "method",
+     *             cardNumber: "cardNumber"
+     *         }
+     *     })
+     */
+    public testCamelCaseProperties(
+        request: SeedUndiscriminatedUnions.PaymentRequest,
+        requestOptions?: Union.RequestOptions,
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__testCamelCaseProperties(request, requestOptions));
+    }
+
+    private async __testCamelCaseProperties(
+        request: SeedUndiscriminatedUnions.PaymentRequest,
+        requestOptions?: Union.RequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/camel-case",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as string, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedUndiscriminatedUnionsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedUndiscriminatedUnionsTimeoutError(
+                    "Timeout exceeded when calling POST /camel-case.",
+                );
+            case "unknown":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
 }

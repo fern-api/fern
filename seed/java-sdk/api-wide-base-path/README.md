@@ -64,7 +64,7 @@ public class Example {
             .pathParam("pathParam")
             .build();
 
-        client.service().post("serviceParam", "resourceParam", 1);
+        client.service().post("serviceParam", 1, "resourceParam");
     }
 }
 ```

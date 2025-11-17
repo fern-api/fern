@@ -54,4 +54,11 @@ public interface UserService {
   )
   User getUserMetadata(@PathVariable("user_id") String userId,
       @PathVariable("version") Integer version);
+
+  @GetMapping(
+      value = "/{user_id}/specifics/{version}/{thought}",
+      produces = "application/json"
+  )
+  User getUserSpecifics(@PathVariable("user_id") String userId,
+      @PathVariable("version") Integer version, @PathVariable("thought") String thought);
 }

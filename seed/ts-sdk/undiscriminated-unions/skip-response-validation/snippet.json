@@ -65,6 +65,17 @@
                 "type": "typescript",
                 "client": "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";\n\nconst client = new SeedUndiscriminatedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.nestedUnions(\"string\");\n"
             }
+        },
+        {
+            "id": {
+                "path": "/camel-case",
+                "method": "POST",
+                "identifier_override": "endpoint_union.testCamelCaseProperties"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";\n\nconst client = new SeedUndiscriminatedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.testCamelCaseProperties({\n    paymentMethod: {\n        method: \"method\",\n        cardNumber: \"cardNumber\"\n    }\n});\n"
+            }
         }
     ],
     "types": {}
