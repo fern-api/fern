@@ -1,6 +1,7 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
+import chalk from "chalk";
 import cliProgress from "cli-progress";
 import decompress from "decompress";
 import { mkdir, readFile, rm, writeFile } from "fs/promises";
@@ -9,6 +10,7 @@ import tmp from "tmp-promise";
 import xml2js from "xml2js";
 
 const PLATFORM_IS_WINDOWS = process.platform === "win32";
+const DOCS_PREFIX = chalk.cyan("[docs]:");
 const ETAG_FILENAME = "etag";
 const PREVIEW_FOLDER_NAME = "preview";
 const APP_PREVIEW_FOLDER_NAME = "app-preview";
@@ -178,14 +180,14 @@ export async function downloadBundle({
         let progressBar: cliProgress.SingleBar | undefined;
         if (app && totalBytes > 0) {
             progressBar = new cliProgress.SingleBar({
-                format: "[docs]: Downloading docs bundle [{bar}] {percentage}% | {value}/{total} MB",
+                format: `${DOCS_PREFIX} Downloading docs bundle [{bar}] {percentage}% | {value}/{total} MB`,
                 barCompleteChar: "\u2588",
                 barIncompleteChar: "\u2591",
                 hideCursor: true
             });
             progressBar.start(Math.ceil(totalBytes / (1024 * 1024)), 0);
         } else if (app) {
-            logger.info("[docs]: Downloading docs bundle...");
+            logger.info(`${DOCS_PREFIX} Downloading docs bundle...`);
         }
 
         const chunks: Uint8Array[] = [];
@@ -229,33 +231,40 @@ export async function downloadBundle({
         logger.debug(`Decompressing bundle from ${outputZipPath} to ${absolutePathToBundleFolder}`);
 
         let unzipProgressBar: cliProgress.SingleBar | undefined;
-        let extractedFiles = 0;
+        let unzipInterval: NodeJS.Timeout | undefined;
 
         if (app) {
             unzipProgressBar = new cliProgress.SingleBar({
-                format: "[docs]: Unzipping docs bundle [{bar}] {value} files extracted",
+                format: `${DOCS_PREFIX} Unzipping docs bundle [{bar}] {percentage}%`,
                 barCompleteChar: "\u2588",
                 barIncompleteChar: "\u2591",
                 hideCursor: true
             });
             unzipProgressBar.start(100, 0);
+
+            const UNZIP_DURATION_MS = 15000;
+            const startTime = Date.now();
+            unzipInterval = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const t = Math.min(elapsed / UNZIP_DURATION_MS, 1);
+                const p = 1 - Math.pow(1 - t, 3);
+                const percentage = Math.min(99, Math.floor(p * 100));
+                unzipProgressBar?.update(percentage);
+            }, 50);
         }
 
-        await decompress(outputZipPath, absolutePathToBundleFolder, {
-            // skip extraction of symlinks on windows
-            filter: (file) => {
-                if (unzipProgressBar) {
-                    extractedFiles++;
-                    const estimatedProgress = Math.min(99, Math.floor(extractedFiles / 10));
-                    unzipProgressBar.update(estimatedProgress, { value: extractedFiles });
-                }
-                return !(PLATFORM_IS_WINDOWS && file.type === "symlink");
+        try {
+            await decompress(outputZipPath, absolutePathToBundleFolder, {
+                filter: (file) => !(PLATFORM_IS_WINDOWS && file.type === "symlink")
+            });
+        } finally {
+            if (unzipInterval) {
+                clearInterval(unzipInterval);
             }
-        });
-
-        if (unzipProgressBar) {
-            unzipProgressBar.update(100, { value: extractedFiles });
-            unzipProgressBar.stop();
+            if (unzipProgressBar) {
+                unzipProgressBar.update(100);
+                unzipProgressBar.stop();
+            }
         }
 
         // write etag
