@@ -72,6 +72,7 @@ export abstract class AbstractRustGeneratorContext<
         this.dependencyManager.add("thiserror", "1.0");
         this.dependencyManager.add("percent-encoding", "2.3");
         this.dependencyManager.add("ordered-float", { version: "4.5", features: ["serde"] });
+        this.dependencyManager.add("num-bigint", { version: "0.4", features: ["serde"] });
 
         // Always include chrono and uuid for QueryBuilder support
         this.dependencyManager.add("chrono", { version: "0.4", features: ["serde"] });
@@ -98,12 +99,6 @@ export abstract class AbstractRustGeneratorContext<
      * Detect features from IR and add conditional dependencies
      */
     private detectAndAddFeatureDependencies(): void {
-        const usesBigInt = this.usesBigInteger();
-
-        if (usesBigInt) {
-            this.dependencyManager.add("num-bigint", { version: "0.4", features: ["serde"] });
-        }
-
         const hasFileUpload = this.hasFileUploadEndpoints();
         const hasStreaming = this.hasStreamingEndpoints();
 
@@ -135,7 +130,7 @@ export abstract class AbstractRustGeneratorContext<
     /**
      * Check if IR uses a specific primitive type
      */
-    private irUsesType(typeName: "DATE_TIME" | "UUID" | "BIG_INTEGER"): boolean {
+    private irUsesType(typeName: "DATE_TIME" | "DATE" | "UUID" | "BIG_INTEGER"): boolean {
         for (const typeDecl of Object.values(this.ir.types)) {
             if (this.typeShapeUsesBuiltin(typeDecl.shape, typeName)) {
                 return true;
@@ -286,10 +281,10 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
-     * Check if IR uses datetime types
+     * Check if IR uses datetime types (DateTime or NaiveDate)
      */
     public usesDateTime(): boolean {
-        return this.irUsesType("DATE_TIME");
+        return this.irUsesType("DATE_TIME") || this.irUsesType("DATE");
     }
 
     /**
