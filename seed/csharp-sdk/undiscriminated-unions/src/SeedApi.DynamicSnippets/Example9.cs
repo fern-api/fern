@@ -14,7 +14,8 @@ public class Example9
         await client.Union.TestCamelCasePropertiesAsync(
             new PaymentRequest {
                 PaymentMethod = new TokenizeCard {
-                    Method = "card"
+                    Method = "method",
+                    CardNumber = "cardNumber"
                 }
             }
         );

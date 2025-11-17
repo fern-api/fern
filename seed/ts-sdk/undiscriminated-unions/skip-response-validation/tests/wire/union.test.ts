@@ -122,8 +122,8 @@ describe("Union", () => {
     test("testCamelCaseProperties", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedUndiscriminatedUnionsClient({ environment: server.baseUrl });
-        const rawRequestBody = { paymentMethod: { method: "card", tokenId: "tok_123" } };
-        const rawResponseBody = "success";
+        const rawRequestBody = { paymentMethod: { method: "method", cardNumber: "cardNumber" } };
+        const rawResponseBody = "string";
         server
             .mockEndpoint()
             .post("/camel-case")
@@ -135,10 +135,10 @@ describe("Union", () => {
 
         const response = await client.union.testCamelCaseProperties({
             paymentMethod: {
-                method: "card",
-                tokenId: "tok_123",
+                method: "method",
+                cardNumber: "cardNumber",
             },
         });
-        expect(response).toEqual("success");
+        expect(response).toEqual("string");
     });
 });

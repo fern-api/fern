@@ -8,7 +8,7 @@ namespace SeedUndiscriminatedUnions.Test.Unit.MockServer;
 public class TestCamelCasePropertiesTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public async Task MockServerTest_1()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {
@@ -42,46 +42,6 @@ public class TestCamelCasePropertiesTest : BaseMockServerTest
             new PaymentRequest
             {
                 PaymentMethod = new TokenizeCard { Method = "method", CardNumber = "cardNumber" },
-            }
-        );
-        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
-    }
-
-    [NUnit.Framework.Test]
-    public async Task MockServerTest_2()
-    {
-        const string requestJson = """
-            {
-              "paymentMethod": {
-                "method": "card",
-                "tokenId": "tok_123"
-              }
-            }
-            """;
-
-        const string mockResponse = """
-            "success"
-            """;
-
-        Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/camel-case")
-                    .UsingPost()
-                    .WithBodyAsJson(requestJson)
-            )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
-
-        var response = await Client.Union.TestCamelCasePropertiesAsync(
-            new PaymentRequest
-            {
-                PaymentMethod = new ConvertToken { Method = "card", TokenId = "tok_123" },
             }
         );
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));

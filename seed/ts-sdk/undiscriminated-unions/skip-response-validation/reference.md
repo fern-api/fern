@@ -311,8 +311,8 @@ await client.union.nestedUnions("string");
 ```typescript
 await client.union.testCamelCaseProperties({
     paymentMethod: {
-        method: "card",
-        tokenId: "tok_123"
+        method: "method",
+        cardNumber: "cardNumber"
     }
 });
 

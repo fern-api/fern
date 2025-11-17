@@ -82,7 +82,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.TestCamelCasePropertiesAsync(\n    new PaymentRequest\n    {\n        PaymentMethod = new ConvertToken { Method = \"card\", TokenId = \"tok_123\" },\n    }\n);\n"
+                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.TestCamelCasePropertiesAsync(\n    new PaymentRequest\n    {\n        PaymentMethod = new TokenizeCard { Method = \"method\", CardNumber = \"cardNumber\" },\n    }\n);\n"
             }
         }
     ]

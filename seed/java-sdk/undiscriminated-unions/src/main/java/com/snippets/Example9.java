@@ -13,8 +13,10 @@ public class Example9 {
 
         client.union()
                 .testCamelCaseProperties(PaymentRequest.builder()
-                        .paymentMethod(PaymentMethodUnion.of(
-                                TokenizeCard.builder().method("card").build()))
+                        .paymentMethod(PaymentMethodUnion.of(TokenizeCard.builder()
+                                .method("method")
+                                .cardNumber("cardNumber")
+                                .build()))
                         .build());
     }
 }

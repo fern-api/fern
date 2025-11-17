@@ -344,7 +344,7 @@ public partial class UnionClient
     /// await client.Union.TestCamelCasePropertiesAsync(
     ///     new PaymentRequest
     ///     {
-    ///         PaymentMethod = new ConvertToken { Method = "card", TokenId = "tok_123" },
+    ///         PaymentMethod = new TokenizeCard { Method = "method", CardNumber = "cardNumber" },
     ///     }
     /// );
     /// </code></example>

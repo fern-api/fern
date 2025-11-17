@@ -429,8 +429,8 @@ export class Union {
      * @example
      *     await client.union.testCamelCaseProperties({
      *         paymentMethod: {
-     *             method: "card",
-     *             tokenId: "tok_123"
+     *             method: "method",
+     *             cardNumber: "cardNumber"
      *         }
      *     })
      */
