@@ -3,7 +3,7 @@
 import { SeedResponsePropertyClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Service", () => {
+describe("ServiceClient", () => {
     test("getMovie", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedResponsePropertyClient({ environment: server.baseUrl });

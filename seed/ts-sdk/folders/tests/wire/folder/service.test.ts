@@ -4,7 +4,7 @@ import * as SeedApi from "../../../src/api/index";
 import { SeedApiClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
-describe("Service", () => {
+describe("ServiceClient", () => {
     test("endpoint", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ environment: server.baseUrl });
