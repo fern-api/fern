@@ -18,9 +18,14 @@ receive the attention you expect.
 
 The Fern repo is primarily written in TypeScript and relies on [PnPm](https://pnpm.io/) for package management.
 
+The repo relies on git-lfs to handle large file storage, so you'll need to have git-lfs installed in order to clone the repo. If you're using homebrew, just run:
+```sh
+brew install git-lfs
+```
+
 ### Important: Avoid Huge Clones
 
-The Fern repository is a large monorepo with extensive test fixtures and generated code. To avoid downloading gigabytes of unnecessary files, we strongly recommend using **sparse checkout** when cloning the repository.
+The Fern repository is a large monorepo with extensive test fixtures and generated code. To avoid downloading gigabytes of unnecessary files, we strongly recommend using **git sparse-checkout** when cloning the repository.
 
 #### Recommended Clone Method
 
@@ -66,11 +71,6 @@ git config feature.manyFiles true
 On macOS, installing [watchman](https://facebook.github.io/watchman/) can further improve file watching performance:
 ```sh
 brew install watchman
-```
-
-The repo relies on git-lfs to handle large file storage, so you'll need to have git-lfs installed in order to clone the repo. If you're using homebrew, just run:
-```sh
-brew install git-lfs
 ```
 
 Once you have cloned or forked the repository, run through the steps below.
