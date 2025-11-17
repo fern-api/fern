@@ -134,12 +134,8 @@ export async function upgrade({
     }
 
     if (fernCliUpgradeInfo && !fernCliUpgradeInfo.isUpgradeAvailable) {
-        const previousVersion = process.env[PREVIOUS_VERSION_ENV_VAR];
-        if (previousVersion == null) {
-            cliContext.logger.info("No upgrade available.");
-            return;
-        }
-        await runPostUpgradeSteps({ cliContext, previousVersion, newVersion: fernCliUpgradeInfo.targetVersion });
+        cliContext.logger.info("No upgrade available.");
+        return;
     } else if (fernCliUpgradeInfo != null) {
         const fernDirectory = await getFernDirectory();
         if (fernDirectory == null) {
