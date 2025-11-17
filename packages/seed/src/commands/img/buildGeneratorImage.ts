@@ -74,7 +74,7 @@ async function buildFromPublishConfig(
     await loggingExeca(
         context.logger,
         "docker",
-        ["build", "-f", dockerConfig.file, ...tagArgs, dockerConfig.context ?? "."],
+        ["build", "--no-cache", "-f", dockerConfig.file, ...tagArgs, dockerConfig.context ?? "."],
         {
             doNotPipeOutput: !shouldPipeOutput(logLevel),
             cwd: repoRoot
