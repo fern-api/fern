@@ -101,7 +101,7 @@ export class CliContext {
     }
 
     public async exit({ code }: { code?: number } = {}): Promise<never> {
-        if (!this._suppressUpgradeMessage || !this.isLocal) {
+        if (!this._suppressUpgradeMessage && !this.isLocal) {
             await this.nudgeUpgradeIfAvailable();
         }
         this.ttyAwareLogger.finish();
