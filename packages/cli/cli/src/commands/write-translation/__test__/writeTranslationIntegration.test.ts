@@ -58,55 +58,6 @@ describe("writeTranslationForProject - Integration Tests", () => {
         } catch {
             // does not exist
         }
-
-        // Also save a summary of what was created
-        try {
-            const summaryPath = join(testOutputDir, "test-summary.md");
-            let summary = `# ${testName} Test Results\n\n`;
-            summary += `Test completed at: ${new Date().toISOString()}\n\n`;
-            summary += `## Original fern directory structure:\n`;
-            summary += `- Temp directory: ${fernDir}\n\n`;
-            summary += `## Translation output structure:\n`;
-
-            const fs = await import("fs/promises");
-            const path = await import("path");
-
-            async function listFilesRecursively(dir: string, basePath: string = ""): Promise<string[]> {
-                const files: string[] = [];
-                try {
-                    const entries = await fs.readdir(dir, { withFileTypes: true });
-                    for (const entry of entries) {
-                        const fullPath = path.join(dir, entry.name);
-                        const relativePath = path.join(basePath, entry.name);
-
-                        if (entry.isDirectory()) {
-                            files.push(relativePath + "/");
-                            const subFiles = await listFilesRecursively(fullPath, relativePath);
-                            files.push(...subFiles);
-                        } else {
-                            files.push(relativePath);
-                        }
-                    }
-                } catch {
-                    // ignore errors
-                }
-                return files;
-            }
-
-            try {
-                const files = await listFilesRecursively(translationsDir);
-                for (const file of files) {
-                    summary += `- ${file}\n`;
-                }
-            } catch {
-                summary += `- No translations directory found\n`;
-            }
-
-            await fs.writeFile(summaryPath, summary);
-            console.log(`Test summary saved to: ${summaryPath}`);
-        } catch (error) {
-            console.log(`Could not create test summary: ${error}`);
-        }
     }
 
     function createMockCliContext() {
