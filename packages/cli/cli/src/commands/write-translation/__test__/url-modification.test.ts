@@ -110,7 +110,7 @@ describe("addLanguageSuffixToUrl", () => {
                 "https://docs-de.docs.buildwithfern.com/de"
             );
             expect(addLanguageSuffixToUrl("https://acme.docs.buildwithfern.com/overview", "de")).toBe(
-                "https://acme-de.docs.buildwithfern.com/overview/de"
+                "https://acme-de.docs.buildwithfern.com/de/overview"
             );
 
             // Custom domain examples

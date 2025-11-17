@@ -11,7 +11,7 @@ export async function transformContentForLanguage(
     const { filePath, language, sourceLanguage, originalContent } = transformation;
 
     if (stub && !filePath.endsWith(".yml") && !filePath.endsWith(".yaml")) {
-        cliContext.logger.debug(`[STUB] Returning content as-is for  ${filePath} (stub mode enabled)`);
+        cliContext.logger.debug(`[STUB] Returning content as-is for ${filePath} (stub mode enabled)`);
         return originalContent;
     }
 
