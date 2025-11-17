@@ -191,7 +191,7 @@ export async function writeAiExamplesOverride({
         });
 
         await writeFile(overrideFilePath, yamlContent, "utf-8");
-        context.logger.info(`AI enhanced examples written to: ${overrideFilePath}`);
+        context.logger.debug(`AI enhanced examples written to: ${overrideFilePath}`);
     } catch (error) {
         context.logger.warn(`Failed to write AI examples override file: ${error}`);
         throw error;

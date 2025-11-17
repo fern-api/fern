@@ -111,7 +111,6 @@
       "fixtures": [
         "trace:no-custom-config",
         "path-parameters:inline-path-parameters-serde",
-        "pagination",
         "bytes-upload",
         "exhaustive:bigint",
         "exhaustive:node-fetch",
