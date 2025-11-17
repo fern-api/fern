@@ -333,7 +333,9 @@ export async function writeTranslationForProject({
             }
 
             const totalFilesToProcess = filesToProcess.length;
-            context.logger.info(chalk.cyan(`Processing ${totalFilesToProcess} changed files for translation...`));
+            if (totalFilesToProcess > 0) {
+                context.logger.info(chalk.cyan(`Processing ${totalFilesToProcess} changed files for translation...`));
+            }
 
             let processedFileIndex = 0;
             for (const [filePath, relativePath] of allFilesEntries) {
