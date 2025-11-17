@@ -2,7 +2,7 @@
 - version: 1.16.0
   changelogEntry:
     - summary: |
-        Provide request.HTTPRawResponse for accessing the headers and status code of paginated responses;
+        Provide request.HTTPRawResponse for accessing the headers and status codes of paginated responses;
         unlike for non-paginated responses, this raw data is always included in the response.
       type: fix
   createdAt: "2025-11-17"
