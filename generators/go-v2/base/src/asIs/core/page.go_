@@ -3,6 +3,7 @@ package core
 import (
 	"context"
 	"errors"
+	"net/http"
 )
 
 // ErrNoPages is a sentinel error used to signal that no pages remain.
@@ -26,11 +27,18 @@ type PageResponse[Cursor comparable, Result any] struct {
 	Done    bool
 }
 
+// HTTPPageResponse contains the HTTP response metadata from a paginated API call.
+type HTTPPageResponse struct {
+	StatusCode int
+	Header     http.Header
+}
+
 // Page represents a single page of results.
 type Page[Cursor comparable, T any] struct {
-	Results      []T
-	RawResponse  PageResponse[Cursor, T]
-	NextPageFunc func(context.Context) (*Page[Cursor, T], error)
+	Results         []T
+	RawResponse     PageResponse[Cursor, T]
+	HTTPRawResponse HTTPPageResponse
+	NextPageFunc    func(context.Context) (*Page[Cursor, T], error)
 }
 
 // GetNextPage fetches the next page, if any. If no pages remain,
