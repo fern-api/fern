@@ -532,7 +532,9 @@ export class DynamicLiteralMapper extends WithGeneration {
                 return this.namedTypeMatchesValue({ named, value });
             }
             case "optional":
-                return value === undefined || this.typeReferenceMatchesValue({ typeReference: typeReference.value, value });
+                return (
+                    value === undefined || this.typeReferenceMatchesValue({ typeReference: typeReference.value, value })
+                );
             case "nullable":
                 return value === null || this.typeReferenceMatchesValue({ typeReference: typeReference.value, value });
             case "list":
@@ -622,13 +624,7 @@ export class DynamicLiteralMapper extends WithGeneration {
         }
     }
 
-    private literalMatchesValue({
-        literal,
-        value
-    }: {
-        literal: FernIr.dynamic.LiteralType;
-        value: unknown;
-    }): boolean {
+    private literalMatchesValue({ literal, value }: { literal: FernIr.dynamic.LiteralType; value: unknown }): boolean {
         switch (literal.type) {
             case "boolean":
                 return typeof value === "boolean" && value === literal.value;
