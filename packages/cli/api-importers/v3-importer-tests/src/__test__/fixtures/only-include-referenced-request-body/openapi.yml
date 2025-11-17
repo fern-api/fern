@@ -1,0 +1,59 @@
+openapi: 3.0.0
+info:
+  title: Request Body Reference Test
+  version: 1.0.0
+paths:
+  /items:
+    post:
+      operationId: createItem
+      summary: Create an item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateItemRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+components:
+  schemas:
+    CreateItemRequest:
+      type: object
+      description: This schema is referenced by request body and should be kept
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/ItemMetadata'
+    ItemMetadata:
+      type: object
+      description: This schema is transitively referenced and should be kept
+      properties:
+        tags:
+          type: array
+          items:
+            type: string
+    Item:
+      type: object
+      description: This schema is referenced by response and should be kept
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    UnusedRequest:
+      type: object
+      description: This schema should be pruned as it's not referenced
+      properties:
+        unused:
+          type: string
