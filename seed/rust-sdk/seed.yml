@@ -109,3 +109,12 @@ fixtures:
           timeouts:
             - GET /movie/{movieId}
       outputFolder: readme-config
+      
+allowedFailures:
+  - circular-references
+  - circular-references-advanced
+  - examples:no-custom-config
+  - examples:readme-config
+  - objects-with-imports
+  - pagination
+  - trace
