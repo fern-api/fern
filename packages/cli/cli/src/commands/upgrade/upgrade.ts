@@ -21,18 +21,56 @@ function ensureFinalNewline(content: string): string {
     return content.endsWith("\n") ? content : content + "\n";
 }
 
+interface GitVersionResult {
+    version: string | null;
+    /** Reason why version retrieval failed, if applicable */
+    failureReason?: "not-git-repo" | "config-not-tracked" | "no-git-history" | "parse-error" | "no-version-field";
+}
+
+/**
+ * Converts git failure reason to human-readable message.
+ */
+function getGitFailureMessage(reason: GitVersionResult["failureReason"]): string {
+    if (!reason) {
+        return "";
+    }
+
+    switch (reason) {
+        case "not-git-repo":
+            return " (not a git repository)";
+        case "config-not-tracked":
+            return " (fern.config.json not tracked by git)";
+        case "no-git-history":
+            return " (no git history for fern.config.json)";
+        case "parse-error":
+            return " (failed to parse fern.config.json from git)";
+        case "no-version-field":
+            return " (no version field in fern.config.json)";
+    }
+}
+
 /**
  * Retrieves the previous version from git history of fern.config.json.
- * Returns null if not in a git repository or if unable to retrieve the version.
+ * Returns version and optional failure reason for better error messages.
  */
-async function getPreviousVersionFromGit(fernDirectory: string, logger: Logger): Promise<string | null> {
+async function getPreviousVersionFromGit(fernDirectory: string, logger: Logger): Promise<GitVersionResult> {
     try {
         // Get the git root directory
-        const { stdout: gitRoot } = await loggingExeca(logger, "git", ["rev-parse", "--show-toplevel"], {
-            cwd: fernDirectory,
-            doNotPipeOutput: true,
-            reject: false
-        });
+        const { stdout: gitRoot, failed: gitRootFailed } = await loggingExeca(
+            logger,
+            "git",
+            ["rev-parse", "--show-toplevel"],
+            {
+                cwd: fernDirectory,
+                doNotPipeOutput: true,
+                reject: false
+            }
+        );
+
+        if (gitRootFailed || !gitRoot.trim()) {
+            return { version: null, failureReason: "not-git-repo" };
+        }
+
         const gitRootPath = gitRoot.trim();
 
         // Get the path to fern.config.json relative to git root
@@ -50,23 +88,109 @@ async function getPreviousVersionFromGit(fernDirectory: string, logger: Logger):
         const configPath = relativePath.trim().split("\n")[0]; // Get first match
 
         if (!configPath) {
-            // File not tracked by git, return null
-            return null;
+            return { version: null, failureReason: "config-not-tracked" };
         }
 
         // Get the file content from git history
-        const { stdout: configContent } = await loggingExeca(logger, "git", ["show", `HEAD:${configPath}`], {
-            cwd: gitRootPath,
-            doNotPipeOutput: true,
-            reject: false
-        });
+        const { stdout: configContent, failed: showFailed } = await loggingExeca(
+            logger,
+            "git",
+            ["show", `HEAD:${configPath}`],
+            {
+                cwd: gitRootPath,
+                doNotPipeOutput: true,
+                reject: false
+            }
+        );
+
+        if (showFailed || !configContent.trim()) {
+            return { version: null, failureReason: "no-git-history" };
+        }
 
         const previousConfig = JSON.parse(configContent);
-        return previousConfig.version ?? null;
+        const version = previousConfig.version ?? null;
+
+        if (version == null) {
+            return { version: null, failureReason: "no-version-field" };
+        }
+
+        return { version };
     } catch (error) {
-        // Not in a git repo, file not in git history, or parse error
-        return null;
+        // JSON parse error or unexpected error
+        logger.debug(`Failed to retrieve version from git: ${error}`);
+        return { version: null, failureReason: "parse-error" };
     }
+}
+
+/**
+ * Resolves the source version for migrations, with support for faulty upgrade detection.
+ *
+ * Resolution order:
+ * 1. Explicit --from flag (highest priority)
+ * 2. Git history if --from-git flag is set
+ * 3. Git history if faulty upgrade detected (FERN_PRE_UPGRADE_VERSION equals current CLI version)
+ * 4. FERN_PRE_UPGRADE_VERSION environment variable (if valid)
+ * 5. Fallback to projectConfig.version
+ *
+ * @param options Configuration for version resolution
+ * @returns The resolved source version to migrate from
+ */
+async function resolveSourceVersion({
+    fromVersion,
+    fromGit,
+    cliContext,
+    fernDirectory,
+    projectConfig,
+    isLocalDev
+}: {
+    fromVersion: string | undefined;
+    fromGit: boolean | undefined;
+    cliContext: CliContext;
+    fernDirectory: string;
+    projectConfig: { version: string };
+    isLocalDev: boolean;
+}): Promise<string> {
+    let resolvedFromVersion = fromVersion?.trim();
+    const envVersion = process.env[PREVIOUS_VERSION_ENV_VAR]?.trim();
+
+    // Detect faulty upgrade: if FERN_PRE_UPGRADE_VERSION equals current CLI version,
+    // the upgrade came from a faulty version. Fall back to git history.
+    // But only if --from flag was not explicitly provided
+    const isFaultyUpgrade = !fromVersion && envVersion === cliContext.environment.packageVersion && !isLocalDev;
+
+    // Don't use env var if it's 0.0.0 (local dev version) or if it indicates a faulty upgrade
+    if (!resolvedFromVersion && envVersion && envVersion !== "0.0.0" && !isFaultyUpgrade && !fromGit) {
+        resolvedFromVersion = envVersion;
+    }
+
+    if (!resolvedFromVersion || isFaultyUpgrade || fromGit) {
+        const gitResult = await getPreviousVersionFromGit(fernDirectory, cliContext.logger);
+        if (gitResult.version != null) {
+            if (isFaultyUpgrade) {
+                cliContext.logger.debug(
+                    `Detected faulty upgrade (FERN_PRE_UPGRADE_VERSION=${process.env[PREVIOUS_VERSION_ENV_VAR]}). Using version from git history: ${gitResult.version}`
+                );
+            }
+            resolvedFromVersion = gitResult.version;
+        } else {
+            // Fallback to projectConfig.version if git retrieval fails
+            if (isFaultyUpgrade) {
+                const reason = getGitFailureMessage(gitResult.failureReason);
+                cliContext.logger.warn(
+                    `Detected potential faulty upgrade but could not retrieve version from git history${reason}. Using current config version: ${projectConfig.version}`
+                );
+                resolvedFromVersion = projectConfig.version;
+            } else if (fromGit) {
+                const reason = getGitFailureMessage(gitResult.failureReason);
+                cliContext.logger.debug(`Could not retrieve version from git${reason}. Falling back to config.`);
+                resolvedFromVersion = resolvedFromVersion || projectConfig.version;
+            } else {
+                resolvedFromVersion = resolvedFromVersion || projectConfig.version;
+            }
+        }
+    }
+
+    return resolvedFromVersion;
 }
 
 function validateVersionAhead({
@@ -84,6 +208,51 @@ function validateVersionAhead({
             `Cannot upgrade because target version (${targetVersion}) is not ahead of existing version ${currentVersion}`
         );
     }
+}
+
+/**
+ * Filters out upgrade-specific flags from CLI arguments.
+ * Removes: upgrade command, --version, --to, --from, --from-git
+ * Preserves all other flags for passing through to the rerun command.
+ */
+function filterUpgradeFlags(args: string[]): string[] {
+    const flagsToRemove = new Set(["--version", "--to", "--from", "--from-git"]);
+    const result: string[] = [];
+    let i = 0;
+
+    while (i < args.length) {
+        const arg = args[i];
+
+        // Skip the "upgrade" command if it's the first argument
+        if (i === 0 && arg === "upgrade") {
+            i++;
+            continue;
+        }
+
+        // Check if this is a flag we should remove
+        const isRemovedFlag = flagsToRemove.has(arg ?? "");
+        const isRemovedFlagWithEquals = Array.from(flagsToRemove).some((flag) => arg?.startsWith(`${flag}=`));
+
+        if (isRemovedFlag) {
+            // Skip the flag
+            i++;
+            // Also skip the next argument if it exists and doesn't look like a flag
+            if (i < args.length && !args[i]?.startsWith("-")) {
+                i++;
+            }
+        } else if (isRemovedFlagWithEquals) {
+            // Skip --flag=value format
+            i++;
+        } else if (arg != null) {
+            // Keep this argument
+            result.push(arg);
+            i++;
+        } else {
+            i++;
+        }
+    }
+
+    return result;
 }
 
 /**
@@ -137,40 +306,14 @@ export async function upgrade({
             loadProjectConfig({ directory: fernDirectory, context })
         );
 
-        let resolvedFromVersion = fromVersion?.trim();
-        const envVersion = process.env[PREVIOUS_VERSION_ENV_VAR]?.trim();
-
-        // Detect faulty upgrade: if FERN_PRE_UPGRADE_VERSION equals current CLI version,
-        // the upgrade came from a faulty version. Fall back to git history.
-        // But only if --from flag was not explicitly provided
-        const isFaultyUpgrade = !fromVersion && envVersion === cliContext.environment.packageVersion && !isLocalDev;
-
-        // Don't use env var if it's 0.0.0 (local dev version) or if it indicates a faulty upgrade
-        if (!resolvedFromVersion && envVersion && envVersion !== "0.0.0" && !isFaultyUpgrade && !fromGit) {
-            resolvedFromVersion = envVersion;
-        }
-
-        if (!resolvedFromVersion || isFaultyUpgrade || fromGit) {
-            const gitVersion = await getPreviousVersionFromGit(fernDirectory, cliContext.logger);
-            if (gitVersion != null) {
-                if (isFaultyUpgrade) {
-                    cliContext.logger.debug(
-                        `Detected faulty upgrade (FERN_PRE_UPGRADE_VERSION=${process.env[PREVIOUS_VERSION_ENV_VAR]}). Using version from git history: ${gitVersion}`
-                    );
-                }
-                resolvedFromVersion = gitVersion;
-            } else {
-                // Fallback to projectConfig.version if git retrieval fails
-                if (isFaultyUpgrade) {
-                    cliContext.logger.warn(
-                        `Detected potential faulty upgrade but could not retrieve version from git history. Using current config version: ${projectConfig.version}`
-                    );
-                    resolvedFromVersion = projectConfig.version;
-                } else {
-                    resolvedFromVersion = resolvedFromVersion || projectConfig.version;
-                }
-            }
-        }
+        const resolvedFromVersion = await resolveSourceVersion({
+            fromVersion,
+            fromGit,
+            cliContext,
+            fernDirectory,
+            projectConfig,
+            isLocalDev
+        });
 
         cliContext.logger.info(
             `Running migrations from ${chalk.dim(resolvedFromVersion)} → ${chalk.green(resolvedTargetVersion)}`
@@ -212,96 +355,21 @@ export async function upgrade({
         loadProjectConfig({ directory: fernDirectory, context })
     );
 
-    let resolvedFromVersion = fromVersion?.trim();
-    const envVersion = process.env[PREVIOUS_VERSION_ENV_VAR]?.trim();
-
-    // Detect faulty upgrade: if FERN_PRE_UPGRADE_VERSION equals current CLI version,
-    // the upgrade came from a faulty version. Fall back to git history.
-    // But only if --from flag was not explicitly provided
-    const isFaultyUpgrade = !fromVersion && envVersion === cliContext.environment.packageVersion && !isLocalDev;
-
-    // Don't use env var if it's 0.0.0 (local dev version) or if it indicates a faulty upgrade
-    if (!resolvedFromVersion && envVersion && envVersion !== "0.0.0" && !isFaultyUpgrade && !fromGit) {
-        resolvedFromVersion = envVersion;
-    }
-
-    if (!resolvedFromVersion || isFaultyUpgrade || fromGit) {
-        const gitVersion = await getPreviousVersionFromGit(fernDirectory, cliContext.logger);
-        if (gitVersion != null) {
-            if (isFaultyUpgrade) {
-                cliContext.logger.debug(
-                    `Detected faulty upgrade (FERN_PRE_UPGRADE_VERSION=${process.env[PREVIOUS_VERSION_ENV_VAR]}). Using version from git history: ${gitVersion}`
-                );
-            }
-            resolvedFromVersion = gitVersion;
-        } else {
-            // Fallback to projectConfig.version if git retrieval fails
-            if (isFaultyUpgrade) {
-                cliContext.logger.warn(
-                    `Detected potential faulty upgrade but could not retrieve version from git history. Using current config version: ${projectConfig.version}`
-                );
-                resolvedFromVersion = projectConfig.version;
-            } else {
-                resolvedFromVersion = resolvedFromVersion || projectConfig.version;
-            }
-        }
-    }
+    const resolvedFromVersion = await resolveSourceVersion({
+        fromVersion,
+        fromGit,
+        cliContext,
+        fernDirectory,
+        projectConfig,
+        isLocalDev
+    });
 
     cliContext.logger.info(
         `Upgrading from ${chalk.dim(cliContext.environment.packageVersion)} → ${chalk.green(resolvedTargetVersion)}`
     );
 
-    // Build rerun args by passing through original args and replacing/adding --from and --to
-    const originalArgs = process.argv.slice(2); // Remove 'node' and script path
-    const otherArgs: string[] = [];
-
-    let i = 0;
-
-    while (i < originalArgs.length) {
-        const arg = originalArgs[i];
-
-        // Skip "upgrade" command as we'll add it at the beginning
-        if (arg === "upgrade" && i === 0) {
-            i++;
-            continue;
-        }
-
-        // Skip --version, --to, and --from flags as we'll add them ourselves
-        if (arg === "--version" || arg === "--to") {
-            // Skip the next arg if it's the value (not starting with --)
-            if (i + 1 < originalArgs.length && !originalArgs[i + 1]?.startsWith("--")) {
-                i += 2;
-            } else {
-                i++;
-            }
-        }
-        // Handle --version=value or --to=value format
-        else if (arg?.startsWith("--version=") || arg?.startsWith("--to=")) {
-            i++;
-        }
-        // Handle --from flag
-        else if (arg === "--from") {
-            // Skip the next arg if it's the value
-            if (i + 1 < originalArgs.length && !originalArgs[i + 1]?.startsWith("--")) {
-                i += 2;
-            } else {
-                i++;
-            }
-        }
-        // Handle --from=value format
-        else if (arg?.startsWith("--from=")) {
-            i++;
-        }
-        // Pass through all other args unchanged
-        else if (arg != null) {
-            otherArgs.push(arg);
-            i++;
-        } else {
-            i++;
-        }
-    }
-
-    // Build final args: upgrade command, then --from and --to, then all other args
+    // Filter out upgrade-specific flags and build args for rerun
+    const otherArgs = filterUpgradeFlags(process.argv.slice(2));
     const rerunArgs = ["upgrade", "--from", resolvedFromVersion, "--to", resolvedTargetVersion, ...otherArgs];
 
     try {

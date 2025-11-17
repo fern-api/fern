@@ -1,5 +1,6 @@
 import { runMigrations } from "@fern-api/cli-migrations";
 import { getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { writeFile } from "fs/promises";
@@ -63,18 +64,21 @@ describe("upgrade", () => {
                 throw new Error(message);
             }),
             exitIfFailed: vi.fn(),
-            isUpgradeAvailable: vi.fn()
-        } as any;
+            isUpgradeAvailable: vi.fn(),
+            suppressUpgradeMessage: vi.fn(),
+            failWithoutThrowing: vi.fn()
+        } as unknown as CliContext;
 
         vi.mocked(runMigrations).mockResolvedValue(undefined);
         vi.mocked(writeFile).mockResolvedValue(undefined);
         vi.mocked(rerunFernCliAtVersion).mockResolvedValue(undefined);
-        vi.mocked(getFernDirectory).mockResolvedValue("/test/fern" as any);
+        vi.mocked(getFernDirectory).mockResolvedValue("/test/fern" as AbsoluteFilePath);
         vi.mocked(loadProjectConfig).mockResolvedValue({
             version: "1.0.0",
-            rawConfig: { version: "1.0.0" },
-            _absolutePath: "/test/fern/fern.config.json"
-        } as any);
+            rawConfig: { version: "1.0.0", organization: "test-org" },
+            _absolutePath: "/test/fern/fern.config.json" as AbsoluteFilePath,
+            organization: "test-org"
+        });
     });
 
     afterEach(() => {
@@ -584,8 +588,8 @@ describe("upgrade", () => {
         it("should handle undefined stdout/stderr gracefully", async () => {
             const errorWithUndefined = new RerunCliError({
                 version: "1.2.0",
-                stdout: undefined as any,
-                stderr: undefined as any
+                stdout: "",
+                stderr: ""
             });
             vi.mocked(rerunFernCliAtVersion).mockRejectedValue(errorWithUndefined);
 
@@ -611,7 +615,10 @@ describe("upgrade", () => {
         it("should detect faulty upgrade when FERN_PRE_UPGRADE_VERSION equals current CLI version", async () => {
             process.env[PREVIOUS_VERSION_ENV_VAR] = "1.2.0"; // Same as current version - indicates faulty upgrade
 
-            vi.mocked(loggingExeca).mockResolvedValue({ stdout: '{"version":"0.84.1"}', stderr: "" } as any);
+            vi.mocked(loggingExeca).mockResolvedValue({
+                stdout: '{"version":"0.84.1"}',
+                stderr: ""
+            } as loggingExeca.ReturnValue);
 
             await upgrade({
                 cliContext: mockCliContext,
@@ -634,7 +641,10 @@ describe("upgrade", () => {
         it("should use git fallback when FERN_PRE_UPGRADE_VERSION equals current version", async () => {
             process.env[PREVIOUS_VERSION_ENV_VAR] = "1.2.0";
 
-            vi.mocked(loggingExeca).mockResolvedValue({ stdout: '{"version":"0.80.0"}', stderr: "" } as any);
+            vi.mocked(loggingExeca).mockResolvedValue({
+                stdout: '{"version":"0.80.0"}',
+                stderr: ""
+            } as loggingExeca.ReturnValue);
 
             await upgrade({
                 cliContext: mockCliContext,
@@ -650,10 +660,45 @@ describe("upgrade", () => {
             });
         });
 
-        it("should fallback to config version when git retrieval fails and warn user", async () => {
+        it("should show specific error when not a git repository", async () => {
             process.env[PREVIOUS_VERSION_ENV_VAR] = "1.2.0"; // Faulty upgrade detected
 
-            vi.mocked(loggingExeca).mockRejectedValue(new Error("Not a git repository"));
+            // Mock git command failing (not a git repo)
+            vi.mocked(loggingExeca).mockResolvedValue({
+                stdout: "",
+                stderr: "",
+                failed: true
+            } as loggingExeca.ReturnValue);
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined
+            });
+
+            expect(mockLogger.warn).toHaveBeenCalledWith(expect.stringContaining("not a git repository"));
+            expect(runMigrations).toHaveBeenCalledWith({
+                fromVersion: "1.0.0", // Falls back to projectConfig.version
+                toVersion: "1.2.0",
+                context: {}
+            });
+        });
+
+        it("should show specific error when config not tracked by git", async () => {
+            process.env[PREVIOUS_VERSION_ENV_VAR] = "1.2.0";
+
+            vi.mocked(loggingExeca)
+                .mockResolvedValueOnce({
+                    stdout: "/project/root\n",
+                    stderr: "",
+                    failed: false
+                } as loggingExeca.ReturnValue)
+                .mockResolvedValueOnce({
+                    stdout: "", // Empty = file not tracked
+                    stderr: "",
+                    failed: false
+                } as loggingExeca.ReturnValue);
 
             await upgrade({
                 cliContext: mockCliContext,
@@ -663,35 +708,123 @@ describe("upgrade", () => {
             });
 
             expect(mockLogger.warn).toHaveBeenCalledWith(
-                expect.stringContaining(
-                    "Detected potential faulty upgrade but could not retrieve version from git history"
-                )
+                expect.stringContaining("fern.config.json not tracked by git")
             );
-            expect(runMigrations).toHaveBeenCalledWith({
-                fromVersion: "1.0.0", // Falls back to projectConfig.version
-                toVersion: "1.2.0",
-                context: {}
+        });
+
+        it("should show specific error when no git history exists", async () => {
+            process.env[PREVIOUS_VERSION_ENV_VAR] = "1.2.0";
+
+            vi.mocked(loggingExeca)
+                .mockResolvedValueOnce({
+                    stdout: "/project/root\n",
+                    stderr: "",
+                    failed: false
+                } as loggingExeca.ReturnValue)
+                .mockResolvedValueOnce({
+                    stdout: "fern.config.json\n",
+                    stderr: "",
+                    failed: false
+                } as loggingExeca.ReturnValue)
+                .mockResolvedValueOnce({
+                    stdout: "",
+                    stderr: "",
+                    failed: true // git show failed
+                } as loggingExeca.ReturnValue);
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined
             });
+
+            expect(mockLogger.warn).toHaveBeenCalledWith(
+                expect.stringContaining("no git history for fern.config.json")
+            );
+        });
+
+        it("should show specific error when config missing version field", async () => {
+            process.env[PREVIOUS_VERSION_ENV_VAR] = "1.2.0";
+
+            vi.mocked(loggingExeca)
+                .mockResolvedValueOnce({
+                    stdout: "/project/root\n",
+                    stderr: "",
+                    failed: false
+                } as loggingExeca.ReturnValue)
+                .mockResolvedValueOnce({
+                    stdout: "fern.config.json\n",
+                    stderr: "",
+                    failed: false
+                } as loggingExeca.ReturnValue)
+                .mockResolvedValueOnce({
+                    stdout: '{"organization":"test"}', // No version field
+                    stderr: "",
+                    failed: false
+                } as loggingExeca.ReturnValue);
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined
+            });
+
+            expect(mockLogger.warn).toHaveBeenCalledWith(
+                expect.stringContaining("no version field in fern.config.json")
+            );
+        });
+
+        it("should show specific error when JSON parse fails", async () => {
+            process.env[PREVIOUS_VERSION_ENV_VAR] = "1.2.0";
+
+            vi.mocked(loggingExeca)
+                .mockResolvedValueOnce({
+                    stdout: "/project/root\n",
+                    stderr: "",
+                    failed: false
+                } as loggingExeca.ReturnValue)
+                .mockResolvedValueOnce({
+                    stdout: "fern.config.json\n",
+                    stderr: "",
+                    failed: false
+                } as loggingExeca.ReturnValue)
+                .mockResolvedValueOnce({
+                    stdout: "invalid json{", // Malformed JSON
+                    stderr: "",
+                    failed: false
+                } as loggingExeca.ReturnValue);
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined
+            });
+
+            expect(mockLogger.warn).toHaveBeenCalledWith(
+                expect.stringContaining("failed to parse fern.config.json from git")
+            );
         });
 
         it("should retrieve version from git for any fern.config.json location", async () => {
             process.env[PREVIOUS_VERSION_ENV_VAR] = "1.2.0";
 
-            let callCount = 0;
-            vi.mocked(loggingExeca).mockImplementation(async () => {
-                callCount++;
-                if (callCount === 1) {
-                    // First call: get git root
-                    return { stdout: "/project/root\n", stderr: "" } as any;
-                } else if (callCount === 2) {
-                    // Second call: find fern.config.json relative path
-                    return { stdout: "custom/path/fern.config.json\n", stderr: "" } as any;
-                } else if (callCount === 3) {
-                    // Third call: retrieve the file content
-                    return { stdout: '{"version":"0.75.0"}', stderr: "" } as any;
-                }
-                throw new Error("Unexpected call");
-            });
+            // Mock sequential git commands: get root, find config, retrieve content
+            vi.mocked(loggingExeca)
+                .mockResolvedValueOnce({
+                    stdout: "/project/root\n",
+                    stderr: ""
+                } as loggingExeca.ReturnValue)
+                .mockResolvedValueOnce({
+                    stdout: "custom/path/fern.config.json\n",
+                    stderr: ""
+                } as loggingExeca.ReturnValue)
+                .mockResolvedValueOnce({
+                    stdout: '{"version":"0.75.0"}',
+                    stderr: ""
+                } as loggingExeca.ReturnValue);
 
             await upgrade({
                 cliContext: mockCliContext,
@@ -779,7 +912,10 @@ describe("upgrade", () => {
             process.env[PREVIOUS_VERSION_ENV_VAR] = "1.0.0"; // Faulty upgrade detected
             vi.mocked(isVersionAhead).mockReturnValue(true);
 
-            vi.mocked(loggingExeca).mockResolvedValue({ stdout: '{"version":"0.85.0"}', stderr: "" } as any);
+            vi.mocked(loggingExeca).mockResolvedValue({
+                stdout: '{"version":"0.85.0"}',
+                stderr: ""
+            } as loggingExeca.ReturnValue);
 
             await upgrade({
                 cliContext: mockCliContext,
@@ -806,7 +942,10 @@ describe("upgrade", () => {
         });
 
         it("should retrieve version from git when --from-git flag is set", async () => {
-            vi.mocked(loggingExeca).mockResolvedValue({ stdout: '{"version":"0.85.0"}', stderr: "" } as any);
+            vi.mocked(loggingExeca).mockResolvedValue({
+                stdout: '{"version":"0.85.0"}',
+                stderr: ""
+            } as loggingExeca.ReturnValue);
 
             await upgrade({
                 cliContext: mockCliContext,
@@ -824,7 +963,10 @@ describe("upgrade", () => {
         });
 
         it("should not log faulty upgrade message when using --from-git", async () => {
-            vi.mocked(loggingExeca).mockResolvedValue({ stdout: '{"version":"0.85.0"}', stderr: "" } as any);
+            vi.mocked(loggingExeca).mockResolvedValue({
+                stdout: '{"version":"0.85.0"}',
+                stderr: ""
+            } as loggingExeca.ReturnValue);
 
             await upgrade({
                 cliContext: mockCliContext,
@@ -840,7 +982,10 @@ describe("upgrade", () => {
 
         it("should ignore env var when --from-git is set", async () => {
             process.env[PREVIOUS_VERSION_ENV_VAR] = "0.90.0"; // This should be ignored
-            vi.mocked(loggingExeca).mockResolvedValue({ stdout: '{"version":"0.85.0"}', stderr: "" } as any);
+            vi.mocked(loggingExeca).mockResolvedValue({
+                stdout: '{"version":"0.85.0"}',
+                stderr: ""
+            } as loggingExeca.ReturnValue);
 
             await upgrade({
                 cliContext: mockCliContext,
@@ -858,7 +1003,11 @@ describe("upgrade", () => {
         });
 
         it("should fall back to projectConfig.version when git fails with --from-git", async () => {
-            vi.mocked(loggingExeca).mockRejectedValue(new Error("Not a git repository"));
+            vi.mocked(loggingExeca).mockResolvedValue({
+                stdout: "",
+                stderr: "",
+                failed: true
+            } as loggingExeca.ReturnValue);
 
             await upgrade({
                 cliContext: mockCliContext,
@@ -868,7 +1017,10 @@ describe("upgrade", () => {
                 fromGit: true
             });
 
-            expect(mockLogger.warn).not.toHaveBeenCalled();
+            expect(mockLogger.debug).toHaveBeenCalledWith(
+                expect.stringContaining("Could not retrieve version from git")
+            );
+            expect(mockLogger.debug).toHaveBeenCalledWith(expect.stringContaining("not a git repository"));
             expect(runMigrations).toHaveBeenCalledWith({
                 fromVersion: "1.0.0", // Falls back to projectConfig.version
                 toVersion: "1.2.0",

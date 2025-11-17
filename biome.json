@@ -216,7 +216,6 @@
     {
       "includes": [
         "packages/cli/init/src/__test__/initializeWithMintlify.test.ts",
-        "packages/cli/cli/src/commands/upgrade/__test__/upgrade.test.ts",
         "packages/generator-cli/src/**/*.ts"
       ],
       "linter": {
