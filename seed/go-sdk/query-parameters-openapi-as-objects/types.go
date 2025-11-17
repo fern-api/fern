@@ -32,13 +32,13 @@ var (
 type SearchRequest struct {
 	Limit            int                            `json:"-" url:"limit"`
 	Id               string                         `json:"-" url:"id"`
-	Date             string                         `json:"-" url:"date"`
+	Date             time.Time                      `json:"-" url:"date" format:"date"`
 	Deadline         time.Time                      `json:"-" url:"deadline"`
 	Bytes            string                         `json:"-" url:"bytes"`
 	User             *User                          `json:"-" url:"user"`
 	UserList         []*User                        `json:"-" url:"userList,omitempty"`
 	OptionalDeadline *time.Time                     `json:"-" url:"optionalDeadline,omitempty"`
-	KeyValue         map[string]*string             `json:"-" url:"keyValue,omitempty"`
+	KeyValue         map[string]string              `json:"-" url:"keyValue,omitempty"`
 	OptionalString   *string                        `json:"-" url:"optionalString,omitempty"`
 	NestedUser       *NestedUser                    `json:"-" url:"nestedUser,omitempty"`
 	OptionalUser     *User                          `json:"-" url:"optionalUser,omitempty"`
@@ -74,7 +74,7 @@ func (s *SearchRequest) SetId(id string) {
 
 // SetDate sets the Date field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchRequest) SetDate(date string) {
+func (s *SearchRequest) SetDate(date time.Time) {
 	s.Date = date
 	s.require(searchRequestFieldDate)
 }
@@ -116,7 +116,7 @@ func (s *SearchRequest) SetOptionalDeadline(optionalDeadline *time.Time) {
 
 // SetKeyValue sets the KeyValue field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchRequest) SetKeyValue(keyValue map[string]*string) {
+func (s *SearchRequest) SetKeyValue(keyValue map[string]string) {
 	s.KeyValue = keyValue
 	s.require(searchRequestFieldKeyValue)
 }

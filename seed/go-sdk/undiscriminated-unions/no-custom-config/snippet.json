@@ -24,6 +24,17 @@
         },
         {
             "id": {
+                "path": "/camel-case",
+                "method": "POST",
+                "identifier_override": "endpoint_union.testCamelCaseProperties"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tundiscriminatedgo \"github.com/fern-api/undiscriminated-go\"\n\tundiscriminatedgoclient \"github.com/fern-api/undiscriminated-go/client\"\n)\n\nclient := undiscriminatedgoclient.NewClient()\nresponse, err := client.Union.TestCamelCaseProperties(\n\tcontext.TODO(),\n\t\u0026undiscriminatedgo.PaymentRequest{\n\t\tPaymentMethod: \u0026undiscriminatedgo.PaymentMethodUnion{\n\t\t\tTokenizeCard: \u0026undiscriminatedgo.TokenizeCard{\n\t\t\t\tMethod:     \"method\",\n\t\t\t\tCardNumber: \"cardNumber\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/duplicate",
                 "method": "POST",
                 "identifier_override": "endpoint_union.duplicateTypesUnion"

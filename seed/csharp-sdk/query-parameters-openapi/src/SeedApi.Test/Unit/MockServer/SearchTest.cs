@@ -27,7 +27,7 @@ public class SearchTest : BaseMockServerTest
                     .WithPath("/user/getUsername")
                     .WithParam("limit", "1")
                     .WithParam("id", "id")
-                    .WithParam("date", "date")
+                    .WithParam("date", "2023-01-15")
                     .WithParam("deadline", "2024-01-15T09:30:00.000Z")
                     .WithParam("bytes", "bytes")
                     .WithParam("optionalDeadline", "2024-01-15T09:30:00.000Z")
@@ -47,7 +47,7 @@ public class SearchTest : BaseMockServerTest
             {
                 Limit = 1,
                 Id = "id",
-                Date = "date",
+                Date = new DateOnly(2023, 1, 15),
                 Deadline = DateTime.Parse(
                     "2024-01-15T09:30:00.000Z",
                     null,
@@ -72,7 +72,7 @@ public class SearchTest : BaseMockServerTest
                     null,
                     DateTimeStyles.AdjustToUniversal
                 ),
-                KeyValue = new Dictionary<string, string?>() { { "keyValue", "keyValue" } },
+                KeyValue = new Dictionary<string, string>() { { "keyValue", "keyValue" } },
                 OptionalString = "optionalString",
                 NestedUser = new NestedUser
                 {

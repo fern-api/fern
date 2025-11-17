@@ -1,0 +1,232 @@
+{
+  "info": {
+    "name": "nullable-request-body",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Test Group",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Post Nullable Request Body",
+          "request": {
+            "description": "Post a nullable request body",
+            "url": {
+              "raw": "{{baseUrl}}/optional-request-body/:path_param",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "optional-request-body",
+                ":path_param"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "path_param",
+                  "description": null,
+                  "value": "path_param"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Post a nullable request body",
+                "url": {
+                  "raw": "{{baseUrl}}/optional-request-body/:path_param",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "optional-request-body",
+                    ":path_param"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "path_param",
+                      "description": null,
+                      "value": "path_param"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": "Successful Response",
+              "body": "{\n    \"key\": \"value\"\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Post a nullable request body",
+                "url": {
+                  "raw": "{{baseUrl}}/optional-request-body/:path_param?query_param_object=%7B%22id%22%3A%22id%22%2C%22name%22%3A%22name%22%7D&query_param_integer=1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "optional-request-body",
+                    ":path_param"
+                  ],
+                  "query": [
+                    {
+                      "key": "query_param_object",
+                      "description": null,
+                      "value": "{\"id\":\"id\",\"name\":\"name\"}"
+                    },
+                    {
+                      "key": "query_param_integer",
+                      "description": null,
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "path_param",
+                      "description": null,
+                      "value": "path_param"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"id\": \"id\",\n    \"name\": \"name\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": "Successful Response",
+              "body": "{\n    \"key\": \"value\"\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Unprocessable Entity Error",
+              "status": "Unprocessable Entity Error",
+              "code": 422,
+              "originalRequest": {
+                "description": "Post a nullable request body",
+                "url": {
+                  "raw": "{{baseUrl}}/optional-request-body/:path_param?query_param_object=%7B%22id%22%3A%22id%22%2C%22name%22%3A%22name%22%7D&query_param_integer=1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "optional-request-body",
+                    ":path_param"
+                  ],
+                  "query": [
+                    {
+                      "key": "query_param_object",
+                      "description": null,
+                      "value": "{\"id\":\"id\",\"name\":\"name\"}"
+                    },
+                    {
+                      "key": "query_param_integer",
+                      "description": null,
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "path_param",
+                      "description": null,
+                      "value": "path_param"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"id\": \"id\",\n    \"name\": \"name\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": "Successful Response",
+              "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

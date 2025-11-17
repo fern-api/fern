@@ -261,3 +261,128 @@ type UnionWithIdenticalPrimitives struct {
 	Double  float64
 	String  string
 }
+
+// Tests that nested properties with camelCase wire names are properly
+// converted from snake_case Ruby keys when passed as Hash values.
+type PaymentMethodUnion struct {
+	TokenizeCard *TokenizeCard
+	ConvertToken *ConvertToken
+}
+
+type TokenizeCard struct {
+	Method     string `json:"method" url:"method"`
+	CardNumber string `json:"cardNumber" url:"cardNumber"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (t *TokenizeCard) GetMethod() string {
+	if t == nil {
+		return ""
+	}
+	return t.Method
+}
+
+func (t *TokenizeCard) GetCardNumber() string {
+	if t == nil {
+		return ""
+	}
+	return t.CardNumber
+}
+
+func (t *TokenizeCard) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TokenizeCard) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler TokenizeCard
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TokenizeCard(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *TokenizeCard) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
+}
+
+type ConvertToken struct {
+	Method  string `json:"method" url:"method"`
+	TokenId string `json:"tokenId" url:"tokenId"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *ConvertToken) GetMethod() string {
+	if c == nil {
+		return ""
+	}
+	return c.Method
+}
+
+func (c *ConvertToken) GetTokenId() string {
+	if c == nil {
+		return ""
+	}
+	return c.TokenId
+}
+
+func (c *ConvertToken) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConvertToken) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ConvertToken
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConvertToken(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConvertToken) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}

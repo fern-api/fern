@@ -36,6 +36,6 @@ class Tree(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .node import Node  # noqa: E402, F401, I001
+from .node import Node  # noqa: E402, I001
 
 update_forward_refs(Tree)
