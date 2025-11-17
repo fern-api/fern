@@ -76,21 +76,22 @@ export async function upgrade({
     targetVersion: string | undefined;
     fromVersion: string | undefined;
 }): Promise<void> {
-    const configVersion = await getProjectConfigVersionSafe(cliContext);
-
-    const resolvedFrom = resolveVersion(fromVersion, PREVIOUS_VERSION_ENV_VAR, configVersion);
-    const resolvedTo = resolveVersion(targetVersion, TARGET_VERSION_ENV_VAR, configVersion);
-
-    const inMigrationMode = fromVersion != null || process.env[PREVIOUS_VERSION_ENV_VAR] != null;
+    const previousEnvVar = process.env[PREVIOUS_VERSION_ENV_VAR];
+    const previousEnvVarSet = previousEnvVar != null && previousEnvVar.trim() !== "";
+    const fromFlagSet = fromVersion != null && fromVersion.trim() !== "";
+    const inMigrationMode = fromFlagSet || previousEnvVarSet;
 
     if (inMigrationMode) {
-        if (!resolvedFrom) {
-            return cliContext.failAndThrow(
-                "Could not determine 'from' version. Provide --from flag or set FERN_PRE_UPGRADE_VERSION environment variable."
-            );
-        }
+        const resolvedFrom = fromFlagSet ? (fromVersion?.trim() ?? "") : (previousEnvVar?.trim() ?? "");
 
-        let targetVersionForMigration = resolvedTo;
+        const targetEnvVar = process.env[TARGET_VERSION_ENV_VAR];
+        let targetVersionForMigration =
+            targetVersion ?? (targetEnvVar != null && targetEnvVar.trim() !== "" ? targetEnvVar.trim() : undefined);
+
+        if (!targetVersionForMigration || targetVersionForMigration === "0.0.0") {
+            const configVersion = await getProjectConfigVersionSafe(cliContext);
+            targetVersionForMigration = configVersion;
+        }
 
         if (!targetVersionForMigration || targetVersionForMigration === "0.0.0") {
             const currentVersion = cliContext.environment.packageVersion;
