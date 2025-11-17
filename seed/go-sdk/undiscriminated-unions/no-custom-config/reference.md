@@ -272,3 +272,55 @@ client.Union.NestedUnions(
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.Union.TestCamelCaseProperties(request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &undiscriminated.PaymentRequest{
+        PaymentMethod: &undiscriminated.PaymentMethodUnion{
+            TokenizeCard: &undiscriminated.TokenizeCard{
+                Method: "method",
+                CardNumber: "cardNumber",
+            },
+        },
+    }
+client.Union.TestCamelCaseProperties(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**paymentMethod:** `*undiscriminated.PaymentMethodUnion` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>

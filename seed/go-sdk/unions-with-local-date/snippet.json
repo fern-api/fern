@@ -1,0 +1,59 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "PATCH",
+                "identifier_override": "endpoint_bigunion.update"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/unions-with-local-date/fern\"\n\tfernclient \"github.com/unions-with-local-date/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Bigunion.Update(\n\tcontext.TODO(),\n\t\u0026fern.BigUnion{\n\t\tNormalSweet: \u0026fern.NormalSweet{\n\t\t\tValue: \"value\",\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "PATCH",
+                "identifier_override": "endpoint_union.update"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/unions-with-local-date/fern\"\n\tfernclient \"github.com/unions-with-local-date/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Union.Update(\n\tcontext.TODO(),\n\t\u0026fern.Shape{\n\t\tCircle: \u0026fern.Circle{\n\t\t\tRadius: 1.1,\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/many",
+                "method": "PATCH",
+                "identifier_override": "endpoint_bigunion.update-many"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/unions-with-local-date/fern\"\n\tfernclient \"github.com/unions-with-local-date/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Bigunion.UpdateMany(\n\tcontext.TODO(),\n\t[]*fern.BigUnion{\n\t\t\u0026fern.BigUnion{\n\t\t\tNormalSweet: \u0026fern.NormalSweet{\n\t\t\t\tValue: \"value\",\n\t\t\t},\n\t\t},\n\t\t\u0026fern.BigUnion{\n\t\t\tNormalSweet: \u0026fern.NormalSweet{\n\t\t\t\tValue: \"value\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_bigunion.get"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/unions-with-local-date/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Bigunion.Get(\n\tcontext.TODO(),\n\t\"id\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_union.get"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/unions-with-local-date/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Union.Get(\n\tcontext.TODO(),\n\t\"id\",\n)\n"
+            }
+        }
+    ]
+}

@@ -11,7 +11,7 @@ pub struct Type {
     pub six: DateTime<Utc>,
     pub seven: NaiveDate,
     pub eight: Uuid,
-    pub nine: String,
+    pub nine: Vec<u8>,
     pub ten: Vec<i64>,
     pub eleven: HashSet<ordered_float::OrderedFloat<f64>>,
     pub twelve: HashMap<String, bool>,

@@ -8,6 +8,9 @@ module SeedExhaustiveClient
     class Docs
       class ObjectWithDocs
         # @return [String] Characters that could lead to broken generated SDKs:
+        #  Markdown Escapes:
+        #  - \_: Escaped underscore (e.g., FOO\_BAR)
+        #  - \*: Escaped asterisk
         #  JSDoc (JavaScript/TypeScript):
         #  - @: Used for JSDoc tags
         #  - {: }: Used for type definitions
@@ -66,6 +69,9 @@ module SeedExhaustiveClient
         OMIT = Object.new
 
         # @param string [String] Characters that could lead to broken generated SDKs:
+        #  Markdown Escapes:
+        #  - \_: Escaped underscore (e.g., FOO\_BAR)
+        #  - \*: Escaped asterisk
         #  JSDoc (JavaScript/TypeScript):
         #  - @: Used for JSDoc tags
         #  - {: }: Used for type definitions

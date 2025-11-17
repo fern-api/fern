@@ -26,6 +26,19 @@ const client = new SeedUndiscriminatedUnionsClient({ environment: "YOUR_BASE_URL
 await client.union.get("string");
 ```
 
+## Request And Response Types
+
+The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
+following namespace:
+
+```typescript
+import { SeedUndiscriminatedUnions } from "@fern/undiscriminated-unions";
+
+const request: SeedUndiscriminatedUnions.PaymentRequest = {
+    ...
+};
+```
+
 ## Exception Handling
 
 When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error

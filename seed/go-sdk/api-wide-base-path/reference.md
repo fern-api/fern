@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.Post(PathParam, ServiceParam, ResourceParam, EndpointParam) -> error</code></summary>
+<details><summary><code>client.Service.Post(PathParam, ServiceParam, EndpointParam, ResourceParam) -> error</code></summary>
 <dl>
 <dd>
 
@@ -17,8 +17,8 @@ client.Service.Post(
         context.TODO(),
         "pathParam",
         "serviceParam",
-        "resourceParam",
         1,
+        "resourceParam",
     )
 }
 ```
@@ -51,7 +51,7 @@ client.Service.Post(
 <dl>
 <dd>
 
-**resourceParam:** `string` 
+**endpointParam:** `int` 
     
 </dd>
 </dl>
@@ -59,7 +59,7 @@ client.Service.Post(
 <dl>
 <dd>
 
-**endpointParam:** `int` 
+**resourceParam:** `string` 
     
 </dd>
 </dl>
