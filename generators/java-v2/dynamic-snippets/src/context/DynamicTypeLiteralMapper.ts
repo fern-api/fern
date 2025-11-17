@@ -615,13 +615,7 @@ export class DynamicTypeLiteralMapper {
         }
     }
 
-    private literalMatchesValue({
-        literal,
-        value
-    }: {
-        literal: FernIr.dynamic.LiteralType;
-        value: unknown;
-    }): boolean {
+    private literalMatchesValue({ literal, value }: { literal: FernIr.dynamic.LiteralType; value: unknown }): boolean {
         switch (literal.type) {
             case "boolean":
                 return typeof value === "boolean" && value === literal.value;
