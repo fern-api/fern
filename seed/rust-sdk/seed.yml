@@ -62,6 +62,13 @@ fixtures:
           tokio-util: "0.7"
         enableWireTests: true
       outputFolder: imdb-custom-config
+    - customConfig:
+        clientName: ImdbClient
+        features:
+          experimental: ["reqwest/blocking", "tokio/process"]
+          advanced: ["sse"]
+        defaultFeatures: ["experimental"]
+      outputFolder: imdb-custom-features
   single-url-environment-default:
     - customConfig: null
       outputFolder: basic
@@ -109,12 +116,10 @@ fixtures:
           timeouts:
             - GET /movie/{movieId}
       outputFolder: readme-config
-      
+
 allowedFailures:
   - circular-references
   - circular-references-advanced
-  - examples:no-custom-config
-  - examples:readme-config
   - objects-with-imports
   - pagination
   - trace

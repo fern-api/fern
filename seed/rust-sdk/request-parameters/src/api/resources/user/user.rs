@@ -80,7 +80,7 @@ impl UserClient {
                     .uuid("id", request.id.clone())
                     .date("date", request.date.clone())
                     .datetime("deadline", request.deadline.clone())
-                    .string("bytes", request.bytes.clone())
+                    .serialize("bytes", Some(request.bytes.clone()))
                     .serialize("user", Some(request.user.clone()))
                     .serialize("userList", Some(request.user_list.clone()))
                     .datetime("optionalDeadline", request.optional_deadline.clone())
