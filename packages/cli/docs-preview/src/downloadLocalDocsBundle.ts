@@ -178,14 +178,14 @@ export async function downloadBundle({
         let progressBar: cliProgress.SingleBar | undefined;
         if (app && totalBytes > 0) {
             progressBar = new cliProgress.SingleBar({
-                format: "Downloading docs bundle [{bar}] {percentage}% | {value}/{total} MB",
+                format: "[docs]: Downloading docs bundle [{bar}] {percentage}% | {value}/{total} MB",
                 barCompleteChar: "\u2588",
                 barIncompleteChar: "\u2591",
                 hideCursor: true
             });
             progressBar.start(Math.ceil(totalBytes / (1024 * 1024)), 0);
         } else if (app) {
-            logger.info("Downloading docs bundle...");
+            logger.info("[docs]: Downloading docs bundle...");
         }
 
         const chunks: Uint8Array[] = [];
@@ -227,10 +227,36 @@ export async function downloadBundle({
         const absolutePathToBundleFolder = getPathToBundleFolder({ app });
         await mkdir(absolutePathToBundleFolder, { recursive: true });
         logger.debug(`Decompressing bundle from ${outputZipPath} to ${absolutePathToBundleFolder}`);
+        
+        let unzipProgressBar: cliProgress.SingleBar | undefined;
+        let extractedFiles = 0;
+        
+        if (app) {
+            unzipProgressBar = new cliProgress.SingleBar({
+                format: "[docs]: Unzipping docs bundle [{bar}] {value} files extracted",
+                barCompleteChar: "\u2588",
+                barIncompleteChar: "\u2591",
+                hideCursor: true
+            });
+            unzipProgressBar.start(100, 0);
+        }
+        
         await decompress(outputZipPath, absolutePathToBundleFolder, {
             // skip extraction of symlinks on windows
-            filter: (file) => !(PLATFORM_IS_WINDOWS && file.type === "symlink")
+            filter: (file) => {
+                if (unzipProgressBar) {
+                    extractedFiles++;
+                    const estimatedProgress = Math.min(99, Math.floor(extractedFiles / 10));
+                    unzipProgressBar.update(estimatedProgress, { value: extractedFiles });
+                }
+                return !(PLATFORM_IS_WINDOWS && file.type === "symlink");
+            }
         });
+        
+        if (unzipProgressBar) {
+            unzipProgressBar.update(100, { value: extractedFiles });
+            unzipProgressBar.stop();
+        }
 
         // write etag
         await writeFile(eTagFilepath, eTag);
