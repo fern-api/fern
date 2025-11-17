@@ -354,11 +354,15 @@ describe("writeTranslationForProject", () => {
             expect(translateText).toHaveBeenCalled();
 
             // Verify it was called with the expected parameters structure
-            const calls = (translateText as any).mock.calls;
+            const mockTranslateText = translateText as ReturnType<typeof vi.fn>;
+            const calls = mockTranslateText.mock.calls;
             expect(calls.length).toBeGreaterThan(0);
 
             // Check that at least one call has the expected structure
-            const firstCall = calls[0][0];
+            const firstCallArgs = calls[0];
+            expect(firstCallArgs).toBeDefined();
+            const firstCall = firstCallArgs?.[0];
+            expect(firstCall).toBeDefined();
             expect(firstCall).toHaveProperty("text");
             expect(firstCall).toHaveProperty("language");
             expect(firstCall).toHaveProperty("sourceLanguage");

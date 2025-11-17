@@ -8,34 +8,25 @@ vi.mock("../translation-service", () => ({
 }));
 
 vi.mock("../yaml-processor", () => ({
-    translateYamlContent: vi.fn(
-        (
-            content: string,
-            language: string,
-            sourceLanguage: string,
-            filePath: string,
-            cliContext: any,
-            stub: boolean
-        ) => {
-            // In stub mode, add slugs to YAML content but don't translate
-            if (stub && content.includes("page:")) {
-                const lines = content.split("\n");
-                const result = [];
-                for (let i = 0; i < lines.length; i++) {
-                    result.push(lines[i]);
-                    if (lines[i].includes("page:")) {
-                        const pageName = lines[i].split("page:")[1]?.trim();
-                        if (pageName) {
-                            const slug = pageName.toLowerCase().replace(/\s+/g, "-");
-                            result.push(`    slug: ${slug}`);
-                        }
+    translateYamlContent: vi.fn((content: string, stub: boolean) => {
+        // In stub mode, add slugs to YAML content but don't translate
+        if (stub && content.includes("page:")) {
+            const lines = content.split("\n");
+            const result = [];
+            for (let i = 0; i < lines.length; i++) {
+                result.push(lines[i]);
+                if (lines[i]?.includes("page:")) {
+                    const pageName = lines[i]?.split("page:")[1]?.trim();
+                    if (pageName) {
+                        const slug = pageName.toLowerCase().replace(/\s+/g, "-");
+                        result.push(`    slug: ${slug}`);
                     }
                 }
-                return Promise.resolve(result.join("\n"));
             }
-            return Promise.resolve(`[TRANSLATED] ${content}`);
+            return Promise.resolve(result.join("\n"));
         }
-    )
+        return Promise.resolve(`[TRANSLATED] ${content}`);
+    })
 }));
 
 describe("content-transformer", () => {

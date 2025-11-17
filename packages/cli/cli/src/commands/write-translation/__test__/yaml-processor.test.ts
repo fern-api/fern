@@ -503,13 +503,13 @@ navigation:
 `;
 
             const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext, true);
-            const parsed = yaml.load(result) as any;
+            const parsed = yaml.load(result) as Record<string, unknown>;
 
             // In stub mode, content should not be translated
-            expect(parsed.navigation[0]?.page).toBe("Hello World");
-            expect(parsed.navigation[0]?.path).toBe("./hello.mdx");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.page).toBe("Hello World");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.path).toBe("./hello.mdx");
             // But slugs should be added
-            expect(parsed.navigation[0]?.slug).toBe("hello-world");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.slug).toBe("hello-world");
         });
 
         it("should add slugs when stub mode is enabled", async () => {
@@ -520,12 +520,12 @@ navigation:
 `;
 
             const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext, true);
-            const parsed = yaml.load(result) as any;
+            const parsed = yaml.load(result) as Record<string, unknown>;
 
             // Content should not be translated
-            expect(parsed.navigation[0]?.page).toBe("Hello World");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.page).toBe("Hello World");
             // But slug should be added
-            expect(parsed.navigation[0]?.slug).toBe("hello-world");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.slug).toBe("hello-world");
         });
 
         it("should generate slug for empty slug values in stub mode", async () => {
@@ -538,14 +538,14 @@ products:
 `;
 
             const result = await translateYamlContent(sourceYaml, "es", "en", "docs.yml", mockCliContext, true);
-            const parsed = yaml.load(result) as any;
+            const parsed = yaml.load(result) as Record<string, unknown>;
 
             // Content should not be translated
-            expect(parsed.products[0]?.["display-name"]).toBe("Home");
-            expect(parsed.products[0]?.path).toBe("./products/home.yml");
-            expect(parsed.products[0]?.icon).toBe("house");
+            expect((parsed.products as Array<Record<string, unknown>>)[0]?.["display-name"]).toBe("Home");
+            expect((parsed.products as Array<Record<string, unknown>>)[0]?.path).toBe("./products/home.yml");
+            expect((parsed.products as Array<Record<string, unknown>>)[0]?.icon).toBe("house");
             // Empty slug should be replaced with generated slug
-            expect(parsed.products[0]?.slug).toBe("home");
+            expect((parsed.products as Array<Record<string, unknown>>)[0]?.slug).toBe("home");
         });
     });
 });

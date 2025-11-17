@@ -1,6 +1,5 @@
-import { cp, mkdir, readdir, readFile, rm } from "fs/promises";
+import { cp, mkdir, readdir, readFile } from "fs/promises";
 import { join } from "path";
-import tmp from "tmp-promise";
 import { beforeAll, describe, expect, it } from "vitest";
 
 import { CliContext } from "../../../cli-context/CliContext";
@@ -120,8 +119,10 @@ describe("writeTranslationForProject - Integration Tests", () => {
 
         return {
             logger,
-            instrumentPostHogEvent: async () => {},
-            runTaskForWorkspace: async (workspace: any, fn: (context: any) => Promise<void>) => {
+            instrumentPostHogEvent: async () => {
+                // empty block
+            },
+            runTaskForWorkspace: async (workspace: unknown, fn: (context: unknown) => Promise<void>) => {
                 return fn({ logger });
             }
         } as unknown as CliContext;
@@ -233,7 +234,10 @@ describe("writeTranslationForProject - Integration Tests", () => {
             });
 
             const translationsDir = join(fernDir, "translations");
-            const firstRunFiles = await readdir(translationsDir, { recursive: true } as any);
+            const firstRunFiles = await readdir(translationsDir, { recursive: true } as {
+                encoding?: BufferEncoding | null;
+                recursive: true;
+            });
 
             await writeTranslationForProject({
                 project,
@@ -241,7 +245,10 @@ describe("writeTranslationForProject - Integration Tests", () => {
                 stub: true
             });
 
-            const secondRunFiles = await readdir(translationsDir, { recursive: true } as any);
+            const secondRunFiles = await readdir(translationsDir, { recursive: true } as {
+                encoding?: BufferEncoding | null;
+                recursive: true;
+            });
 
             expect(firstRunFiles.sort()).toEqual(secondRunFiles.sort());
 
@@ -307,7 +314,10 @@ describe("writeTranslationForProject - Integration Tests", () => {
 
             const translationsDir = join(fernDir, "translations");
             const deFernDir = join(translationsDir, "de", "fern");
-            const deFiles = await readdir(deFernDir, { recursive: true } as any);
+            const deFiles = await readdir(deFernDir, { recursive: true } as {
+                encoding?: BufferEncoding | null;
+                recursive: true;
+            });
 
             const dePages = deFiles.filter((f) => f.includes("pages"));
             expect(dePages.length).toBeGreaterThan(0);

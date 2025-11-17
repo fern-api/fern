@@ -18,19 +18,44 @@ interface RetryConfig {
 }
 
 /**
+ * Error type that includes Node.js network error codes
+ */
+type NetworkError = Error & {
+    code?: string;
+};
+
+/**
  * Determines if an error is retriable based on its characteristics
  */
-function isRetriableError(error: any, response?: Response): boolean {
+function isRetriableError(error: NetworkError, response?: Response): boolean {
     // Network errors, timeouts, and connection issues
+    // AbortError occurs when fetch is aborted (e.g., via AbortController timeout)
+    if (error.name === "AbortError") {
+        return true;
+    }
+
+    // Node.js network errors have a 'code' property (not 'cause')
+    // The 'cause' property is for error chaining (ES2022), which would be another Error object
     if (
-        error.name === "AbortError" ||
-        error.name === "TimeoutError" ||
         error.code === "ECONNRESET" ||
         error.code === "ENOTFOUND" ||
         error.code === "ECONNREFUSED" ||
         error.code === "ETIMEDOUT"
     ) {
         return true;
+    }
+
+    // Check if the error's cause is a Node.js error with a code property
+    if (error.cause instanceof Error) {
+        const causeWithCode = error.cause as NetworkError;
+        if (
+            causeWithCode.code === "ECONNRESET" ||
+            causeWithCode.code === "ENOTFOUND" ||
+            causeWithCode.code === "ECONNREFUSED" ||
+            causeWithCode.code === "ETIMEDOUT"
+        ) {
+            return true;
+        }
     }
 
     // HTTP status codes that might be retriable
@@ -112,7 +137,7 @@ export async function translateText({
         timeout: retryConfig.timeout ?? DEFAULT_TIMEOUT
     };
 
-    let lastError: any;
+    let lastError: Error | undefined;
 
     for (let attempt = 1; attempt <= config.maxRetries + 1; attempt++) {
         try {
@@ -148,7 +173,7 @@ export async function translateText({
                     throw new Error(`403: ${errorDetail}`);
                 }
 
-                const error = new Error(`HTTP ${response.status}: ${errorDetail}`);
+                const error = new Error(`HTTP ${response.status}: ${errorDetail}`) as NetworkError;
                 if (!isRetriableError(error, response)) {
                     cliContext.logger.error(`[TRANSLATE] Non-retriable error ${response.status}: ${errorDetail}`);
                     return text;
@@ -183,8 +208,8 @@ export async function translateText({
             await new Promise((resolve) => setTimeout(resolve, 500));
 
             return result["translated_text"] ?? text;
-        } catch (error) {
-            lastError = error;
+        } catch (error: unknown) {
+            lastError = error as Error;
 
             // 403 errors should not be retried - they indicate authentication/authorization issues
             if (error instanceof Error && error.message.includes("403")) {
@@ -192,7 +217,7 @@ export async function translateText({
             }
 
             // Check if this is a retriable error
-            if (!isRetriableError(error)) {
+            if (error instanceof Error && !isRetriableError(error as NetworkError)) {
                 const errorMessage = error instanceof Error ? error.message : String(error);
                 cliContext.logger.error(`[TRANSLATE] Non-retriable error: ${errorMessage}`);
                 return text;
@@ -216,7 +241,8 @@ export async function translateText({
     }
 
     // This should never be reached, but just in case
-    const lastErrorMessage = lastError instanceof Error ? lastError.message : String(lastError);
+    const lastErrorMessage =
+        lastError instanceof Error ? lastError.message : lastError ? String(lastError) : "Unknown error";
     cliContext.logger.error(`[TRANSLATE] Unexpected end of retry loop. Last error: ${lastErrorMessage}`);
     return text;
 }
