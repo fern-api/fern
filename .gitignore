@@ -88,3 +88,15 @@ seed/python-sdk/**/output.prof
 **/vitest.config.ts.*.mjs
 
 .local
+
+# Seed build artifacts and caches
+seed/**/.gradle/
+seed/**/build/
+seed/**/bin/
+seed/**/obj/
+seed/**/target/
+seed/**/__pycache__/
+seed/**/.pytest_cache/
+seed/**/.mypy_cache/
+seed/**/.ruff_cache/
+seed/**/*.egg-info/
