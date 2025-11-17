@@ -177,8 +177,9 @@ describe("upgrade", () => {
             expect(runMigrationsCall).toBeDefined();
             expect(writeFileCall).toBeDefined();
 
-            const runMigrationsCallOrder = vi.mocked(runMigrations).mock.invocationCallOrder[0];
-            const writeFileCallOrder = vi.mocked(writeFile).mock.invocationCallOrder[0];
+            const runMigrationsCallOrder =
+                vi.mocked(runMigrations).mock.invocationCallOrder[0] ?? Number.MAX_SAFE_INTEGER;
+            const writeFileCallOrder = vi.mocked(writeFile).mock.invocationCallOrder[0] ?? Number.MAX_SAFE_INTEGER;
 
             expect(runMigrationsCallOrder).toBeLessThan(writeFileCallOrder);
         });
@@ -365,7 +366,7 @@ describe("upgrade", () => {
 
         it("should handle missing fern directory gracefully in migration mode", async () => {
             mockCliContext.environment.packageVersion = "1.2.0";
-            vi.mocked(getFernDirectory).mockResolvedValue(null);
+            vi.mocked(getFernDirectory).mockResolvedValue(undefined);
 
             await upgrade({
                 cliContext: mockCliContext,
