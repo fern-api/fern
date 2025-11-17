@@ -8550,7 +8550,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "bde8080f",
+                                "id": "150db43d",
                                 "name": null,
                                 "url": "/camel-case",
                                 "rootPathParameters": [],
@@ -8656,12 +8656,12 @@
                                                     },
                                                     "shape": {
                                                         "type": "undiscriminatedUnion",
-                                                        "index": 0,
+                                                        "index": 1,
                                                         "singleUnionType": {
                                                             "shape": {
                                                                 "type": "named",
                                                                 "typeName": {
-                                                                    "typeId": "type_union:TokenizeCard",
+                                                                    "typeId": "type_union:ConvertToken",
                                                                     "fernFilepath": {
                                                                         "allParts": [
                                                                             {
@@ -8706,22 +8706,22 @@
                                                                         }
                                                                     },
                                                                     "name": {
-                                                                        "originalName": "TokenizeCard",
+                                                                        "originalName": "ConvertToken",
                                                                         "camelCase": {
-                                                                            "unsafeName": "tokenizeCard",
-                                                                            "safeName": "tokenizeCard"
+                                                                            "unsafeName": "convertToken",
+                                                                            "safeName": "convertToken"
                                                                         },
                                                                         "snakeCase": {
-                                                                            "unsafeName": "tokenize_card",
-                                                                            "safeName": "tokenize_card"
+                                                                            "unsafeName": "convert_token",
+                                                                            "safeName": "convert_token"
                                                                         },
                                                                         "screamingSnakeCase": {
-                                                                            "unsafeName": "TOKENIZE_CARD",
-                                                                            "safeName": "TOKENIZE_CARD"
+                                                                            "unsafeName": "CONVERT_TOKEN",
+                                                                            "safeName": "CONVERT_TOKEN"
                                                                         },
                                                                         "pascalCase": {
-                                                                            "unsafeName": "TokenizeCard",
-                                                                            "safeName": "TokenizeCard"
+                                                                            "unsafeName": "ConvertToken",
+                                                                            "safeName": "ConvertToken"
                                                                         }
                                                                     },
                                                                     "displayName": null
@@ -8765,7 +8765,7 @@
                                                                                 "jsonExample": "card"
                                                                             },
                                                                             "originalTypeDeclaration": {
-                                                                                "typeId": "type_union:TokenizeCard",
+                                                                                "typeId": "type_union:ConvertToken",
                                                                                 "fernFilepath": {
                                                                                     "allParts": [
                                                                                         {
@@ -8810,22 +8810,22 @@
                                                                                     }
                                                                                 },
                                                                                 "name": {
-                                                                                    "originalName": "TokenizeCard",
+                                                                                    "originalName": "ConvertToken",
                                                                                     "camelCase": {
-                                                                                        "unsafeName": "tokenizeCard",
-                                                                                        "safeName": "tokenizeCard"
+                                                                                        "unsafeName": "convertToken",
+                                                                                        "safeName": "convertToken"
                                                                                     },
                                                                                     "snakeCase": {
-                                                                                        "unsafeName": "tokenize_card",
-                                                                                        "safeName": "tokenize_card"
+                                                                                        "unsafeName": "convert_token",
+                                                                                        "safeName": "convert_token"
                                                                                     },
                                                                                     "screamingSnakeCase": {
-                                                                                        "unsafeName": "TOKENIZE_CARD",
-                                                                                        "safeName": "TOKENIZE_CARD"
+                                                                                        "unsafeName": "CONVERT_TOKEN",
+                                                                                        "safeName": "CONVERT_TOKEN"
                                                                                     },
                                                                                     "pascalCase": {
-                                                                                        "unsafeName": "TokenizeCard",
-                                                                                        "safeName": "TokenizeCard"
+                                                                                        "unsafeName": "ConvertToken",
+                                                                                        "safeName": "ConvertToken"
                                                                                     }
                                                                                 },
                                                                                 "displayName": null
@@ -8835,25 +8835,25 @@
                                                                         {
                                                                             "name": {
                                                                                 "name": {
-                                                                                    "originalName": "cardNumber",
+                                                                                    "originalName": "tokenId",
                                                                                     "camelCase": {
-                                                                                        "unsafeName": "cardNumber",
-                                                                                        "safeName": "cardNumber"
+                                                                                        "unsafeName": "tokenID",
+                                                                                        "safeName": "tokenID"
                                                                                     },
                                                                                     "snakeCase": {
-                                                                                        "unsafeName": "card_number",
-                                                                                        "safeName": "card_number"
+                                                                                        "unsafeName": "token_id",
+                                                                                        "safeName": "token_id"
                                                                                     },
                                                                                     "screamingSnakeCase": {
-                                                                                        "unsafeName": "CARD_NUMBER",
-                                                                                        "safeName": "CARD_NUMBER"
+                                                                                        "unsafeName": "TOKEN_ID",
+                                                                                        "safeName": "TOKEN_ID"
                                                                                     },
                                                                                     "pascalCase": {
-                                                                                        "unsafeName": "CardNumber",
-                                                                                        "safeName": "CardNumber"
+                                                                                        "unsafeName": "TokenID",
+                                                                                        "safeName": "TokenID"
                                                                                     }
                                                                                 },
-                                                                                "wireValue": "cardNumber"
+                                                                                "wireValue": "tokenId"
                                                                             },
                                                                             "value": {
                                                                                 "shape": {
@@ -8861,14 +8861,14 @@
                                                                                     "primitive": {
                                                                                         "type": "string",
                                                                                         "string": {
-                                                                                            "original": "1234567890123456"
+                                                                                            "original": "tok_123"
                                                                                         }
                                                                                     }
                                                                                 },
-                                                                                "jsonExample": "1234567890123456"
+                                                                                "jsonExample": "tok_123"
                                                                             },
                                                                             "originalTypeDeclaration": {
-                                                                                "typeId": "type_union:TokenizeCard",
+                                                                                "typeId": "type_union:ConvertToken",
                                                                                 "fernFilepath": {
                                                                                     "allParts": [
                                                                                         {
@@ -8913,22 +8913,22 @@
                                                                                     }
                                                                                 },
                                                                                 "name": {
-                                                                                    "originalName": "TokenizeCard",
+                                                                                    "originalName": "ConvertToken",
                                                                                     "camelCase": {
-                                                                                        "unsafeName": "tokenizeCard",
-                                                                                        "safeName": "tokenizeCard"
+                                                                                        "unsafeName": "convertToken",
+                                                                                        "safeName": "convertToken"
                                                                                     },
                                                                                     "snakeCase": {
-                                                                                        "unsafeName": "tokenize_card",
-                                                                                        "safeName": "tokenize_card"
+                                                                                        "unsafeName": "convert_token",
+                                                                                        "safeName": "convert_token"
                                                                                     },
                                                                                     "screamingSnakeCase": {
-                                                                                        "unsafeName": "TOKENIZE_CARD",
-                                                                                        "safeName": "TOKENIZE_CARD"
+                                                                                        "unsafeName": "CONVERT_TOKEN",
+                                                                                        "safeName": "CONVERT_TOKEN"
                                                                                     },
                                                                                     "pascalCase": {
-                                                                                        "unsafeName": "TokenizeCard",
-                                                                                        "safeName": "TokenizeCard"
+                                                                                        "unsafeName": "ConvertToken",
+                                                                                        "safeName": "ConvertToken"
                                                                                     }
                                                                                 },
                                                                                 "displayName": null
@@ -8941,14 +8941,14 @@
                                                             },
                                                             "jsonExample": {
                                                                 "method": "card",
-                                                                "cardNumber": "1234567890123456"
+                                                                "tokenId": "tok_123"
                                                             }
                                                         }
                                                     }
                                                 },
                                                 "jsonExample": {
                                                     "method": "card",
-                                                    "cardNumber": "1234567890123456"
+                                                    "tokenId": "tok_123"
                                                 }
                                             },
                                             "originalTypeDeclaration": null
@@ -8958,7 +8958,7 @@
                                     "jsonExample": {
                                         "paymentMethod": {
                                             "method": "card",
-                                            "cardNumber": "1234567890123456"
+                                            "tokenId": "tok_123"
                                         }
                                     }
                                 },
