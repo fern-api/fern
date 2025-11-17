@@ -46,7 +46,7 @@ export function addLanguageSuffixToUrl(url: string, language: Language): string 
             urlObj.pathname = language + urlObj.pathname;
         } else {
             urlObj.hostname = `${language}.${hostname}`;
-            urlObj.pathname = language + +urlObj.pathname;
+            urlObj.pathname = language + urlObj.pathname;
         }
 
         let result = urlObj.toString();
