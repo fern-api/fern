@@ -35,6 +35,9 @@ export class TemplateDataGenerator {
     }
 
     public generateTemplateData(templateFileName: string) {
+        if (templateFileName === "ClientErrorTests.Template") {
+            return this.generateTemplateDataForClientErrorTests();
+        }
         if (templateFileName === "ClientRetryTests.Template") {
             return this.generateTemplateDataForClientRetryTests();
         }
@@ -42,6 +45,19 @@ export class TemplateDataGenerator {
             return this.generateTemplateDataForHTTPStub();
         }
         throw new Error(`Unknown template file "${templateFileName}"`);
+    }
+
+    private generateTemplateDataForClientErrorTests() {
+        const base = this.generateTemplateDataForClientRetryTests();
+        if (!base) {
+            return null;
+        }
+        const { moduleName, clientDeclaration, endpointCall } = base as {
+            moduleName: string;
+            clientDeclaration: string;
+            endpointCall: string;
+        };
+        return { moduleName, clientDeclaration, endpointCall };
     }
 
     private generateTemplateDataForClientRetryTests() {
