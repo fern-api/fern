@@ -78,7 +78,8 @@ func (p *Pager[
 	}
 
 	callParams := p.prepareCall(pageRequest)
-	if _, err := p.caller.Call(ctx, callParams); err != nil {
+	httpResponse, err := p.caller.Call(ctx, callParams)
+	if err != nil {
 		return nil, err
 	}
 
@@ -88,6 +89,10 @@ func (p *Pager[
 		return &core.Page[Cursor, Results]{
 			Results:     pageResponse.Results,
 			RawResponse: *pageResponse,
+			HTTPRawResponse: core.HTTPPageResponse{
+				StatusCode: httpResponse.StatusCode,
+				Header:     httpResponse.Header,
+			},
 			NextPageFunc: func(ctx context.Context) (*core.Page[Cursor, Results], error) {
 				page, err := p.GetPage(ctx, pageResponse.Next)
 				if err != nil {
@@ -104,6 +109,10 @@ func (p *Pager[
 	return &core.Page[Cursor, Results]{
 		Results:     pageResponse.Results,
 		RawResponse: *pageResponse,
+		HTTPRawResponse: core.HTTPPageResponse{
+			StatusCode: httpResponse.StatusCode,
+			Header:     httpResponse.Header,
+		},
 		NextPageFunc: func(ctx context.Context) (*core.Page[Cursor, Results], error) {
 			if pageResponse.Done {
 				return nil, core.ErrNoPages
