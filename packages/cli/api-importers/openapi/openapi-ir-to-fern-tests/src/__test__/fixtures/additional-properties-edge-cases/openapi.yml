@@ -1,0 +1,159 @@
+openapi: 3.0.0
+info:
+  title: Additional Properties Edge Cases
+  version: 1.0.0
+
+paths:
+  /flexible:
+    post:
+      operationId: createFlexible
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FlexibleObject"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FlexibleObject"
+  
+  /strict:
+    post:
+      operationId: createStrict
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StrictObject"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StrictObject"
+  
+  /string-map:
+    post:
+      operationId: createStringMap
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StringMap"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StringMap"
+  
+  /object-map:
+    post:
+      operationId: createObjectMap
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ObjectMap"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ObjectMap"
+  
+  /user-map:
+    post:
+      operationId: createUserMap
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserMap"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserMap"
+  
+  /array-map:
+    post:
+      operationId: createArrayMap
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ArrayMap"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArrayMap"
+
+components:
+  schemas:
+    FlexibleObject:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      additionalProperties: true
+    
+    StrictObject:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      additionalProperties: false
+    
+    StringMap:
+      type: object
+      properties:
+        id:
+          type: string
+      additionalProperties:
+        type: string
+    
+    ObjectMap:
+      type: object
+      additionalProperties:
+        type: object
+        properties:
+          value:
+            type: string
+          count:
+            type: integer
+    
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    
+    UserMap:
+      type: object
+      additionalProperties:
+        $ref: "#/components/schemas/User"
+    
+    ArrayMap:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          type: string

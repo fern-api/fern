@@ -1,0 +1,119 @@
+openapi: 3.0.0
+info:
+  title: Enum Normalization Edge Cases
+  version: 1.0.0
+
+paths:
+  /test:
+    post:
+      operationId: testEnums
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  $ref: "#/components/schemas/Status"
+                special:
+                  $ref: "#/components/schemas/SpecialEnum"
+                priority:
+                  $ref: "#/components/schemas/Priority"
+                empty:
+                  $ref: "#/components/schemas/EmptyEnum"
+                numeric:
+                  $ref: "#/components/schemas/NumericStrings"
+                color:
+                  $ref: "#/components/schemas/Color"
+                role:
+                  $ref: "#/components/schemas/Role"
+                version:
+                  $ref: "#/components/schemas/ApiVersion"
+                mixed:
+                  $ref: "#/components/schemas/MixedCase"
+      responses:
+        "200":
+          description: Success
+
+components:
+  schemas:
+    Status:
+      type: string
+      enum:
+        - active
+        - inactive
+        - pending
+        - archived
+    
+    SpecialEnum:
+      type: string
+      enum:
+        - value-with-dash
+        - value_with_underscore
+        - value.with.dot
+        - value with space
+    
+    Priority:
+      type: integer
+      enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+    
+    EmptyEnum:
+      type: string
+      enum:
+        - ""
+        - value1
+        - value2
+    
+    NumericStrings:
+      type: string
+      enum:
+        - "1"
+        - "2"
+        - "3"
+        - "100"
+        - "999"
+    
+    Color:
+      type: string
+      enum:
+        - red
+        - green
+        - blue
+    
+    Role:
+      type: string
+      enum:
+        - admin
+        - user
+        - guest
+      x-fern-enum:
+        admin:
+          name: Administrator
+          description: Full system access
+        user:
+          name: RegularUser
+          description: Standard user access
+        guest:
+          name: GuestUser
+          description: Limited access
+    
+    ApiVersion:
+      type: string
+      enum:
+        - v1
+        - v2
+        - v3
+    
+    MixedCase:
+      type: string
+      enum:
+        - camelCase
+        - PascalCase
+        - snake_case
+        - UPPER_CASE
+        - kebab-case

@@ -1,0 +1,106 @@
+openapi: 3.0.0
+info:
+  title: Nullable Types Edge Cases
+  version: 1.0.0
+
+paths:
+  /test:
+    post:
+      operationId: testNullable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nullableString:
+                  $ref: "#/components/schemas/NullableString"
+                nullableUser:
+                  $ref: "#/components/schemas/NullableUser"
+                nullableArray:
+                  $ref: "#/components/schemas/NullableArray"
+                profile:
+                  $ref: "#/components/schemas/Profile"
+      responses:
+        "200":
+          description: Success
+
+components:
+  schemas:
+    NullableString:
+      type: string
+      nullable: true
+    
+    NullableUser:
+      type: object
+      nullable: true
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    
+    NullableArray:
+      type: array
+      nullable: true
+      items:
+        type: string
+    
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    
+    NullableUserRef:
+      allOf:
+        - $ref: "#/components/schemas/User"
+      nullable: true
+    
+    NullableStatus:
+      type: string
+      enum:
+        - active
+        - inactive
+        - pending
+      nullable: true
+    
+    Profile:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        bio:
+          type: string
+          nullable: true
+        avatar:
+          type: string
+          nullable: true
+        website:
+          type: string
+          nullable: true
+      required:
+        - id
+        - name
+    
+    Address:
+      type: object
+      properties:
+        street:
+          type: string
+        city:
+          type: string
+    
+    UserWithAddress:
+      type: object
+      properties:
+        id:
+          type: string
+        address:
+          allOf:
+            - $ref: "#/components/schemas/Address"
+          nullable: true

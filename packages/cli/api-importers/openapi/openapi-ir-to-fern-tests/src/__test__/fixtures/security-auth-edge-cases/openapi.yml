@@ -1,0 +1,105 @@
+openapi: 3.0.0
+info:
+  title: Security and Auth Edge Cases
+  version: 1.0.0
+
+paths:
+  /data:
+    get:
+      operationId: getData
+      responses:
+        "200":
+          description: Success
+  
+  /public:
+    get:
+      operationId: getPublic
+      security: []
+      responses:
+        "200":
+          description: Success
+  
+  /protected:
+    get:
+      operationId: getProtected
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Success
+  
+  /secure:
+    get:
+      operationId: getSecure
+      security:
+        - ApiKeyAuth: []
+          BearerAuth: []
+      responses:
+        "200":
+          description: Success
+  
+  /flexible:
+    get:
+      operationId: getFlexible
+      security:
+        - ApiKeyAuth: []
+        - BearerAuth: []
+        - OAuth2:
+            - read
+      responses:
+        "200":
+          description: Success
+
+security:
+  - ApiKeyAuth: []
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    
+    BasicAuth:
+      type: http
+      scheme: basic
+    
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://example.com/oauth/authorize
+          tokenUrl: https://example.com/oauth/token
+          scopes:
+            read: Read access
+            write: Write access
+            admin: Admin access
+        implicit:
+          authorizationUrl: https://example.com/oauth/authorize
+          scopes:
+            read: Read access
+            write: Write access
+        clientCredentials:
+          tokenUrl: https://example.com/oauth/token
+          scopes:
+            api: API access
+    
+    ApiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    
+    ApiKeyQuery:
+      type: apiKey
+      in: query
+      name: api_key
+    
+    ApiKeyCookie:
+      type: apiKey
+      in: cookie
+      name: api_key

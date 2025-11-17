@@ -1,0 +1,164 @@
+openapi: 3.0.0
+info:
+  title: Circular References Edge Cases
+  version: 1.0.0
+
+paths:
+  /node:
+    post:
+      operationId: createNode
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Node"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Node"
+  
+  /author:
+    post:
+      operationId: createAuthor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Author"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Author"
+  
+  /tree:
+    post:
+      operationId: createTree
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TreeNode"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TreeNode"
+
+components:
+  schemas:
+    Node:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+        next:
+          $ref: "#/components/schemas/Node"
+    
+    Author:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        books:
+          type: array
+          items:
+            $ref: "#/components/schemas/Book"
+    
+    Book:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        author:
+          $ref: "#/components/schemas/Author"
+    
+    TreeNode:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+        parent:
+          $ref: "#/components/schemas/TreeNode"
+        children:
+          type: array
+          items:
+            $ref: "#/components/schemas/TreeNode"
+    
+    Level1:
+      type: object
+      properties:
+        id:
+          type: string
+        level2:
+          $ref: "#/components/schemas/Level2"
+    
+    Level2:
+      type: object
+      properties:
+        id:
+          type: string
+        level3:
+          $ref: "#/components/schemas/Level3"
+    
+    Level3:
+      type: object
+      properties:
+        id:
+          type: string
+        level4:
+          $ref: "#/components/schemas/Level4"
+    
+    Level4:
+      type: object
+      properties:
+        id:
+          type: string
+        level5:
+          $ref: "#/components/schemas/Level5"
+    
+    Level5:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+    
+    BaseEntity:
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    
+    Category:
+      allOf:
+        - $ref: "#/components/schemas/BaseEntity"
+        - type: object
+          properties:
+            name:
+              type: string
+            parent:
+              $ref: "#/components/schemas/Category"
+            subcategories:
+              type: array
+              items:
+                $ref: "#/components/schemas/Category"
