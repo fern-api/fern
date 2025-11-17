@@ -31,39 +31,59 @@ Instead of a regular `git clone`, use sparse checkout from the start:
 git clone --filter=blob:none --sparse https://github.com/fern-api/fern.git
 cd fern
 
-# Run the automated setup script (from the repository root)
-./scripts/setup-repo.sh
-# Or alternatively: pnpm run setup
+# Configure sparse checkout to exclude large directories
+git sparse-checkout set --no-cone \
+  '/*' \
+  '!seed' \
+  '!seed-remote-local' \
+  'packages/seed/**' \
+  'seed/**/seed.yml' \
+  'seed-remote-local/**/seed.yml' \
+  '!**/__snapshots__/**'
 ```
 
-The setup script will:
-- Configure git settings for large repositories
-- Set up sparse checkout to exclude large generated directories
-- Install dependencies and run initial builds
-- Optionally install watchman for better file watching performance
+This configuration:
+- Includes all root files and directories
+- Excludes the `seed/` directory (except `seed.yml` files needed for testing)
+- Excludes the `seed-remote-local/` directory (except `seed.yml` files)
+- Excludes all `__snapshots__/` directories
+- Keeps `packages/seed/**` (the seed CLI source code)
 
-#### Manual Setup (Alternative)
+If you need to reset your sparse checkout configuration later, you can run:
+```sh
+pnpm run configure-sparse-checkout
+```
 
-If you prefer to set things up manually or have already cloned the repository:
+#### Already Cloned Without Sparse Checkout?
+
+If you've already cloned the repository without sparse checkout, you can configure it now to reduce the repository size:
+
+```sh
+# From the repository root
+pnpm run configure-sparse-checkout
+```
+
+#### Additional Performance Tips (Optional)
+
+For better performance with large repositories, you can also configure these git settings:
+
+```sh
+git config core.fsmonitor true
+git config core.untrackedcache true
+git config feature.manyFiles true
+```
+
+On macOS, installing [watchman](https://facebook.github.io/watchman/) can further improve file watching performance:
+```sh
+brew install watchman
+```
 
 The repo relies on git-lfs to handle large file storage, so you'll need to have git-lfs installed in order to clone the repo. If you're using homebrew, just run:
 ```sh
 brew install git-lfs
 ```
 
-Once you have cloned or forked the repository, you can configure sparse checkout to reduce repository size:
-
-```sh
-# Configure git for large repositories
-git config core.fsmonitor true
-git config core.untrackedcache true
-git config feature.manyFiles true
-
-# Set up sparse checkout
-./scripts/configure-sparse-checkout.sh
-```
-
-Then run through the steps below.
+Once you have cloned or forked the repository, run through the steps below.
 
 ### Step 1: Install dependencies
 

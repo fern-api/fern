@@ -12,7 +12,6 @@
   },
   "scripts": {
     "bootstrap": "./scripts/bootstrap.sh",
-    "setup": "./scripts/setup-repo.sh",
     "configure-sparse-checkout": "./scripts/configure-sparse-checkout.sh",
     "clean": "turbo clean",
     "compile": "turbo compile",
