@@ -3250,6 +3250,582 @@
             "v2Examples": null,
             "availability": null,
             "docs": "Mix of primitives where some resolve to the same Java type."
+        },
+        "type_union:PaymentMethodUnion": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "PaymentMethodUnion",
+                    "camelCase": {
+                        "unsafeName": "paymentMethodUnion",
+                        "safeName": "paymentMethodUnion"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "payment_method_union",
+                        "safeName": "payment_method_union"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PAYMENT_METHOD_UNION",
+                        "safeName": "PAYMENT_METHOD_UNION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PaymentMethodUnion",
+                        "safeName": "PaymentMethodUnion"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                        }
+                    }
+                },
+                "displayName": null,
+                "typeId": "type_union:PaymentMethodUnion"
+            },
+            "shape": {
+                "_type": "undiscriminatedUnion",
+                "members": [
+                    {
+                        "type": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "TokenizeCard",
+                                "camelCase": {
+                                    "unsafeName": "tokenizeCard",
+                                    "safeName": "tokenizeCard"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "tokenize_card",
+                                    "safeName": "tokenize_card"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TOKENIZE_CARD",
+                                    "safeName": "TOKENIZE_CARD"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "TokenizeCard",
+                                    "safeName": "TokenizeCard"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [
+                                    {
+                                        "originalName": "union",
+                                        "camelCase": {
+                                            "unsafeName": "union",
+                                            "safeName": "union"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "union",
+                                            "safeName": "union"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "UNION",
+                                            "safeName": "UNION"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Union",
+                                            "safeName": "Union"
+                                        }
+                                    }
+                                ],
+                                "packagePath": [],
+                                "file": {
+                                    "originalName": "union",
+                                    "camelCase": {
+                                        "unsafeName": "union",
+                                        "safeName": "union"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "union",
+                                        "safeName": "union"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "UNION",
+                                        "safeName": "UNION"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Union",
+                                        "safeName": "Union"
+                                    }
+                                }
+                            },
+                            "displayName": "Tokenize Card",
+                            "typeId": "type_union:TokenizeCard",
+                            "default": null,
+                            "inline": null
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "ConvertToken",
+                                "camelCase": {
+                                    "unsafeName": "convertToken",
+                                    "safeName": "convertToken"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "convert_token",
+                                    "safeName": "convert_token"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CONVERT_TOKEN",
+                                    "safeName": "CONVERT_TOKEN"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ConvertToken",
+                                    "safeName": "ConvertToken"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [
+                                    {
+                                        "originalName": "union",
+                                        "camelCase": {
+                                            "unsafeName": "union",
+                                            "safeName": "union"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "union",
+                                            "safeName": "union"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "UNION",
+                                            "safeName": "UNION"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Union",
+                                            "safeName": "Union"
+                                        }
+                                    }
+                                ],
+                                "packagePath": [],
+                                "file": {
+                                    "originalName": "union",
+                                    "camelCase": {
+                                        "unsafeName": "union",
+                                        "safeName": "union"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "union",
+                                        "safeName": "union"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "UNION",
+                                        "safeName": "UNION"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Union",
+                                        "safeName": "Union"
+                                    }
+                                }
+                            },
+                            "displayName": "Convert Token",
+                            "typeId": "type_union:ConvertToken",
+                            "default": null,
+                            "inline": null
+                        },
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [
+                "type_union:TokenizeCard",
+                "type_union:ConvertToken"
+            ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": "Tests that nested properties with camelCase wire names are properly\nconverted from snake_case Ruby keys when passed as Hash values."
+        },
+        "type_union:TokenizeCard": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "TokenizeCard",
+                    "camelCase": {
+                        "unsafeName": "tokenizeCard",
+                        "safeName": "tokenizeCard"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "tokenize_card",
+                        "safeName": "tokenize_card"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKENIZE_CARD",
+                        "safeName": "TOKENIZE_CARD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TokenizeCard",
+                        "safeName": "TokenizeCard"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                        }
+                    }
+                },
+                "displayName": null,
+                "typeId": "type_union:TokenizeCard"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "method",
+                                "camelCase": {
+                                    "unsafeName": "method",
+                                    "safeName": "method"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "method",
+                                    "safeName": "method"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "METHOD",
+                                    "safeName": "METHOD"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Method",
+                                    "safeName": "Method"
+                                }
+                            },
+                            "wireValue": "method"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "cardNumber",
+                                "camelCase": {
+                                    "unsafeName": "cardNumber",
+                                    "safeName": "cardNumber"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "card_number",
+                                    "safeName": "card_number"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CARD_NUMBER",
+                                    "safeName": "CARD_NUMBER"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "CardNumber",
+                                    "safeName": "CardNumber"
+                                }
+                            },
+                            "wireValue": "cardNumber"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": null
+        },
+        "type_union:ConvertToken": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "ConvertToken",
+                    "camelCase": {
+                        "unsafeName": "convertToken",
+                        "safeName": "convertToken"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "convert_token",
+                        "safeName": "convert_token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CONVERT_TOKEN",
+                        "safeName": "CONVERT_TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ConvertToken",
+                        "safeName": "ConvertToken"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                        }
+                    }
+                },
+                "displayName": null,
+                "typeId": "type_union:ConvertToken"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "method",
+                                "camelCase": {
+                                    "unsafeName": "method",
+                                    "safeName": "method"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "method",
+                                    "safeName": "method"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "METHOD",
+                                    "safeName": "METHOD"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Method",
+                                    "safeName": "Method"
+                                }
+                            },
+                            "wireValue": "method"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "tokenId",
+                                "camelCase": {
+                                    "unsafeName": "tokenID",
+                                    "safeName": "tokenID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "token_id",
+                                    "safeName": "token_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TOKEN_ID",
+                                    "safeName": "TOKEN_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "TokenID",
+                                    "safeName": "TokenID"
+                                }
+                            },
+                            "wireValue": "tokenId"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": null
         }
     },
     "errors": {},
@@ -7709,6 +8285,715 @@
                     "apiPlayground": null,
                     "availability": null,
                     "docs": null
+                },
+                {
+                    "id": "endpoint_union.testCamelCaseProperties",
+                    "name": {
+                        "originalName": "testCamelCaseProperties",
+                        "camelCase": {
+                            "unsafeName": "testCamelCaseProperties",
+                            "safeName": "testCamelCaseProperties"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "test_camel_case_properties",
+                            "safeName": "test_camel_case_properties"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TEST_CAMEL_CASE_PROPERTIES",
+                            "safeName": "TEST_CAMEL_CASE_PROPERTIES"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "TestCamelCaseProperties",
+                            "safeName": "TestCamelCaseProperties"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": false,
+                    "security": null,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "POST",
+                    "basePath": null,
+                    "path": {
+                        "head": "/camel-case",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/camel-case",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "type": "inlinedRequestBody",
+                        "name": {
+                            "originalName": "PaymentRequest",
+                            "camelCase": {
+                                "unsafeName": "paymentRequest",
+                                "safeName": "paymentRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "payment_request",
+                                "safeName": "payment_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PAYMENT_REQUEST",
+                                "safeName": "PAYMENT_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "PaymentRequest",
+                                "safeName": "PaymentRequest"
+                            }
+                        },
+                        "extends": [],
+                        "properties": [
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "paymentMethod",
+                                        "camelCase": {
+                                            "unsafeName": "paymentMethod",
+                                            "safeName": "paymentMethod"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "payment_method",
+                                            "safeName": "payment_method"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "PAYMENT_METHOD",
+                                            "safeName": "PAYMENT_METHOD"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "PaymentMethod",
+                                            "safeName": "PaymentMethod"
+                                        }
+                                    },
+                                    "wireValue": "paymentMethod"
+                                },
+                                "valueType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "PaymentMethodUnion",
+                                        "camelCase": {
+                                            "unsafeName": "paymentMethodUnion",
+                                            "safeName": "paymentMethodUnion"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "payment_method_union",
+                                            "safeName": "payment_method_union"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "PAYMENT_METHOD_UNION",
+                                            "safeName": "PAYMENT_METHOD_UNION"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "PaymentMethodUnion",
+                                            "safeName": "PaymentMethodUnion"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "union",
+                                                "camelCase": {
+                                                    "unsafeName": "union",
+                                                    "safeName": "union"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "union",
+                                                    "safeName": "union"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "UNION",
+                                                    "safeName": "UNION"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Union",
+                                                    "safeName": "Union"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
+                                            "originalName": "union",
+                                            "camelCase": {
+                                                "unsafeName": "union",
+                                                "safeName": "union"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "union",
+                                                "safeName": "union"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "UNION",
+                                                "safeName": "UNION"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Union",
+                                                "safeName": "Union"
+                                            }
+                                        }
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_union:PaymentMethodUnion",
+                                    "default": null,
+                                    "inline": null
+                                },
+                                "v2Examples": {
+                                    "userSpecifiedExamples": {},
+                                    "autogeneratedExamples": {}
+                                },
+                                "propertyAccess": null,
+                                "availability": null,
+                                "docs": null
+                            }
+                        ],
+                        "extra-properties": false,
+                        "extendedProperties": [],
+                        "docs": null,
+                        "v2Examples": null,
+                        "contentType": null
+                    },
+                    "v2RequestBodies": null,
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "wrapper",
+                            "wrapperName": {
+                                "originalName": "PaymentRequest",
+                                "camelCase": {
+                                    "unsafeName": "paymentRequest",
+                                    "safeName": "paymentRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "payment_request",
+                                    "safeName": "payment_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PAYMENT_REQUEST",
+                                    "safeName": "PAYMENT_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "PaymentRequest",
+                                    "safeName": "PaymentRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            },
+                            "includePathParameters": false,
+                            "onlyPathParameters": false
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
+                        "streamParameter": null
+                    },
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                },
+                                "docs": null,
+                                "v2Examples": null
+                            }
+                        },
+                        "status-code": null
+                    },
+                    "v2Responses": null,
+                    "errors": [],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "2dc06155",
+                                "url": "/camel-case",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "inlinedRequestBody",
+                                    "properties": [
+                                        {
+                                            "name": {
+                                                "name": {
+                                                    "originalName": "paymentMethod",
+                                                    "camelCase": {
+                                                        "unsafeName": "paymentMethod",
+                                                        "safeName": "paymentMethod"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "payment_method",
+                                                        "safeName": "payment_method"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "PAYMENT_METHOD",
+                                                        "safeName": "PAYMENT_METHOD"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "PaymentMethod",
+                                                        "safeName": "PaymentMethod"
+                                                    }
+                                                },
+                                                "wireValue": "paymentMethod"
+                                            },
+                                            "originalTypeDeclaration": null,
+                                            "value": {
+                                                "shape": {
+                                                    "type": "named",
+                                                    "shape": {
+                                                        "type": "undiscriminatedUnion",
+                                                        "index": 0,
+                                                        "singleUnionType": {
+                                                            "shape": {
+                                                                "type": "named",
+                                                                "shape": {
+                                                                    "type": "object",
+                                                                    "properties": [
+                                                                        {
+                                                                            "name": {
+                                                                                "name": {
+                                                                                    "originalName": "method",
+                                                                                    "camelCase": {
+                                                                                        "unsafeName": "method",
+                                                                                        "safeName": "method"
+                                                                                    },
+                                                                                    "snakeCase": {
+                                                                                        "unsafeName": "method",
+                                                                                        "safeName": "method"
+                                                                                    },
+                                                                                    "screamingSnakeCase": {
+                                                                                        "unsafeName": "METHOD",
+                                                                                        "safeName": "METHOD"
+                                                                                    },
+                                                                                    "pascalCase": {
+                                                                                        "unsafeName": "Method",
+                                                                                        "safeName": "Method"
+                                                                                    }
+                                                                                },
+                                                                                "wireValue": "method"
+                                                                            },
+                                                                            "originalTypeDeclaration": {
+                                                                                "name": {
+                                                                                    "originalName": "TokenizeCard",
+                                                                                    "camelCase": {
+                                                                                        "unsafeName": "tokenizeCard",
+                                                                                        "safeName": "tokenizeCard"
+                                                                                    },
+                                                                                    "snakeCase": {
+                                                                                        "unsafeName": "tokenize_card",
+                                                                                        "safeName": "tokenize_card"
+                                                                                    },
+                                                                                    "screamingSnakeCase": {
+                                                                                        "unsafeName": "TOKENIZE_CARD",
+                                                                                        "safeName": "TOKENIZE_CARD"
+                                                                                    },
+                                                                                    "pascalCase": {
+                                                                                        "unsafeName": "TokenizeCard",
+                                                                                        "safeName": "TokenizeCard"
+                                                                                    }
+                                                                                },
+                                                                                "fernFilepath": {
+                                                                                    "allParts": [
+                                                                                        {
+                                                                                            "originalName": "union",
+                                                                                            "camelCase": {
+                                                                                                "unsafeName": "union",
+                                                                                                "safeName": "union"
+                                                                                            },
+                                                                                            "snakeCase": {
+                                                                                                "unsafeName": "union",
+                                                                                                "safeName": "union"
+                                                                                            },
+                                                                                            "screamingSnakeCase": {
+                                                                                                "unsafeName": "UNION",
+                                                                                                "safeName": "UNION"
+                                                                                            },
+                                                                                            "pascalCase": {
+                                                                                                "unsafeName": "Union",
+                                                                                                "safeName": "Union"
+                                                                                            }
+                                                                                        }
+                                                                                    ],
+                                                                                    "packagePath": [],
+                                                                                    "file": {
+                                                                                        "originalName": "union",
+                                                                                        "camelCase": {
+                                                                                            "unsafeName": "union",
+                                                                                            "safeName": "union"
+                                                                                        },
+                                                                                        "snakeCase": {
+                                                                                            "unsafeName": "union",
+                                                                                            "safeName": "union"
+                                                                                        },
+                                                                                        "screamingSnakeCase": {
+                                                                                            "unsafeName": "UNION",
+                                                                                            "safeName": "UNION"
+                                                                                        },
+                                                                                        "pascalCase": {
+                                                                                            "unsafeName": "Union",
+                                                                                            "safeName": "Union"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "displayName": null,
+                                                                                "typeId": "type_union:TokenizeCard"
+                                                                            },
+                                                                            "value": {
+                                                                                "shape": {
+                                                                                    "type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "type": "string",
+                                                                                        "string": {
+                                                                                            "original": "method"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": "method"
+                                                                            },
+                                                                            "propertyAccess": null
+                                                                        },
+                                                                        {
+                                                                            "name": {
+                                                                                "name": {
+                                                                                    "originalName": "cardNumber",
+                                                                                    "camelCase": {
+                                                                                        "unsafeName": "cardNumber",
+                                                                                        "safeName": "cardNumber"
+                                                                                    },
+                                                                                    "snakeCase": {
+                                                                                        "unsafeName": "card_number",
+                                                                                        "safeName": "card_number"
+                                                                                    },
+                                                                                    "screamingSnakeCase": {
+                                                                                        "unsafeName": "CARD_NUMBER",
+                                                                                        "safeName": "CARD_NUMBER"
+                                                                                    },
+                                                                                    "pascalCase": {
+                                                                                        "unsafeName": "CardNumber",
+                                                                                        "safeName": "CardNumber"
+                                                                                    }
+                                                                                },
+                                                                                "wireValue": "cardNumber"
+                                                                            },
+                                                                            "originalTypeDeclaration": {
+                                                                                "name": {
+                                                                                    "originalName": "TokenizeCard",
+                                                                                    "camelCase": {
+                                                                                        "unsafeName": "tokenizeCard",
+                                                                                        "safeName": "tokenizeCard"
+                                                                                    },
+                                                                                    "snakeCase": {
+                                                                                        "unsafeName": "tokenize_card",
+                                                                                        "safeName": "tokenize_card"
+                                                                                    },
+                                                                                    "screamingSnakeCase": {
+                                                                                        "unsafeName": "TOKENIZE_CARD",
+                                                                                        "safeName": "TOKENIZE_CARD"
+                                                                                    },
+                                                                                    "pascalCase": {
+                                                                                        "unsafeName": "TokenizeCard",
+                                                                                        "safeName": "TokenizeCard"
+                                                                                    }
+                                                                                },
+                                                                                "fernFilepath": {
+                                                                                    "allParts": [
+                                                                                        {
+                                                                                            "originalName": "union",
+                                                                                            "camelCase": {
+                                                                                                "unsafeName": "union",
+                                                                                                "safeName": "union"
+                                                                                            },
+                                                                                            "snakeCase": {
+                                                                                                "unsafeName": "union",
+                                                                                                "safeName": "union"
+                                                                                            },
+                                                                                            "screamingSnakeCase": {
+                                                                                                "unsafeName": "UNION",
+                                                                                                "safeName": "UNION"
+                                                                                            },
+                                                                                            "pascalCase": {
+                                                                                                "unsafeName": "Union",
+                                                                                                "safeName": "Union"
+                                                                                            }
+                                                                                        }
+                                                                                    ],
+                                                                                    "packagePath": [],
+                                                                                    "file": {
+                                                                                        "originalName": "union",
+                                                                                        "camelCase": {
+                                                                                            "unsafeName": "union",
+                                                                                            "safeName": "union"
+                                                                                        },
+                                                                                        "snakeCase": {
+                                                                                            "unsafeName": "union",
+                                                                                            "safeName": "union"
+                                                                                        },
+                                                                                        "screamingSnakeCase": {
+                                                                                            "unsafeName": "UNION",
+                                                                                            "safeName": "UNION"
+                                                                                        },
+                                                                                        "pascalCase": {
+                                                                                            "unsafeName": "Union",
+                                                                                            "safeName": "Union"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "displayName": null,
+                                                                                "typeId": "type_union:TokenizeCard"
+                                                                            },
+                                                                            "value": {
+                                                                                "shape": {
+                                                                                    "type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "type": "string",
+                                                                                        "string": {
+                                                                                            "original": "cardNumber"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": "cardNumber"
+                                                                            },
+                                                                            "propertyAccess": null
+                                                                        }
+                                                                    ],
+                                                                    "extraProperties": null
+                                                                },
+                                                                "typeName": {
+                                                                    "name": {
+                                                                        "originalName": "TokenizeCard",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "tokenizeCard",
+                                                                            "safeName": "tokenizeCard"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "tokenize_card",
+                                                                            "safeName": "tokenize_card"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "TOKENIZE_CARD",
+                                                                            "safeName": "TOKENIZE_CARD"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "TokenizeCard",
+                                                                            "safeName": "TokenizeCard"
+                                                                        }
+                                                                    },
+                                                                    "fernFilepath": {
+                                                                        "allParts": [
+                                                                            {
+                                                                                "originalName": "union",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "union",
+                                                                                    "safeName": "union"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "union",
+                                                                                    "safeName": "union"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "UNION",
+                                                                                    "safeName": "UNION"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "Union",
+                                                                                    "safeName": "Union"
+                                                                                }
+                                                                            }
+                                                                        ],
+                                                                        "packagePath": [],
+                                                                        "file": {
+                                                                            "originalName": "union",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "union",
+                                                                                "safeName": "union"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "union",
+                                                                                "safeName": "union"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "UNION",
+                                                                                "safeName": "UNION"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Union",
+                                                                                "safeName": "Union"
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "displayName": null,
+                                                                    "typeId": "type_union:TokenizeCard"
+                                                                }
+                                                            },
+                                                            "jsonExample": {
+                                                                "method": "method",
+                                                                "cardNumber": "cardNumber"
+                                                            }
+                                                        }
+                                                    },
+                                                    "typeName": {
+                                                        "name": {
+                                                            "originalName": "PaymentMethodUnion",
+                                                            "camelCase": {
+                                                                "unsafeName": "paymentMethodUnion",
+                                                                "safeName": "paymentMethodUnion"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "payment_method_union",
+                                                                "safeName": "payment_method_union"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "PAYMENT_METHOD_UNION",
+                                                                "safeName": "PAYMENT_METHOD_UNION"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "PaymentMethodUnion",
+                                                                "safeName": "PaymentMethodUnion"
+                                                            }
+                                                        },
+                                                        "fernFilepath": {
+                                                            "allParts": [
+                                                                {
+                                                                    "originalName": "union",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "union",
+                                                                        "safeName": "union"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "union",
+                                                                        "safeName": "union"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "UNION",
+                                                                        "safeName": "UNION"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Union",
+                                                                        "safeName": "Union"
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "packagePath": [],
+                                                            "file": {
+                                                                "originalName": "union",
+                                                                "camelCase": {
+                                                                    "unsafeName": "union",
+                                                                    "safeName": "union"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "union",
+                                                                    "safeName": "union"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "UNION",
+                                                                    "safeName": "UNION"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Union",
+                                                                    "safeName": "Union"
+                                                                }
+                                                            }
+                                                        },
+                                                        "displayName": null,
+                                                        "typeId": "type_union:PaymentMethodUnion"
+                                                    }
+                                                },
+                                                "jsonExample": {
+                                                    "method": "method",
+                                                    "cardNumber": "cardNumber"
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "extraProperties": null,
+                                    "jsonExample": {
+                                        "paymentMethod": {
+                                            "method": "method",
+                                            "cardNumber": "cardNumber"
+                                        }
+                                    }
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "string"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "retries": null,
+                    "apiPlayground": null,
+                    "availability": null,
+                    "docs": null
                 }
             ],
             "audiences": null
@@ -7759,7 +9044,10 @@
                 "type_union:OptionalMetadata",
                 "type_union:Metadata",
                 "type_union:Key",
-                "type_union:KeyType"
+                "type_union:KeyType",
+                "type_union:PaymentMethodUnion",
+                "type_union:TokenizeCard",
+                "type_union:ConvertToken"
             ]
         },
         "sharedTypes": [
@@ -9160,6 +10448,343 @@
                         "value": "STRING"
                     }
                 ]
+            },
+            "type_union:PaymentMethodUnion": {
+                "type": "undiscriminatedUnion",
+                "declaration": {
+                    "name": {
+                        "originalName": "PaymentMethodUnion",
+                        "camelCase": {
+                            "unsafeName": "paymentMethodUnion",
+                            "safeName": "paymentMethodUnion"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "payment_method_union",
+                            "safeName": "payment_method_union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PAYMENT_METHOD_UNION",
+                            "safeName": "PAYMENT_METHOD_UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "PaymentMethodUnion",
+                            "safeName": "PaymentMethodUnion"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "union",
+                                "camelCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UNION",
+                                    "safeName": "UNION"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Union",
+                                    "safeName": "Union"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    }
+                },
+                "types": [
+                    {
+                        "type": "named",
+                        "value": "type_union:TokenizeCard"
+                    },
+                    {
+                        "type": "named",
+                        "value": "type_union:ConvertToken"
+                    }
+                ]
+            },
+            "type_union:TokenizeCard": {
+                "type": "object",
+                "declaration": {
+                    "name": {
+                        "originalName": "TokenizeCard",
+                        "camelCase": {
+                            "unsafeName": "tokenizeCard",
+                            "safeName": "tokenizeCard"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "tokenize_card",
+                            "safeName": "tokenize_card"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TOKENIZE_CARD",
+                            "safeName": "TOKENIZE_CARD"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "TokenizeCard",
+                            "safeName": "TokenizeCard"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "union",
+                                "camelCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UNION",
+                                    "safeName": "UNION"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Union",
+                                    "safeName": "Union"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    }
+                },
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "method",
+                                "camelCase": {
+                                    "unsafeName": "method",
+                                    "safeName": "method"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "method",
+                                    "safeName": "method"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "METHOD",
+                                    "safeName": "METHOD"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Method",
+                                    "safeName": "Method"
+                                }
+                            },
+                            "wireValue": "method"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "cardNumber",
+                                "camelCase": {
+                                    "unsafeName": "cardNumber",
+                                    "safeName": "cardNumber"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "card_number",
+                                    "safeName": "card_number"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CARD_NUMBER",
+                                    "safeName": "CARD_NUMBER"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "CardNumber",
+                                    "safeName": "CardNumber"
+                                }
+                            },
+                            "wireValue": "cardNumber"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "additionalProperties": false
+            },
+            "type_union:ConvertToken": {
+                "type": "object",
+                "declaration": {
+                    "name": {
+                        "originalName": "ConvertToken",
+                        "camelCase": {
+                            "unsafeName": "convertToken",
+                            "safeName": "convertToken"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "convert_token",
+                            "safeName": "convert_token"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CONVERT_TOKEN",
+                            "safeName": "CONVERT_TOKEN"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ConvertToken",
+                            "safeName": "ConvertToken"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "union",
+                                "camelCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UNION",
+                                    "safeName": "UNION"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Union",
+                                    "safeName": "Union"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    }
+                },
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "method",
+                                "camelCase": {
+                                    "unsafeName": "method",
+                                    "safeName": "method"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "method",
+                                    "safeName": "method"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "METHOD",
+                                    "safeName": "METHOD"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Method",
+                                    "safeName": "Method"
+                                }
+                            },
+                            "wireValue": "method"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "tokenId",
+                                "camelCase": {
+                                    "unsafeName": "tokenID",
+                                    "safeName": "tokenID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "token_id",
+                                    "safeName": "token_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TOKEN_ID",
+                                    "safeName": "TOKEN_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "TokenID",
+                                    "safeName": "TokenID"
+                                }
+                            },
+                            "wireValue": "tokenId"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "additionalProperties": false
             }
         },
         "headers": [],
@@ -9673,6 +11298,190 @@
                     "type": "json"
                 },
                 "examples": null
+            },
+            "endpoint_union.testCamelCaseProperties": {
+                "auth": null,
+                "declaration": {
+                    "name": {
+                        "originalName": "testCamelCaseProperties",
+                        "camelCase": {
+                            "unsafeName": "testCamelCaseProperties",
+                            "safeName": "testCamelCaseProperties"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "test_camel_case_properties",
+                            "safeName": "test_camel_case_properties"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TEST_CAMEL_CASE_PROPERTIES",
+                            "safeName": "TEST_CAMEL_CASE_PROPERTIES"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "TestCamelCaseProperties",
+                            "safeName": "TestCamelCaseProperties"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "union",
+                                "camelCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UNION",
+                                    "safeName": "UNION"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Union",
+                                    "safeName": "Union"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    }
+                },
+                "location": {
+                    "method": "POST",
+                    "path": "/camel-case"
+                },
+                "request": {
+                    "type": "inlined",
+                    "declaration": {
+                        "name": {
+                            "originalName": "PaymentRequest",
+                            "camelCase": {
+                                "unsafeName": "paymentRequest",
+                                "safeName": "paymentRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "payment_request",
+                                "safeName": "payment_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PAYMENT_REQUEST",
+                                "safeName": "PAYMENT_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "PaymentRequest",
+                                "safeName": "PaymentRequest"
+                            }
+                        },
+                        "fernFilepath": {
+                            "allParts": [
+                                {
+                                    "originalName": "union",
+                                    "camelCase": {
+                                        "unsafeName": "union",
+                                        "safeName": "union"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "union",
+                                        "safeName": "union"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "UNION",
+                                        "safeName": "UNION"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Union",
+                                        "safeName": "Union"
+                                    }
+                                }
+                            ],
+                            "packagePath": [],
+                            "file": {
+                                "originalName": "union",
+                                "camelCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UNION",
+                                    "safeName": "UNION"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Union",
+                                    "safeName": "Union"
+                                }
+                            }
+                        }
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "body": {
+                        "type": "properties",
+                        "value": [
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "paymentMethod",
+                                        "camelCase": {
+                                            "unsafeName": "paymentMethod",
+                                            "safeName": "paymentMethod"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "payment_method",
+                                            "safeName": "payment_method"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "PAYMENT_METHOD",
+                                            "safeName": "PAYMENT_METHOD"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "PaymentMethod",
+                                            "safeName": "PaymentMethod"
+                                        }
+                                    },
+                                    "wireValue": "paymentMethod"
+                                },
+                                "typeReference": {
+                                    "type": "named",
+                                    "value": "type_union:PaymentMethodUnion"
+                                },
+                                "propertyAccess": null,
+                                "variable": null
+                            }
+                        ]
+                    },
+                    "metadata": {
+                        "includePathParameters": false,
+                        "onlyPathParameters": false
+                    }
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
             }
         },
         "pathParameters": [],
@@ -9764,7 +11573,10 @@
                 "type_union:Key",
                 "type_union:KeyType",
                 "type_union:UnionWithIdenticalStrings",
-                "type_union:UnionWithIdenticalPrimitives"
+                "type_union:UnionWithIdenticalPrimitives",
+                "type_union:PaymentMethodUnion",
+                "type_union:TokenizeCard",
+                "type_union:ConvertToken"
             ],
             "errors": [],
             "subpackages": [],
