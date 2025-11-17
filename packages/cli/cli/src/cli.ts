@@ -1070,7 +1070,7 @@ function addSelfUpdateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
         (yargs) =>
             yargs.positional("version", {
                 type: "string",
-                description: "The version to update to (e.g., 0.85.0, next-10, 10). Defaults to latest."
+                description: "The version to update to (e.g., 0.85.0, 10). Defaults to latest."
             }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
