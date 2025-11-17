@@ -43,20 +43,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.InlinedRequests = void 0;
+exports.InlinedRequestsClient = void 0;
+const BaseClient_js_1 = require("../../../../BaseClient.js");
 const headers_js_1 = require("../../../../core/headers.js");
 const core = __importStar(require("../../../../core/index.js"));
 const errors = __importStar(require("../../../../errors/index.js"));
 const SeedExhaustive = __importStar(require("../../../index.js"));
-class InlinedRequests {
-    constructor(_options) {
-        this._options = _options;
+class InlinedRequestsClient {
+    constructor(options) {
+        this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
     }
     /**
      * POST with custom object in request body, response is an object
      *
      * @param {SeedExhaustive.PostWithObjectBody} request
-     * @param {InlinedRequests.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {InlinedRequestsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link SeedExhaustive.BadRequestBody}
      *
@@ -149,4 +150,4 @@ class InlinedRequests {
         });
     }
 }
-exports.InlinedRequests = InlinedRequests;
+exports.InlinedRequestsClient = InlinedRequestsClient;

@@ -3,7 +3,7 @@
 import { SeedIdempotencyHeadersClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Payment", () => {
+describe("PaymentClient", () => {
     test("delete", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedIdempotencyHeadersClient({ token: "test", environment: server.baseUrl });

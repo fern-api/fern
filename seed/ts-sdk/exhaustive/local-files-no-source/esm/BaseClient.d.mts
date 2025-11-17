@@ -1,4 +1,4 @@
-import type * as core from "./core/index.mjs";
+import * as core from "./core/index.mjs";
 export interface BaseClientOptions {
     environment: core.Supplier<string>;
     /** Specify a custom URL to connect the client to. */
@@ -27,3 +27,4 @@ export interface BaseRequestOptions {
     /** Additional headers to include in the request. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
 }
+export declare function normalizeClientOptions<T extends BaseClientOptions>(options: T): T;

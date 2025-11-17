@@ -43,17 +43,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Primitive = void 0;
+exports.PrimitiveClient = void 0;
+const BaseClient_js_1 = require("../../../../../../BaseClient.js");
 const headers_js_1 = require("../../../../../../core/headers.js");
 const core = __importStar(require("../../../../../../core/index.js"));
 const errors = __importStar(require("../../../../../../errors/index.js"));
-class Primitive {
-    constructor(_options) {
-        this._options = _options;
+class PrimitiveClient {
+    constructor(options) {
+        this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
     }
     /**
      * @param {string} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnString("string")
@@ -108,7 +109,7 @@ class Primitive {
     }
     /**
      * @param {number} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnInt(1)
@@ -163,7 +164,7 @@ class Primitive {
     }
     /**
      * @param {number} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnLong(1000000)
@@ -218,7 +219,7 @@ class Primitive {
     }
     /**
      * @param {number} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnDouble(1.1)
@@ -273,7 +274,7 @@ class Primitive {
     }
     /**
      * @param {boolean} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnBool(true)
@@ -328,7 +329,7 @@ class Primitive {
     }
     /**
      * @param {string} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z")
@@ -383,7 +384,7 @@ class Primitive {
     }
     /**
      * @param {string} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnDate("2023-01-15")
@@ -438,7 +439,7 @@ class Primitive {
     }
     /**
      * @param {string} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
@@ -493,7 +494,7 @@ class Primitive {
     }
     /**
      * @param {string} request
-     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh")
@@ -556,4 +557,4 @@ class Primitive {
         });
     }
 }
-exports.Primitive = Primitive;
+exports.PrimitiveClient = PrimitiveClient;

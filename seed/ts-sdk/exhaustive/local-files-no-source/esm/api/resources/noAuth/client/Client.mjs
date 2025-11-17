@@ -8,19 +8,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { normalizeClientOptions } from "../../../../BaseClient.mjs";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.mjs";
 import * as core from "../../../../core/index.mjs";
 import * as errors from "../../../../errors/index.mjs";
 import * as SeedExhaustive from "../../../index.mjs";
-export class NoAuth {
-    constructor(_options) {
-        this._options = _options;
+export class NoAuthClient {
+    constructor(options) {
+        this._options = normalizeClientOptions(options);
     }
     /**
      * POST request with no auth
      *
      * @param {unknown} request
-     * @param {NoAuth.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {NoAuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link SeedExhaustive.BadRequestBody}
      *

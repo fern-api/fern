@@ -1,19 +1,19 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import * as core from "../../../../core/index.js";
-export declare namespace NoAuth {
+export declare namespace NoAuthClient {
     interface Options extends BaseClientOptions {
     }
     interface RequestOptions extends BaseRequestOptions {
     }
 }
-export declare class NoAuth {
-    protected readonly _options: NoAuth.Options;
-    constructor(_options: NoAuth.Options);
+export declare class NoAuthClient {
+    protected readonly _options: NoAuthClient.Options;
+    constructor(options: NoAuthClient.Options);
     /**
      * POST request with no auth
      *
      * @param {unknown} request
-     * @param {NoAuth.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {NoAuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link SeedExhaustive.BadRequestBody}
      *
@@ -22,7 +22,7 @@ export declare class NoAuth {
      *         "key": "value"
      *     })
      */
-    postWithNoAuth(request?: unknown, requestOptions?: NoAuth.RequestOptions): core.HttpResponsePromise<boolean>;
+    postWithNoAuth(request?: unknown, requestOptions?: NoAuthClient.RequestOptions): core.HttpResponsePromise<boolean>;
     private __postWithNoAuth;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }

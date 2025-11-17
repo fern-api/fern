@@ -2,6 +2,7 @@
 
 import type * as SeedValidation from "./api/index.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
+import { normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import * as errors from "./errors/index.js";
@@ -15,22 +16,8 @@ export declare namespace SeedValidationClient {
 export class SeedValidationClient {
     protected readonly _options: SeedValidationClient.Options;
 
-    constructor(_options: SeedValidationClient.Options) {
-        this._options = {
-            ..._options,
-            logging: core.logging.createLogger(_options?.logging),
-            headers: mergeHeaders(
-                {
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/validation",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/validation/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                _options?.headers,
-            ),
-        };
+    constructor(options: SeedValidationClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     /**
