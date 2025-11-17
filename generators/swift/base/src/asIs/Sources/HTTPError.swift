@@ -5,39 +5,18 @@ import Foundation
 /// This type provides a structured view of non-success HTTP responses, including
 /// the status code, an optional parsed error payload and a semantic classification.
 public struct HTTPError: Swift.Error, Swift.CustomStringConvertible {
-    public enum Kind {
-        /// 3xx responses.
-        case redirect
-        /// 401 responses.
-        case unauthorized
-        /// 403 responses.
-        case forbidden
-        /// 404 responses.
-        case notFound
-        /// Other 4xx responses.
-        case client
-        /// 422 responses.
-        case validation
-        /// 503 responses.
-        case serviceUnavailable
-        /// Other 5xx responses.
-        case server
-        /// Any other non-success status code.
-        case other
-    }
-
     /// The HTTP status code returned by the server.
     public let statusCode: Swift.Int
 
     /// Parsed error payload returned by the server, if any.
-    public let body: APIErrorResponse?
+    public let body: ResponseBody?
 
     /// Semantic classification of the error based on the status code.
     public let kind: Kind
 
     public init(
         statusCode: Swift.Int,
-        body: APIErrorResponse?,
+        body: ResponseBody?,
         kind: Kind
     ) {
         self.statusCode = statusCode
@@ -112,7 +91,7 @@ public struct HTTPError: Swift.Error, Swift.CustomStringConvertible {
         data: Foundation.Data,
         jsonDecoder: Foundation.JSONDecoder
     ) -> HTTPError {
-        let parsedBody = APIErrorResponse.decode(
+        let parsedBody = ResponseBody.decode(
             statusCode: statusCode,
             data: data,
             using: jsonDecoder
@@ -141,5 +120,71 @@ public struct HTTPError: Swift.Error, Swift.CustomStringConvertible {
         }
 
         return HTTPError(statusCode: statusCode, body: parsedBody, kind: kind)
+    }
+
+    public enum Kind {
+        /// 3xx responses.
+        case redirect
+        /// 401 responses.
+        case unauthorized
+        /// 403 responses.
+        case forbidden
+        /// 404 responses.
+        case notFound
+        /// Other 4xx responses.
+        case client
+        /// 422 responses.
+        case validation
+        /// 503 responses.
+        case serviceUnavailable
+        /// Other 5xx responses.
+        case server
+        /// Any other non-success status code.
+        case other
+    }
+
+    /// A best-effort representation of an error payload returned by an API.
+    ///
+    /// This type is intentionally minimal and is populated from a variety of possible
+    /// response body formats (typed JSON, loose JSON with a `"message"` field, or plain text).
+    public struct ResponseBody: Swift.Codable, Swift.Sendable {
+        public let code: Swift.Int
+        public let type: Swift.String?
+        public let message: Swift.String?
+
+        /// Attempts to decode an `APIErrorResponse` from the given HTTP response payload.
+        public static func decode(
+            statusCode: Swift.Int,
+            data: Foundation.Data,
+            using jsonDecoder: Foundation.JSONDecoder
+        ) -> ResponseBody? {
+            // Try to parse as a strongly-typed error response first
+            if let errorResponse = try? jsonDecoder.decode(ResponseBody.self, from: data) {
+                return errorResponse
+            }
+
+            // Try to parse as a simple JSON object with a "message" field
+            if let json = try? Foundation.JSONSerialization.jsonObject(with: data)
+                as? [Swift.String: Any],
+                let message = json["message"] as? Swift.String
+            {
+                return ResponseBody(code: statusCode, message: message)
+            }
+
+            // Try to parse as plain text
+            if let errorMessage: String = Swift.String(data: data, encoding: .utf8),
+                !errorMessage.isEmpty
+            {
+                return ResponseBody(code: statusCode, message: errorMessage)
+            }
+
+            return nil
+        }
+
+        public init(code: Swift.Int, type: Swift.String? = nil, message: Swift.String? = nil) {
+            self.code = code
+            self.type = type
+            self.message = message
+        }
     }
 }

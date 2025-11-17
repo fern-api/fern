@@ -12,7 +12,6 @@ export type AsIsSymbolName =
     | "EncodableValue"
     | "Serde"
     | "StringKey"
-    | "APIErrorResponse"
     | "ClientConfig"
     | "ClientError"
     | "FormFile"
@@ -132,11 +131,6 @@ export const SourceAsIsFileSpecs = {
     },
 
     // Public
-    APIErrorResponse: {
-        relativePathToDir: "Public",
-        filenameWithoutExtension: "APIErrorResponse",
-        symbols: [{ name: "APIErrorResponse", shape: { type: "struct" } }]
-    },
     ClientConfig: {
         relativePathToDir: "Public",
         filenameWithoutExtension: "ClientConfig",
