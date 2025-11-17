@@ -7,6 +7,13 @@ types:
       expires_in: optional<integer>
       refresh_token: optional<string>
 
+  GrantType:
+    docs: The type of grant being requested
+    enum:
+      - authorization_code
+      - refresh_token
+      - client_credentials
+
 service:
   auth: false
   base-path: /
@@ -21,6 +28,6 @@ service:
             client_id: string
             client_secret: string
             audience: literal<"https://api.example.com">
-            grant_type: literal<"client_credentials">
+            grant_type: GrantType
             scope: optional<string>
       response: TokenResponse
