@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add progress bar to write-translation command showing files processed out of total. When translating documentation files, the command now displays "Processing X/Y files for translation..." and "[X/Y] Processing: filename" for each file being processed.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-17"
+  version: 1.3.0
+
+- changelogEntry:
+    - summary: |
         Show AI example generation progress in the spinner line. When generating AI examples, the spinner displays "generating AI examples for {API name} - X/Y" to track progress without creating terminal noise.
       type: feat
   irVersion: 61
