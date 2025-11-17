@@ -16,6 +16,7 @@ export type AsIsSymbolName =
     | "ClientConfig"
     | "ClientError"
     | "FormFile"
+    | "HTTPError"
     | "Nullable"
     | "RequestOptions"
     | "Networking"
