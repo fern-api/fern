@@ -11,7 +11,6 @@ import { doesVersionOfCliExist } from "../../cli-context/upgrade-utils/doesVersi
 import { rerunFernCliAtVersion } from "../../rerunFernCliAtVersion";
 
 export const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
-export const TARGET_VERSION_ENV_VAR = "FERN_POST_UPGRADE_VERSION";
 
 function ensureFinalNewline(content: string): string {
     return content.endsWith("\n") ? content : content + "\n";
@@ -30,14 +29,6 @@ async function getProjectConfigVersionSafe(cliContext: CliContext): Promise<stri
     } catch {
         return undefined;
     }
-}
-
-function resolveVersion(
-    flagValue: string | undefined,
-    envVarName: string,
-    configVersion: string | undefined
-): string | undefined {
-    return flagValue ?? process.env[envVarName] ?? configVersion;
 }
 
 /**
@@ -84,14 +75,7 @@ export async function upgrade({
     if (inMigrationMode) {
         const resolvedFrom = fromFlagSet ? (fromVersion?.trim() ?? "") : (previousEnvVar?.trim() ?? "");
 
-        const targetEnvVar = process.env[TARGET_VERSION_ENV_VAR];
-        let targetVersionForMigration =
-            targetVersion ?? (targetEnvVar != null && targetEnvVar.trim() !== "" ? targetEnvVar.trim() : undefined);
-
-        if (!targetVersionForMigration || targetVersionForMigration === "0.0.0") {
-            const configVersion = await getProjectConfigVersionSafe(cliContext);
-            targetVersionForMigration = configVersion;
-        }
+        let targetVersionForMigration = targetVersion ?? (await getProjectConfigVersionSafe(cliContext)) ?? undefined;
 
         if (!targetVersionForMigration || targetVersionForMigration === "0.0.0") {
             const currentVersion = cliContext.environment.packageVersion;
@@ -99,7 +83,7 @@ export async function upgrade({
                 targetVersionForMigration = currentVersion;
             } else {
                 return cliContext.failAndThrow(
-                    "Could not determine target version. Provide --to/--version flag, set FERN_POST_UPGRADE_VERSION environment variable, or install a published version of the CLI."
+                    "Could not determine target version. Provide --to/--version flag or ensure fern.config.json pins a valid version."
                 );
             }
         }
@@ -198,8 +182,7 @@ export async function upgrade({
                 version: fernCliUpgradeInfo.targetVersion,
                 cliContext,
                 env: {
-                    [PREVIOUS_VERSION_ENV_VAR]: previousVersionBeforeUpgrade,
-                    [TARGET_VERSION_ENV_VAR]: fernCliUpgradeInfo.targetVersion
+                    [PREVIOUS_VERSION_ENV_VAR]: previousVersionBeforeUpgrade
                 }
             });
         }
