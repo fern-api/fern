@@ -1,25 +1,25 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import * as core from "../../../../../../core/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
-export declare namespace Put {
+export declare namespace PutClient {
     interface Options extends BaseClientOptions {
     }
     interface RequestOptions extends BaseRequestOptions {
     }
 }
-export declare class Put {
-    protected readonly _options: Put.Options;
-    constructor(_options: Put.Options);
+export declare class PutClient {
+    protected readonly _options: PutClient.Options;
+    constructor(options: PutClient.Options);
     /**
      * @param {SeedExhaustive.endpoints.PutRequest} request
-     * @param {Put.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PutClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.put.add({
      *         id: "id"
      *     })
      */
-    add(request: SeedExhaustive.endpoints.PutRequest, requestOptions?: Put.RequestOptions): core.HttpResponsePromise<SeedExhaustive.endpoints.PutResponse>;
+    add(request: SeedExhaustive.endpoints.PutRequest, requestOptions?: PutClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.endpoints.PutResponse>;
     private __add;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }

@@ -43,7 +43,7 @@ await client.nullable.getUsers({
 <dl>
 <dd>
 
-**requestOptions:** `Nullable.RequestOptions` 
+**requestOptions:** `NullableClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -108,7 +108,7 @@ await client.nullable.createUser({
 <dl>
 <dd>
 
-**requestOptions:** `Nullable.RequestOptions` 
+**requestOptions:** `NullableClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -159,7 +159,7 @@ await client.nullable.deleteUser({
 <dl>
 <dd>
 
-**requestOptions:** `Nullable.RequestOptions` 
+**requestOptions:** `NullableClient.RequestOptions` 
     
 </dd>
 </dl>

@@ -37,7 +37,7 @@ await client.organizations.getOrganization("organization_id");
 <dl>
 <dd>
 
-**requestOptions:** `Organizations.RequestOptions` 
+**requestOptions:** `OrganizationsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -89,7 +89,7 @@ await client.organizations.getOrganizationUser({
 <dl>
 <dd>
 
-**requestOptions:** `Organizations.RequestOptions` 
+**requestOptions:** `OrganizationsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -148,7 +148,7 @@ await client.organizations.searchOrganizations("organization_id", {
 <dl>
 <dd>
 
-**requestOptions:** `Organizations.RequestOptions` 
+**requestOptions:** `OrganizationsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -200,7 +200,7 @@ await client.user.getUser({
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions` 
+**requestOptions:** `UserClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -252,7 +252,7 @@ await client.user.createUser({
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions` 
+**requestOptions:** `UserClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -307,7 +307,7 @@ await client.user.updateUser({
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions` 
+**requestOptions:** `UserClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -359,7 +359,7 @@ await client.user.searchUsers({
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions` 
+**requestOptions:** `UserClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -425,7 +425,7 @@ await client.user.getUserMetadata({
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions` 
+**requestOptions:** `UserClient.RequestOptions` 
     
 </dd>
 </dl>

@@ -3,7 +3,7 @@
 import { SeedUndiscriminatedUnionsClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Union", () => {
+describe("UnionClient", () => {
     test("get", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedUndiscriminatedUnionsClient({ environment: server.baseUrl });
