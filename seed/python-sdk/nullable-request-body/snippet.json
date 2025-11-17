@@ -1,0 +1,18 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/optional-request-body/{path_param}",
+                "method": "POST",
+                "identifier_override": "endpoint_testGroup.test_method_name"
+            },
+            "snippet": {
+                "sync_client": "from seed import PlainObject, SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.test_group.test_method_name(\n    path_param=\"path_param\",\n    request=PlainObject(),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi, PlainObject\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.test_group.test_method_name(\n        path_param=\"path_param\",\n        request=PlainObject(),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

@@ -3,7 +3,7 @@
 import { SeedEnumClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("QueryParam", () => {
+describe("QueryParamClient", () => {
     test("send", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedEnumClient({ environment: server.baseUrl });

@@ -3,7 +3,7 @@
 import { SeedPathParametersClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Organizations", () => {
+describe("OrganizationsClient", () => {
     test("getOrganization", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedPathParametersClient({ tenantId: "tenant_id", environment: server.baseUrl });

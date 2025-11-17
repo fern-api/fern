@@ -3,7 +3,7 @@
 import { SeedVersionClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("User", () => {
+describe("UserClient", () => {
     test("getUser", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedVersionClient({ xApiVersion: "2.0.0", environment: server.baseUrl });

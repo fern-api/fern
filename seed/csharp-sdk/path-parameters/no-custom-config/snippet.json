@@ -96,6 +96,18 @@
                 "type": "csharp",
                 "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetUserMetadataAsync(\n    new GetUserMetadataRequest\n    {\n        TenantId = \"tenant_id\",\n        UserId = \"user_id\",\n        Version = 1,\n    }\n);\n"
             }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/{tenant_id}/user/{user_id}/specifics/{version}/{thought}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getUserSpecifics"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetUserSpecificsAsync(\n    new GetUserSpecificsRequest\n    {\n        TenantId = \"tenant_id\",\n        UserId = \"user_id\",\n        Version = 1,\n        Thought = \"thought\",\n    }\n);\n"
+            }
         }
     ]
 }

@@ -95,6 +95,190 @@
               "_postman_previewlanguage": "json"
             }
           ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Send Optional Typed Body",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/send-optional-typed-body",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "send-optional-typed-body"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"message\": \"message\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/send-optional-typed-body",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "send-optional-typed-body"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"message\": \"message\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": "Id of the created resource",
+              "body": "\"string\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Send Optional Nullable With All Optional Properties",
+          "request": {
+            "description": "Tests optional(nullable(T)) where T has only optional properties.\nThis should not generate wire tests expecting {} when Optional.empty() is passed.",
+            "url": {
+              "raw": "{{baseUrl}}/deploy/:actionId/versions/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "deploy",
+                ":actionId",
+                "versions",
+                ":id"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "actionId",
+                  "description": null,
+                  "value": "actionId"
+                },
+                {
+                  "key": "id",
+                  "description": null,
+                  "value": "id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"updateDraft\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Tests optional(nullable(T)) where T has only optional properties.\nThis should not generate wire tests expecting {} when Optional.empty() is passed.",
+                "url": {
+                  "raw": "{{baseUrl}}/deploy/:actionId/versions/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "deploy",
+                    ":actionId",
+                    "versions",
+                    ":id"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "actionId",
+                      "description": null,
+                      "value": "actionId"
+                    },
+                    {
+                      "key": "id",
+                      "description": null,
+                      "value": "id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"updateDraft\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"success\": true\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }

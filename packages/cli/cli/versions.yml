@@ -5,8 +5,22 @@
         operations handling from generator-cli to fern-cli.
       type: feat
   irVersion: 61
-  createdAt: "2025-11-16"
-  version: 1.3.0
+  createdAt: "2025-11-17"
+  version: 1.4.0
+
+- changelogEntry:
+    - summary: |
+        Made `fern upgrade` safer by running migrations before updating `fern.config.json`. If migrations fail, your config stays unchanged.
+      type: fix
+    - summary: |
+        Added `--from` flag to `fern upgrade` to manually specify the version to migrate from when needed.
+      type: feat
+    - summary: |
+        Improved `fern upgrade` reliability by automatically detecting and recovering from faulty CLI upgrades. When upgrading from a problematic CLI version, Fern now retrieves the correct previous version from git history to ensure migrations run properly.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-17"
+  version: 1.3.0-rc0
 
 - changelogEntry:
     - summary: |
@@ -43,7 +57,7 @@
 
 - changelogEntry:
     - summary: |
-        Fix CLI migration selection to include the target version's migrations during `fern upgrade`.
+        Fix CLI migration selection to include the target version's migrations during `fern upgrade`. Previously, an off-by-one error excluded the target version (e.g., 1.0.0), causing its migration not to run. Users who upgraded to 1.0.0 should upgrade to 1.0.4 and run `fern upgrade` again to apply the 1.0.0 migration.
       type: fix
   irVersion: 61
   createdAt: "2025-11-14"

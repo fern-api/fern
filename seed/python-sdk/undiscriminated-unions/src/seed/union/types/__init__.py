@@ -6,6 +6,7 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .convert_token import ConvertToken
     from .key import Key
     from .key_type import KeyType
     from .metadata import Metadata
@@ -16,12 +17,15 @@ if typing.TYPE_CHECKING:
     from .nested_union_l_2 import NestedUnionL2
     from .nested_union_root import NestedUnionRoot
     from .optional_metadata import OptionalMetadata
+    from .payment_method_union import PaymentMethodUnion
     from .request import Request
+    from .tokenize_card import TokenizeCard
     from .type_with_optional_union import TypeWithOptionalUnion
     from .union_with_duplicate_types import UnionWithDuplicateTypes
     from .union_with_identical_primitives import UnionWithIdenticalPrimitives
     from .union_with_identical_strings import UnionWithIdenticalStrings
 _dynamic_imports: typing.Dict[str, str] = {
+    "ConvertToken": ".convert_token",
     "Key": ".key",
     "KeyType": ".key_type",
     "Metadata": ".metadata",
@@ -32,7 +36,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "NestedUnionL2": ".nested_union_l_2",
     "NestedUnionRoot": ".nested_union_root",
     "OptionalMetadata": ".optional_metadata",
+    "PaymentMethodUnion": ".payment_method_union",
     "Request": ".request",
+    "TokenizeCard": ".tokenize_card",
     "TypeWithOptionalUnion": ".type_with_optional_union",
     "UnionWithDuplicateTypes": ".union_with_duplicate_types",
     "UnionWithIdenticalPrimitives": ".union_with_identical_primitives",
@@ -62,6 +68,7 @@ def __dir__():
 
 
 __all__ = [
+    "ConvertToken",
     "Key",
     "KeyType",
     "Metadata",
@@ -72,7 +79,9 @@ __all__ = [
     "NestedUnionL2",
     "NestedUnionRoot",
     "OptionalMetadata",
+    "PaymentMethodUnion",
     "Request",
+    "TokenizeCard",
     "TypeWithOptionalUnion",
     "UnionWithDuplicateTypes",
     "UnionWithIdenticalPrimitives",
