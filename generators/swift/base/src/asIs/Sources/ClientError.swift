@@ -1,26 +1,41 @@
 import Foundation
 
+/// High-level error type thrown by generated Swift SDKs.
+///
+/// Request / client-side failures are represented as dedicated cases and
+/// HTTP response failures are wrapped in an `HTTPError` that classifies the status code.
 public enum ClientError: Swift.Error {
-    // Network & Client Errors
-    case invalidURL
+    // MARK: - Client / transport errors
+
+    /// The request URL could not be constructed.
+    case invalidURL(Swift.String)
+
+    /// The request body could not be encoded.
     case encodingError(Swift.Error)
+
+    /// The response body could not be decoded.
     case decodingError(Swift.Error)
+
+    /// The SDK received a response it could not interpret as a valid HTTP response.
     case invalidResponse
+
+    /// An underlying networking error occurred (e.g., connection reset).
     case networkError(Swift.Error)
 
-    // Generic HTTP Errors (status code based)
-    case badRequest(APIErrorResponse?)  // 400
-    case unauthorized(APIErrorResponse?)  // 401
-    case forbidden(APIErrorResponse?)  // 403
-    case notFound(APIErrorResponse?)  // 404
-    case validationError(APIErrorResponse?)  // 422
-    case serverError(APIErrorResponse?)  // 5xx
-    case httpError(statusCode: Swift.Int, response: APIErrorResponse?)  // other
+    /// The request timed out.
+    case timeout(Swift.Error?)
+
+    // MARK: - HTTP response errors
+
+    /// An error HTTP response was returned by the server.
+    case httpError(HTTPError)
+
+    // MARK: - Description
 
     public var errorDescription: Swift.String? {
         switch self {
-        case .invalidURL:
-            return "Invalid URL"
+        case .invalidURL(let url):
+            return "Invalid URL '\(url)'"
         case .encodingError(let error):
             return "Failed to encode request: \(error.localizedDescription)"
         case .decodingError(let error):
@@ -29,46 +44,14 @@ public enum ClientError: Swift.Error {
             return "Invalid response received"
         case .networkError(let error):
             return "Network error: \(error.localizedDescription)"
-
-        case .badRequest(let response):
-            return formatErrorMessage("Bad request", response)
-        case .unauthorized(let response):
-            return formatErrorMessage("Unauthorized", response)
-        case .forbidden(let response):
-            return formatErrorMessage("Forbidden", response)
-        case .notFound(let response):
-            return formatErrorMessage("Not found", response)
-        case .validationError(let response):
-            return formatErrorMessage("Validation error", response)
-        case .serverError(let response):
-            return formatErrorMessage("Server error", response)
-        case .httpError(let statusCode, let response):
-            return formatErrorMessage("HTTP error (\(statusCode))", response)
+        case .timeout(let underlying):
+            if let underlying {
+                return "Request timed out: \(underlying.localizedDescription)"
+            } else {
+                return "Request timed out"
+            }
+        case .httpError(let httpError):
+            return httpError.localizedDescription
         }
-    }
-
-    private func formatErrorMessage(_ defaultMessage: Swift.String, _ response: APIErrorResponse?)
-        -> Swift.String
-    {
-        guard let response = response else {
-            return defaultMessage
-        }
-
-        var message = defaultMessage
-
-        // Use server message if available and meaningful
-        if let serverMessage = response.message, !serverMessage.isEmpty {
-            message = serverMessage
-        }
-
-        // Always include the status code
-        message += " (Code: \(response.code))"
-
-        // Include type if available
-        if let type = response.type, !type.isEmpty {
-            message += " [Type: \(type)]"
-        }
-
-        return message
     }
 }
