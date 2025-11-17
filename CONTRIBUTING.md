@@ -18,12 +18,51 @@ receive the attention you expect.
 
 The Fern repo is primarily written in TypeScript and relies on [PnPm](https://pnpm.io/) for package management.
 
+### Important: Avoid Huge Clones
+
+The Fern repository is a large monorepo with extensive test fixtures and generated code. To avoid downloading gigabytes of unnecessary files, we strongly recommend using **sparse checkout** when cloning the repository.
+
+#### Recommended Clone Method
+
+Instead of a regular `git clone`, use sparse checkout from the start:
+
+```sh
+# Clone with sparse checkout enabled
+git clone --filter=blob:none --sparse https://github.com/fern-api/fern.git
+cd fern
+
+# Run the automated setup script
+./scripts/setup-repo.sh
+```
+
+The `setup-repo.sh` script will:
+- Configure git settings for large repositories
+- Set up sparse checkout to exclude large generated directories
+- Install dependencies and run initial builds
+- Optionally install watchman for better file watching performance
+
+#### Manual Setup (Alternative)
+
+If you prefer to set things up manually or have already cloned the repository:
+
 The repo relies on git-lfs to handle large file storage, so you'll need to have git-lfs installed in order to clone the repo. If you're using homebrew, just run:
 ```sh
 brew install git-lfs
 ```
 
-Once you have cloned or forked the repository, run through the steps below.
+Once you have cloned or forked the repository, you can configure sparse checkout to reduce repository size:
+
+```sh
+# Configure git for large repositories
+git config core.fsmonitor true
+git config core.untrackedcache true
+git config feature.manyFiles true
+
+# Set up sparse checkout
+./scripts/configure-sparse-checkout.sh
+```
+
+Then run through the steps below.
 
 ### Step 1: Install dependencies
 
