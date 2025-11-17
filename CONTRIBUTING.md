@@ -51,7 +51,7 @@ This configuration:
 
 If you need to reset your sparse checkout configuration later, you can run:
 ```sh
-pnpm run configure-sparse-checkout
+pnpm run setup-sparse-checkout
 ```
 
 #### Already Cloned Without Sparse Checkout?
@@ -60,7 +60,7 @@ If you've already cloned the repository without sparse checkout, you can configu
 
 ```sh
 # From the repository root
-pnpm run configure-sparse-checkout
+pnpm run setup-sparse-checkout
 ```
 
 #### Additional Performance Tips (Optional)
