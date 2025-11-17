@@ -100,8 +100,7 @@ export async function upgrade({
             newVersion: targetVersionForMigration
         });
 
-        // If explicit target version was provided, update fern.config.json
-        if (hasExplicitTo) {
+        if (hasExplicitTo || (previousEnvVar && isPublishedCli)) {
             const fernDirectory = await getFernDirectory();
             if (fernDirectory != null) {
                 const projectConfig = await cliContext.runTask((context) =>
@@ -167,14 +166,6 @@ export async function upgrade({
             loadProjectConfig({ directory: fernDirectory, context })
         );
 
-        const newProjectConfig = produce(projectConfig.rawConfig, (draft) => {
-            draft.version = fernCliUpgradeInfo.targetVersion;
-        });
-        await writeFile(
-            projectConfig._absolutePath,
-            ensureFinalNewline(JSON.stringify(newProjectConfig, undefined, 2))
-        );
-
         const previousVersionBeforeUpgrade = projectConfig.version;
 
         cliContext.logger.info(
@@ -191,6 +182,13 @@ export async function upgrade({
                 previousVersion: previousVersionBeforeUpgrade,
                 newVersion: fernCliUpgradeInfo.targetVersion
             });
+            const newProjectConfig = produce(projectConfig.rawConfig, (draft) => {
+                draft.version = fernCliUpgradeInfo.targetVersion;
+            });
+            await writeFile(
+                projectConfig._absolutePath,
+                ensureFinalNewline(JSON.stringify(newProjectConfig, undefined, 2))
+            );
         } else {
             await loggingExeca(cliContext.logger, "npm", [
                 "install",
@@ -203,7 +201,8 @@ export async function upgrade({
                 cliContext,
                 env: {
                     [PREVIOUS_VERSION_ENV_VAR]: previousVersionBeforeUpgrade
-                }
+                },
+                args: ["upgrade", "--from", previousVersionBeforeUpgrade, "--to", fernCliUpgradeInfo.targetVersion]
             });
         }
     }
