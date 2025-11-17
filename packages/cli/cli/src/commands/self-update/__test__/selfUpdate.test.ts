@@ -9,6 +9,9 @@ vi.mock("fs/promises", () => ({
     realpath: vi.fn()
 }));
 
+// Store original platform
+const originalPlatform = process.platform;
+
 describe("selfUpdate", () => {
     let mockCliContext: CliContext;
     let mockLogger: {
@@ -41,6 +44,10 @@ describe("selfUpdate", () => {
 
     afterEach(() => {
         vi.clearAllMocks();
+        // Restore original platform
+        Object.defineProperty(process, "platform", {
+            value: originalPlatform
+        });
     });
 
     describe("installation method detection", () => {
@@ -816,6 +823,198 @@ describe("selfUpdate", () => {
             await selfUpdate({ cliContext: mockCliContext, version: "1.2.3", dryRun: false });
 
             expect(mockLogger.info).toHaveBeenCalledWith(expect.stringContaining("Running:"));
+        });
+    });
+
+    describe("Windows compatibility", () => {
+        beforeEach(() => {
+            // Mock Windows platform
+            Object.defineProperty(process, "platform", {
+                value: "win32"
+            });
+        });
+
+        it("should use 'where' command instead of 'which' on Windows", async () => {
+            vi.mocked(loggingExeca)
+                .mockResolvedValueOnce({
+                    stdout: "C:\\Program Files\\nodejs\\node_modules\\fern-api\\bin\\fern.exe",
+                    stderr: "",
+                    failed: false
+                } as loggingExeca.ReturnValue)
+                .mockResolvedValue({
+                    stdout: "",
+                    stderr: "",
+                    failed: true
+                } as loggingExeca.ReturnValue);
+
+            await selfUpdate({ cliContext: mockCliContext, version: undefined, dryRun: true });
+
+            // First call should be 'where fern'
+            expect(vi.mocked(loggingExeca).mock.calls[0]?.[1]).toBe("where");
+            expect(vi.mocked(loggingExeca).mock.calls[0]?.[2]).toEqual(["fern"]);
+        });
+
+        it("should handle multiple paths returned by 'where' command on Windows", async () => {
+            vi.mocked(loggingExeca)
+                .mockResolvedValueOnce({
+                    stdout: "C:\\Program Files\\nodejs\\node_modules\\fern-api\\bin\\fern.exe\r\nC:\\Users\\user\\AppData\\Roaming\\npm\\fern.exe",
+                    stderr: "",
+                    failed: false
+                } as loggingExeca.ReturnValue)
+                .mockResolvedValue({
+                    stdout: "",
+                    stderr: "",
+                    failed: true
+                } as loggingExeca.ReturnValue);
+
+            await selfUpdate({ cliContext: mockCliContext, version: undefined, dryRun: true });
+
+            // Should use the first path found
+            expect(mockLogger.debug).toHaveBeenCalledWith(
+                "Found fern at: C:\\Program Files\\nodejs\\node_modules\\fern-api\\bin\\fern.exe"
+            );
+        });
+
+        it("should detect npm installation with Windows paths", async () => {
+            vi.mocked(loggingExeca)
+                .mockResolvedValueOnce({
+                    stdout: "C:\\Program Files\\nodejs\\node_modules\\fern-api\\bin\\fern.exe",
+                    stderr: "",
+                    failed: false
+                } as loggingExeca.ReturnValue)
+                .mockResolvedValue({
+                    stdout: "",
+                    stderr: "",
+                    failed: true
+                } as loggingExeca.ReturnValue);
+
+            await selfUpdate({ cliContext: mockCliContext, version: undefined, dryRun: true });
+
+            expect(mockLogger.info).toHaveBeenCalledWith(expect.stringContaining("npm"));
+        });
+
+        it("should detect pnpm installation with Windows paths", async () => {
+            vi.mocked(loggingExeca)
+                .mockResolvedValueOnce({
+                    stdout: "C:\\Users\\user\\AppData\\Local\\.pnpm\\fern-api\\bin\\fern.exe",
+                    stderr: "",
+                    failed: false
+                } as loggingExeca.ReturnValue)
+                .mockResolvedValue({
+                    stdout: "",
+                    stderr: "",
+                    failed: true
+                } as loggingExeca.ReturnValue);
+
+            await selfUpdate({ cliContext: mockCliContext, version: undefined, dryRun: true });
+
+            expect(mockLogger.info).toHaveBeenCalledWith(expect.stringContaining("pnpm"));
+        });
+
+        it("should detect yarn installation with Windows paths", async () => {
+            vi.mocked(loggingExeca)
+                .mockResolvedValueOnce({
+                    stdout: "C:\\Users\\user\\AppData\\Local\\yarn\\bin\\fern.exe",
+                    stderr: "",
+                    failed: false
+                } as loggingExeca.ReturnValue)
+                .mockResolvedValue({
+                    stdout: "",
+                    stderr: "",
+                    failed: true
+                } as loggingExeca.ReturnValue);
+
+            await selfUpdate({ cliContext: mockCliContext, version: undefined, dryRun: true });
+
+            expect(mockLogger.info).toHaveBeenCalledWith(expect.stringContaining("yarn"));
+        });
+
+        it("should detect bun installation with Windows paths", async () => {
+            vi.mocked(loggingExeca)
+                .mockResolvedValueOnce({
+                    stdout: "C:\\Users\\user\\.bun\\install\\global\\fern-api\\bin\\fern.exe",
+                    stderr: "",
+                    failed: false
+                } as loggingExeca.ReturnValue)
+                .mockResolvedValue({
+                    stdout: "",
+                    stderr: "",
+                    failed: true
+                } as loggingExeca.ReturnValue);
+
+            await selfUpdate({ cliContext: mockCliContext, version: undefined, dryRun: true });
+
+            expect(mockLogger.info).toHaveBeenCalledWith(expect.stringContaining("bun"));
+        });
+
+        it("should skip Homebrew detection on Windows", async () => {
+            vi.mocked(loggingExeca)
+                .mockResolvedValueOnce({
+                    stdout: "C:\\opt\\homebrew\\bin\\node_modules\\fern-api\\bin\\fern.exe",
+                    stderr: "",
+                    failed: false
+                } as loggingExeca.ReturnValue)
+                .mockResolvedValue({
+                    stdout: "",
+                    stderr: "",
+                    failed: true
+                } as loggingExeca.ReturnValue);
+
+            await selfUpdate({ cliContext: mockCliContext, version: undefined, dryRun: true });
+
+            // Should not try to call 'brew' command on Windows
+            const brewCalls = vi.mocked(loggingExeca).mock.calls.filter((call) => call[1] === "brew");
+            expect(brewCalls).toHaveLength(0);
+        });
+
+        it("should not include Homebrew in error diagnostics on Windows", async () => {
+            vi.mocked(loggingExeca)
+                .mockResolvedValueOnce({
+                    stdout: "C:\\some\\custom\\path\\fern.exe",
+                    stderr: "",
+                    failed: false
+                } as loggingExeca.ReturnValue)
+                .mockResolvedValue({
+                    stdout: "",
+                    stderr: "",
+                    failed: true
+                } as loggingExeca.ReturnValue);
+
+            await expect(
+                selfUpdate({ cliContext: mockCliContext, version: undefined, dryRun: true })
+            ).rejects.toThrow();
+
+            // Should not mention Homebrew in debug logs
+            const homebrewMentions = mockLogger.debug.mock.calls.filter((call) =>
+                call[0]?.toString().toLowerCase().includes("homebrew")
+            );
+            expect(homebrewMentions).toHaveLength(0);
+        });
+
+        it("should handle Windows path with drive letter in bin directory comparison", async () => {
+            vi.mocked(loggingExeca)
+                // where fern
+                .mockResolvedValueOnce({
+                    stdout: "C:\\Users\\user\\AppData\\Roaming\\pnpm-global\\fern.exe",
+                    stderr: "",
+                    failed: false
+                } as loggingExeca.ReturnValue)
+                // npm bin -g
+                .mockResolvedValueOnce({
+                    stdout: "",
+                    stderr: "",
+                    failed: true
+                } as loggingExeca.ReturnValue)
+                // pnpm bin -g - returns matching directory
+                .mockResolvedValueOnce({
+                    stdout: "C:\\Users\\user\\AppData\\Roaming\\pnpm-global",
+                    stderr: "",
+                    failed: false
+                } as loggingExeca.ReturnValue);
+
+            await selfUpdate({ cliContext: mockCliContext, version: undefined, dryRun: true });
+
+            expect(mockLogger.info).toHaveBeenCalledWith(expect.stringContaining("pnpm"));
         });
     });
 });

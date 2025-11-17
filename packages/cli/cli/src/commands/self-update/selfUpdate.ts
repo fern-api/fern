@@ -2,7 +2,7 @@ import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import chalk from "chalk";
 import { realpath } from "fs/promises";
-import { dirname } from "path";
+import { dirname, normalize, sep } from "path";
 import { CliContext } from "../../cli-context/CliContext";
 
 export interface InstallationMethod {
@@ -48,7 +48,11 @@ async function getPackageManagerBinDir(logger: Logger, pm: "npm" | "pnpm" | "yar
 }
 
 async function detectInstallationMethod(logger: Logger): Promise<InstallationMethod> {
-    const { stdout: whichFern, failed: whichFailed } = await loggingExeca(logger, "which", ["fern"], {
+    // Use cross-platform command: 'where' on Windows, 'which' on Unix
+    const isWindows = process.platform === "win32";
+    const whichCommand = isWindows ? "where" : "which";
+
+    const { stdout: whichFern, failed: whichFailed } = await loggingExeca(logger, whichCommand, ["fern"], {
         doNotPipeOutput: true,
         reject: false
     });
@@ -57,7 +61,8 @@ async function detectInstallationMethod(logger: Logger): Promise<InstallationMet
         return { type: "unknown", command: "" };
     }
 
-    const fernPath = whichFern.trim();
+    // On Windows, 'where' may return multiple paths - take the first one
+    const fernPath = whichFern.trim().split(/\r?\n/)[0] ?? whichFern.trim();
     logger.debug(`Found fern at: ${fernPath}`);
 
     let resolvedPath: string;
@@ -69,38 +74,41 @@ async function detectInstallationMethod(logger: Logger): Promise<InstallationMet
         resolvedPath = fernPath;
     }
 
-    if (
-        resolvedPath.includes("/Cellar/") ||
-        resolvedPath.includes("/Homebrew/") ||
-        resolvedPath.includes("/opt/homebrew/") ||
-        resolvedPath.includes("/usr/local/Cellar/")
-    ) {
-        const { failed: brewCheckFailed } = await loggingExeca(logger, "brew", ["list", "--versions", "fern-api"], {
-            doNotPipeOutput: true,
-            reject: false
-        });
+    // Homebrew detection (macOS/Linux only)
+    if (process.platform !== "win32") {
+        if (
+            resolvedPath.includes("/Cellar/") ||
+            resolvedPath.includes("/Homebrew/") ||
+            resolvedPath.includes("/opt/homebrew/") ||
+            resolvedPath.includes("/usr/local/Cellar/")
+        ) {
+            const { failed: brewCheckFailed } = await loggingExeca(logger, "brew", ["list", "--versions", "fern-api"], {
+                doNotPipeOutput: true,
+                reject: false
+            });
 
-        if (!brewCheckFailed) {
-            return {
-                type: "brew",
-                command: "brew",
-                detectedPath: fernPath,
-                resolvedPath
-            };
-        }
+            if (!brewCheckFailed) {
+                return {
+                    type: "brew",
+                    command: "brew",
+                    detectedPath: fernPath,
+                    resolvedPath
+                };
+            }
 
-        const { failed: brewCheckFernFailed } = await loggingExeca(logger, "brew", ["list", "--versions", "fern"], {
-            doNotPipeOutput: true,
-            reject: false
-        });
+            const { failed: brewCheckFernFailed } = await loggingExeca(logger, "brew", ["list", "--versions", "fern"], {
+                doNotPipeOutput: true,
+                reject: false
+            });
 
-        if (!brewCheckFernFailed) {
-            return {
-                type: "brew",
-                command: "brew",
-                detectedPath: fernPath,
-                resolvedPath
-            };
+            if (!brewCheckFernFailed) {
+                return {
+                    type: "brew",
+                    command: "brew",
+                    detectedPath: fernPath,
+                    resolvedPath
+                };
+            }
         }
     }
 
@@ -113,7 +121,16 @@ async function detectInstallationMethod(logger: Logger): Promise<InstallationMet
         const binDir = await getPackageManagerBinDir(logger, pm);
         if (binDir != null) {
             logger.debug(`${pm} bin dir: ${binDir}`);
-            if (fernDir === binDir || fernDir.startsWith(binDir + "/")) {
+            // Normalize paths for cross-platform comparison
+            const normalizedFernDir = normalize(fernDir);
+            const normalizedBinDir = normalize(binDir);
+            // Check both forward and backward slash variants for cross-platform compatibility
+            if (
+                normalizedFernDir === normalizedBinDir ||
+                normalizedFernDir.startsWith(normalizedBinDir + sep) ||
+                normalizedFernDir.startsWith(normalizedBinDir + "/") ||
+                normalizedFernDir.startsWith(normalizedBinDir + "\\")
+            ) {
                 return {
                     type: pm,
                     command: pm,
@@ -124,7 +141,17 @@ async function detectInstallationMethod(logger: Logger): Promise<InstallationMet
         }
     }
 
-    if (resolvedPath.includes(".pnpm") || resolvedPath.includes("pnpm-global") || resolvedPath.includes("/pnpm/")) {
+    // Fallback: Check for common path patterns (normalized for cross-platform)
+    // Use both forward and backward slashes for compatibility
+    const normalizedPath = normalize(resolvedPath);
+
+    if (
+        normalizedPath.includes(".pnpm") ||
+        normalizedPath.includes("pnpm-global") ||
+        normalizedPath.includes(`${sep}pnpm${sep}`) ||
+        normalizedPath.includes("/pnpm/") ||
+        normalizedPath.includes("\\pnpm\\")
+    ) {
         return {
             type: "pnpm",
             command: "pnpm",
@@ -133,7 +160,14 @@ async function detectInstallationMethod(logger: Logger): Promise<InstallationMet
         };
     }
 
-    if (resolvedPath.includes("/.yarn/") || resolvedPath.includes("/yarn/")) {
+    if (
+        normalizedPath.includes(`${sep}.yarn${sep}`) ||
+        normalizedPath.includes(`${sep}yarn${sep}`) ||
+        normalizedPath.includes("/.yarn/") ||
+        normalizedPath.includes("/yarn/") ||
+        normalizedPath.includes("\\.yarn\\") ||
+        normalizedPath.includes("\\yarn\\")
+    ) {
         return {
             type: "yarn",
             command: "yarn",
@@ -142,7 +176,14 @@ async function detectInstallationMethod(logger: Logger): Promise<InstallationMet
         };
     }
 
-    if (resolvedPath.includes("/.bun/") || resolvedPath.includes("/bun/")) {
+    if (
+        normalizedPath.includes(`${sep}.bun${sep}`) ||
+        normalizedPath.includes(`${sep}bun${sep}`) ||
+        normalizedPath.includes("/.bun/") ||
+        normalizedPath.includes("/bun/") ||
+        normalizedPath.includes("\\.bun\\") ||
+        normalizedPath.includes("\\bun\\")
+    ) {
         return {
             type: "bun",
             command: "bun",
@@ -151,7 +192,14 @@ async function detectInstallationMethod(logger: Logger): Promise<InstallationMet
         };
     }
 
-    if (resolvedPath.includes("/lib/node_modules/")) {
+    if (
+        normalizedPath.includes(`${sep}lib${sep}node_modules${sep}`) ||
+        normalizedPath.includes(`${sep}node_modules${sep}`) ||
+        normalizedPath.includes("/lib/node_modules/") ||
+        normalizedPath.includes("/node_modules/") ||
+        normalizedPath.includes("\\lib\\node_modules\\") ||
+        normalizedPath.includes("\\node_modules\\")
+    ) {
         return {
             type: "npm",
             command: "npm",
@@ -162,10 +210,12 @@ async function detectInstallationMethod(logger: Logger): Promise<InstallationMet
 
     // Log diagnostic information about why detection failed
     logger.debug("Installation method detection failed:");
-    logger.debug(`  - Not installed via Homebrew (no Cellar/Homebrew path)`);
+    if (process.platform !== "win32") {
+        logger.debug(`  - Not installed via Homebrew (no Cellar/Homebrew path)`);
+    }
     logger.debug(`  - Package manager bin directories checked: pnpm, yarn, bun, npm (none matched)`);
     logger.debug(
-        `  - Path patterns checked: .pnpm, pnpm-global, /pnpm/, .yarn, /yarn/, .bun, /bun/, /lib/node_modules/`
+        `  - Path patterns checked: .pnpm, pnpm-global, ${sep}pnpm${sep}, .yarn, ${sep}yarn${sep}, .bun, ${sep}bun${sep}, ${sep}node_modules${sep}`
     );
     logger.debug(`  - Resolved path: ${resolvedPath}`);
     logger.debug(`  - Directory: ${fernDir}`);
