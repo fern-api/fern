@@ -184,7 +184,6 @@ export const ERROR_NO_SEMVER_TAGS = "No semantic version tags found for";
 export const ERROR_FAILED_TO_FETCH_VERSION = "Failed to get latest version for";
 
 // Info/warning messages
-export const MSG_BRANCH_NOT_FOUND_FALLBACK = "Branch not found in logs, falling back to most recent branch";
 export const MSG_SUCCESSFULLY_COPIED_GITHUB = "Successfully copied GitHub output from branch: ";
 
 // ============================================================================
