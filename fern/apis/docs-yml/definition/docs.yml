@@ -423,6 +423,7 @@ types:
         type: optional<boolean>
         docs: |
           If true, this version will be hidden from navigation, search, and indexing, but still accessible via direct URL.
+      announcement: optional<AnnouncementConfig>
 
   Availability:
     enum:
@@ -1634,6 +1635,7 @@ types:
       slug:
         type: optional<string>
         docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
+      announcement: optional<AnnouncementConfig>
 
   ExternalProduct:
     extends: [ProductConfigBase]
