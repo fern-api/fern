@@ -2,13 +2,6 @@ export const FERN_REPO_PACKAGE_NAME = "fern";
 
 export const FERN_TEST_REPO_NAME = "fern-api/empty";
 
-export const FERN_CONFIG_JSON_FILENAME = "fern.config.json";
-
-export const FERN_CONFIG_JSON_CONTENT = {
-    organization: "fern",
-    version: "*"
-};
-
 export const REMOTE_GROUP_NAME = "remote";
 export const LOCAL_GROUP_NAME = "local";
 
@@ -42,10 +35,8 @@ export const GeneratorNameFromNickname: Record<GeneratorNickname, GeneratorName>
 // ============================================================================
 export const FERN_DIRECTORY_NAME = "fern";
 export const DEFINITION_DIRECTORY_NAME = "definition";
-export const GENERATORS_YML_FILENAME = "generators.yml";
 export const SDKS_DIRECTORY_NAME = "sdks";
 export const TEST_DEFINITIONS_RELATIVE_PATH = "test-definitions";
-export const APIS_DIRECTORY_NAME = "apis";
 export const SEED_REMOTE_LOCAL_OUTPUT_DIR = "seed-remote-local";
 
 // Fern CLI paths (relative to fern repo root)
@@ -53,7 +44,6 @@ export const CLI_RELATIVE_PATH = "packages/cli/cli/dist/prod/cli.cjs";
 
 // Directory name patterns
 export const OUTPUT_MODE_SUFFIX = "OutputMode";
-export const GENERATION_MODE_SUFFIX = "Generation";
 
 // ============================================================================
 // CLI Commands & Flags
@@ -76,14 +66,6 @@ export const GIT_DEPTH_VALUE = "1";
 // ============================================================================
 export const DIFF_COMMAND = "diff";
 export const DIFF_RECURSIVE_FLAG = "-r";
-
-// ============================================================================
-// GitHub CLI Commands
-// ============================================================================
-export const GH_COMMAND = "gh";
-export const GH_API_SUBCOMMAND = "api";
-export const GH_JQ_FLAG = "--jq";
-export const GH_BRANCHES_JQ_QUERY = ".[0].name";
 
 // ============================================================================
 // Package Locations
@@ -126,12 +108,6 @@ export const ENV_VAR_GITHUB_TOKEN = "GITHUB_TOKEN";
 export const ENV_VAR_FERN_TOKEN = "FERN_TOKEN";
 
 // ============================================================================
-// YAML Schema
-// ============================================================================
-export const GENERATORS_YML_SCHEMA_URL = "https://schema.buildwithfern.dev/generators-yml.json";
-export const GENERATORS_YML_SCHEMA_COMMENT = "# yaml-language-server: $schema=";
-
-// ============================================================================
 // Version Constants
 // ============================================================================
 export const LOCAL_BUILD_VERSION = "99.99.99";
@@ -158,15 +134,11 @@ export const LOG_SECTION_SEPARATOR = "━━━";
 export const LOG_HEADER_LOCAL_GENERATION = "LOCAL GENERATION (Docker)";
 export const LOG_HEADER_REMOTE_GENERATION = "REMOTE GENERATION (Fiddle)";
 export const LOG_HEADER_COMPARING_OUTPUTS = "COMPARING OUTPUTS";
-export const LOG_HEADER_TEST_SUMMARY = "TEST SUMMARY";
 
 // Success/failure messages
-export const MSG_ALL_TESTS_PASSED = "✓ All tests passed!";
 export const MSG_BOTH_GENERATIONS_SUCCESSFUL = "✓ Both generations completed successfully";
 export const MSG_OUTPUTS_MATCH = "✓ Outputs match perfectly";
 export const MSG_OUTPUTS_DIFFER = "⚠ Outputs differ";
-export const MSG_TEST_PASSED_PREFIX = "✓ Test passed: ";
-export const MSG_TEST_FAILED_PREFIX = "✗ Test failed: ";
 export const MSG_GENERATION_RUNNING_PREFIX = "▶ Running";
 export const MSG_GENERATION_COMPLETED_PREFIX = "✓";
 export const MSG_GENERATION_FAILED_PREFIX = "✗";
@@ -182,11 +154,3 @@ export const ERROR_DOCKER_HUB_API_FAILED = "Docker Hub API returned";
 export const ERROR_NO_TAGS_FOUND = "No tags found for";
 export const ERROR_NO_SEMVER_TAGS = "No semantic version tags found for";
 export const ERROR_FAILED_TO_FETCH_VERSION = "Failed to get latest version for";
-
-// Info/warning messages
-export const MSG_SUCCESSFULLY_COPIED_GITHUB = "Successfully copied GitHub output from branch: ";
-
-// ============================================================================
-// Test Output Messages
-// ============================================================================
-export const MSG_TESTS_FAILED_TEMPLATE = (count: number) => `${count} test(s) failed`;

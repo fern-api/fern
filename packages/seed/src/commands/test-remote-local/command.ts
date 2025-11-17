@@ -4,7 +4,6 @@ import path from "path";
 import { loadGeneratorWorkspaces } from "../../loadGeneratorWorkspaces";
 import { buildGeneratorImage } from "../img/buildGeneratorImage";
 import { TaskContextFactory } from "../test/TaskContextFactory";
-import { getLatestGeneratorVersions, getLocalGeneratorVersions, runTestCase } from "./caseRunner";
 import {
     ALL_GENERATOR_NICKNAMES,
     ALL_OUTPUT_MODES,
@@ -18,6 +17,8 @@ import {
     SEED_REMOTE_LOCAL_OUTPUT_DIR,
     TestFixture
 } from "./constants";
+import { getLatestGeneratorVersions, getLocalGeneratorVersions } from "./dockerHubClient";
+import { runTestCase } from "./testExecution";
 
 interface TestResult {
     generator: GeneratorNickname;
