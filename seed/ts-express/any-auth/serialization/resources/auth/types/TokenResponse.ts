@@ -7,14 +7,14 @@ import type * as serializers from "../../../index";
 export const TokenResponse: core.serialization.ObjectSchema<serializers.TokenResponse.Raw, SeedAnyAuth.TokenResponse> =
     core.serialization.object({
         accessToken: core.serialization.property("access_token", core.serialization.string()),
-        expiresIn: core.serialization.property("expires_in", core.serialization.number()),
+        expiresIn: core.serialization.property("expires_in", core.serialization.number().optional()),
         refreshToken: core.serialization.property("refresh_token", core.serialization.string().optional()),
     });
 
 export declare namespace TokenResponse {
     export interface Raw {
         access_token: string;
-        expires_in: number;
+        expires_in?: number | null;
         refresh_token?: string | null;
     }
 }

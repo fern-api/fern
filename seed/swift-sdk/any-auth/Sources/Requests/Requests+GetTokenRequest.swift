@@ -5,7 +5,7 @@ extension Requests {
         public let clientId: String
         public let clientSecret: String
         public let audience: HttpsApiExampleCom
-        public let grantType: ClientCredentials
+        public let grantType: GrantType
         public let scope: String?
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
@@ -14,7 +14,7 @@ extension Requests {
             clientId: String,
             clientSecret: String,
             audience: HttpsApiExampleCom,
-            grantType: ClientCredentials,
+            grantType: GrantType,
             scope: String? = nil,
             additionalProperties: [String: JSONValue] = .init()
         ) {
@@ -31,7 +31,7 @@ extension Requests {
             self.clientId = try container.decode(String.self, forKey: .clientId)
             self.clientSecret = try container.decode(String.self, forKey: .clientSecret)
             self.audience = try container.decode(HttpsApiExampleCom.self, forKey: .audience)
-            self.grantType = try container.decode(ClientCredentials.self, forKey: .grantType)
+            self.grantType = try container.decode(GrantType.self, forKey: .grantType)
             self.scope = try container.decodeIfPresent(String.self, forKey: .scope)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
@@ -44,10 +44,6 @@ extension Requests {
             try container.encode(self.audience, forKey: .audience)
             try container.encode(self.grantType, forKey: .grantType)
             try container.encodeIfPresent(self.scope, forKey: .scope)
-        }
-
-        public enum ClientCredentials: String, Codable, Hashable, CaseIterable, Sendable {
-            case clientCredentials = "client_credentials"
         }
 
         public enum HttpsApiExampleCom: String, Codable, Hashable, CaseIterable, Sendable {

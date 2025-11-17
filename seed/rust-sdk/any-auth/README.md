@@ -59,7 +59,7 @@ async fn main() {
                 client_id: "client_id".to_string(),
                 client_secret: "client_secret".to_string(),
                 audience: "https://api.example.com".to_string(),
-                grant_type: "client_credentials".to_string(),
+                grant_type: GrantType::AuthorizationCode,
                 scope: Some("scope".to_string()),
             },
             None,

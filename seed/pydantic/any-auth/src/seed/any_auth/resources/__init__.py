@@ -3,7 +3,7 @@
 # isort: skip_file
 
 from . import auth, user
-from .auth import TokenResponse
+from .auth import GrantType, TokenResponse
 from .user import User
 
-__all__ = ["TokenResponse", "User", "auth", "user"]
+__all__ = ["GrantType", "TokenResponse", "User", "auth", "user"]

@@ -17,10 +17,10 @@ class TokenResponse extends JsonSerializableType
     public string $accessToken;
 
     /**
-     * @var int $expiresIn
+     * @var ?int $expiresIn
      */
     #[JsonProperty('expires_in')]
-    public int $expiresIn;
+    public ?int $expiresIn;
 
     /**
      * @var ?string $refreshToken
@@ -31,7 +31,7 @@ class TokenResponse extends JsonSerializableType
     /**
      * @param array{
      *   accessToken: string,
-     *   expiresIn: int,
+     *   expiresIn?: ?int,
      *   refreshToken?: ?string,
      * } $values
      */
@@ -39,7 +39,7 @@ class TokenResponse extends JsonSerializableType
         array $values,
     ) {
         $this->accessToken = $values['accessToken'];
-        $this->expiresIn = $values['expiresIn'];
+        $this->expiresIn = $values['expiresIn'] ?? null;
         $this->refreshToken = $values['refreshToken'] ?? null;
     }
 

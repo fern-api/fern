@@ -11,7 +11,7 @@ import (
 // An OAuth token response.
 type TokenResponse struct {
 	AccessToken  string  `json:"access_token" url:"access_token"`
-	ExpiresIn    int     `json:"expires_in" url:"expires_in"`
+	ExpiresIn    *int    `json:"expires_in,omitempty" url:"expires_in,omitempty"`
 	RefreshToken *string `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
 
 	extraProperties map[string]any
@@ -25,9 +25,9 @@ func (t *TokenResponse) GetAccessToken() string {
 	return t.AccessToken
 }
 
-func (t *TokenResponse) GetExpiresIn() int {
+func (t *TokenResponse) GetExpiresIn() *int {
 	if t == nil {
-		return 0
+		return nil
 	}
 	return t.ExpiresIn
 }
@@ -74,4 +74,30 @@ func (t *TokenResponse) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", t)
+}
+
+// The type of grant being requested
+type GrantType string
+
+const (
+	GrantTypeAuthorizationCode = "authorization_code"
+	GrantTypeRefreshToken      = "refresh_token"
+	GrantTypeClientCredentials = "client_credentials"
+)
+
+func NewGrantTypeFromString(s string) (GrantType, error) {
+	switch s {
+	case "authorization_code":
+		return GrantTypeAuthorizationCode, nil
+	case "refresh_token":
+		return GrantTypeRefreshToken, nil
+	case "client_credentials":
+		return GrantTypeClientCredentials, nil
+	}
+	var t GrantType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (g GrantType) Ptr() *GrantType {
+	return &g
 }

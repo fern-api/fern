@@ -17,7 +17,7 @@ client.auth.get_token(
   clientId: 'client_id',
   clientSecret: 'client_secret',
   audience: 'https://api.example.com',
-  grantType: 'client_credentials',
+  grantType: ,
   scope: 'scope'
 );
 ```
@@ -58,7 +58,7 @@ client.auth.get_token(
 <dl>
 <dd>
 
-**grant_type:** `String` 
+**grant_type:** `Seed::Auth::Types::GrantType` 
     
 </dd>
 </dl>

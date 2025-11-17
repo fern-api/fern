@@ -5,6 +5,6 @@
  */
 export interface TokenResponse {
     accessToken: string;
-    expiresIn: number;
+    expiresIn?: number;
     refreshToken?: string;
 }

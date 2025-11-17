@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.anyAuth.core.ObjectMappers;
+import java.lang.Integer;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
@@ -23,11 +24,12 @@ import java.util.Optional;
 public final class TokenResponse {
   private final String accessToken;
 
-  private final int expiresIn;
+  private final Optional<Integer> expiresIn;
 
   private final Optional<String> refreshToken;
 
-  private TokenResponse(String accessToken, int expiresIn, Optional<String> refreshToken) {
+  private TokenResponse(String accessToken, Optional<Integer> expiresIn,
+      Optional<String> refreshToken) {
     this.accessToken = accessToken;
     this.expiresIn = expiresIn;
     this.refreshToken = refreshToken;
@@ -39,7 +41,7 @@ public final class TokenResponse {
   }
 
   @JsonProperty("expires_in")
-  public int getExpiresIn() {
+  public Optional<Integer> getExpiresIn() {
     return expiresIn;
   }
 
@@ -55,7 +57,7 @@ public final class TokenResponse {
   }
 
   private boolean equalTo(TokenResponse other) {
-    return accessToken.equals(other.accessToken) && expiresIn == other.expiresIn && refreshToken.equals(other.refreshToken);
+    return accessToken.equals(other.accessToken) && expiresIn.equals(other.expiresIn) && refreshToken.equals(other.refreshToken);
   }
 
   @java.lang.Override
@@ -73,17 +75,17 @@ public final class TokenResponse {
   }
 
   public interface AccessTokenStage {
-    ExpiresInStage accessToken(String accessToken);
+    _FinalStage accessToken(String accessToken);
 
     Builder from(TokenResponse other);
   }
 
-  public interface ExpiresInStage {
-    _FinalStage expiresIn(int expiresIn);
-  }
-
   public interface _FinalStage {
     TokenResponse build();
+
+    _FinalStage expiresIn(Optional<Integer> expiresIn);
+
+    _FinalStage expiresIn(Integer expiresIn);
 
     _FinalStage refreshToken(Optional<String> refreshToken);
 
@@ -93,12 +95,12 @@ public final class TokenResponse {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements AccessTokenStage, ExpiresInStage, _FinalStage {
+  public static final class Builder implements AccessTokenStage, _FinalStage {
     private String accessToken;
 
-    private int expiresIn;
-
     private Optional<String> refreshToken = Optional.empty();
+
+    private Optional<Integer> expiresIn = Optional.empty();
 
     private Builder() {
     }
@@ -113,15 +115,8 @@ public final class TokenResponse {
 
     @java.lang.Override
     @JsonSetter("access_token")
-    public ExpiresInStage accessToken(String accessToken) {
+    public _FinalStage accessToken(String accessToken) {
       this.accessToken = Objects.requireNonNull(accessToken, "accessToken must not be null");
-      return this;
-    }
-
-    @java.lang.Override
-    @JsonSetter("expires_in")
-    public _FinalStage expiresIn(int expiresIn) {
-      this.expiresIn = expiresIn;
       return this;
     }
 
@@ -138,6 +133,22 @@ public final class TokenResponse {
     )
     public _FinalStage refreshToken(Optional<String> refreshToken) {
       this.refreshToken = refreshToken;
+      return this;
+    }
+
+    @java.lang.Override
+    public _FinalStage expiresIn(Integer expiresIn) {
+      this.expiresIn = Optional.ofNullable(expiresIn);
+      return this;
+    }
+
+    @java.lang.Override
+    @JsonSetter(
+        value = "expires_in",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage expiresIn(Optional<Integer> expiresIn) {
+      this.expiresIn = expiresIn;
       return this;
     }
 

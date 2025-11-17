@@ -23,7 +23,7 @@ import AnyAuth
         )
         let expectedResponse = TokenResponse(
             accessToken: "access_token",
-            expiresIn: 1,
+            expiresIn: Optional(1),
             refreshToken: Optional("refresh_token")
         )
         let response = try await client.auth.getToken(
@@ -31,7 +31,7 @@ import AnyAuth
                 clientId: "client_id",
                 clientSecret: "client_secret",
                 audience: .httpsApiExampleCom,
-                grantType: .clientCredentials,
+                grantType: .authorizationCode,
                 scope: "scope"
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)

@@ -89,8 +89,8 @@
                 "identifier_override": "endpoint_union.testCamelCaseProperties"
             },
             "snippet": {
-                "sync_client": "from seed import SeedUndiscriminatedUnions\nfrom seed.union import TokenizeCard\n\nclient = SeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.test_camel_case_properties(\n    payment_method=TokenizeCard(\n        method=\"method\",\n        card_number=\"cardNumber\",\n    ),\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUndiscriminatedUnions\nfrom seed.union import TokenizeCard\n\nclient = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.test_camel_case_properties(\n        payment_method=TokenizeCard(\n            method=\"method\",\n            card_number=\"cardNumber\",\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedUndiscriminatedUnions\nfrom seed.union import TokenizeCard\n\nclient = SeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.test_camel_case_properties(\n    payment_method=TokenizeCard(\n        method=\"card\",\n        card_number=\"1234567890123456\",\n    ),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUndiscriminatedUnions\nfrom seed.union import TokenizeCard\n\nclient = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.test_camel_case_properties(\n        payment_method=TokenizeCard(\n            method=\"card\",\n            card_number=\"1234567890123456\",\n        ),\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

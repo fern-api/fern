@@ -2,14 +2,17 @@
 
 import type * as SeedAnyAuth from "../../../../../api/index";
 import * as core from "../../../../../core";
-import type * as serializers from "../../../../index";
+import * as serializers from "../../../../index";
 
 export const GetTokenRequest: core.serialization.Schema<serializers.GetTokenRequest.Raw, SeedAnyAuth.GetTokenRequest> =
     core.serialization.object({
         clientId: core.serialization.property("client_id", core.serialization.string()),
         clientSecret: core.serialization.property("client_secret", core.serialization.string()),
         audience: core.serialization.stringLiteral("https://api.example.com"),
-        grantType: core.serialization.property("grant_type", core.serialization.stringLiteral("client_credentials")),
+        grantType: core.serialization.property(
+            "grant_type",
+            core.serialization.lazy(() => serializers.GrantType),
+        ),
         scope: core.serialization.string().optional(),
     });
 
@@ -18,7 +21,7 @@ export declare namespace GetTokenRequest {
         client_id: string;
         client_secret: string;
         audience: "https://api.example.com";
-        grant_type: "client_credentials";
+        grant_type: serializers.GrantType.Raw;
         scope?: string | null;
     }
 }

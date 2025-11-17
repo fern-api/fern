@@ -10,19 +10,15 @@ import (
 )
 
 type GetTokenRequest struct {
-	ClientId     string  `json:"client_id" url:"-"`
-	ClientSecret string  `json:"client_secret" url:"-"`
-	Scope        *string `json:"scope,omitempty" url:"-"`
+	ClientId     string    `json:"client_id" url:"-"`
+	ClientSecret string    `json:"client_secret" url:"-"`
+	GrantType    GrantType `json:"grant_type" url:"-"`
+	Scope        *string   `json:"scope,omitempty" url:"-"`
 	audience     string
-	grantType    string
 }
 
 func (g *GetTokenRequest) Audience() string {
 	return g.audience
-}
-
-func (g *GetTokenRequest) GrantType() string {
-	return g.grantType
 }
 
 func (g *GetTokenRequest) UnmarshalJSON(data []byte) error {
@@ -33,7 +29,6 @@ func (g *GetTokenRequest) UnmarshalJSON(data []byte) error {
 	}
 	*g = GetTokenRequest(body)
 	g.audience = "https://api.example.com"
-	g.grantType = "client_credentials"
 	return nil
 }
 
@@ -41,14 +36,38 @@ func (g *GetTokenRequest) MarshalJSON() ([]byte, error) {
 	type embed GetTokenRequest
 	var marshaler = struct {
 		embed
-		Audience  string `json:"audience"`
-		GrantType string `json:"grant_type"`
+		Audience string `json:"audience"`
 	}{
-		embed:     embed(*g),
-		Audience:  "https://api.example.com",
-		GrantType: "client_credentials",
+		embed:    embed(*g),
+		Audience: "https://api.example.com",
 	}
 	return json.Marshal(marshaler)
+}
+
+// The type of grant being requested
+type GrantType string
+
+const (
+	GrantTypeAuthorizationCode GrantType = "authorization_code"
+	GrantTypeRefreshToken      GrantType = "refresh_token"
+	GrantTypeClientCredentials GrantType = "client_credentials"
+)
+
+func NewGrantTypeFromString(s string) (GrantType, error) {
+	switch s {
+	case "authorization_code":
+		return GrantTypeAuthorizationCode, nil
+	case "refresh_token":
+		return GrantTypeRefreshToken, nil
+	case "client_credentials":
+		return GrantTypeClientCredentials, nil
+	}
+	var t GrantType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (g GrantType) Ptr() *GrantType {
+	return &g
 }
 
 // An OAuth token response.
@@ -60,7 +79,7 @@ var (
 
 type TokenResponse struct {
 	AccessToken  string  `json:"access_token" url:"access_token"`
-	ExpiresIn    int     `json:"expires_in" url:"expires_in"`
+	ExpiresIn    *int    `json:"expires_in,omitempty" url:"expires_in,omitempty"`
 	RefreshToken *string `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -76,9 +95,9 @@ func (t *TokenResponse) GetAccessToken() string {
 	return t.AccessToken
 }
 
-func (t *TokenResponse) GetExpiresIn() int {
+func (t *TokenResponse) GetExpiresIn() *int {
 	if t == nil {
-		return 0
+		return nil
 	}
 	return t.ExpiresIn
 }
@@ -110,7 +129,7 @@ func (t *TokenResponse) SetAccessToken(accessToken string) {
 
 // SetExpiresIn sets the ExpiresIn field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TokenResponse) SetExpiresIn(expiresIn int) {
+func (t *TokenResponse) SetExpiresIn(expiresIn *int) {
 	t.ExpiresIn = expiresIn
 	t.require(tokenResponseFieldExpiresIn)
 }

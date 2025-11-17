@@ -19,7 +19,7 @@ public partial class AuthClient
     ///         ClientId = "client_id",
     ///         ClientSecret = "client_secret",
     ///         Audience = "https://api.example.com",
-    ///         GrantType = "client_credentials",
+    ///         GrantType = GrantType.AuthorizationCode,
     ///         Scope = "scope",
     ///     }
     /// );

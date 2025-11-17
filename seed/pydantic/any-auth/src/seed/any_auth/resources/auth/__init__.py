@@ -2,6 +2,7 @@
 
 # isort: skip_file
 
+from .grant_type import GrantType
 from .token_response import TokenResponse
 
-__all__ = ["TokenResponse"]
+__all__ = ["GrantType", "TokenResponse"]

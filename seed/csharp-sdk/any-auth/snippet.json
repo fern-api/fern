@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedAnyAuth;\n\nvar client = new SeedAnyAuthClient(\"TOKEN\");\nawait client.Auth.GetTokenAsync(\n    new GetTokenRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"client_credentials\",\n        Scope = \"scope\",\n    }\n);\n"
+                "client": "using SeedAnyAuth;\n\nvar client = new SeedAnyAuthClient(\"TOKEN\");\nawait client.Auth.GetTokenAsync(\n    new GetTokenRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        Audience = \"https://api.example.com\",\n        GrantType = GrantType.AuthorizationCode,\n        Scope = \"scope\",\n    }\n);\n"
             }
         },
         {

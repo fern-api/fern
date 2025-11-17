@@ -15,6 +15,7 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
 - [Advanced](#advanced)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
+  - [Forward Compatible Enums](#forward-compatible-enums)
 - [Contributing](#contributing)
 
 ## Requirements
@@ -45,7 +46,7 @@ await client.Auth.GetTokenAsync(
         ClientId = "client_id",
         ClientSecret = "client_secret",
         Audience = "https://api.example.com",
-        GrantType = "client_credentials",
+        GrantType = GrantType.AuthorizationCode,
         Scope = "scope",
     }
 );
@@ -103,6 +104,35 @@ var response = await client.Auth.GetTokenAsync(
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
     }
 );
+```
+
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using SeedAnyAuth;
+
+// Using a built-in value
+var grantType = GrantType.AuthorizationCode;
+
+// Using a custom value
+var customGrantType = GrantType.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (grantType.Value)
+{
+    case GrantType.Values.AuthorizationCode:
+        Console.WriteLine("AuthorizationCode");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {grantType.Value}");
+        break;
+}
+
+// Explicit casting
+string grantTypeString = (string)GrantType.AuthorizationCode;
+GrantType grantTypeFromString = (GrantType)"authorization_code";
 ```
 
 ## Contributing

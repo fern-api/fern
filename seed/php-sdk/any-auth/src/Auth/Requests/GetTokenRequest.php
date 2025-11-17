@@ -4,6 +4,7 @@ namespace Seed\Auth\Requests;
 
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
+use Seed\Auth\Types\GrantType;
 
 class GetTokenRequest extends JsonSerializableType
 {
@@ -26,7 +27,7 @@ class GetTokenRequest extends JsonSerializableType
     public string $audience;
 
     /**
-     * @var 'client_credentials' $grantType
+     * @var value-of<GrantType> $grantType
      */
     #[JsonProperty('grant_type')]
     public string $grantType;
@@ -42,7 +43,7 @@ class GetTokenRequest extends JsonSerializableType
      *   clientId: string,
      *   clientSecret: string,
      *   audience: 'https://api.example.com',
-     *   grantType: 'client_credentials',
+     *   grantType: value-of<GrantType>,
      *   scope?: ?string,
      * } $values
      */

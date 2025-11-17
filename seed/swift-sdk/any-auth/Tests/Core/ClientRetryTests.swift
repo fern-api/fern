@@ -26,7 +26,7 @@ import Testing
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
+                    grantType: .authorizationCode,
                     scope: "scope"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -60,7 +60,7 @@ import Testing
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
+                    grantType: .authorizationCode,
                     scope: "scope"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -94,7 +94,7 @@ import Testing
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
+                    grantType: .authorizationCode,
                     scope: "scope"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -127,7 +127,7 @@ import Testing
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
+                    grantType: .authorizationCode,
                     scope: "scope"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -159,7 +159,7 @@ import Testing
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
+                    grantType: .authorizationCode,
                     scope: "scope"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -192,7 +192,7 @@ import Testing
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
+                    grantType: .authorizationCode,
                     scope: "scope"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -225,7 +225,7 @@ import Testing
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
+                    grantType: .authorizationCode,
                     scope: "scope"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -263,7 +263,7 @@ import Testing
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
+                    grantType: .authorizationCode,
                     scope: "scope"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -311,7 +311,7 @@ import Testing
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
+                    grantType: .authorizationCode,
                     scope: "scope"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -355,7 +355,7 @@ import Testing
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
+                    grantType: .authorizationCode,
                     scope: "scope"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -410,7 +410,7 @@ import Testing
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
+                    grantType: .authorizationCode,
                     scope: "scope"
                 ),
                 requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
@@ -439,7 +439,7 @@ import Testing
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
+                    grantType: .authorizationCode,
                     scope: "scope"
                 ),
                 requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
@@ -472,7 +472,7 @@ import Testing
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
+                    grantType: .authorizationCode,
                     scope: "scope"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)

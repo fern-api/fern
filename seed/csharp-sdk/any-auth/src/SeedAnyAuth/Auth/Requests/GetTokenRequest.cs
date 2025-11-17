@@ -16,7 +16,7 @@ public record GetTokenRequest
     public string Audience { get; set; } = "https://api.example.com";
 
     [JsonPropertyName("grant_type")]
-    public string GrantType { get; set; } = "client_credentials";
+    public required GrantType GrantType { get; set; }
 
     [JsonPropertyName("scope")]
     public string? Scope { get; set; }

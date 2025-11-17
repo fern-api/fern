@@ -70,7 +70,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"client_id\": \"client_id\",\n    \"client_secret\": \"client_secret\",\n    \"audience\": \"https://api.example.com\",\n    \"grant_type\": \"client_credentials\",\n    \"scope\": \"scope\"\n}",
+              "raw": "{\n    \"client_id\": \"client_id\",\n    \"client_secret\": \"client_secret\",\n    \"audience\": \"https://api.example.com\",\n    \"grant_type\": \"authorization_code\",\n    \"scope\": \"scope\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -113,7 +113,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"client_id\": \"client_id\",\n    \"client_secret\": \"client_secret\",\n    \"audience\": \"https://api.example.com\",\n    \"grant_type\": \"client_credentials\",\n    \"scope\": \"scope\"\n}",
+                  "raw": "{\n    \"client_id\": \"client_id\",\n    \"client_secret\": \"client_secret\",\n    \"audience\": \"https://api.example.com\",\n    \"grant_type\": \"authorization_code\",\n    \"scope\": \"scope\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"

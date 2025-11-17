@@ -26,9 +26,9 @@ module SeedAnyAuthClient
       # @param refresh_token [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedAnyAuthClient::Auth::TokenResponse]
-      def initialize(access_token:, expires_in:, refresh_token: OMIT, additional_properties: nil)
+      def initialize(access_token:, expires_in: OMIT, refresh_token: OMIT, additional_properties: nil)
         @access_token = access_token
-        @expires_in = expires_in
+        @expires_in = expires_in if expires_in != OMIT
         @refresh_token = refresh_token if refresh_token != OMIT
         @additional_properties = additional_properties
         @_field_set = {
@@ -73,7 +73,7 @@ module SeedAnyAuthClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.access_token.is_a?(String) != false || raise("Passed value for field obj.access_token is not the expected type, validation failed.")
-        obj.expires_in.is_a?(Integer) != false || raise("Passed value for field obj.expires_in is not the expected type, validation failed.")
+        obj.expires_in&.is_a?(Integer) != false || raise("Passed value for field obj.expires_in is not the expected type, validation failed.")
         obj.refresh_token&.is_a?(String) != false || raise("Passed value for field obj.refresh_token is not the expected type, validation failed.")
       end
     end

@@ -2,6 +2,6 @@
 
 # isort: skip_file
 
-from .resources import TokenResponse, User, auth, user
+from .resources import GrantType, TokenResponse, User, auth, user
 
-__all__ = ["TokenResponse", "User", "auth", "user"]
+__all__ = ["GrantType", "TokenResponse", "User", "auth", "user"]

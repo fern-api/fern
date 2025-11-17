@@ -17,7 +17,7 @@ public class Example0
                 ClientId = "client_id",
                 ClientSecret = "client_secret",
                 Audience = "https://api.example.com",
-                GrantType = "client_credentials",
+                GrantType = GrantType.AuthorizationCode,
                 Scope = "scope"
             }
         );
