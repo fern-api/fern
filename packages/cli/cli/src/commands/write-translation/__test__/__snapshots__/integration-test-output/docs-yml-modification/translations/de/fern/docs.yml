@@ -1,0 +1,12 @@
+instances:
+  - url: https://test-de.docs.buildwithfern.com/de
+languages:
+  - en
+  - de
+  - es
+products:
+  - display-name: Home
+    path: ./nav.yml
+title: Test Documentation
+settings:
+  language: de
