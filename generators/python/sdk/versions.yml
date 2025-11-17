@@ -4,6 +4,17 @@
   changelogEntry:
     - summary: |
         Expose the typed response on paginated pages by making pagers generic over both the item type and response type: `SyncPager[T, R]` and `AsyncPager[T, R]`. This is a typing-only change to improve type checker/IDE support; there are no runtime or behavioral changes and existing code continues to work. You only need to update code if you have explicit type annotations referencing `SyncPager[...]`/`AsyncPager[...]`; in that case, provide two type parameters (e.g., `SyncPager[User, ListUsersResponse]` or use `Any` for the second parameter).
+
+        Accessing typed pagination metadata:
+        ```python
+        # Get the first page to access the typed response
+        pager = client.users.list(page=1, per_page=20)
+        first_page = next(pager.iter_pages())
+
+        # Access typed fields from the response (e.g., ListUsersPaginationResponse)
+        print(first_page.response.total_count)  # typed metadata
+        print(first_page.response.page)         # typed pagination info
+        ```
       type: feat
   createdAt: "2025-11-17"
   irVersion: 61
