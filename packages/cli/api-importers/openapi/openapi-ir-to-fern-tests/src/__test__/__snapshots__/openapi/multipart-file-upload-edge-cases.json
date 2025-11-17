@@ -1,0 +1,311 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "uploadFile": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                  "response": {
+                    "body": {
+                      "fileId": "fileId",
+                      "url": "url",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/upload",
+              "request": {
+                "body": {
+                  "properties": {
+                    "description": "optional<string>",
+                    "file": "file",
+                  },
+                },
+                "content-type": "multipart/form-data",
+                "headers": undefined,
+                "name": "UploadFileRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "UploadFileResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "uploadMultipleFiles": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                  "response": {
+                    "body": {
+                      "uploadedCount": 1,
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/upload-multiple",
+              "request": {
+                "body": {
+                  "properties": {
+                    "files": "list<file>",
+                    "metadata": "optional<UploadMultipleFilesRequestMetadata>",
+                  },
+                },
+                "content-type": "multipart/form-data",
+                "headers": undefined,
+                "name": "UploadMultipleFilesRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "UploadMultipleFilesResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "uploadWithJson": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "data": {},
+                  },
+                  "response": {
+                    "body": {
+                      "success": true,
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/upload-with-json",
+              "request": {
+                "body": {
+                  "properties": {
+                    "data": "UploadWithJsonRequestData",
+                    "file": "file",
+                  },
+                },
+                "content-type": "multipart/form-data",
+                "headers": undefined,
+                "name": "UploadWithJsonRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "UploadWithJsonResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "UploadFileResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "fileId": "optional<string>",
+              "url": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UploadMultipleFilesRequestMetadata": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "tags": "optional<list<string>>",
+              "title": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UploadMultipleFilesResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "uploadedCount": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UploadWithJsonRequestData": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "name": "optional<string>",
+              "size": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UploadWithJsonResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "success": "optional<boolean>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  UploadFileResponse:
+    properties:
+      fileId: optional<string>
+      url: optional<string>
+    source:
+      openapi: ../openapi.yml
+  UploadMultipleFilesRequestMetadata:
+    properties:
+      title: optional<string>
+      tags: optional<list<string>>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  UploadMultipleFilesResponse:
+    properties:
+      uploadedCount: optional<integer>
+    source:
+      openapi: ../openapi.yml
+  UploadWithJsonRequestData:
+    properties:
+      name: optional<string>
+      size: optional<integer>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  UploadWithJsonResponse:
+    properties:
+      success: optional<boolean>
+    source:
+      openapi: ../openapi.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    uploadFile:
+      path: /upload
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: UploadFileRequest
+        body:
+          properties:
+            file: file
+            description: optional<string>
+        content-type: multipart/form-data
+      response:
+        docs: Success
+        type: UploadFileResponse
+        status-code: 200
+      examples:
+        - request: {}
+          response:
+            body:
+              fileId: fileId
+              url: url
+    uploadMultipleFiles:
+      path: /upload-multiple
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: UploadMultipleFilesRequest
+        body:
+          properties:
+            files: list<file>
+            metadata: optional<UploadMultipleFilesRequestMetadata>
+        content-type: multipart/form-data
+      response:
+        docs: Success
+        type: UploadMultipleFilesResponse
+        status-code: 200
+      examples:
+        - request: {}
+          response:
+            body:
+              uploadedCount: 1
+    uploadWithJson:
+      path: /upload-with-json
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: UploadWithJsonRequest
+        body:
+          properties:
+            file: file
+            data: UploadWithJsonRequestData
+        content-type: multipart/form-data
+      response:
+        docs: Success
+        type: UploadWithJsonResponse
+        status-code: 200
+      examples:
+        - request:
+            data: {}
+          response:
+            body:
+              success: true
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Multipart File Upload Edge Cases",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Multipart File Upload Edge Cases
+",
+  },
+}
