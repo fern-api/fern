@@ -69,7 +69,7 @@ service:
         - request:
             paymentMethod:
               method: card
-              cardNumber: 1234567890123456
+              cardNumber: "1234567890123456"
           response:
             body: success
 
