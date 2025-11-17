@@ -1,21 +1,17 @@
 import { runMigrations } from "@fern-api/cli-migrations";
 import { getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
-import { loggingExeca } from "@fern-api/logging-execa";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { writeFile } from "fs/promises";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { CliContext } from "../../../cli-context/CliContext";
-import { doesVersionOfCliExist } from "../../../cli-context/upgrade-utils/doesVersionOfCliExist";
 import { rerunFernCliAtVersion } from "../../../rerunFernCliAtVersion";
 import { PREVIOUS_VERSION_ENV_VAR, upgrade } from "../upgrade";
 
 vi.mock("@fern-api/cli-migrations");
 vi.mock("@fern-api/configuration-loader");
-vi.mock("@fern-api/logging-execa");
 vi.mock("@fern-api/semver-utils");
 vi.mock("fs/promises");
-vi.mock("../../../cli-context/upgrade-utils/doesVersionOfCliExist");
 vi.mock("../../../rerunFernCliAtVersion");
 
 describe("upgrade", () => {
@@ -60,7 +56,6 @@ describe("upgrade", () => {
 
         vi.mocked(runMigrations).mockResolvedValue(undefined);
         vi.mocked(writeFile).mockResolvedValue(undefined);
-        vi.mocked(loggingExeca).mockResolvedValue(undefined as any);
         vi.mocked(rerunFernCliAtVersion).mockResolvedValue(undefined);
         vi.mocked(getFernDirectory).mockResolvedValue("/test/fern" as any);
         vi.mocked(loadProjectConfig).mockResolvedValue({
@@ -78,7 +73,6 @@ describe("upgrade", () => {
         let originalArgv: string[];
 
         beforeEach(() => {
-            vi.mocked(doesVersionOfCliExist).mockResolvedValue(true);
             vi.mocked(isVersionAhead).mockReturnValue(true);
             mockCliContext.environment.packageVersion = "1.0.0";
             originalArgv = process.argv;
@@ -88,7 +82,7 @@ describe("upgrade", () => {
             process.argv = originalArgv;
         });
 
-        it("should install target version and rerun with --from and --to flags", async () => {
+        it("should rerun with --from and --to flags", async () => {
             process.argv = ["node", "cli.js", "upgrade", "--version", "1.2.0"];
 
             await upgrade({
@@ -98,14 +92,14 @@ describe("upgrade", () => {
                 fromVersion: undefined
             });
 
-            expect(loggingExeca).toHaveBeenCalledWith(mockLogger, "npm", ["install", "-g", "fern-api@1.2.0"]);
             expect(rerunFernCliAtVersion).toHaveBeenCalledWith({
                 version: "1.2.0",
                 cliContext: mockCliContext,
                 env: {
                     [PREVIOUS_VERSION_ENV_VAR]: "1.0.0"
                 },
-                args: ["upgrade", "--from", "1.0.0", "--to", "1.2.0"]
+                args: ["upgrade", "--from", "1.0.0", "--to", "1.2.0"],
+                context: "upgrade"
             });
             expect(runMigrations).not.toHaveBeenCalled();
             expect(writeFile).not.toHaveBeenCalled();
@@ -127,7 +121,8 @@ describe("upgrade", () => {
                 env: {
                     [PREVIOUS_VERSION_ENV_VAR]: "0.84.1"
                 },
-                args: ["upgrade", "--from", "0.84.1", "--to", "1.2.0"]
+                args: ["upgrade", "--from", "0.84.1", "--to", "1.2.0"],
+                context: "upgrade"
             });
         });
 
@@ -147,7 +142,8 @@ describe("upgrade", () => {
                 env: {
                     [PREVIOUS_VERSION_ENV_VAR]: "1.0.0"
                 },
-                args: ["upgrade", "--from", "1.0.0", "--to", "1.2.0", "--rc"]
+                args: ["upgrade", "--from", "1.0.0", "--to", "1.2.0", "--rc"],
+                context: "upgrade"
             });
         });
 
@@ -167,11 +163,12 @@ describe("upgrade", () => {
                 env: {
                     [PREVIOUS_VERSION_ENV_VAR]: "1.0.0"
                 },
-                args: ["upgrade", "--from", "1.0.0", "--to", "1.2.0", "--some-future-flag", "value"]
+                args: ["upgrade", "--from", "1.0.0", "--to", "1.2.0", "--some-future-flag", "value"],
+                context: "upgrade"
             });
         });
 
-        it("should skip install and rerun for local-dev (0.0.0) and run migrations directly", async () => {
+        it("should skip rerun for local-dev (0.0.0) and run migrations directly", async () => {
             mockCliContext.environment.packageVersion = "0.0.0";
 
             await upgrade({
@@ -181,7 +178,6 @@ describe("upgrade", () => {
                 fromVersion: undefined
             });
 
-            expect(loggingExeca).not.toHaveBeenCalled();
             expect(rerunFernCliAtVersion).not.toHaveBeenCalled();
             expect(runMigrations).toHaveBeenCalledWith({
                 fromVersion: "1.0.0",
@@ -195,7 +191,6 @@ describe("upgrade", () => {
     describe("when current CLI version === target version", () => {
         beforeEach(() => {
             mockCliContext.environment.packageVersion = "1.2.0";
-            vi.mocked(doesVersionOfCliExist).mockResolvedValue(true);
             vi.mocked(isVersionAhead).mockReturnValue(true);
         });
 
@@ -207,7 +202,6 @@ describe("upgrade", () => {
                 fromVersion: "1.0.0"
             });
 
-            expect(loggingExeca).not.toHaveBeenCalled();
             expect(rerunFernCliAtVersion).not.toHaveBeenCalled();
             expect(runMigrations).toHaveBeenCalledWith({
                 fromVersion: "1.0.0",
@@ -270,7 +264,6 @@ describe("upgrade", () => {
 
     describe("target version resolution", () => {
         beforeEach(() => {
-            vi.mocked(doesVersionOfCliExist).mockResolvedValue(true);
             vi.mocked(isVersionAhead).mockReturnValue(true);
         });
 
@@ -283,7 +276,7 @@ describe("upgrade", () => {
             });
 
             expect(mockCliContext.isUpgradeAvailable).not.toHaveBeenCalled();
-            expect(loggingExeca).toHaveBeenCalledWith(mockLogger, "npm", ["install", "-g", "fern-api@1.5.0"]);
+            expect(rerunFernCliAtVersion).toHaveBeenCalledWith(expect.objectContaining({ version: "1.5.0" }));
         });
 
         it("should fetch latest version when no --version provided", async () => {
@@ -302,7 +295,7 @@ describe("upgrade", () => {
             });
 
             expect(mockCliContext.isUpgradeAvailable).toHaveBeenCalledWith({ includePreReleases: false });
-            expect(loggingExeca).toHaveBeenCalledWith(mockLogger, "npm", ["install", "-g", "fern-api@1.3.0"]);
+            expect(rerunFernCliAtVersion).toHaveBeenCalledWith(expect.objectContaining({ version: "1.3.0" }));
         });
 
         it("should print 'No upgrade available' when already at latest", async () => {
@@ -321,29 +314,13 @@ describe("upgrade", () => {
             });
 
             expect(mockLogger.info).toHaveBeenCalledWith("No upgrade available.");
-            expect(loggingExeca).not.toHaveBeenCalled();
+            expect(rerunFernCliAtVersion).not.toHaveBeenCalled();
             expect(runMigrations).not.toHaveBeenCalled();
         });
     });
 
     describe("version validation", () => {
-        it("should throw when target version does not exist", async () => {
-            vi.mocked(doesVersionOfCliExist).mockResolvedValue(false);
-
-            await expect(
-                upgrade({
-                    cliContext: mockCliContext,
-                    includePreReleases: false,
-                    targetVersion: "99.99.99",
-                    fromVersion: undefined
-                })
-            ).rejects.toThrow("Failed to upgrade to 99.99.99 because it does not exist");
-
-            expect(loggingExeca).not.toHaveBeenCalled();
-        });
-
         it("should throw when target version is not ahead of current", async () => {
-            vi.mocked(doesVersionOfCliExist).mockResolvedValue(true);
             vi.mocked(isVersionAhead).mockReturnValue(false);
 
             await expect(
@@ -355,12 +332,28 @@ describe("upgrade", () => {
                 })
             ).rejects.toThrow("Cannot upgrade because target version (0.5.0) is not ahead of existing version 1.0.0");
         });
+
+        it("should pass upgrade context to rerunFernCliAtVersion", async () => {
+            vi.mocked(isVersionAhead).mockReturnValue(true);
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined
+            });
+
+            expect(rerunFernCliAtVersion).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    context: "upgrade"
+                })
+            );
+        });
     });
 
     describe("edge cases", () => {
         it("should throw when fern directory is missing", async () => {
             vi.mocked(getFernDirectory).mockResolvedValue(undefined);
-            vi.mocked(doesVersionOfCliExist).mockResolvedValue(true);
             vi.mocked(isVersionAhead).mockReturnValue(true);
 
             await expect(

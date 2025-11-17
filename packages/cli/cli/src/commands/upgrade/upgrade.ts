@@ -1,6 +1,5 @@
 import { runMigrations } from "@fern-api/cli-migrations";
 import { FERN_DIRECTORY, getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
-import { loggingExeca } from "@fern-api/logging-execa";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
@@ -8,7 +7,6 @@ import { produce } from "immer";
 import yargs from "yargs";
 
 import { CliContext } from "../../cli-context/CliContext";
-import { doesVersionOfCliExist } from "../../cli-context/upgrade-utils/doesVersionOfCliExist";
 import { rerunFernCliAtVersion } from "../../rerunFernCliAtVersion";
 
 export const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
@@ -17,7 +15,7 @@ function ensureFinalNewline(content: string): string {
     return content.endsWith("\n") ? content : content + "\n";
 }
 
-async function validateTargetVersion({
+function validateVersionAhead({
     cliContext,
     targetVersion,
     currentVersion
@@ -25,20 +23,10 @@ async function validateTargetVersion({
     cliContext: CliContext;
     targetVersion: string;
     currentVersion: string;
-}): Promise<void> {
-    const versionExists = await doesVersionOfCliExist({
-        cliEnvironment: cliContext.environment,
-        version: targetVersion
-    });
-    if (!versionExists) {
-        return cliContext.failAndThrow(
-            `Failed to upgrade to ${targetVersion} because it does not exist. See https://www.npmjs.com/package/${cliContext.environment.packageName}?activeTab=versions.`
-        );
-    }
-
+}): void {
     const versionAhead = isVersionAhead(targetVersion, currentVersion);
     if (!versionAhead) {
-        return cliContext.failAndThrow(
+        cliContext.failAndThrow(
             `Cannot upgrade because target version (${targetVersion}) is not ahead of existing version ${currentVersion}`
         );
     }
@@ -49,13 +37,14 @@ async function validateTargetVersion({
  *
  * Flow:
  *   1. Determine the target version (explicit via --version, or latest available)
- *   2. Determine the source version (explicit via --from, or from fern.config.json)
- *   3. If current CLI version !== target version:
- *      - Install target version globally
- *      - Re-run at target version with --from and --to flags
- *   4. If current CLI version === target version:
+ *   2. If current CLI version === target version (or local dev):
+ *      - Load config to determine source version
  *      - Run migrations from source → target
  *      - Update fern.config.json to target version
+ *   3. If current CLI version !== target version:
+ *      - Validate target is ahead of current
+ *      - Load config to determine source version
+ *      - Re-run at target version with --from and --to flags (npx handles installation)
  */
 export async function upgrade({
     cliContext,
@@ -119,8 +108,8 @@ export async function upgrade({
         return;
     }
 
-    // Not at target version yet - validate, then install and rerun
-    await validateTargetVersion({
+    // Not at target version yet - validate version ordering, then install and rerun
+    validateVersionAhead({
         cliContext,
         targetVersion: resolvedTargetVersion,
         currentVersion: cliContext.environment.packageVersion
@@ -141,12 +130,6 @@ export async function upgrade({
     cliContext.logger.info(
         `Upgrading from ${chalk.dim(cliContext.environment.packageVersion)} → ${chalk.green(resolvedTargetVersion)}`
     );
-
-    await loggingExeca(cliContext.logger, "npm", [
-        "install",
-        "-g",
-        `${cliContext.environment.packageName}@${resolvedTargetVersion}`
-    ]);
 
     // Preserve original args except for --version/--to/--from which we replace
     const rerunArgs = ["upgrade", "--from", resolvedFromVersion, "--to", resolvedTargetVersion];
@@ -178,6 +161,7 @@ export async function upgrade({
         env: {
             [PREVIOUS_VERSION_ENV_VAR]: resolvedFromVersion
         },
-        args: rerunArgs
+        args: rerunArgs,
+        context: "upgrade"
     });
 }

@@ -8,12 +8,14 @@ export async function rerunFernCliAtVersion({
     version,
     cliContext,
     env,
-    args
+    args,
+    context
 }: {
     version: string;
     cliContext: CliContext;
     env?: Record<string, string>;
     args?: string[];
+    context?: "upgrade" | undefined;
 }): Promise<void> {
     cliContext.suppressUpgradeMessage();
 
@@ -45,11 +47,18 @@ export async function rerunFernCliAtVersion({
             version,
             cliContext,
             env,
-            args
+            args,
+            context
         });
     }
 
     if (failed) {
+        // Check if it's a version not found error and provide context-specific message
+        if (context === "upgrade" && (stderr.includes("ETARGET") || stderr.includes("No matching version found"))) {
+            return cliContext.failAndThrow(
+                `Failed to upgrade to ${version} because it does not exist. See https://www.npmjs.com/package/${cliContext.environment.packageName}?activeTab=versions.`
+            );
+        }
         cliContext.failWithoutThrowing();
     }
 }
