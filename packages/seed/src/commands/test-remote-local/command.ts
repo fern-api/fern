@@ -1,4 +1,5 @@
 import { LogLevel } from "@fern-api/logger";
+import { printTable } from "console-table-printer";
 import path from "path";
 import { loadGeneratorWorkspaces } from "../../loadGeneratorWorkspaces";
 import { buildGeneratorImage } from "../img/buildGeneratorImage";
@@ -9,16 +10,9 @@ import {
     ALL_OUTPUT_MODES,
     ALL_TEST_FIXTURES,
     CLI_RELATIVE_PATH,
-    ERROR_NO_GENERATOR_VERSION,
-    GeneratorName,
     GeneratorNickname,
     LOCAL_BUILD_VERSION,
-    LOG_HEADER_TEST_SUMMARY,
     LOG_SEPARATOR,
-    MSG_ALL_TESTS_PASSED,
-    MSG_TEST_FAILED_PREFIX,
-    MSG_TEST_PASSED_PREFIX,
-    MSG_TESTS_FAILED_TEMPLATE,
     OUTPUT_MODE_SUFFIX,
     OutputMode,
     SEED_REMOTE_LOCAL_OUTPUT_DIR,
@@ -135,42 +129,38 @@ export async function executeTestRemoteLocalCommand({
                     success: result.success,
                     error: result.error
                 });
-
-                if (result.success) {
-                    logger.info(`${MSG_TEST_PASSED_PREFIX}${gen} / ${fix} / ${mode}`);
-                } else {
-                    logger.error(`${MSG_TEST_FAILED_PREFIX}${gen}:${fix}:${mode}`, result.error || "Unknown error");
-                }
             }
         }
     }
 
-    // Print summary
-    logger.info(`\n${LOG_SEPARATOR}`);
-    logger.info(LOG_HEADER_TEST_SUMMARY);
-    logger.info(LOG_SEPARATOR);
+    // Print results table
+    const tableItems = results.map((r) => {
+        return {
+            Generator: r.generator,
+            Fixture: r.fixture,
+            "Output Mode": r.outputMode,
+            Result: r.success ? "success" : "failure",
+            "Failure Type": !r.success && r.error ? "generation" : "",
+            "Failure Message": !r.success && r.error ? r.error : ""
+        };
+    });
+    printTable(tableItems);
 
-    const passed = results.filter((r) => r.success).length;
     const failed = results.filter((r) => !r.success).length;
     const total = results.length;
 
-    logger.info(`Total: ${total} | Passed: ${passed} | Failed: ${failed}`);
-
-    if (failed > 0) {
-        logger.info("\nFailed tests:");
-        for (const result of results.filter((r) => !r.success)) {
-            logger.error(`  ${MSG_TEST_FAILED_PREFIX}${result.generator} / ${result.fixture} / ${result.outputMode}`);
-            if (result.error) {
-                logger.error(`    ${result.error}`);
-            }
-        }
+    if (failed === 0) {
+        // biome-ignore lint: ignore next line
+        console.log(`${total}/${total} test cases passed ✅`);
+    } else {
+        // biome-ignore lint: ignore next line
+        console.log(`${failed}/${total} test cases failed ❌`);
     }
 
+    // Exit with non-zero code if tests failed, but don't throw
     if (failed > 0) {
-        throw new Error(MSG_TESTS_FAILED_TEMPLATE(failed));
+        process.exit(1);
     }
-
-    logger.info(`\n${MSG_ALL_TESTS_PASSED}`);
 }
 
 /**

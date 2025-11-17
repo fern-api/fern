@@ -276,7 +276,7 @@ async function postProcessGithubSelfHosted(
         if (!selfhostedGithubConfig.previewMode) {
             await repository.push();
             const pushedBranch = await repository.getCurrentBranch();
-            context.logger.info(`Pushed branch https://${selfhostedGithubConfig.uri}/tree/${pushedBranch}`);
+            context.logger.info(`Pushed branch: https://github.com/${selfhostedGithubConfig.uri}/tree/${pushedBranch}`);
         }
 
         if (selfhostedGithubConfig.mode === "pull-request") {

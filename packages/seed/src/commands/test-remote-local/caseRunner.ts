@@ -498,25 +498,14 @@ async function copyGithubOutputToOutputDirectory(
 }
 
 function getRemoteBranchFromLogs(logs: string): string | undefined {
-    // Example log line: INFO  2025-11-15T23:49:44.180Z [api]: fernapi/fern-typescript-sdk Pushed branch: https://github.com/fern-api/lattice-sdk-javascript/tree/fern-bot/2025-11-15T23-49Z
-    // Try multiple patterns to be more robust
+    // Example log lines:
+    // - INFO  2025-11-15T23:49:44.180Z [api]: fernapi/fern-typescript-sdk Pushed branch: https://github.com/fern-api/lattice-sdk-javascript/tree/fern-bot/2025-11-15T23-49Z
+    // - INFO  2025-11-17T03:15:23.574Z [api]: fernapi/fern-typescript-sdk Pushed branch: https://github.com/fern-api/empty/tree/fern-bot/2025-11-17_03-15-22
+    // Look for any GitHub URL with /tree/<branch> pattern and extract the branch name
 
-    // Pattern 1: Full GitHub URL with branch
     const urlMatch = logs.match(GITHUB_BRANCH_URL_REGEX);
     if (urlMatch?.[1]) {
         return urlMatch[1];
-    }
-
-    // Pattern 2: Look for "branch: <branch-name>" pattern
-    const branchMatch = logs.match(/branch:\s+(\S+)/i);
-    if (branchMatch?.[1] && !branchMatch[1].startsWith("http")) {
-        return branchMatch[1];
-    }
-
-    // Pattern 3: Look for fern-bot/<timestamp> pattern directly
-    const fernBotMatch = logs.match(/fern-bot\/[\d-]+T[\d-]+Z/);
-    if (fernBotMatch?.[0]) {
-        return fernBotMatch[0];
     }
 
     return undefined;

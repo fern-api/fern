@@ -1,6 +1,6 @@
 {
     "name": "@fern-fern/test-remote-local-sdk",
-    "version": "0.0.17399",
+    "version": "0.0.17403",
     "private": false,
     "repository": "github:fern-api/empty",
     "type": "commonjs",

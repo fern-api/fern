@@ -143,8 +143,8 @@ export const LOCAL_BUILD_VERSION = "99.99.99";
 // Semantic versioning pattern: X.Y.Z
 export const SEMVER_REGEX = /^\d+\.\d+\.\d+$/;
 
-// GitHub branch URL pattern in logs
-export const GITHUB_BRANCH_URL_REGEX = /Pushed branch: https:\/\/github\.com\/[^\/]+\/[^\/]+\/tree\/([^\s]+)/;
+// GitHub branch URL pattern in logs - flexible pattern to extract branch from any GitHub tree URL
+export const GITHUB_BRANCH_URL_REGEX = /https?:\/\/(?:www\.)?github\.com\/[^\/]+\/[^\/]+\/tree\/([^\s]+)/;
 
 // ============================================================================
 // Log Messages & Separators
