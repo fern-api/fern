@@ -3,9 +3,7 @@
 - version: 4.37.0
   changelogEntry:
     - summary: |
-        Add response-to-page functionality for pagination, allowing users to access the underlying typed API response object from paginated results. The pager's `response` field now contains the typed/parsed response body (e.g., `ListUsersPaginationResponse`) instead of the raw HTTP response wrapper. This provides access to pagination metadata and the data array.
-
-        **Breaking Change**: Pager type signature changed from `SyncPager[T]` to `SyncPager[T, R]` where `R` is the response type. Users who explicitly referenced pager types in their code will need to update their type annotations to include both type parameters (e.g., `SyncPager[User, ListUsersResponse]` or `SyncPager[User, Any]`). Most users who just iterate over pagers won't be affected.
+        Expose the typed response on paginated pages by making pagers generic over both the item type and response type: `SyncPager[T, R]` and `AsyncPager[T, R]`. This is a typing-only change to improve type checker/IDE support; there are no runtime or behavioral changes and existing code continues to work. You only need to update code if you have explicit type annotations referencing `SyncPager[...]`/`AsyncPager[...]`; in that case, provide two type parameters (e.g., `SyncPager[User, ListUsersResponse]` or use `Any` for the second parameter).
       type: feat
   createdAt: "2025-11-17"
   irVersion: 61
