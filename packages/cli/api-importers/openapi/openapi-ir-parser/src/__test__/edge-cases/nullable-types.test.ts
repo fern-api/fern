@@ -4,7 +4,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { describe, expect, it, vi } from "vitest";
 import { OpenAPIV3ParserContext } from "../../openapi/v3/OpenAPIV3ParserContext";
 import { DEFAULT_PARSE_OPENAPI_SETTINGS } from "../../options";
-import { convertSchema } from "../../schema/convertSchemas";
+import { convertForTest } from "./testUtils";
 
 describe("nullable types and OpenAPI 3.1 type unions", () => {
     const mockTaskContext = {
@@ -48,7 +48,12 @@ describe("nullable types and OpenAPI 3.1 type unions", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.NullableString as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["NullableString"], source, context);
+        const result = convertForTest({
+            schema: schema,
+            context: context,
+            source: source,
+            breadcrumbs: ["NullableString"]
+        });
 
         expect(result).toBeDefined();
     });
@@ -85,7 +90,12 @@ describe("nullable types and OpenAPI 3.1 type unions", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.NullableUser as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["NullableUser"], source, context);
+        const result = convertForTest({
+            schema: schema,
+            context: context,
+            source: source,
+            breadcrumbs: ["NullableUser"]
+        });
 
         expect(result).toBeDefined();
     });
@@ -121,7 +131,12 @@ describe("nullable types and OpenAPI 3.1 type unions", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.NullableArray as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["NullableArray"], source, context);
+        const result = convertForTest({
+            schema: schema,
+            context: context,
+            source: source,
+            breadcrumbs: ["NullableArray"]
+        });
 
         expect(result).toBeDefined();
     });
@@ -161,7 +176,12 @@ describe("nullable types and OpenAPI 3.1 type unions", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.NullableUserRef as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["NullableUserRef"], source, context);
+        const result = convertForTest({
+            schema: schema,
+            context: context,
+            source: source,
+            breadcrumbs: ["NullableUserRef"]
+        });
 
         expect(result).toBeDefined();
     });
@@ -195,7 +215,12 @@ describe("nullable types and OpenAPI 3.1 type unions", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.NullableStatus as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["NullableStatus"], source, context);
+        const result = convertForTest({
+            schema: schema,
+            context: context,
+            source: source,
+            breadcrumbs: ["NullableStatus"]
+        });
 
         expect(result).toBeDefined();
     });
@@ -244,7 +269,7 @@ describe("nullable types and OpenAPI 3.1 type unions", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.Profile as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["Profile"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["Profile"] });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("object");
@@ -278,7 +303,12 @@ describe("nullable types and OpenAPI 3.1 type unions", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.MaybeString as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["MaybeString"], source, context);
+        const result = convertForTest({
+            schema: schema,
+            context: context,
+            source: source,
+            breadcrumbs: ["MaybeString"]
+        });
 
         expect(result).toBeDefined();
     });
@@ -325,7 +355,12 @@ describe("nullable types and OpenAPI 3.1 type unions", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.UserWithAddress as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["UserWithAddress"], source, context);
+        const result = convertForTest({
+            schema: schema,
+            context: context,
+            source: source,
+            breadcrumbs: ["UserWithAddress"]
+        });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("object");

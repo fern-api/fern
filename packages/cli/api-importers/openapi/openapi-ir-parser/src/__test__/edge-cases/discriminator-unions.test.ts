@@ -4,7 +4,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { describe, expect, it, vi } from "vitest";
 import { OpenAPIV3ParserContext } from "../../openapi/v3/OpenAPIV3ParserContext";
 import { DEFAULT_PARSE_OPENAPI_SETTINGS } from "../../options";
-import { convertSchema } from "../../schema/convertSchemas";
+import { convertForTest } from "./testUtils";
 
 describe("discriminator unions", () => {
     const mockTaskContext = {
@@ -83,7 +83,7 @@ describe("discriminator unions", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.Animal as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["Animal"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["Animal"] });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("oneOf");
@@ -132,7 +132,7 @@ describe("discriminator unions", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.Shape as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["Shape"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["Shape"] });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("oneOf");
@@ -199,7 +199,7 @@ describe("discriminator unions", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.Entity as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["Entity"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["Entity"] });
 
         expect(result).toBeDefined();
     });
@@ -253,7 +253,7 @@ describe("discriminator unions", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.Event as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["Event"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["Event"] });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("oneOf");
@@ -320,7 +320,7 @@ describe("discriminator unions", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.Payment as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["Payment"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["Payment"] });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("oneOf");

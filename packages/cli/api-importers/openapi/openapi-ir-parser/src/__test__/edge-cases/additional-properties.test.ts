@@ -4,7 +4,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { describe, expect, it, vi } from "vitest";
 import { OpenAPIV3ParserContext } from "../../openapi/v3/OpenAPIV3ParserContext";
 import { DEFAULT_PARSE_OPENAPI_SETTINGS } from "../../options";
-import { convertSchema } from "../../schema/convertSchemas";
+import { convertForTest } from "./testUtils";
 
 describe("additionalProperties edge cases", () => {
     const mockTaskContext = {
@@ -49,7 +49,12 @@ describe("additionalProperties edge cases", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.FlexibleObject as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["FlexibleObject"], source, context);
+        const result = convertForTest({
+            schema: schema,
+            context: context,
+            source: source,
+            breadcrumbs: ["FlexibleObject"]
+        });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("object");
@@ -84,7 +89,12 @@ describe("additionalProperties edge cases", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.StrictObject as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["StrictObject"], source, context);
+        const result = convertForTest({
+            schema: schema,
+            context: context,
+            source: source,
+            breadcrumbs: ["StrictObject"]
+        });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("object");
@@ -120,7 +130,7 @@ describe("additionalProperties edge cases", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.StringMap as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["StringMap"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["StringMap"] });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("object");
@@ -157,7 +167,7 @@ describe("additionalProperties edge cases", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.ObjectMap as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["ObjectMap"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["ObjectMap"] });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("object");
@@ -197,7 +207,7 @@ describe("additionalProperties edge cases", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.UserMap as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["UserMap"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["UserMap"] });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("object");
@@ -236,7 +246,7 @@ describe("additionalProperties edge cases", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.Config as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["Config"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["Config"] });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("object");
@@ -285,8 +295,18 @@ describe("additionalProperties edge cases", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.ImplicitAdditionalProps as OpenAPIV3.SchemaObject;
-        const resultTrue = convertSchema(schema, ["ImplicitAdditionalProps"], source, contextDefaultTrue);
-        const resultFalse = convertSchema(schema, ["ImplicitAdditionalProps"], source, contextDefaultFalse);
+        const resultTrue = convertForTest({
+            schema: schema,
+            context: contextDefaultTrue,
+            source: source,
+            breadcrumbs: ["ImplicitAdditionalProps"]
+        });
+        const resultFalse = convertForTest({
+            schema: schema,
+            context: contextDefaultFalse,
+            source: source,
+            breadcrumbs: ["ImplicitAdditionalProps"]
+        });
 
         expect(resultTrue).toBeDefined();
         expect(resultFalse).toBeDefined();
@@ -322,7 +342,7 @@ describe("additionalProperties edge cases", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.ArrayMap as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["ArrayMap"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["ArrayMap"] });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("object");

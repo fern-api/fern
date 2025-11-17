@@ -4,7 +4,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { describe, expect, it, vi } from "vitest";
 import { OpenAPIV3ParserContext } from "../../openapi/v3/OpenAPIV3ParserContext";
 import { DEFAULT_PARSE_OPENAPI_SETTINGS } from "../../options";
-import { convertSchema } from "../../schema/convertSchemas";
+import { convertForTest } from "./testUtils";
 
 describe("multipart/form-data and file uploads", () => {
     const mockTaskContext = {
@@ -67,7 +67,12 @@ describe("multipart/form-data and file uploads", () => {
 
         const requestBody = openApiDocument.paths["/upload"]?.post?.requestBody as OpenAPIV3.RequestBodyObject;
         const schema = requestBody.content["multipart/form-data"]?.schema as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["UploadRequest"], source, context);
+        const result = convertForTest({
+            schema: schema,
+            context: context,
+            source: source,
+            breadcrumbs: ["UploadRequest"]
+        });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("object");
@@ -130,7 +135,12 @@ describe("multipart/form-data and file uploads", () => {
 
         const requestBody = openApiDocument.paths["/upload-multiple"]?.post?.requestBody as OpenAPIV3.RequestBodyObject;
         const schema = requestBody.content["multipart/form-data"]?.schema as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["MultipleUploadRequest"], source, context);
+        const result = convertForTest({
+            schema: schema,
+            context: context,
+            source: source,
+            breadcrumbs: ["MultipleUploadRequest"]
+        });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("object");
@@ -194,7 +204,12 @@ describe("multipart/form-data and file uploads", () => {
 
         const requestBody = openApiDocument.paths["/upload-mixed"]?.post?.requestBody as OpenAPIV3.RequestBodyObject;
         const schema = requestBody.content["multipart/form-data"]?.schema as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["MixedUploadRequest"], source, context);
+        const result = convertForTest({
+            schema: schema,
+            context: context,
+            source: source,
+            breadcrumbs: ["MixedUploadRequest"]
+        });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("object");
@@ -243,7 +258,12 @@ describe("multipart/form-data and file uploads", () => {
 
         const requestBody = openApiDocument.paths["/form-submit"]?.post?.requestBody as OpenAPIV3.RequestBodyObject;
         const schema = requestBody.content["application/x-www-form-urlencoded"]?.schema as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["FormSubmitRequest"], source, context);
+        const result = convertForTest({
+            schema: schema,
+            context: context,
+            source: source,
+            breadcrumbs: ["FormSubmitRequest"]
+        });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("object");
@@ -285,7 +305,12 @@ describe("multipart/form-data and file uploads", () => {
 
         const response = openApiDocument.paths["/download"]?.get?.responses["200"] as OpenAPIV3.ResponseObject;
         const schema = response.content?.["application/octet-stream"]?.schema as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["DownloadResponse"], source, context);
+        const result = convertForTest({
+            schema: schema,
+            context: context,
+            source: source,
+            breadcrumbs: ["DownloadResponse"]
+        });
 
         expect(result).toBeDefined();
     });

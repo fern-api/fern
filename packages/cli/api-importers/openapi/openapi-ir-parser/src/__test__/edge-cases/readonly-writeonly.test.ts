@@ -4,7 +4,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { describe, expect, it, vi } from "vitest";
 import { OpenAPIV3ParserContext } from "../../openapi/v3/OpenAPIV3ParserContext";
 import { DEFAULT_PARSE_OPENAPI_SETTINGS } from "../../options";
-import { convertSchema } from "../../schema/convertSchemas";
+import { convertForTest } from "./testUtils";
 
 describe("readOnly and writeOnly directionality", () => {
     const mockTaskContext = {
@@ -70,7 +70,7 @@ describe("readOnly and writeOnly directionality", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.User as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["User"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["User"] });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("object");
@@ -120,7 +120,12 @@ describe("readOnly and writeOnly directionality", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.UserCreate as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["UserCreate"], source, context);
+        const result = convertForTest({
+            schema: schema,
+            context: context,
+            source: source,
+            breadcrumbs: ["UserCreate"]
+        });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("object");
@@ -182,7 +187,7 @@ describe("readOnly and writeOnly directionality", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.Account as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["Account"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["Account"] });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("object");
@@ -263,7 +268,7 @@ describe("readOnly and writeOnly directionality", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.Order as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["Order"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["Order"] });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("object");
@@ -308,7 +313,7 @@ describe("readOnly and writeOnly directionality", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.Product as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["Product"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["Product"] });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("object");

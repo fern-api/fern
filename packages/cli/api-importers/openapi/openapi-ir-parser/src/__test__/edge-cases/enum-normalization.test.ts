@@ -4,7 +4,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { describe, expect, it, vi } from "vitest";
 import { OpenAPIV3ParserContext } from "../../openapi/v3/OpenAPIV3ParserContext";
 import { DEFAULT_PARSE_OPENAPI_SETTINGS } from "../../options";
-import { convertSchema } from "../../schema/convertSchemas";
+import { convertForTest } from "./testUtils";
 
 describe("enum normalization and edge cases", () => {
     const mockTaskContext = {
@@ -45,7 +45,7 @@ describe("enum normalization and edge cases", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.Status as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["Status"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["Status"] });
 
         expect(result).toBeDefined();
     });
@@ -75,7 +75,12 @@ describe("enum normalization and edge cases", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.SpecialEnum as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["SpecialEnum"], source, context);
+        const result = convertForTest({
+            schema: schema,
+            context: context,
+            source: source,
+            breadcrumbs: ["SpecialEnum"]
+        });
 
         expect(result).toBeDefined();
     });
@@ -105,7 +110,7 @@ describe("enum normalization and edge cases", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.Priority as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["Priority"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["Priority"] });
 
         expect(result).toBeDefined();
     });
@@ -135,7 +140,7 @@ describe("enum normalization and edge cases", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.EmptyEnum as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["EmptyEnum"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["EmptyEnum"] });
 
         expect(result).toBeDefined();
     });
@@ -165,7 +170,12 @@ describe("enum normalization and edge cases", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.NumericStrings as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["NumericStrings"], source, context);
+        const result = convertForTest({
+            schema: schema,
+            context: context,
+            source: source,
+            breadcrumbs: ["NumericStrings"]
+        });
 
         expect(result).toBeDefined();
     });
@@ -210,8 +220,18 @@ describe("enum normalization and edge cases", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.Color as OpenAPIV3.SchemaObject;
-        const resultWith = convertSchema(schema, ["Color"], source, contextWithCoercion);
-        const resultWithout = convertSchema(schema, ["Color"], source, contextWithoutCoercion);
+        const resultWith = convertForTest({
+            schema: schema,
+            context: contextWithCoercion,
+            source: source,
+            breadcrumbs: ["Color"]
+        });
+        const resultWithout = convertForTest({
+            schema: schema,
+            context: contextWithoutCoercion,
+            source: source,
+            breadcrumbs: ["Color"]
+        });
 
         expect(resultWith).toBeDefined();
         expect(resultWithout).toBeDefined();
@@ -241,7 +261,7 @@ describe("enum normalization and edge cases", () => {
                                 description: "Limited access"
                             }
                         }
-                    }
+                    } as unknown as OpenAPIV3.SchemaObject
                 }
             }
         };
@@ -256,7 +276,7 @@ describe("enum normalization and edge cases", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.Role as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["Role"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["Role"] });
 
         expect(result).toBeDefined();
     });
@@ -289,7 +309,12 @@ describe("enum normalization and edge cases", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.ApiVersion as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["ApiVersion"], source, context);
+        const result = convertForTest({
+            schema: schema,
+            context: context,
+            source: source,
+            breadcrumbs: ["ApiVersion"]
+        });
 
         expect(result).toBeDefined();
     });
@@ -319,7 +344,7 @@ describe("enum normalization and edge cases", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.MixedCase as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["MixedCase"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["MixedCase"] });
 
         expect(result).toBeDefined();
     });

@@ -4,8 +4,8 @@ import { OpenAPIV3 } from "openapi-types";
 import { describe, expect, it, vi } from "vitest";
 import { OpenAPIV3ParserContext } from "../../openapi/v3/OpenAPIV3ParserContext";
 import { DEFAULT_PARSE_OPENAPI_SETTINGS } from "../../options";
-import { convertSchema } from "../../schema/convertSchemas";
 import { getGeneratedTypeName } from "../../schema/utils/getSchemaName";
+import { convertForTest } from "./testUtils";
 
 describe("preserveSchemaIds", () => {
     const mockTaskContext = {
@@ -53,7 +53,12 @@ describe("preserveSchemaIds", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.UserProfile as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["UserProfile"], source, contextWithPreserve);
+        const result = convertForTest({
+            schema: schema,
+            context: contextWithPreserve,
+            source: source,
+            breadcrumbs: ["UserProfile"]
+        });
 
         expect(result).toBeDefined();
     });
@@ -90,7 +95,12 @@ describe("preserveSchemaIds", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.UserProfile as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["UserProfile"], source, contextWithoutPreserve);
+        const result = convertForTest({
+            schema: schema,
+            context: contextWithoutPreserve,
+            source: source,
+            breadcrumbs: ["UserProfile"]
+        });
 
         expect(result).toBeDefined();
     });
@@ -155,7 +165,7 @@ describe("preserveSchemaIds", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.Company as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["Company"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["Company"] });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("object");
@@ -212,7 +222,7 @@ describe("preserveSchemaIds", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.Order as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["Order"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["Order"] });
 
         expect(result).toBeDefined();
     });

@@ -4,7 +4,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { describe, expect, it, vi } from "vitest";
 import { OpenAPIV3ParserContext } from "../../openapi/v3/OpenAPIV3ParserContext";
 import { DEFAULT_PARSE_OPENAPI_SETTINGS } from "../../options";
-import { convertSchema } from "../../schema/convertSchemas";
+import { convertForTest } from "./testUtils";
 
 describe("allOf/oneOf/anyOf schema composition", () => {
     const mockTaskContext = {
@@ -63,7 +63,12 @@ describe("allOf/oneOf/anyOf schema composition", () => {
             });
 
             const schema = openApiDocument.components?.schemas?.Extended as OpenAPIV3.SchemaObject;
-            const result = convertSchema(schema, ["Extended"], source, context);
+            const result = convertForTest({
+                schema: schema,
+                context: context,
+                source: source,
+                breadcrumbs: ["Extended"]
+            });
 
             expect(result).toBeDefined();
             expect(result.type).toBe("object");
@@ -118,7 +123,12 @@ describe("allOf/oneOf/anyOf schema composition", () => {
             });
 
             const schema = openApiDocument.components?.schemas?.Level3 as OpenAPIV3.SchemaObject;
-            const result = convertSchema(schema, ["Level3"], source, context);
+            const result = convertForTest({
+                schema: schema,
+                context: context,
+                source: source,
+                breadcrumbs: ["Level3"]
+            });
 
             expect(result).toBeDefined();
         });
@@ -168,7 +178,7 @@ describe("allOf/oneOf/anyOf schema composition", () => {
             });
 
             const schema = openApiDocument.components?.schemas?.Pet as OpenAPIV3.SchemaObject;
-            const result = convertSchema(schema, ["Pet"], source, context);
+            const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["Pet"] });
 
             expect(result).toBeDefined();
             expect(result.type).toBe("oneOf");
@@ -213,7 +223,12 @@ describe("allOf/oneOf/anyOf schema composition", () => {
             });
 
             const schema = openApiDocument.components?.schemas?.Response as OpenAPIV3.SchemaObject;
-            const result = convertSchema(schema, ["Response"], source, context);
+            const result = convertForTest({
+                schema: schema,
+                context: context,
+                source: source,
+                breadcrumbs: ["Response"]
+            });
 
             expect(result).toBeDefined();
         });
@@ -252,7 +267,12 @@ describe("allOf/oneOf/anyOf schema composition", () => {
             });
 
             const schema = openApiDocument.components?.schemas?.SingleOneOf as OpenAPIV3.SchemaObject;
-            const result = convertSchema(schema, ["SingleOneOf"], source, context);
+            const result = convertForTest({
+                schema: schema,
+                context: context,
+                source: source,
+                breadcrumbs: ["SingleOneOf"]
+            });
 
             expect(result).toBeDefined();
         });
@@ -292,7 +312,12 @@ describe("allOf/oneOf/anyOf schema composition", () => {
             });
 
             const schema = openApiDocument.components?.schemas?.FlexibleValue as OpenAPIV3.SchemaObject;
-            const result = convertSchema(schema, ["FlexibleValue"], source, context);
+            const result = convertForTest({
+                schema: schema,
+                context: context,
+                source: source,
+                breadcrumbs: ["FlexibleValue"]
+            });
 
             expect(result).toBeDefined();
         });
@@ -322,7 +347,12 @@ describe("allOf/oneOf/anyOf schema composition", () => {
             });
 
             const schema = openApiDocument.components?.schemas?.NullableAnyOf as OpenAPIV3.SchemaObject;
-            const result = convertSchema(schema, ["NullableAnyOf"], source, context);
+            const result = convertForTest({
+                schema: schema,
+                context: context,
+                source: source,
+                breadcrumbs: ["NullableAnyOf"]
+            });
 
             expect(result).toBeDefined();
         });
@@ -377,7 +407,12 @@ describe("allOf/oneOf/anyOf schema composition", () => {
             });
 
             const schema = openApiDocument.components?.schemas?.Complex as OpenAPIV3.SchemaObject;
-            const result = convertSchema(schema, ["Complex"], source, context);
+            const result = convertForTest({
+                schema: schema,
+                context: context,
+                source: source,
+                breadcrumbs: ["Complex"]
+            });
 
             expect(result).toBeDefined();
         });

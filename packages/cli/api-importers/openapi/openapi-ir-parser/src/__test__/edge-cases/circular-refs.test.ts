@@ -4,7 +4,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { describe, expect, it, vi } from "vitest";
 import { OpenAPIV3ParserContext } from "../../openapi/v3/OpenAPIV3ParserContext";
 import { DEFAULT_PARSE_OPENAPI_SETTINGS } from "../../options";
-import { convertSchema } from "../../schema/convertSchemas";
+import { convertForTest } from "./testUtils";
 
 describe("circular references and deep $ref chains", () => {
     const mockTaskContext = {
@@ -49,7 +49,7 @@ describe("circular references and deep $ref chains", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.Node as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["Node"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["Node"] });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("object");
@@ -95,10 +95,20 @@ describe("circular references and deep $ref chains", () => {
         });
 
         const authorSchema = openApiDocument.components?.schemas?.Author as OpenAPIV3.SchemaObject;
-        const authorResult = convertSchema(authorSchema, ["Author"], source, context);
+        const authorResult = convertForTest({
+            schema: authorSchema,
+            context: context,
+            source: source,
+            breadcrumbs: ["Author"]
+        });
 
         const bookSchema = openApiDocument.components?.schemas?.Book as OpenAPIV3.SchemaObject;
-        const bookResult = convertSchema(bookSchema, ["Book"], source, context);
+        const bookResult = convertForTest({
+            schema: bookSchema,
+            context: context,
+            source: source,
+            breadcrumbs: ["Book"]
+        });
 
         expect(authorResult).toBeDefined();
         expect(bookResult).toBeDefined();
@@ -137,7 +147,7 @@ describe("circular references and deep $ref chains", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.TreeNode as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["TreeNode"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["TreeNode"] });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("object");
@@ -199,7 +209,7 @@ describe("circular references and deep $ref chains", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.Level1 as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["Level1"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["Level1"] });
 
         expect(result).toBeDefined();
         expect(result.type).toBe("object");
@@ -249,7 +259,7 @@ describe("circular references and deep $ref chains", () => {
         });
 
         const schema = openApiDocument.components?.schemas?.Category as OpenAPIV3.SchemaObject;
-        const result = convertSchema(schema, ["Category"], source, context);
+        const result = convertForTest({ schema: schema, context: context, source: source, breadcrumbs: ["Category"] });
 
         expect(result).toBeDefined();
     });
@@ -295,10 +305,20 @@ describe("circular references and deep $ref chains", () => {
         });
 
         const nodeSchema = openApiDocument.components?.schemas?.GraphNode as OpenAPIV3.SchemaObject;
-        const nodeResult = convertSchema(nodeSchema, ["GraphNode"], source, context);
+        const nodeResult = convertForTest({
+            schema: nodeSchema,
+            context: context,
+            source: source,
+            breadcrumbs: ["GraphNode"]
+        });
 
         const edgeSchema = openApiDocument.components?.schemas?.Edge as OpenAPIV3.SchemaObject;
-        const edgeResult = convertSchema(edgeSchema, ["Edge"], source, context);
+        const edgeResult = convertForTest({
+            schema: edgeSchema,
+            context: context,
+            source: source,
+            breadcrumbs: ["Edge"]
+        });
 
         expect(nodeResult).toBeDefined();
         expect(edgeResult).toBeDefined();
