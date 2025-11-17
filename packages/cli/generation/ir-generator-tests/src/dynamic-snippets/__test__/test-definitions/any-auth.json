@@ -122,8 +122,11 @@
                         "wireValue": "expires_in"
                     },
                     "typeReference": {
-                        "type": "primitive",
-                        "value": "INTEGER"
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        }
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -163,6 +166,141 @@
                 }
             ],
             "additionalProperties": false
+        },
+        "type_auth:GrantType": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "GrantType",
+                    "camelCase": {
+                        "unsafeName": "grantType",
+                        "safeName": "grantType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "grant_type",
+                        "safeName": "grant_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GRANT_TYPE",
+                        "safeName": "GRANT_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GrantType",
+                        "safeName": "GrantType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "auth",
+                            "camelCase": {
+                                "unsafeName": "auth",
+                                "safeName": "auth"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "auth",
+                                "safeName": "auth"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AUTH",
+                                "safeName": "AUTH"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Auth",
+                                "safeName": "Auth"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "auth",
+                        "camelCase": {
+                            "unsafeName": "auth",
+                            "safeName": "auth"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "auth",
+                            "safeName": "auth"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AUTH",
+                            "safeName": "AUTH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Auth",
+                            "safeName": "Auth"
+                        }
+                    }
+                }
+            },
+            "values": [
+                {
+                    "name": {
+                        "originalName": "authorization_code",
+                        "camelCase": {
+                            "unsafeName": "authorizationCode",
+                            "safeName": "authorizationCode"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "authorization_code",
+                            "safeName": "authorization_code"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AUTHORIZATION_CODE",
+                            "safeName": "AUTHORIZATION_CODE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "AuthorizationCode",
+                            "safeName": "AuthorizationCode"
+                        }
+                    },
+                    "wireValue": "authorization_code"
+                },
+                {
+                    "name": {
+                        "originalName": "refresh_token",
+                        "camelCase": {
+                            "unsafeName": "refreshToken",
+                            "safeName": "refreshToken"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "refresh_token",
+                            "safeName": "refresh_token"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "REFRESH_TOKEN",
+                            "safeName": "REFRESH_TOKEN"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "RefreshToken",
+                            "safeName": "RefreshToken"
+                        }
+                    },
+                    "wireValue": "refresh_token"
+                },
+                {
+                    "name": {
+                        "originalName": "client_credentials",
+                        "camelCase": {
+                            "unsafeName": "clientCredentials",
+                            "safeName": "clientCredentials"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "client_credentials",
+                            "safeName": "client_credentials"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CLIENT_CREDENTIALS",
+                            "safeName": "CLIENT_CREDENTIALS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ClientCredentials",
+                            "safeName": "ClientCredentials"
+                        }
+                    },
+                    "wireValue": "client_credentials"
+                }
+            ]
         },
         "type_user:User": {
             "type": "object",
@@ -577,11 +715,8 @@
                                 "wireValue": "grant_type"
                             },
                             "typeReference": {
-                                "type": "literal",
-                                "value": {
-                                    "type": "string",
-                                    "value": "client_credentials"
-                                }
+                                "type": "named",
+                                "value": "type_auth:GrantType"
                             },
                             "propertyAccess": null,
                             "variable": null
