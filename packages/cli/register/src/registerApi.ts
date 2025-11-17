@@ -62,7 +62,8 @@ export async function registerApi({
             context,
             token,
             organization,
-            sourceFilePath
+            sourceFilePath,
+            ir.apiName.originalName
         );
     }
 

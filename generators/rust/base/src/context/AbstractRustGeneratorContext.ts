@@ -188,6 +188,42 @@ export abstract class AbstractRustGeneratorContext<
         }
         this.logger.debug(`Registered ${queryRequestCount} query request filenames and type names`);
 
+        // Priority 3.5: Referenced request with query parameters
+        let referencedRequestWithQueryCount = 0;
+        for (const service of Object.values(ir.services)) {
+            for (const endpoint of service.endpoints) {
+                // Only endpoints with referenced body AND query parameters
+                if (endpoint.requestBody?.type === "reference" && endpoint.queryParameters.length > 0) {
+                    // Generate request type name like CreateUsernameReferencedRequest
+                    const requestName = `${endpoint.name.pascalCase.safeName}Request`;
+                    const baseFilename = convertPascalToSnakeCase(requestName);
+
+                    // Register both filename and type name
+                    const registeredFilename = this.project.filenameRegistry.registerReferencedRequestWithQueryFilename(
+                        endpoint.id,
+                        baseFilename
+                    );
+                    const registeredTypeName = this.project.filenameRegistry.registerReferencedRequestWithQueryTypeName(
+                        endpoint.id,
+                        requestName
+                    );
+
+                    // Log if collision was resolved
+                    if (registeredFilename !== baseFilename || registeredTypeName !== requestName) {
+                        this.logger.debug(
+                            `Referenced request with query collision resolved: ` +
+                                `${requestName} → ${registeredTypeName}, ` +
+                                `${baseFilename}.rs → ${registeredFilename}.rs`
+                        );
+                    }
+                    referencedRequestWithQueryCount++;
+                }
+            }
+        }
+        this.logger.debug(
+            `Registered ${referencedRequestWithQueryCount} referenced request with query filenames and type names`
+        );
+
         // Priority 4: Client names (root client + all subpackage clients)
         let clientNameCount = 0;
 
@@ -618,6 +654,32 @@ export abstract class AbstractRustGeneratorContext<
      */
     public getFileUploadRequestTypeName(endpointId: string): string {
         return this.project.filenameRegistry.getFileUploadRequestTypeNameOrThrow(endpointId);
+    }
+
+    /**
+     * Get filename for referenced request with query using endpoint ID.
+     * @param endpointId - The unique endpoint ID from IR
+     */
+    public getFilenameForReferencedRequestWithQuery(endpointId: string): string {
+        return this.project.filenameRegistry.getReferencedRequestWithQueryFilenameOrThrow(endpointId);
+    }
+
+    /**
+     * Get module name for referenced request with query from filename.
+     * This extracts the module name by removing the .rs extension from the filename.
+     */
+    public getModuleNameForReferencedRequestWithQuery(endpointId: string): string {
+        const filename = this.getFilenameForReferencedRequestWithQuery(endpointId);
+        return filename.replace(".rs", "");
+    }
+
+    /**
+     * Get unique type name for referenced request with query using endpoint ID.
+     * @param endpointId - The unique endpoint ID from IR
+     * @returns The unique type name (e.g., CreateUsernameReferencedRequest2 if there's a collision)
+     */
+    public getReferencedRequestWithQueryTypeName(endpointId: string): string {
+        return this.project.filenameRegistry.getReferencedRequestWithQueryTypeNameOrThrow(endpointId);
     }
 
     /**

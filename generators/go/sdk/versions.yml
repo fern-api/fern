@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.15.1
+  changelogEntry:
+    - summary: |
+        Fix issue where unmarshaling optional bodies for requests with non-primitive query params tried to assign a value type to a pointer field.
+      type: fix
+  createdAt: "2025-11-13"
+  irVersion: 60
+
 - version: 1.15.0
   changelogEntry:
     - summary: |
