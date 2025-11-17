@@ -152,7 +152,7 @@ public struct HTTPError: Swift.Error, Swift.CustomStringConvertible {
         public let type: Swift.String?
         public let message: Swift.String?
 
-        /// Attempts to decode an `APIErrorResponse` from the given HTTP response payload.
+        /// Attempts to decode an `HTTPError.ResponseBody` from the given HTTP response payload.
         public static func decode(
             statusCode: Swift.Int,
             data: Foundation.Data,
