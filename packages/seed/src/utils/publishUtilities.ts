@@ -9,7 +9,12 @@ export function subVersion(command: string, version: string, versionSubstitution
     return versionSubstitution ? command.replace(versionSubstitution, version) : command;
 }
 
-export async function runCommands(commands: string[], context: TaskContext, cwd: string) {
+export async function runCommands(
+    commands: string[],
+    context: TaskContext,
+    cwd: string,
+    shouldPipeOutput: boolean = false
+) {
     for (const command of commands) {
         const splitCommand = command.split(" ");
         if (splitCommand[0] == null) {
@@ -20,7 +25,7 @@ export async function runCommands(commands: string[], context: TaskContext, cwd:
             splitCommand[0],
             splitCommand.slice(1),
             {
-                doNotPipeOutput: true,
+                doNotPipeOutput: !shouldPipeOutput,
                 env: {
                     ...process.env
                 },

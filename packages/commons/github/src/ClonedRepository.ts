@@ -1,6 +1,6 @@
 import { cp, lstat, readdir, readFile, rm } from "fs/promises";
 import path, { resolve } from "path";
-import type { SimpleGit } from "simple-git";
+import { type SimpleGit, simpleGit } from "simple-git";
 
 import { FERNIGNORE, GIT_DIR, GITIGNORE, README_FILEPATH } from "./constants";
 
@@ -17,6 +17,13 @@ export class ClonedRepository {
         this.git = git;
     }
 
+    public static createAtPath(clonePath: string): ClonedRepository {
+        return new ClonedRepository({
+            clonePath,
+            git: simpleGit(clonePath)
+        });
+    }
+
     public async getDefaultBranch(): Promise<string> {
         await this.git.cwd(this.clonePath);
         const remoteInfo = await this.git.remote(["show", "origin"]);
@@ -28,6 +35,12 @@ export class ClonedRepository {
             throw new Error("Could not determine default branch");
         }
         return match[1].trim();
+    }
+
+    public async getCurrentBranch(): Promise<string> {
+        await this.git.cwd(this.clonePath);
+        const branch = await this.git.branchLocal();
+        return branch.current;
     }
 
     public async getReadme(): Promise<string | undefined> {
