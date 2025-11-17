@@ -8,12 +8,12 @@ paths:
       operationId: getItems
       summary: Get items
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItemResponse'
+                $ref: "#/components/schemas/ItemResponse"
 components:
   schemas:
     ItemResponse:
@@ -24,7 +24,7 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/Item'
+            $ref: "#/components/schemas/Item"
     Item:
       type: object
       required:
@@ -34,7 +34,7 @@ components:
         id:
           type: integer
         details:
-          $ref: '#/components/schemas/ItemDetails'
+          $ref: "#/components/schemas/ItemDetails"
     ItemDetails:
       type: object
       properties:

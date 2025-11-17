@@ -12,9 +12,9 @@ paths:
           in: query
           required: true
           schema:
-            $ref: '#/components/schemas/SearchFilter'
+            $ref: "#/components/schemas/SearchFilter"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:

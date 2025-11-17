@@ -12,14 +12,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateItemRequest'
+              $ref: "#/components/schemas/CreateItemRequest"
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                $ref: "#/components/schemas/Item"
 components:
   schemas:
     CreateItemRequest:
@@ -31,7 +31,7 @@ components:
         name:
           type: string
         metadata:
-          $ref: '#/components/schemas/ItemMetadata'
+          $ref: "#/components/schemas/ItemMetadata"
     ItemMetadata:
       type: object
       description: This schema is transitively referenced and should be kept

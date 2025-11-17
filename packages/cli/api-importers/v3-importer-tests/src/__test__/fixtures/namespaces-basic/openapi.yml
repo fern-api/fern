@@ -8,14 +8,14 @@ paths:
       operationId: listPets
       summary: List all pets
       responses:
-        '200':
+        "200":
           description: A list of pets
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Pet'
+                  $ref: "#/components/schemas/Pet"
     post:
       operationId: createPet
       summary: Create a pet
@@ -24,14 +24,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Pet'
+              $ref: "#/components/schemas/Pet"
       responses:
-        '201':
+        "201":
           description: Pet created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Pet'
+                $ref: "#/components/schemas/Pet"
 components:
   schemas:
     Pet:

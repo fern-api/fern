@@ -12,27 +12,27 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Company'
+              $ref: "#/components/schemas/Company"
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Company'
+                $ref: "#/components/schemas/Company"
   /users:
     get:
       operationId: getUsers
       summary: Get users (should be filtered out)
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
 components:
   schemas:
     Company:

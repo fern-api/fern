@@ -8,14 +8,14 @@ paths:
       operationId: getPosts
       summary: Get posts
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Post'
+                  $ref: "#/components/schemas/Post"
 components:
   schemas:
     Post:

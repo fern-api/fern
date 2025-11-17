@@ -8,14 +8,14 @@ paths:
       operationId: getComments
       summary: Get comments
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Comment'
+                  $ref: "#/components/schemas/Comment"
 components:
   schemas:
     Comment:
