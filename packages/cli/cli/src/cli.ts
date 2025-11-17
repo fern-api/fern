@@ -28,6 +28,7 @@ import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { diff } from "./commands/diff/diff";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
+import { downgrade } from "./commands/downgrade/downgrade";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
 import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
@@ -191,6 +192,7 @@ async function tryRunCli(cliContext: CliContext) {
             cliContext.suppressUpgradeMessage();
         }
     });
+    addDowngradeCommand(cli, cliContext);
     addGenerateJsonschemaCommand(cli, cliContext);
     addWriteDocsDefinitionCommand(cli, cliContext);
     addWriteTranslationCommand(cli, cliContext);
@@ -1029,6 +1031,25 @@ function addUpgradeCommand({
                 fromGit: argv["from-git"]
             });
             onRun();
+        }
+    );
+}
+
+function addDowngradeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "downgrade <version>",
+        `Downgrades Fern CLI version in ${PROJECT_CONFIG_FILENAME}`,
+        (yargs) =>
+            yargs.positional("version", {
+                type: "string",
+                description: "The version to downgrade to",
+                demandOption: true
+            }),
+        async (argv) => {
+            await downgrade({
+                cliContext,
+                targetVersion: argv.version
+            });
         }
     );
 }
