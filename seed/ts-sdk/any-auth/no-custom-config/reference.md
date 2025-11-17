@@ -41,7 +41,7 @@ await client.auth.getToken({
 <dl>
 <dd>
 
-**requestOptions:** `Auth.RequestOptions` 
+**requestOptions:** `AuthClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -83,7 +83,7 @@ await client.user.get();
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions` 
+**requestOptions:** `UserClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -124,7 +124,7 @@ await client.user.getAdmins();
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions` 
+**requestOptions:** `UserClient.RequestOptions` 
     
 </dd>
 </dl>

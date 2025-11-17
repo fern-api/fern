@@ -53,7 +53,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `Users.RequestOptions` 
+**requestOptions:** `UsersClient.RequestOptions` 
     
 </dd>
 </dl>

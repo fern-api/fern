@@ -53,7 +53,7 @@ await client.organization.create({
 <dl>
 <dd>
 
-**requestOptions:** `Organization.RequestOptions` 
+**requestOptions:** `OrganizationClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -119,7 +119,7 @@ await client.user.list({
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions` 
+**requestOptions:** `UserClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -185,7 +185,7 @@ await client.user.events.listEvents({
 <dl>
 <dd>
 
-**requestOptions:** `Events.RequestOptions` 
+**requestOptions:** `EventsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -251,7 +251,7 @@ await client.user.events.metadata.getMetadata({
 <dl>
 <dd>
 
-**requestOptions:** `Metadata.RequestOptions` 
+**requestOptions:** `MetadataClient.RequestOptions` 
     
 </dd>
 </dl>

@@ -43,19 +43,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Params = void 0;
+exports.ParamsClient = void 0;
+const BaseClient_js_1 = require("../../../../../../BaseClient.js");
 const headers_js_1 = require("../../../../../../core/headers.js");
 const core = __importStar(require("../../../../../../core/index.js"));
 const errors = __importStar(require("../../../../../../errors/index.js"));
-class Params {
-    constructor(_options) {
-        this._options = _options;
+class ParamsClient {
+    constructor(options) {
+        this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
     }
     /**
      * GET with path param
      *
      * @param {string} param
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.getWithPath("param")
@@ -109,7 +110,7 @@ class Params {
      * GET with path param
      *
      * @param {SeedExhaustive.endpoints.GetWithInlinePath} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.getWithInlinePath({
@@ -166,7 +167,7 @@ class Params {
      * GET with query param
      *
      * @param {SeedExhaustive.endpoints.GetWithQuery} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.getWithQuery({
@@ -227,7 +228,7 @@ class Params {
      * GET with multiple of same query param
      *
      * @param {SeedExhaustive.endpoints.GetWithMultipleQuery} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.getWithAllowMultipleQuery({
@@ -299,7 +300,7 @@ class Params {
      *
      * @param {string} param
      * @param {SeedExhaustive.endpoints.GetWithPathAndQuery} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.getWithPathAndQuery("param", {
@@ -358,7 +359,7 @@ class Params {
      * GET with path and query params
      *
      * @param {SeedExhaustive.endpoints.GetWithInlinePathAndQuery} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.getWithInlinePathAndQuery({
@@ -419,7 +420,7 @@ class Params {
      *
      * @param {string} param
      * @param {string} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.modifyWithPath("param", "string")
@@ -476,7 +477,7 @@ class Params {
      * PUT to update with path param
      *
      * @param {SeedExhaustive.endpoints.ModifyResourceAtInlinedPath} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.modifyWithInlinePath({
@@ -543,4 +544,4 @@ class Params {
         });
     }
 }
-exports.Params = Params;
+exports.ParamsClient = ParamsClient;

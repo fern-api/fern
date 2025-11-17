@@ -1,18 +1,18 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import * as core from "../../../../../../core/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
-export declare namespace ContentType {
+export declare namespace ContentTypeClient {
     interface Options extends BaseClientOptions {
     }
     interface RequestOptions extends BaseRequestOptions {
     }
 }
-export declare class ContentType {
-    protected readonly _options: ContentType.Options;
-    constructor(_options: ContentType.Options);
+export declare class ContentTypeClient {
+    protected readonly _options: ContentTypeClient.Options;
+    constructor(options: ContentTypeClient.Options);
     /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
-     * @param {ContentType.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.contentType.postJsonPatchContentType({
@@ -33,11 +33,11 @@ export declare class ContentType {
      *         bigint: "1000000"
      *     })
      */
-    postJsonPatchContentType(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ContentType.RequestOptions): core.HttpResponsePromise<void>;
+    postJsonPatchContentType(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ContentTypeClient.RequestOptions): core.HttpResponsePromise<void>;
     private __postJsonPatchContentType;
     /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
-     * @param {ContentType.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
@@ -58,7 +58,7 @@ export declare class ContentType {
      *         bigint: "1000000"
      *     })
      */
-    postJsonPatchContentWithCharsetType(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ContentType.RequestOptions): core.HttpResponsePromise<void>;
+    postJsonPatchContentWithCharsetType(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ContentTypeClient.RequestOptions): core.HttpResponsePromise<void>;
     private __postJsonPatchContentWithCharsetType;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }

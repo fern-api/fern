@@ -29,7 +29,7 @@ await client.retries.getUsers();
 <dl>
 <dd>
 
-**requestOptions:** `Retries.RequestOptions` 
+**requestOptions:** `RetriesClient.RequestOptions` 
     
 </dd>
 </dl>
