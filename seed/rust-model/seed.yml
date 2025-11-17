@@ -53,8 +53,7 @@ fixtures:
 allowedFailures:
   - circular-references
   - circular-references-advanced
-  - examples:no-custom-config
-  - examples:readme-config
+  - examples
   - objects-with-imports
   - pagination
   - trace
