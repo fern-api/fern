@@ -244,7 +244,7 @@ func do() {
 			),
 		),
 		Date: acme.Time(
-			acme.MustParseDateTime(
+			acme.MustParseDate(
 				"2023-01-15",
 			),
 		),
@@ -1091,7 +1091,7 @@ func do() {
 			),
 		),
 		Date: acme.Time(
-			acme.MustParseDateTime(
+			acme.MustParseDate(
 				"2023-01-15",
 			),
 		),
@@ -1938,7 +1938,7 @@ func do() {
 			),
 		),
 		Date: acme.Time(
-			acme.MustParseDateTime(
+			acme.MustParseDate(
 				"2023-01-15",
 			),
 		),
