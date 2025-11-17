@@ -43,6 +43,7 @@ import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJ
 import { mockServer } from "./commands/mock/mockServer";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
+import { selfUpdate } from "./commands/self-update/selfUpdate";
 import { testOutput } from "./commands/test/testOutput";
 import { generateToken } from "./commands/token/token";
 import { updateApiSpec } from "./commands/upgrade/updateApiSpec";
@@ -185,6 +186,7 @@ async function tryRunCli(cliContext: CliContext) {
     addWriteOverridesCommand(cli, cliContext);
     addTestCommand(cli, cliContext);
     addUpdateApiSpecCommand(cli, cliContext);
+    addSelfUpdateCommand(cli, cliContext);
     addUpgradeCommand({
         cli,
         cliContext,
@@ -1074,6 +1076,34 @@ function addUpdateApiSpecCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: true
                 })
+            });
+        }
+    );
+}
+
+function addSelfUpdateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "self-update [version]",
+        "Updates the globally installed Fern CLI to the latest version or the specified version",
+        (yargs) =>
+            yargs
+                .positional("version", {
+                    type: "string",
+                    description: "The version to update to (e.g., 0.85.0, 10). Defaults to latest."
+                })
+                .option("dry-run", {
+                    type: "boolean",
+                    description: "Show what would be executed without actually running the update",
+                    default: false
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern self-update"
+            });
+            await selfUpdate({
+                cliContext,
+                version: argv.version,
+                dryRun: argv.dryRun
             });
         }
     );
