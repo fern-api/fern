@@ -1018,13 +1018,18 @@ function addUpgradeCommand({
                     string: true,
                     description:
                         "The version to migrate from. Use this to manually run migrations when upgrading from an older CLI version."
+                })
+                .option("from-git", {
+                    boolean: true,
+                    hidden: true
                 }),
         async (argv) => {
             await upgrade({
                 cliContext,
                 includePreReleases: argv.rc,
                 targetVersion: argv.to ?? argv.version,
-                fromVersion: argv.from
+                fromVersion: argv.from,
+                fromGit: argv["from-git"]
             });
             onRun();
         }

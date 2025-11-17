@@ -1,5 +1,6 @@
 import { runMigrations } from "@fern-api/cli-migrations";
 import { getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
+import { loggingExeca } from "@fern-api/logging-execa";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { writeFile } from "fs/promises";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -12,6 +13,7 @@ vi.mock("@fern-api/cli-migrations");
 vi.mock("@fern-api/configuration-loader");
 vi.mock("@fern-api/semver-utils");
 vi.mock("fs/promises");
+vi.mock("@fern-api/logging-execa");
 vi.mock("../../../rerunFernCliAtVersion");
 
 describe("upgrade", () => {
@@ -20,6 +22,7 @@ describe("upgrade", () => {
         info: ReturnType<typeof vi.fn>;
         error: ReturnType<typeof vi.fn>;
         warn: ReturnType<typeof vi.fn>;
+        debug: ReturnType<typeof vi.fn>;
     };
     let mockRunTask: ReturnType<typeof vi.fn>;
 
@@ -30,7 +33,8 @@ describe("upgrade", () => {
         mockLogger = {
             info: vi.fn(),
             error: vi.fn(),
-            warn: vi.fn()
+            warn: vi.fn(),
+            debug: vi.fn()
         };
 
         mockRunTask = vi.fn(async (fn: (context: unknown) => Promise<unknown>) => {
@@ -364,6 +368,300 @@ describe("upgrade", () => {
                     fromVersion: undefined
                 })
             ).rejects.toThrow('Directory "fern" not found');
+        });
+    });
+
+    describe("faulty upgrade detection", () => {
+        beforeEach(() => {
+            mockCliContext.environment.packageVersion = "1.2.0";
+        });
+
+        it("should detect faulty upgrade when FERN_PRE_UPGRADE_VERSION equals current CLI version", async () => {
+            process.env[PREVIOUS_VERSION_ENV_VAR] = "1.2.0"; // Same as current version - indicates faulty upgrade
+
+            vi.mocked(loggingExeca).mockResolvedValue({ stdout: '{"version":"0.84.1"}', stderr: "" } as any);
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined
+            });
+
+            expect(mockLogger.debug).toHaveBeenCalledWith(
+                expect.stringContaining("Detected faulty upgrade (FERN_PRE_UPGRADE_VERSION=1.2.0)")
+            );
+            expect(mockLogger.debug).toHaveBeenCalledWith(expect.stringContaining("0.84.1"));
+            expect(runMigrations).toHaveBeenCalledWith({
+                fromVersion: "0.84.1",
+                toVersion: "1.2.0",
+                context: {}
+            });
+        });
+
+        it("should use git fallback when FERN_PRE_UPGRADE_VERSION equals current version", async () => {
+            process.env[PREVIOUS_VERSION_ENV_VAR] = "1.2.0";
+
+            vi.mocked(loggingExeca).mockResolvedValue({ stdout: '{"version":"0.80.0"}', stderr: "" } as any);
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined
+            });
+
+            expect(runMigrations).toHaveBeenCalledWith({
+                fromVersion: "0.80.0",
+                toVersion: "1.2.0",
+                context: {}
+            });
+        });
+
+        it("should fallback to config version when git retrieval fails and warn user", async () => {
+            process.env[PREVIOUS_VERSION_ENV_VAR] = "1.2.0"; // Faulty upgrade detected
+
+            vi.mocked(loggingExeca).mockRejectedValue(new Error("Not a git repository"));
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined
+            });
+
+            expect(mockLogger.warn).toHaveBeenCalledWith(
+                expect.stringContaining(
+                    "Detected potential faulty upgrade but could not retrieve version from git history"
+                )
+            );
+            expect(runMigrations).toHaveBeenCalledWith({
+                fromVersion: "1.0.0", // Falls back to projectConfig.version
+                toVersion: "1.2.0",
+                context: {}
+            });
+        });
+
+        it("should retrieve version from git for any fern.config.json location", async () => {
+            process.env[PREVIOUS_VERSION_ENV_VAR] = "1.2.0";
+
+            let callCount = 0;
+            vi.mocked(loggingExeca).mockImplementation(async () => {
+                callCount++;
+                if (callCount === 1) {
+                    // First call: get git root
+                    return { stdout: "/project/root\n", stderr: "" } as any;
+                } else if (callCount === 2) {
+                    // Second call: find fern.config.json relative path
+                    return { stdout: "custom/path/fern.config.json\n", stderr: "" } as any;
+                } else if (callCount === 3) {
+                    // Third call: retrieve the file content
+                    return { stdout: '{"version":"0.75.0"}', stderr: "" } as any;
+                }
+                throw new Error("Unexpected call");
+            });
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined
+            });
+
+            expect(runMigrations).toHaveBeenCalledWith({
+                fromVersion: "0.75.0",
+                toVersion: "1.2.0",
+                context: {}
+            });
+        });
+
+        it("should not trigger git fallback when FERN_PRE_UPGRADE_VERSION is different from current version", async () => {
+            process.env[PREVIOUS_VERSION_ENV_VAR] = "1.0.0"; // Different from current version (1.2.0)
+
+            vi.mocked(loggingExeca).mockImplementation(async () => {
+                throw new Error("Git should not be called");
+            });
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined
+            });
+
+            expect(mockLogger.debug).not.toHaveBeenCalledWith(expect.stringContaining("Detected faulty upgrade"));
+            expect(runMigrations).toHaveBeenCalledWith({
+                fromVersion: "1.0.0",
+                toVersion: "1.2.0",
+                context: {}
+            });
+        });
+
+        it("should use explicit --from flag even when faulty upgrade detected", async () => {
+            process.env[PREVIOUS_VERSION_ENV_VAR] = "1.2.0"; // Faulty upgrade
+
+            vi.mocked(loggingExeca).mockImplementation(async () => {
+                throw new Error("Git should not be called when --from is explicit");
+            });
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: "0.90.0" // Explicit --from flag
+            });
+
+            expect(mockLogger.debug).not.toHaveBeenCalledWith(expect.stringContaining("Detected faulty upgrade"));
+            expect(runMigrations).toHaveBeenCalledWith({
+                fromVersion: "0.90.0",
+                toVersion: "1.2.0",
+                context: {}
+            });
+        });
+
+        it("should not trigger git fallback for local dev (0.0.0)", async () => {
+            mockCliContext.environment.packageVersion = "0.0.0"; // Local dev
+            process.env[PREVIOUS_VERSION_ENV_VAR] = "0.0.0";
+
+            vi.mocked(loggingExeca).mockImplementation(async () => {
+                throw new Error("Git should not be called for local dev");
+            });
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined
+            });
+
+            expect(mockLogger.debug).not.toHaveBeenCalledWith(expect.stringContaining("Detected faulty upgrade"));
+            expect(runMigrations).toHaveBeenCalledWith({
+                fromVersion: "1.0.0", // Uses projectConfig.version
+                toVersion: "1.2.0",
+                context: {}
+            });
+        });
+
+        it("should apply faulty upgrade detection when rerunning at different version", async () => {
+            mockCliContext.environment.packageVersion = "1.0.0"; // Different from target
+            process.env[PREVIOUS_VERSION_ENV_VAR] = "1.0.0"; // Faulty upgrade detected
+            vi.mocked(isVersionAhead).mockReturnValue(true);
+
+            vi.mocked(loggingExeca).mockResolvedValue({ stdout: '{"version":"0.85.0"}', stderr: "" } as any);
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined
+            });
+
+            expect(rerunFernCliAtVersion).toHaveBeenCalledWith({
+                version: "1.2.0",
+                cliContext: mockCliContext,
+                env: {
+                    [PREVIOUS_VERSION_ENV_VAR]: "0.85.0"
+                },
+                args: ["upgrade", "--from", "0.85.0", "--to", "1.2.0"],
+                context: "upgrade"
+            });
+        });
+    });
+
+    describe("--from-git flag", () => {
+        beforeEach(() => {
+            mockCliContext.environment.packageVersion = "0.0.0"; // Local dev
+        });
+
+        it("should retrieve version from git when --from-git flag is set", async () => {
+            vi.mocked(loggingExeca).mockResolvedValue({ stdout: '{"version":"0.85.0"}', stderr: "" } as any);
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined,
+                fromGit: true
+            });
+
+            expect(runMigrations).toHaveBeenCalledWith({
+                fromVersion: "0.85.0",
+                toVersion: "1.2.0",
+                context: {}
+            });
+        });
+
+        it("should not log faulty upgrade message when using --from-git", async () => {
+            vi.mocked(loggingExeca).mockResolvedValue({ stdout: '{"version":"0.85.0"}', stderr: "" } as any);
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined,
+                fromGit: true
+            });
+
+            expect(mockLogger.debug).not.toHaveBeenCalledWith(expect.stringContaining("Detected faulty upgrade"));
+            expect(mockLogger.warn).not.toHaveBeenCalled();
+        });
+
+        it("should ignore env var when --from-git is set", async () => {
+            process.env[PREVIOUS_VERSION_ENV_VAR] = "0.90.0"; // This should be ignored
+            vi.mocked(loggingExeca).mockResolvedValue({ stdout: '{"version":"0.85.0"}', stderr: "" } as any);
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined,
+                fromGit: true
+            });
+
+            expect(runMigrations).toHaveBeenCalledWith({
+                fromVersion: "0.85.0", // From git, not from env var
+                toVersion: "1.2.0",
+                context: {}
+            });
+        });
+
+        it("should fall back to projectConfig.version when git fails with --from-git", async () => {
+            vi.mocked(loggingExeca).mockRejectedValue(new Error("Not a git repository"));
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined,
+                fromGit: true
+            });
+
+            expect(mockLogger.warn).not.toHaveBeenCalled();
+            expect(runMigrations).toHaveBeenCalledWith({
+                fromVersion: "1.0.0", // Falls back to projectConfig.version
+                toVersion: "1.2.0",
+                context: {}
+            });
+        });
+
+        it("should respect explicit --from flag even when --from-git is set", async () => {
+            vi.mocked(loggingExeca).mockImplementation(async () => {
+                throw new Error("Git should not be called when --from is explicit");
+            });
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: "0.80.0", // Explicit --from flag
+                fromGit: true
+            });
+
+            expect(runMigrations).toHaveBeenCalledWith({
+                fromVersion: "0.80.0", // Uses explicit --from, not git
+                toVersion: "1.2.0",
+                context: {}
+            });
         });
     });
 });
