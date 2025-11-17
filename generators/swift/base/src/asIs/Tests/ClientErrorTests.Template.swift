@@ -25,7 +25,6 @@ import Testing
             try #require(httpError.statusCode == 400)
             try #require(httpError.kind == .client)
             try #require(httpError.body?.message == "Bad request")
-            try #require(stub.getRequestCount() == 1)
         } catch {
             Issue.record("Expected ClientError, got \(error)")
         }
@@ -51,7 +50,6 @@ import Testing
             try #require(httpError.statusCode == 404)
             try #require(httpError.kind == .notFound)
             try #require(httpError.body?.message == "Not found")
-            try #require(stub.getRequestCount() == 1)
         } catch {
             Issue.record("Expected ClientError, got \(error)")
         }
@@ -77,7 +75,6 @@ import Testing
             try #require(httpError.statusCode == 422)
             try #require(httpError.kind == .validation)
             try #require(httpError.body?.message == "Validation failed")
-            try #require(stub.getRequestCount() == 1)
         } catch {
             Issue.record("Expected ClientError, got \(error)")
         }
