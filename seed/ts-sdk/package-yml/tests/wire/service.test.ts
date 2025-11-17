@@ -3,7 +3,7 @@
 import { SeedPackageYmlClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Service", () => {
+describe("ServiceClient", () => {
     test("nop", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedPackageYmlClient({ id: "id-a2ijs82", environment: server.baseUrl });

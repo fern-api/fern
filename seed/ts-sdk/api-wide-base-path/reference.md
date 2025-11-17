@@ -53,7 +53,7 @@ await client.service.post("serviceParam", "resourceParam", 1);
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>

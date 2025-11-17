@@ -71,7 +71,7 @@ await client.a.b.foo();
 <dl>
 <dd>
 
-**requestOptions:** `B.RequestOptions` 
+**requestOptions:** `BClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -113,7 +113,7 @@ await client.a.c.foo();
 <dl>
 <dd>
 
-**requestOptions:** `C.RequestOptions` 
+**requestOptions:** `CClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -155,7 +155,7 @@ await client.folder.foo();
 <dl>
 <dd>
 
-**requestOptions:** `Folder.RequestOptions` 
+**requestOptions:** `FolderClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -197,7 +197,7 @@ await client.folder.service.endpoint();
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -248,7 +248,7 @@ await client.folder.service.unknownRequest({
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>

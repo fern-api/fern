@@ -37,7 +37,7 @@ await client.union.get("string");
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions` 
+**requestOptions:** `UnionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -78,7 +78,7 @@ await client.union.getMetadata();
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions` 
+**requestOptions:** `UnionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -131,7 +131,7 @@ await client.union.updateMetadata({
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions` 
+**requestOptions:** `UnionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -186,7 +186,7 @@ await client.union.call({
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions` 
+**requestOptions:** `UnionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -235,7 +235,7 @@ await client.union.duplicateTypesUnion("string");
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions` 
+**requestOptions:** `UnionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -284,7 +284,7 @@ await client.union.nestedUnions("string");
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions` 
+**requestOptions:** `UnionClient.RequestOptions` 
     
 </dd>
 </dl>

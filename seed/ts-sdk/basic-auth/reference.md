@@ -43,7 +43,7 @@ await client.basicAuth.getWithBasicAuth();
 <dl>
 <dd>
 
-**requestOptions:** `BasicAuth.RequestOptions` 
+**requestOptions:** `BasicAuthClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -108,7 +108,7 @@ await client.basicAuth.postWithBasicAuth({
 <dl>
 <dd>
 
-**requestOptions:** `BasicAuth.RequestOptions` 
+**requestOptions:** `BasicAuthClient.RequestOptions` 
     
 </dd>
 </dl>

@@ -39,7 +39,7 @@ await client.unknown.post({
 <dl>
 <dd>
 
-**requestOptions:** `Unknown.RequestOptions` 
+**requestOptions:** `UnknownClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -92,7 +92,7 @@ await client.unknown.postObject({
 <dl>
 <dd>
 
-**requestOptions:** `Unknown.RequestOptions` 
+**requestOptions:** `UnknownClient.RequestOptions` 
     
 </dd>
 </dl>

@@ -3,7 +3,7 @@
 import { SeedNurseryApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Package", () => {
+describe("PackageClient", () => {
     test("test", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedNurseryApiClient({ environment: server.baseUrl });

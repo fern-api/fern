@@ -3,7 +3,7 @@
 import { SeedFileUploadClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Service", () => {
+describe("ServiceClient", () => {
     test("simple", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedFileUploadClient({ environment: server.baseUrl });
