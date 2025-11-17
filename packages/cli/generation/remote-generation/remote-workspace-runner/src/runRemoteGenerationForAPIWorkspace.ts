@@ -2,7 +2,7 @@ import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
-import { APIV1Write } from "@fern-api/fdr-sdk";
+import { APIV1Write, FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { TaskContext } from "@fern-api/task-context";
@@ -161,7 +161,12 @@ async function uploadDynamicIRsForSdkGeneration({
         return;
     }
 
-    const settings = getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorGroup.generators[0]);
+    const firstGenerator = generatorGroup.generators[0];
+    if (!firstGenerator) {
+        return;
+    }
+
+    const settings = getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(firstGenerator);
     const fernWorkspace = await workspace.toFernWorkspace({ context }, settings);
 
     const dynamicIRs = await generateDynamicIRsForSdkGenerators({
@@ -182,18 +187,22 @@ async function uploadDynamicIRsForSdkGeneration({
 
     try {
         const response = await fdr.api.v1.register.getDynamicIrUploadUrls({
-            orgId: organization,
+            orgId: CjsFdrSdk.OrgId(organization),
             snippetName,
             version: sdkVersion,
             languages: Object.keys(dynamicIRs)
         });
 
-        await uploadDynamicIRs({
-            dynamicIRs,
-            dynamicIRUploadUrls: response.uploadUrls,
-            context,
-            snippetName
-        });
+        if (response.ok) {
+            await uploadDynamicIRs({
+                dynamicIRs,
+                dynamicIRUploadUrls: response.body.uploadUrls,
+                context,
+                snippetName
+            });
+        } else {
+            context.logger.warn(`Failed to get dynamic IR upload URLs: ${response.error}`);
+        }
     } catch (error) {
         context.logger.warn(`Failed to upload dynamic IRs for SDK generation: ${error}`);
     }
