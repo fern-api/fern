@@ -227,10 +227,10 @@ export async function downloadBundle({
         const absolutePathToBundleFolder = getPathToBundleFolder({ app });
         await mkdir(absolutePathToBundleFolder, { recursive: true });
         logger.debug(`Decompressing bundle from ${outputZipPath} to ${absolutePathToBundleFolder}`);
-        
+
         let unzipProgressBar: cliProgress.SingleBar | undefined;
         let extractedFiles = 0;
-        
+
         if (app) {
             unzipProgressBar = new cliProgress.SingleBar({
                 format: "[docs]: Unzipping docs bundle [{bar}] {value} files extracted",
@@ -240,7 +240,7 @@ export async function downloadBundle({
             });
             unzipProgressBar.start(100, 0);
         }
-        
+
         await decompress(outputZipPath, absolutePathToBundleFolder, {
             // skip extraction of symlinks on windows
             filter: (file) => {
@@ -252,7 +252,7 @@ export async function downloadBundle({
                 return !(PLATFORM_IS_WINDOWS && file.type === "symlink");
             }
         });
-        
+
         if (unzipProgressBar) {
             unzipProgressBar.update(100, { value: extractedFiles });
             unzipProgressBar.stop();
