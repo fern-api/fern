@@ -242,7 +242,7 @@ export async function downloadBundle({
             });
             unzipProgressBar.start(100, 0);
 
-            const UNZIP_DURATION_MS = 15000;
+            const UNZIP_DURATION_MS = 30000;
             const startTime = Date.now();
             unzipInterval = setInterval(() => {
                 const elapsed = Date.now() - startTime;
