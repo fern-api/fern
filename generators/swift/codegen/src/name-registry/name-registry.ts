@@ -463,18 +463,6 @@ export class NameRegistry {
         return variants;
     }
 
-    public registerRetryTestSuiteSymbol() {
-        const rootClientSymbol = this.getRootClientSymbolOrThrow();
-        const symbolName = this.testModuleNamespace.registerRetryTestSuiteSymbol(rootClientSymbol.name);
-        return this.symbolRegistry.registerTestModuleType(symbolName, { type: "struct" });
-    }
-
-    public getRetryTestSuiteSymbolOrThrow(): swift.Symbol {
-        const symbolName = this.testModuleNamespace.getRetryTestSuiteNameOrThrow();
-        const symbolId = this.symbolRegistry.inferSymbolIdForTestModuleType(symbolName);
-        return this.symbolRegistry.getSymbolByIdOrThrow(symbolId);
-    }
-
     public registerWireTestSuiteSymbol(subclientName: string) {
         const symbolName = this.testModuleNamespace.registerWireTestSuiteSymbol(subclientName);
         return this.symbolRegistry.registerTestModuleType(symbolName, { type: "struct" });
