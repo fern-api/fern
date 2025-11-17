@@ -91,6 +91,52 @@ export async function upgrade({
             }
         }
 
+        // If user manually specified --from and --to, ensure we're running at the target version
+        if (
+            fromVersionTrimmed &&
+            targetVersionTrimmed &&
+            cliContext.environment.packageVersion !== targetVersionForMigration
+        ) {
+            const versionExists = await doesVersionOfCliExist({
+                cliEnvironment: cliContext.environment,
+                version: targetVersionForMigration
+            });
+            if (!versionExists) {
+                return cliContext.failAndThrow(
+                    `Failed to upgrade to ${targetVersionForMigration} because it does not exist. See https://www.npmjs.com/package/${cliContext.environment.packageName}?activeTab=versions.`
+                );
+            }
+
+            const versionAhead = isVersionAhead(targetVersionForMigration, cliContext.environment.packageVersion);
+            if (!versionAhead) {
+                return cliContext.failAndThrow(
+                    `Cannot upgrade because target version (${targetVersionForMigration}) is not ahead of existing version ${cliContext.environment.packageVersion}`
+                );
+            }
+
+            cliContext.logger.info(
+                `Upgrading from ${chalk.dim(cliContext.environment.packageVersion)} → ${chalk.green(targetVersionForMigration)}`
+            );
+
+            await loggingExeca(cliContext.logger, "npm", [
+                "install",
+                "-g",
+                `${cliContext.environment.packageName}@${targetVersionForMigration}`
+            ]);
+
+            // Re-run at target version
+            await rerunFernCliAtVersion({
+                version: targetVersionForMigration,
+                cliContext,
+                env: {
+                    [PREVIOUS_VERSION_ENV_VAR]: resolvedFrom
+                },
+                args: ["upgrade", "--from", resolvedFrom, "--to", targetVersionForMigration]
+            });
+
+            return;
+        }
+
         cliContext.logger.info(
             `Running migrations from ${chalk.dim(resolvedFrom)} → ${chalk.green(targetVersionForMigration)}`
         );
