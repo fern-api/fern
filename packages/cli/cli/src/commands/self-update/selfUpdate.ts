@@ -160,6 +160,16 @@ async function detectInstallationMethod(logger: Logger): Promise<InstallationMet
         };
     }
 
+    // Log diagnostic information about why detection failed
+    logger.debug("Installation method detection failed:");
+    logger.debug(`  - Not installed via Homebrew (no Cellar/Homebrew path)`);
+    logger.debug(`  - Package manager bin directories checked: pnpm, yarn, bun, npm (none matched)`);
+    logger.debug(
+        `  - Path patterns checked: .pnpm, pnpm-global, /pnpm/, .yarn, /yarn/, .bun, /bun/, /lib/node_modules/`
+    );
+    logger.debug(`  - Resolved path: ${resolvedPath}`);
+    logger.debug(`  - Directory: ${fernDir}`);
+
     return {
         type: "unknown",
         command: "",
@@ -181,9 +191,7 @@ function getUpdateCommand(method: InstallationMethod, version: string | undefine
         case "bun":
             return ["bun", "install", "-g", packageSpec];
         case "brew":
-            if (version != null) {
-                return ["brew", "upgrade", "fern-api"];
-            }
+            // Homebrew doesn't support versioned upgrades, always upgrade to latest
             return ["brew", "upgrade", "fern-api"];
         default:
             return [];
@@ -214,7 +222,8 @@ export async function selfUpdate({
                 errorMessage += `\nResolved to: ${installationMethod.resolvedPath}`;
             }
         }
-        errorMessage += "\nPlease manually update using your package manager (npm, pnpm, yarn, bun, or brew).";
+        errorMessage += "\n\nPlease manually update using your package manager (npm, pnpm, yarn, bun, or brew).";
+        errorMessage += "\nFor more diagnostic information, run with: FERN_LOG_LEVEL=debug fern self-update";
         return cliContext.failAndThrow(errorMessage);
     }
 
@@ -234,6 +243,14 @@ export async function selfUpdate({
     if (updateCommand.length === 0) {
         return cliContext.failAndThrow(
             `Unable to construct update command for installation method: ${installationMethod.type}`
+        );
+    }
+
+    if (installationMethod.type === "brew" && version != null) {
+        cliContext.logger.warn(
+            chalk.yellow(
+                `Warning: Homebrew does not support versioned upgrades. Upgrading to the latest version instead.`
+            )
         );
     }
 
