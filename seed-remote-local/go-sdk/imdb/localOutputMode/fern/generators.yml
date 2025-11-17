@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+groups:
+  remote:
+    generators:
+      - name: fernapi/fern-go-sdk
+        config:
+          module:
+            path: github.com/fern-api/test-remote-local-sdk
+        version: 1.15.1
+        output:
+          location: local-file-system
+          path: ../sdks/remoteGeneration
+  local:
+    generators:
+      - name: fernapi/fern-go-sdk
+        config:
+          module:
+            path: github.com/fern-api/test-remote-local-sdk
+        version: 1.15.1
+        output:
+          location: local-file-system
+          path: ../sdks/localGeneration
