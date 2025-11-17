@@ -192,10 +192,12 @@ function getUpdateCommand(method: InstallationMethod, version: string | undefine
 
 export async function selfUpdate({
     cliContext,
-    version
+    version,
+    dryRun
 }: {
     cliContext: CliContext;
     version: string | undefined;
+    dryRun?: boolean;
 }): Promise<void> {
     cliContext.logger.info("Detecting installation method...");
 
@@ -236,6 +238,13 @@ export async function selfUpdate({
     }
 
     const commandString = updateCommand.join(" ");
+
+    if (dryRun === true) {
+        cliContext.logger.info(chalk.yellow("Dry run mode - no changes will be made"));
+        cliContext.logger.info(`Would run: ${chalk.cyan(commandString)}`);
+        return;
+    }
+
     cliContext.logger.info(`Running: ${chalk.dim(commandString)}`);
 
     const [command, ...args] = updateCommand;
