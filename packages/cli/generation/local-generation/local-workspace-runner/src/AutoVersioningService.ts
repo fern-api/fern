@@ -70,7 +70,9 @@ export class AutoVersioningService {
             if (line.startsWith("+") && !line.startsWith("+++") && line.includes(mappedMagicVersion)) {
                 magicVersionOccurrences++;
                 const sanitizedPlusLine = line.replace(mappedMagicVersion, "<MAGIC>");
-                this.logger.debug(`Found magic version in added line (file: ${currentFile}): ${sanitizedPlusLine}`);
+                this.logger.debug(
+                    `Found placeholder version in added line (file: ${currentFile}): ${sanitizedPlusLine}`
+                );
 
                 const matchingMinusLine = this.findMatchingMinusLine(lines, i, mappedMagicVersion);
 
@@ -89,14 +91,14 @@ export class AutoVersioningService {
 
         if (magicVersionOccurrences > 0) {
             throw new AutoVersioningException(
-                `Found magic version in the diff but no matching previous version lines were found in any hunk. ` +
+                `Found placeholder version in the diff but no matching previous version lines were found in any hunk. ` +
                     `This may indicate new files or a format change. occurrences=${magicVersionOccurrences}, pairsFound=0`
             );
         }
 
         throw new AutoVersioningException(
             "Failed to extract version from diff. This may indicate the version file format is not supported for" +
-                " auto-versioning, or the magic version was not found in any added lines."
+                " auto-versioning, or the placeholder version was not found in any added lines."
         );
     }
 
@@ -397,7 +399,7 @@ export class AutoVersioningService {
         mappedMagicVersion: string,
         finalVersion: string
     ): Promise<void> {
-        this.logger.debug(`Replacing magic version ${mappedMagicVersion} with final version: ${finalVersion}`);
+        this.logger.debug(`Replacing placeholder version ${mappedMagicVersion} with final version: ${finalVersion}`);
 
         const sedCommand = `s/${this.escapeForSed(mappedMagicVersion)}/${this.escapeForSed(finalVersion)}/g`;
         const osName = os.platform().toLowerCase();
@@ -415,7 +417,7 @@ export class AutoVersioningService {
             doNotPipeOutput: true
         });
 
-        this.logger.debug("Magic version replaced successfully");
+        this.logger.debug("Placeholder version replaced successfully");
     }
 
     /**

@@ -94,7 +94,7 @@ export class LocalTaskHandler {
                 this.context.logger.info("No semantic changes detected. Skipping GitHub operations.");
                 return { shouldCommit: false, autoVersioningCommitMessage: undefined };
             }
-            // Replace magic version with computed version
+            // Replace placeholder version with computed version
             await autoVersioningService.replaceMagicVersion(
                 this.absolutePathToLocalOutput,
                 this.version,
@@ -144,9 +144,7 @@ export class LocalTaskHandler {
                 const clientRegistry = await this.getClientRegistry();
                 const bamlClient = BamlClient.withOptions({ clientRegistry });
 
-                const analysis = await bamlClient.AnalyzeSdkDiff({
-                    diff: cleanedDiff
-                });
+                const analysis = await bamlClient.AnalyzeSdkDiff(cleanedDiff);
 
                 if (analysis.version_bump === VersionBump.NO_CHANGE) {
                     this.context.logger.info("AI detected no semantic changes");
@@ -163,7 +161,7 @@ export class LocalTaskHandler {
                     commitMessage: analysis.message
                 };
             } catch (aiError) {
-                this.context.logger.info(`AI analysis failed, falling back to PATCH increment: ${aiError}`);
+                this.context.logger.warn(`AI analysis failed, falling back to PATCH increment: ${aiError}`);
                 const newVersion = this.incrementVersion(previousVersion, VersionBump.PATCH);
                 return {
                     version: newVersion,
