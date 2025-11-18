@@ -1226,7 +1226,7 @@ export class SdkGenerator {
             let serviceReference = this.referenceConfigBuilder.addSection({
                 title:
                     service.displayName ??
-                    service.name.fernFilepath.allParts.map((part) => part.pascalCase.unsafeName).join(" ")
+                    service.name.fernFilepath.allParts.map((part) => part.camelCase.unsafeName).join("")
             });
 
             const exportedFilepath = this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId);
