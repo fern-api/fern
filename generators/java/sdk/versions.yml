@@ -6,7 +6,7 @@
         - method(InputStream stream, String filename, MediaType mediaType)
         - method(InputStream stream, String filename, RequestOptions requestOptions)
         - method(InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions)
-        
+
         This enables streaming file uploads without requiring files to be written to disk first. The implementation uses the existing FileStream wrapper class and InputStreamRequestBody for OkHttp integration. Note: Okio automatically closes the stream after upload, but users should still use try-with-resources for proper resource management.
       type: feat
   createdAt: "2025-11-18"
