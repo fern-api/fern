@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add automatic semantic versioning with `--version AUTO` flag. Analyzes git diffs using AI to determine appropriate version bumps (MAJOR/MINOR/PATCH) and generates semantic commit messages. Requires self-hosted GitHub configuration for push capabilities. Includes git clone timeouts to prevent hanging on credential issues.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.9.0
+
+- changelogEntry:
+    - summary: |
         Fix issue where local generation for github output mode wasn't producing README.md files
       type: fix
   irVersion: 61
