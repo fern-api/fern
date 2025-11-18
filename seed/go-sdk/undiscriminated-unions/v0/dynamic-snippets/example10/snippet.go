@@ -16,8 +16,8 @@ func do() {
     request := &fern.PaymentRequest{
         PaymentMethod: &fern.PaymentMethodUnion{
             TokenizeCard: &fern.TokenizeCard{
-                Method: "card",
-                CardNumber: "1234567890123456",
+                Method: "method",
+                CardNumber: "cardNumber",
             },
         },
     }
