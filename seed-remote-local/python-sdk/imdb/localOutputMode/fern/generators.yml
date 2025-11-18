@@ -3,14 +3,14 @@ groups:
   remote:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 4.36.2
+        version: 4.37.0
         output:
           location: local-file-system
           path: ../sdks/remoteGeneration
   local:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 4.36.2
+        version: 4.37.0
         output:
           location: local-file-system
           path: ../sdks/localGeneration
