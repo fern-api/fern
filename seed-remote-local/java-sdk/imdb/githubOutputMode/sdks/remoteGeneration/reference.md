@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>client.imdb.<a href="src/fern/imdb/client.py">create_movie</a>(...)</code></summary>
+<details><summary><code>client.imdb.createMovie(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -26,18 +26,14 @@ Add a movie to the database using the movies/* /... path.
 <dl>
 <dd>
 
-```python
-from fern import FernApi
-
-client = FernApi(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.imdb.create_movie(
-    title="title",
-    rating=1.1,
-)
-
+```java
+client.imdb().createMovie(
+    CreateMovieRequest
+        .builder()
+        .title("title")
+        .rating(1.1)
+        .build()
+);
 ```
 </dd>
 </dl>
@@ -52,23 +48,7 @@ client.imdb.create_movie(
 <dl>
 <dd>
 
-**title:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**rating:** `float` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+**request:** `CreateMovieRequest` 
     
 </dd>
 </dl>
@@ -80,7 +60,7 @@ client.imdb.create_movie(
 </dl>
 </details>
 
-<details><summary><code>client.imdb.<a href="src/fern/imdb/client.py">get_movie</a>(...)</code></summary>
+<details><summary><code>client.imdb.getMovie(movieId) -> Movie</code></summary>
 <dl>
 <dd>
 
@@ -92,17 +72,8 @@ client.imdb.create_movie(
 <dl>
 <dd>
 
-```python
-from fern import FernApi
-
-client = FernApi(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.imdb.get_movie(
-    movie_id="movieId",
-)
-
+```java
+client.imdb().getMovie("movieId");
 ```
 </dd>
 </dl>
@@ -117,15 +88,7 @@ client.imdb.get_movie(
 <dl>
 <dd>
 
-**movie_id:** `MovieId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+**movieId:** `String` 
     
 </dd>
 </dl>
@@ -136,4 +99,3 @@ client.imdb.get_movie(
 </dd>
 </dl>
 </details>
-

@@ -1,28 +1,47 @@
-# Fern Python Library
+# Fern Java Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Ffern-api%2Fempty)
-[![pypi](https://img.shields.io/pypi/v/test-remote-local-sdk)](https://pypi.python.org/pypi/test-remote-local-sdk)
+[![Maven Central](https://img.shields.io/maven-central/v/com.fern-api/test-remote-local-sdk)](https://central.sonatype.com/artifact/com.fern-api/test-remote-local-sdk)
 
-The Fern Python library provides convenient access to the Fern APIs from Python.
+The Fern Java library provides convenient access to the Fern APIs from Java.
 
 ## Table of Contents
 
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
-- [Async Client](#async-client)
+- [Base Url](#base-url)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
-  - [Access Raw Response Data](#access-raw-response-data)
+  - [Custom Client](#custom-client)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
-  - [Custom Client](#custom-client)
+  - [Custom Headers](#custom-headers)
+  - [Access Raw Response Data](#access-raw-response-data)
 - [Contributing](#contributing)
 
 ## Installation
 
-```sh
-pip install test-remote-local-sdk
+### Gradle
+
+Add the dependency in your `build.gradle` file:
+
+```groovy
+dependencies {
+  implementation 'com.fern-api:test-remote-local-sdk'
+}
+```
+
+### Maven
+
+Add the dependency in your `pom.xml` file:
+
+```xml
+<dependency>
+  <groupId>com.fern-api</groupId>
+  <artifactId>test-remote-local-sdk</artifactId>
+  <version>7.7.7</version>
+</dependency>
 ```
 
 ## Reference
@@ -33,82 +52,83 @@ A full reference for this library is available [here](https://github.com/fern-ap
 
 Instantiate and use the client with the following:
 
-```python
-from fern import FernApi
+```java
+package com.example.usage;
 
-client = FernApi(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.imdb.create_movie(
-    title="title",
-    rating=1.1,
-)
+import com.fern.api.FernApiClient;
+import com.fern.api.resources.imdb.types.CreateMovieRequest;
+
+public class Example {
+    public static void main(String[] args) {
+        FernApiClient client = FernApiClient
+            .builder()
+            .token("<token>")
+            .build();
+
+        client.imdb().createMovie(
+            CreateMovieRequest
+                .builder()
+                .title("title")
+                .rating(1.1)
+                .build()
+        );
+    }
+}
 ```
 
-## Async Client
+## Base Url
 
-The SDK also exports an `async` client so that you can make non-blocking calls to our API. Note that if you are constructing an Async httpx client class to pass into this client, use `httpx.AsyncClient()` instead of `httpx.Client()` (e.g. for the `httpx_client` parameter of this client).
+You can set a custom base URL when constructing the client.
 
-```python
-import asyncio
+```java
+import com.fern.api.FernApiClient;
 
-from fern import AsyncFernApi
-
-client = AsyncFernApi(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-
-async def main() -> None:
-    await client.imdb.create_movie(
-        title="title",
-        rating=1.1,
-    )
-
-
-asyncio.run(main())
+FernApiClient client = FernApiClient
+    .builder()
+    .url("https://example.com")
+    .build();
 ```
 
 ## Exception Handling
 
-When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error
-will be thrown.
+When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
-```python
-from fern.core.api_error import ApiError
+```java
+import com.fern.api.core.FernApiApiException;
 
-try:
-    client.imdb.create_movie(...)
-except ApiError as e:
-    print(e.status_code)
-    print(e.body)
+try{
+    client.imdb().createMovie(...);
+} catch (FernApiApiException e){
+    // Do something with the API exception...
+}
 ```
 
 ## Advanced
 
-### Access Raw Response Data
+### Custom Client
 
-The SDK provides access to raw response data, including headers, through the `.with_raw_response` property.
-The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
+This SDK is built to work with any instance of `OkHttpClient`. By default, if no client is provided, the SDK will construct one.
+However, you can pass your own client like so:
 
-```python
-from fern import FernApi
+```java
+import com.fern.api.FernApiClient;
+import okhttp3.OkHttpClient;
 
-client = FernApi(
-    ...,
-)
-response = client.imdb.with_raw_response.create_movie(...)
-print(response.headers)  # access the response headers
-print(response.data)  # access the underlying object
+OkHttpClient customClient = ...;
+
+FernApiClient client = FernApiClient
+    .builder()
+    .httpClient(customClient)
+    .build();
 ```
 
 ### Retries
 
 The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
 as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
-retry limit (default: 2).
+retry limit (default: 2). Before defaulting to exponential backoff, the SDK will first attempt to respect
+the `Retry-After` header (as either in seconds or as an HTTP date), and then the `X-RateLimit-Reset` header
+(as a Unix timestamp in epoch seconds); failing both of those, it will fall back to exponential backoff.
 
 A request is deemed retryable when any of the following HTTP status codes is returned:
 
@@ -116,51 +136,78 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
 - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
 
-Use the `max_retries` request option to configure this behavior.
+Use the `maxRetries` client option to configure this behavior.
 
-```python
-client.imdb.create_movie(..., request_options={
-    "max_retries": 1
-})
+```java
+import com.fern.api.FernApiClient;
+
+FernApiClient client = FernApiClient
+    .builder()
+    .maxRetries(1)
+    .build();
 ```
 
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
-```python
+```java
+import com.fern.api.FernApiClient;
+import com.fern.api.core.RequestOptions;
 
-from fern import FernApi
+// Client level
+FernApiClient client = FernApiClient
+    .builder()
+    .timeout(10)
+    .build();
 
-client = FernApi(
+// Request level
+client.imdb().createMovie(
     ...,
-    timeout=20.0,
-)
-
-
-# Override timeout for a specific method
-client.imdb.create_movie(..., request_options={
-    "timeout_in_seconds": 1
-})
+    RequestOptions
+        .builder()
+        .timeout(10)
+        .build()
+);
 ```
 
-### Custom Client
+### Custom Headers
 
-You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
-and transports.
+The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
-```python
-import httpx
+```java
+import com.fern.api.FernApiClient;
+import com.fern.api.core.RequestOptions;
 
-from fern import FernApi
+// Client level
+FernApiClient client = FernApiClient
+    .builder()
+    .addHeader("X-Custom-Header", "custom-value")
+    .addHeader("X-Request-Id", "abc-123")
+    .build();
+;
 
-client = FernApi(
+// Request level
+client.imdb().createMovie(
     ...,
-    httpx_client=httpx.Client(
-        proxy="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
+    RequestOptions
+        .builder()
+        .addHeader("X-Request-Header", "request-value")
+        .build()
+);
+```
+
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `withRawResponse()` method.
+The `withRawResponse()` method returns a raw client that wraps all responses with `body()` and `headers()` methods.
+(A normal client's `response` is identical to a raw client's `response.body()`.)
+
+```java
+CreateMovieHttpResponse response = client.imdb().withRawResponse().createMovie(...);
+
+System.out.println(response.body());
+System.out.println(response.headers().get("X-My-Header"));
 ```
 
 ## Contributing
