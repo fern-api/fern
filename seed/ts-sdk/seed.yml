@@ -470,7 +470,8 @@ scripts:
           if grep -q '"test":' package.json; then corepack yarn test; fi
         fi
 allowedFailures:
-  - any-auth
+  - any-auth:no-custom-config
+  - any-auth:generate-endpoint-metadata
   - enum:no-custom-config
   - enum:forward-compatible-enums
   - enum:serde
