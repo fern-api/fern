@@ -110,8 +110,17 @@
                 "type": "Vehicle",
               },
               "id": "string",
-              "type": "literal<"vehicle">",
+              "type": "PropertyType",
             },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "PropertyType": {
+            "enum": [
+              "vehicle",
+            ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -239,10 +248,16 @@
       deductible: optional<integer>
     source:
       openapi: ../openapi.yml
+  PropertyType:
+    enum:
+      - vehicle
+    inline: true
+    source:
+      openapi: ../openapi.yml
   Property:
     properties:
       id: string
-      type: literal<"vehicle">
+      type: PropertyType
       data:
         type: Vehicle
     source:

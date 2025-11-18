@@ -1469,7 +1469,13 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "ProcessingFailureReasonEnum": {
             "docs": "* `EXCEEDED_CHARACTER_LIMIT` - Exceeded Character Limit",
-            "type": "literal<"EXCEEDED_CHARACTER_LIMIT">",
+            "enum": [
+              "EXCEEDED_CHARACTER_LIMIT",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "ProcessingStateEnum": {
             "docs": "* `QUEUED` - Queued
@@ -2158,7 +2164,13 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "SlimDocumentStatusEnum": {
             "docs": "* `ACTIVE` - Active",
-            "type": "literal<"ACTIVE">",
+            "enum": [
+              "ACTIVE",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "SubmitCompletionActualRequest": {
             "docs": undefined,
@@ -3610,8 +3622,11 @@ types:
     source:
       openapi: ../openapi.yml
   ProcessingFailureReasonEnum:
-    type: literal<"EXCEEDED_CHARACTER_LIMIT">
+    enum:
+      - EXCEEDED_CHARACTER_LIMIT
     docs: '* `EXCEEDED_CHARACTER_LIMIT` - Exceeded Character Limit'
+    source:
+      openapi: ../openapi.yml
   ProcessingStateEnum:
     enum:
       - QUEUED
@@ -4045,8 +4060,11 @@ types:
     source:
       openapi: ../openapi.yml
   SlimDocumentStatusEnum:
-    type: literal<"ACTIVE">
+    enum:
+      - ACTIVE
     docs: '* `ACTIVE` - Active'
+    source:
+      openapi: ../openapi.yml
   SubmitCompletionActualRequest:
     properties:
       id:
