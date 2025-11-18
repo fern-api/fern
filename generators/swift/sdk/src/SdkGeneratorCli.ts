@@ -1,7 +1,7 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
-import { assertNever, extractErrorMessage, noop } from "@fern-api/core-utils";
+import { assertNever, entries, extractErrorMessage, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractSwiftGeneratorCli } from "@fern-api/swift-base";
+import { AbstractSwiftGeneratorCli, TestTemplateFiles } from "@fern-api/swift-base";
 import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/swift-dynamic-snippets";
 import {
@@ -563,10 +563,8 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     private async generateTestFiles(context: SdkGeneratorContext): Promise<void> {
-        if (!context.hasTests) {
-            return;
-        }
         await this.generateTestAsIsFiles(context);
+        await this.generateTestTemplateFiles(context);
         if (context.customConfig.enableWireTests) {
             this.generateWireTestSuiteFiles(context);
         }
@@ -576,22 +574,27 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         await Promise.all(
             context.getTestAsIsFiles().map(async (def) => {
                 const rawContents = await def.loadContents();
-                if (def.filenameWithoutExtension.endsWith(".Template")) {
-                    const templateDataGenerator = new TemplateDataGenerator({ context });
-                    const templateData = templateDataGenerator.generateTemplateData(def.filenameWithoutExtension);
-                    if (templateData) {
-                        const contents = this.renderTemplate(rawContents, templateData);
-                        context.project.addTestAsIsFile({
-                            nameCandidateWithoutExtension: def.filenameWithoutExtension.replace(".Template", ""),
-                            directory: def.directory,
-                            contents
-                        });
-                    }
-                } else {
+                context.project.addTestAsIsFile({
+                    nameCandidateWithoutExtension: def.filenameWithoutExtension,
+                    directory: def.directory,
+                    contents: rawContents
+                });
+            })
+        );
+    }
+
+    private async generateTestTemplateFiles(context: SdkGeneratorContext) {
+        const templateDataGenerator = new TemplateDataGenerator({ context });
+        await Promise.all(
+            entries(TestTemplateFiles).map(async ([templateId, template]) => {
+                const rawContents = await template.loadContents();
+                const templateData = templateDataGenerator.generateTemplateData(templateId);
+                if (templateData) {
+                    const contents = this.renderTemplate(rawContents, templateData);
                     context.project.addTestAsIsFile({
-                        nameCandidateWithoutExtension: def.filenameWithoutExtension,
-                        directory: def.directory,
-                        contents: rawContents
+                        nameCandidateWithoutExtension: template.filenameWithoutExtension(templateData),
+                        directory: template.directory,
+                        contents
                     });
                 }
             })

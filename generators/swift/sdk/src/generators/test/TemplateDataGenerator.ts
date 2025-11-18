@@ -1,4 +1,5 @@
-import { assertDefined } from "@fern-api/core-utils";
+import { assertDefined, assertNever } from "@fern-api/core-utils";
+import { TestTemplateFileId } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator, EndpointSnippetGenerator } from "@fern-api/swift-dynamic-snippets";
 import { dynamic, HttpEndpoint } from "@fern-fern/ir-sdk/api";
@@ -34,17 +35,17 @@ export class TemplateDataGenerator {
         return this.context.ir.dynamic;
     }
 
-    public generateTemplateData(templateFileName: string) {
-        if (templateFileName === "ClientErrorTests.Template") {
-            return this.generateTemplateDataForClientErrorTests();
+    public generateTemplateData(templateId: TestTemplateFileId) {
+        switch (templateId) {
+            case "ClientErrorTests":
+                return this.generateTemplateDataForClientErrorTests();
+            case "ClientRetryTests":
+                return this.generateTemplateDataForClientRetryTests();
+            case "HTTPStub":
+                return this.generateTemplateDataForHTTPStub();
+            default:
+                assertNever(templateId);
         }
-        if (templateFileName === "ClientRetryTests.Template") {
-            return this.generateTemplateDataForClientRetryTests();
-        }
-        if (templateFileName === "HTTPStub.Template") {
-            return this.generateTemplateDataForHTTPStub();
-        }
-        throw new Error(`Unknown template file "${templateFileName}"`);
     }
 
     private generateTemplateDataForClientErrorTests() {

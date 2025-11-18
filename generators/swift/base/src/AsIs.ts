@@ -91,25 +91,7 @@ function createSourceAsIsFiles(): SourceAsIsFileDefinitionsById {
     return result;
 }
 
-const TestAsIsFileSpecs = {
-    // Core
-    ClientErrorTests: {
-        relativePathToDir: "Core",
-        filenameWithoutExtension: "ClientErrorTests.Template",
-        symbols: [{ name: "ClientErrorTests", shape: { type: "class" } }]
-    },
-    ClientRetryTests: {
-        relativePathToDir: "Core",
-        filenameWithoutExtension: "ClientRetryTests.Template",
-        symbols: [{ name: "ClientRetryTests", shape: { type: "class" } }]
-    },
-    // Utilities
-    HTTPStub: {
-        relativePathToDir: "Utilities",
-        filenameWithoutExtension: "HTTPStub.Template",
-        symbols: [{ name: "HTTPStub", shape: { type: "class" } }]
-    }
-} satisfies Record<string, swift.AsIsFileSpec<string>>;
+const TestAsIsFileSpecs: Record<string, swift.AsIsFileSpec<string>> = {};
 
 export type TestAsIsFileId = keyof typeof TestAsIsFileSpecs;
 
