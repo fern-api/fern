@@ -23,6 +23,7 @@ import com.fern.ir.model.auth.BearerAuthScheme;
 import com.fern.ir.model.auth.EnvironmentVariable;
 import com.fern.ir.model.auth.HeaderAuthScheme;
 import com.fern.ir.model.auth.InferredAuthScheme;
+import com.fern.ir.model.auth.OAuthAccessTokenRequestProperties;
 import com.fern.ir.model.auth.OAuthClientCredentials;
 import com.fern.ir.model.auth.OAuthConfiguration;
 import com.fern.ir.model.auth.OAuthScheme;
@@ -30,6 +31,9 @@ import com.fern.ir.model.commons.EndpointReference;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.commons.WebSocketChannelId;
+import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.HttpService;
+import com.fern.ir.model.http.RequestProperty;
 import com.fern.ir.model.ir.Subpackage;
 import com.fern.ir.model.types.Literal;
 import com.fern.java.AbstractGeneratorContext;
@@ -39,12 +43,14 @@ import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass;
 import com.fern.java.client.GeneratedRootClient;
 import com.fern.java.client.generators.AbstractClientGeneratorUtils.Result;
+import com.fern.java.client.generators.visitors.RequestPropertyToNameVisitor;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.utils.CasingUtils;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -53,8 +59,10 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeVariableName;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.lang.model.element.Modifier;
@@ -879,6 +887,38 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 createSetter("clientId", clientCredentials.getClientIdEnvVar(), Optional.empty());
                 createSetter("clientSecret", clientCredentials.getClientSecretEnvVar(), Optional.empty());
 
+                // Create setters for custom properties
+                OAuthAccessTokenRequestProperties requestProperties =
+                        clientCredentials.getTokenEndpoint().getRequestProperties();
+                List<String> customPropertyNames = new ArrayList<>();
+                if (requestProperties.getCustomProperties().isPresent()) {
+                    for (RequestProperty customProp :
+                            requestProperties.getCustomProperties().get()) {
+                        String propName = customProp
+                                .getProperty()
+                                .visit(new RequestPropertyToNameVisitor())
+                                .getName()
+                                .getCamelCase()
+                                .getSafeName();
+                        customPropertyNames.add(propName);
+                        createSetter(propName, Optional.empty(), Optional.empty());
+                    }
+                }
+
+                // Also create setters for header properties from the endpoint (like x-api-key)
+                HttpService httpService =
+                        clientGeneratorContext.getIr().getServices().get(tokenEndpointReference.getServiceId());
+                HttpEndpoint httpEndpoint = httpService.getEndpoints().stream()
+                        .filter(it -> it.getId().equals(tokenEndpointReference.getEndpointId()))
+                        .findFirst()
+                        .orElseThrow();
+                for (var header : httpEndpoint.getHeaders()) {
+                    String headerName =
+                            header.getName().getName().getCamelCase().getSafeName();
+                    customPropertyNames.add(headerName);
+                    createSetter(headerName, Optional.empty(), Optional.empty());
+                }
+
                 Subpackage subpackage = clientGeneratorContext
                         .getIr()
                         .getSubpackages()
@@ -907,15 +947,25 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                 .endControlFlow();
                     });
 
+                    configureAuthMethod.addStatement(
+                            "$T authClient = new $T(authClientOptionsBuilder.build())",
+                            authClientClassName,
+                            authClientClassName);
+
+                    // Build OAuthTokenSupplier constructor call with custom properties
+                    CodeBlock.Builder oauthConstructorArgs =
+                            CodeBlock.builder().add("this.clientId, this.clientSecret");
+                    for (String customPropName : customPropertyNames) {
+                        oauthConstructorArgs.add(", this.$L", customPropName);
+                    }
+                    oauthConstructorArgs.add(", authClient");
+
                     configureAuthMethod
                             .addStatement(
-                                    "$T authClient = new $T(authClientOptionsBuilder.build())",
-                                    authClientClassName,
-                                    authClientClassName)
-                            .addStatement(
-                                    "$T oAuthTokenSupplier = new $T(this.clientId, this.clientSecret, authClient)",
+                                    "$T oAuthTokenSupplier = new $T($L)",
                                     oauthTokenSupplierClassName,
-                                    oauthTokenSupplierClassName)
+                                    oauthTokenSupplierClassName,
+                                    oauthConstructorArgs.build())
                             .addStatement("builder.addHeader($S, oAuthTokenSupplier)", "Authorization")
                             .endControlFlow();
                 }
