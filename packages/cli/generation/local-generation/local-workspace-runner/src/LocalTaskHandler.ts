@@ -145,8 +145,11 @@ export class LocalTaskHandler {
         // Copy all files from generated temp dir
         await this.copyGeneratedFilesToDirectory(tmpOutputResolutionDir);
 
+        await this.runGitCommand(["add", "."], tmpOutputResolutionDir);
+
         // Undo changes to fernignore paths
         await this.runGitCommand(["reset", "--", ...fernIgnorePaths], tmpOutputResolutionDir);
+
         await this.runGitCommand(["restore", "."], tmpOutputResolutionDir);
 
         // remove .git dir before copying files over

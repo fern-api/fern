@@ -1,6 +1,6 @@
 import Foundation
 
-public enum JsonLikeWithNullAndUndefined: Codable, Hashable, Sendable {
+public indirect enum JsonLikeWithNullAndUndefined: Codable, Hashable, Sendable {
     case optionalNullableBool(Nullable<Bool>?)
     case optionalNullableInt(Nullable<Int>?)
     case optionalNullableJsonLikeWithNullAndUndefinedArray([Nullable<JsonLikeWithNullAndUndefined>?])
