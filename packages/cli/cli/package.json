@@ -118,7 +118,7 @@
     "get-port": "^7.1.0",
     "immer": "^10.1.1",
     "is-ci": "^3.0.1",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.1.1",
     "latest-version": "^9.0.0",
     "lodash-es": "^4.17.21",
     "openapi-types": "^12.1.3",

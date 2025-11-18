@@ -52,7 +52,7 @@
     "estree-walker": "^3.0.3",
     "file-type": "^19.0.0",
     "gray-matter": "^4.0.3",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.1.1",
     "mdast-util-to-hast": "^13.2.0",
     "next-mdx-remote": "^5.0.0",
     "path-to-regexp": "6.3.0",
