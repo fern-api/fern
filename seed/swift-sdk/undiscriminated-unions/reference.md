@@ -375,8 +375,8 @@ private func main() async throws {
 
     _ = try await client.union.testCamelCaseProperties(request: .init(paymentMethod: PaymentMethodUnion.tokenizeCard(
         TokenizeCard(
-            method: "method",
-            cardNumber: "cardNumber"
+            method: "card",
+            cardNumber: "1234567890123456"
         )
     )))
 }
