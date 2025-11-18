@@ -3,7 +3,7 @@
 package client
 
 import (
-	option "github.com/fern-api/test-remote-local-sdk/v7/option"
+	option "github.com/fern-api/empty/v7/option"
 	assert "github.com/stretchr/testify/assert"
 	http "net/http"
 	testing "testing"

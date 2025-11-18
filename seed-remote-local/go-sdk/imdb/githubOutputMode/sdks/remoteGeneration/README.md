@@ -30,9 +30,9 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/fern-api/test-remote-local-sdk/v7/client"
-    option "github.com/fern-api/test-remote-local-sdk/v7/option"
-    v7 "github.com/fern-api/test-remote-local-sdk/v7"
+    client "github.com/fern-api/empty/v7/client"
+    option "github.com/fern-api/empty/v7/option"
+    v7 "github.com/fern-api/empty/v7"
     context "context"
 )
 

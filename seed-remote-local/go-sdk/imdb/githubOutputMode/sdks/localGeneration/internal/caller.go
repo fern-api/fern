@@ -12,7 +12,7 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/fern-api/test-remote-local-sdk/v7/core"
+	"github.com/fern-api/empty/v7/core"
 )
 
 const (

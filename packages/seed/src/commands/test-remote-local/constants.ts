@@ -84,7 +84,7 @@ export const PACKAGE_LOCATION_LOCAL_FILE_SYSTEM = "local-file-system";
 export const TS_SDK_PACKAGE_NAME = "@fern-fern/test-remote-local-sdk";
 export const JAVA_SDK_MAVEN_COORDINATE = "com.fern-api:test-remote-local-sdk";
 export const PYTHON_SDK_PACKAGE_NAME = "test-remote-local-sdk";
-export const GO_SDK_MODULE_PATH = "github.com/fern-api/test-remote-local-sdk";
+export const GO_SDK_MODULE_PATH = `github.com/${FERN_TEST_REPO_NAME}`;
 
 // ============================================================================
 // GitHub Configuration

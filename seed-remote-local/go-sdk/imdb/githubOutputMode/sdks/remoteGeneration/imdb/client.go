@@ -4,10 +4,10 @@ package imdb
 
 import (
 	context "context"
-	v7 "github.com/fern-api/test-remote-local-sdk/v7"
-	core "github.com/fern-api/test-remote-local-sdk/v7/core"
-	internal "github.com/fern-api/test-remote-local-sdk/v7/internal"
-	option "github.com/fern-api/test-remote-local-sdk/v7/option"
+	v7 "github.com/fern-api/empty/v7"
+	core "github.com/fern-api/empty/v7/core"
+	internal "github.com/fern-api/empty/v7/internal"
+	option "github.com/fern-api/empty/v7/option"
 )
 
 type Client struct {
