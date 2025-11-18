@@ -17,6 +17,7 @@ export declare namespace StructGenerator {
         unsafeName: string;
         rawName: string;
         type: TypeReference;
+        indirect?: boolean;
         docsContent?: string;
     }
 
@@ -93,15 +94,30 @@ export class StructGenerator {
     }
 
     private generateDataProperties(): swift.Property[] {
-        return this.dataPropertyDefinitions.map((p) =>
-            swift.property({
+        return this.dataPropertyDefinitions.map((p) => {
+            let swiftType = this.getSwiftTypeReferenceForProperty(p);
+
+            if (p.indirect) {
+                if (swiftType.variant.type === "optional") {
+                    swiftType = swift.TypeReference.optional(
+                        swift.TypeReference.generic(this.referencer.referenceAsIsType("Indirect"), [
+                            swiftType.variant.valueType
+                        ])
+                    );
+                } else {
+                    swiftType = swift.TypeReference.generic(this.referencer.referenceAsIsType("Indirect"), [swiftType]);
+                }
+            }
+
+            return swift.property({
                 unsafeName: p.unsafeName,
                 accessLevel: swift.AccessLevel.Public,
                 declarationType: swift.DeclarationType.Let,
-                type: this.getSwiftTypeReferenceForProperty(p),
+                type: swiftType,
+                indirect: p.indirect,
                 docs: p.docsContent ? swift.docComment({ summary: p.docsContent }) : undefined
-            })
-        );
+            });
+        });
     }
 
     private getSwiftTypeReferenceForProperty(
@@ -123,11 +139,26 @@ export class StructGenerator {
 
     private generatePrimaryInitializer(dataProperties: swift.Property[]) {
         const parameters = dataProperties.map((p) => {
+            let swiftType = p.type;
+            if (p.indirect) {
+                if (p.type.variant.type === "optional") {
+                    const nonOptionalType = p.type.nonOptional();
+                    if (nonOptionalType.variant.type === "generic") {
+                        const [genericArg] = nonOptionalType.variant.arguments;
+                        swiftType = swift.TypeReference.optional(genericArg ?? swiftType);
+                    }
+                } else {
+                    if (p.type.variant.type === "generic") {
+                        const [genericArg] = p.type.variant.arguments;
+                        swiftType = genericArg ?? swiftType;
+                    }
+                }
+            }
             return swift.functionParameter({
                 argumentLabel: p.unsafeName,
                 unsafeName: p.unsafeName,
-                type: p.type,
-                defaultValue: p.type.variant.type === "optional" ? swift.Expression.rawValue("nil") : undefined
+                type: swiftType,
+                defaultValue: swiftType.variant.type === "optional" ? swift.Expression.rawValue("nil") : undefined
             });
         });
         if (this.additionalPropertiesMetadata) {
@@ -140,9 +171,27 @@ export class StructGenerator {
                 })
             );
         }
-        const bodyStatements = dataProperties.map((p) =>
-            swift.Statement.propertyAssignment(p.unsafeName, swift.Expression.reference(p.unsafeName))
-        );
+        const bodyStatements = dataProperties.map((p) => {
+            let rhs = swift.Expression.reference(p.unsafeName);
+            if (p.indirect) {
+                if (p.type.variant.type === "optional") {
+                    rhs = swift.Expression.methodCallWithTrailingClosure({
+                        target: rhs,
+                        methodName: "map",
+                        closureBody: swift.Expression.classInitialization({
+                            unsafeName: "Indirect",
+                            arguments_: [swift.functionArgument({ value: swift.Expression.rawValue("$0") })]
+                        })
+                    });
+                } else {
+                    rhs = swift.Expression.classInitialization({
+                        unsafeName: "Indirect",
+                        arguments_: [swift.functionArgument({ value: rhs })]
+                    });
+                }
+            }
+            return swift.Statement.propertyAssignment(p.unsafeName, rhs);
+        });
         if (this.additionalPropertiesMetadata) {
             bodyStatements.push(
                 swift.Statement.propertyAssignment(

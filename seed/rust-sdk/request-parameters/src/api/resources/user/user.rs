@@ -89,7 +89,7 @@ impl UserClient {
                     .serialize("nestedUser", Some(request.nested_user.clone()))
                     .serialize("optionalUser", request.optional_user.clone())
                     .serialize("excludeUser", Some(request.exclude_user.clone()))
-                    .string("filter", request.filter.clone())
+                    .string_array("filter", request.filter.clone())
                     .int("longParam", request.long_param.clone())
                     .big_int("bigIntParam", request.big_int_param.clone())
                     .build(),
