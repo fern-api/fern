@@ -5623,9 +5623,9 @@ importers:
       chalk:
         specifier: ^5.3.0
         version: 5.6.2
-      prettier2:
-        specifier: npm:prettier@^2.7.1
-        version: prettier@2.8.8
+      yaml:
+        specifier: 2.3.3
+        version: 2.3.3
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -5633,9 +5633,6 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
-      '@types/prettier2':
-        specifier: npm:@types/prettier@^2.7.3
-        version: '@types/prettier@2.7.3'
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
