@@ -57,7 +57,12 @@ export class AutoVersioningService {
         // Find the git repository root
         const gitRoot = await this.findGitRoot(workingDirectory);
         if (!gitRoot) {
-            throw new Error(`No git repository found containing directory: ${workingDirectory}`);
+            throw new Error(
+                `No git repository found containing directory: ${workingDirectory}\n` +
+                    `Automatic versioning (--version AUTO) requires the output directory to be within a git repository. ` +
+                    `Please ensure your SDK output directory is configured to point to a location within a git repository, ` +
+                    `or use a specific version instead of AUTO.`
+            );
         }
 
         this.logger.info(`Found git repository root: ${gitRoot}`);
