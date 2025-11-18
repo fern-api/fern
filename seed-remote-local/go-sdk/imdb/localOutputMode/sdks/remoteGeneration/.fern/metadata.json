@@ -1,7 +1,7 @@
 {
   "cliVersion": "0.0.0",
   "generatorName": "fernapi/fern-go-sdk",
-  "generatorVersion": "1.15.1",
+  "generatorVersion": "1.16.0",
   "generatorConfig": {
     "module": {
       "path": "github.com/fern-api/test-remote-local-sdk"

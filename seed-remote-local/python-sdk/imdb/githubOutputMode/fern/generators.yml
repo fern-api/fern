@@ -3,7 +3,7 @@ groups:
   remote:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 4.36.2
+        version: 4.37.0
         output:
           location: pypi
           package-name: test-remote-local-sdk
@@ -13,7 +13,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 4.36.2
+        version: 4.37.0
         output:
           location: pypi
           package-name: test-remote-local-sdk

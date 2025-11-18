@@ -206,7 +206,7 @@ export async function runLocalGenerationForWorkspace({
                         join(workspace.absoluteFilePath, RelativeFilePath.of(generatorInvocation.raw.snippets.path))
                     );
                 }
-                if (absolutePathToLocalSnippetJSON == null && intermediateRepresentation.selfHosted) {
+                if (absolutePathToLocalSnippetJSON == null && selfhostedGithubConfig != null) {
                     absolutePathToLocalSnippetJSON = AbsoluteFilePath.of(
                         (await getWorkspaceTempDir()).path + "/snippet.json"
                     );
@@ -301,7 +301,7 @@ async function postProcessGithubSelfHosted(
     absolutePathToLocalOutput: AbsoluteFilePath
 ): Promise<void> {
     try {
-        context.logger.debug("Starting GitHub self-hosted flow...");
+        context.logger.debug("Starting GitHub self-hosted flow in directory: " + absolutePathToLocalOutput);
         const repository = ClonedRepository.createAtPath(absolutePathToLocalOutput);
         const now = new Date();
         const formattedDate = now.toISOString().replace("T", "_").replace(/:/g, "-").replace(/\..+/, "");
@@ -312,7 +312,7 @@ async function postProcessGithubSelfHosted(
         }
 
         context.logger.debug("Committing changes...");
-        await repository.commit("SDK Generation");
+        await repository.commitAllChanges("SDK Generation");
         context.logger.debug(`Committed changes to local copy of GitHub repository at ${absolutePathToLocalOutput}`);
 
         if (!selfhostedGithubConfig.previewMode) {
