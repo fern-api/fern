@@ -86,7 +86,7 @@ public interface ICustomConfig {
     @Value.Default
     @JsonProperty("enable-wire-tests")
     default Boolean enableWireTests() {
-        return false;
+        return true;
     }
 
     @Value.Default
