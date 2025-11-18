@@ -1,6 +1,7 @@
 import { ClientRegistry } from "@boundaryml/baml";
 import { b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
 import { FERNIGNORE_FILENAME } from "@fern-api/configuration";
+import { AiServicesSchema } from "@fern-api/configuration/src/generators-yml";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
@@ -12,7 +13,6 @@ import semver from "semver";
 import tmp from "tmp-promise";
 import { AutoVersioningException, AutoVersioningService, AutoVersionResult } from "./AutoVersioningService";
 import { isAutoVersion } from "./VersionUtils";
-import { AiServicesSchema } from "@fern-api/configuration/src/generators-yml";
 
 export declare namespace LocalTaskHandler {
     export interface Init {
