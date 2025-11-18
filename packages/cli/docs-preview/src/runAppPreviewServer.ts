@@ -79,7 +79,7 @@ class SnippetDependencyTracker {
         let match;
         while ((match = markdownRegex.exec(markdown)) !== null) {
             const src = match[1];
-            if (src) {
+            if (src && !this.isUrl(src)) {
                 const referencedFilePath = resolve(
                     src.startsWith("/") ? fernFolderPath : dirname(markdownFilePath),
                     RelativeFilePath.of(src.replace(/^\//, ""))
@@ -92,7 +92,7 @@ class SnippetDependencyTracker {
         const codeRegex = /<Code(?:\s+[^>]*?)?\s+src={?['"]([^'"]+)['"](?! \+)}?((?:\s+[^>]*)?)\/>/g;
         while ((match = codeRegex.exec(markdown)) !== null) {
             const src = match[1];
-            if (src) {
+            if (src && !this.isUrl(src)) {
                 const referencedFilePath = resolve(
                     src.startsWith("/") ? fernFolderPath : dirname(markdownFilePath),
                     RelativeFilePath.of(src.replace(/^\//, ""))
@@ -102,6 +102,10 @@ class SnippetDependencyTracker {
         }
 
         return references;
+    }
+
+    private isUrl(src: string): boolean {
+        return src.startsWith("http://") || src.startsWith("https://");
     }
 
     /**
