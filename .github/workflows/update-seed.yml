@@ -9,7 +9,7 @@ on:
       language:
         description: 'Language to run seed for (leave as "all" to run all languages)'
         required: false
-        default: 'all'
+        default: "all"
         type: choice
         options:
           - all
