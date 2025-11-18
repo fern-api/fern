@@ -21,7 +21,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -32,7 +34,7 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "0.140.3-057adfab3",
+    "@fern-api/fdr-sdk": "0.140.3-473ba2d2c",
     "@fern-api/venus-api-sdk": "0.17.3-3-gf696595",
     "@fern-fern/fdr-test-sdk": "^0.0.5297",
     "@fern-fern/fiddle-sdk": "0.0.656",
