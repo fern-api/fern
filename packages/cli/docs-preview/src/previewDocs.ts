@@ -114,7 +114,7 @@ export async function getPreviewDocsDefinition({
                 absolutePathToMarkdownFile: absoluteFilePath,
                 context
             });
-            
+
             const markdownReplacedMdAndCode = await replaceReferencedCode({
                 markdown: markdownReplacedMd,
                 absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
