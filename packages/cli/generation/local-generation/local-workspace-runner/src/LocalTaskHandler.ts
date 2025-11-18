@@ -1,5 +1,5 @@
 import { ClientRegistry } from "@boundaryml/baml";
-import { AnalyzeCommitDiffResponse, b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
+import { b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
 import { FERNIGNORE_FILENAME } from "@fern-api/configuration";
 import { loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -39,6 +39,7 @@ export class LocalTaskHandler {
     private absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
     private version: string | undefined;
     private project: Project;
+    private autoVersioningCommitMessage: string | undefined;
 
     constructor({
         context,
@@ -96,6 +97,8 @@ export class LocalTaskHandler {
                 // TODO(tjb9dc): Actually skip the GitHub operations
                 return;
             }
+            // Store the commit message for later use
+            this.autoVersioningCommitMessage = autoVersionResult.commitMessage;
             // Replace magic version with computed version
             await autoVersioningService.replaceMagicVersion(
                 this.absolutePathToLocalOutput,
@@ -103,6 +106,13 @@ export class LocalTaskHandler {
                 autoVersionResult.version
             );
         }
+    }
+
+    /**
+     * Gets the commit message from auto versioning, if available.
+     */
+    public getAutoVersioningCommitMessage(): string | undefined {
+        return this.autoVersioningCommitMessage;
     }
 
     /**

@@ -153,25 +153,20 @@ export async function runLocalGenerationForWorkspace({
                     absolutePathToPreviewForGenerator != null
                 );
 
-                const hasRegularGithubConfig =
-                    generatorInvocation.raw?.github != null &&
-                    !isGithubSelfhosted(generatorInvocation.raw.github) &&
-                    "repository" in generatorInvocation.raw.github;
-
-                // Validate that automatic versioning has a GitHub repository for git diff analysis
+                // Validate that automatic versioning requires self-hosted GitHub configuration
                 if (version != null && isAutoVersion(version)) {
-                    const hasAnyGithubConfig = selfhostedGithubConfig != null || hasRegularGithubConfig;
-
-                    if (!hasAnyGithubConfig) {
+                    if (selfhostedGithubConfig == null) {
                         context.failAndThrow(
-                            `Automatic versioning (--version AUTO) requires a GitHub repository configuration. ` +
-                                `Please configure your generator with GitHub output in generators.yml. ` +
+                            `Automatic versioning (--version AUTO) requires a self-hosted GitHub repository configuration. ` +
+                                `Regular GitHub repositories are not supported because auto versioning needs to push changes back to the repository. ` +
+                                `Please configure your generator with self-hosted GitHub output in generators.yml. ` +
                                 `Example:\n` +
                                 `generators:\n` +
                                 `  - name: fernapi/fern-typescript-sdk\n` +
                                 `    version: latest\n` +
                                 `    github:\n` +
-                                `      repository: your-org/your-sdk-repo\n` +
+                                `      uri: your-org/your-sdk-repo\n` +
+                                `      token: \${GITHUB_TOKEN}\n` +
                                 `      mode: pull-request\n`
                         );
                     }
@@ -180,24 +175,19 @@ export async function runLocalGenerationForWorkspace({
                 if (selfhostedGithubConfig != null) {
                     await fs.rm(absolutePathToLocalOutput, { recursive: true, force: true });
                     await fs.mkdir(absolutePathToLocalOutput, { recursive: true });
-                    const repo = await cloneRepository({
-                        githubRepository: selfhostedGithubConfig.uri,
-                        installationToken: selfhostedGithubConfig.token,
-                        targetDirectory: absolutePathToLocalOutput
-                    });
-                } else if (
-                    hasRegularGithubConfig &&
-                    generatorInvocation.raw?.github != null &&
-                    "repository" in generatorInvocation.raw.github
-                ) {
-                    // Clone regular GitHub repository for all GitHub-based generation
-                    await fs.rm(absolutePathToLocalOutput, { recursive: true, force: true });
-                    await fs.mkdir(absolutePathToLocalOutput, { recursive: true });
-                    const repo = await cloneRepository({
-                        githubRepository: generatorInvocation.raw.github.repository,
-                        installationToken: undefined, // No token needed for public GitHub repos
-                        targetDirectory: absolutePathToLocalOutput
-                    });
+
+                    try {
+                        const repo = await cloneRepository({
+                            githubRepository: selfhostedGithubConfig.uri,
+                            installationToken: selfhostedGithubConfig.token,
+                            targetDirectory: absolutePathToLocalOutput,
+                            timeoutMs: 30000 // 30 seconds timeout for credential/network issues
+                        });
+                    } catch (error) {
+                        interactiveTaskContext.failAndThrow(
+                            `Failed to clone GitHub repository ${selfhostedGithubConfig.uri}: ${error instanceof Error ? error.message : String(error)}`
+                        );
+                    }
                 }
 
                 let absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined = undefined;
@@ -215,7 +205,7 @@ export async function runLocalGenerationForWorkspace({
                 // NOTE(tjb9dc): Important that we get a new temp dir per-generator, as we don't want their local files to collide.
                 const workspaceTempDir = await getWorkspaceTempDir();
 
-                await writeFilesToDiskAndRunGenerator({
+                const { autoVersioningCommitMessage } = await writeFilesToDiskAndRunGenerator({
                     organization: projectConfig.organization,
                     absolutePathToFernConfig: projectConfig._absolutePath,
                     workspace: fernWorkspace,
@@ -247,7 +237,8 @@ export async function runLocalGenerationForWorkspace({
                     await postProcessGithubSelfHosted(
                         interactiveTaskContext,
                         selfhostedGithubConfig,
-                        absolutePathToLocalOutput
+                        absolutePathToLocalOutput,
+                        autoVersioningCommitMessage
                     );
                 }
             });
@@ -298,7 +289,8 @@ function resolveAbsolutePathToLocalPreview(
 async function postProcessGithubSelfHosted(
     context: TaskContext,
     selfhostedGithubConfig: SelhostedGithubConfig,
-    absolutePathToLocalOutput: AbsoluteFilePath
+    absolutePathToLocalOutput: AbsoluteFilePath,
+    commitMessage?: string
 ): Promise<void> {
     try {
         context.logger.debug("Starting GitHub self-hosted flow in directory: " + absolutePathToLocalOutput);
@@ -312,7 +304,8 @@ async function postProcessGithubSelfHosted(
         }
 
         context.logger.debug("Committing changes...");
-        await repository.commitAllChanges("SDK Generation");
+        const finalCommitMessage = commitMessage ?? "SDK Generation";
+        await repository.commitAllChanges(finalCommitMessage);
         context.logger.debug(`Committed changes to local copy of GitHub repository at ${absolutePathToLocalOutput}`);
 
         if (!selfhostedGithubConfig.previewMode) {

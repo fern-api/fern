@@ -63,8 +63,6 @@ function AnalyzeSdkDiff(request: AnalyzeCommitDiffRequest) -> AnalyzeCommitDiffR
     in the diff, describe changes generically (e.g., "added X-Fern-SDK-Version header")
 
     Git Diff to Analyze:
-    ---
     {{request.diff}}
-    ---
   "#
 }

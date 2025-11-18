@@ -99,7 +99,11 @@ export async function writeFilesToDiskAndRunGenerator({
     runner: ContainerRunner | undefined;
     ir: IntermediateRepresentation;
     project: Project;
-}): Promise<{ ir: IntermediateRepresentation; generatorConfig: FernGeneratorExec.GeneratorConfig }> {
+}): Promise<{
+    ir: IntermediateRepresentation;
+    generatorConfig: FernGeneratorExec.GeneratorConfig;
+    autoVersioningCommitMessage?: string;
+}> {
     const { latest, migrated } = await getIntermediateRepresentation({
         workspace,
         audiences,
@@ -222,7 +226,8 @@ export async function writeFilesToDiskAndRunGenerator({
 
     return {
         ir: latest,
-        generatorConfig: config
+        generatorConfig: config,
+        autoVersioningCommitMessage: taskHandler.getAutoVersioningCommitMessage()
     };
 }
 
