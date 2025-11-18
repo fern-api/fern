@@ -92,7 +92,6 @@ export class LocalTaskHandler {
             const autoVersionResult = await this.handleAutoVersioning();
             if (autoVersionResult == null) {
                 this.context.logger.info("No semantic changes detected. Skipping GitHub operations.");
-                // TODO(tjb9dc): Actually skip the GitHub operations
                 return { shouldCommit: false, autoVersioningCommitMessage: undefined };
             }
             // Replace magic version with computed version
@@ -103,7 +102,7 @@ export class LocalTaskHandler {
             );
             return { shouldCommit: true, autoVersioningCommitMessage: autoVersionResult.commitMessage };
         }
-        return { shouldCommit: false, autoVersioningCommitMessage: undefined };
+        return { shouldCommit: true, autoVersioningCommitMessage: undefined };
     }
 
     /**
