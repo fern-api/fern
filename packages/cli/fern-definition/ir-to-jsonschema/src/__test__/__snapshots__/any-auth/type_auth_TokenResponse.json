@@ -5,7 +5,14 @@
       "type": "string"
     },
     "expires_in": {
-      "type": "integer"
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "refresh_token": {
       "oneOf": [
@@ -19,8 +26,7 @@
     }
   },
   "required": [
-    "access_token",
-    "expires_in"
+    "access_token"
   ],
   "additionalProperties": false,
   "definitions": {}
