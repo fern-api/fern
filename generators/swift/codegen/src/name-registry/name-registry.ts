@@ -158,15 +158,15 @@ export class NameRegistry {
      */
     public registerRootClientSymbol({
         configClientClassName,
-        apiNamePascalCase
+        registeredSourceModuleName
     }: {
         configClientClassName: string | undefined;
-        apiNamePascalCase: string;
+        registeredSourceModuleName: string;
     }): swift.Symbol {
         const candidates: [string, ...string[]] = [
-            `${apiNamePascalCase}Client`,
-            `${apiNamePascalCase}ApiClient`,
-            `${apiNamePascalCase}Service`
+            `${registeredSourceModuleName}Client`,
+            `${registeredSourceModuleName}ApiClient`,
+            `${registeredSourceModuleName}Service`
         ];
         if (typeof configClientClassName === "string") {
             candidates.unshift(configClientClassName);
@@ -187,15 +187,15 @@ export class NameRegistry {
      */
     public registerEnvironmentSymbol({
         configEnvironmentEnumName,
-        apiNamePascalCase
+        registeredSourceModuleName
     }: {
         configEnvironmentEnumName: string | undefined;
-        apiNamePascalCase: string;
+        registeredSourceModuleName: string;
     }): swift.Symbol {
         const candidates: [string, ...string[]] = [
-            `${apiNamePascalCase}Environment`,
-            `${apiNamePascalCase}Environ`,
-            `${apiNamePascalCase}Env`
+            `${registeredSourceModuleName}Environment`,
+            `${registeredSourceModuleName}Environ`,
+            `${registeredSourceModuleName}Env`
         ];
         if (typeof configEnvironmentEnumName === "string") {
             candidates.unshift(configEnvironmentEnumName);
@@ -210,8 +210,11 @@ export class NameRegistry {
         return this.symbolRegistry.getSymbolByIdOrThrow(symbolId);
     }
 
-    public registerErrorEnumSymbol(apiNamePascalCase: string): swift.Symbol {
-        const candidates: [string, ...string[]] = [`${apiNamePascalCase}Error`, `${apiNamePascalCase}ClientError`];
+    public registerErrorEnumSymbol(registeredSourceModuleName: string): swift.Symbol {
+        const candidates: [string, ...string[]] = [
+            `${registeredSourceModuleName}Error`,
+            `${registeredSourceModuleName}ClientError`
+        ];
         const symbolName = this.sourceModuleNamespace.addErrorEnumSymbolName(candidates);
         return this.symbolRegistry.registerSourceModuleType(symbolName, { type: "enum-with-associated-values" });
     }

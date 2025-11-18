@@ -41,7 +41,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     private registerSourceSymbols(nameRegistry: NameRegistry, ir: FernIr.dynamic.DynamicIntermediateRepresentation) {
         const apiNamePascalCase = pascalCase(this.config.workspaceName);
-        nameRegistry.registerSourceModuleSymbol({
+        const registeredSourceModuleSymbol = nameRegistry.registerSourceModuleSymbol({
             configModuleName: this.customConfig?.moduleName,
             apiNamePascalCase,
             asIsSymbols: Object.values(swift.SourceAsIsFileSpecs).flatMap(
@@ -50,12 +50,12 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         });
         nameRegistry.registerRootClientSymbol({
             configClientClassName: this.customConfig?.clientClassName,
-            apiNamePascalCase
+            registeredSourceModuleName: registeredSourceModuleSymbol.name
         });
         entries(swift.SourceTemplateFileSpecs).forEach(([templateId]) => {
             switch (templateId) {
                 case "ClientError":
-                    nameRegistry.registerErrorEnumSymbol(apiNamePascalCase);
+                    nameRegistry.registerErrorEnumSymbol(registeredSourceModuleSymbol.name);
                     break;
                 case "HTTPClient":
                     nameRegistry.registerSourceStaticSymbol(templateId, { type: "class" });
@@ -66,7 +66,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         });
         nameRegistry.registerEnvironmentSymbol({
             configEnvironmentEnumName: this.customConfig?.environmentEnumName,
-            apiNamePascalCase
+            registeredSourceModuleName: registeredSourceModuleSymbol.name
         });
 
         // Must first register top-level symbols

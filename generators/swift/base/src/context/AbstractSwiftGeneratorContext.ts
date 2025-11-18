@@ -68,19 +68,19 @@ export abstract class AbstractSwiftGeneratorContext<
 
     private registerSourceSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
         const { nameRegistry } = project;
-        nameRegistry.registerSourceModuleSymbol({
+        const registeredSourceModuleSymbol = nameRegistry.registerSourceModuleSymbol({
             configModuleName: this.customConfig.moduleName,
             apiNamePascalCase: ir.apiName.pascalCase.unsafeName,
             asIsSymbols: Object.values(SourceAsIsFiles).flatMap((file) => file.symbols)
         });
         nameRegistry.registerRootClientSymbol({
             configClientClassName: this.customConfig.clientClassName,
-            apiNamePascalCase: ir.apiName.pascalCase.unsafeName
+            registeredSourceModuleName: registeredSourceModuleSymbol.name
         });
         entries(swift.SourceTemplateFileSpecs).forEach(([templateId]) => {
             switch (templateId) {
                 case "ClientError":
-                    nameRegistry.registerErrorEnumSymbol(ir.apiName.pascalCase.unsafeName);
+                    nameRegistry.registerErrorEnumSymbol(registeredSourceModuleSymbol.name);
                     break;
                 case "HTTPClient":
                     nameRegistry.registerSourceStaticSymbol(templateId, { type: "class" });
@@ -91,7 +91,7 @@ export abstract class AbstractSwiftGeneratorContext<
         });
         nameRegistry.registerEnvironmentSymbol({
             configEnvironmentEnumName: this.customConfig.environmentEnumName,
-            apiNamePascalCase: ir.apiName.pascalCase.unsafeName
+            registeredSourceModuleName: registeredSourceModuleSymbol.name
         });
 
         // Must first register top-level symbols
