@@ -997,6 +997,21 @@ export class SubClientGenerator {
             return "structured_query";
         }
 
+        // Handle allow-multiple query parameters (repeating query params like ?tag=a&tag=b)
+        // These have type Vec<Option<T>> and need special array methods
+        // Note: The model generator wraps allowMultiple types in a list, so the actual type is Vec<Option<T>>
+        // But the SDK generator sees the original valueType before wrapping
+        if (queryParam.allowMultiple) {
+            // Get the base method for the underlying type (ignoring the list wrapper)
+            const baseMethod = this.getQueryBuilderMethodForType(valueType);
+            // Only add _array suffix for primitive types that have array methods
+            if (["string", "int", "float", "bool"].includes(baseMethod)) {
+                return `${baseMethod}_array`;
+            }
+            // Fall back to serialize for complex types
+            return "serialize";
+        }
+
         // Map types to appropriate QueryBuilder methods
         return TypeReference._visit(valueType, {
             primitive: (primitive) => {
@@ -1062,7 +1077,24 @@ export class SubClientGenerator {
                 });
             },
             named: () => "serialize",
-            container: () => "serialize",
+            container: (container) => {
+                // Drill down into optional/nullable to get the underlying type
+                return container._visit({
+                    optional: (innerType) => this.getQueryBuilderMethodForType(innerType),
+                    nullable: (innerType) => this.getQueryBuilderMethodForType(innerType),
+                    map: () => "serialize",
+                    set: () => "serialize",
+                    list: () => "serialize",
+                    literal: (literal) => {
+                        return literal._visit({
+                            string: () => "string",
+                            boolean: () => "bool",
+                            _other: () => "serialize"
+                        });
+                    },
+                    _other: () => "serialize"
+                });
+            },
             unknown: () => "serialize",
             _other: () => "serialize"
         });

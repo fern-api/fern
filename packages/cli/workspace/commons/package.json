@@ -41,7 +41,7 @@
     "@fern-api/path-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@redocly/openapi-core": "^1.4.1",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.1.1",
     "latest-version": "^9.0.0",
     "lodash-es": "^4.17.21",
     "octokit": "^5.0.3",
