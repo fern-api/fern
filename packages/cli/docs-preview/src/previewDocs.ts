@@ -108,14 +108,21 @@ export async function getPreviewDocsDefinition({
                 continue;
             }
 
-            const processedMarkdown = await replaceReferencedMarkdown({
+            const markdownReplacedMd = await replaceReferencedMarkdown({
                 markdown,
                 absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: absoluteFilePath,
                 context
             });
 
-            const { markdown: markdownWithAbsPaths, filepaths } = parseImagePaths(processedMarkdown, {
+            const markdownReplacedMdAndCode = await replaceReferencedCode({
+                markdown: markdownReplacedMd,
+                absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                absolutePathToMarkdownFile: absoluteFilePath,
+                context
+            });
+
+            const { markdown: markdownWithAbsPaths, filepaths } = parseImagePaths(markdownReplacedMdAndCode, {
                 absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: absoluteFilePath
             });
@@ -143,7 +150,7 @@ export async function getPreviewDocsDefinition({
             }
 
             // Then replace image paths with file IDs
-            let finalMarkdown = replaceImagePathsAndUrls(
+            const finalMarkdown = replaceImagePathsAndUrls(
                 markdownWithAbsPaths,
                 fileIdsMap,
                 {}, // markdownFilesToPathName - empty object since we don't need it for images
@@ -153,13 +160,6 @@ export async function getPreviewDocsDefinition({
                 },
                 context
             );
-
-            finalMarkdown = await replaceReferencedCode({
-                markdown: finalMarkdown,
-                absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
-                absolutePathToMarkdownFile: absoluteFilePath,
-                context
-            });
 
             previousDocsDefinition.pages[pageId] = {
                 markdown: finalMarkdown,
