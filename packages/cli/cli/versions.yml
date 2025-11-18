@@ -1,6 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add support for a `hidden` field in docs.yml PlaygroundSettings. The CLI now accepts and validates this field in configuration. Forwarding to site navigation will be added once the SDK exposes the corresponding property.
+      type: feat
+    - summary: |
+        Update @fern-api/fdr-sdk to version 0.140.3-2163f3701.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.7.0
+
+- changelogEntry:
+    - summary: |
         Add `fern self-update` command to update the globally installed Fern CLI. 
         The command detects how the CLI was installed (npm, pnpm, yarn, bun, or brew) and runs the appropriate update command. 
         Supports updating to a specific version (e.g., `fern self-update 0.85.0`) or the latest version (e.g., `fern self-update`). 
