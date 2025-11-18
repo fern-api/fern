@@ -8,8 +8,10 @@ import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import chalk from "chalk";
+import cliProgress from "cli-progress";
 import { existsSync, statSync } from "fs";
 import { mkdir, readdir, readFile, writeFile } from "fs/promises";
+import IS_CI from "is-ci";
 import yaml from "js-yaml";
 import path from "path";
 
@@ -333,84 +335,107 @@ export async function writeTranslationForProject({
             }
 
             const totalFilesToProcess = filesToProcess.length;
-            if (totalFilesToProcess > 0) {
+            const useProgressBar = process.stdout.isTTY && !IS_CI && totalFilesToProcess > 0;
+
+            let progressBar: cliProgress.SingleBar | undefined;
+            if (useProgressBar) {
+                progressBar = new cliProgress.SingleBar({
+                    format: "Translating files [{bar}] {percentage}% | {value}/{total} files",
+                    barCompleteChar: "\u2588",
+                    barIncompleteChar: "\u2591",
+                    hideCursor: true
+                });
+                progressBar.start(totalFilesToProcess, 0);
+            } else if (totalFilesToProcess > 0) {
                 context.logger.info(chalk.cyan(`Processing ${totalFilesToProcess} changed files for translation...`));
             }
 
             let processedFileIndex = 0;
-            for (const [filePath, relativePath] of allFilesEntries) {
-                if (hasDocsConfig && relativePath === DOCS_CONFIGURATION_FILENAME) {
-                    cliContext.logger.debug(
-                        `[SKIPPED] ${relativePath} (handled by language-specific docs config creation)`
-                    );
-                    // still update hash for source language tracking
+            try {
+                for (const [filePath, relativePath] of allFilesEntries) {
+                    if (hasDocsConfig && relativePath === DOCS_CONFIGURATION_FILENAME) {
+                        cliContext.logger.debug(
+                            `[SKIPPED] ${relativePath} (handled by language-specific docs config creation)`
+                        );
+                        // still update hash for source language tracking
+                        const originalContent = await readFile(filePath, "utf-8");
+                        updateHashForFile(hashMappings, relativePath, originalContent);
+                        const sourceStats = languageStats[sourceLanguage];
+                        if (sourceStats) {
+                            sourceStats.filesSkipped++; // count as skipped rather than processed
+                        }
+                        continue;
+                    }
+
+                    const fileHasChanged = await hasFileChanged(filePath, relativePath, hashMappings);
+
+                    if (!fileHasChanged) {
+                        for (const language of languages) {
+                            const stats = languageStats[language];
+                            if (stats) {
+                                stats.filesSkipped++;
+                            }
+                        }
+                        cliContext.logger.debug(`[SKIPPED] ${relativePath} (no changes since last translation)`);
+                        continue;
+                    }
+
+                    processedFileIndex++;
+                    if (!useProgressBar) {
+                        context.logger.info(
+                            chalk.gray(`[${processedFileIndex}/${totalFilesToProcess}] Processing: ${relativePath}`)
+                        );
+                    }
+                    cliContext.logger.debug(`[PROCESSING] ${relativePath} (detected changes)`);
+
                     const originalContent = await readFile(filePath, "utf-8");
                     updateHashForFile(hashMappings, relativePath, originalContent);
+
                     const sourceStats = languageStats[sourceLanguage];
                     if (sourceStats) {
-                        sourceStats.filesSkipped++; // count as skipped rather than processed
+                        sourceStats.filesProcessed++;
                     }
-                    continue;
-                }
-
-                const fileHasChanged = await hasFileChanged(filePath, relativePath, hashMappings);
-
-                if (!fileHasChanged) {
-                    for (const language of languages) {
-                        const stats = languageStats[language];
-                        if (stats) {
-                            stats.filesSkipped++;
-                        }
-                    }
-                    cliContext.logger.debug(`[SKIPPED] ${relativePath} (no changes since last translation)`);
-                    continue;
-                }
-
-                processedFileIndex++;
-                context.logger.info(
-                    chalk.gray(`[${processedFileIndex}/${totalFilesToProcess}] Processing: ${relativePath}`)
-                );
-                cliContext.logger.debug(`[PROCESSING] ${relativePath} (detected changes)`);
-
-                const originalContent = await readFile(filePath, "utf-8");
-                updateHashForFile(hashMappings, relativePath, originalContent);
-
-                const sourceStats = languageStats[sourceLanguage];
-                if (sourceStats) {
-                    sourceStats.filesProcessed++;
-                }
-                cliContext.logger.debug(
-                    `[HASH UPDATED] ${relativePath} -> ${sourceLanguage} (source language - hash only)`
-                );
-
-                for (const language of targetLanguages) {
-                    const languageDirectory = join(
-                        translationsDirectory,
-                        RelativeFilePath.of(language),
-                        RelativeFilePath.of("fern")
+                    cliContext.logger.debug(
+                        `[HASH UPDATED] ${relativePath} -> ${sourceLanguage} (source language - hash only)`
                     );
-                    const destPath = join(languageDirectory, relativePath);
 
-                    const destDir = path.dirname(destPath);
-                    if (!existsSync(destDir)) {
-                        await mkdir(destDir, { recursive: true });
+                    for (const language of targetLanguages) {
+                        const languageDirectory = join(
+                            translationsDirectory,
+                            RelativeFilePath.of(language),
+                            RelativeFilePath.of("fern")
+                        );
+                        const destPath = join(languageDirectory, relativePath);
+
+                        const destDir = path.dirname(destPath);
+                        if (!existsSync(destDir)) {
+                            await mkdir(destDir, { recursive: true });
+                        }
+
+                        const transformation: ContentTransformation = {
+                            filePath: relativePath,
+                            language,
+                            sourceLanguage,
+                            originalContent
+                        };
+
+                        const transformedContent = await transformContentForLanguage(transformation, cliContext, stub);
+                        await writeFile(destPath, transformedContent, "utf-8");
+
+                        const languageStatsForLang = languageStats[language];
+                        if (languageStatsForLang) {
+                            languageStatsForLang.filesProcessed++;
+                        }
+                        cliContext.logger.debug(`[COMPLETED] ${relativePath} -> ${language}/${relativePath}`);
                     }
 
-                    const transformation: ContentTransformation = {
-                        filePath: relativePath,
-                        language,
-                        sourceLanguage,
-                        originalContent
-                    };
-
-                    const transformedContent = await transformContentForLanguage(transformation, cliContext, stub);
-                    await writeFile(destPath, transformedContent, "utf-8");
-
-                    const languageStatsForLang = languageStats[language];
-                    if (languageStatsForLang) {
-                        languageStatsForLang.filesProcessed++;
+                    if (progressBar) {
+                        progressBar.update(processedFileIndex);
                     }
-                    cliContext.logger.debug(`[COMPLETED] ${relativePath} -> ${language}/${relativePath}`);
+                }
+            } finally {
+                if (progressBar) {
+                    progressBar.stop();
                 }
             }
 
