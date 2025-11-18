@@ -13,7 +13,9 @@ export const BaseRustCustomConfigSchema = z.object({
     packageDescription: z.string().optional(),
     packageLicense: z.string().optional(),
     packageRepository: z.string().optional(),
-    packageDocumentation: z.string().optional()
+    packageDocumentation: z.string().optional(),
+    // Wire test generation
+    enableWireTests: z.boolean().optional()
 });
 
 export type BaseRustCustomConfigSchema = z.infer<typeof BaseRustCustomConfigSchema>;

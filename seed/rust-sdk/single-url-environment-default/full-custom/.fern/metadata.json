@@ -15,6 +15,7 @@
       }
     ],
     "crateName": "full_custom_sdk",
-    "crateVersion": "1.0.0"
+    "crateVersion": "1.0.0",
+    "enableWireTests": true
   }
 }

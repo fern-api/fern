@@ -215,11 +215,12 @@ export class UnionGenerator {
     }
 
     private generateUnionVariant(writer: rust.Writer, unionType: SingleUnionType): void {
-        const variantName = unionType.discriminantValue.name.pascalCase.unsafeName;
+        const rawVariantName = unionType.discriminantValue.name.pascalCase.unsafeName;
+        const variantName = this.context.escapeRustReservedType(rawVariantName); // Escape reserved types with r#
         const discriminantValue = unionType.discriminantValue.wireValue;
 
         // Generate variant attributes
-        const variantAttributes = this.generateVariantAttributes(unionType);
+        const variantAttributes = this.generateVariantAttributes(unionType, variantName);
         variantAttributes.forEach((attr) => {
             writer.write("    ");
             attr.write(writer);
@@ -234,8 +235,15 @@ export class UnionGenerator {
             singleProperty: (singleProperty) => {
                 const fieldType = generateRustTypeForTypeReference(singleProperty.type, this.context);
                 const fieldName = singleProperty.name.name.snakeCase.unsafeName;
+                const wireValue = singleProperty.name.wireValue;
 
                 writer.writeLine(`    ${variantName} {`);
+
+                // Add serde rename if field name differs from wire value
+                if (fieldName !== wireValue) {
+                    writer.writeLine(`        #[serde(rename = "${wireValue}")]`);
+                }
+
                 writer.writeLine(`        ${fieldName}: ${fieldType.toString()},`);
 
                 // Add base properties if they exist
@@ -269,13 +277,18 @@ export class UnionGenerator {
         });
     }
 
-    private generateVariantAttributes(unionType: SingleUnionType): rust.Attribute[] {
+    private generateVariantAttributes(unionType: SingleUnionType, escapedVariantName: string): rust.Attribute[] {
         const attributes: rust.Attribute[] = [];
         const discriminantValue = unionType.discriminantValue.wireValue;
-        const variantName = unionType.discriminantValue.name.pascalCase.unsafeName;
+        const rawVariantName = unionType.discriminantValue.name.pascalCase.unsafeName;
 
-        // Add serde rename if the variant name differs from discriminant value
-        if (variantName.toLowerCase() !== discriminantValue.toLowerCase()) {
+        // Add serde rename if:
+        // 1. The variant name was escaped (e.g., String -> r#String), OR
+        // 2. The variant name differs from discriminant value (case-insensitive)
+        const wasEscaped = escapedVariantName !== rawVariantName;
+        const namesDiffer = rawVariantName.toLowerCase() !== discriminantValue.toLowerCase();
+
+        if (wasEscaped || namesDiffer) {
             attributes.push(Attribute.serde.rename(discriminantValue));
         }
 

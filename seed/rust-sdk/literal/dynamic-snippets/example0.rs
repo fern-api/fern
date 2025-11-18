@@ -11,11 +11,13 @@ async fn main() {
         .headers
         .send(
             &SendLiteralsInHeadersRequest {
-                endpoint_version: "02-12-2024".to_string(),
-                r#async: true,
                 query: "What is the weather today".to_string(),
             },
-            None,
+            Some(
+                RequestOptions::new()
+                    .additional_header("X-Endpoint-Version", "02-12-2024".to_string())
+                    .additional_header("X-Async", true),
+            ),
         )
         .await;
 }
