@@ -129,7 +129,6 @@ export async function generateAPIWorkspaces({
                     runner,
                     inspect,
                     lfsOverride,
-                    project
                 });
             });
         })
