@@ -37,7 +37,7 @@
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.1.1",
     "openapi-types": "^12.1.3"
   },
   "devDependencies": {

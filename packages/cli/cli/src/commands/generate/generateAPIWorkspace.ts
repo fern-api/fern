@@ -95,6 +95,7 @@ export async function generateWorkspace({
             keepDocker,
             context,
             runner,
+            absolutePathToPreview,
             inspect
         });
     } else {

@@ -8,6 +8,7 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.request_options import RequestOptions
 from .raw_client import AsyncRawSeedApi, RawSeedApi
 from .types.nested_user import NestedUser
+from .types.search_request_neighbor import SearchRequestNeighbor
 from .types.search_request_neighbor_required import SearchRequestNeighborRequired
 from .types.search_response import SearchResponse
 from .types.user import User
@@ -83,20 +84,20 @@ class SeedApi:
         *,
         limit: int,
         id: str,
-        date: str,
+        date: dt.date,
         deadline: dt.datetime,
         bytes: str,
         user: User,
         neighbor_required: SearchRequestNeighborRequired,
         user_list: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
         optional_deadline: typing.Optional[dt.datetime] = None,
-        key_value: typing.Optional[typing.Dict[str, typing.Optional[str]]] = None,
+        key_value: typing.Optional[typing.Dict[str, str]] = None,
         optional_string: typing.Optional[str] = None,
         nested_user: typing.Optional[NestedUser] = None,
         optional_user: typing.Optional[User] = None,
         exclude_user: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
         filter: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        neighbor: typing.Optional[User] = None,
+        neighbor: typing.Optional[SearchRequestNeighbor] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SearchResponse:
         """
@@ -106,7 +107,7 @@ class SeedApi:
 
         id : str
 
-        date : str
+        date : dt.date
 
         deadline : dt.datetime
 
@@ -120,7 +121,7 @@ class SeedApi:
 
         optional_deadline : typing.Optional[dt.datetime]
 
-        key_value : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+        key_value : typing.Optional[typing.Dict[str, str]]
 
         optional_string : typing.Optional[str]
 
@@ -132,7 +133,7 @@ class SeedApi:
 
         filter : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
-        neighbor : typing.Optional[User]
+        neighbor : typing.Optional[SearchRequestNeighbor]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -154,7 +155,9 @@ class SeedApi:
         client.search(
             limit=1,
             id="id",
-            date="date",
+            date=datetime.date.fromisoformat(
+                "2023-01-15",
+            ),
             deadline=datetime.datetime.fromisoformat(
                 "2024-01-15 09:30:00+00:00",
             ),
@@ -290,20 +293,20 @@ class AsyncSeedApi:
         *,
         limit: int,
         id: str,
-        date: str,
+        date: dt.date,
         deadline: dt.datetime,
         bytes: str,
         user: User,
         neighbor_required: SearchRequestNeighborRequired,
         user_list: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
         optional_deadline: typing.Optional[dt.datetime] = None,
-        key_value: typing.Optional[typing.Dict[str, typing.Optional[str]]] = None,
+        key_value: typing.Optional[typing.Dict[str, str]] = None,
         optional_string: typing.Optional[str] = None,
         nested_user: typing.Optional[NestedUser] = None,
         optional_user: typing.Optional[User] = None,
         exclude_user: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
         filter: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        neighbor: typing.Optional[User] = None,
+        neighbor: typing.Optional[SearchRequestNeighbor] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SearchResponse:
         """
@@ -313,7 +316,7 @@ class AsyncSeedApi:
 
         id : str
 
-        date : str
+        date : dt.date
 
         deadline : dt.datetime
 
@@ -327,7 +330,7 @@ class AsyncSeedApi:
 
         optional_deadline : typing.Optional[dt.datetime]
 
-        key_value : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+        key_value : typing.Optional[typing.Dict[str, str]]
 
         optional_string : typing.Optional[str]
 
@@ -339,7 +342,7 @@ class AsyncSeedApi:
 
         filter : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
-        neighbor : typing.Optional[User]
+        neighbor : typing.Optional[SearchRequestNeighbor]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -365,7 +368,9 @@ class AsyncSeedApi:
             await client.search(
                 limit=1,
                 id="id",
-                date="date",
+                date=datetime.date.fromisoformat(
+                    "2023-01-15",
+                ),
                 deadline=datetime.datetime.fromisoformat(
                     "2024-01-15 09:30:00+00:00",
                 ),

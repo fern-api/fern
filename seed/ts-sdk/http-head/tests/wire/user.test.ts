@@ -3,7 +3,7 @@
 import { SeedHttpHeadClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("User", () => {
+describe("UserClient", () => {
     test("head", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedHttpHeadClient({ environment: server.baseUrl });

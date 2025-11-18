@@ -1,0 +1,52 @@
+openapi: 3.0.3
+info:
+  title: Parameter Style DeepObject Test
+  version: 1.0.0
+paths:
+  /items:
+    get:
+      operationId: listItems
+      summary: List items with complex filter
+      parameters:
+        - name: filter
+          in: query
+          description: Complex filter object with nested properties
+          required: false
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              createdAfter:
+                type: string
+                format: date-time
+              status:
+                type: string
+                enum:
+                  - active
+                  - inactive
+          style: deepObject
+          explode: true
+      responses:
+        "200":
+          description: List of items
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Item"
+components:
+  schemas:
+    Item:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          type: string

@@ -1,0 +1,897 @@
+{
+  "title": "AllOf/OneOf/AnyOf Edge Cases",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "createExtended",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateExtendedRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateExtendedRequest",
+          "schema": "Extended",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "CreateExtendedResponse",
+          "schema": "Extended",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "POST",
+      "path": "/extended",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "id": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "name": {
+                "value": {
+                  "value": "name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "email": {
+                  "value": {
+                    "value": "email",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "createPet",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreatePetRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreatePetRequest",
+          "schema": "Pet",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "CreatePetResponse",
+          "schema": "Pet",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "POST",
+      "path": "/pet",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "value": {
+              "value": {
+                "petType": {
+                  "value": {
+                    "value": "dog",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "discriminated"
+            },
+            "type": "oneOf"
+          },
+          "response": {
+            "value": {
+              "value": {
+                "value": {
+                  "bark": {
+                    "value": {
+                      "value": true,
+                      "type": "boolean"
+                    },
+                    "type": "primitive"
+                  },
+                  "petType": {
+                    "value": {
+                      "value": "dog",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "discriminated"
+              },
+              "type": "oneOf"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "createFlexible",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateFlexibleRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateFlexibleRequest",
+          "schema": "FlexibleValue",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "CreateFlexibleResponse",
+          "schema": "FlexibleValue",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "POST",
+      "path": "/flexible",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "value": {
+              "value": "string",
+              "type": "string"
+            },
+            "type": "primitive"
+          },
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Base": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "baseId",
+            "key": "id",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "BaseId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "baseCreatedAt",
+            "key": "createdAt",
+            "schema": {
+              "generatedName": "BaseCreatedAt",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "BaseCreatedAt",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Base",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Extended": {
+        "allOf": [
+          {
+            "generatedName": "Base",
+            "schema": "Base",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "extendedName",
+            "key": "name",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ExtendedName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "extendedEmail",
+            "key": "email",
+            "schema": {
+              "generatedName": "ExtendedEmail",
+              "value": {
+                "schema": {
+                  "format": "email",
+                  "type": "string"
+                },
+                "generatedName": "ExtendedEmail",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Extended",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Level1": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "level1Field1",
+            "key": "field1",
+            "schema": {
+              "generatedName": "Level1Field1",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "Level1Field1",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Level1",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Level2": {
+        "allOf": [
+          {
+            "generatedName": "Level1",
+            "schema": "Level1",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "level2Field2",
+            "key": "field2",
+            "schema": {
+              "generatedName": "Level2Field2",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "Level2Field2",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Level2",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Level3": {
+        "allOf": [
+          {
+            "generatedName": "Level2",
+            "schema": "Level2",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "level3Field3",
+            "key": "field3",
+            "schema": {
+              "generatedName": "Level3Field3",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "Level3Field3",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Level3",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Dog": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "dogBark",
+            "key": "bark",
+            "schema": {
+              "generatedName": "DogBark",
+              "value": {
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "DogBark",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Dog",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Cat": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "catMeow",
+            "key": "meow",
+            "schema": {
+              "generatedName": "CatMeow",
+              "value": {
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "CatMeow",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Cat",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Pet": {
+        "value": {
+          "commonProperties": [],
+          "discriminantProperty": "petType",
+          "generatedName": "Pet",
+          "schemas": {
+            "dog": {
+              "generatedName": "ComponentsSchemasDog",
+              "schema": "Dog",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "cat": {
+              "generatedName": "ComponentsSchemasCat",
+              "schema": "Cat",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          },
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "discriminated"
+        },
+        "type": "oneOf"
+      },
+      "Response": {
+        "value": {
+          "generatedName": "Response",
+          "schemas": [
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "responseDataSuccess",
+                  "key": "success",
+                  "schema": {
+                    "generatedName": "ResponseDataSuccess",
+                    "value": {
+                      "schema": {
+                        "type": "boolean"
+                      },
+                      "generatedName": "ResponseDataSuccess",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "responseDataData",
+                  "key": "data",
+                  "schema": {
+                    "generatedName": "ResponseDataData",
+                    "value": {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "ResponseDataData",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "ResponseData",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "responseCodeError",
+                  "key": "error",
+                  "schema": {
+                    "generatedName": "ResponseCodeError",
+                    "value": {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "ResponseCodeError",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "responseCodeCode",
+                  "key": "code",
+                  "schema": {
+                    "generatedName": "ResponseCodeCode",
+                    "value": {
+                      "schema": {
+                        "type": "int"
+                      },
+                      "generatedName": "ResponseCodeCode",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "ResponseCode",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "FlexibleValue": {
+        "value": {
+          "generatedName": "FlexibleValue",
+          "schemas": [
+            {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "FlexibleValueZero",
+              "groupName": [],
+              "type": "primitive"
+            },
+            {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "FlexibleValueOne",
+              "groupName": [],
+              "type": "primitive"
+            },
+            {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "flexibleValueComplexComplex",
+                  "key": "complex",
+                  "schema": {
+                    "generatedName": "FlexibleValueComplexComplex",
+                    "value": {
+                      "schema": {
+                        "type": "boolean"
+                      },
+                      "generatedName": "FlexibleValueComplexComplex",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "generatedName": "FlexibleValueComplex",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "NullableAnyOf": {
+        "generatedName": "NullableAnyOf",
+        "value": {
+          "value": {
+            "generatedName": "NullableAnyOf",
+            "schemas": [
+              {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "NullableAnyOfZero",
+                "groupName": [],
+                "type": "primitive"
+              },
+              {
+                "schema": {
+                  "type": "double"
+                },
+                "generatedName": "NullableAnyOfOne",
+                "groupName": [],
+                "type": "primitive"
+              }
+            ],
+            "groupName": [],
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "undiscriminated"
+          },
+          "type": "oneOf"
+        },
+        "groupName": [],
+        "type": "nullable"
+      },
+      "Complex": {
+        "allOf": [
+          {
+            "generatedName": "Base",
+            "schema": "Base",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Complex",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

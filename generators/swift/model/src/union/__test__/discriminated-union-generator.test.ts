@@ -43,4 +43,22 @@ describe("DiscriminatedUnionGenerator", () => {
         const union = generator.generate();
         await expect(union.toString()).toMatchFileSnapshot(`snapshots/${unionName}.swift`);
     });
+
+    it("correctly omits variant properties colliding with discriminant", async () => {
+        const context = await createSampleGeneratorContext(
+            pathToDefinition("discriminated-union-variants-with-duplicate-discriminant")
+        );
+        const moduleName = "DiscriminatedUnionVariantsWithDuplicateDiscriminant";
+        const unionName = "UnionWithDuplicateVariantDiscriminant";
+        const declaration = getUnionTypeDeclarationOrThrow(context, unionName);
+        const generator = new DiscriminatedUnionGenerator({
+            symbol: swift.Symbol.create(`${moduleName}.${unionName}`, unionName, {
+                type: "enum-with-associated-values"
+            }),
+            unionTypeDeclaration: declaration,
+            context
+        });
+        const union = generator.generate();
+        await expect(union.toString()).toMatchFileSnapshot(`snapshots/${unionName}.swift`);
+    });
 });

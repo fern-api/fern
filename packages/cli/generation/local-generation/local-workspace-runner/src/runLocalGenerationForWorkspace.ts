@@ -5,6 +5,7 @@ import { fernConfigJson, GeneratorInvocation, generatorsYml } from "@fern-api/co
 import { createVenusService } from "@fern-api/core";
 import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { ClonedRepository, cloneRepository, parseRepository } from "@fern-api/github";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
 import { getDynamicGeneratorConfig } from "@fern-api/remote-workspace-runner";
@@ -14,11 +15,12 @@ import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
 } from "@fern-api/workspace-loader";
+import { Octokit } from "@octokit/rest";
 import chalk from "chalk";
+import * as fs from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
-
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
 
 export async function runLocalGenerationForWorkspace({
@@ -30,6 +32,7 @@ export async function runLocalGenerationForWorkspace({
     keepDocker,
     inspect,
     context,
+    absolutePathToPreview,
     runner
 }: {
     token: FernToken | undefined;
@@ -39,6 +42,7 @@ export async function runLocalGenerationForWorkspace({
     version: string | undefined;
     keepDocker: boolean;
     context: TaskContext;
+    absolutePathToPreview: AbsoluteFilePath | undefined;
     runner: ContainerRunner | undefined;
     inspect: boolean;
 }): Promise<void> {
@@ -110,9 +114,6 @@ export async function runLocalGenerationForWorkspace({
                 }
 
                 if (organization.ok) {
-                    if (organization.body.selfHostedSdKs) {
-                        intermediateRepresentation.selfHosted = true;
-                    }
                     if (organization.body.isWhitelabled) {
                         if (intermediateRepresentation.readmeConfig == null) {
                             intermediateRepresentation.readmeConfig = emptyReadmeConfig;
@@ -133,13 +134,30 @@ export async function runLocalGenerationForWorkspace({
                     intermediateRepresentation.publishConfig = publishConfig;
                 }
 
+                const absolutePathToPreviewForGenerator = resolveAbsolutePathToLocalPreview(
+                    absolutePathToPreview,
+                    generatorInvocation
+                );
+
                 const absolutePathToLocalOutput =
+                    absolutePathToPreviewForGenerator ??
                     generatorInvocation.absolutePathToLocalOutput ??
-                    join(
-                        workspace.absoluteFilePath,
-                        RelativeFilePath.of("sdks"),
-                        RelativeFilePath.of(generatorInvocation.language ?? generatorInvocation.name)
-                    );
+                    AbsoluteFilePath.of(await tmp.dir().then((dir) => dir.path));
+
+                const selfhostedGithubConfig = getSelfhostedGithubConfig(
+                    generatorInvocation,
+                    absolutePathToPreviewForGenerator != null
+                );
+
+                if (selfhostedGithubConfig != null) {
+                    await fs.rm(absolutePathToLocalOutput, { recursive: true, force: true });
+                    await fs.mkdir(absolutePathToLocalOutput, { recursive: true });
+                    const repo = await cloneRepository({
+                        githubRepository: selfhostedGithubConfig.uri,
+                        installationToken: selfhostedGithubConfig.token,
+                        targetDirectory: absolutePathToLocalOutput
+                    });
+                }
 
                 let absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined = undefined;
                 if (generatorInvocation.raw?.snippets?.path != null) {
@@ -182,6 +200,14 @@ export async function runLocalGenerationForWorkspace({
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
+
+                if (selfhostedGithubConfig != null) {
+                    await postProcessGithubSelfHosted(
+                        interactiveTaskContext,
+                        selfhostedGithubConfig,
+                        absolutePathToLocalOutput
+                    );
+                }
             });
         })
     );
@@ -214,6 +240,78 @@ function getPackageNameFromGeneratorConfig(generatorInvocation: GeneratorInvocat
         }
     }
     return undefined;
+}
+function resolveAbsolutePathToLocalPreview(
+    absolutePathToPreview: AbsoluteFilePath | undefined,
+    generatorInvocation: GeneratorInvocation
+): AbsoluteFilePath | undefined {
+    if (absolutePathToPreview == null) {
+        return undefined;
+    }
+    const generatorName = generatorInvocation.name.split("/").pop() ?? "sdk";
+    const subfolderName = generatorName.replace(/[^a-zA-Z0-9-_]/g, "_");
+
+    return absolutePathToPreview ? join(absolutePathToPreview, RelativeFilePath.of(subfolderName)) : undefined;
+}
+async function postProcessGithubSelfHosted(
+    context: TaskContext,
+    selfhostedGithubConfig: SelhostedGithubConfig,
+    absolutePathToLocalOutput: AbsoluteFilePath
+): Promise<void> {
+    try {
+        context.logger.debug("Starting GitHub self-hosted flow...");
+        const repository = ClonedRepository.createAtPath(absolutePathToLocalOutput);
+        const now = new Date();
+        const formattedDate = now.toISOString().replace("T", "_").replace(/:/g, "-").replace(/\..+/, "");
+        const prBranch = `fern-bot/${formattedDate}`;
+        if (selfhostedGithubConfig.mode === "pull-request") {
+            context.logger.debug(`Checking out new branch ${prBranch}`);
+            await repository.checkout(prBranch);
+        }
+
+        context.logger.debug("Committing changes...");
+        await repository.commit("SDK Generation");
+        context.logger.debug(`Committed changes to local copy of GitHub repository at ${absolutePathToLocalOutput}`);
+
+        if (!selfhostedGithubConfig.previewMode) {
+            await repository.push();
+            const pushedBranch = await repository.getCurrentBranch();
+            context.logger.info(`Pushed branch: https://github.com/${selfhostedGithubConfig.uri}/tree/${pushedBranch}`);
+        }
+
+        if (selfhostedGithubConfig.mode === "pull-request") {
+            const baseBranch = await repository.getDefaultBranch();
+
+            const octokit = new Octokit({
+                auth: selfhostedGithubConfig.token
+            });
+            // Use octokit directly to create the pull request
+            const parsedRepo = parseRepository(selfhostedGithubConfig.uri);
+            const { owner, repo } = parsedRepo;
+            const head = `${owner}:${prBranch}`;
+
+            try {
+                await octokit.pulls.create({
+                    owner,
+                    repo,
+                    title: "SDK Generation",
+                    body: "Automated SDK generation by Fern",
+                    head,
+                    base: baseBranch,
+                    draft: false
+                });
+
+                context.logger.info(`Created pull request ${head} -> ${baseBranch} on ${selfhostedGithubConfig.uri}`);
+            } catch (error) {
+                const message = error instanceof Error ? error.message : String(error);
+                if (message.includes("A pull request already exists for")) {
+                    context.failWithoutThrowing(`A pull request already exists for ${head}`);
+                }
+            }
+        }
+    } catch (error) {
+        context.failAndThrow(`Error during GitHub self-hosted flow: ${String(error)}`);
+    }
 }
 
 export async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {
@@ -419,3 +517,20 @@ const emptyReadmeConfig: FernIr.ReadmeConfig = {
     features: undefined,
     exampleStyle: undefined
 };
+
+interface SelhostedGithubConfig extends generatorsYml.GithubSelfhostedSchema {
+    previewMode: boolean;
+}
+
+function getSelfhostedGithubConfig(
+    generatorInvocation: generatorsYml.GeneratorInvocation,
+    previewMode: boolean
+): SelhostedGithubConfig | undefined {
+    if (generatorInvocation.raw?.github != null && isGithubSelfhosted(generatorInvocation.raw.github)) {
+        return {
+            ...generatorInvocation.raw.github,
+            previewMode
+        };
+    }
+    return undefined;
+}

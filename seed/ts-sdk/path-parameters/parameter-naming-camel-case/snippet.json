@@ -87,6 +87,17 @@
                 "type": "typescript",
                 "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUserMetadata({\n    userId: \"user_id\",\n    version: 1\n});\n"
             }
+        },
+        {
+            "id": {
+                "path": "/{tenant_id}/user/{user_id}/specifics/{version}/{thought}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getUserSpecifics"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUserSpecifics({\n    userId: \"user_id\",\n    version: 1,\n    thought: \"thought\"\n});\n"
+            }
         }
     ],
     "types": {}

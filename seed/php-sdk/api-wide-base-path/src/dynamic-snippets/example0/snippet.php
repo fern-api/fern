@@ -12,6 +12,6 @@ $client = new SeedClient(
 $client->service->post(
     'pathParam',
     'serviceParam',
-    'resourceParam',
     1,
+    'resourceParam',
 );
