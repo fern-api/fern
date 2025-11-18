@@ -4573,6 +4573,9 @@ importers:
 
   packages/cli/cli:
     devDependencies:
+      '@boundaryml/baml':
+        specifier: ^0.211.2
+        version: 0.211.2
       '@bufbuild/protobuf':
         specifier: 2.2.5
         version: 2.2.5

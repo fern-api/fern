@@ -47,6 +47,7 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "devDependencies": {
+    "@boundaryml/baml": "^0.211.2",
     "@bufbuild/protobuf": "^2.2.5",
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/auth": "workspace:*",

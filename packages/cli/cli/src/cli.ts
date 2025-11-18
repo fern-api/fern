@@ -456,15 +456,8 @@ function addSdkDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 cliContext.logger.info(JSON.stringify(result, null, 2));
             } else {
                 // Output as formatted text
-                cliContext.logger.info("\n" + result.headline);
-                cliContext.logger.info("\n" + result.description);
-                cliContext.logger.info(`\nVersion Bump: ${result.versionBump}`);
-                if (result.breakingChanges.length > 0) {
-                    cliContext.logger.info("\nBreaking Changes:");
-                    result.breakingChanges.forEach((change) => {
-                        cliContext.logger.info(`  - ${change}`);
-                    });
-                }
+                cliContext.logger.info("\n" + result.message);
+                cliContext.logger.info(`\nVersion Bump: ${result.version_bump}`);
             }
         }
     );

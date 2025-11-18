@@ -11,7 +11,7 @@ import { FernCliError } from "@fern-api/task-context";
 import { exec } from "child_process";
 import { promisify } from "util";
 import { CliContext } from "../../cli-context/CliContext";
-import { SdkDiffResult } from "@fern-api/cli-ai";
+import { AnalyzeCommitDiffResponse, b as BamlClient, VersionBump } from "@fern-api/cli-ai";
 
 const execAsync = promisify(exec);
 
@@ -27,7 +27,7 @@ export async function sdkDiffCommand({
     context: CliContext;
     fromDir: string;
     toDir: string;
-}): Promise<SdkDiffResult> {
+}): Promise<AnalyzeCommitDiffResponse> {
     // Resolve and validate paths
     const fromPath = AbsoluteFilePath.of(resolve(cwd(), fromDir));
     const toPath = AbsoluteFilePath.of(resolve(cwd(), toDir));
@@ -54,10 +54,8 @@ export async function sdkDiffCommand({
     if (!gitDiff || gitDiff.trim().length === 0) {
         context.logger.warn("No differences found between the directories");
         return {
-            headline: "chore: No changes detected",
-            description: "The two SDK directories are identical.",
-            versionBump: "patch",
-            breakingChanges: []
+            message: "No changes detected between the directories",
+            version_bump: VersionBump.NO_CHANGE
         };
     }
 
@@ -66,7 +64,9 @@ export async function sdkDiffCommand({
     // Analyze the diff using LLM
     context.logger.info("Analyzing diff with LLM...");
     try {
-        const analysis = await analyzeSdkDiff(gitDiff);
+        const analysis = await BamlClient.AnalyzeSdkDiff({
+            diff: gitDiff
+        });
         context.logger.debug("Analysis complete");
         return analysis;
     } catch (error) {
