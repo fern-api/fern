@@ -188,10 +188,9 @@ export async function runLocalGenerationForWorkspace({
                 } else if (
                     hasRegularGithubConfig &&
                     generatorInvocation.raw?.github != null &&
-                    !isGithubSelfhosted(generatorInvocation.raw.github) &&
                     "repository" in generatorInvocation.raw.github
                 ) {
-                    // Clone regular GitHub repository for auto versioning
+                    // Clone regular GitHub repository for all GitHub-based generation
                     await fs.rm(absolutePathToLocalOutput, { recursive: true, force: true });
                     await fs.mkdir(absolutePathToLocalOutput, { recursive: true });
                     const repo = await cloneRepository({
