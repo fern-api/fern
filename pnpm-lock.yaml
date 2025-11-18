@@ -2044,6 +2044,9 @@ importers:
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../packages/cli/logger
+      '@fern-api/mock-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/mock-utils
       '@fern-api/rust-base':
         specifier: workspace:*
         version: link:../base
