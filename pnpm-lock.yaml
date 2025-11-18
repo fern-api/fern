@@ -7973,6 +7973,10 @@ importers:
         version: 17.7.2
 
   packages/seed:
+    dependencies:
+      '@boundaryml/baml':
+        specifier: ^0.211.2
+        version: 0.211.2
     devDependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
