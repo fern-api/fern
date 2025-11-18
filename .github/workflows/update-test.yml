@@ -11,6 +11,10 @@ concurrency:
 permissions:
   contents: write
 
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+
 jobs:
   update-test:
     if: github.repository == 'fern-api/fern' && github.ref != 'refs/heads/main'
