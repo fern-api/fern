@@ -32,9 +32,6 @@ request := &fern.UploadFileRequest{
     }
 client.FileUploadExample.UploadFile(
         context.TODO(),
-        strings.NewReader(
-            "",
-        ),
         request,
     )
 }

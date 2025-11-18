@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix issue where x-fern-explorer was not hiding routes from the API Explorer
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.9.2
+
+- changelogEntry:
+    - summary: |
         Fix issue where `<Code />` components were not able to be added during `fern docs dev` mode.
       type: fix
   irVersion: 61
