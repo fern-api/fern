@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix IR generation to reject examples with null or undefined primitive values instead of creating malformed examples. When example values are missing for required primitive fields, the IR generator now throws an error to prevent downstream crashes in SDK generators.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.9.3
+
+- changelogEntry:
+    - summary: |
         Fix issue where x-fern-explorer was not hiding routes from the API Explorer
       type: fix
   irVersion: 61

@@ -432,6 +432,9 @@ export function convertTypeReferenceExample({
                             ExampleContainer.literal({ literal: ExamplePrimitive.boolean(literal.boolean) })
                         );
                     case "string":
+                        if (literal.string == null) {
+                            throw new Error("Literal string value is null or undefined");
+                        }
                         return ExampleTypeReferenceShape.container(
                             ExampleContainer.literal({
                                 literal: ExamplePrimitive.string({
@@ -513,6 +516,9 @@ function convertPrimitiveExample({
     return PrimitiveTypeV1._visit(typeBeingExemplified, {
         string: () => {
             if (typeof example !== "string") {
+                if (example == null) {
+                    throw new Error("Example value is null or undefined for string type");
+                }
                 return ExampleTypeReferenceShape.primitive(
                     ExamplePrimitive.string({
                         original: Examples.STRING
@@ -530,6 +536,9 @@ function convertPrimitiveExample({
         },
         dateTime: () => {
             if (typeof example !== "string") {
+                if (example == null) {
+                    throw new Error("Example value is null or undefined for dateTime type");
+                }
                 return ExampleTypeReferenceShape.primitive(
                     ExamplePrimitive.string({
                         original: Examples.DATE_TIME
@@ -545,6 +554,9 @@ function convertPrimitiveExample({
         },
         date: () => {
             if (typeof example !== "string") {
+                if (example == null) {
+                    throw new Error("Example value is null or undefined for date type");
+                }
                 return ExampleTypeReferenceShape.primitive(
                     ExamplePrimitive.string({
                         original: Examples.DATE
@@ -555,6 +567,9 @@ function convertPrimitiveExample({
         },
         base64: () => {
             if (typeof example !== "string") {
+                if (example == null) {
+                    throw new Error("Example value is null or undefined for base64 type");
+                }
                 return ExampleTypeReferenceShape.primitive(
                     ExamplePrimitive.string({
                         original: Examples.BASE64
@@ -569,48 +584,72 @@ function convertPrimitiveExample({
         },
         uint: () => {
             if (typeof example !== "number") {
+                if (example == null) {
+                    throw new Error("Example value is null or undefined for uint type");
+                }
                 return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint(Examples.UINT));
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint(example));
         },
         uint64: () => {
             if (typeof example !== "number") {
+                if (example == null) {
+                    throw new Error("Example value is null or undefined for uint64 type");
+                }
                 return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint64(Examples.UINT64));
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint64(example));
         },
         integer: () => {
             if (typeof example !== "number") {
+                if (example == null) {
+                    throw new Error("Example value is null or undefined for integer type");
+                }
                 return ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(Examples.INT));
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(example));
         },
         float: () => {
             if (typeof example !== "number") {
+                if (example == null) {
+                    throw new Error("Example value is null or undefined for float type");
+                }
                 return ExampleTypeReferenceShape.primitive(ExamplePrimitive.float(Examples.FLOAT));
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.float(example));
         },
         double: () => {
             if (typeof example !== "number") {
+                if (example == null) {
+                    throw new Error("Example value is null or undefined for double type");
+                }
                 return ExampleTypeReferenceShape.primitive(ExamplePrimitive.double(Examples.DOUBLE));
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.double(example));
         },
         long: () => {
             if (typeof example !== "number") {
+                if (example == null) {
+                    throw new Error("Example value is null or undefined for long type");
+                }
                 return ExampleTypeReferenceShape.primitive(ExamplePrimitive.long(Examples.UINT));
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.long(example));
         },
         boolean: () => {
             if (typeof example !== "boolean") {
+                if (example == null) {
+                    throw new Error("Example value is null or undefined for boolean type");
+                }
                 return ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(Examples.BOOLEAN));
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(example));
         },
         uuid: () => {
             if (typeof example !== "string") {
+                if (example == null) {
+                    throw new Error("Example value is null or undefined for uuid type");
+                }
                 return ExampleTypeReferenceShape.primitive(
                     ExamplePrimitive.string({
                         original: Examples.UUID
@@ -621,6 +660,9 @@ function convertPrimitiveExample({
         },
         bigInteger: () => {
             if (typeof example !== "string") {
+                if (example == null) {
+                    throw new Error("Example value is null or undefined for bigInteger type");
+                }
                 return ExampleTypeReferenceShape.primitive(
                     ExamplePrimitive.string({
                         original: Examples.BIG_INTEGER
