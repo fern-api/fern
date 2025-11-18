@@ -1,3 +1,11 @@
+- version: 3.17.0
+  changelogEntry:
+    - summary: |
+        Allow appending arbitrary content to build.gradle via build_gradle (or build-gradle) custom config. This enables users to add custom repositories, plugins, or other Gradle configuration to the generated build.gradle file.
+      type: feat
+  createdAt: "2025-11-18"
+  irVersion: 61
+
 - version: 3.16.0
   changelogEntry:
     - summary: |

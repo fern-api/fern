@@ -675,6 +675,24 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     + "}");
         }
 
+        if (generatorConfig.getCustomConfig().isPresent()) {
+            Object customConfig = generatorConfig.getCustomConfig().get();
+            if (customConfig instanceof java.util.Map) {
+                @SuppressWarnings("unchecked")
+                java.util.Map<String, Object> configMap = (java.util.Map<String, Object>) customConfig;
+                Object buildGradleContent = configMap.get("build_gradle");
+                if (buildGradleContent == null) {
+                    buildGradleContent = configMap.get("build-gradle");
+                }
+                if (buildGradleContent != null) {
+                    String customContent = buildGradleContent.toString();
+                    if (!customContent.isEmpty()) {
+                        buildGradle.addCustomBlocks(customContent);
+                    }
+                }
+            }
+        }
+
         addGeneratedFile(buildGradle.build());
         String settingsGradleContents = "";
         if (maybeMavenCoordinate.isPresent()) {
