@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix issue where `<Code />` components were not able to be added during `fern docs dev` mode.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.9.1
+
+- changelogEntry:
+    - summary: |
         Add external configuration to tsup build to prevent dev-only dependencies (prettier, vitest, typescript, tsup, depcheck, @types/*) from being accidentally bundled. 
         This ensures the CLI bundle only includes runtime dependencies and enables metafile generation for bundle analysis.
       type: feat
