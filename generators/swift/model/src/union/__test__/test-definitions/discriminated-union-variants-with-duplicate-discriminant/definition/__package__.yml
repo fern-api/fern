@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  UnionWithDuplicateVariantDiscriminant:
+    union:
+      variantA: VariantA
+      variantB: VariantB
+      variantC: VariantC
+
+  VariantA:
+    properties:
+      propertyA: string
+
+  VariantB:
+    properties:
+      propertyB: string
+      type: literal<"variantB">
+
+  VariantC:
+    properties:
+      propertyC: string

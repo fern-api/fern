@@ -1,0 +1,272 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "getData": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "headers": {
+                    "X-API-Key": "[object Object]",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/data",
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getFlexible": {
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+                {
+                  "BearerAuth": [],
+                },
+                {
+                  "OAuth2": [
+                    "read",
+                  ],
+                },
+              ],
+              "docs": undefined,
+              "examples": [
+                {
+                  "headers": {
+                    "X-API-Key": "[object Object]",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/flexible",
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getProtected": {
+              "auth": [
+                {
+                  "BearerAuth": [],
+                },
+              ],
+              "docs": undefined,
+              "examples": [
+                {
+                  "headers": {
+                    "X-API-Key": "[object Object]",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/protected",
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getPublic": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "headers": {
+                    "X-API-Key": "[object Object]",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/public",
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getSecure": {
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                  "BearerAuth": [],
+                },
+              ],
+              "docs": undefined,
+              "examples": [
+                {
+                  "headers": {
+                    "X-API-Key": "[object Object]",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/secure",
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "OauthScope": {
+            "enum": [
+              {
+                "docs": "Read access",
+                "value": "read",
+              },
+              {
+                "docs": "Write access",
+                "value": "write",
+              },
+              {
+                "docs": "Admin access",
+                "value": "admin",
+              },
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  OauthScope:
+    enum:
+      - value: read
+        docs: Read access
+      - value: write
+        docs: Write access
+      - value: admin
+        docs: Admin access
+    source:
+      openapi: ../openapi.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getData:
+      path: /data
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      examples:
+        - headers:
+            X-API-Key: '[object Object]'
+    getPublic:
+      path: /public
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      examples:
+        - headers:
+            X-API-Key: '[object Object]'
+    getProtected:
+      path: /protected
+      method: GET
+      auth:
+        - BearerAuth: []
+      source:
+        openapi: ../openapi.yml
+      examples:
+        - headers:
+            X-API-Key: '[object Object]'
+    getSecure:
+      path: /secure
+      method: GET
+      auth:
+        - ApiKeyAuth: []
+          BearerAuth: []
+      source:
+        openapi: ../openapi.yml
+      examples:
+        - headers:
+            X-API-Key: '[object Object]'
+    getFlexible:
+      path: /flexible
+      method: GET
+      auth:
+        - ApiKeyAuth: []
+        - BearerAuth: []
+        - OAuth2:
+            - read
+      source:
+        openapi: ../openapi.yml
+      examples:
+        - headers:
+            X-API-Key: '[object Object]'
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "auth": "ApiKeyAuth",
+      "auth-schemes": {
+        "ApiKeyAuth": {
+          "header": "X-API-Key",
+          "name": "apiKey",
+          "type": "string",
+        },
+        "BasicAuth": {
+          "scheme": "basic",
+        },
+        "BearerAuth": {
+          "scheme": "bearer",
+        },
+        "OAuth2": {
+          "scheme": "bearer",
+        },
+      },
+      "display-name": "Security and Auth Edge Cases",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "headers": {
+        "X-API-Key": {
+          "env": undefined,
+          "name": "apiKey",
+          "type": "string",
+        },
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Security and Auth Edge Cases
+auth-schemes:
+  ApiKeyAuth:
+    header: X-API-Key
+    name: apiKey
+    type: string
+  BearerAuth:
+    scheme: bearer
+  BasicAuth:
+    scheme: basic
+  OAuth2:
+    scheme: bearer
+auth: ApiKeyAuth
+headers:
+  X-API-Key:
+    type: string
+    name: apiKey
+",
+  },
+}

@@ -15,6 +15,7 @@ lib/
 build/
 generated/
 seed/
+seed-remote-local/
 .git/
 .husky/
 .turbo/

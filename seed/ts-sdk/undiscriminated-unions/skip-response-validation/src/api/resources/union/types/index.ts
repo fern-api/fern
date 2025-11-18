@@ -1,3 +1,4 @@
+export * from "./ConvertToken.js";
 export * from "./Key.js";
 export * from "./KeyType.js";
 export * from "./Metadata.js";
@@ -8,7 +9,9 @@ export * from "./NestedUnionL1.js";
 export * from "./NestedUnionL2.js";
 export * from "./NestedUnionRoot.js";
 export * from "./OptionalMetadata.js";
+export * from "./PaymentMethodUnion.js";
 export * from "./Request.js";
+export * from "./TokenizeCard.js";
 export * from "./TypeWithOptionalUnion.js";
 export * from "./UnionWithDuplicateTypes.js";
 export * from "./UnionWithIdenticalPrimitives.js";

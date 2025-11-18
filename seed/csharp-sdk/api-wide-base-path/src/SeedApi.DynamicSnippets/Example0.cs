@@ -14,8 +14,8 @@ public class Example0
         await client.Service.PostAsync(
             "pathParam",
             "serviceParam",
-            "resourceParam",
-            1
+            1,
+            "resourceParam"
         );
     }
 
