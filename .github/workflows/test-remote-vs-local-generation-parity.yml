@@ -1,0 +1,95 @@
+name: Test Remote vs Local Generation Parity
+
+on:
+  # Runs every morning at 8:00 AM Eastern Time (1:00 PM UTC)
+  schedule:
+    - cron: "0 13 * * *"
+  # Runs when triggered manually
+  workflow_dispatch:
+
+# Cancel previous workflows when another is triggered
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  test-remote-local-parity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Compile
+        run: pnpm compile
+
+      - name: Build Fern CLI
+        run: pnpm fern:build
+
+      - name: Build Seed CLI
+        run: pnpm seed:build
+
+      - name: Run Seed Test Remote-Local (GitHub Output Mode)
+        run: pnpm seed test-remote-local --output-mode github
+
+      # - name: Run Seed Test Remote-Local (Local Output Mode)
+      # run: pnpm seed test-remote-local --output-mode local
+
+      - name: Check for Changes
+        id: check-changes
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            echo "has-changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has-changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request
+        if: steps.check-changes.outputs.has-changes == 'true'
+        id: cpr
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.ACTIONS_PAT }}
+          commit-message: "chore(seed): update remote-local parity test outputs"
+          title: "chore(seed): update remote-local parity test outputs"
+          branch: seed-remote-local-parity-updates
+          body: |
+            Auto-generated PR from seed-remote-local-parity workflow.
+
+            This PR contains updates from running:
+            - `pnpm seed test-remote-local --output-mode github`
+            - `pnpm seed test-remote-local --output-mode local`
+
+            Triggered by: ${{ github.event_name }}
+            Branch: ${{ github.ref_name }}
+            Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          delete-branch: true
+          add-paths: |
+            seed-remote-local/**
+          labels: |
+            seed
+            automated-pr
+
+      - name: Log PR Creation
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        run: |
+          echo "PR Created: ${{ steps.cpr.outputs.pull-request-url }}"
+
+      - name: Log PR Update
+        if: steps.cpr.outputs.pull-request-operation == 'updated'
+        run: |
+          echo "PR Updated: ${{ steps.cpr.outputs.pull-request-url }}"
+
+      - name: Log No Changes
+        if: steps.check-changes.outputs.has-changes == 'false'
+        run: |
+          echo "No changes detected - skipping PR creation"
