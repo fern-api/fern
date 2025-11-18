@@ -197,6 +197,45 @@ public abstract class AbstractClientGeneratorUtils {
                             .get());
                 }
 
+                if (httpEndpointMethodSpecs.getInputStreamMethodSpec().isPresent()) {
+                    rawClientImplBuilder.addMethod(
+                            rawHttpEndpointMethodSpecs.getInputStreamMethodSpec().get());
+                    implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
+                            .getInputStreamMethodSpec()
+                            .get());
+                }
+
+                if (httpEndpointMethodSpecs.getInputStreamWithMediaTypeMethodSpec().isPresent()) {
+                    rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs
+                            .getInputStreamWithMediaTypeMethodSpec()
+                            .get());
+                    implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
+                            .getInputStreamWithMediaTypeMethodSpec()
+                            .get());
+                }
+
+                if (httpEndpointMethodSpecs
+                        .getInputStreamWithRequestOptionsMethodSpec()
+                        .isPresent()) {
+                    rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs
+                            .getInputStreamWithRequestOptionsMethodSpec()
+                            .get());
+                    implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
+                            .getInputStreamWithRequestOptionsMethodSpec()
+                            .get());
+                }
+
+                if (httpEndpointMethodSpecs
+                        .getInputStreamWithMediaTypeAndRequestOptionsMethodSpec()
+                        .isPresent()) {
+                    rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs
+                            .getInputStreamWithMediaTypeAndRequestOptionsMethodSpec()
+                            .get());
+                    implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
+                            .getInputStreamWithMediaTypeAndRequestOptionsMethodSpec()
+                            .get());
+                }
+
                 generatedWrappedRequests.addAll(httpEndpointMethodSpecFactory.getGeneratedWrappedRequests());
             }
         }

@@ -334,7 +334,11 @@ public abstract class AbstractEndpointWriter {
                 endpointWithoutRequestOptions,
                 endpointWithoutRequest,
                 byteArrayMethodSpec,
-                nonRequestOptionsByteArrayMethodSpec);
+                nonRequestOptionsByteArrayMethodSpec,
+                null, // inputStreamMethodSpec - TODO: implement
+                null, // inputStreamWithMediaTypeMethodSpec - TODO: implement
+                null, // inputStreamWithRequestOptionsMethodSpec - TODO: implement
+                null); // inputStreamWithMediaTypeAndRequestOptionsMethodSpec - TODO: implement
     }
 
     public abstract CodeBlock getInitializeRequestCodeBlock(

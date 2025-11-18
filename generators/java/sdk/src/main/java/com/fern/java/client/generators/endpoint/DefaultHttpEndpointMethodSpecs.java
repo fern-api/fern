@@ -26,18 +26,30 @@ public final class DefaultHttpEndpointMethodSpecs implements HttpEndpointMethodS
     private final MethodSpec noRequestBodyMethodSpec;
     private final MethodSpec byteArrayMethodSpec;
     private final MethodSpec nonRequestOptionsByteArrayMethodSpec;
+    private final MethodSpec inputStreamMethodSpec;
+    private final MethodSpec inputStreamWithMediaTypeMethodSpec;
+    private final MethodSpec inputStreamWithRequestOptionsMethodSpec;
+    private final MethodSpec inputStreamWithMediaTypeAndRequestOptionsMethodSpec;
 
     public DefaultHttpEndpointMethodSpecs(
             MethodSpec requestOptionsMethodSpec,
             MethodSpec nonRequestOptionsMethodSpec,
             MethodSpec noRequestBodyMethodSpec,
             MethodSpec byteArrayMethodSpec,
-            MethodSpec nonRequestOptionsByteArrayMethodSpec) {
+            MethodSpec nonRequestOptionsByteArrayMethodSpec,
+            MethodSpec inputStreamMethodSpec,
+            MethodSpec inputStreamWithMediaTypeMethodSpec,
+            MethodSpec inputStreamWithRequestOptionsMethodSpec,
+            MethodSpec inputStreamWithMediaTypeAndRequestOptionsMethodSpec) {
         this.nonRequestOptionsMethodSpec = nonRequestOptionsMethodSpec;
         this.requestOptionsMethodSpec = requestOptionsMethodSpec;
         this.noRequestBodyMethodSpec = noRequestBodyMethodSpec;
         this.byteArrayMethodSpec = byteArrayMethodSpec;
         this.nonRequestOptionsByteArrayMethodSpec = nonRequestOptionsByteArrayMethodSpec;
+        this.inputStreamMethodSpec = inputStreamMethodSpec;
+        this.inputStreamWithMediaTypeMethodSpec = inputStreamWithMediaTypeMethodSpec;
+        this.inputStreamWithRequestOptionsMethodSpec = inputStreamWithRequestOptionsMethodSpec;
+        this.inputStreamWithMediaTypeAndRequestOptionsMethodSpec = inputStreamWithMediaTypeAndRequestOptionsMethodSpec;
     }
 
     @Override
@@ -63,5 +75,25 @@ public final class DefaultHttpEndpointMethodSpecs implements HttpEndpointMethodS
     @Override
     public Optional<MethodSpec> getNonRequestOptionsByteArrayMethodSpec() {
         return Optional.ofNullable(nonRequestOptionsByteArrayMethodSpec);
+    }
+
+    @Override
+    public Optional<MethodSpec> getInputStreamMethodSpec() {
+        return Optional.ofNullable(inputStreamMethodSpec);
+    }
+
+    @Override
+    public Optional<MethodSpec> getInputStreamWithMediaTypeMethodSpec() {
+        return Optional.ofNullable(inputStreamWithMediaTypeMethodSpec);
+    }
+
+    @Override
+    public Optional<MethodSpec> getInputStreamWithRequestOptionsMethodSpec() {
+        return Optional.ofNullable(inputStreamWithRequestOptionsMethodSpec);
+    }
+
+    @Override
+    public Optional<MethodSpec> getInputStreamWithMediaTypeAndRequestOptionsMethodSpec() {
+        return Optional.ofNullable(inputStreamWithMediaTypeAndRequestOptionsMethodSpec);
     }
 }
