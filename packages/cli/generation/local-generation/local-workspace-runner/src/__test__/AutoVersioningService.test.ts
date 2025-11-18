@@ -776,7 +776,11 @@ describe("AutoVersioningService", () => {
             expect(finalContent).toContain("1.0.1");
             expect(finalContent).toBe('{\n  "name": "test-sdk",\n  "version": "1.0.1"\n}');
 
-            await fs.unlink(diffFile);
+            try {
+                await fs.unlink(diffFile);
+            } catch (error) {
+                console.warn(`Failed to cleanup diff file ${diffFile}:`, error);
+            }
         } finally {
             await fs.rm(tempDir, { recursive: true, force: true });
         }
@@ -825,7 +829,11 @@ describe("AutoVersioningService", () => {
             expect(finalContent).toContain("v2.4.0");
             expect(finalContent).toBe('package sdk\n\nconst Version = "v2.4.0"\n');
 
-            await fs.unlink(diffFile);
+            try {
+                await fs.unlink(diffFile);
+            } catch (error) {
+                console.warn(`Failed to cleanup diff file ${diffFile}:`, error);
+            }
         } finally {
             await fs.rm(tempDir, { recursive: true, force: true });
         }
