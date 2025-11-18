@@ -1,8 +1,5 @@
-import { ClientRegistry, setLogLevel } from "@boundaryml/baml";
+import { ClientRegistry, getLogLevel, setLogLevel } from "@boundaryml/baml";
 import { generatorsYml } from "@fern-api/configuration";
-
-// BAML logs are too verbose by default (includes prompt and request/response bodies)
-setLogLevel("WARN");
 
 /**
  * Creates and configures a BAML ClientRegistry based on the provided AI service configuration.
@@ -29,6 +26,12 @@ export function configureBamlClient(config: generatorsYml.AiServicesSchema): Cli
 
     // Set it as the primary client
     registry.setPrimary("ConfiguredClient");
+
+    // BAML logs are too verbose by default (includes prompt and request/response bodies)
+    // We only do this once to avoid polluting the logs with messages about the log level change
+    if (getLogLevel() !== "WARN") {
+        setLogLevel("WARN");
+    }
 
     return registry;
 }
