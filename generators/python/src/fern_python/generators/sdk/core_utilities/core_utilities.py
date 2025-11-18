@@ -210,6 +210,16 @@ class CoreUtilities:
                 ),
                 exports={"SyncPager", "AsyncPager"} if not self._exclude_types_from_init_exports else set(),
             )
+            # Copy custom pagination file (for user customization)
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="custom_pagination.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="custom_pagination"),
+                ),
+                exports={"SyncCustomPager", "AsyncCustomPager"} if not self._exclude_types_from_init_exports else set(),
+            )
 
         if self._allow_skipping_validation:
             self._copy_file_to_project(
@@ -643,9 +653,21 @@ class CoreUtilities:
             ),
         )
 
-    def get_paginator_type(self, inner_type: AST.TypeHint, response_type: AST.TypeHint, is_async: bool) -> AST.TypeHint:
+    def get_custom_paginator_reference(self, is_async: bool) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "custom_pagination"),
+                named_import="AsyncCustomPager" if is_async else "SyncCustomPager",
+            ),
+        )
+
+    def get_paginator_type(
+        self, inner_type: AST.TypeHint, response_type: AST.TypeHint, is_async: bool, is_custom: bool = False
+    ) -> AST.TypeHint:
+        pager_reference = self.get_custom_paginator_reference(is_async) if is_custom else self.get_paginator_reference(is_async)
         return AST.TypeHint(
-            type=self.get_paginator_reference(is_async),
+            type=pager_reference,
             type_parameters=[AST.TypeParameter(inner_type), AST.TypeParameter(response_type)],
         )
 
