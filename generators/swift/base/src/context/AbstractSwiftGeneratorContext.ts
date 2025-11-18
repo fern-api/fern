@@ -1,5 +1,5 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
-import { assertDefined, assertNever } from "@fern-api/core-utils";
+import { assertDefined, assertNever, entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseSwiftCustomConfigSchema, Referencer, swift, UndiscriminatedUnion } from "@fern-api/swift-codegen";
 import {
@@ -17,7 +17,6 @@ import {
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-
 import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
 import { SwiftProject } from "../project";
 import { CycleDetector } from "./cycle-detector";
@@ -77,6 +76,18 @@ export abstract class AbstractSwiftGeneratorContext<
         nameRegistry.registerRootClientSymbol({
             configClientClassName: this.customConfig.clientClassName,
             apiNamePascalCase: ir.apiName.pascalCase.unsafeName
+        });
+        entries(swift.SourceTemplateFileSpecs).forEach(([templateId]) => {
+            switch (templateId) {
+                case "ClientError":
+                    nameRegistry.registerErrorEnumSymbol(ir.apiName.pascalCase.unsafeName);
+                    break;
+                case "HTTPClient":
+                    nameRegistry.registerSourceStaticSymbol(templateId, { type: "class" });
+                    break;
+                default:
+                    assertNever(templateId);
+            }
         });
         nameRegistry.registerEnvironmentSymbol({
             configEnvironmentEnumName: this.customConfig.environmentEnumName,

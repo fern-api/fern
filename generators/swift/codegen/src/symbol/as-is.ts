@@ -4,7 +4,6 @@ export type AsIsSymbolName =
     | "JSONValue"
     | "CalendarDate"
     | "HTTP"
-    | "HTTPClient"
     | "MultipartFormData"
     | "MultipartFormDataConvertible"
     | "MultipartFormField"
@@ -13,7 +12,6 @@ export type AsIsSymbolName =
     | "Serde"
     | "StringKey"
     | "ClientConfig"
-    | "ClientError"
     | "FormFile"
     | "HTTPError"
     | "Nullable"
@@ -45,11 +43,6 @@ export const SourceAsIsFileSpecs = {
         relativePathToDir: "Core/Networking",
         filenameWithoutExtension: "HTTP",
         symbols: [{ name: "HTTP", shape: { type: "enum-container" } }]
-    },
-    HttpClient: {
-        relativePathToDir: "Core/Networking",
-        filenameWithoutExtension: "HTTPClient",
-        symbols: [{ name: "HTTPClient", shape: { type: "class" } }]
     },
     MultipartFormData: {
         relativePathToDir: "Core/Networking",
@@ -135,11 +128,6 @@ export const SourceAsIsFileSpecs = {
         relativePathToDir: "Public",
         filenameWithoutExtension: "ClientConfig",
         symbols: [{ name: "ClientConfig", shape: { type: "class" } }]
-    },
-    ClientError: {
-        relativePathToDir: "Public",
-        filenameWithoutExtension: "ClientError",
-        symbols: [{ name: "ClientError", shape: { type: "enum-with-associated-values" } }]
     },
     FormFile: {
         relativePathToDir: "Public",

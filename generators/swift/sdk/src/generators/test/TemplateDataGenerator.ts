@@ -35,7 +35,32 @@ export class TemplateDataGenerator {
         return this.context.ir.dynamic;
     }
 
-    public generateTemplateData(templateId: TestTemplateFileId) {
+    public generateSourceTemplateData(templateId: swift.SourceTemplateFileId) {
+        switch (templateId) {
+            case "ClientError":
+                return this.generateTemplateDataForClientError();
+            case "HTTPClient":
+                return this.generateTemplateDataForHTTPClient();
+            default:
+                assertNever(templateId);
+        }
+    }
+
+    private generateTemplateDataForClientError() {
+        const errorEnumSymbol = this.context.project.nameRegistry.getErrorEnumSymbolOrThrow();
+        return {
+            errorEnumName: errorEnumSymbol.name
+        };
+    }
+
+    private generateTemplateDataForHTTPClient() {
+        const errorEnumSymbol = this.context.project.nameRegistry.getErrorEnumSymbolOrThrow();
+        return {
+            errorEnumName: errorEnumSymbol.name
+        };
+    }
+
+    public generateTestTemplateData(templateId: TestTemplateFileId) {
         switch (templateId) {
             case "ClientErrorTests":
                 return this.generateTemplateDataForClientErrorTests();
@@ -50,6 +75,7 @@ export class TemplateDataGenerator {
 
     private generateTemplateDataForClientErrorTests() {
         const moduleSymbol = this.context.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        const errorEnumSymbol = this.context.project.nameRegistry.getErrorEnumSymbolOrThrow();
         const clientDeclaration = this.generateRootClientInitializationStatement();
         const endpointCallExpression = this.generateEndpointMethodCallExpression();
         if (!clientDeclaration || !endpointCallExpression) {
@@ -57,6 +83,7 @@ export class TemplateDataGenerator {
         }
         return {
             moduleName: moduleSymbol.name,
+            errorEnumName: errorEnumSymbol.name,
             clientDeclaration: clientDeclaration.toStringWithIndentation(3),
             endpointCall: swift.Statement.discardAssignment(endpointCallExpression).toStringWithIndentation(4)
         };

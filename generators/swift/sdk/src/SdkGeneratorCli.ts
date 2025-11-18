@@ -1,7 +1,7 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever, entries, extractErrorMessage, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractSwiftGeneratorCli, TestTemplateFiles } from "@fern-api/swift-base";
+import { AbstractSwiftGeneratorCli, SourceTemplateFiles, TestTemplateFiles } from "@fern-api/swift-base";
 import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/swift-dynamic-snippets";
 import {
@@ -152,6 +152,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     private async generateSourceFiles(context: SdkGeneratorContext): Promise<void> {
         // Generation order determines priority when resolving duplicate file names
         await this.generateSourceAsIsFiles(context);
+        await this.generateSourceTemplateFiles(context);
         this.generateSourceSubClientFiles(context);
         this.generateSourceRequestFiles(context);
         this.generateSourceSchemaFiles(context);
@@ -167,6 +168,24 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     directory: def.directory,
                     contents: await def.loadContents()
                 });
+            })
+        );
+    }
+
+    private async generateSourceTemplateFiles(context: SdkGeneratorContext) {
+        const templateDataGenerator = new TemplateDataGenerator({ context });
+        await Promise.all(
+            entries(SourceTemplateFiles).map(async ([templateId, template]) => {
+                const rawContents = await template.loadContents();
+                const templateData = templateDataGenerator.generateSourceTemplateData(templateId);
+                if (templateData) {
+                    const contents = this.renderTemplate(rawContents, templateData);
+                    context.project.addSourceAsIsFile({
+                        nameCandidateWithoutExtension: template.filenameWithoutExtension(templateData),
+                        directory: template.directory,
+                        contents
+                    });
+                }
             })
         );
     }
@@ -588,7 +607,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         await Promise.all(
             entries(TestTemplateFiles).map(async ([templateId, template]) => {
                 const rawContents = await template.loadContents();
-                const templateData = templateDataGenerator.generateTemplateData(templateId);
+                const templateData = templateDataGenerator.generateTestTemplateData(templateId);
                 if (templateData) {
                     const contents = this.renderTemplate(rawContents, templateData);
                     context.project.addTestAsIsFile({

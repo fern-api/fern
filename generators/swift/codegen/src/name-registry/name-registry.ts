@@ -1,4 +1,4 @@
-import { assertDefined, SymbolRegistry as Namespace } from "@fern-api/core-utils";
+import { assertDefined, assertNever, SymbolRegistry as Namespace } from "@fern-api/core-utils";
 import { uniqWith } from "lodash-es";
 import { swift } from "..";
 import { LiteralEnum } from "../helpers";
@@ -28,8 +28,8 @@ export class NameRegistry {
     private readonly sourceModuleNamespace: SourceModuleNamespace;
     private readonly testModuleNamespace: TestModuleNamespace;
     private readonly requestsNamespace: RequestsNamespace;
-    private readonly sourceAsIsSymbolsByName: Map<string, swift.Symbol>;
-    private readonly testAsIsSymbolsByName: Map<string, swift.Symbol>;
+    private readonly sourceStaticSymbolsByName: Map<string, swift.Symbol>;
+    private readonly testStaticSymbolsByName: Map<string, swift.Symbol>;
     private readonly requestTypeSymbols: swift.Symbol[];
     private readonly subClientSymbols: swift.Symbol[];
     private readonly nestedLiteralEnumSymbolsByParentSymbolId: Map<string, Map<string, swift.Symbol>>;
@@ -41,8 +41,8 @@ export class NameRegistry {
         this.sourceModuleNamespace = new SourceModuleNamespace();
         this.testModuleNamespace = new TestModuleNamespace();
         this.requestsNamespace = new RequestsNamespace();
-        this.sourceAsIsSymbolsByName = new Map();
-        this.testAsIsSymbolsByName = new Map();
+        this.sourceStaticSymbolsByName = new Map();
+        this.testStaticSymbolsByName = new Map();
         this.requestTypeSymbols = [];
         this.subClientSymbols = [];
         this.nestedLiteralEnumSymbolsByParentSymbolId = new Map();
@@ -51,9 +51,23 @@ export class NameRegistry {
     }
 
     public getAsIsSymbolOrThrow(symbolName: swift.AsIsSymbolName): swift.Symbol {
-        const symbol = this.sourceAsIsSymbolsByName.get(symbolName);
+        const symbol = this.sourceStaticSymbolsByName.get(symbolName);
         assertDefined(symbol, `As is symbol not found for name "${symbolName}"`);
         return symbol;
+    }
+
+    public getSourceTemplateSymbolOrThrow(templateId: swift.SourceTemplateFileId): swift.Symbol {
+        switch (templateId) {
+            case "ClientError": {
+                return this.getErrorEnumSymbolOrThrow();
+            }
+            case "HTTPClient": {
+                const symbolId = this.symbolRegistry.inferSymbolIdForSourceModuleType(templateId);
+                return swift.Symbol.create(symbolId, templateId, { type: "class" });
+            }
+            default:
+                assertNever(templateId);
+        }
     }
 
     /**
@@ -82,17 +96,21 @@ export class NameRegistry {
         const moduleSymbol = this.symbolRegistry.registerSourceModule(moduleSymbolName);
         asIsSymbols.forEach((asIsSymbol) => {
             const symbolName = asIsSymbol.name;
-            this.symbolRegistry.registerSourceModuleType(symbolName, asIsSymbol.shape);
-            this.sourceModuleNamespace.addAsIsSymbolName(symbolName);
-            const symbolId = this.symbolRegistry.inferSymbolIdForSourceModuleType(symbolName);
-            const symbol = swift.Symbol.create(symbolId, symbolName, asIsSymbol.shape);
-            this.sourceAsIsSymbolsByName.set(symbolName, symbol);
+            this.registerSourceStaticSymbol(symbolName, asIsSymbol.shape);
         });
         return moduleSymbol;
     }
 
     public getRegisteredSourceModuleSymbolOrThrow(): swift.Symbol {
         return this.symbolRegistry.getRegisteredSourceModuleSymbolOrThrow();
+    }
+
+    public registerSourceStaticSymbol(symbolName: string, shape: swift.TypeSymbolShape) {
+        this.symbolRegistry.registerSourceModuleType(symbolName, shape);
+        this.sourceModuleNamespace.addStaticSymbolName(symbolName);
+        const symbolId = this.symbolRegistry.inferSymbolIdForSourceModuleType(symbolName);
+        const symbol = swift.Symbol.create(symbolId, symbolName, shape);
+        this.sourceStaticSymbolsByName.set(symbolName, symbol);
     }
 
     /**
@@ -125,7 +143,7 @@ export class NameRegistry {
             this.testModuleNamespace.addAsIsSymbol(symbolName);
             const symbolId = this.symbolRegistry.inferSymbolIdForTestModuleType(symbolName);
             const symbol = swift.Symbol.create(symbolId, symbolName, asIsSymbol.shape);
-            this.testAsIsSymbolsByName.set(symbolName, symbol);
+            this.testStaticSymbolsByName.set(symbolName, symbol);
         });
         return moduleSymbol;
     }
@@ -188,6 +206,18 @@ export class NameRegistry {
 
     public getEnvironmentSymbolOrThrow(): swift.Symbol {
         const symbolName = this.sourceModuleNamespace.getEnvironmentSymbolNameOrThrow();
+        const symbolId = this.symbolRegistry.inferSymbolIdForSourceModuleType(symbolName);
+        return this.symbolRegistry.getSymbolByIdOrThrow(symbolId);
+    }
+
+    public registerErrorEnumSymbol(apiNamePascalCase: string): swift.Symbol {
+        const candidates: [string, ...string[]] = [`${apiNamePascalCase}Error`, `${apiNamePascalCase}ClientError`];
+        const symbolName = this.sourceModuleNamespace.addErrorEnumSymbolName(candidates);
+        return this.symbolRegistry.registerSourceModuleType(symbolName, { type: "enum-with-associated-values" });
+    }
+
+    public getErrorEnumSymbolOrThrow(): swift.Symbol {
+        const symbolName = this.sourceModuleNamespace.getErrorEnumSymbolNameOrThrow();
         const symbolId = this.symbolRegistry.inferSymbolIdForSourceModuleType(symbolName);
         return this.symbolRegistry.getSymbolByIdOrThrow(symbolId);
     }

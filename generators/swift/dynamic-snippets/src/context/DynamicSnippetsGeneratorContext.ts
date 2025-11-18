@@ -3,7 +3,7 @@ import {
     FernGeneratorExec,
     Options
 } from "@fern-api/browser-compatible-base-generator";
-import { assertDefined, visitDiscriminatedUnion } from "@fern-api/core-utils";
+import { assertDefined, assertNever, entries, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { BaseSwiftCustomConfigSchema, NameRegistry, Referencer, swift } from "@fern-api/swift-codegen";
 import { pascalCase } from "../util/pascal-case";
@@ -52,9 +52,21 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             configClientClassName: this.customConfig?.clientClassName,
             apiNamePascalCase
         });
+        entries(swift.SourceTemplateFileSpecs).forEach(([templateId]) => {
+            switch (templateId) {
+                case "ClientError":
+                    nameRegistry.registerErrorEnumSymbol(apiNamePascalCase);
+                    break;
+                case "HTTPClient":
+                    nameRegistry.registerSourceStaticSymbol(templateId, { type: "class" });
+                    break;
+                default:
+                    assertNever(templateId);
+            }
+        });
         nameRegistry.registerEnvironmentSymbol({
             configEnvironmentEnumName: this.customConfig?.environmentEnumName,
-            apiNamePascalCase: apiNamePascalCase
+            apiNamePascalCase
         });
 
         // Must first register top-level symbols
