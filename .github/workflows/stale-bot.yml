@@ -38,7 +38,7 @@ jobs:
           branches-filter-regex: "^((?!prototype))"
           rate-limit: true
           pr-check: true
-          dry-run: true
+          dry-run: false
           ignore-issue-interaction: true
           include-protected-branches: false
           include-ruleset-branches: false
