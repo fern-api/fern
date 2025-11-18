@@ -172,9 +172,7 @@ export async function runLocalGenerationForWorkspace({
                                 `    version: latest\n` +
                                 `    github:\n` +
                                 `      repository: your-org/your-sdk-repo\n` +
-                                `      mode: pull-request\n` +
-                                `    config:\n` +
-                                `      version: AUTO`
+                                `      mode: pull-request\n`
                         );
                     }
                 }
