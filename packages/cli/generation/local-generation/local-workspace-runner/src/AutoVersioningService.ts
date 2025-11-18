@@ -1,5 +1,6 @@
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
+import { promises as fs } from "fs";
 import * as os from "os";
 import * as path from "path";
 
@@ -46,16 +47,24 @@ export class AutoVersioningService {
      * Generates a git diff from the working directory changes and writes it to a temporary file.
      * This compares the current working directory against the last commit to see what has changed.
      *
-     * @param workingDirectory The git repository directory
+     * @param workingDirectory The directory that should be within a git repository
      * @return Path to the temporary diff file
      * @throws Error if file operations fail or git command fails
      */
     public async generateDiff(workingDirectory: string): Promise<string> {
         const diffFile = path.join(os.tmpdir(), `git-diff-${Date.now()}.patch`);
 
+        // Find the git repository root
+        const gitRoot = await this.findGitRoot(workingDirectory);
+        if (!gitRoot) {
+            throw new Error(`No git repository found containing directory: ${workingDirectory}`);
+        }
+
+        this.logger.info(`Found git repository root: ${gitRoot}`);
+
         // Generate diff between HEAD and working directory (including staged and unstaged changes)
         await loggingExeca(this.logger, "git", ["diff", "HEAD", "--output", diffFile], {
-            cwd: workingDirectory,
+            cwd: gitRoot,
             doNotPipeOutput: true
         });
 
@@ -465,5 +474,34 @@ export class AutoVersioningService {
         }
 
         throw new AutoVersioningException("Could not extract previous version from diff line: " + lineWithMagicVersion);
+    }
+
+    /**
+     * Finds the git repository root by walking up the directory tree from the given path.
+     *
+     * @param startPath The path to start searching from
+     * @return The git repository root path, or null if not found
+     */
+    private async findGitRoot(startPath: string): Promise<string | null> {
+        let currentPath = path.resolve(startPath);
+
+        while (currentPath !== path.dirname(currentPath)) {
+            // Keep going until we reach the filesystem root
+            try {
+                const gitDir = path.join(currentPath, ".git");
+                const stats = await fs.stat(gitDir);
+
+                if (stats.isDirectory() || stats.isFile()) {
+                    // Found .git directory or file (for git worktrees)
+                    return currentPath;
+                }
+            } catch (error) {
+                // .git doesn't exist at this level, continue up
+            }
+
+            currentPath = path.dirname(currentPath);
+        }
+
+        return null; // No git repository found
     }
 }
