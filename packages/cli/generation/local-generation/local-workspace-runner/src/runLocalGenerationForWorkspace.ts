@@ -165,7 +165,7 @@ export async function runLocalGenerationForWorkspace({
                         join(workspace.absoluteFilePath, RelativeFilePath.of(generatorInvocation.raw.snippets.path))
                     );
                 }
-                if (absolutePathToLocalSnippetJSON == null && intermediateRepresentation.selfHosted) {
+                if (absolutePathToLocalSnippetJSON == null && selfhostedGithubConfig != null) {
                     absolutePathToLocalSnippetJSON = AbsoluteFilePath.of(
                         (await getWorkspaceTempDir()).path + "/snippet.json"
                     );
