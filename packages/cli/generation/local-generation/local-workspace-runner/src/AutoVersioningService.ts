@@ -1,8 +1,6 @@
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
-import { promises as fs } from "fs";
 import * as os from "os";
-import * as path from "path";
 
 /**
  * Exception thrown when automatic semantic versioning fails due to inability
@@ -446,34 +444,5 @@ export class AutoVersioningService {
         }
 
         throw new AutoVersioningException("Could not extract previous version from diff line: " + lineWithMagicVersion);
-    }
-
-    /**
-     * Finds the git repository root by walking up the directory tree from the given path.
-     *
-     * @param startPath The path to start searching from
-     * @return The git repository root path, or null if not found
-     */
-    private async findGitRoot(startPath: string): Promise<string | null> {
-        let currentPath = path.resolve(startPath);
-
-        while (currentPath !== path.dirname(currentPath)) {
-            // Keep going until we reach the filesystem root
-            try {
-                const gitDir = path.join(currentPath, ".git");
-                const stats = await fs.stat(gitDir);
-
-                if (stats.isDirectory() || stats.isFile()) {
-                    // Found .git directory or file (for git worktrees)
-                    return currentPath;
-                }
-            } catch (error) {
-                // .git doesn't exist at this level, continue up
-            }
-
-            currentPath = path.dirname(currentPath);
-        }
-
-        return null; // No git repository found
     }
 }
