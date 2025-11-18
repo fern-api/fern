@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.23.4
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixed a bug where discriminated union variant properties that collided with the discriminant property were incorrectly included in the generated struct.
+  createdAt: "2025-11-16"
+  irVersion: 61
+
 - version: 0.23.3
   changelogEntry:
     - type: fix
