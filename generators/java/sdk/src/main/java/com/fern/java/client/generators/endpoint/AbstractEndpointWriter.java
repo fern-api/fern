@@ -334,6 +334,281 @@ public abstract class AbstractEndpointWriter {
         MethodSpec inputStreamWithRequestOptionsMethodSpec = null;
         MethodSpec inputStreamWithMediaTypeAndRequestOptionsMethodSpec = null;
 
+        Optional<FileUploadRequest> maybeFileUpload =
+                httpEndpoint.getRequestBody().flatMap(HttpRequestBody::getFileUpload);
+        if (maybeFileUpload.isPresent()) {
+            FileUploadRequest fileUpload = maybeFileUpload.get();
+            List<FileProperty> fileProperties = fileUpload.getProperties().stream()
+                    .filter(prop -> prop.visit(new FileUploadRequestProperty.Visitor<Boolean>() {
+                        @Override
+                        public Boolean visitFile(FileProperty file) {
+                            return true;
+                        }
+
+                        @Override
+                        public Boolean visitBodyProperty(FileUploadBodyProperty bodyProperty) {
+                            return false;
+                        }
+
+                        @Override
+                        public Boolean _visitUnknown(Object unknownType) {
+                            return false;
+                        }
+                    }))
+                    .map(prop -> prop.visit(new FileUploadRequestProperty.Visitor<FileProperty>() {
+                        @Override
+                        public FileProperty visitFile(FileProperty file) {
+                            return file;
+                        }
+
+                        @Override
+                        public FileProperty visitBodyProperty(FileUploadBodyProperty bodyProperty) {
+                            throw new RuntimeException("Expected file property");
+                        }
+
+                        @Override
+                        public FileProperty _visitUnknown(Object unknownType) {
+                            throw new RuntimeException("Unknown property type");
+                        }
+                    }))
+                    .collect(Collectors.toList());
+
+            if (fileProperties.size() == 1) {
+                FileProperty fileProperty = fileProperties.get(0);
+                boolean isSingleFile = fileProperty.visit(new FileProperty.Visitor<Boolean>() {
+                    @Override
+                    public Boolean visitFile(FilePropertySingle file) {
+                        return true;
+                    }
+
+                    @Override
+                    public Boolean visitFileArray(FilePropertyArray fileArray) {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean _visitUnknown(Object unknownType) {
+                        return false;
+                    }
+                });
+
+                if (isSingleFile) {
+                    com.fern.ir.model.commons.NameAndWireValue filePropertyKey =
+                            fileProperty.visit(new com.fern.java.client.generators.visitors.GetFilePropertyKey());
+                    String wireKey = filePropertyKey.getWireValue();
+
+                    List<ParameterSpec> additionalParamsWithoutBody = additionalParameters.stream()
+                            .filter(parameterSpec -> !parameterSpec.name.equals(variables
+                                    .sdkRequest()
+                                    .get()
+                                    .getRequestParameterName()
+                                    .getCamelCase()
+                                    .getUnsafeName()))
+                            .collect(Collectors.toList());
+
+                    ClassName fileStreamClassName =
+                            clientGeneratorContext.getPoetClassNameFactory().getFileStreamClassName();
+                    ClassName mediaTypeClassName =
+                            clientGeneratorContext.getPoetClassNameFactory().getOkhttp3MediaTypeClassName();
+                    ClassName multipartBodyClassName =
+                            clientGeneratorContext.getPoetClassNameFactory().getOkhttp3MultipartBodyClassName();
+                    ClassName requestBodyClassName =
+                            clientGeneratorContext.getPoetClassNameFactory().getOkhttp3RequestBodyClassName();
+                    ClassName inputStreamClassName = ClassName.get(java.io.InputStream.class);
+
+                    ParameterSpec streamParam = ParameterSpec.builder(inputStreamClassName, "stream")
+                            .build();
+                    ParameterSpec filenameParam =
+                            ParameterSpec.builder(String.class, "filename").build();
+                    ParameterSpec mediaTypeParam = ParameterSpec.builder(mediaTypeClassName, "mediaType")
+                            .build();
+
+                    MethodSpec.Builder baseMethodBuilder = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
+                            .addModifiers(Modifier.PUBLIC)
+                            .addParameters(variables.pathParameters)
+                            .addParameters(additionalParamsWithoutBody)
+                            .addParameter(streamParam)
+                            .addParameter(filenameParam)
+                            .returns(endpointWithRequestOptions.returnType);
+
+                    CodeBlock.Builder methodBody = CodeBlock.builder()
+                            .addStatement(
+                                    "$T fs = new $T($N, $N, null)",
+                                    fileStreamClassName,
+                                    fileStreamClassName,
+                                    streamParam,
+                                    filenameParam)
+                            .addStatement(
+                                    "$T $L = new $T().setType($T.FORM)",
+                                    multipartBodyClassName.nestedClass("Builder"),
+                                    variables.getMultipartBodyPropertiesName(),
+                                    multipartBodyClassName.nestedClass("Builder"),
+                                    multipartBodyClassName)
+                            .addStatement(
+                                    "$L.addFormDataPart($S, $N, fs.toRequestBody())",
+                                    variables.getMultipartBodyPropertiesName(),
+                                    wireKey,
+                                    filenameParam)
+                            .addStatement(
+                                    "$T $L = $L.build()",
+                                    requestBodyClassName,
+                                    variables.getOkhttpRequestBodyName(),
+                                    variables.getMultipartBodyPropertiesName())
+                            .add(getInitializeRequestCodeBlock(
+                                    clientOptionsField,
+                                    generatedClientOptions,
+                                    httpEndpoint,
+                                    null,
+                                    generatedObjectMapper,
+                                    httpUrlBuilder,
+                                    false))
+                            .add(responseParserGenerator.getResponseParserCodeBlock(baseMethodBuilder));
+
+                    baseMethodBuilder.addCode(methodBody.build());
+                    inputStreamMethodSpec = baseMethodBuilder.build();
+
+                    MethodSpec.Builder withMediaTypeBuilder = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
+                            .addModifiers(Modifier.PUBLIC)
+                            .addParameters(variables.pathParameters)
+                            .addParameters(additionalParamsWithoutBody)
+                            .addParameter(streamParam)
+                            .addParameter(filenameParam)
+                            .addParameter(mediaTypeParam)
+                            .returns(endpointWithRequestOptions.returnType);
+
+                    CodeBlock.Builder withMediaTypeBody = CodeBlock.builder()
+                            .addStatement(
+                                    "$T fs = new $T($N, $N, $N)",
+                                    fileStreamClassName,
+                                    fileStreamClassName,
+                                    streamParam,
+                                    filenameParam,
+                                    mediaTypeParam)
+                            .addStatement(
+                                    "$T $L = new $T().setType($T.FORM)",
+                                    multipartBodyClassName.nestedClass("Builder"),
+                                    variables.getMultipartBodyPropertiesName(),
+                                    multipartBodyClassName.nestedClass("Builder"),
+                                    multipartBodyClassName)
+                            .addStatement(
+                                    "$L.addFormDataPart($S, $N, fs.toRequestBody())",
+                                    variables.getMultipartBodyPropertiesName(),
+                                    wireKey,
+                                    filenameParam)
+                            .addStatement(
+                                    "$T $L = $L.build()",
+                                    requestBodyClassName,
+                                    variables.getOkhttpRequestBodyName(),
+                                    variables.getMultipartBodyPropertiesName())
+                            .add(getInitializeRequestCodeBlock(
+                                    clientOptionsField,
+                                    generatedClientOptions,
+                                    httpEndpoint,
+                                    null,
+                                    generatedObjectMapper,
+                                    httpUrlBuilder,
+                                    false))
+                            .add(responseParserGenerator.getResponseParserCodeBlock(withMediaTypeBuilder));
+
+                    withMediaTypeBuilder.addCode(withMediaTypeBody.build());
+                    inputStreamWithMediaTypeMethodSpec = withMediaTypeBuilder.build();
+
+                    MethodSpec.Builder withRequestOptionsBuilder = MethodSpec.methodBuilder(
+                                    endpointWithRequestOptions.name)
+                            .addModifiers(Modifier.PUBLIC)
+                            .addParameters(variables.pathParameters)
+                            .addParameters(additionalParamsWithoutBody)
+                            .addParameter(streamParam)
+                            .addParameter(filenameParam)
+                            .addParameter(requestOptionsParameterSpec())
+                            .returns(endpointWithRequestOptions.returnType);
+
+                    CodeBlock.Builder withRequestOptionsBody = CodeBlock.builder()
+                            .addStatement(
+                                    "$T fs = new $T($N, $N, null)",
+                                    fileStreamClassName,
+                                    fileStreamClassName,
+                                    streamParam,
+                                    filenameParam)
+                            .addStatement(
+                                    "$T $L = new $T().setType($T.FORM)",
+                                    multipartBodyClassName.nestedClass("Builder"),
+                                    variables.getMultipartBodyPropertiesName(),
+                                    multipartBodyClassName.nestedClass("Builder"),
+                                    multipartBodyClassName)
+                            .addStatement(
+                                    "$L.addFormDataPart($S, $N, fs.toRequestBody())",
+                                    variables.getMultipartBodyPropertiesName(),
+                                    wireKey,
+                                    filenameParam)
+                            .addStatement(
+                                    "$T $L = $L.build()",
+                                    requestBodyClassName,
+                                    variables.getOkhttpRequestBodyName(),
+                                    variables.getMultipartBodyPropertiesName())
+                            .add(getInitializeRequestCodeBlock(
+                                    clientOptionsField,
+                                    generatedClientOptions,
+                                    httpEndpoint,
+                                    null,
+                                    generatedObjectMapper,
+                                    httpUrlBuilder,
+                                    false))
+                            .add(responseParserGenerator.getResponseParserCodeBlock(withRequestOptionsBuilder));
+
+                    withRequestOptionsBuilder.addCode(withRequestOptionsBody.build());
+                    inputStreamWithRequestOptionsMethodSpec = withRequestOptionsBuilder.build();
+
+                    MethodSpec.Builder withBothBuilder = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
+                            .addModifiers(Modifier.PUBLIC)
+                            .addParameters(variables.pathParameters)
+                            .addParameters(additionalParamsWithoutBody)
+                            .addParameter(streamParam)
+                            .addParameter(filenameParam)
+                            .addParameter(mediaTypeParam)
+                            .addParameter(requestOptionsParameterSpec())
+                            .returns(endpointWithRequestOptions.returnType);
+
+                    CodeBlock.Builder withBothBody = CodeBlock.builder()
+                            .addStatement(
+                                    "$T fs = new $T($N, $N, $N)",
+                                    fileStreamClassName,
+                                    fileStreamClassName,
+                                    streamParam,
+                                    filenameParam,
+                                    mediaTypeParam)
+                            .addStatement(
+                                    "$T $L = new $T().setType($T.FORM)",
+                                    multipartBodyClassName.nestedClass("Builder"),
+                                    variables.getMultipartBodyPropertiesName(),
+                                    multipartBodyClassName.nestedClass("Builder"),
+                                    multipartBodyClassName)
+                            .addStatement(
+                                    "$L.addFormDataPart($S, $N, fs.toRequestBody())",
+                                    variables.getMultipartBodyPropertiesName(),
+                                    wireKey,
+                                    filenameParam)
+                            .addStatement(
+                                    "$T $L = $L.build()",
+                                    requestBodyClassName,
+                                    variables.getOkhttpRequestBodyName(),
+                                    variables.getMultipartBodyPropertiesName())
+                            .add(getInitializeRequestCodeBlock(
+                                    clientOptionsField,
+                                    generatedClientOptions,
+                                    httpEndpoint,
+                                    null,
+                                    generatedObjectMapper,
+                                    httpUrlBuilder,
+                                    false))
+                            .add(responseParserGenerator.getResponseParserCodeBlock(withBothBuilder));
+
+                    withBothBuilder.addCode(withBothBody.build());
+                    inputStreamWithMediaTypeAndRequestOptionsMethodSpec = withBothBuilder.build();
+                }
+            }
+        }
+
         return httpEndpointMethodSpecsFactory.create(
                 endpointWithRequestOptions,
                 endpointWithoutRequestOptions,
