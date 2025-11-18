@@ -72,16 +72,7 @@ class CustomPagination(Paginator):
         # Parse the initial response
         self.init_parsed_response(writer=writer)
         
-        # Create reference to the CustomPager class - this will trigger imports
-        # Import from custom_pagination module (separate file for user customization)
-        pager_class_name = "AsyncCustomPager" if self._is_async else "SyncCustomPager"
-        pager_reference = AST.ClassReference(
-            qualified_name_excluding_import=(),
-            import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._context.core_utilities._module_path, "custom_pagination"),
-                named_import=pager_class_name,
-            ),
-        )
+        pager_reference = self._context.core_utilities.get_custom_paginator_reference(self._is_async)
         
         # Instantiate CustomPager with the response and client wrapper
         writer.write("return ")
