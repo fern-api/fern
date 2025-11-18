@@ -17,6 +17,17 @@ export class AutoVersioningException extends Error {
     }
 }
 
+export interface AutoVersionResult {
+    /**
+     * The new version to use (e.g., "1.2.3" or "v1.2.3").
+     */
+    version: string;
+    /**
+     * The commit message describing the changes.
+     */
+    commitMessage: string;
+}
+
 interface FileSection {
     lines: string[];
 }

@@ -8,6 +8,7 @@ import {
 import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
+import { Project } from "@fern-api/project-loader";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
@@ -32,7 +33,8 @@ export async function generateWorkspace({
     mode,
     runner,
     inspect,
-    lfsOverride
+    lfsOverride,
+    project
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -49,6 +51,7 @@ export async function generateWorkspace({
     runner: ContainerRunner | undefined;
     inspect: boolean;
     lfsOverride: string | undefined;
+    project: Project;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -96,7 +99,8 @@ export async function generateWorkspace({
             context,
             runner,
             absolutePathToPreview,
-            inspect
+            inspect,
+            project
         });
     } else {
         if (!token) {

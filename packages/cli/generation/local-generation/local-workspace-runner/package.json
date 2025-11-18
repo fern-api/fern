@@ -32,9 +32,11 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
+    "@boundaryml/baml": "^0.211.2",
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/auth": "workspace:*",
     "@fern-api/browser-compatible-base-generator": "workspace:*",
+    "@fern-api/cli-ai": "workspace:*",
     "@fern-api/cli-source-resolver": "workspace:*",
     "@fern-api/configuration": "workspace:*",
     "@fern-api/configuration-loader": "workspace:*",
@@ -51,6 +53,7 @@
     "@fern-api/java-dynamic-snippets": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/php-dynamic-snippets": "workspace:*",
+    "@fern-api/project-loader": "workspace:*",
     "@fern-api/python-dynamic-snippets": "workspace:*",
     "@fern-api/remote-workspace-runner": "workspace:*",
     "@fern-api/ruby-dynamic-snippets": "workspace:*",
@@ -65,12 +68,14 @@
     "@octokit/rest": "^20.1.2",
     "chalk": "^5.3.0",
     "decompress": "^4.2.1",
+    "semver": "^7.6.3",
     "tmp-promise": "^3.0.3"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@types/decompress": "^4.2.7",
     "@types/node": "18.15.3",
+    "@types/semver": "^7.5.8",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"

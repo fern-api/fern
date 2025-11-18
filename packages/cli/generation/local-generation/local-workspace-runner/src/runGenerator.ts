@@ -2,6 +2,7 @@ import { Audiences, generatorsYml, SNIPPET_TEMPLATES_JSON_FILENAME } from "@fern
 import { ContainerRunner } from "@fern-api/core-utils/src/types";
 import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import { ApiDefinitionSource, IntermediateRepresentation, SourceConfig } from "@fern-api/ir-sdk";
+import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -72,7 +73,8 @@ export async function writeFilesToDiskAndRunGenerator({
     inspect,
     executionEnvironment,
     runner,
-    ir
+    ir,
+    project
 }: {
     organization: string;
     absolutePathToFernConfig: AbsoluteFilePath | undefined;
@@ -96,6 +98,7 @@ export async function writeFilesToDiskAndRunGenerator({
     executionEnvironment?: ExecutionEnvironment;
     runner: ContainerRunner | undefined;
     ir: IntermediateRepresentation;
+    project: Project;
 }): Promise<{ ir: IntermediateRepresentation; generatorConfig: FernGeneratorExec.GeneratorConfig }> {
     const { latest, migrated } = await getIntermediateRepresentation({
         workspace,
@@ -211,7 +214,9 @@ export async function writeFilesToDiskAndRunGenerator({
         absolutePathToLocalSnippetJSON,
         absolutePathToLocalSnippetTemplateJSON,
         absolutePathToTmpSnippetJSON,
-        absolutePathToTmpSnippetTemplatesJSON
+        absolutePathToTmpSnippetTemplatesJSON,
+        version,
+        project
     });
     await taskHandler.copyGeneratedFiles();
 

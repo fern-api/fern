@@ -1,10 +1,17 @@
+import { ClientRegistry } from "@boundaryml/baml";
+import { AnalyzeCommitDiffResponse, b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
 import { FERNIGNORE_FILENAME } from "@fern-api/configuration";
+import { loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
+import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import decompress from "decompress";
 import { cp, readdir, readFile, rm } from "fs/promises";
+import semver from "semver";
 import tmp from "tmp-promise";
+import { AutoVersioningException, AutoVersioningService, AutoVersionResult } from "./AutoVersioningService";
+import { isAutoVersion } from "./VersionUtils";
 
 export declare namespace LocalTaskHandler {
     export interface Init {
@@ -15,6 +22,8 @@ export declare namespace LocalTaskHandler {
         absolutePathToLocalOutput: AbsoluteFilePath;
         absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
         absolutePathToTmpSnippetTemplatesJSON: AbsoluteFilePath | undefined;
+        version: string | undefined;
+        project: Project;
     }
 }
 
@@ -26,6 +35,8 @@ export class LocalTaskHandler {
     private absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath | undefined;
     private absolutePathToLocalOutput: AbsoluteFilePath;
     private absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
+    private version: string | undefined;
+    private project: Project;
 
     constructor({
         context,
@@ -34,7 +45,9 @@ export class LocalTaskHandler {
         absolutePathToLocalSnippetTemplateJSON,
         absolutePathToLocalOutput,
         absolutePathToLocalSnippetJSON,
-        absolutePathToTmpSnippetTemplatesJSON
+        absolutePathToTmpSnippetTemplatesJSON,
+        version,
+        project
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -43,6 +56,8 @@ export class LocalTaskHandler {
         this.absolutePathToLocalSnippetJSON = absolutePathToLocalSnippetJSON;
         this.absolutePathToLocalSnippetTemplateJSON = absolutePathToLocalSnippetTemplateJSON;
         this.absolutePathToTmpSnippetTemplatesJSON = absolutePathToTmpSnippetTemplatesJSON;
+        this.version = version;
+        this.project = project;
     }
 
     public async copyGeneratedFiles(): Promise<void> {
@@ -69,6 +84,177 @@ export class LocalTaskHandler {
                 absolutePathToLocalSnippetJSON: this.absolutePathToLocalSnippetJSON
             });
         }
+
+        // Handle automatic semantic versioning if version is AUTO
+        if (this.version != null && isAutoVersion(this.version)) {
+            const autoVersioningService = new AutoVersioningService({ logger: this.context.logger });
+            const autoVersionResult = await this.handleAutoVersioning();
+            if (autoVersionResult == null) {
+                this.context.logger.info("No semantic changes detected. Skipping GitHub operations.");
+                // TODO(tjb9dc): Actually skip the GitHub operations
+                return;
+            }
+            // Replace magic version with computed version
+            await autoVersioningService.replaceMagicVersion(
+                this.absolutePathToLocalOutput,
+                this.version,
+                autoVersionResult.version
+            );
+        }
+    }
+
+    /**
+     * Handles automatic semantic versioning by analyzing the git diff with AI.
+     * Returns the final version to use and the commit message, or null if NO_CHANGE.
+     */
+    private async handleAutoVersioning(): Promise<AutoVersionResult | null> {
+        const autoVersioningService = new AutoVersioningService({ logger: this.context.logger });
+        let diffFile: string | undefined;
+
+        try {
+            this.context.logger.info("Analyzing SDK changes for automatic semantic versioning");
+
+            // Generate git diff to file
+            diffFile = await autoVersioningService.generateDiff(this.absolutePathToLocalOutput);
+            const diffContent = await readFile(diffFile, "utf-8");
+
+            if (diffContent.trim().length === 0) {
+                this.context.logger.info("No changes detected in generated SDK");
+                return null;
+            }
+
+            // Extract previous version and clean diff
+            // Note: this.version is the mapped magic version (e.g., "v505.503.4455" for Go)
+            if (!this.version) {
+                throw new Error("Version is required for auto versioning");
+            }
+
+            const previousVersion = autoVersioningService.extractPreviousVersion(diffContent, this.version);
+            const cleanedDiff = autoVersioningService.cleanDiffForAI(diffContent, this.version);
+
+            this.context.logger.debug(`Generated diff size: ${diffContent.length} bytes`);
+            this.context.logger.debug(`Cleaned diff size: ${cleanedDiff.length} bytes`);
+            this.context.logger.debug(`Previous version detected: ${previousVersion}`);
+
+            // Call AI to analyze the diff
+            try {
+                // TODO: Need to get project for BAML client configuration
+                const clientRegistry = await this.getClientRegistry();
+                const bamlClient = BamlClient.withOptions({ clientRegistry });
+
+                const analysis = await bamlClient.AnalyzeSdkDiff({
+                    diff: cleanedDiff
+                });
+
+                if (analysis.version_bump === VersionBump.NO_CHANGE) {
+                    this.context.logger.info("AI detected no semantic changes");
+                    return null;
+                }
+
+                // Calculate new version
+                const newVersion = this.incrementVersion(previousVersion, analysis.version_bump);
+
+                this.context.logger.info(`Version bump: ${analysis.version_bump}, new version: ${newVersion}`);
+
+                return {
+                    version: newVersion,
+                    commitMessage: analysis.message
+                };
+            } catch (aiError) {
+                this.context.logger.info(`AI analysis failed, falling back to PATCH increment: ${aiError}`);
+                const newVersion = this.incrementVersion(previousVersion, VersionBump.PATCH);
+                return {
+                    version: newVersion,
+                    commitMessage: "SDK regeneration\n\nUnable to analyze changes with AI, incrementing PATCH version."
+                };
+            }
+        } catch (error) {
+            if (error instanceof AutoVersioningException) {
+                // When user explicitly requested AUTO versioning, we must fail if we can't extract version
+                this.context.logger.error(`AUTO versioning failed: ${error.message}`);
+                throw new Error(
+                    `Failed to extract previous version for automatic semantic versioning. ` +
+                        `Please ensure your project has a version file in a supported format. Error: ${error.message}`
+                );
+            }
+
+            this.context.logger.error(`Failed to perform automatic versioning: ${error}`);
+            throw new Error(`Automatic versioning failed: ${error}`);
+        } finally {
+            // Clean up temp diff file
+            if (diffFile) {
+                try {
+                    await rm(diffFile);
+                } catch (cleanupError) {
+                    this.context.logger.warn(`Failed to delete temp diff file: ${diffFile}`, String(cleanupError));
+                }
+            }
+        }
+    }
+
+    /**
+     * Increments a semantic version string based on the version bump type.
+     * Uses the semver library for robust version handling.
+     */
+    private incrementVersion(version: string, versionBump: VersionBump): string {
+        // Handle 'v' prefix - semver handles this automatically
+        const cleanVersion = semver.clean(version);
+        if (!cleanVersion) {
+            throw new Error(`Invalid version format: ${version}`);
+        }
+
+        let releaseType: semver.ReleaseType;
+        switch (versionBump) {
+            case VersionBump.MAJOR:
+                releaseType = "major";
+                break;
+            case VersionBump.MINOR:
+                releaseType = "minor";
+                break;
+            case VersionBump.PATCH:
+                releaseType = "patch";
+                break;
+            default:
+                throw new Error(`Unsupported version bump: ${versionBump}`);
+        }
+
+        const newVersion = semver.inc(cleanVersion, releaseType);
+        if (!newVersion) {
+            throw new Error(`Failed to increment version: ${version}`);
+        }
+
+        // Preserve 'v' prefix if original version had it
+        return version.startsWith("v") ? `v${newVersion}` : newVersion;
+    }
+
+    /**
+     * Gets the BAML client registry for AI analysis.
+     * This method is adapted from sdkDiffCommand.ts but needs project configuration.
+     */
+    private async getClientRegistry(): Promise<ClientRegistry> {
+        // Get the first API workspace (or we could make this configurable)
+        const workspace = this.project.apiWorkspaces[0];
+        if (workspace == null) {
+            throw new Error("No API workspaces found in the project.");
+        }
+
+        // Load generators configuration to get AI service settings
+        const generatorsConfig = await loadGeneratorsConfiguration({
+            absolutePathToWorkspace: workspace.absoluteFilePath,
+            context: this.context as unknown as TaskContext
+        });
+
+        if (generatorsConfig?.ai == null) {
+            throw new Error(
+                "No AI service configuration found in generators.yml. " +
+                    "Please add an 'ai' section with provider and model."
+            );
+        }
+
+        this.context.logger.debug(
+            `Using AI service: ${generatorsConfig.ai.provider} with model ${generatorsConfig.ai.model}`
+        );
+        return configureBamlClient(generatorsConfig.ai);
     }
 
     private async isFernIgnorePresent(): Promise<boolean> {

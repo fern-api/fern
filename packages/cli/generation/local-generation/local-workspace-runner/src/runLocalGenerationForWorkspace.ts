@@ -8,6 +8,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ClonedRepository, cloneRepository, parseRepository } from "@fern-api/github";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
+import { Project } from "@fern-api/project-loader";
 import { getDynamicGeneratorConfig } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
@@ -33,7 +34,8 @@ export async function runLocalGenerationForWorkspace({
     inspect,
     context,
     absolutePathToPreview,
-    runner
+    runner,
+    project
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -45,6 +47,7 @@ export async function runLocalGenerationForWorkspace({
     absolutePathToPreview: AbsoluteFilePath | undefined;
     runner: ContainerRunner | undefined;
     inspect: boolean;
+    project: Project;
 }): Promise<void> {
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
@@ -196,7 +199,8 @@ export async function runLocalGenerationForWorkspace({
                     inspect,
                     executionEnvironment: undefined, // This should use the Docker fallback with proper image name
                     ir: intermediateRepresentation,
-                    runner
+                    runner,
+                    project
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
