@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.31.1
+  changelogEntry:
+    - summary: |
+        Fix crash when generating examples with undefined string values. The generator now safely handles cases where string examples lack an `original` field, preventing "Cannot read properties of undefined (reading 'replaceAll')" errors.
+      type: fix
+  createdAt: "2025-11-18"
+  irVersion: 61
+
 - version: 3.31.0
   changelogEntry:
     - summary: |

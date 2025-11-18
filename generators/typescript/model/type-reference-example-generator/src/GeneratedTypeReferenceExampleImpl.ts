@@ -50,7 +50,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                         if (opts.isForComment || opts.isForTypeDeclarationComment) {
                             return ts.factory.createStringLiteral(escapeStringForComment(stringExample.original));
                         }
-                        return ts.factory.createStringLiteral(stringExample.original);
+                        return ts.factory.createStringLiteral(stringExample.original ?? "");
                     },
                     integer: (integerExample) => ts.factory.createNumericLiteral(integerExample),
                     double: (doubleExample) => ts.factory.createNumericLiteral(doubleExample),
@@ -217,7 +217,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
         return ExampleTypeReferenceShape._visit<ts.PropertyName>(example.shape, {
             primitive: (primitiveExample) =>
                 ExamplePrimitive._visit<ts.PropertyName>(primitiveExample, {
-                    string: (stringExample) => ts.factory.createStringLiteral(stringExample.original),
+                    string: (stringExample) => ts.factory.createStringLiteral(stringExample.original ?? ""),
                     integer: (integerExample) => ts.factory.createNumericLiteral(integerExample),
                     double: (doubleExample) => ts.factory.createNumericLiteral(doubleExample),
                     long: (longExample) => ts.factory.createNumericLiteral(longExample),
@@ -307,7 +307,10 @@ function createBigIntLiteral(value: string | number): ts.Expression {
 const stringsToEscape = {
     "*/": "* /"
 };
-function escapeStringForComment(str: string): string {
+function escapeStringForComment(str: string | undefined): string {
+    if (str == null) {
+        return "";
+    }
     for (const [original, escaped] of Object.entries(stringsToEscape)) {
         str = str.replaceAll(original, escaped);
     }
