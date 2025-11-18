@@ -153,19 +153,26 @@ export async function runLocalGenerationForWorkspace({
                     absolutePathToPreviewForGenerator != null
                 );
 
+                const hasRegularGithubConfig =
+                    generatorInvocation.raw?.github != null &&
+                    !isGithubSelfhosted(generatorInvocation.raw.github) &&
+                    "repository" in generatorInvocation.raw.github;
+
                 // Validate that automatic versioning has a GitHub repository for git diff analysis
                 if (version != null && isAutoVersion(version)) {
-                    if (selfhostedGithubConfig == null) {
+                    const hasAnyGithubConfig = selfhostedGithubConfig != null || hasRegularGithubConfig;
+
+                    if (!hasAnyGithubConfig) {
                         context.failAndThrow(
                             `Automatic versioning (--version AUTO) requires a GitHub repository configuration. ` +
-                                `Please configure your generator with GitHub output mode in generators.yml. ` +
+                                `Please configure your generator with GitHub output in generators.yml. ` +
                                 `Example:\n` +
                                 `generators:\n` +
                                 `  - name: fernapi/fern-typescript-sdk\n` +
                                 `    version: latest\n` +
-                                `    output:\n` +
-                                `      location: github\n` +
+                                `    github:\n` +
                                 `      repository: your-org/your-sdk-repo\n` +
+                                `      mode: pull-request\n` +
                                 `    config:\n` +
                                 `      version: AUTO`
                         );
@@ -178,6 +185,20 @@ export async function runLocalGenerationForWorkspace({
                     const repo = await cloneRepository({
                         githubRepository: selfhostedGithubConfig.uri,
                         installationToken: selfhostedGithubConfig.token,
+                        targetDirectory: absolutePathToLocalOutput
+                    });
+                } else if (
+                    hasRegularGithubConfig &&
+                    generatorInvocation.raw?.github != null &&
+                    !isGithubSelfhosted(generatorInvocation.raw.github) &&
+                    "repository" in generatorInvocation.raw.github
+                ) {
+                    // Clone regular GitHub repository for auto versioning
+                    await fs.rm(absolutePathToLocalOutput, { recursive: true, force: true });
+                    await fs.mkdir(absolutePathToLocalOutput, { recursive: true });
+                    const repo = await cloneRepository({
+                        githubRepository: generatorInvocation.raw.github.repository,
+                        installationToken: undefined, // No token needed for public GitHub repos
                         targetDirectory: absolutePathToLocalOutput
                     });
                 }
