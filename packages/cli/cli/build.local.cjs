@@ -1,4 +1,5 @@
 const packageJson = require("./package.json");
+const aiPackageJson = require("../ai/package.json");
 const tsup = require('tsup');
 const { writeFile } = require("fs/promises");
 const path = require("path");
@@ -12,6 +13,7 @@ async function main() {
         minify: false,
         outDir: 'dist/local',
         sourcemap: true,
+        external: ['@boundaryml/baml'],
         env: {
             AUTH0_DOMAIN: "fern-dev.us.auth0.com",
             AUTH0_CLIENT_ID: "4QiMvRvRUYpnycrVDK2M59hhJ6kcHYFQ",
@@ -44,7 +46,10 @@ async function main() {
                 version: process.argv[2] || packageJson.version,
                 repository: packageJson.repository,
                 files: ["cli.cjs"],
-                bin: { fern: "cli.cjs" }
+                bin: { fern: "cli.cjs" },
+                dependencies: {
+                    "@boundaryml/baml": packageJson.devDependencies["@boundaryml/baml"]
+                }
             },
             undefined,
             2

@@ -22,8 +22,8 @@ private func main() async throws {
     _ = try await client.service.post(
         pathParam: "pathParam",
         serviceParam: "serviceParam",
-        resourceParam: "resourceParam",
-        endpointParam: 1
+        endpointParam: 1,
+        resourceParam: "resourceParam"
     )
 }
 

@@ -1,0 +1,443 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createArrayMap": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "key": [
+                      "value",
+                    ],
+                  },
+                  "response": {
+                    "body": {
+                      "key": [
+                        "value",
+                      ],
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/array-map",
+              "request": {
+                "body": "ArrayMap",
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "ArrayMap",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "createFlexible": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                  "response": {
+                    "body": {
+                      "id": "id",
+                      "name": "name",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/flexible",
+              "request": {
+                "body": "FlexibleObject",
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "FlexibleObject",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "createObjectMap": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "key": {},
+                  },
+                  "response": {
+                    "body": {
+                      "key": {
+                        "count": 1,
+                        "value": "value",
+                      },
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/object-map",
+              "request": {
+                "body": "ObjectMap",
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "ObjectMap",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "createStrict": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                  "response": {
+                    "body": {
+                      "id": "id",
+                      "name": "name",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/strict",
+              "request": {
+                "body": "StrictObject",
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "StrictObject",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "createStringMap": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                  "response": {
+                    "body": {
+                      "id": "id",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/string-map",
+              "request": {
+                "body": "StringMap",
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "StringMap",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "createUserMap": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "key": {},
+                  },
+                  "response": {
+                    "body": {
+                      "key": {
+                        "id": "id",
+                        "name": "name",
+                      },
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/user-map",
+              "request": {
+                "body": "UserMap",
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "UserMap",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "ArrayMap": "map<string, list<string>>",
+          "FlexibleObject": {
+            "docs": undefined,
+            "extra-properties": true,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+              "name": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ObjectMap": "map<string, ObjectMapValue>",
+          "ObjectMapValue": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "count": "optional<integer>",
+              "value": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "StrictObject": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+              "name": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "StringMap": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "User": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+              "name": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UserMap": "map<string, User>",
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createFlexible:
+      path: /flexible
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: FlexibleObject
+        content-type: application/json
+      response:
+        docs: Success
+        type: FlexibleObject
+        status-code: 200
+      examples:
+        - request: {}
+          response:
+            body:
+              id: id
+              name: name
+    createStrict:
+      path: /strict
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: StrictObject
+        content-type: application/json
+      response:
+        docs: Success
+        type: StrictObject
+        status-code: 200
+      examples:
+        - request: {}
+          response:
+            body:
+              id: id
+              name: name
+    createStringMap:
+      path: /string-map
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: StringMap
+        content-type: application/json
+      response:
+        docs: Success
+        type: StringMap
+        status-code: 200
+      examples:
+        - request: {}
+          response:
+            body:
+              id: id
+    createObjectMap:
+      path: /object-map
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: ObjectMap
+        content-type: application/json
+      response:
+        docs: Success
+        type: ObjectMap
+        status-code: 200
+      examples:
+        - request:
+            key: {}
+          response:
+            body:
+              key:
+                value: value
+                count: 1
+    createUserMap:
+      path: /user-map
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: UserMap
+        content-type: application/json
+      response:
+        docs: Success
+        type: UserMap
+        status-code: 200
+      examples:
+        - request:
+            key: {}
+          response:
+            body:
+              key:
+                id: id
+                name: name
+    createArrayMap:
+      path: /array-map
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: ArrayMap
+        content-type: application/json
+      response:
+        docs: Success
+        type: ArrayMap
+        status-code: 200
+      examples:
+        - request:
+            key:
+              - value
+          response:
+            body:
+              key:
+                - value
+  source:
+    openapi: ../openapi.yml
+types:
+  FlexibleObject:
+    properties:
+      id: optional<string>
+      name: optional<string>
+    extra-properties: true
+    source:
+      openapi: ../openapi.yml
+  StrictObject:
+    properties:
+      id: optional<string>
+      name: optional<string>
+    source:
+      openapi: ../openapi.yml
+  StringMap:
+    properties:
+      id: optional<string>
+    source:
+      openapi: ../openapi.yml
+  ObjectMapValue:
+    properties:
+      value: optional<string>
+      count: optional<integer>
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  ObjectMap: map<string, ObjectMapValue>
+  User:
+    properties:
+      id: optional<string>
+      name: optional<string>
+    source:
+      openapi: ../openapi.yml
+  UserMap: map<string, User>
+  ArrayMap: map<string, list<string>>
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Additional Properties Edge Cases",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Additional Properties Edge Cases
+",
+  },
+}

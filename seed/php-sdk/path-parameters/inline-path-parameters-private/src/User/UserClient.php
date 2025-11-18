@@ -17,6 +17,7 @@ use Seed\User\Requests\UpdateUserRequest;
 use Seed\User\Requests\SearchUsersRequest;
 use Seed\Core\Json\JsonDecoder;
 use Seed\User\Requests\GetUserMetadataRequest;
+use Seed\User\Requests\GetUserSpecificsRequest;
 
 class UserClient
 {
@@ -298,6 +299,61 @@ class UserClient
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "/{$request->getTenantId()}/user/{$request->getUserId()}/metadata/v{$request->getVersion()}",
+                    method: HttpMethod::GET,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                return User::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null) {
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Test endpoint with path parameters listed in different order than found in path
+     *
+     * @param GetUserSpecificsRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return User
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function getUserSpecifics(GetUserSpecificsRequest $request, ?array $options = null): User
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/{$request->getTenantId()}/user/{$request->getUserId()}/specifics/{$request->getVersion()}/{$request->getThought()}",
                     method: HttpMethod::GET,
                 ),
                 $options,

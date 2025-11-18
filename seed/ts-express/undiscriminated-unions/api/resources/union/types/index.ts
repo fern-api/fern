@@ -1,3 +1,4 @@
+export * from "./ConvertToken";
 export * from "./Key";
 export * from "./KeyType";
 export * from "./Metadata";
@@ -8,7 +9,9 @@ export * from "./NestedUnionL1";
 export * from "./NestedUnionL2";
 export * from "./NestedUnionRoot";
 export * from "./OptionalMetadata";
+export * from "./PaymentMethodUnion";
 export * from "./Request";
+export * from "./TokenizeCard";
 export * from "./TypeWithOptionalUnion";
 export * from "./UnionWithDuplicateTypes";
 export * from "./UnionWithIdenticalPrimitives";

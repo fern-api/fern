@@ -6,6 +6,23 @@
 
 The CustomName Go library provides convenient access to the CustomName APIs from Go.
 
+## Table of Contents
+
+- [Documentation](#documentation)
+- [Reference](#reference)
+- [Base Readme Custom Section](#base-readme-custom-section)
+- [Generator Invocation Custom Section](#generator-invocation-custom-section)
+- [Override Section](#override-section)
+- [Usage](#usage)
+- [Environments](#environments)
+- [Errors](#errors)
+- [Request Options](#request-options)
+- [Advanced](#advanced)
+  - [Response Headers](#response-headers)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Explicit Null](#explicit-null)
+
 ## Documentation
 
 API reference documentation is available [here](https://www.docs.fernapi.com).

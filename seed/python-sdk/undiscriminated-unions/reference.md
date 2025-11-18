@@ -326,3 +326,63 @@ client.union.nested_unions(
 </dl>
 </details>
 
+<details><summary><code>client.union.<a href="src/seed/union/client.py">test_camel_case_properties</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedUndiscriminatedUnions
+from seed.union import TokenizeCard
+
+client = SeedUndiscriminatedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.union.test_camel_case_properties(
+    payment_method=TokenizeCard(
+        method="method",
+        card_number="cardNumber",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**payment_method:** `PaymentMethodUnion` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

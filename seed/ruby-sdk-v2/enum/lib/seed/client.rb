@@ -23,6 +23,11 @@ module Seed
       @inlined_request ||= Seed::InlinedRequest::Client.new(client: @raw_client)
     end
 
+    # @return [Seed::MultipartForm::Client]
+    def multipart_form
+      @multipart_form ||= Seed::MultipartForm::Client.new(client: @raw_client)
+    end
+
     # @return [Seed::PathParam::Client]
     def path_param
       @path_param ||= Seed::PathParam::Client.new(client: @raw_client)

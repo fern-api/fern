@@ -5,6 +5,20 @@
 
 The Seed Rust library provides convenient access to the Seed APIs from Rust.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Errors](#errors)
+- [Request Types](#request-types)
+- [Advanced](#advanced)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+- [Contributing](#contributing)
+
 ## Installation
 
 Add this to your `Cargo.toml`:
@@ -37,7 +51,15 @@ async fn main() {
         ..Default::default()
     };
     let client = EnumClient::new(config).expect("Failed to build client");
-    client.headers.send(None).await;
+    client
+        .headers
+        .send(Some(
+            RequestOptions::new()
+                .additional_header("operand", Operand::GreaterThan)
+                .additional_header("maybeOperand", Some(Operand::GreaterThan))
+                .additional_header("operandOrColor", ColorOrOperand::Color(Color::Red)),
+        ))
+        .await;
 }
 ```
 

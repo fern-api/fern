@@ -123,7 +123,9 @@ async fn main() {
                 update_time: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
                     .unwrap()
                     .with_timezone(&Utc),
-                update_info: TestSubmissionUpdateInfo::Running { value: None },
+                update_info: TestSubmissionUpdateInfo::Running {
+                    value: Default::default(),
+                },
             },
             None,
         )
@@ -242,7 +244,9 @@ async fn main() {
                 update_time: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
                     .unwrap()
                     .with_timezone(&Utc),
-                update_info: WorkspaceSubmissionUpdateInfo::Running { value: None },
+                update_info: WorkspaceSubmissionUpdateInfo::Running {
+                    value: Default::default(),
+                },
             },
             None,
         )
@@ -304,9 +308,9 @@ async fn main() {
             &StoreTracedTestCaseRequest {
                 result: TestCaseResultWithStdout {
                     result: TestCaseResult {
-                        expected_result: VariableValue::IntegerValue { value: None },
+                        expected_result: VariableValue::IntegerValue { value: 0 },
                         actual_result: ActualResult::Value {
-                            value: VariableValue::IntegerValue { value: None },
+                            value: VariableValue::IntegerValue { value: 0 },
                         },
                         passed: true,
                     },
@@ -318,7 +322,7 @@ async fn main() {
                             Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                         ),
                         line_number: 1,
-                        return_value: Some(DebugVariableValue::IntegerValue { value: None }),
+                        return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
                         expression_location: Some(ExpressionLocation {
                             start: 1,
                             offset: 1,
@@ -332,13 +336,13 @@ async fn main() {
                                     Scope {
                                         variables: HashMap::from([(
                                             "variables".to_string(),
-                                            DebugVariableValue::IntegerValue { value: None },
+                                            DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
                                     },
                                     Scope {
                                         variables: HashMap::from([(
                                             "variables".to_string(),
-                                            DebugVariableValue::IntegerValue { value: None },
+                                            DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
                                     },
                                 ],
@@ -351,7 +355,7 @@ async fn main() {
                             Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                         ),
                         line_number: 1,
-                        return_value: Some(DebugVariableValue::IntegerValue { value: None }),
+                        return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
                         expression_location: Some(ExpressionLocation {
                             start: 1,
                             offset: 1,
@@ -365,13 +369,13 @@ async fn main() {
                                     Scope {
                                         variables: HashMap::from([(
                                             "variables".to_string(),
-                                            DebugVariableValue::IntegerValue { value: None },
+                                            DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
                                     },
                                     Scope {
                                         variables: HashMap::from([(
                                             "variables".to_string(),
-                                            DebugVariableValue::IntegerValue { value: None },
+                                            DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
                                     },
                                 ],
@@ -472,7 +476,7 @@ async fn main() {
                         filename: "filename".to_string(),
                         directory: "directory".to_string(),
                     },
-                    return_value: Some(DebugVariableValue::IntegerValue { value: None }),
+                    return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
                     expression_location: Some(ExpressionLocation {
                         start: 1,
                         offset: 1,
@@ -486,13 +490,13 @@ async fn main() {
                                 Scope {
                                     variables: HashMap::from([(
                                         "variables".to_string(),
-                                        DebugVariableValue::IntegerValue { value: None },
+                                        DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
                                 },
                                 Scope {
                                     variables: HashMap::from([(
                                         "variables".to_string(),
-                                        DebugVariableValue::IntegerValue { value: None },
+                                        DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
                                 },
                             ],
@@ -509,7 +513,7 @@ async fn main() {
                         filename: "filename".to_string(),
                         directory: "directory".to_string(),
                     },
-                    return_value: Some(DebugVariableValue::IntegerValue { value: None }),
+                    return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
                     expression_location: Some(ExpressionLocation {
                         start: 1,
                         offset: 1,
@@ -523,13 +527,13 @@ async fn main() {
                                 Scope {
                                     variables: HashMap::from([(
                                         "variables".to_string(),
-                                        DebugVariableValue::IntegerValue { value: None },
+                                        DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
                                 },
                                 Scope {
                                     variables: HashMap::from([(
                                         "variables".to_string(),
-                                        DebugVariableValue::IntegerValue { value: None },
+                                        DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
                                 },
                             ],
@@ -624,7 +628,7 @@ async fn main() {
                             Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                         ),
                         line_number: 1,
-                        return_value: Some(DebugVariableValue::IntegerValue { value: None }),
+                        return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
                         expression_location: Some(ExpressionLocation {
                             start: 1,
                             offset: 1,
@@ -638,13 +642,13 @@ async fn main() {
                                     Scope {
                                         variables: HashMap::from([(
                                             "variables".to_string(),
-                                            DebugVariableValue::IntegerValue { value: None },
+                                            DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
                                     },
                                     Scope {
                                         variables: HashMap::from([(
                                             "variables".to_string(),
-                                            DebugVariableValue::IntegerValue { value: None },
+                                            DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
                                     },
                                 ],
@@ -657,7 +661,7 @@ async fn main() {
                             Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                         ),
                         line_number: 1,
-                        return_value: Some(DebugVariableValue::IntegerValue { value: None }),
+                        return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
                         expression_location: Some(ExpressionLocation {
                             start: 1,
                             offset: 1,
@@ -671,13 +675,13 @@ async fn main() {
                                     Scope {
                                         variables: HashMap::from([(
                                             "variables".to_string(),
-                                            DebugVariableValue::IntegerValue { value: None },
+                                            DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
                                     },
                                     Scope {
                                         variables: HashMap::from([(
                                             "variables".to_string(),
-                                            DebugVariableValue::IntegerValue { value: None },
+                                            DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
                                     },
                                 ],
@@ -769,7 +773,7 @@ async fn main() {
                         filename: "filename".to_string(),
                         directory: "directory".to_string(),
                     },
-                    return_value: Some(DebugVariableValue::IntegerValue { value: None }),
+                    return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
                     expression_location: Some(ExpressionLocation {
                         start: 1,
                         offset: 1,
@@ -783,13 +787,13 @@ async fn main() {
                                 Scope {
                                     variables: HashMap::from([(
                                         "variables".to_string(),
-                                        DebugVariableValue::IntegerValue { value: None },
+                                        DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
                                 },
                                 Scope {
                                     variables: HashMap::from([(
                                         "variables".to_string(),
-                                        DebugVariableValue::IntegerValue { value: None },
+                                        DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
                                 },
                             ],
@@ -806,7 +810,7 @@ async fn main() {
                         filename: "filename".to_string(),
                         directory: "directory".to_string(),
                     },
-                    return_value: Some(DebugVariableValue::IntegerValue { value: None }),
+                    return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
                     expression_location: Some(ExpressionLocation {
                         start: 1,
                         offset: 1,
@@ -820,13 +824,13 @@ async fn main() {
                                 Scope {
                                     variables: HashMap::from([(
                                         "variables".to_string(),
-                                        DebugVariableValue::IntegerValue { value: None },
+                                        DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
                                 },
                                 Scope {
                                     variables: HashMap::from([(
                                         "variables".to_string(),
-                                        DebugVariableValue::IntegerValue { value: None },
+                                        DebugVariableValue::IntegerValue { value: 0 },
                                     )]),
                                 },
                             ],
@@ -968,7 +972,13 @@ async fn main() {
         ..Default::default()
     };
     let client = TraceClient::new(config).expect("Failed to build client");
-    client.migration.get_attempted_migrations(None).await;
+    client
+        .migration
+        .get_attempted_migrations(Some(
+            RequestOptions::new()
+                .additional_header("admin-key-header", "admin-key-header".to_string()),
+        ))
+        .await;
 }
 ```
 </dd>
@@ -1485,8 +1495,12 @@ async fn main() {
                 problem_name: "problemName".to_string(),
                 problem_description: ProblemDescription {
                     boards: vec![
-                        ProblemDescriptionBoard::Html { value: None },
-                        ProblemDescriptionBoard::Html { value: None },
+                        ProblemDescriptionBoard::Html {
+                            value: "value".to_string(),
+                        },
+                        ProblemDescriptionBoard::Html {
+                            value: "value".to_string(),
+                        },
                     ],
                 },
                 files: HashMap::from([(
@@ -1524,21 +1538,21 @@ async fn main() {
                         test_case: TestCase {
                             id: "id".to_string(),
                             params: vec![
-                                VariableValue::IntegerValue { value: None },
-                                VariableValue::IntegerValue { value: None },
+                                VariableValue::IntegerValue { value: 0 },
+                                VariableValue::IntegerValue { value: 0 },
                             ],
                         },
-                        expected_result: VariableValue::IntegerValue { value: None },
+                        expected_result: VariableValue::IntegerValue { value: 0 },
                     },
                     TestCaseWithExpectedResult {
                         test_case: TestCase {
                             id: "id".to_string(),
                             params: vec![
-                                VariableValue::IntegerValue { value: None },
-                                VariableValue::IntegerValue { value: None },
+                                VariableValue::IntegerValue { value: 0 },
+                                VariableValue::IntegerValue { value: 0 },
                             ],
                         },
-                        expected_result: VariableValue::IntegerValue { value: None },
+                        expected_result: VariableValue::IntegerValue { value: 0 },
                     },
                 ],
                 method_name: "methodName".to_string(),
@@ -1602,8 +1616,12 @@ async fn main() {
                 problem_name: "problemName".to_string(),
                 problem_description: ProblemDescription {
                     boards: vec![
-                        ProblemDescriptionBoard::Html { value: None },
-                        ProblemDescriptionBoard::Html { value: None },
+                        ProblemDescriptionBoard::Html {
+                            value: "value".to_string(),
+                        },
+                        ProblemDescriptionBoard::Html {
+                            value: "value".to_string(),
+                        },
                     ],
                 },
                 files: HashMap::from([(
@@ -1641,21 +1659,21 @@ async fn main() {
                         test_case: TestCase {
                             id: "id".to_string(),
                             params: vec![
-                                VariableValue::IntegerValue { value: None },
-                                VariableValue::IntegerValue { value: None },
+                                VariableValue::IntegerValue { value: 0 },
+                                VariableValue::IntegerValue { value: 0 },
                             ],
                         },
-                        expected_result: VariableValue::IntegerValue { value: None },
+                        expected_result: VariableValue::IntegerValue { value: 0 },
                     },
                     TestCaseWithExpectedResult {
                         test_case: TestCase {
                             id: "id".to_string(),
                             params: vec![
-                                VariableValue::IntegerValue { value: None },
-                                VariableValue::IntegerValue { value: None },
+                                VariableValue::IntegerValue { value: 0 },
+                                VariableValue::IntegerValue { value: 0 },
                             ],
                         },
-                        expected_result: VariableValue::IntegerValue { value: None },
+                        expected_result: VariableValue::IntegerValue { value: 0 },
                     },
                 ],
                 method_name: "methodName".to_string(),

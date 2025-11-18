@@ -1,0 +1,403 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createAuthor": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                  "response": {
+                    "body": {
+                      "books": [
+                        {
+                          "id": "id",
+                          "title": "title",
+                        },
+                      ],
+                      "id": "id",
+                      "name": "name",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/author",
+              "request": {
+                "body": "Author",
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "Author",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "createNode": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                  "response": {
+                    "body": {
+                      "id": "id",
+                      "value": "value",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/node",
+              "request": {
+                "body": "Node",
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "Node",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "createTree": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                  "response": {
+                    "body": {
+                      "id": "id",
+                      "value": "value",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/tree",
+              "request": {
+                "body": "TreeNode",
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "TreeNode",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "Author": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "books": "optional<list<Book>>",
+              "id": "optional<string>",
+              "name": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "BaseEntity": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "createdAt": "optional<datetime>",
+              "id": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Book": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "author": "optional<Author>",
+              "id": "optional<string>",
+              "title": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Category": {
+            "docs": undefined,
+            "extends": [
+              "BaseEntity",
+            ],
+            "inline": undefined,
+            "properties": {
+              "name": "optional<string>",
+              "parent": "optional<Category>",
+              "subcategories": "optional<list<Category>>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Level1": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+              "level2": "optional<Level2>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Level2": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+              "level3": "optional<Level3>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Level3": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+              "level4": "optional<Level4>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Level4": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+              "level5": "optional<Level5>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Level5": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+              "value": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Node": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+              "next": "optional<Node>",
+              "value": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "TreeNode": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "children": "optional<list<TreeNode>>",
+              "id": "optional<string>",
+              "parent": "optional<TreeNode>",
+              "value": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createNode:
+      path: /node
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: Node
+        content-type: application/json
+      response:
+        docs: Success
+        type: Node
+        status-code: 200
+      examples:
+        - request: {}
+          response:
+            body:
+              id: id
+              value: value
+    createAuthor:
+      path: /author
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: Author
+        content-type: application/json
+      response:
+        docs: Success
+        type: Author
+        status-code: 200
+      examples:
+        - request: {}
+          response:
+            body:
+              id: id
+              name: name
+              books:
+                - id: id
+                  title: title
+    createTree:
+      path: /tree
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: TreeNode
+        content-type: application/json
+      response:
+        docs: Success
+        type: TreeNode
+        status-code: 200
+      examples:
+        - request: {}
+          response:
+            body:
+              id: id
+              value: value
+  source:
+    openapi: ../openapi.yml
+types:
+  Node:
+    properties:
+      id: optional<string>
+      value: optional<string>
+      next: optional<Node>
+    source:
+      openapi: ../openapi.yml
+  Author:
+    properties:
+      id: optional<string>
+      name: optional<string>
+      books: optional<list<Book>>
+    source:
+      openapi: ../openapi.yml
+  Book:
+    properties:
+      id: optional<string>
+      title: optional<string>
+      author: optional<Author>
+    source:
+      openapi: ../openapi.yml
+  TreeNode:
+    properties:
+      id: optional<string>
+      value: optional<string>
+      parent: optional<TreeNode>
+      children: optional<list<TreeNode>>
+    source:
+      openapi: ../openapi.yml
+  Level1:
+    properties:
+      id: optional<string>
+      level2: optional<Level2>
+    source:
+      openapi: ../openapi.yml
+  Level2:
+    properties:
+      id: optional<string>
+      level3: optional<Level3>
+    source:
+      openapi: ../openapi.yml
+  Level3:
+    properties:
+      id: optional<string>
+      level4: optional<Level4>
+    source:
+      openapi: ../openapi.yml
+  Level4:
+    properties:
+      id: optional<string>
+      level5: optional<Level5>
+    source:
+      openapi: ../openapi.yml
+  Level5:
+    properties:
+      id: optional<string>
+      value: optional<string>
+    source:
+      openapi: ../openapi.yml
+  BaseEntity:
+    properties:
+      id: optional<string>
+      createdAt: optional<datetime>
+    source:
+      openapi: ../openapi.yml
+  Category:
+    properties:
+      name: optional<string>
+      parent: optional<Category>
+      subcategories: optional<list<Category>>
+    extends:
+      - BaseEntity
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Circular References Edge Cases",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Circular References Edge Cases
+",
+  },
+}
