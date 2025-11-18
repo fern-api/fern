@@ -343,7 +343,7 @@ public abstract class AbstractEndpointWriter {
                 inputStreamMethodSpec,
                 inputStreamWithMediaTypeMethodSpec,
                 inputStreamWithRequestOptionsMethodSpec,
-                inputStreamWithMediaTypeAndRequestOptionsMethodSpec)
+                inputStreamWithMediaTypeAndRequestOptionsMethodSpec);
     }
 
     public abstract CodeBlock getInitializeRequestCodeBlock(
