@@ -43,39 +43,6 @@ export class AutoVersioningService {
     constructor({ logger }: { logger: TaskContext["logger"] }) {
         this.logger = logger;
     }
-    /**
-     * Generates a git diff from the working directory changes and writes it to a temporary file.
-     * This compares the current working directory against the last commit to see what has changed.
-     *
-     * @param workingDirectory The directory that should be within a git repository
-     * @return Path to the temporary diff file
-     * @throws Error if file operations fail or git command fails
-     */
-    public async generateDiff(workingDirectory: string): Promise<string> {
-        const diffFile = path.join(os.tmpdir(), `git-diff-${Date.now()}.patch`);
-
-        // Find the git repository root
-        const gitRoot = await this.findGitRoot(workingDirectory);
-        if (!gitRoot) {
-            throw new Error(
-                `No git repository found containing directory: ${workingDirectory}\n` +
-                    `Automatic versioning (--version AUTO) requires the output directory to be within a git repository. ` +
-                    `Please ensure your SDK output directory is configured to point to a location within a git repository, ` +
-                    `or use a specific version instead of AUTO.`
-            );
-        }
-
-        this.logger.info(`Found git repository root: ${gitRoot}`);
-
-        // Generate diff between HEAD and working directory (including staged and unstaged changes)
-        await loggingExeca(this.logger, "git", ["diff", "HEAD", "--output", diffFile], {
-            cwd: gitRoot,
-            doNotPipeOutput: true
-        });
-
-        this.logger.info(`Generated git diff to file: ${diffFile}`);
-        return diffFile;
-    }
 
     /**
      * Extracts the previous version from a git diff by finding lines with the magic version.
@@ -105,19 +72,19 @@ export class AutoVersioningService {
             if (line.startsWith("+") && !line.startsWith("+++") && line.includes(mappedMagicVersion)) {
                 magicVersionOccurrences++;
                 const sanitizedPlusLine = line.replace(mappedMagicVersion, "<MAGIC>");
-                this.logger.info(`Found magic version in added line (file: ${currentFile}): ${sanitizedPlusLine}`);
+                this.logger.debug(`Found magic version in added line (file: ${currentFile}): ${sanitizedPlusLine}`);
 
                 const matchingMinusLine = this.findMatchingMinusLine(lines, i, mappedMagicVersion);
 
                 if (matchingMinusLine == undefined) {
-                    this.logger.info(
+                    this.logger.debug(
                         `No matching minus line in hunk; continuing search. file=${currentFile}, plusLine=${sanitizedPlusLine}`
                     );
                     continue;
                 }
 
                 const extracted = this.extractPreviousVersionFromDiffLine(matchingMinusLine);
-                this.logger.info(`Extracted previous version from diff (file: ${currentFile}): ${extracted}`);
+                this.logger.debug(`Extracted previous version from diff (file: ${currentFile}): ${extracted}`);
                 return extracted;
             }
         }
@@ -163,13 +130,13 @@ export class AutoVersioningService {
             linesScanned++;
 
             if (this.shouldStopSearching(line)) {
-                this.logger.info(`Stopped backward scan at hunk boundary after ${linesScanned} lines`);
+                this.logger.debug(`Stopped backward scan at hunk boundary after ${linesScanned} lines`);
                 break;
             }
 
             if (this.isDeletionLine(line)) {
                 if (this.isVersionChangePair(line, plusLine, mappedMagicVersion)) {
-                    this.logger.info(`Found matching minus line after scanning ${linesScanned} lines backwards`);
+                    this.logger.debug(`Found matching minus line after scanning ${linesScanned} lines backwards`);
                     return line;
                 }
             }
@@ -212,7 +179,7 @@ export class AutoVersioningService {
             }
         }
 
-        this.logger.info(
+        this.logger.debug(
             `Cleaned diff: removed ${diffContent.length - result.join("\n").length} bytes containing version changes`
         );
         return result.join("\n");
@@ -432,7 +399,7 @@ export class AutoVersioningService {
         mappedMagicVersion: string,
         finalVersion: string
     ): Promise<void> {
-        this.logger.info(`Replacing magic version ${mappedMagicVersion} with final version: ${finalVersion}`);
+        this.logger.debug(`Replacing magic version ${mappedMagicVersion} with final version: ${finalVersion}`);
 
         const sedCommand = `s/${this.escapeForSed(mappedMagicVersion)}/${this.escapeForSed(finalVersion)}/g`;
         const osName = os.platform().toLowerCase();
@@ -450,7 +417,7 @@ export class AutoVersioningService {
             doNotPipeOutput: true
         });
 
-        this.logger.info("Magic version replaced successfully");
+        this.logger.debug("Magic version replaced successfully");
     }
 
     /**
