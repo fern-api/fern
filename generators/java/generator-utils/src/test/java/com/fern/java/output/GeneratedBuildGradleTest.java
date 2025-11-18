@@ -63,10 +63,9 @@ public class GeneratedBuildGradleTest {
                 + "}";
 
         GeneratedBuildGradle buildGradle = GeneratedBuildGradle.builder()
-                .addAllPlugins(List.of(
-                        GradlePlugin.builder()
-                                .pluginId(GeneratedBuildGradle.JAVA_LIBRARY_PLUGIN_ID)
-                                .build()))
+                .addAllPlugins(List.of(GradlePlugin.builder()
+                        .pluginId(GeneratedBuildGradle.JAVA_LIBRARY_PLUGIN_ID)
+                        .build()))
                 .addCustomRepositories(GradleRepository.builder()
                         .url("https://s01.oss.sonatype.org/content/repositories/releases/")
                         .build())
@@ -75,9 +74,9 @@ public class GeneratedBuildGradleTest {
                 .build();
 
         String contents = buildGradle.getContents();
-        assertTrue(contents.contains("https://custom.repo.example.com/maven2/"),
+        assertTrue(
+                contents.contains("https://custom.repo.example.com/maven2/"),
                 "Custom repository URL should be present in build.gradle");
-        assertTrue(contents.contains("repositories {"),
-                "Custom repositories block should be present in build.gradle");
+        assertTrue(contents.contains("repositories {"), "Custom repositories block should be present in build.gradle");
     }
 }
