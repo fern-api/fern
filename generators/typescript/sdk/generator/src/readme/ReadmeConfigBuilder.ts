@@ -143,20 +143,37 @@ function getCustomSections(
 
     if (generateSubpackageExports) {
         const packageName = context.npmPackage?.packageName ?? "@acme/sdk";
-        sections.push({
-            name: "Subpackage Exports",
-            language: FernGeneratorCli.Language.Typescript,
-            content: `This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
+
+        const firstSubpackageWithClient = Object.values(context.ir.subpackages).find(
+            (subpackage) => subpackage.hasEndpointsInTree
+        );
+
+        if (firstSubpackageWithClient != null) {
+            const pathSegments = firstSubpackageWithClient.fernFilepath.packagePath.map(
+                (name) => name.camelCase.safeName
+            );
+            const subpackageName = firstSubpackageWithClient.name.camelCase.safeName;
+            if (pathSegments.length === 0 || pathSegments[pathSegments.length - 1] !== subpackageName) {
+                pathSegments.push(subpackageName);
+            }
+            const importPath = pathSegments.join("/");
+            const clientName = `${firstSubpackageWithClient.name.pascalCase.unsafeName}Client`;
+
+            sections.push({
+                name: "Subpackage Exports",
+                language: FernGeneratorCli.Language.Typescript,
+                content: `This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
 
 **Example:**
 \`\`\`typescript
-import { BarClient } from '${packageName}/foo/bar';
+import { ${clientName} } from '${packageName}/${importPath}';
 
-const client = new BarClient({...});
+const client = new ${clientName}({...});
 \`\`\`
 
 This feature is enabled by the \`generateSubpackageExports\` configuration option in your _generators.yml_ file.`
-        });
+            });
+        }
     }
 
     return sections.length > 0 ? sections : undefined;
