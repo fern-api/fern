@@ -49,67 +49,28 @@ export class TemplateDataGenerator {
     }
 
     private generateTemplateDataForClientErrorTests() {
-        const base = this.generateTemplateDataForClientRetryTests();
-        if (!base) {
+        const moduleSymbol = this.context.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        const clientDeclaration = this.generateRootClientInitializationStatement();
+        const endpointCallExpression = this.generateEndpointMethodCallExpression();
+        if (!clientDeclaration || !endpointCallExpression) {
             return null;
         }
-        const { moduleName, clientDeclaration, endpointCall } = base as {
-            moduleName: string;
-            clientDeclaration: string;
-            endpointCall: string;
+        return {
+            moduleName: moduleSymbol.name,
+            clientDeclaration: clientDeclaration.toStringWithIndentation(3),
+            endpointCall: swift.Statement.discardAssignment(endpointCallExpression).toStringWithIndentation(4)
         };
-        return { moduleName, clientDeclaration, endpointCall };
     }
 
     private generateTemplateDataForClientRetryTests() {
         const moduleSymbol = this.context.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
-        const endpoint = this.getEndpointForClientRetryTests();
-        if (!endpoint) {
+        const sampleEndpoint = this.getSampleEndpoint();
+        const clientDeclaration = this.generateRootClientInitializationStatement();
+        const endpointCallExpression = this.generateEndpointMethodCallExpression();
+        if (!sampleEndpoint || !clientDeclaration || !endpointCallExpression) {
             return null;
         }
-        const dynamicEndpoint = this.getDynamicEndpointForEndpoint(endpoint);
-        const dynamicEndpointExample = dynamicEndpoint.examples?.[0];
-        if (!dynamicEndpointExample) {
-            return null;
-        }
-        const endpointSnippetRequest = convertDynamicEndpointSnippetRequest(dynamicEndpointExample, {
-            baseUrlFallback: "https://api.fern.com"
-        });
-        const clientDeclaration = this.endpointSnippetGenerator.generateRootClientInitializationStatement({
-            auth: dynamicEndpoint.auth,
-            snippet: endpointSnippetRequest,
-            additionalArgs: [
-                swift.functionArgument({
-                    label: "urlSession",
-                    value: swift.Expression.memberAccess({
-                        target: swift.Expression.reference("stub"),
-                        memberName: "urlSession"
-                    })
-                })
-            ]
-        });
-        const endpointCallExpression = this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
-            endpoint: dynamicEndpoint,
-            snippet: convertDynamicEndpointSnippetRequest(dynamicEndpointExample),
-            additionalArguments: [
-                swift.functionArgument({
-                    label: "requestOptions",
-                    value: swift.Expression.structInitialization({
-                        unsafeName: "RequestOptions",
-                        arguments_: [
-                            swift.functionArgument({
-                                label: "additionalHeaders",
-                                value: swift.Expression.memberAccess({
-                                    target: swift.Expression.reference("stub"),
-                                    memberName: "headers"
-                                })
-                            })
-                        ]
-                    })
-                })
-            ]
-        });
-
+        const { dynamicEndpoint, dynamicEndpointExample } = sampleEndpoint;
         return {
             moduleName: moduleSymbol.name,
             clientDeclaration: clientDeclaration.toStringWithIndentation(3),
@@ -181,6 +142,77 @@ export class TemplateDataGenerator {
         const moduleSymbol = this.context.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
         return {
             moduleName: moduleSymbol.name
+        };
+    }
+
+    private generateRootClientInitializationStatement() {
+        const sampleEndpoint = this.getSampleEndpoint();
+        if (!sampleEndpoint) {
+            return null;
+        }
+        const { dynamicEndpoint, endpointSnippetRequest } = sampleEndpoint;
+        return this.endpointSnippetGenerator.generateRootClientInitializationStatement({
+            auth: dynamicEndpoint.auth,
+            snippet: endpointSnippetRequest,
+            additionalArgs: [
+                swift.functionArgument({
+                    label: "urlSession",
+                    value: swift.Expression.memberAccess({
+                        target: swift.Expression.reference("stub"),
+                        memberName: "urlSession"
+                    })
+                })
+            ]
+        });
+    }
+
+    private generateEndpointMethodCallExpression() {
+        const sampleEndpoint = this.getSampleEndpoint();
+        if (!sampleEndpoint) {
+            return null;
+        }
+        const { dynamicEndpoint, dynamicEndpointExample } = sampleEndpoint;
+        return this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
+            endpoint: dynamicEndpoint,
+            snippet: convertDynamicEndpointSnippetRequest(dynamicEndpointExample),
+            additionalArguments: [
+                swift.functionArgument({
+                    label: "requestOptions",
+                    value: swift.Expression.structInitialization({
+                        unsafeName: "RequestOptions",
+                        arguments_: [
+                            swift.functionArgument({
+                                label: "additionalHeaders",
+                                value: swift.Expression.memberAccess({
+                                    target: swift.Expression.reference("stub"),
+                                    memberName: "headers"
+                                })
+                            })
+                        ]
+                    })
+                })
+            ]
+        });
+    }
+
+    private getSampleEndpoint() {
+        const endpoint = this.getEndpointForClientRetryTests();
+        if (!endpoint) {
+            return null;
+        }
+        const dynamicEndpoint = this.getDynamicEndpointForEndpoint(endpoint);
+        const dynamicEndpointExample = dynamicEndpoint.examples?.[0];
+        if (!dynamicEndpointExample) {
+            return null;
+        }
+        const endpointSnippetRequest = convertDynamicEndpointSnippetRequest(dynamicEndpointExample, {
+            baseUrlFallback: "https://api.fern.com"
+        });
+        return {
+            endpoint,
+            dynamicEndpoint,
+            dynamicEndpointExample,
+            endpointSnippetRequest
         };
     }
 
