@@ -19,7 +19,9 @@ export function convertPlaygroundSettings(
             "limit-websocket-messages-per-connection":
                 playgroundSettings.limitWebsocketMessagesPerConnection != null
                     ? playgroundSettings.limitWebsocketMessagesPerConnection
-                    : undefined
+                    : undefined,
+            hidden:
+                playgroundSettings.hidden != null && playgroundSettings.hidden ? playgroundSettings.hidden : undefined
         };
     }
 
