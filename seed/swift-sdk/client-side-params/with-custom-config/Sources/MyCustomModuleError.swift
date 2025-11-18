@@ -4,7 +4,7 @@ import Foundation
 ///
 /// Request / client-side failures are represented as dedicated cases and
 /// HTTP response failures are wrapped in an `HTTPError` that classifies the status code.
-public enum ClientSideParamsError: Swift.Error {
+public enum MyCustomModuleError: Swift.Error {
     // MARK: - Client / transport errors
 
     /// The request URL could not be constructed.
