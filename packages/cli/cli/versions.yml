@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Remove S3 upload code for Fern definition metadata in remote generation workflow.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.8.1
+
+- changelogEntry:
+    - summary: |
         Add `fern sdk-diff` command to analyze the differences between two SDKs and generate a commit message and version bump.
       type: feat
   irVersion: 61

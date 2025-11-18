@@ -158,42 +158,8 @@ async function createJob({
 
             const tarPath = join(absolutePathToTmpDir, RelativeFilePath.of("definition.tgz"));
             await createTar({ file: tarPath, cwd: absolutePathToTmpFernDirectory }, ["."]);
-
-            // Upload definition to S3
-            context.logger.debug("Getting upload URL for Fern definition.");
-            const definitionUploadUrlRequest = await remoteGenerationService.remoteGen.getDefinitionUploadUrl({
-                apiName: workspace.definition.rootApiFile.contents.name,
-                organizationName: organization,
-                version
-            });
-
-            if (!definitionUploadUrlRequest.ok) {
-                if (definitionUploadUrlRequest.error.content.reason === "status-code") {
-                    context.logger.debug(
-                        `Failed with status-code to get upload URL with status code ${definitionUploadUrlRequest.error.content.statusCode}, continuing: ${definitionUploadUrlRequest.error.content.body}`
-                    );
-                } else if (definitionUploadUrlRequest.error.content.reason === "non-json") {
-                    context.logger.debug(
-                        `Failed with non-json to get upload URL with status code ${definitionUploadUrlRequest.error.content.statusCode}, continuing: ${definitionUploadUrlRequest.error.content.rawBody}`
-                    );
-                } else if (definitionUploadUrlRequest.error.content.reason === "unknown") {
-                    context.logger.debug(
-                        `Failed to get upload URL as unknown error occurred continuing: ${definitionUploadUrlRequest.error.content.errorMessage}`
-                    );
-                }
-            } else {
-                context.logger.debug("Uploading definition...");
-                await axios.put(definitionUploadUrlRequest.body.s3Url, await readFile(tarPath));
-
-                // Create definition metadata
-                fernDefinitionMetadata = {
-                    definitionS3DownloadUrl: definitionUploadUrlRequest.body.s3Url,
-                    outputPath: ".mock",
-                    cliVersion: projectConfig.version
-                };
-            }
         } catch (error) {
-            context.logger.debug(`Failed to upload definition to S3, continuing: ${error}`);
+            context.logger.debug(`Failed to create definition tarball, continuing: ${error}`);
         }
     }
 
