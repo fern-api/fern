@@ -43,6 +43,7 @@ import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJ
 import { mockServer } from "./commands/mock/mockServer";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
+import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand";
 import { selfUpdate } from "./commands/self-update/selfUpdate";
 import { testOutput } from "./commands/test/testOutput";
 import { generateToken } from "./commands/token/token";
@@ -166,6 +167,7 @@ async function tryRunCli(cliContext: CliContext) {
         .recommendCommands();
 
     addDiffCommand(cli, cliContext);
+    addSdkDiffCommand(cli, cliContext);
     addInitCommand(cli, cliContext);
     addTokenCommand(cli, cliContext);
     addAddCommand(cli, cliContext);
@@ -413,6 +415,56 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             }
             const code = result.bump === "major" ? 1 : 0;
             await cliContext.exit({ code });
+        }
+    );
+}
+
+function addSdkDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "sdk-diff <from-dir> <to-dir>",
+        false,
+        (yargs) =>
+            yargs
+                .positional("from-dir", {
+                    type: "string",
+                    demandOption: true,
+                    description: "Path to the directory containing the previous version of the SDK"
+                })
+                .positional("to-dir", {
+                    type: "string",
+                    demandOption: true,
+                    description: "Path to the directory containing the next version of the SDK"
+                })
+                .option("json", {
+                    boolean: true,
+                    default: false,
+                    description: "Output result as JSON"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern sdk-diff"
+            });
+
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: undefined,
+                defaultToAllApiWorkspaces: true
+            });
+
+            const result = await sdkDiffCommand({
+                context: cliContext,
+                project,
+                fromDir: argv.fromDir,
+                toDir: argv.toDir
+            });
+
+            if (argv.json) {
+                // Output as JSON
+                cliContext.logger.info(JSON.stringify(result, null, 2));
+            } else {
+                // Output as formatted text
+                cliContext.logger.info("\n" + result.message);
+                cliContext.logger.info(`\nVersion Bump: ${result.version_bump}`);
+            }
         }
     );
 }

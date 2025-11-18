@@ -12,7 +12,15 @@
 
 - changelogEntry:
     - summary: |
-        Replace prettier2 with yaml package in `fern format` command to reduce CLI bundle size by ~4.3 MB (11.4% reduction from 38 MB to 33.67 MB). 
+        Add `fern sdk-diff` command to analyze the differences between two SDKs and generate a commit message and version bump.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.8.0
+
+- changelogEntry:
+    - summary: |
+        Replace prettier2 with yaml package in `fern format` command to reduce CLI bundle size by ~4.3 MB (11.4% reduction from 38 MB to 33.67 MB).
         YAML formatting output may have minor differences (e.g., extra blank lines after section headers like `types:` and `errors:`).
       type: feat
   irVersion: 61
