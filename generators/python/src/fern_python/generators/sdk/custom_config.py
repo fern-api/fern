@@ -124,10 +124,14 @@ class SDKCustomConfig(pydantic.BaseModel):
 
     class Config:
         extra = pydantic.Extra.forbid
-        allow_population_by_field_name = True
 
     @classmethod
     def parse_obj(cls, obj: Any) -> "SDKCustomConfig":
+        if isinstance(obj, dict):
+            obj = obj.copy()
+            if "custom-pager-name" in obj and "custom_pager_name" not in obj:
+                obj["custom_pager_name"] = obj.pop("custom-pager-name")
+        
         obj = super().parse_obj(obj)
 
         use_typeddict_requests = obj.use_typeddict_requests or obj.pydantic_config.use_typeddict_requests
