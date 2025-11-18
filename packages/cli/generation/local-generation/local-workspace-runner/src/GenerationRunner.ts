@@ -44,7 +44,7 @@ export class GenerationRunner {
         outputVersionOverride,
         shouldGenerateDynamicSnippetTests,
         skipUnstableDynamicSnippetTests,
-        inspect,
+        inspect
     }: GenerationRunner.RunArgs): Promise<void> {
         const results = await Promise.all(
             generatorGroup.generators.map(async (generatorInvocation) => {
@@ -68,7 +68,7 @@ export class GenerationRunner {
                                 irVersionOverride,
                                 outputVersionOverride,
                                 absolutePathToFernConfig,
-                                inspect,
+                                inspect
                             });
 
                             interactiveTaskContext.logger.info(
@@ -112,7 +112,7 @@ export class GenerationRunner {
         irVersionOverride,
         outputVersionOverride,
         absolutePathToFernConfig,
-        inspect,
+        inspect
     }: {
         generatorGroup: generatorsYml.GeneratorGroup;
         generatorInvocation: generatorsYml.GeneratorInvocation;

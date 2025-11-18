@@ -32,7 +32,7 @@ export async function generateWorkspace({
     mode,
     runner,
     inspect,
-    lfsOverride,
+    lfsOverride
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -74,7 +74,7 @@ export async function generateWorkspace({
         return context.failAndThrow(`Group '${groupNameOrDefault}' does not exist.`);
     }
 
-    const {ai} = workspace.generatorsConfiguration;
+    const { ai } = workspace.generatorsConfiguration;
 
     // Apply lfs-override if specified
     if (lfsOverride != null) {

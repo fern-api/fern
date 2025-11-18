@@ -61,7 +61,7 @@ export class LocalTaskHandler {
         this.ai = ai;
     }
 
-    public async copyGeneratedFiles(): Promise<{ shouldCommit: boolean, autoVersioningCommitMessage?: string }> {
+    public async copyGeneratedFiles(): Promise<{ shouldCommit: boolean; autoVersioningCommitMessage?: string }> {
         const isFernIgnorePresent = await this.isFernIgnorePresent();
         const isExistingGitRepo = await this.isGitRepository();
 
@@ -242,9 +242,7 @@ export class LocalTaskHandler {
             );
         }
 
-        this.context.logger.debug(
-            `Using AI service: ${this.ai.provider} with model ${this.ai.model}`
-        );
+        this.context.logger.debug(`Using AI service: ${this.ai.provider} with model ${this.ai.model}`);
         return configureBamlClient(this.ai);
     }
 
