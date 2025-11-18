@@ -430,10 +430,12 @@ export class DynamicTypeLiteralMapper {
         value: unknown;
     }): php.TypeLiteral | undefined {
         for (const typeReference of undiscriminatedUnion.types) {
-            try {
-                return this.convert({ typeReference, value });
-            } catch (e) {
-                continue;
+            if (this.typeReferenceMatchesValue({ typeReference, value })) {
+                try {
+                    return this.convert({ typeReference, value });
+                } catch (e) {
+                    continue;
+                }
             }
         }
         this.context.errors.add({
@@ -441,6 +443,126 @@ export class DynamicTypeLiteralMapper {
             message: `None of the types in the undiscriminated union matched the given "${typeof value}" value`
         });
         return undefined;
+    }
+
+    private typeReferenceMatchesValue({
+        typeReference,
+        value
+    }: {
+        typeReference: FernIr.dynamic.TypeReference;
+        value: unknown;
+    }): boolean {
+        switch (typeReference.type) {
+            case "named": {
+                const named = this.context.resolveNamedType({ typeId: typeReference.value });
+                if (named == null) {
+                    return false;
+                }
+                return this.namedTypeMatchesValue({ named, value });
+            }
+            case "optional":
+            case "nullable":
+                return this.typeReferenceMatchesValue({ typeReference: typeReference.value, value });
+            case "primitive":
+                return this.primitiveMatchesValue({ primitive: typeReference.value, value });
+            case "list":
+            case "set":
+                return Array.isArray(value);
+            case "map":
+                return typeof value === "object" && value != null && !Array.isArray(value);
+            case "literal":
+                return this.literalMatchesValue({ literalType: typeReference.value, value });
+            case "unknown":
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private namedTypeMatchesValue({ named, value }: { named: FernIr.dynamic.NamedType; value: unknown }): boolean {
+        switch (named.type) {
+            case "alias":
+                return this.typeReferenceMatchesValue({ typeReference: named.typeReference, value });
+            case "object":
+                return this.objectMatchesValue({ object_: named, value });
+            case "enum":
+                return typeof value === "string" && named.values.some((v) => v.wireValue === value);
+            case "discriminatedUnion":
+            case "undiscriminatedUnion":
+                return typeof value === "object" && value != null;
+            default:
+                return false;
+        }
+    }
+
+    private objectMatchesValue({ object_, value }: { object_: FernIr.dynamic.ObjectType; value: unknown }): boolean {
+        const record = this.context.getRecord(value);
+        if (record == null) {
+            return false;
+        }
+        for (const property of object_.properties) {
+            if (this.isRequiredProperty(property) && !(property.name.wireValue in record)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private isRequiredProperty(property: FernIr.dynamic.NamedParameter): boolean {
+        const typeRef = property.typeReference;
+        if (typeRef.type === "optional" || typeRef.type === "nullable") {
+            return false;
+        }
+        if (typeRef.type === "literal") {
+            return false;
+        }
+        return true;
+    }
+
+    private primitiveMatchesValue({
+        primitive,
+        value
+    }: {
+        primitive: FernIr.dynamic.PrimitiveTypeV1;
+        value: unknown;
+    }): boolean {
+        switch (primitive) {
+            case "INTEGER":
+            case "LONG":
+            case "UINT":
+            case "UINT_64":
+            case "FLOAT":
+            case "DOUBLE":
+                return typeof value === "number";
+            case "BOOLEAN":
+                return typeof value === "boolean";
+            case "DATE":
+            case "DATE_TIME":
+            case "BASE_64":
+            case "UUID":
+            case "BIG_INTEGER":
+            case "STRING":
+                return typeof value === "string";
+            default:
+                return false;
+        }
+    }
+
+    private literalMatchesValue({
+        literalType,
+        value
+    }: {
+        literalType: FernIr.dynamic.LiteralType;
+        value: unknown;
+    }): boolean {
+        switch (literalType.type) {
+            case "boolean":
+                return typeof value === "boolean" && value === literalType.value;
+            case "string":
+                return typeof value === "string" && value === literalType.value;
+            default:
+                return false;
+        }
     }
 
     private convertUnknown({ value }: { value: unknown }): php.TypeLiteral {

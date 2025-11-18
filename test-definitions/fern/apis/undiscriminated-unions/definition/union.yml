@@ -69,7 +69,7 @@ service:
         - request:
             paymentMethod:
               method: card
-              cardNumber: "1234567890123456"
+              tokenId: tok_123
           response:
             body: success
 
