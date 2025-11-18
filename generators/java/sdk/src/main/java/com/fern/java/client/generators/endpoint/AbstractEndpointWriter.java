@@ -329,16 +329,21 @@ public abstract class AbstractEndpointWriter {
                     .build();
         }
 
+        MethodSpec inputStreamMethodSpec = null;
+        MethodSpec inputStreamWithMediaTypeMethodSpec = null;
+        MethodSpec inputStreamWithRequestOptionsMethodSpec = null;
+        MethodSpec inputStreamWithMediaTypeAndRequestOptionsMethodSpec = null;
+
         return httpEndpointMethodSpecsFactory.create(
                 endpointWithRequestOptions,
                 endpointWithoutRequestOptions,
                 endpointWithoutRequest,
                 byteArrayMethodSpec,
                 nonRequestOptionsByteArrayMethodSpec,
-                null, // inputStreamMethodSpec - TODO: implement
-                null, // inputStreamWithMediaTypeMethodSpec - TODO: implement
-                null, // inputStreamWithRequestOptionsMethodSpec - TODO: implement
-                null); // inputStreamWithMediaTypeAndRequestOptionsMethodSpec - TODO: implement
+                inputStreamMethodSpec,
+                inputStreamWithMediaTypeMethodSpec,
+                inputStreamWithRequestOptionsMethodSpec,
+                inputStreamWithMediaTypeAndRequestOptionsMethodSpec)
     }
 
     public abstract CodeBlock getInitializeRequestCodeBlock(
