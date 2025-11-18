@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fern-api/test-remote-local-sdk/core"
+	"github.com/fern-api/test-remote-local-sdk/v7/core"
 	"github.com/stretchr/testify/assert"
 )
 

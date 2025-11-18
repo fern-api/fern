@@ -4,7 +4,7 @@ package api
 
 import (
 	json "encoding/json"
-	core "github.com/fern-api/test-remote-local-sdk/core"
+	core "github.com/fern-api/test-remote-local-sdk/v7/core"
 )
 
 type MovieDoesNotExistError struct {

@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	internal "github.com/fern-api/test-remote-local-sdk/internal"
+	internal "github.com/fern-api/test-remote-local-sdk/v7/internal"
 	big "math/big"
 )
 

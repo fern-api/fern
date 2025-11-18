@@ -6,9 +6,9 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
-	testremotelocalsdk "github.com/fern-api/test-remote-local-sdk"
-	client "github.com/fern-api/test-remote-local-sdk/client"
-	option "github.com/fern-api/test-remote-local-sdk/option"
+	v7 "github.com/fern-api/test-remote-local-sdk/v7"
+	client "github.com/fern-api/test-remote-local-sdk/v7/client"
+	option "github.com/fern-api/test-remote-local-sdk/v7/option"
 	require "github.com/stretchr/testify/require"
 	http "net/http"
 	testing "testing"
@@ -71,7 +71,7 @@ func TestImdbCreateMovieWithWireMock(
 			WireMockBaseURL,
 		),
 	)
-	request := &testremotelocalsdk.CreateMovieRequest{
+	request := &v7.CreateMovieRequest{
 		Title:  "title",
 		Rating: 1.1,
 	}

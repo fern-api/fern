@@ -45,7 +45,7 @@ java {
 
 group = 'com.fern-api'
 
-version = '0.0.1'
+version = '7.7.7'
 
 jar {
     dependsOn(":generatePomFileForMavenPublication")
@@ -72,7 +72,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'com.fern-api'
             artifactId = 'test-remote-local-sdk'
-            version = '0.0.1'
+            version = '7.7.7'
             from components.java
             pom {
                 licenses {

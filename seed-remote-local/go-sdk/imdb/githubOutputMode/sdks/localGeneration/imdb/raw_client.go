@@ -4,10 +4,10 @@ package imdb
 
 import (
 	context "context"
-	testremotelocalsdk "github.com/fern-api/test-remote-local-sdk"
-	core "github.com/fern-api/test-remote-local-sdk/core"
-	internal "github.com/fern-api/test-remote-local-sdk/internal"
-	option "github.com/fern-api/test-remote-local-sdk/option"
+	v7 "github.com/fern-api/test-remote-local-sdk/v7"
+	core "github.com/fern-api/test-remote-local-sdk/v7/core"
+	internal "github.com/fern-api/test-remote-local-sdk/v7/internal"
+	option "github.com/fern-api/test-remote-local-sdk/v7/option"
 	http "net/http"
 )
 
@@ -32,9 +32,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) CreateMovie(
 	ctx context.Context,
-	request *testremotelocalsdk.CreateMovieRequest,
+	request *v7.CreateMovieRequest,
 	opts ...option.RequestOption,
-) (*core.Response[testremotelocalsdk.MovieId], error) {
+) (*core.Response[v7.MovieId], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -46,7 +46,7 @@ func (r *RawClient) CreateMovie(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response testremotelocalsdk.MovieId
+	var response v7.MovieId
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -64,7 +64,7 @@ func (r *RawClient) CreateMovie(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[testremotelocalsdk.MovieId]{
+	return &core.Response[v7.MovieId]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -73,9 +73,9 @@ func (r *RawClient) CreateMovie(
 
 func (r *RawClient) GetMovie(
 	ctx context.Context,
-	movieId testremotelocalsdk.MovieId,
+	movieId v7.MovieId,
 	opts ...option.RequestOption,
-) (*core.Response[*testremotelocalsdk.Movie], error) {
+) (*core.Response[*v7.Movie], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -90,7 +90,7 @@ func (r *RawClient) GetMovie(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *testremotelocalsdk.Movie
+	var response *v7.Movie
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -102,13 +102,13 @@ func (r *RawClient) GetMovie(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(testremotelocalsdk.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(v7.ErrorCodes),
 		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*testremotelocalsdk.Movie]{
+	return &core.Response[*v7.Movie]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

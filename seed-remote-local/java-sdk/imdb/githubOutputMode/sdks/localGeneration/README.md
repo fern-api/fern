@@ -40,7 +40,7 @@ Add the dependency in your `pom.xml` file:
 <dependency>
   <groupId>com.fern-api</groupId>
   <artifactId>test-remote-local-sdk</artifactId>
-  <version>0.0.1</version>
+  <version>7.7.7</version>
 </dependency>
 ```
 
