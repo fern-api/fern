@@ -107,11 +107,6 @@ export const SourceAsIsFileSpecs = {
     },
 
     // Core
-    CalendarDate: {
-        relativePathToDir: "Core",
-        filenameWithoutExtension: "CalendarDate",
-        symbols: [{ name: "CalendarDate", shape: { type: "struct" } }]
-    },
     DataPlusString: {
         relativePathToDir: "Core",
         filenameWithoutExtension: "Data+String",
@@ -124,6 +119,11 @@ export const SourceAsIsFileSpecs = {
     },
 
     // Public
+    CalendarDate: {
+        relativePathToDir: "Public",
+        filenameWithoutExtension: "CalendarDate",
+        symbols: [{ name: "CalendarDate", shape: { type: "struct" } }]
+    },
     ClientConfig: {
         relativePathToDir: "Public",
         filenameWithoutExtension: "ClientConfig",
@@ -133,6 +133,11 @@ export const SourceAsIsFileSpecs = {
         relativePathToDir: "Public",
         filenameWithoutExtension: "FormFile",
         symbols: [{ name: "FormFile", shape: { type: "struct" } }]
+    },
+    HTTPError: {
+        relativePathToDir: "Public",
+        filenameWithoutExtension: "HTTPError",
+        symbols: [{ name: "HTTPError", shape: { type: "struct" } }]
     },
     Indirect: {
         relativePathToDir: "Public",
