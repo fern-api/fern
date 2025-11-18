@@ -63,6 +63,8 @@ function AnalyzeSdkDiff(diff: string @description("The git diff to analyze for g
     in the diff, describe changes generically (e.g., "added X-Fern-SDK-Version header")
 
     Git Diff:
+    ---
     {{diff}}
+    ---
   "#
 }
