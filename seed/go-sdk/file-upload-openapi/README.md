@@ -33,7 +33,6 @@ import (
     client "github.com/file-upload-openapi/fern/client"
     fern "github.com/file-upload-openapi/fern"
     context "context"
-    strings "strings"
 )
 
 func do() {
@@ -43,9 +42,6 @@ func do() {
     }
     client.FileUploadExample.UploadFile(
         context.TODO(),
-        strings.NewReader(
-            "",
-        ),
         request,
     )
 }

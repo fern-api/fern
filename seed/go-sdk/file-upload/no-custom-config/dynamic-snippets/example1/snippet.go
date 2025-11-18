@@ -5,7 +5,6 @@ import (
     option "github.com/file-upload/fern/option"
     fern "github.com/file-upload/fern"
     context "context"
-    strings "strings"
 )
 
 func do() {
@@ -17,9 +16,6 @@ func do() {
     request := &fern.OptionalArgsRequest{}
     client.Service.OptionalArgs(
         context.TODO(),
-        strings.NewReader(
-            "",
-        ),
         request,
     )
 }

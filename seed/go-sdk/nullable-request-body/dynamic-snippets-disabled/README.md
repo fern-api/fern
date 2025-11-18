@@ -38,11 +38,11 @@ import (
 func do() {
     client := client.NewClient()
     request := &fern.TestMethodNameTestGroupRequest{
+        PathParam: "path_param",
         Body: &fern.PlainObject{},
     }
     client.TestGroup.TestMethodName(
         context.TODO(),
-        "path_param",
         request,
     )
 }

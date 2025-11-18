@@ -66,11 +66,14 @@ client.Organizations.GetOrganization(
 <dd>
 
 ```go
+request := &path.GetOrganizationUserRequest{
+        TenantId: "tenant_id",
+        OrganizationId: "organization_id",
+        UserId: "user_id",
+    }
 client.Organizations.GetOrganizationUser(
         context.TODO(),
-        "tenant_id",
-        "organization_id",
-        "user_id",
+        request,
     )
 }
 ```
@@ -196,10 +199,13 @@ client.Organizations.SearchOrganizations(
 <dd>
 
 ```go
+request := &path.GetUsersRequest{
+        TenantId: "tenant_id",
+        UserId: "user_id",
+    }
 client.User.GetUser(
         context.TODO(),
-        "tenant_id",
-        "user_id",
+        request,
     )
 }
 ```
@@ -310,6 +316,8 @@ client.User.CreateUser(
 
 ```go
 request := &path.UpdateUserRequest{
+        TenantId: "tenant_id",
+        UserId: "user_id",
         Body: &path.User{
             Name: "name",
             Tags: []string{
@@ -320,8 +328,6 @@ request := &path.UpdateUserRequest{
     }
 client.User.UpdateUser(
         context.TODO(),
-        "tenant_id",
-        "user_id",
         request,
     )
 }
@@ -381,14 +387,14 @@ client.User.UpdateUser(
 
 ```go
 request := &path.SearchUsersRequest{
+        TenantId: "tenant_id",
+        UserId: "user_id",
         Limit: path.Int(
             1,
         ),
     }
 client.User.SearchUsers(
         context.TODO(),
-        "tenant_id",
-        "user_id",
         request,
     )
 }
@@ -461,11 +467,14 @@ Test endpoint with path parameter that has a text prefix (v{version})
 <dd>
 
 ```go
+request := &path.GetUserMetadataRequest{
+        TenantId: "tenant_id",
+        UserId: "user_id",
+        Version: 1,
+    }
 client.User.GetUserMetadata(
         context.TODO(),
-        "tenant_id",
-        "user_id",
-        1,
+        request,
     )
 }
 ```
@@ -537,12 +546,15 @@ Test endpoint with path parameters listed in different order than found in path
 <dd>
 
 ```go
+request := &path.GetUserSpecificsRequest{
+        TenantId: "tenant_id",
+        UserId: "user_id",
+        Version: 1,
+        Thought: "thought",
+    }
 client.User.GetUserSpecifics(
         context.TODO(),
-        "tenant_id",
-        "user_id",
-        1,
-        "thought",
+        request,
     )
 }
 ```

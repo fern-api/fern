@@ -31,17 +31,16 @@ package example
 
 import (
     client "github.com/file-upload/fern/client"
+    fern "github.com/file-upload/fern"
     context "context"
-    strings "strings"
 )
 
 func do() {
     client := client.NewClient()
+    request := &fern.JustFileRequest{}
     client.Service.JustFile(
         context.TODO(),
-        strings.NewReader(
-            "",
-        ),
+        request,
     )
 }
 ```
