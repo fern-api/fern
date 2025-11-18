@@ -3967,6 +3967,9 @@ importers:
       '@boundaryml/baml':
         specifier: ^0.211.2
         version: 0.211.2
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../configuration
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*

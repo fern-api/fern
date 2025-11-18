@@ -9,7 +9,7 @@
   "files": {
     "includes": [
       "**",
-      "!packages/cli/ai/baml_client/**",
+      "!packages/cli/ai/src/baml_client/**",
       "!!**/lib",
       "!!**/dist",
       "!!seed",

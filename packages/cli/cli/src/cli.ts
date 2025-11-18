@@ -445,8 +445,14 @@ function addSdkDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 command: "fern sdk-diff"
             });
 
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: undefined,
+                defaultToAllApiWorkspaces: true
+            });
+
             const result = await sdkDiffCommand({
                 context: cliContext,
+                project,
                 fromDir: argv.fromDir,
                 toDir: argv.toDir
             });
@@ -462,7 +468,6 @@ function addSdkDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
         }
     );
 }
-
 
 function addTokenCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
