@@ -6,15 +6,15 @@
  * - A version bump recommendation (major/minor/patch)
  */
 
+import { ClientRegistry } from "@boundaryml/baml";
+import { AnalyzeCommitDiffResponse, b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
+import { loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
+import { Project } from "@fern-api/project-loader";
 import { FernCliError, TaskContext } from "@fern-api/task-context";
 import { exec } from "child_process";
 import { promisify } from "util";
 import { CliContext } from "../../cli-context/CliContext";
-import { AnalyzeCommitDiffResponse, b as BamlClient, VersionBump, configureBamlClient } from "@fern-api/cli-ai";
-import { loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
-import { ClientRegistry } from "@boundaryml/baml";
-import { Project } from "@fern-api/project-loader";
 
 const execAsync = promisify(exec);
 

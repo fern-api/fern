@@ -43,6 +43,7 @@ import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJ
 import { mockServer } from "./commands/mock/mockServer";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
+import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand";
 import { selfUpdate } from "./commands/self-update/selfUpdate";
 import { testOutput } from "./commands/test/testOutput";
 import { generateToken } from "./commands/token/token";
@@ -56,7 +57,6 @@ import { writeTranslationForProject } from "./commands/write-translation/writeTr
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { RUNTIME } from "./runtime";
-import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand";
 
 void runCli();
 
