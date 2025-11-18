@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add external configuration to tsup build to prevent dev-only dependencies (prettier, vitest, typescript, tsup, depcheck, @types/*) from being accidentally bundled. 
+        This reduces CLI bundle size by an additional ~3 MB (8.8% reduction from 34 MB to 31 MB).
+        Combined with prettier2 removal, total reduction is ~7 MB (18.4% reduction from 38 MB to 31 MB).
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.8.0
+
+- changelogEntry:
+    - summary: |
         Replace prettier2 with yaml package in `fern format` command to reduce CLI bundle size by ~4.3 MB (11.4% reduction from 38 MB to 33.67 MB). 
         YAML formatting output may have minor differences (e.g., extra blank lines after section headers like `types:` and `errors:`).
       type: feat

@@ -12,6 +12,18 @@ async function main() {
         outDir: 'dist/dev',
         minify: false,
         sourcemap: true,
+        platform: 'node',
+        target: 'node18',
+        external: [
+            /^prettier(?:\/.*)?$/,
+            /^prettier2(?:\/.*)?$/,
+            /^vitest(?:\/.*)?$/,
+            /^depcheck(?:\/.*)?$/,
+            /^tsup(?:\/.*)?$/,
+            /^typescript(?:\/.*)?$/,
+            /^@types\/.*$/,
+        ],
+        metafile: true,
         env: {
             AUTH0_DOMAIN: "fern-dev.us.auth0.com",
             AUTH0_CLIENT_ID: "4QiMvRvRUYpnycrVDK2M59hhJ6kcHYFQ",
