@@ -12,6 +12,15 @@
 
 - changelogEntry:
     - summary: |
+        Add external configuration to tsup build to prevent dev-only dependencies (prettier, vitest, typescript, tsup, depcheck, @types/*) from being accidentally bundled. 
+        This ensures the CLI bundle only includes runtime dependencies and enables metafile generation for bundle analysis.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.9.0
+
+- changelogEntry:
+    - summary: |
         Fix issue where local generation for github output mode wasn't producing README.md files
       type: fix
   irVersion: 61
