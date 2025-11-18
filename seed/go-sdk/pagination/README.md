@@ -118,7 +118,7 @@ for page != nil {
     }
 }
 
-// Alternatively, access the next cursor directly from the raw response.
+// Paginated endpoints return a Page with directly accessible headers, status code, and raw response.
 ctx := context.TODO()
 page, err := client.Complex.Search(
     ctx,
@@ -127,6 +127,10 @@ page, err := client.Complex.Search(
 if err != nil {
     return err
 }
+// Access response metadata directly from the page
+fmt.Printf("Got headers: %v", page.Header)
+fmt.Printf("Got status code: %d", page.StatusCode)
+// Access the raw response fields
 nextCursor := page.RawResponse.Next
 ```
 
@@ -184,11 +188,21 @@ You can access the raw HTTP response data by using the `WithRawResponse` field o
 when you need to examine the response headers received from the API call.
 
 ```go
+// For paginated endpoints, headers and status code are directly available on the Page.
+page, err := client.Complex.Search(...)
+if err != nil {
+    return err
+}
+fmt.Printf("Got response headers: %v", page.Header)
+fmt.Printf("Got status code: %d", page.StatusCode)
+
+// For non-paginated endpoints, use WithRawResponse to access headers and status code.
 response, err := client.Complex.WithRawResponse.Search(...)
 if err != nil {
     return err
 }
 fmt.Printf("Got response headers: %v", response.Header)
+fmt.Printf("Got status code: %d", response.StatusCode)
 ```
 
 ### Retries
