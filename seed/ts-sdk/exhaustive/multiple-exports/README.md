@@ -15,6 +15,19 @@ npm i -s @fern/exhaustive
 
 A full reference for this library is available [here](./reference.md).
 
+## Subpackage Exports
+
+This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
+
+**Example:**
+```typescript
+import { EndpointsClient } from '@fern/exhaustive/endpoints';
+
+const client = new EndpointsClient({...});
+```
+
+This feature is enabled by the `generateSubpackageExports` configuration option in your _generators.yml_ file.
+
 ## Usage
 
 Instantiate and use the client with the following:

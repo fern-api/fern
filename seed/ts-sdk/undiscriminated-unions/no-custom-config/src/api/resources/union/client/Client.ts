@@ -425,26 +425,26 @@ export class UnionClient {
 
     /**
      * @param {SeedUndiscriminatedUnions.PaymentRequest} request
-     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.union.testCamelCaseProperties({
      *         paymentMethod: {
-     *             method: "method",
-     *             cardNumber: "cardNumber"
+     *             method: "card",
+     *             cardNumber: "1234567890123456"
      *         }
      *     })
      */
     public testCamelCaseProperties(
         request: SeedUndiscriminatedUnions.PaymentRequest,
-        requestOptions?: Union.RequestOptions,
+        requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__testCamelCaseProperties(request, requestOptions));
     }
 
     private async __testCamelCaseProperties(
         request: SeedUndiscriminatedUnions.PaymentRequest,
-        requestOptions?: Union.RequestOptions,
+        requestOptions?: UnionClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
