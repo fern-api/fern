@@ -23,6 +23,7 @@ import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
+import { isAutoVersion } from "./VersionUtils";
 
 export async function runLocalGenerationForWorkspace({
     token,
@@ -151,6 +152,25 @@ export async function runLocalGenerationForWorkspace({
                     generatorInvocation,
                     absolutePathToPreviewForGenerator != null
                 );
+
+                // Validate that automatic versioning has a GitHub repository for git diff analysis
+                if (generatorInvocation.version != null && isAutoVersion(generatorInvocation.version)) {
+                    if (selfhostedGithubConfig == null) {
+                        context.failAndThrow(
+                            `Automatic versioning (--version AUTO) requires a GitHub repository configuration. ` +
+                                `Please configure your generator with GitHub output mode in generators.yml. ` +
+                                `Example:\n` +
+                                `generators:\n` +
+                                `  - name: fernapi/fern-typescript-sdk\n` +
+                                `    version: latest\n` +
+                                `    output:\n` +
+                                `      location: github\n` +
+                                `      repository: your-org/your-sdk-repo\n` +
+                                `    config:\n` +
+                                `      version: AUTO`
+                        );
+                    }
+                }
 
                 if (selfhostedGithubConfig != null) {
                     await fs.rm(absolutePathToLocalOutput, { recursive: true, force: true });
