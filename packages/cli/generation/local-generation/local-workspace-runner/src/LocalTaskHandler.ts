@@ -8,6 +8,8 @@ import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import decompress from "decompress";
 import { cp, readdir, readFile, rm } from "fs/promises";
+import { tmpdir } from "os";
+import { join as pathJoin } from "path";
 import semver from "semver";
 import tmp from "tmp-promise";
 import { AutoVersioningException, AutoVersioningService, AutoVersionResult } from "./AutoVersioningService";
@@ -114,8 +116,8 @@ export class LocalTaskHandler {
         try {
             this.context.logger.info("Analyzing SDK changes for automatic semantic versioning");
 
-            // Generate git diff to file
-            diffFile = await autoVersioningService.generateDiff(this.absolutePathToLocalOutput);
+            // Generate git diff to file using local git command
+            diffFile = await this.generateDiffFile();
             const diffContent = await readFile(diffFile, "utf-8");
 
             if (diffContent.trim().length === 0) {
@@ -413,6 +415,19 @@ export class LocalTaskHandler {
             doNotPipeOutput: true
         });
         return response.stdout;
+    }
+
+    /**
+     * Generates a git diff file for automatic versioning analysis.
+     * This compares the current state against HEAD to see what changes have been made.
+     */
+    private async generateDiffFile(): Promise<string> {
+        const diffFile = pathJoin(tmpdir(), `git-diff-${Date.now()}.patch`);
+
+        await this.runGitCommand(["diff", "HEAD", "--output", diffFile], this.absolutePathToLocalOutput);
+
+        this.context.logger.info(`Generated git diff to file: ${diffFile}`);
+        return diffFile;
     }
 }
 
