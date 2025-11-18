@@ -14,19 +14,23 @@ export class ReadmeConfigBuilder {
     private readonly endpointSnippets: FernGeneratorExec.Endpoint[];
     private readonly fileResponseType: "stream" | "binary-response";
     private readonly fetchSupport: "node-fetch" | "native";
+    private readonly generateSubpackageExports: boolean;
 
     constructor({
         endpointSnippets,
         fileResponseType,
-        fetchSupport
+        fetchSupport,
+        generateSubpackageExports
     }: {
         endpointSnippets: FernGeneratorExec.Endpoint[];
         fileResponseType: "stream" | "binary-response";
         fetchSupport: "node-fetch" | "native";
+        generateSubpackageExports: boolean;
     }) {
         this.endpointSnippets = endpointSnippets;
         this.fileResponseType = fileResponseType;
         this.fetchSupport = fetchSupport;
+        this.generateSubpackageExports = generateSubpackageExports;
     }
 
     public build({
@@ -79,7 +83,7 @@ export class ReadmeConfigBuilder {
                 ? Array.from(context.ir.readmeConfig.disabledFeatures)
                 : undefined,
             whiteLabel: context.ir.readmeConfig?.whiteLabel,
-            customSections: getCustomSections(context),
+            customSections: getCustomSections(context, this.generateSubpackageExports),
             features
         };
     }
@@ -109,7 +113,10 @@ export class ReadmeConfigBuilder {
     }
 }
 
-function getCustomSections(context: SdkContext): FernGeneratorCli.CustomSection[] | undefined {
+function getCustomSections(
+    context: SdkContext,
+    generateSubpackageExports: boolean
+): FernGeneratorCli.CustomSection[] | undefined {
     const irCustomSections = context.ir.readmeConfig?.customSections;
     const customConfigSections = parseCustomConfigOrUndefined(
         context.logger,
@@ -133,6 +140,25 @@ function getCustomSections(context: SdkContext): FernGeneratorCli.CustomSection[
             content: section.content
         });
     }
+
+    if (generateSubpackageExports) {
+        const packageName = context.npmPackage?.packageName ?? "@acme/sdk";
+        sections.push({
+            name: "Subpackage Exports",
+            language: FernGeneratorCli.Language.Typescript,
+            content: `This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
+
+**Example:**
+\`\`\`typescript
+import { BarClient } from '${packageName}/foo/bar';
+
+const client = new BarClient({...});
+\`\`\`
+
+This feature is enabled by the \`generateSubpackageExports\` configuration option in your _generators.yml_ file.`
+        });
+    }
+
     return sections.length > 0 ? sections : undefined;
 }
 
