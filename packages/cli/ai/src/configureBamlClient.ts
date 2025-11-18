@@ -1,5 +1,8 @@
-import { ClientRegistry } from "@boundaryml/baml";
+import { ClientRegistry, setLogLevel } from "@boundaryml/baml";
 import { generatorsYml } from "@fern-api/configuration";
+
+// BAML logs are too verbose by default (includes prompt and request/response bodies)
+setLogLevel("WARN");
 
 /**
  * Creates and configures a BAML ClientRegistry based on the provided AI service configuration.
