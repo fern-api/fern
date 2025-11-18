@@ -142,6 +142,11 @@ jobs:
         run: |
           pnpm seed:build
 
+      - name: Publish Dev CLI
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          pnpm seed publish cli --ver ${{ inputs.version }} --dev --log-level debug
+
       - name: Publish + Register CLI
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
