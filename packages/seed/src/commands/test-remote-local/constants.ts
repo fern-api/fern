@@ -51,7 +51,10 @@ export const OUTPUT_MODE_SUFFIX = "OutputMode";
 export const FERN_GENERATE_COMMAND = "generate";
 export const FLAG_GROUP = "--group";
 export const FLAG_LOG_LEVEL = "--log-level";
+export const DEFAULT_FERN_LOG_LEVEL = "debug";
 export const FLAG_LOCAL = "--local";
+export const FLAG_VERSION = "--version";
+export const DEFAULT_SDK_VERSION = "7.7.7";
 
 // ============================================================================
 // Git Commands & Flags
