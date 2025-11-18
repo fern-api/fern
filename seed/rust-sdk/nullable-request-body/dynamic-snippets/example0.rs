@@ -12,7 +12,10 @@ async fn main() {
         .test_method_name(
             &"path_param".to_string(),
             &TestMethodNameTestGroupRequest {
-                body: Some(PlainObject {}),
+                body: Some(PlainObject {
+                    id: None,
+                    name: None,
+                }),
             },
             None,
         )
