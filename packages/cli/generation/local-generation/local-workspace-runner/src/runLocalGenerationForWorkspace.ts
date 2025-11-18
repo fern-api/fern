@@ -154,7 +154,7 @@ export async function runLocalGenerationForWorkspace({
                 );
 
                 // Validate that automatic versioning has a GitHub repository for git diff analysis
-                if (generatorInvocation.version != null && isAutoVersion(generatorInvocation.version)) {
+                if (version != null && isAutoVersion(version)) {
                     if (selfhostedGithubConfig == null) {
                         context.failAndThrow(
                             `Automatic versioning (--version AUTO) requires a GitHub repository configuration. ` +
