@@ -43,7 +43,8 @@ export class AutoVersioningService {
         this.logger = logger;
     }
     /**
-     * Generates a git diff from the staged changes and writes it to a temporary file.
+     * Generates a git diff from the working directory changes and writes it to a temporary file.
+     * This compares the current working directory against the last commit to see what has changed.
      *
      * @param workingDirectory The git repository directory
      * @return Path to the temporary diff file
@@ -52,7 +53,8 @@ export class AutoVersioningService {
     public async generateDiff(workingDirectory: string): Promise<string> {
         const diffFile = path.join(os.tmpdir(), `git-diff-${Date.now()}.patch`);
 
-        await loggingExeca(this.logger, "git", ["diff", "--cached", "--output", diffFile], {
+        // Generate diff between HEAD and working directory (including staged and unstaged changes)
+        await loggingExeca(this.logger, "git", ["diff", "HEAD", "--output", diffFile], {
             cwd: workingDirectory,
             doNotPipeOutput: true
         });
