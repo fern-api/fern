@@ -24,6 +24,7 @@ import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass;
 import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass;
+import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.endpoint.HttpUrlBuilder.PathParamInfo;
 import com.fern.java.client.generators.visitors.FilePropertyIsOptional;
 import com.fern.java.output.GeneratedObjectMapper;
@@ -397,13 +398,24 @@ public abstract class AbstractEndpointWriter {
                             fileProperty.visit(new com.fern.java.client.generators.visitors.GetFilePropertyKey());
                     String wireKey = filePropertyKey.getWireValue();
 
+                    // Filter out both the request body parameter and the file parameter
                     List<ParameterSpec> additionalParamsWithoutBody = additionalParameters.stream()
-                            .filter(parameterSpec -> !parameterSpec.name.equals(variables
-                                    .sdkRequest()
-                                    .get()
-                                    .getRequestParameterName()
-                                    .getCamelCase()
-                                    .getUnsafeName()))
+                            .filter(parameterSpec -> {
+                                // Exclude the request body parameter
+                                if (variables.sdkRequest().isPresent()
+                                        && parameterSpec.name.equals(variables
+                                                .sdkRequest()
+                                                .get()
+                                                .getRequestParameterName()
+                                                .getCamelCase()
+                                                .getUnsafeName())) {
+                                    return false;
+                                }
+                                if (parameterSpec.type.equals(ClassName.get(java.io.File.class))) {
+                                    return false;
+                                }
+                                return true;
+                            })
                             .collect(Collectors.toList());
 
                     ClassName fileStreamClassName =
@@ -432,6 +444,7 @@ public abstract class AbstractEndpointWriter {
                             .returns(endpointWithRequestOptions.returnType);
 
                     CodeBlock.Builder methodBody = CodeBlock.builder()
+                            .add(generatedHttpUrl.initialization())
                             .addStatement(
                                     "$T fs = new $T($N, $N, null)",
                                     fileStreamClassName,
@@ -453,16 +466,37 @@ public abstract class AbstractEndpointWriter {
                                     "$T $L = $L.build()",
                                     requestBodyClassName,
                                     variables.getOkhttpRequestBodyName(),
-                                    variables.getMultipartBodyPropertiesName())
-                            .add(getInitializeRequestCodeBlock(
-                                    clientOptionsField,
-                                    generatedClientOptions,
-                                    httpEndpoint,
-                                    null,
-                                    generatedObjectMapper,
-                                    httpUrlBuilder,
-                                    false))
-                            .add(responseParserGenerator.getResponseParserCodeBlock(baseMethodBuilder));
+                                    variables.getMultipartBodyPropertiesName());
+
+                    methodBody.addStatement(
+                            "$T.Builder $L = new $T.Builder()",
+                            ClassName.get("okhttp3", "Request"),
+                            "_requestBuilder",
+                            ClassName.get("okhttp3", "Request"));
+                    methodBody.addStatement(
+                            "$L.url($L)",
+                            "_requestBuilder",
+                            generatedHttpUrl.inlineableBuild());
+                    methodBody.addStatement(
+                            "$L.method($S, $L)",
+                            "_requestBuilder",
+                            httpEndpoint.getMethod().toString(),
+                            variables.getOkhttpRequestBodyName());
+                    methodBody.addStatement(
+                            "$L.headers($T.of(this.$L.$L($L)))",
+                            "_requestBuilder",
+                            ClassName.get("okhttp3", "Headers"),
+                            clientOptionsField.name,
+                            ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                            AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                    methodBody.addStatement(
+                            "$T $L = $L.build()",
+                            ClassName.get("okhttp3", "Request"),
+                            variables.getOkhttpRequestName(),
+                            "_requestBuilder");
+
+                    // Add response parsing
+                    methodBody.add(responseParserGenerator.getResponseParserCodeBlock(baseMethodBuilder));
 
                     baseMethodBuilder.addCode(methodBody.build());
                     inputStreamMethodSpec = baseMethodBuilder.build();
@@ -477,6 +511,7 @@ public abstract class AbstractEndpointWriter {
                             .returns(endpointWithRequestOptions.returnType);
 
                     CodeBlock.Builder withMediaTypeBody = CodeBlock.builder()
+                            .add(generatedHttpUrl.initialization())
                             .addStatement(
                                     "$T fs = new $T($N, $N, $N)",
                                     fileStreamClassName,
@@ -499,16 +534,35 @@ public abstract class AbstractEndpointWriter {
                                     "$T $L = $L.build()",
                                     requestBodyClassName,
                                     variables.getOkhttpRequestBodyName(),
-                                    variables.getMultipartBodyPropertiesName())
-                            .add(getInitializeRequestCodeBlock(
-                                    clientOptionsField,
-                                    generatedClientOptions,
-                                    httpEndpoint,
-                                    null,
-                                    generatedObjectMapper,
-                                    httpUrlBuilder,
-                                    false))
-                            .add(responseParserGenerator.getResponseParserCodeBlock(withMediaTypeBuilder));
+                                    variables.getMultipartBodyPropertiesName());
+
+                    withMediaTypeBody.addStatement(
+                            "$T.Builder $L = new $T.Builder()",
+                            ClassName.get("okhttp3", "Request"),
+                            "_requestBuilder",
+                            ClassName.get("okhttp3", "Request"));
+                    withMediaTypeBody.addStatement(
+                            "$L.url($L)",
+                            "_requestBuilder",
+                            generatedHttpUrl.inlineableBuild());
+                    withMediaTypeBody.addStatement(
+                            "$L.method($S, $L)",
+                            "_requestBuilder",
+                            httpEndpoint.getMethod().toString(),
+                            variables.getOkhttpRequestBodyName());
+                    withMediaTypeBody.addStatement(
+                            "$L.headers($T.of(this.$L.$L($L)))",
+                            "_requestBuilder",
+                            ClassName.get("okhttp3", "Headers"),
+                            clientOptionsField.name,
+                            ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                            AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                    withMediaTypeBody.addStatement(
+                            "$T $L = $L.build()",
+                            ClassName.get("okhttp3", "Request"),
+                            variables.getOkhttpRequestName(),
+                            "_requestBuilder");
+                    withMediaTypeBody.add(responseParserGenerator.getResponseParserCodeBlock(withMediaTypeBuilder));
 
                     withMediaTypeBuilder.addCode(withMediaTypeBody.build());
                     inputStreamWithMediaTypeMethodSpec = withMediaTypeBuilder.build();
@@ -524,6 +578,7 @@ public abstract class AbstractEndpointWriter {
                             .returns(endpointWithRequestOptions.returnType);
 
                     CodeBlock.Builder withRequestOptionsBody = CodeBlock.builder()
+                            .add(generatedHttpUrl.initialization())
                             .addStatement(
                                     "$T fs = new $T($N, $N, null)",
                                     fileStreamClassName,
@@ -545,16 +600,35 @@ public abstract class AbstractEndpointWriter {
                                     "$T $L = $L.build()",
                                     requestBodyClassName,
                                     variables.getOkhttpRequestBodyName(),
-                                    variables.getMultipartBodyPropertiesName())
-                            .add(getInitializeRequestCodeBlock(
-                                    clientOptionsField,
-                                    generatedClientOptions,
-                                    httpEndpoint,
-                                    null,
-                                    generatedObjectMapper,
-                                    httpUrlBuilder,
-                                    false))
-                            .add(responseParserGenerator.getResponseParserCodeBlock(withRequestOptionsBuilder));
+                                    variables.getMultipartBodyPropertiesName());
+
+                    withRequestOptionsBody.addStatement(
+                            "$T.Builder $L = new $T.Builder()",
+                            ClassName.get("okhttp3", "Request"),
+                            "_requestBuilder",
+                            ClassName.get("okhttp3", "Request"));
+                    withRequestOptionsBody.addStatement(
+                            "$L.url($L)",
+                            "_requestBuilder",
+                            generatedHttpUrl.inlineableBuild());
+                    withRequestOptionsBody.addStatement(
+                            "$L.method($S, $L)",
+                            "_requestBuilder",
+                            httpEndpoint.getMethod().toString(),
+                            variables.getOkhttpRequestBodyName());
+                    withRequestOptionsBody.addStatement(
+                            "$L.headers($T.of(this.$L.$L($L)))",
+                            "_requestBuilder",
+                            ClassName.get("okhttp3", "Headers"),
+                            clientOptionsField.name,
+                            ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                            AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                    withRequestOptionsBody.addStatement(
+                            "$T $L = $L.build()",
+                            ClassName.get("okhttp3", "Request"),
+                            variables.getOkhttpRequestName(),
+                            "_requestBuilder");
+                    withRequestOptionsBody.add(responseParserGenerator.getResponseParserCodeBlock(withRequestOptionsBuilder));
 
                     withRequestOptionsBuilder.addCode(withRequestOptionsBody.build());
                     inputStreamWithRequestOptionsMethodSpec = withRequestOptionsBuilder.build();
@@ -570,6 +644,7 @@ public abstract class AbstractEndpointWriter {
                             .returns(endpointWithRequestOptions.returnType);
 
                     CodeBlock.Builder withBothBody = CodeBlock.builder()
+                            .add(generatedHttpUrl.initialization())
                             .addStatement(
                                     "$T fs = new $T($N, $N, $N)",
                                     fileStreamClassName,
@@ -592,16 +667,35 @@ public abstract class AbstractEndpointWriter {
                                     "$T $L = $L.build()",
                                     requestBodyClassName,
                                     variables.getOkhttpRequestBodyName(),
-                                    variables.getMultipartBodyPropertiesName())
-                            .add(getInitializeRequestCodeBlock(
-                                    clientOptionsField,
-                                    generatedClientOptions,
-                                    httpEndpoint,
-                                    null,
-                                    generatedObjectMapper,
-                                    httpUrlBuilder,
-                                    false))
-                            .add(responseParserGenerator.getResponseParserCodeBlock(withBothBuilder));
+                                    variables.getMultipartBodyPropertiesName());
+
+                    withBothBody.addStatement(
+                            "$T.Builder $L = new $T.Builder()",
+                            ClassName.get("okhttp3", "Request"),
+                            "_requestBuilder",
+                            ClassName.get("okhttp3", "Request"));
+                    withBothBody.addStatement(
+                            "$L.url($L)",
+                            "_requestBuilder",
+                            generatedHttpUrl.inlineableBuild());
+                    withBothBody.addStatement(
+                            "$L.method($S, $L)",
+                            "_requestBuilder",
+                            httpEndpoint.getMethod().toString(),
+                            variables.getOkhttpRequestBodyName());
+                    withBothBody.addStatement(
+                            "$L.headers($T.of(this.$L.$L($L)))",
+                            "_requestBuilder",
+                            ClassName.get("okhttp3", "Headers"),
+                            clientOptionsField.name,
+                            ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                            AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                    withBothBody.addStatement(
+                            "$T $L = $L.build()",
+                            ClassName.get("okhttp3", "Request"),
+                            variables.getOkhttpRequestName(),
+                            "_requestBuilder");
+                    withBothBody.add(responseParserGenerator.getResponseParserCodeBlock(withBothBuilder));
 
                     withBothBuilder.addCode(withBothBody.build());
                     inputStreamWithMediaTypeAndRequestOptionsMethodSpec = withBothBuilder.build();
