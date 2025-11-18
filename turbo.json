@@ -38,7 +38,7 @@
       "inputs": ["src/**", "tests/**", "$TURBO_ROOT$/.eslintrc.js", "$TURBO_ROOT$/.eslintignore", "tsconfig.json"]
     },
     "test": {
-      "dependsOn": ["^compile"],
+      "dependsOn": ["^compile", "compile"],
       "outputs": [],
       "inputs": [
         "$TURBO_ROOT$/shared/vitest.config.ts",
@@ -53,7 +53,7 @@
       ]
     },
     "test:debug": {
-      "dependsOn": ["^compile:debug"],
+      "dependsOn": ["^compile:debug", "compile:debug"],
       "outputs": [],
       "inputs": [
         "$TURBO_ROOT$/shared/vitest.config.ts",
@@ -68,7 +68,7 @@
       ]
     },
     "test:update": {
-      "dependsOn": ["^compile"],
+      "dependsOn": ["^compile", "compile"],
       "outputs": [],
       "inputs": [
         "$TURBO_ROOT$/shared/vitest.config.ts",
@@ -83,7 +83,7 @@
       ]
     },
     "dist:cli": {
-      "dependsOn": ["^compile"],
+      "dependsOn": ["^compile", "compile"],
       "outputs": ["dist/**"],
       "inputs": [
         "src/**",
@@ -96,7 +96,7 @@
       ]
     },
     "dist:cli:dev": {
-      "dependsOn": ["^compile"],
+      "dependsOn": ["^compile", "compile"],
       "outputs": ["dist/**"],
       "inputs": [
         "src/**",
@@ -109,7 +109,7 @@
       ]
     },
     "dist:cli:local": {
-      "dependsOn": ["^compile"],
+      "dependsOn": ["^compile", "compile"],
       "outputs": ["dist/**"],
       "inputs": [
         "src/**",
@@ -122,7 +122,7 @@
       ]
     },
     "dist:cli:prod": {
-      "dependsOn": ["^compile"],
+      "dependsOn": ["^compile", "compile"],
       "outputs": ["dist/**"],
       "inputs": [
         "src/**",
