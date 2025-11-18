@@ -12,6 +12,14 @@
   createdAt: "2025-11-18"
   irVersion: 61
 
+- version: 3.16.1
+  changelogEntry:
+    - summary: |
+        Fix OAuth client credentials token supplier to support custom properties and headers. OAuth token endpoints can now include custom headers (e.g., x-api-key) and custom body properties (e.g., entity_id) in addition to standard OAuth fields (client_id, client_secret, scopes). This enables authentication with non-standard OAuth implementations that require additional parameters.
+      type: fix
+  createdAt: "2025-11-18"
+  irVersion: 61
+
 - version: 3.16.0
   changelogEntry:
     - summary: |

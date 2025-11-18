@@ -473,10 +473,7 @@ public abstract class AbstractEndpointWriter {
                             ClassName.get("okhttp3", "Request"),
                             "_requestBuilder",
                             ClassName.get("okhttp3", "Request"));
-                    methodBody.addStatement(
-                            "$L.url($L)",
-                            "_requestBuilder",
-                            generatedHttpUrl.inlineableBuild());
+                    methodBody.addStatement("$L.url($L)", "_requestBuilder", generatedHttpUrl.inlineableBuild());
                     methodBody.addStatement(
                             "$L.method($S, $L)",
                             "_requestBuilder",
@@ -541,10 +538,7 @@ public abstract class AbstractEndpointWriter {
                             ClassName.get("okhttp3", "Request"),
                             "_requestBuilder",
                             ClassName.get("okhttp3", "Request"));
-                    withMediaTypeBody.addStatement(
-                            "$L.url($L)",
-                            "_requestBuilder",
-                            generatedHttpUrl.inlineableBuild());
+                    withMediaTypeBody.addStatement("$L.url($L)", "_requestBuilder", generatedHttpUrl.inlineableBuild());
                     withMediaTypeBody.addStatement(
                             "$L.method($S, $L)",
                             "_requestBuilder",
@@ -608,9 +602,7 @@ public abstract class AbstractEndpointWriter {
                             "_requestBuilder",
                             ClassName.get("okhttp3", "Request"));
                     withRequestOptionsBody.addStatement(
-                            "$L.url($L)",
-                            "_requestBuilder",
-                            generatedHttpUrl.inlineableBuild());
+                            "$L.url($L)", "_requestBuilder", generatedHttpUrl.inlineableBuild());
                     withRequestOptionsBody.addStatement(
                             "$L.method($S, $L)",
                             "_requestBuilder",
@@ -628,7 +620,8 @@ public abstract class AbstractEndpointWriter {
                             ClassName.get("okhttp3", "Request"),
                             variables.getOkhttpRequestName(),
                             "_requestBuilder");
-                    withRequestOptionsBody.add(responseParserGenerator.getResponseParserCodeBlock(withRequestOptionsBuilder));
+                    withRequestOptionsBody.add(
+                            responseParserGenerator.getResponseParserCodeBlock(withRequestOptionsBuilder));
 
                     withRequestOptionsBuilder.addCode(withRequestOptionsBody.build());
                     inputStreamWithRequestOptionsMethodSpec = withRequestOptionsBuilder.build();
@@ -674,10 +667,7 @@ public abstract class AbstractEndpointWriter {
                             ClassName.get("okhttp3", "Request"),
                             "_requestBuilder",
                             ClassName.get("okhttp3", "Request"));
-                    withBothBody.addStatement(
-                            "$L.url($L)",
-                            "_requestBuilder",
-                            generatedHttpUrl.inlineableBuild());
+                    withBothBody.addStatement("$L.url($L)", "_requestBuilder", generatedHttpUrl.inlineableBuild());
                     withBothBody.addStatement(
                             "$L.method($S, $L)",
                             "_requestBuilder",
