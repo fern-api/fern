@@ -1,3 +1,11 @@
+- version: 3.17.1
+  changelogEntry:
+    - summary: |
+        Fix stream tests to use Java 8-compatible collections. Stream tests now use ArrayList and Collections.singletonMap() instead of List.of() and Map.of(), ensuring tests compile under JDK 8.
+      type: fix
+  createdAt: "2025-11-18"
+  irVersion: 61
+
 - version: 3.17.0
   changelogEntry:
     - summary: |
