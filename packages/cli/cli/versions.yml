@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Change default for OpenAPI and AsyncAPI parsing setting:
+        Change default for OpenAPI parsing setting:
           - `coerce-enums-to-literals`: `false` (was `true`)
         The CLI will automatically upgrade your _generators.yml_ to explicitly set the old default to preserve
         existing behavior. New users will get the new default.
