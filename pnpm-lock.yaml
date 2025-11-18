@@ -3967,6 +3967,9 @@ importers:
       '@boundaryml/baml':
         specifier: ^0.211.2
         version: 0.211.2
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../configuration
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -4573,6 +4576,9 @@ importers:
 
   packages/cli/cli:
     devDependencies:
+      '@boundaryml/baml':
+        specifier: ^0.211.2
+        version: 0.211.2
       '@bufbuild/protobuf':
         specifier: 2.2.5
         version: 2.2.5
@@ -4585,6 +4591,9 @@ importers:
       '@fern-api/casings-generator':
         specifier: workspace:*
         version: link:../../commons/casings-generator
+      '@fern-api/cli-ai':
+        specifier: workspace:*
+        version: link:../ai
       '@fern-api/cli-logger':
         specifier: workspace:*
         version: link:../cli-logger

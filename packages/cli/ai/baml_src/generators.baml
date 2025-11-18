@@ -1,7 +1,7 @@
 generator target {
     output_type "typescript"
 
-    output_dir "../"
+    output_dir "../src/"
 
     version "0.211.2"
 
