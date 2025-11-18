@@ -1,10 +1,8 @@
 import { ClientRegistry } from "@boundaryml/baml";
 import { b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
 import { FERNIGNORE_FILENAME } from "@fern-api/configuration";
-import { loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import decompress from "decompress";
 import { cp, readdir, readFile, rm } from "fs/promises";
@@ -14,6 +12,7 @@ import semver from "semver";
 import tmp from "tmp-promise";
 import { AutoVersioningException, AutoVersioningService, AutoVersionResult } from "./AutoVersioningService";
 import { isAutoVersion } from "./VersionUtils";
+import { AiServicesSchema } from "@fern-api/configuration/src/generators-yml";
 
 export declare namespace LocalTaskHandler {
     export interface Init {
@@ -25,7 +24,7 @@ export declare namespace LocalTaskHandler {
         absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
         absolutePathToTmpSnippetTemplatesJSON: AbsoluteFilePath | undefined;
         version: string | undefined;
-        project: Project;
+        ai: AiServicesSchema | undefined;
     }
 }
 
@@ -38,8 +37,7 @@ export class LocalTaskHandler {
     private absolutePathToLocalOutput: AbsoluteFilePath;
     private absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
     private version: string | undefined;
-    private project: Project;
-    private autoVersioningCommitMessage: string | undefined;
+    private ai: AiServicesSchema | undefined;
 
     constructor({
         context,
@@ -50,7 +48,7 @@ export class LocalTaskHandler {
         absolutePathToLocalSnippetJSON,
         absolutePathToTmpSnippetTemplatesJSON,
         version,
-        project
+        ai
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -60,10 +58,10 @@ export class LocalTaskHandler {
         this.absolutePathToLocalSnippetTemplateJSON = absolutePathToLocalSnippetTemplateJSON;
         this.absolutePathToTmpSnippetTemplatesJSON = absolutePathToTmpSnippetTemplatesJSON;
         this.version = version;
-        this.project = project;
+        this.ai = ai;
     }
 
-    public async copyGeneratedFiles(): Promise<void> {
+    public async copyGeneratedFiles(): Promise<{ shouldCommit: boolean, autoVersioningCommitMessage?: string }> {
         const isFernIgnorePresent = await this.isFernIgnorePresent();
         const isExistingGitRepo = await this.isGitRepository();
 
@@ -95,24 +93,17 @@ export class LocalTaskHandler {
             if (autoVersionResult == null) {
                 this.context.logger.info("No semantic changes detected. Skipping GitHub operations.");
                 // TODO(tjb9dc): Actually skip the GitHub operations
-                return;
+                return { shouldCommit: false, autoVersioningCommitMessage: undefined };
             }
-            // Store the commit message for later use
-            this.autoVersioningCommitMessage = autoVersionResult.commitMessage;
             // Replace magic version with computed version
             await autoVersioningService.replaceMagicVersion(
                 this.absolutePathToLocalOutput,
                 this.version,
                 autoVersionResult.version
             );
+            return { shouldCommit: true, autoVersioningCommitMessage: autoVersionResult.commitMessage };
         }
-    }
-
-    /**
-     * Gets the commit message from auto versioning, if available.
-     */
-    public getAutoVersioningCommitMessage(): string | undefined {
-        return this.autoVersioningCommitMessage;
+        return { shouldCommit: false, autoVersioningCommitMessage: undefined };
     }
 
     /**
@@ -244,19 +235,7 @@ export class LocalTaskHandler {
      * This method is adapted from sdkDiffCommand.ts but needs project configuration.
      */
     private async getClientRegistry(): Promise<ClientRegistry> {
-        // Get the first API workspace (or we could make this configurable)
-        const workspace = this.project.apiWorkspaces[0];
-        if (workspace == null) {
-            throw new Error("No API workspaces found in the project.");
-        }
-
-        // Load generators configuration to get AI service settings
-        const generatorsConfig = await loadGeneratorsConfiguration({
-            absolutePathToWorkspace: workspace.absoluteFilePath,
-            context: this.context as unknown as TaskContext
-        });
-
-        if (generatorsConfig?.ai == null) {
+        if (this.ai == null) {
             throw new Error(
                 "No AI service configuration found in generators.yml. " +
                     "Please add an 'ai' section with provider and model."
@@ -264,9 +243,9 @@ export class LocalTaskHandler {
         }
 
         this.context.logger.debug(
-            `Using AI service: ${generatorsConfig.ai.provider} with model ${generatorsConfig.ai.model}`
+            `Using AI service: ${this.ai.provider} with model ${this.ai.model}`
         );
-        return configureBamlClient(generatorsConfig.ai);
+        return configureBamlClient(this.ai);
     }
 
     private async isFernIgnorePresent(): Promise<boolean> {

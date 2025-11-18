@@ -8,7 +8,6 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ClonedRepository, cloneRepository, parseRepository } from "@fern-api/github";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
-import { Project } from "@fern-api/project-loader";
 import { getDynamicGeneratorConfig } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
@@ -36,7 +35,7 @@ export async function runLocalGenerationForWorkspace({
     context,
     absolutePathToPreview,
     runner,
-    project
+    ai
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -48,7 +47,7 @@ export async function runLocalGenerationForWorkspace({
     absolutePathToPreview: AbsoluteFilePath | undefined;
     runner: ContainerRunner | undefined;
     inspect: boolean;
-    project: Project;
+    ai: generatorsYml.AiServicesSchema | undefined;
 }): Promise<void> {
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
@@ -205,7 +204,7 @@ export async function runLocalGenerationForWorkspace({
                 // NOTE(tjb9dc): Important that we get a new temp dir per-generator, as we don't want their local files to collide.
                 const workspaceTempDir = await getWorkspaceTempDir();
 
-                const { autoVersioningCommitMessage } = await writeFilesToDiskAndRunGenerator({
+                const { shouldCommit, autoVersioningCommitMessage } = await writeFilesToDiskAndRunGenerator({
                     organization: projectConfig.organization,
                     absolutePathToFernConfig: projectConfig._absolutePath,
                     workspace: fernWorkspace,
@@ -228,12 +227,12 @@ export async function runLocalGenerationForWorkspace({
                     executionEnvironment: undefined, // This should use the Docker fallback with proper image name
                     ir: intermediateRepresentation,
                     runner,
-                    project
+                    ai
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
 
-                if (selfhostedGithubConfig != null) {
+                if (selfhostedGithubConfig != null && shouldCommit) {
                     await postProcessGithubSelfHosted(
                         interactiveTaskContext,
                         selfhostedGithubConfig,

@@ -4,7 +4,6 @@ import { generatorsYml, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import chalk from "chalk";
@@ -25,7 +24,7 @@ export declare namespace GenerationRunner {
         shouldGenerateDynamicSnippetTests: boolean | undefined;
         skipUnstableDynamicSnippetTests?: boolean;
         inspect: boolean;
-        project: Project;
+        ai: generatorsYml.AiServicesSchema | undefined;
     }
 }
 
@@ -46,7 +45,6 @@ export class GenerationRunner {
         shouldGenerateDynamicSnippetTests,
         skipUnstableDynamicSnippetTests,
         inspect,
-        project
     }: GenerationRunner.RunArgs): Promise<void> {
         const results = await Promise.all(
             generatorGroup.generators.map(async (generatorInvocation) => {
@@ -71,7 +69,6 @@ export class GenerationRunner {
                                 outputVersionOverride,
                                 absolutePathToFernConfig,
                                 inspect,
-                                project
                             });
 
                             interactiveTaskContext.logger.info(
@@ -116,7 +113,6 @@ export class GenerationRunner {
         outputVersionOverride,
         absolutePathToFernConfig,
         inspect,
-        project
     }: {
         generatorGroup: generatorsYml.GeneratorGroup;
         generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -127,8 +123,12 @@ export class GenerationRunner {
         outputVersionOverride: string | undefined;
         absolutePathToFernConfig: AbsoluteFilePath | undefined;
         inspect: boolean;
-        project: Project;
-    }): Promise<{ ir: IntermediateRepresentation; generatorConfig: FernGeneratorExec.GeneratorConfig }> {
+    }): Promise<{
+        ir: IntermediateRepresentation;
+        generatorConfig: FernGeneratorExec.GeneratorConfig;
+        shouldCommit: boolean;
+        autoVersioningCommitMessage?: string;
+    }> {
         context.logger.info(`Starting generation for ${generatorInvocation.name}`);
 
         if (generatorInvocation.absolutePathToLocalOutput == null) {
@@ -162,7 +162,7 @@ export class GenerationRunner {
         const workspaceTempDir = await getWorkspaceTempDir();
 
         // Pass the generated IR to writeFilesToDiskAndRunGenerator
-        const { ir, generatorConfig } = await writeFilesToDiskAndRunGenerator({
+        return writeFilesToDiskAndRunGenerator({
             organization,
             absolutePathToFernConfig,
             workspace,
@@ -189,9 +189,7 @@ export class GenerationRunner {
             executionEnvironment: this.executionEnvironment,
             ir: rawIr,
             runner: undefined,
-            project
+            ai: workspace.generatorsConfiguration?.ai
         });
-
-        return { ir, generatorConfig };
     }
 }
