@@ -15,8 +15,28 @@ import java.util.Optional;
 
 public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassNameFactory {
 
+    private final Optional<String> customPagerName;
+
     public ClientPoetClassNameFactory(List<String> packagePrefixTokens, ICustomConfig.PackageLayout packageLayout) {
+        this(packagePrefixTokens, packageLayout, Optional.empty());
+    }
+
+    public ClientPoetClassNameFactory(
+            List<String> packagePrefixTokens,
+            ICustomConfig.PackageLayout packageLayout,
+            Optional<String> customPagerName) {
         super(packagePrefixTokens, packageLayout);
+        this.customPagerName = customPagerName;
+    }
+
+    public ClassName getCustomPaginationClassName() {
+        String className = customPagerName.orElse("CustomPager");
+        return getPaginationClassName(className);
+    }
+
+    public ClassName getAsyncCustomPaginationClassName() {
+        String className = "Async" + customPagerName.orElse("CustomPager");
+        return getPaginationClassName(className);
     }
 
     public ClassName getErrorClassName(ErrorDeclaration errorDeclaration) {

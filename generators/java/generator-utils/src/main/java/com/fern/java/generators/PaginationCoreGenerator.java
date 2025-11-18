@@ -58,12 +58,16 @@ public final class PaginationCoreGenerator extends AbstractFilesGenerator {
             return List.of();
         }
 
-        List<String> fileNames = List.of("BasePage", "SyncPage", "SyncPagingIterable");
+        List<String> fileNames = List.of(
+                "BasePage", "SyncPage", "SyncPagingIterable", "BiDirectionalPage", "CustomPager", "AsyncCustomPager");
 
         return fileNames.stream()
                 .map(fileName -> {
                     String fullFileName = "/" + fileName + ".java";
                     try (InputStream is = PaginationCoreGenerator.class.getResourceAsStream(fullFileName)) {
+                        if (is == null) {
+                            throw new RuntimeException("Resource not found: " + fullFileName);
+                        }
                         String contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
                         return GeneratedResourcesJavaFile.builder()
                                 .className(generatorContext
@@ -72,7 +76,7 @@ public final class PaginationCoreGenerator extends AbstractFilesGenerator {
                                 .contents(contents)
                                 .build();
                     } catch (IOException e) {
-                        throw new RuntimeException("Failed to read " + fullFileName);
+                        throw new RuntimeException("Failed to read " + fullFileName, e);
                     }
                 })
                 .collect(Collectors.toList());

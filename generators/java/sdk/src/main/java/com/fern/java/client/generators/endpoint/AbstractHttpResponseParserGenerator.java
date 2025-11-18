@@ -19,6 +19,7 @@ import com.fern.ir.model.types.UndiscriminatedUnionMember;
 import com.fern.ir.model.types.UndiscriminatedUnionTypeDeclaration;
 import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.java.client.ClientGeneratorContext;
+import com.fern.java.client.ClientPoetClassNameFactory;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
@@ -38,6 +39,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import okhttp3.OkHttpClient;
@@ -222,9 +224,40 @@ public abstract class AbstractHttpResponseParserGenerator {
                     }
 
                     if (pagination) {
-                        ClassName pagerClassName = clientGeneratorContext
-                                .getPoetClassNameFactory()
-                                .getPaginationClassName("SyncPagingIterable");
+                        // Determine which pager class to use based on pagination type
+                        final ClassName pagerClassName = httpEndpoint
+                                .getPagination()
+                                .get()
+                                .visit(new Pagination.Visitor<ClassName>() {
+                                    @Override
+                                    public ClassName visitCursor(CursorPagination cursor) {
+                                        return clientGeneratorContext
+                                                .getPoetClassNameFactory()
+                                                .getPaginationClassName("SyncPagingIterable");
+                                    }
+
+                                    @Override
+                                    public ClassName visitOffset(OffsetPagination offset) {
+                                        return clientGeneratorContext
+                                                .getPoetClassNameFactory()
+                                                .getPaginationClassName("SyncPagingIterable");
+                                    }
+
+                                    @Override
+                                    public ClassName visitCustom(CustomPagination custom) {
+                                        return ((ClientPoetClassNameFactory)
+                                                        clientGeneratorContext.getPoetClassNameFactory())
+                                                .getCustomPaginationClassName();
+                                    }
+
+                                    @Override
+                                    public ClassName _visitUnknown(Object unknownType) {
+                                        return clientGeneratorContext
+                                                .getPoetClassNameFactory()
+                                                .getPaginationClassName("SyncPagingIterable");
+                                    }
+                                });
+
                         return httpEndpoint.getPagination().get().visit(new Pagination.Visitor<TypeName>() {
                             @Override
                             public TypeName visitCursor(CursorPagination cursor) {
@@ -272,10 +305,65 @@ public abstract class AbstractHttpResponseParserGenerator {
 
                             @Override
                             public TypeName visitCustom(CustomPagination customPagination) {
-                                // For custom pagination, return the response type directly
-                                // without wrapping in a Pager. The user is responsible for
-                                // implementing their own pagination logic.
-                                return responseType;
+                                // For async clients, use AsyncCustomPager
+                                if (AbstractHttpResponseParserGenerator.this
+                                        instanceof AsyncHttpResponseParserGenerator) {
+                                    // Use AsyncCustomPager for async clients
+                                    ClassName asyncPagerClassName = ((ClientPoetClassNameFactory)
+                                                    clientGeneratorContext.getPoetClassNameFactory())
+                                            .getAsyncCustomPaginationClassName();
+
+                                    SnippetAndResultType resultSnippet = getNestedPropertySnippet(
+                                            customPagination
+                                                    .getResults()
+                                                    .getPropertyPath()
+                                                    .map(path -> path.stream()
+                                                            .map(PropertyPathItem::getName)
+                                                            .collect(Collectors.toList())),
+                                            customPagination.getResults().getProperty(),
+                                            body.getResponseBodyType());
+                                    com.fern.ir.model.types.ContainerType resultContainerType = resultSnippet
+                                            .typeReference
+                                            .getContainer()
+                                            .orElseThrow(() -> new RuntimeException(
+                                                    "Unexpected non-container pagination result type"));
+                                    com.fern.ir.model.types.TypeReference resultUnderlyingType =
+                                            resultContainerType.visit(
+                                                    new TypeReferenceUtils.ContainerTypeToUnderlyingType());
+
+                                    // Return CompletableFuture<AsyncCustomPager<T>>
+                                    return ParameterizedTypeName.get(
+                                            ClassName.get(CompletableFuture.class),
+                                            ParameterizedTypeName.get(
+                                                    asyncPagerClassName,
+                                                    clientGeneratorContext
+                                                            .getPoetTypeNameMapper()
+                                                            .convertToTypeName(true, resultUnderlyingType)));
+                                }
+
+                                // For sync clients, return CustomPager<T> for bidirectional pagination support.
+                                // Users must implement the CustomPager skeleton class.
+                                SnippetAndResultType resultSnippet = getNestedPropertySnippet(
+                                        customPagination
+                                                .getResults()
+                                                .getPropertyPath()
+                                                .map(path -> path.stream()
+                                                        .map(PropertyPathItem::getName)
+                                                        .collect(Collectors.toList())),
+                                        customPagination.getResults().getProperty(),
+                                        body.getResponseBodyType());
+                                com.fern.ir.model.types.ContainerType resultContainerType = resultSnippet
+                                        .typeReference
+                                        .getContainer()
+                                        .orElseThrow(() -> new RuntimeException(
+                                                "Unexpected non-container pagination result type"));
+                                com.fern.ir.model.types.TypeReference resultUnderlyingType = resultContainerType.visit(
+                                        new TypeReferenceUtils.ContainerTypeToUnderlyingType());
+                                return ParameterizedTypeName.get(
+                                        pagerClassName,
+                                        clientGeneratorContext
+                                                .getPoetTypeNameMapper()
+                                                .convertToTypeName(true, resultUnderlyingType));
                             }
 
                             @Override
@@ -1550,11 +1638,42 @@ public abstract class AbstractHttpResponseParserGenerator {
 
         @Override
         public Void visitCustom(CustomPagination customPagination) {
-            // For custom pagination, handle the response as non-paginated
-            // and return the parsed response directly. The user is responsible
-            // for implementing their own pagination logic.
             TypeName responseType = getResponseType(httpEndpoint, clientGeneratorContext);
-            handleSuccessfulResult(httpResponseBuilder, CodeBlock.of("$L", variables.getParsedResponseVariableName()));
+
+            // For async clients, generate AsyncCustomPager.createAsync()
+            if (AbstractHttpResponseParserGenerator.this instanceof AsyncHttpResponseParserGenerator) {
+                // Get the AsyncCustomPager class
+                ClassName asyncPagerClassName = ((ClientPoetClassNameFactory)
+                                clientGeneratorContext.getPoetClassNameFactory())
+                        .getAsyncCustomPaginationClassName();
+
+                // Generate AsyncCustomPager.createAsync() call
+                CodeBlock asyncPagerCreation = CodeBlock.builder()
+                        .add(
+                                "$T.createAsync($L, $L.httpClient(), $L)",
+                                asyncPagerClassName,
+                                variables.getParsedResponseVariableName(),
+                                clientOptionsField.name,
+                                AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
+                        .build();
+
+                handleSuccessfulResult(httpResponseBuilder, asyncPagerCreation);
+                endpointMethodBuilder.returns(responseType);
+                return null;
+            }
+
+            // For sync clients, generate CustomPager.create() call
+            // The user must implement the CustomPager class (skeleton throws UnsupportedOperationException)
+            CodeBlock customPagerCreation = CodeBlock.builder()
+                    .add(
+                            "$T.create($L, $L.httpClient(), $L)",
+                            responseType,
+                            variables.getParsedResponseVariableName(),
+                            clientOptionsField.name,
+                            AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
+                    .build();
+
+            handleSuccessfulResult(httpResponseBuilder, customPagerCreation);
             endpointMethodBuilder.returns(responseType);
             return null;
         }
