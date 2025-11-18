@@ -18,19 +18,16 @@ env:
 jobs:
   update-test:
     if: github.repository == 'fern-api/fern' && github.ref != 'refs/heads/main'
-    runs-on: ubuntu-latest
+    runs-on: Test
     timeout-minutes: 30
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          lfs: true
 
       - name: Install
         uses: ./.github/actions/install
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20.x"
 
       - uses: bufbuild/buf-setup-action@v1.50.0
         with:
