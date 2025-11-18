@@ -1,0 +1,318 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "testEnums": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/test",
+              "request": {
+                "body": {
+                  "properties": {
+                    "color": "optional<Color>",
+                    "empty": "optional<EmptyEnum>",
+                    "mixed": "optional<MixedCase>",
+                    "numeric": "optional<NumericStrings>",
+                    "priority": "optional<Priority>",
+                    "role": "optional<Role>",
+                    "special": "optional<SpecialEnum>",
+                    "status": "optional<Status>",
+                    "version": "optional<ApiVersion>",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "TestEnumsRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "ApiVersion": {
+            "enum": [
+              "v1",
+              "v2",
+              "v3",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Color": {
+            "enum": [
+              "red",
+              "green",
+              "blue",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "EmptyEnum": {
+            "enum": [
+              {
+                "name": "EMPTY",
+                "value": "",
+              },
+              "value1",
+              "value2",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "MixedCase": {
+            "enum": [
+              "camelCase",
+              "PascalCase",
+              "snake_case",
+              "UPPER_CASE",
+              {
+                "name": "KebabCase",
+                "value": "kebab-case",
+              },
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "NumericStrings": {
+            "enum": [
+              {
+                "name": "One",
+                "value": "1",
+              },
+              {
+                "name": "Two",
+                "value": "2",
+              },
+              {
+                "name": "Three",
+                "value": "3",
+              },
+              {
+                "name": "OneHundred",
+                "value": "100",
+              },
+              {
+                "name": "NineHundredNinetyNine",
+                "value": "999",
+              },
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Priority": "integer",
+          "Role": {
+            "enum": [
+              {
+                "docs": "Full system access",
+                "name": "Administrator",
+                "value": "admin",
+              },
+              {
+                "docs": "Standard user access",
+                "name": "RegularUser",
+                "value": "user",
+              },
+              {
+                "docs": "Limited access",
+                "name": "GuestUser",
+                "value": "guest",
+              },
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "SpecialEnum": {
+            "enum": [
+              {
+                "name": "ValueWithDash",
+                "value": "value-with-dash",
+              },
+              "value_with_underscore",
+              {
+                "name": "ValueWithDot",
+                "value": "value.with.dot",
+              },
+              {
+                "name": "ValueWithSpace",
+                "value": "value with space",
+              },
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Status": {
+            "enum": [
+              "active",
+              "inactive",
+              "pending",
+              "archived",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    testEnums:
+      path: /test
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: TestEnumsRequest
+        body:
+          properties:
+            status: optional<Status>
+            special: optional<SpecialEnum>
+            priority: optional<Priority>
+            empty: optional<EmptyEnum>
+            numeric: optional<NumericStrings>
+            color: optional<Color>
+            role: optional<Role>
+            version: optional<ApiVersion>
+            mixed: optional<MixedCase>
+        content-type: application/json
+      examples:
+        - request: {}
+  source:
+    openapi: ../openapi.yml
+types:
+  Status:
+    enum:
+      - active
+      - inactive
+      - pending
+      - archived
+    source:
+      openapi: ../openapi.yml
+  SpecialEnum:
+    enum:
+      - value: value-with-dash
+        name: ValueWithDash
+      - value_with_underscore
+      - value: value.with.dot
+        name: ValueWithDot
+      - value: value with space
+        name: ValueWithSpace
+    source:
+      openapi: ../openapi.yml
+  Priority: integer
+  EmptyEnum:
+    enum:
+      - value: ''
+        name: EMPTY
+      - value1
+      - value2
+    source:
+      openapi: ../openapi.yml
+  NumericStrings:
+    enum:
+      - value: '1'
+        name: One
+      - value: '2'
+        name: Two
+      - value: '3'
+        name: Three
+      - value: '100'
+        name: OneHundred
+      - value: '999'
+        name: NineHundredNinetyNine
+    source:
+      openapi: ../openapi.yml
+  Color:
+    enum:
+      - red
+      - green
+      - blue
+    source:
+      openapi: ../openapi.yml
+  Role:
+    enum:
+      - value: admin
+        name: Administrator
+        docs: Full system access
+      - value: user
+        name: RegularUser
+        docs: Standard user access
+      - value: guest
+        name: GuestUser
+        docs: Limited access
+    source:
+      openapi: ../openapi.yml
+  ApiVersion:
+    enum:
+      - v1
+      - v2
+      - v3
+    source:
+      openapi: ../openapi.yml
+  MixedCase:
+    enum:
+      - camelCase
+      - PascalCase
+      - snake_case
+      - UPPER_CASE
+      - value: kebab-case
+        name: KebabCase
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Enum Normalization Edge Cases",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Enum Normalization Edge Cases
+",
+  },
+}

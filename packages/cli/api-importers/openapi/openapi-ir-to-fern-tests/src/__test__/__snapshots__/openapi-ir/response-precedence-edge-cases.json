@@ -1,0 +1,605 @@
+{
+  "title": "Response Precedence Edge Cases",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "getData",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetDataRequest",
+      "response": {
+        "description": "Success",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "getDataResponseData",
+              "key": "data",
+              "schema": {
+                "generatedName": "GetDataResponseData",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "GetDataResponseData",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "GetDataResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "404": {
+          "generatedName": "NotFoundError",
+          "schema": {
+            "allOf": [],
+            "properties": [
+              {
+                "conflict": {},
+                "generatedName": "notFoundErrorBodyError",
+                "key": "error",
+                "schema": {
+                  "generatedName": "NotFoundErrorBodyError",
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "NotFoundErrorBodyError",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "optional"
+                },
+                "audiences": []
+              }
+            ],
+            "allOfPropertyConflicts": [],
+            "generatedName": "NotFoundErrorBody",
+            "groupName": [],
+            "additionalProperties": false,
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "object"
+          },
+          "description": "Not found",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "GET",
+      "path": "/data",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "data": {
+                  "value": {
+                    "value": "data",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "exportData",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ExportDataRequest",
+      "response": {
+        "description": "Success",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "exportDataResponseData",
+              "key": "data",
+              "schema": {
+                "generatedName": "ExportDataResponseData",
+                "value": {
+                  "value": {
+                    "key": {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "ExportDataResponseDataItemKey",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "value": {
+                      "generatedName": "ExportDataResponseDataItemValue",
+                      "type": "unknown"
+                    },
+                    "generatedName": "ExportDataResponseDataItem",
+                    "groupName": [],
+                    "type": "map"
+                  },
+                  "generatedName": "ExportDataResponseData",
+                  "groupName": [],
+                  "type": "array"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ExportDataResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "GET",
+      "path": "/export",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "data": {
+                  "value": [
+                    {
+                      "value": [
+                        {
+                          "key": {
+                            "value": "key",
+                            "type": "string"
+                          },
+                          "value": {
+                            "value": {
+                              "value": {
+                                "value": "value",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "type": "unknown"
+                          }
+                        }
+                      ],
+                      "type": "map"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "getItems",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetItemsRequest",
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "GET",
+      "path": "/items",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "getUsers",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetUsersRequest",
+      "response": {
+        "description": "List of users",
+        "schema": {
+          "value": {
+            "allOf": [],
+            "properties": [
+              {
+                "conflict": {},
+                "generatedName": "getUsersResponseItemId",
+                "key": "id",
+                "schema": {
+                  "generatedName": "GetUsersResponseItemId",
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "GetUsersResponseItemId",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "optional"
+                },
+                "audiences": []
+              },
+              {
+                "conflict": {},
+                "generatedName": "getUsersResponseItemName",
+                "key": "name",
+                "schema": {
+                  "generatedName": "GetUsersResponseItemName",
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "GetUsersResponseItemName",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "optional"
+                },
+                "audiences": []
+              }
+            ],
+            "allOfPropertyConflicts": [],
+            "generatedName": "GetUsersResponseItem",
+            "groupName": [],
+            "additionalProperties": false,
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "object"
+          },
+          "generatedName": "GetUsersResponse",
+          "groupName": [],
+          "type": "array"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {
+        "404": {
+          "generatedName": "NotFoundError",
+          "schema": {
+            "allOf": [],
+            "properties": [
+              {
+                "conflict": {},
+                "generatedName": "notFoundErrorBodyError",
+                "key": "error",
+                "schema": {
+                  "generatedName": "NotFoundErrorBodyError",
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "NotFoundErrorBodyError",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "optional"
+                },
+                "audiences": []
+              }
+            ],
+            "allOfPropertyConflicts": [],
+            "generatedName": "NotFoundErrorBody",
+            "groupName": [],
+            "additionalProperties": false,
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "object"
+          },
+          "description": "Resource not found",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "examples": [
+            {
+              "example": {
+                "properties": {},
+                "type": "object"
+              }
+            }
+          ]
+        }
+      },
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "GET",
+      "path": "/users",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "name": {
+                      "value": {
+                        "value": "name",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "deleteItem",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "DeleteItemRequest",
+      "errors": {
+        "404": {
+          "generatedName": "NotFoundError",
+          "schema": {
+            "generatedName": "NotFoundErrorBody",
+            "type": "unknown"
+          },
+          "description": "Not found",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      },
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "DELETE",
+      "path": "/delete",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "getRateLimited",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetRateLimitedRequest",
+      "response": {
+        "description": "Success",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "getRateLimitedResponseData",
+              "key": "data",
+              "schema": {
+                "generatedName": "GetRateLimitedResponseData",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "GetRateLimitedResponseData",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "GetRateLimitedResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "GET",
+      "path": "/rate-limited",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "data": {
+                  "value": {
+                    "value": "data",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

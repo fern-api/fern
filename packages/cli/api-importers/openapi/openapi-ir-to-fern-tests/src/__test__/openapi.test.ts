@@ -16,7 +16,8 @@ const DOCS_MODE_FIXTURES = new Set([
     "inline-schema-reference",
     "preserve-single-schema-oneof",
     "openapi-filter",
-    "hookdeck"
+    "hookdeck",
+    "preserve-schema-ids-edge-cases"
 ]);
 
 const docsFixturesOverride = process.env.TEST_DOCS_FIXTURES;
