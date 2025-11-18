@@ -67,11 +67,9 @@ public final class RawHttpEndpointMethodSpecs implements HttpEndpointMethodSpecs
 
     @Override
     public Optional<MethodSpec> getInputStreamWithMediaTypeMethodSpec() {
-        return httpEndpointMethodSpecs
-                .getInputStreamWithMediaTypeMethodSpec()
-                .map(methodSpec -> methodSpec.toBuilder()
-                        .returns(wrapInRawHttpResponse(methodSpec.returnType))
-                        .build());
+        return httpEndpointMethodSpecs.getInputStreamWithMediaTypeMethodSpec().map(methodSpec -> methodSpec.toBuilder()
+                .returns(wrapInRawHttpResponse(methodSpec.returnType))
+                .build());
     }
 
     @Override

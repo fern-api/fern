@@ -198,14 +198,17 @@ public abstract class AbstractClientGeneratorUtils {
                 }
 
                 if (httpEndpointMethodSpecs.getInputStreamMethodSpec().isPresent()) {
-                    rawClientImplBuilder.addMethod(
-                            rawHttpEndpointMethodSpecs.getInputStreamMethodSpec().get());
+                    rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs
+                            .getInputStreamMethodSpec()
+                            .get());
                     implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
                             .getInputStreamMethodSpec()
                             .get());
                 }
 
-                if (httpEndpointMethodSpecs.getInputStreamWithMediaTypeMethodSpec().isPresent()) {
+                if (httpEndpointMethodSpecs
+                        .getInputStreamWithMediaTypeMethodSpec()
+                        .isPresent()) {
                     rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs
                             .getInputStreamWithMediaTypeMethodSpec()
                             .get());
