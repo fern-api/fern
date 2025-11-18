@@ -180,7 +180,7 @@ export async function runLocalGenerationForWorkspace({
                             githubRepository: selfhostedGithubConfig.uri,
                             installationToken: selfhostedGithubConfig.token,
                             targetDirectory: absolutePathToLocalOutput,
-                            timeoutMs: 30000 // 30 seconds timeout for credential/network issues
+                            timeoutMs: 1000 // 10 seconds timeout for credential/network issues
                         });
                     } catch (error) {
                         interactiveTaskContext.failAndThrow(
