@@ -1,3 +1,11 @@
+- version: 3.17.0
+  changelogEntry:
+    - summary: |
+        Enable wire tests by default for Java SDKs. Wire tests validate HTTP protocol communication (auth, headers, query params, body JSON, error handling) using MockWebServer. To disable, set `enable-wire-tests: false` in your generator configuration.
+      type: feat
+  createdAt: "2025-11-18"
+  irVersion: 61
+
 - version: 3.16.0
   changelogEntry:
     - summary: |
