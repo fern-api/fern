@@ -1,0 +1,207 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "testNullable": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/test",
+              "request": {
+                "body": {
+                  "properties": {
+                    "nullableArray": "optional<nullable<NullableArray>>",
+                    "nullableString": "optional<nullable<NullableString>>",
+                    "nullableUser": "optional<nullable<NullableUser>>",
+                    "profile": "optional<Profile>",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "TestNullableRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "Address": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "city": "optional<string>",
+              "street": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "NullableArray": "nullable<list<string>>",
+          "NullableStatus": {
+            "enum": [
+              "active",
+              "inactive",
+              "pending",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "NullableString": "nullable<string>",
+          "NullableUser": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+              "name": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "NullableUserRef": "nullable<User>",
+          "Profile": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "avatar": "optional<nullable<string>>",
+              "bio": "optional<nullable<string>>",
+              "id": "string",
+              "name": "string",
+              "website": "optional<nullable<string>>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "User": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+              "name": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UserWithAddress": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "address": "optional<nullable<Address>>",
+              "id": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    testNullable:
+      path: /test
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: TestNullableRequest
+        body:
+          properties:
+            nullableString: optional<nullable<NullableString>>
+            nullableUser: optional<nullable<NullableUser>>
+            nullableArray: optional<nullable<NullableArray>>
+            profile: optional<Profile>
+        content-type: application/json
+      examples:
+        - request: {}
+  source:
+    openapi: ../openapi.yml
+types:
+  NullableString: nullable<string>
+  NullableUser:
+    properties:
+      id: optional<string>
+      name: optional<string>
+    source:
+      openapi: ../openapi.yml
+  NullableArray: nullable<list<string>>
+  User:
+    properties:
+      id: optional<string>
+      name: optional<string>
+    source:
+      openapi: ../openapi.yml
+  NullableUserRef: nullable<User>
+  NullableStatus:
+    enum:
+      - active
+      - inactive
+      - pending
+    source:
+      openapi: ../openapi.yml
+  Profile:
+    properties:
+      id: string
+      name: string
+      bio: optional<nullable<string>>
+      avatar: optional<nullable<string>>
+      website: optional<nullable<string>>
+    source:
+      openapi: ../openapi.yml
+  Address:
+    properties:
+      street: optional<string>
+      city: optional<string>
+    source:
+      openapi: ../openapi.yml
+  UserWithAddress:
+    properties:
+      id: optional<string>
+      address: optional<nullable<Address>>
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Nullable Types Edge Cases",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Nullable Types Edge Cases
+",
+  },
+}

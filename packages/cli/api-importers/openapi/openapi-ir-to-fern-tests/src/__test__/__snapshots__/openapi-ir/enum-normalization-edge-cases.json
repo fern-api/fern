@@ -1,0 +1,521 @@
+{
+  "title": "Enum Normalization Edge Cases",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "testEnums",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "TestEnumsRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "testEnumsRequestStatus",
+              "key": "status",
+              "schema": {
+                "generatedName": "TestEnumsRequestStatus",
+                "value": {
+                  "generatedName": "TestEnumsRequestStatus",
+                  "schema": "Status",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "type": "optional"
+              },
+              "audiences": [],
+              "readonly": false,
+              "writeonly": false
+            },
+            {
+              "conflict": {},
+              "generatedName": "testEnumsRequestSpecial",
+              "key": "special",
+              "schema": {
+                "generatedName": "TestEnumsRequestSpecial",
+                "value": {
+                  "generatedName": "TestEnumsRequestSpecial",
+                  "schema": "SpecialEnum",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "type": "optional"
+              },
+              "audiences": [],
+              "readonly": false,
+              "writeonly": false
+            },
+            {
+              "conflict": {},
+              "generatedName": "testEnumsRequestPriority",
+              "key": "priority",
+              "schema": {
+                "generatedName": "TestEnumsRequestPriority",
+                "value": {
+                  "generatedName": "TestEnumsRequestPriority",
+                  "schema": "Priority",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "type": "optional"
+              },
+              "audiences": [],
+              "readonly": false,
+              "writeonly": false
+            },
+            {
+              "conflict": {},
+              "generatedName": "testEnumsRequestEmpty",
+              "key": "empty",
+              "schema": {
+                "generatedName": "TestEnumsRequestEmpty",
+                "value": {
+                  "generatedName": "TestEnumsRequestEmpty",
+                  "schema": "EmptyEnum",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "type": "optional"
+              },
+              "audiences": [],
+              "readonly": false,
+              "writeonly": false
+            },
+            {
+              "conflict": {},
+              "generatedName": "testEnumsRequestNumeric",
+              "key": "numeric",
+              "schema": {
+                "generatedName": "TestEnumsRequestNumeric",
+                "value": {
+                  "generatedName": "TestEnumsRequestNumeric",
+                  "schema": "NumericStrings",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "type": "optional"
+              },
+              "audiences": [],
+              "readonly": false,
+              "writeonly": false
+            },
+            {
+              "conflict": {},
+              "generatedName": "testEnumsRequestColor",
+              "key": "color",
+              "schema": {
+                "generatedName": "TestEnumsRequestColor",
+                "value": {
+                  "generatedName": "TestEnumsRequestColor",
+                  "schema": "Color",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "type": "optional"
+              },
+              "audiences": [],
+              "readonly": false,
+              "writeonly": false
+            },
+            {
+              "conflict": {},
+              "generatedName": "testEnumsRequestRole",
+              "key": "role",
+              "schema": {
+                "generatedName": "TestEnumsRequestRole",
+                "value": {
+                  "generatedName": "TestEnumsRequestRole",
+                  "schema": "Role",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "type": "optional"
+              },
+              "audiences": [],
+              "readonly": false,
+              "writeonly": false
+            },
+            {
+              "conflict": {},
+              "generatedName": "testEnumsRequestVersion",
+              "key": "version",
+              "schema": {
+                "generatedName": "TestEnumsRequestVersion",
+                "value": {
+                  "generatedName": "TestEnumsRequestVersion",
+                  "schema": "ApiVersion",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "type": "optional"
+              },
+              "audiences": [],
+              "readonly": false,
+              "writeonly": false
+            },
+            {
+              "conflict": {},
+              "generatedName": "testEnumsRequestMixed",
+              "key": "mixed",
+              "schema": {
+                "generatedName": "TestEnumsRequestMixed",
+                "value": {
+                  "generatedName": "TestEnumsRequestMixed",
+                  "schema": "MixedCase",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "type": "optional"
+              },
+              "audiences": [],
+              "readonly": false,
+              "writeonly": false
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "TestEnumsRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "POST",
+      "path": "/test",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Status": {
+        "generatedName": "Status",
+        "values": [
+          {
+            "generatedName": "active",
+            "value": "active",
+            "casing": {}
+          },
+          {
+            "generatedName": "inactive",
+            "value": "inactive",
+            "casing": {}
+          },
+          {
+            "generatedName": "pending",
+            "value": "pending",
+            "casing": {}
+          },
+          {
+            "generatedName": "archived",
+            "value": "archived",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "SpecialEnum": {
+        "generatedName": "SpecialEnum",
+        "values": [
+          {
+            "generatedName": "ValueWithDash",
+            "value": "value-with-dash",
+            "casing": {}
+          },
+          {
+            "generatedName": "value_with_underscore",
+            "value": "value_with_underscore",
+            "casing": {}
+          },
+          {
+            "generatedName": "ValueWithDot",
+            "value": "value.with.dot",
+            "casing": {}
+          },
+          {
+            "generatedName": "ValueWithSpace",
+            "value": "value with space",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "Priority": {
+        "schema": {
+          "type": "int"
+        },
+        "generatedName": "Priority",
+        "groupName": [],
+        "type": "primitive"
+      },
+      "EmptyEnum": {
+        "generatedName": "EmptyEnum",
+        "values": [
+          {
+            "generatedName": "EMPTY",
+            "value": "",
+            "casing": {}
+          },
+          {
+            "generatedName": "value1",
+            "value": "value1",
+            "casing": {}
+          },
+          {
+            "generatedName": "value2",
+            "value": "value2",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "NumericStrings": {
+        "generatedName": "NumericStrings",
+        "values": [
+          {
+            "generatedName": "One",
+            "value": "1",
+            "casing": {}
+          },
+          {
+            "generatedName": "Two",
+            "value": "2",
+            "casing": {}
+          },
+          {
+            "generatedName": "Three",
+            "value": "3",
+            "casing": {}
+          },
+          {
+            "generatedName": "OneHundred",
+            "value": "100",
+            "casing": {}
+          },
+          {
+            "generatedName": "NineHundredNinetyNine",
+            "value": "999",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "Color": {
+        "generatedName": "Color",
+        "values": [
+          {
+            "generatedName": "red",
+            "value": "red",
+            "casing": {}
+          },
+          {
+            "generatedName": "green",
+            "value": "green",
+            "casing": {}
+          },
+          {
+            "generatedName": "blue",
+            "value": "blue",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "Role": {
+        "generatedName": "Role",
+        "values": [
+          {
+            "nameOverride": "Administrator",
+            "generatedName": "admin",
+            "value": "admin",
+            "description": "Full system access",
+            "casing": {}
+          },
+          {
+            "nameOverride": "RegularUser",
+            "generatedName": "user",
+            "value": "user",
+            "description": "Standard user access",
+            "casing": {}
+          },
+          {
+            "nameOverride": "GuestUser",
+            "generatedName": "guest",
+            "value": "guest",
+            "description": "Limited access",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "ApiVersion": {
+        "generatedName": "ApiVersion",
+        "values": [
+          {
+            "generatedName": "v1",
+            "value": "v1",
+            "casing": {}
+          },
+          {
+            "generatedName": "v2",
+            "value": "v2",
+            "casing": {}
+          },
+          {
+            "generatedName": "v3",
+            "value": "v3",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "MixedCase": {
+        "generatedName": "MixedCase",
+        "values": [
+          {
+            "generatedName": "camelCase",
+            "value": "camelCase",
+            "casing": {}
+          },
+          {
+            "generatedName": "PascalCase",
+            "value": "PascalCase",
+            "casing": {}
+          },
+          {
+            "generatedName": "snake_case",
+            "value": "snake_case",
+            "casing": {}
+          },
+          {
+            "generatedName": "UPPER_CASE",
+            "value": "UPPER_CASE",
+            "casing": {}
+          },
+          {
+            "generatedName": "KebabCase",
+            "value": "kebab-case",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

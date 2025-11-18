@@ -1,0 +1,937 @@
+{
+  "title": "Discriminator Unions Edge Cases",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "createAnimal",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateAnimalRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateAnimalRequest",
+          "schema": "Animal",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "CreateAnimalResponse",
+          "schema": "Animal",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "POST",
+      "path": "/animal",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "value": {
+              "value": {
+                "breed": {
+                  "value": {
+                    "value": "breed",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "animalType": {
+                  "value": {
+                    "value": "dog",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "discriminated"
+            },
+            "type": "oneOf"
+          },
+          "response": {
+            "value": {
+              "value": {
+                "value": {
+                  "breed": {
+                    "value": {
+                      "value": "breed",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "barkVolume": {
+                    "value": {
+                      "value": 1.1,
+                      "type": "double"
+                    },
+                    "type": "primitive"
+                  },
+                  "animalType": {
+                    "value": {
+                      "value": "dog",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "discriminated"
+              },
+              "type": "oneOf"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "createShape",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateShapeRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateShapeRequest",
+          "schema": "Shape",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "CreateShapeResponse",
+          "schema": "Shape",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "POST",
+      "path": "/shape",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "shapeType": {
+                "value": {
+                  "value": "shapeType",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "radius": {
+                "value": {
+                  "value": 1.1,
+                  "type": "double"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "shapeType": {
+                  "value": {
+                    "value": "shapeType",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "radius": {
+                  "value": {
+                    "value": 1.1,
+                    "type": "double"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "createPayment",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreatePaymentRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreatePaymentRequest",
+          "schema": "Payment",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "CreatePaymentResponse",
+          "schema": "Payment",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "POST",
+      "path": "/payment",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "value": {
+              "value": {
+                "cardNumber": {
+                  "value": {
+                    "value": "cardNumber",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "paymentMethod": {
+                  "value": {
+                    "value": "credit_card",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "discriminated"
+            },
+            "type": "oneOf"
+          },
+          "response": {
+            "value": {
+              "value": {
+                "value": {
+                  "cardNumber": {
+                    "value": {
+                      "value": "cardNumber",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "expiryDate": {
+                    "value": {
+                      "value": "expiryDate",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "cvv": {
+                    "value": {
+                      "value": "cvv",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "paymentMethod": {
+                    "value": {
+                      "value": "credit_card",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "discriminated"
+              },
+              "type": "oneOf"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Dog": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "dogBreed",
+            "key": "breed",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "DogBreed",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "dogBarkVolume",
+            "key": "barkVolume",
+            "schema": {
+              "generatedName": "DogBarkVolume",
+              "value": {
+                "schema": {
+                  "type": "double"
+                },
+                "generatedName": "DogBarkVolume",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Dog",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Cat": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "catColor",
+            "key": "color",
+            "schema": {
+              "generatedName": "CatColor",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CatColor",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "catIndoor",
+            "key": "indoor",
+            "schema": {
+              "generatedName": "CatIndoor",
+              "value": {
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "CatIndoor",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Cat",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Bird": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "birdWingspan",
+            "key": "wingspan",
+            "schema": {
+              "generatedName": "BirdWingspan",
+              "value": {
+                "schema": {
+                  "type": "double"
+                },
+                "generatedName": "BirdWingspan",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "birdCanFly",
+            "key": "canFly",
+            "schema": {
+              "schema": {
+                "type": "boolean"
+              },
+              "generatedName": "BirdCanFly",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Bird",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Animal": {
+        "value": {
+          "commonProperties": [],
+          "discriminantProperty": "animalType",
+          "generatedName": "Animal",
+          "schemas": {
+            "dog": {
+              "generatedName": "ComponentsSchemasDog",
+              "schema": "Dog",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "cat": {
+              "generatedName": "ComponentsSchemasCat",
+              "schema": "Cat",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "bird": {
+              "generatedName": "ComponentsSchemasBird",
+              "schema": "Bird",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          },
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "discriminated"
+        },
+        "type": "oneOf"
+      },
+      "Circle": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "circleShapeType",
+            "key": "shapeType",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "CircleShapeType",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "circleRadius",
+            "key": "radius",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "CircleRadius",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Circle",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Square": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "squareShapeType",
+            "key": "shapeType",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "SquareShapeType",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "squareSideLength",
+            "key": "sideLength",
+            "schema": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "SquareSideLength",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Square",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Shape": {
+        "value": {
+          "generatedName": "Shape",
+          "schemas": [
+            {
+              "generatedName": "ShapeZero",
+              "schema": "Circle",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "ShapeOne",
+              "schema": "Square",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "CreditCardPayment": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "creditCardPaymentCardNumber",
+            "key": "cardNumber",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "CreditCardPaymentCardNumber",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "creditCardPaymentExpiryDate",
+            "key": "expiryDate",
+            "schema": {
+              "generatedName": "CreditCardPaymentExpiryDate",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CreditCardPaymentExpiryDate",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "creditCardPaymentCvv",
+            "key": "cvv",
+            "schema": {
+              "generatedName": "CreditCardPaymentCvv",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CreditCardPaymentCvv",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "CreditCardPayment",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "BankTransferPayment": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "bankTransferPaymentAccountNumber",
+            "key": "accountNumber",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "BankTransferPaymentAccountNumber",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "bankTransferPaymentRoutingNumber",
+            "key": "routingNumber",
+            "schema": {
+              "generatedName": "BankTransferPaymentRoutingNumber",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "BankTransferPaymentRoutingNumber",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "bankTransferPaymentBankName",
+            "key": "bankName",
+            "schema": {
+              "generatedName": "BankTransferPaymentBankName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "BankTransferPaymentBankName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "BankTransferPayment",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "CryptoPayment": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "cryptoPaymentWalletAddress",
+            "key": "walletAddress",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "CryptoPaymentWalletAddress",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "cryptoPaymentCurrency",
+            "key": "currency",
+            "schema": {
+              "generatedName": "CryptoPaymentCurrency",
+              "values": [
+                {
+                  "generatedName": "BTC",
+                  "value": "BTC",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "ETH",
+                  "value": "ETH",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "USDT",
+                  "value": "USDT",
+                  "casing": {}
+                }
+              ],
+              "groupName": [],
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "cryptoPaymentNetwork",
+            "key": "network",
+            "schema": {
+              "generatedName": "CryptoPaymentNetwork",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CryptoPaymentNetwork",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "CryptoPayment",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Payment": {
+        "value": {
+          "commonProperties": [],
+          "discriminantProperty": "paymentMethod",
+          "generatedName": "Payment",
+          "schemas": {
+            "credit_card": {
+              "generatedName": "ComponentsSchemasCreditCardPayment",
+              "schema": "CreditCardPayment",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "bank_transfer": {
+              "generatedName": "ComponentsSchemasBankTransferPayment",
+              "schema": "BankTransferPayment",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "crypto": {
+              "generatedName": "ComponentsSchemasCryptoPayment",
+              "schema": "CryptoPayment",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          },
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "discriminated"
+        },
+        "type": "oneOf"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

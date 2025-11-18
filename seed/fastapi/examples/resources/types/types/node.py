@@ -51,6 +51,6 @@ class Node(UniversalBaseModel):
             extra = pydantic.Extra.forbid
 
 
-from .tree import Tree  # noqa: E402, F401, I001
+from .tree import Tree  # noqa: E402, I001
 
 update_forward_refs(Node)

@@ -28,6 +28,7 @@ import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { diff } from "./commands/diff/diff";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
+import { downgrade } from "./commands/downgrade/downgrade";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
 import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
@@ -42,6 +43,7 @@ import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJ
 import { mockServer } from "./commands/mock/mockServer";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
+import { selfUpdate } from "./commands/self-update/selfUpdate";
 import { testOutput } from "./commands/test/testOutput";
 import { generateToken } from "./commands/token/token";
 import { updateApiSpec } from "./commands/upgrade/updateApiSpec";
@@ -184,6 +186,7 @@ async function tryRunCli(cliContext: CliContext) {
     addWriteOverridesCommand(cli, cliContext);
     addTestCommand(cli, cliContext);
     addUpdateApiSpecCommand(cli, cliContext);
+    addSelfUpdateCommand(cli, cliContext);
     addUpgradeCommand({
         cli,
         cliContext,
@@ -191,6 +194,7 @@ async function tryRunCli(cliContext: CliContext) {
             cliContext.suppressUpgradeMessage();
         }
     });
+    addDowngradeCommand(cli, cliContext);
     addGenerateJsonschemaCommand(cli, cliContext);
     addWriteDocsDefinitionCommand(cli, cliContext);
     addWriteTranslationCommand(cli, cliContext);
@@ -572,9 +576,6 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
-            }
-            if (argv.local && argv.preview) {
-                return cliContext.failWithoutThrowing("The --local flag is incompatible with --preview.");
             }
             if (argv.skipUpload && !argv.preview) {
                 return cliContext.failWithoutThrowing("The --skip-upload flag can only be used with --preview.");
@@ -1009,14 +1010,48 @@ function addUpgradeCommand({
                 .option("version", {
                     string: true,
                     description: "The version to upgrade to. Defaults to the latest release."
+                })
+                .option("to", {
+                    string: true,
+                    hidden: true
+                })
+                .option("from", {
+                    string: true,
+                    description:
+                        "The version to migrate from. Use this to manually run migrations when upgrading from an older CLI version."
+                })
+                .option("from-git", {
+                    boolean: true,
+                    hidden: true
                 }),
         async (argv) => {
             await upgrade({
                 cliContext,
                 includePreReleases: argv.rc,
-                targetVersion: argv.version
+                targetVersion: argv.to ?? argv.version,
+                fromVersion: argv.from,
+                fromGit: argv["from-git"]
             });
             onRun();
+        }
+    );
+}
+
+function addDowngradeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "downgrade <version>",
+        `Downgrades Fern CLI version in ${PROJECT_CONFIG_FILENAME}`,
+        (yargs) =>
+            yargs.positional("version", {
+                type: "string",
+                description: "The version to downgrade to",
+                demandOption: true
+            }),
+        async (argv) => {
+            await downgrade({
+                cliContext,
+                targetVersion: argv.version
+            });
         }
     );
 }
@@ -1041,6 +1076,34 @@ function addUpdateApiSpecCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: true
                 })
+            });
+        }
+    );
+}
+
+function addSelfUpdateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "self-update [version]",
+        "Updates the globally installed Fern CLI to the latest version or the specified version",
+        (yargs) =>
+            yargs
+                .positional("version", {
+                    type: "string",
+                    description: "The version to update to (e.g., 0.85.0, 10). Defaults to latest."
+                })
+                .option("dry-run", {
+                    type: "boolean",
+                    description: "Show what would be executed without actually running the update",
+                    default: false
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern self-update"
+            });
+            await selfUpdate({
+                cliContext,
+                version: argv.version,
+                dryRun: argv.dryRun
             });
         }
     );

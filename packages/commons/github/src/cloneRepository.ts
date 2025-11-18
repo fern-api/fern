@@ -10,18 +10,19 @@ import { parseRepository } from "./parseRepository";
  */
 export async function cloneRepository({
     githubRepository,
-    installationToken
+    installationToken,
+    targetDirectory
 }: {
     githubRepository: string;
     installationToken: string | undefined;
+    targetDirectory?: string;
 }): Promise<ClonedRepository> {
     const repositoryReference = parseRepository(githubRepository);
     const cloneUrl =
         installationToken != null
             ? repositoryReference.getAuthedCloneUrl(installationToken)
             : repositoryReference.cloneUrl;
-    const dir = await tmp.dir();
-    const clonePath = dir.path;
+    const clonePath = targetDirectory ?? (await tmp.dir()).path;
     const git = simpleGit(clonePath);
     await git.clone(cloneUrl, ".");
 
