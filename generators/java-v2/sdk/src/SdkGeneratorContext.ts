@@ -44,7 +44,6 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
 
     public getReturnTypeForEndpoint(httpEndpoint: HttpEndpoint): java.Type {
         if (httpEndpoint.pagination != null) {
-            // For custom pagination, return CustomPager with the response type
             if (httpEndpoint.pagination.type === "custom") {
                 const responseBody = httpEndpoint.response?.body;
                 if (responseBody && responseBody.type === "json") {
@@ -219,7 +218,6 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
 
     public getPaginationClassName(paginationType?: Pagination): string {
         if (paginationType?.type === "custom") {
-            // Use the custom pager name from config if available
             return this.customConfig?.["custom-pager-name"] ?? "CustomPager";
         }
         return "SyncPagingIterable";
@@ -387,9 +385,6 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
                 return this.extractPaginationItemType(resultsProperty.property.valueType);
             }
         } else if (pagination.type === "custom") {
-            // For custom pagination, we need to extract the item type from the response
-            // Custom pagination typically returns the full response object,
-            // so we return undefined here to let the generator handle it differently
             return undefined;
         }
         return undefined;

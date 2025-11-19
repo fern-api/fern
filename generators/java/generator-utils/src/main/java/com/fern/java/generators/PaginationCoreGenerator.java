@@ -69,6 +69,51 @@ public final class PaginationCoreGenerator extends AbstractFilesGenerator {
                             throw new RuntimeException("Resource not found: " + fullFileName);
                         }
                         String contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+
+                        // Apply custom pager name if configured
+                        String customPagerName = generatorContext.getCustomConfig() != null
+                                ? generatorContext
+                                        .getCustomConfig()
+                                        .customPagerName()
+                                        .orElse(null)
+                                : null;
+
+                        if (customPagerName != null
+                                && (fileName.equals("CustomPager") || fileName.equals("AsyncCustomPager"))) {
+                            // Replace class name in the file content
+                            if (fileName.equals("CustomPager")) {
+                                contents = contents.replace(
+                                        "public class CustomPager<T>", "public class " + customPagerName + "<T>");
+                                contents = contents.replace("CustomPager<T>", customPagerName + "<T>");
+                                contents = contents.replace("CustomPager.create(", customPagerName + ".create(");
+                                contents = contents.replace(
+                                        "CustomPager must be implemented", customPagerName + " must be implemented");
+                                contents = contents.replace("CustomPager.", customPagerName + ".");
+                                contents =
+                                        contents.replace("core/CustomPager.java", "core/" + customPagerName + ".java");
+                                // Replace in example code
+                                contents = contents.replace("public CustomPager(", "public " + customPagerName + "(");
+                                contents = contents.replace("new CustomPager ", "new " + customPagerName + " ");
+                                fileName = customPagerName;
+                            } else { // AsyncCustomPager
+                                String asyncName = "Async" + customPagerName;
+                                contents = contents.replace(
+                                        "public class AsyncCustomPager<T>", "public class " + asyncName + "<T>");
+                                contents = contents.replace("AsyncCustomPager<T>", asyncName + "<T>");
+                                contents =
+                                        contents.replace("AsyncCustomPager.createAsync(", asyncName + ".createAsync(");
+                                contents = contents.replace(
+                                        "AsyncCustomPager must be implemented", asyncName + " must be implemented");
+                                contents = contents.replace("AsyncCustomPager.", asyncName + ".");
+                                contents =
+                                        contents.replace("core/AsyncCustomPager.java", "core/" + asyncName + ".java");
+                                // Replace in example code
+                                contents = contents.replace("public AsyncCustomPager(", "public " + asyncName + "(");
+                                contents = contents.replace("new AsyncCustomPager<>(", "new " + asyncName + "<>(");
+                                fileName = asyncName;
+                            }
+                        }
+
                         return GeneratedResourcesJavaFile.builder()
                                 .className(generatorContext
                                         .getPoetClassNameFactory()

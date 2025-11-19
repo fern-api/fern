@@ -40,7 +40,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         super({ endpointSnippets });
         this.context = context;
 
-        this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
+        this.isPaginationEnabled =
+            (context.config.generatePaginatedClients ?? false) || context.ir.sdkConfig.hasPaginatedEndpoints;
         this.endpointsById = this.buildEndpointsById();
         this.prerenderedSnippetsByEndpointId = this.buildPrerenderedSnippetsByEndpointId(endpointSnippets);
         this.defaultEndpointId = this.getDefaultEndpointIdWithMaybeEmptySnippets(endpointSnippets);
@@ -149,60 +150,15 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private getCustomPaginationDocumentation(customPagerName: string): string {
-        return `## Custom Pagination Implementation
+        return `## Bidirectional Pagination
 
-The SDK uses a custom bidirectional pagination implementation via the \`${customPagerName}\` class. This class is a skeleton implementation that you must complete based on your API's specific pagination structure (e.g., HATEOAS links).
-
-### Implementation Steps
-
-1. **Locate the skeleton class**: Find \`core/pagination/${customPagerName}.java\`
-2. **Implement required methods**: Replace the \`UnsupportedOperationException\` with your logic
-3. **Add to .fernignore**: Ensure the file is listed in \`.fernignore\` to preserve your changes
-
-### Example Implementation
-
-\`\`\`java
-public class ${customPagerName}<T> implements BiDirectionalPage<T>, Iterable<T> {
-    private final List<T> items;
-    private final String nextUrl;
-    private final String previousUrl;
-    private final OkHttpClient client;
-
-    @Override
-    public boolean hasNext() {
-        return nextUrl != null;
-    }
-
-    @Override
-    public ${customPagerName}<T> nextPage() throws IOException {
-        if (!hasNext()) {
-            throw new NoSuchElementException("No next page available");
-        }
-        // Make HTTP request to nextUrl
-        // Parse response and return new ${customPagerName} instance
-    }
-
-    @Override
-    public List<T> getItems() {
-        return items;
-    }
-
-    // ... implement other required methods
-}
-\`\`\`
-
-### Usage
-
-Once implemented, the custom pager provides bidirectional navigation:
+Paginated endpoints use a custom implementation configured for this API. You can navigate both forward and backward through pages:
 
 \`\`\`java
 ${customPagerName}<Item> page = client.listItems();
 
 // Navigate forward
 while (page.hasNext()) {
-    for (Item item : page.getItems()) {
-        // Process item
-    }
     page = page.nextPage();
 }
 
@@ -573,7 +529,7 @@ UpdateRequest request = UpdateRequest.builder()
         const isCustomPagination = endpoint.endpoint.pagination?.type === "custom";
 
         if (isCustomPagination) {
-            // For custom pagination, provide a different example
+            // For custom pagination, provide a concise example
             const customPagerClassName = this.context.customConfig?.["custom-pager-name"] ?? "CustomPager";
             const endpointMethodCall = this.getMethodCall(endpoint, [ReadmeSnippetBuilder.ELLIPSES]);
 
@@ -585,31 +541,12 @@ UpdateRequest request = UpdateRequest.builder()
                 writer.write(`${customPagerClassName}<?> response = `);
                 writer.writeNodeStatement(endpointMethodCall);
                 writer.newLine();
-                writer.writeLine("// Iterate through pages using bidirectional navigation");
-                writer.writeLine("while (response.hasNext()) {");
-                writer.indent();
-                writer.writeLine("for (var item : response.getItems()) {");
-                writer.indent();
+                writer.writeLine("// Iterate through items");
+                writer.controlFlow("for", java.codeblock("item : response"));
                 writer.writeLine("// Process each item");
-                writer.dedent();
-                writer.writeLine("}");
-                writer.writeLine("response = response.nextPage();");
-                writer.dedent();
-                writer.writeLine("}");
+                writer.endControlFlow();
                 writer.newLine();
-                writer.writeLine("// Navigate to previous page");
-                writer.writeLine("if (response.hasPrevious()) {");
-                writer.indent();
-                writer.writeLine("response = response.previousPage();");
-                writer.dedent();
-                writer.writeLine("}");
-                writer.newLine();
-                writer.writeLine("// Access the full response for metadata");
-                writer.writeLine("response.getResponse().ifPresent(fullResponse -> {");
-                writer.indent();
-                writer.writeLine("// Access custom pagination metadata from the response");
-                writer.dedent();
-                writer.writeLine("});");
+                writer.writeLine("// Manual navigation: response.nextPage(), response.previousPage()");
             });
 
             return this.renderSnippet(snippet);
