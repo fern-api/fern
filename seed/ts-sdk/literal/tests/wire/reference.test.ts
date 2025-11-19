@@ -6,7 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("ReferenceClient", () => {
     test("send", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedLiteralClient({ environment: server.baseUrl });
+        const client = new SeedLiteralClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {
             prompt: "You are a helpful assistant",
             stream: false,

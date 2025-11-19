@@ -7,6 +7,7 @@ describe("ApiClient", () => {
     test("getSomething", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedInferredAuthImplicitNoExpiryClient({
+            maxRetries: 0,
             xApiKey: "X-Api-Key",
             clientId: "client_id",
             clientSecret: "client_secret",

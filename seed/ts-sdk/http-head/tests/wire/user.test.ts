@@ -6,7 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("UserClient", () => {
     test("head", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedHttpHeadClient({ environment: server.baseUrl });
+        const client = new SeedHttpHeadClient({ maxRetries: 0, environment: server.baseUrl });
 
         server.mockEndpoint().head("/users").respondWith().statusCode(200).build();
 
@@ -16,7 +16,7 @@ describe("UserClient", () => {
 
     test("list", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedHttpHeadClient({ environment: server.baseUrl });
+        const client = new SeedHttpHeadClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = [
             { name: "name", tags: ["tags", "tags"] },

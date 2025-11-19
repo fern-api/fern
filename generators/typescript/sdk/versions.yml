@@ -1,8 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.31.3
+  changelogEntry:
+    - summary: Generate wire tests with `maxRetries` set to 0.
+      type: fix
+  createdAt: "2025-11-19"
+  irVersion: 61
+
 - version: 3.31.2
   changelogEntry:
-    - summary: |
-        Bump generator CLI version to publish new Docker image.
+    - summary: Bump generator CLI version to publish new Docker image.
       type: chore
   createdAt: "2025-11-19"
   irVersion: 61

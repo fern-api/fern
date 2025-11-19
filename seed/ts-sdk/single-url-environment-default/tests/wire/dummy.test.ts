@@ -6,7 +6,11 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("DummyClient", () => {
     test("getDummy", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedSingleUrlEnvironmentDefaultClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedSingleUrlEnvironmentDefaultClient({
+            maxRetries: 0,
+            token: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = "string";
         server.mockEndpoint().get("/dummy").respondWith().statusCode(200).jsonBody(rawResponseBody).build();

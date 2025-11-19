@@ -6,7 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("ServiceClient", () => {
     test("getMovie", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExamplesClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             id: "movie-c06a4ad7",
@@ -54,7 +54,7 @@ describe("ServiceClient", () => {
 
     test("createMovie", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExamplesClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = {
             id: "movie-c06a4ad7",
             prequel: "movie-cv9b914f",
@@ -103,7 +103,7 @@ describe("ServiceClient", () => {
 
     test("getMetadata", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExamplesClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             type: "html",
@@ -138,7 +138,7 @@ describe("ServiceClient", () => {
 
     test("createBigEntity", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExamplesClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = {
             castMember: { name: "name", id: "id" },
             extendedMovie: {
@@ -495,7 +495,7 @@ describe("ServiceClient", () => {
 
     test("refreshToken (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExamplesClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         server.mockEndpoint().post("/refresh-token").respondWith().statusCode(200).build();
 
@@ -505,7 +505,7 @@ describe("ServiceClient", () => {
 
     test("refreshToken (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExamplesClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { ttl: 420 };
 
         server.mockEndpoint().post("/refresh-token").jsonBody(rawRequestBody).respondWith().statusCode(200).build();

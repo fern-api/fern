@@ -6,7 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("ServiceClient", () => {
     test("listResources", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedClientSideParamsClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = [
             {
@@ -67,7 +67,7 @@ describe("ServiceClient", () => {
 
     test("getResource", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedClientSideParamsClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             id: "id",
@@ -105,7 +105,7 @@ describe("ServiceClient", () => {
 
     test("searchResources", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedClientSideParamsClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { query: "query", filters: { filters: { key: "value" } } };
         const rawResponseBody = {
             results: [
@@ -182,7 +182,7 @@ describe("ServiceClient", () => {
 
     test("listUsers", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedClientSideParamsClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             users: [
@@ -392,7 +392,7 @@ describe("ServiceClient", () => {
 
     test("getUserById", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedClientSideParamsClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             user_id: "user_id",
@@ -492,7 +492,7 @@ describe("ServiceClient", () => {
 
     test("createUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedClientSideParamsClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = {
             email: "email",
             email_verified: true,
@@ -624,7 +624,7 @@ describe("ServiceClient", () => {
 
     test("updateUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedClientSideParamsClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = {
             email: "email",
             email_verified: true,
@@ -756,7 +756,7 @@ describe("ServiceClient", () => {
 
     test("deleteUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedClientSideParamsClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         server.mockEndpoint().delete("/api/users/userId").respondWith().statusCode(200).build();
 
@@ -766,7 +766,7 @@ describe("ServiceClient", () => {
 
     test("listConnections", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedClientSideParamsClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = [
             {
@@ -843,7 +843,7 @@ describe("ServiceClient", () => {
 
     test("getConnection", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedClientSideParamsClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             id: "id",
@@ -890,7 +890,7 @@ describe("ServiceClient", () => {
 
     test("listClients", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedClientSideParamsClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             start: 1,
@@ -1114,7 +1114,7 @@ describe("ServiceClient", () => {
 
     test("getClient", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedClientSideParamsClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedClientSideParamsClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             client_id: "client_id",

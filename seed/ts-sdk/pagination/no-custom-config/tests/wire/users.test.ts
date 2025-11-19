@@ -6,7 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("UsersClient", () => {
     test("listWithCursorPagination", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             hasNextPage: true,
@@ -57,7 +57,7 @@ describe("UsersClient", () => {
 
     test("listWithMixedTypeCursorPagination", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             next: "next",
@@ -93,7 +93,7 @@ describe("UsersClient", () => {
 
     test("listWithBodyCursorPagination", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { pagination: { cursor: "cursor" } };
         const rawResponseBody = {
             hasNextPage: true,
@@ -150,7 +150,7 @@ describe("UsersClient", () => {
 
     test("listWithOffsetPagination", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             hasNextPage: true,
@@ -201,7 +201,7 @@ describe("UsersClient", () => {
 
     test("listWithDoubleOffsetPagination", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             hasNextPage: true,
@@ -252,7 +252,7 @@ describe("UsersClient", () => {
 
     test("listWithBodyOffsetPagination", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { pagination: { page: 1 } };
         const rawResponseBody = {
             hasNextPage: true,
@@ -309,7 +309,7 @@ describe("UsersClient", () => {
 
     test("listWithOffsetStepPagination", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             hasNextPage: true,
@@ -359,7 +359,7 @@ describe("UsersClient", () => {
 
     test("listWithOffsetPaginationHasNextPage", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             hasNextPage: true,
@@ -409,7 +409,7 @@ describe("UsersClient", () => {
 
     test("listWithExtendedResults", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             total_count: 1,
@@ -451,7 +451,7 @@ describe("UsersClient", () => {
 
     test("listWithExtendedResultsAndOptionalData", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             total_count: 1,
@@ -493,7 +493,7 @@ describe("UsersClient", () => {
 
     test("listUsernames", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = { cursor: { after: "after", data: ["data", "data"] } };
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
@@ -516,7 +516,7 @@ describe("UsersClient", () => {
 
     test("listWithGlobalConfig", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = { results: ["results", "results"] };
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
