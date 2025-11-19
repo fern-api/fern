@@ -120,7 +120,7 @@ class SDKCustomConfig(pydantic.BaseModel):
     # the recursion limit is at least this value.
     recursion_limit: Optional[int] = pydantic.Field(None, gt=1000)
 
-    custom_pager_name: Optional[str] = pydantic.Field(None, alias="custom-pager-name")
+    custom_pager_name: Optional[str] = None
 
     class Config:
         extra = pydantic.Extra.forbid
