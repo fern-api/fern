@@ -1664,10 +1664,14 @@ public abstract class AbstractHttpResponseParserGenerator {
 
             // For sync clients, generate CustomPager.create() call
             // The user must implement the CustomPager class (skeleton throws UnsupportedOperationException)
+            ClassName customPagerClassName = ((ClientPoetClassNameFactory)
+                            clientGeneratorContext.getPoetClassNameFactory())
+                    .getCustomPaginationClassName();
+
             CodeBlock customPagerCreation = CodeBlock.builder()
                     .add(
                             "$T.create($L, $L.httpClient(), $L)",
-                            responseType,
+                            customPagerClassName,
                             variables.getParsedResponseVariableName(),
                             clientOptionsField.name,
                             AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
