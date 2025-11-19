@@ -9,6 +9,7 @@ features:
       following namespace:
 
   - id: SUBPACKAGE_EXPORTS
+    advanced: true
     description: |
       This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
 
