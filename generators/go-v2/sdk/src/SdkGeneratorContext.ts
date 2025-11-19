@@ -67,6 +67,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             files.push(AsIsFiles.Page);
         }
 
+        if (this.customConfig.customPagerName != null) {
+            files.push(AsIsFiles.CustomPagination);
+        }
+
         if (this.ir.sdkConfig.hasStreamingEndpoints) {
             files.push(AsIsFiles.Stream);
         }
@@ -502,6 +506,15 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
+    public getCustomPagerTypeReference(responseType: go.Type): go.TypeReference {
+        const pagerName = this.customConfig.customPagerName ?? "CustomPager";
+        return go.typeReference({
+            name: pagerName,
+            importPath: this.getCoreImportPath(),
+            generics: [responseType]
+        });
+    }
+
     public isFileUploadEndpoint(endpoint: HttpEndpoint): boolean {
         const requestBody = endpoint.requestBody;
         if (requestBody == null) {
@@ -774,6 +787,28 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
         if (responseBody == null) {
             return go.Type.error(); // no explicit void in golang, just need to handle the error
+        }
+
+        const pagination = this.getPagination(httpEndpoint);
+        if (pagination?.type === "custom" && this.customConfig.customPagerName != null) {
+            let baseResponseType: go.Type;
+            switch (responseBody.type) {
+                case "json":
+                    baseResponseType = this.goTypeMapper.convert({ reference: responseBody.value.responseBodyType });
+                    break;
+                case "fileDownload":
+                case "text":
+                    baseResponseType = go.Type.string();
+                    break;
+                case "bytes":
+                    throw new Error("Returning bytes is not supported");
+                case "streaming":
+                case "streamParameter":
+                    throw new Error("Custom pagination with streaming is not supported");
+                default:
+                    assertNever(responseBody);
+            }
+            return go.Type.pointer(go.Type.reference(this.getCustomPagerTypeReference(baseResponseType)));
         }
 
         switch (responseBody.type) {

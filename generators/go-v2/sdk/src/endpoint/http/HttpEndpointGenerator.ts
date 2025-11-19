@@ -104,6 +104,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (pagination != null && this.context.isEnabledPaginationEndpoint(endpoint)) {
             return this.getPaginationEndpointBody({ signature, endpoint, subpackage, pagination });
         }
+        if (pagination?.type === "custom" && this.context.customConfig.customPagerName != null) {
+            return this.getCustomPaginationEndpointBody({ signature, endpoint, subpackage });
+        }
         return this.generateDelegatingEndpointBody({ endpoint, signature, subpackage });
     }
 
@@ -196,6 +199,77 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.writeNewLineIfLastLineNot();
             writer.writeNode(paginationInfo.callGetPage);
             writer.writeNewLineIfLastLineNot();
+        });
+    }
+
+    private getCustomPaginationEndpointBody({
+        signature,
+        endpoint,
+        subpackage
+    }: {
+        signature: EndpointSignatureInfo;
+        endpoint: HttpEndpoint;
+        subpackage: Subpackage | undefined;
+    }): go.CodeBlock {
+        const errorDecoder = this.buildErrorDecoder({ endpoint });
+        return go.codeblock((writer) => {
+            writer.writeNode(
+                this.prepareRequestCall({
+                    signature,
+                    endpoint,
+                    subpackage,
+                    errorDecoder: undefined,
+                    rawClient: true
+                })
+            );
+            writer.newLine();
+            const responseInitialization = this.getResponseInitialization({ endpoint });
+            if (responseInitialization != null) {
+                writer.writeNode(responseInitialization);
+                writer.newLine();
+            }
+            writer.write("_, err := ");
+            writer.writeNode(
+                this.context.caller.call({
+                    endpoint,
+                    clientReference: this.getCallerFieldReference({ rawClient: true }),
+                    optionsReference: go.codeblock("options"),
+                    url: go.codeblock("endpointURL"),
+                    request: signature.request?.getRequestReference(),
+                    response: this.getResponseParameterReference({ endpoint }),
+                    errorCodes: errorDecoder != null ? go.codeblock("errorCodes") : undefined
+                })
+            );
+            writer.newLine();
+            writer.writeLine("if err != nil {");
+            writer.indent();
+            writer.writeNode(this.writeReturnZeroValueWithError({ signature }));
+            writer.newLine();
+            writer.dedent();
+            writer.writeLine("}");
+            const responseBody = endpoint.response?.body;
+            if (responseBody == null) {
+                writer.writeLine("return nil, nil");
+                return;
+            }
+            writer.write("pager := ");
+            writer.writeNode(
+                go.invokeFunc({
+                    func: go.typeReference({
+                        name: "NewCustomPager",
+                        importPath: this.context.getCoreImportPath()
+                    }),
+                    arguments_: [
+                        this.getResponseBodyReference({ responseBody }),
+                        go.codeblock("nil"),
+                        go.codeblock("nil"),
+                        go.codeblock("nil"),
+                        go.codeblock("nil")
+                    ]
+                })
+            );
+            writer.newLine();
+            writer.writeLine("return pager, nil");
         });
     }
 
