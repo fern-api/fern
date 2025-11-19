@@ -27,14 +27,14 @@ jobs:
           script: |
             const comment = context.payload.comment.body;
             const match = comment.match(/^seed run (\S+)/);
-            
+
             if (!match) {
               core.setFailed('Invalid seed command format. Use: seed run <language>');
               return;
             }
-            
+
             const language = match[1].toLowerCase();
-            
+
             // Map language names to generator names
             const languageMap = {
               'python': 'python-sdk',
@@ -77,26 +77,26 @@ jobs:
               'rust-model': 'rust-model',
               'pydantic-v2': 'pydantic-v2'
             };
-            
+
             const generator = languageMap[language];
-            
+
             if (!generator) {
               const supportedLanguages = Object.keys(languageMap).sort().join(', ');
               core.setFailed(`Unknown language: ${language}. Supported languages: ${supportedLanguages}`);
               return;
             }
-            
+
             // Get PR details
             const pr = await github.rest.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.issue.number
             });
-            
+
             core.setOutput('generator', generator);
             core.setOutput('pr-number', context.issue.number);
             core.setOutput('pr-sha', pr.data.head.sha);
-            
+
             // Add a reaction to the comment to acknowledge
             await github.rest.reactions.createForIssueComment({
               owner: context.repo.owner,
@@ -183,16 +183,16 @@ jobs:
             } catch (e) {
               output = 'No output captured';
             }
-            
+
             // Truncate output if too long (GitHub has a limit)
             const maxLength = 65000;
             if (output.length > maxLength) {
               output = output.substring(0, maxLength) + '\n\n... (output truncated)';
             }
-            
+
             const exitCode = '${{ steps.seed-test.outputs.exit-code }}';
             const success = exitCode === '0';
-            
+
             await github.rest.checks.update({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -208,19 +208,19 @@ jobs:
                 text: '```\n' + output + '\n```'
               }
             });
-            
+
             // Comment on PR with result
             const commentBody = success
               ? `✅ Seed test passed for \`${{ needs.parse-comment.outputs.generator }}\``
               : `❌ Seed test failed for \`${{ needs.parse-comment.outputs.generator }}\`. Check the [workflow run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.`;
-            
+
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: ${{ needs.parse-comment.outputs.pr-number }},
               body: commentBody
             });
-            
+
             if (!success) {
               core.setFailed('Seed test failed');
             }
