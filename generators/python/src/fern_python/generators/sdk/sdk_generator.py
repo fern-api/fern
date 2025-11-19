@@ -699,7 +699,7 @@ __version__ = metadata.version("{project._project_config.package_name}")
         )
         project.add_file(test_filepath, test_content)
 
-    def _build_verify_types_test_content(self, type_info_list: list) -> str:
+    def _build_verify_types_test_content(self, type_info_list: Sequence[Tuple[str, str]]) -> str:
         """Build the content of the verify types test file."""
         type_params = ",\n        ".join([f'("{module}", "{class_name}")' for module, class_name in type_info_list])
 
