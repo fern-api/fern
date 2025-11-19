@@ -1,4 +1,4 @@
-import { readFile } from "fs/promises";
+import { readFile, writeFile } from "fs/promises";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { build as tsup } from "tsdown";
@@ -24,6 +24,27 @@ async function main() {
         },
         external: [
             '@fern-api/go-formatter',
+            '@boundaryml/baml',
           ],
-    });     
+    });
+
+    process.chdir(join(__dirname, "dist"));
+
+    await writeFile(
+        "package.json",
+        JSON.stringify(
+            {
+                name: "fern-api",
+                version: process.argv[2] || packageJson.version,
+                repository: packageJson.repository,
+                files: ["cli.cjs"],
+                bin: { fern: "cli.cjs" },
+                dependencies: {
+                    "@boundaryml/baml": packageJson.dependencies["@boundaryml/baml"]
+                }
+            },
+            undefined,
+            2
+        )
+    );
 }

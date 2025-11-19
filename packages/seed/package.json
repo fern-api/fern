@@ -34,6 +34,9 @@
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --run -u"
   },
+  "dependencies": {
+    "@boundaryml/baml": "^0.211.2"
+  },
   "devDependencies": {
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/configs": "workspace:*",

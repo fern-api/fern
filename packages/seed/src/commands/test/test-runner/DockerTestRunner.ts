@@ -80,7 +80,8 @@ export class DockerTestRunner extends TestRunner {
             skipUnstableDynamicSnippetTests: true,
             inspect,
             keepDocker: keepDocker ?? false,
-            dockerImage: this.getDockerImageName()
+            dockerImage: this.getDockerImageName(),
+            ai: undefined
         });
     }
 }

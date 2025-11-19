@@ -1,7 +1,6 @@
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import * as os from "os";
-import * as path from "path";
 
 /**
  * Exception thrown when automatic semantic versioning fails due to inability
@@ -17,6 +16,17 @@ export class AutoVersioningException extends Error {
     }
 }
 
+export interface AutoVersionResult {
+    /**
+     * The new version to use (e.g., "1.2.3" or "v1.2.3").
+     */
+    version: string;
+    /**
+     * The commit message describing the changes.
+     */
+    commitMessage: string;
+}
+
 interface FileSection {
     lines: string[];
 }
@@ -30,24 +40,6 @@ export class AutoVersioningService {
 
     constructor({ logger }: { logger: TaskContext["logger"] }) {
         this.logger = logger;
-    }
-    /**
-     * Generates a git diff from the staged changes and writes it to a temporary file.
-     *
-     * @param workingDirectory The git repository directory
-     * @return Path to the temporary diff file
-     * @throws Error if file operations fail or git command fails
-     */
-    public async generateDiff(workingDirectory: string): Promise<string> {
-        const diffFile = path.join(os.tmpdir(), `git-diff-${Date.now()}.patch`);
-
-        await loggingExeca(this.logger, "git", ["diff", "--cached", "--output", diffFile], {
-            cwd: workingDirectory,
-            doNotPipeOutput: true
-        });
-
-        this.logger.info(`Generated git diff to file: ${diffFile}`);
-        return diffFile;
     }
 
     /**
@@ -78,33 +70,35 @@ export class AutoVersioningService {
             if (line.startsWith("+") && !line.startsWith("+++") && line.includes(mappedMagicVersion)) {
                 magicVersionOccurrences++;
                 const sanitizedPlusLine = line.replace(mappedMagicVersion, "<MAGIC>");
-                this.logger.info(`Found magic version in added line (file: ${currentFile}): ${sanitizedPlusLine}`);
+                this.logger.debug(
+                    `Found placeholder version in added line (file: ${currentFile}): ${sanitizedPlusLine}`
+                );
 
                 const matchingMinusLine = this.findMatchingMinusLine(lines, i, mappedMagicVersion);
 
                 if (matchingMinusLine == undefined) {
-                    this.logger.info(
+                    this.logger.debug(
                         `No matching minus line in hunk; continuing search. file=${currentFile}, plusLine=${sanitizedPlusLine}`
                     );
                     continue;
                 }
 
                 const extracted = this.extractPreviousVersionFromDiffLine(matchingMinusLine);
-                this.logger.info(`Extracted previous version from diff (file: ${currentFile}): ${extracted}`);
+                this.logger.debug(`Extracted previous version from diff (file: ${currentFile}): ${extracted}`);
                 return extracted;
             }
         }
 
         if (magicVersionOccurrences > 0) {
             throw new AutoVersioningException(
-                `Found magic version in the diff but no matching previous version lines were found in any hunk. ` +
+                `Found placeholder version in the diff but no matching previous version lines were found in any hunk. ` +
                     `This may indicate new files or a format change. occurrences=${magicVersionOccurrences}, pairsFound=0`
             );
         }
 
         throw new AutoVersioningException(
             "Failed to extract version from diff. This may indicate the version file format is not supported for" +
-                " auto-versioning, or the magic version was not found in any added lines."
+                " auto-versioning, or the placeholder version was not found in any added lines."
         );
     }
 
@@ -136,13 +130,13 @@ export class AutoVersioningService {
             linesScanned++;
 
             if (this.shouldStopSearching(line)) {
-                this.logger.info(`Stopped backward scan at hunk boundary after ${linesScanned} lines`);
+                this.logger.debug(`Stopped backward scan at hunk boundary after ${linesScanned} lines`);
                 break;
             }
 
             if (this.isDeletionLine(line)) {
                 if (this.isVersionChangePair(line, plusLine, mappedMagicVersion)) {
-                    this.logger.info(`Found matching minus line after scanning ${linesScanned} lines backwards`);
+                    this.logger.debug(`Found matching minus line after scanning ${linesScanned} lines backwards`);
                     return line;
                 }
             }
@@ -185,7 +179,7 @@ export class AutoVersioningService {
             }
         }
 
-        this.logger.info(
+        this.logger.debug(
             `Cleaned diff: removed ${diffContent.length - result.join("\n").length} bytes containing version changes`
         );
         return result.join("\n");
@@ -405,7 +399,7 @@ export class AutoVersioningService {
         mappedMagicVersion: string,
         finalVersion: string
     ): Promise<void> {
-        this.logger.info(`Replacing magic version ${mappedMagicVersion} with final version: ${finalVersion}`);
+        this.logger.debug(`Replacing placeholder version ${mappedMagicVersion} with final version: ${finalVersion}`);
 
         const sedCommand = `s/${this.escapeForSed(mappedMagicVersion)}/${this.escapeForSed(finalVersion)}/g`;
         const osName = os.platform().toLowerCase();
@@ -423,7 +417,7 @@ export class AutoVersioningService {
             doNotPipeOutput: true
         });
 
-        this.logger.info("Magic version replaced successfully");
+        this.logger.debug("Placeholder version replaced successfully");
     }
 
     /**
