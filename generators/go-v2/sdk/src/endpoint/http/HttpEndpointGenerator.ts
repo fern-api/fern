@@ -247,19 +247,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 default:
                     assertNever(responseBody);
             }
-            writer.write("var response ");
-            writer.writeNode(baseResponseType);
-            writer.newLine();
-            writer.write("_, err := ");
             writer.writeNode(
-                this.context.caller.call({
+                this.prepareRequestCall({
+                    signature,
                     endpoint,
-                    clientReference: this.getCallerFieldReference({ subpackage }),
-                    optionsReference: go.codeblock("options"),
-                    url: go.codeblock("endpointURL"),
-                    request: signature.request?.getRequestReference(),
-                    response: this.getResponseParameterReference({ endpoint }),
-                    errorCodes: errorDecoder != null ? go.codeblock("errorCodes") : undefined
+                    subpackage,
+                    errorDecoder: undefined,
+                    rawClient: false
                 })
             );
             writer.newLine();
@@ -287,7 +281,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             );
             writer.newLine();
             const customPagerName = this.context.customConfig.customPagerName ?? "CustomPager";
-            writer.write(`pager := &core.${customPagerName}[`);
+            writer.write(`pager := &core.${customPagerName}[*`);
             writer.writeNode(baseResponseType);
             writer.write("]{CustomPager: base}");
             writer.newLine();
@@ -819,9 +813,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private getResponseInitialization({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock | undefined {
         const responseBody = endpoint.response?.body;
-        const pagination = this.context.getPagination(endpoint);
-        const isCustomPagination = pagination?.type === "custom" && this.context.customConfig.customPagerName != null;
-        if (responseBody == null || this.context.isEnabledPaginationEndpoint(endpoint) || isCustomPagination) {
+        if (responseBody == null || this.context.isEnabledPaginationEndpoint(endpoint)) {
             return undefined;
         }
         switch (responseBody.type) {

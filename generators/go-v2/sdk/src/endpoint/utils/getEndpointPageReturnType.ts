@@ -83,7 +83,7 @@ function getCustomPagerReturnType({
             go.typeReference({
                 name: customPagerName,
                 importPath: context.getCoreImportPath(),
-                generics: [responseBodyType]
+                generics: [go.Type.pointer(responseBodyType)]
             })
         )
     );
