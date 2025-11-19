@@ -1294,7 +1294,7 @@
             "docs": null
         },
         "type_:Schema2TestEnum": {
-            "inline": true,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "Schema2TestEnum",

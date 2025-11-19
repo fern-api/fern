@@ -32,7 +32,7 @@
     "idempotencyHeaders": [],
     "types": {
         "type_:ExampleResponseStatus": {
-            "inline": true,
+            "inline": null,
             "name": {
                 "name": {
                     "originalName": "ExampleResponseStatus",
