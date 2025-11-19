@@ -5,7 +5,7 @@ import { itValidate } from "../utils/itValidate";
 describe("passthrough", () => {
     const baseSchema = object({
         foo: string(),
-        bar: stringLiteral("bar")
+        bar: stringLiteral("bar"),
     });
 
     describe("parse", () => {
@@ -13,13 +13,13 @@ describe("passthrough", () => {
             raw: {
                 foo: "hello",
                 bar: "bar",
-                baz: "extra"
+                baz: "extra",
             },
             parsed: {
                 foo: "hello",
                 bar: "bar",
-                baz: "extra"
-            }
+                baz: "extra",
+            },
         });
 
         itValidate(
@@ -28,14 +28,14 @@ describe("passthrough", () => {
             {
                 foo: 123,
                 bar: "bar",
-                baz: "extra"
+                baz: "extra",
             },
             [
                 {
                     path: ["foo"],
-                    message: "Expected string. Received 123."
-                }
-            ]
+                    message: "Expected string. Received 123.",
+                },
+            ],
         );
     });
 
@@ -45,14 +45,14 @@ describe("passthrough", () => {
                 foo: "hello",
                 bar: "bar",
 
-                baz: "extra"
+                baz: "extra",
             },
             parsed: {
                 foo: "hello",
                 bar: "bar",
 
-                baz: "extra"
-            }
+                baz: "extra",
+            },
         });
 
         itValidate(
@@ -61,14 +61,14 @@ describe("passthrough", () => {
             {
                 foo: "hello",
                 bar: "wrong",
-                baz: "extra"
+                baz: "extra",
             },
             [
                 {
                     path: ["bar"],
-                    message: 'Expected "bar". Received "wrong".'
-                }
-            ]
+                    message: 'Expected "bar". Received "wrong".',
+                },
+            ],
         );
     });
 
@@ -76,12 +76,12 @@ describe("passthrough", () => {
         raw: {
             foo: "hello",
             bar: "bar",
-            extra: 42
+            extra: 42,
         },
         parsed: {
             foo: "hello",
             bar: "bar",
-            extra: 42
-        }
+            extra: 42,
+        },
     });
 });

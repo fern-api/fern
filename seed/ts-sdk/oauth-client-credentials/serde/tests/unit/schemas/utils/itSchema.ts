@@ -1,10 +1,10 @@
 /* eslint-disable vi/no-export */
-import { Schema, SchemaOptions } from "../../../../src/core/schemas/Schema";
+import type { Schema, SchemaOptions } from "../../../../src/core/schemas/Schema";
 
 export function itSchemaIdentity<T>(
     schema: Schema<T, T>,
     value: T,
-    { title = "functions as identity", opts }: { title?: string; opts?: SchemaOptions } = {}
+    { title = "functions as identity", opts }: { title?: string; opts?: SchemaOptions } = {},
 ): void {
     itSchema(title, schema, { raw: value, parsed: value, opts });
 }
@@ -16,13 +16,13 @@ export function itSchema<Raw, Parsed>(
         raw,
         parsed,
         opts,
-        only = false
+        only = false,
     }: {
         raw: Raw;
         parsed: Parsed;
         opts?: SchemaOptions;
         only?: boolean;
-    }
+    },
 ): void {
     // eslint-disable-next-line vi/valid-title
     (only ? describe.only : describe)(title, () => {
@@ -37,18 +37,18 @@ export function itParse<Raw, Parsed>(
     {
         raw,
         parsed,
-        opts
+        opts,
     }: {
         raw: Raw;
         parsed: Parsed;
         opts?: SchemaOptions;
-    }
+    },
 ): void {
     // eslint-disable-next-line vi/valid-title
     it(title, () => {
         const maybeValid = schema.parse(raw, opts);
         if (!maybeValid.ok) {
-            throw new Error("Failed to parse() " + JSON.stringify(maybeValid.errors, undefined, 4));
+            throw new Error(`Failed to parse() ${JSON.stringify(maybeValid.errors, undefined, 4)}`);
         }
         expect(maybeValid.value).toStrictEqual(parsed);
     });
@@ -60,18 +60,18 @@ export function itJson<Raw, Parsed>(
     {
         raw,
         parsed,
-        opts
+        opts,
     }: {
         raw: Raw;
         parsed: Parsed;
         opts?: SchemaOptions;
-    }
+    },
 ): void {
     // eslint-disable-next-line vi/valid-title
     it(title, () => {
         const maybeValid = schema.json(parsed, opts);
         if (!maybeValid.ok) {
-            throw new Error("Failed to json() " + JSON.stringify(maybeValid.errors, undefined, 4));
+            throw new Error(`Failed to json() ${JSON.stringify(maybeValid.errors, undefined, 4)}`);
         }
         expect(maybeValid.value).toStrictEqual(raw);
     });

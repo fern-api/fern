@@ -1,6 +1,6 @@
 export type {
     inferParsedUnidiscriminatedUnionSchema,
     inferRawUnidiscriminatedUnionSchema,
-    UndiscriminatedUnionSchema
+    UndiscriminatedUnionSchema,
 } from "./types.js";
 export { undiscriminatedUnion } from "./undiscriminatedUnion.js";

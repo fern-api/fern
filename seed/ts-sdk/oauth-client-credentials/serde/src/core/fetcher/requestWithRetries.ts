@@ -46,7 +46,7 @@ function getRetryDelayFromHeaders(response: Response, retryAttempt: number): num
 
 export async function requestWithRetries(
     requestFn: () => Promise<Response>,
-    maxRetries: number = DEFAULT_MAX_RETRIES
+    maxRetries: number = DEFAULT_MAX_RETRIES,
 ): Promise<Response> {
     let response: Response = await requestFn();
 

@@ -18,7 +18,7 @@ export function anySignal(...args: AbortSignal[] | [AbortSignal[]]): AbortSignal
         }
 
         signal.addEventListener("abort", () => controller.abort((signal as any)?.reason), {
-            signal: controller.signal
+            signal: controller.signal,
         });
     }
 

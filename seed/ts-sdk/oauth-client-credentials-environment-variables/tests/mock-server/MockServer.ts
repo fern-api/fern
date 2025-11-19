@@ -1,4 +1,4 @@
-import { RequestHandlerOptions } from "msw";
+import type { RequestHandlerOptions } from "msw";
 import type { SetupServer } from "msw/node";
 
 import { mockEndpointBuilder } from "./mockEndpointBuilder";
@@ -22,7 +22,7 @@ export class MockServer {
             once: options?.once,
             onBuild: (handler) => {
                 this.server.use(handler);
-            }
+            },
         }).baseUrl(this.baseUrl);
         return builder;
     }

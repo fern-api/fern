@@ -5,7 +5,7 @@ function createMockLogger() {
         debug: vi.fn(),
         info: vi.fn(),
         warn: vi.fn(),
-        error: vi.fn()
+        error: vi.fn(),
     };
 }
 
@@ -13,8 +13,8 @@ function mockSuccessResponse(data: unknown = { data: "test" }, status = 200, sta
     global.fetch = vi.fn().mockResolvedValue(
         new Response(JSON.stringify(data), {
             status,
-            statusText
-        })
+            statusText,
+        }),
     );
 }
 
@@ -33,17 +33,17 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
                     headers: expect.toContainHeaders({
-                        Authorization: "[REDACTED]"
-                    })
-                })
+                        Authorization: "[REDACTED]",
+                    }),
+                }),
             );
         });
 
@@ -60,17 +60,17 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
                     headers: expect.toContainHeaders({
-                        "X-API-KEY": "[REDACTED]"
-                    })
-                })
+                        "X-API-KEY": "[REDACTED]",
+                    }),
+                }),
             );
         });
 
@@ -87,17 +87,17 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
                     headers: expect.toContainHeaders({
-                        Cookie: "[REDACTED]"
-                    })
-                })
+                        Cookie: "[REDACTED]",
+                    }),
+                }),
             );
         });
 
@@ -114,17 +114,17 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
                     headers: expect.toContainHeaders({
-                        "x-auth-token": "[REDACTED]"
-                    })
-                })
+                        "x-auth-token": "[REDACTED]",
+                    }),
+                }),
             );
         });
 
@@ -141,17 +141,17 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
                     headers: expect.toContainHeaders({
-                        "Proxy-Authorization": "[REDACTED]"
-                    })
-                })
+                        "Proxy-Authorization": "[REDACTED]",
+                    }),
+                }),
             );
         });
 
@@ -168,17 +168,17 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
                     headers: expect.toContainHeaders({
-                        "X-CSRF-Token": "[REDACTED]"
-                    })
-                })
+                        "X-CSRF-Token": "[REDACTED]",
+                    }),
+                }),
             );
         });
 
@@ -195,17 +195,17 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
                     headers: expect.toContainHeaders({
-                        "WWW-Authenticate": "[REDACTED]"
-                    })
-                })
+                        "WWW-Authenticate": "[REDACTED]",
+                    }),
+                }),
             );
         });
 
@@ -222,17 +222,17 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
                     headers: expect.toContainHeaders({
-                        "X-Session-Token": "[REDACTED]"
-                    })
-                })
+                        "X-Session-Token": "[REDACTED]",
+                    }),
+                }),
             );
         });
 
@@ -246,15 +246,15 @@ describe("Redacting Logic", () => {
                 headers: {
                     "Content-Type": "application/json",
                     "User-Agent": "Test/1.0",
-                    Accept: "application/json"
+                    Accept: "application/json",
                 },
                 responseType: "json",
                 maxRetries: 0,
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
@@ -263,9 +263,9 @@ describe("Redacting Logic", () => {
                     headers: expect.toContainHeaders({
                         "Content-Type": "application/json",
                         "User-Agent": "Test/1.0",
-                        Accept: "application/json"
-                    })
-                })
+                        Accept: "application/json",
+                    }),
+                }),
             );
         });
 
@@ -280,15 +280,15 @@ describe("Redacting Logic", () => {
                     Authorization: "Bearer token",
                     "X-API-Key": "api-key",
                     Cookie: "session=123",
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
                 responseType: "json",
                 maxRetries: 0,
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
@@ -298,9 +298,9 @@ describe("Redacting Logic", () => {
                         Authorization: "[REDACTED]",
                         "X-API-Key": "[REDACTED]",
                         Cookie: "[REDACTED]",
-                        "Content-Type": "application/json"
-                    })
-                })
+                        "Content-Type": "application/json",
+                    }),
+                }),
             );
         });
     });
@@ -317,8 +317,8 @@ describe("Redacting Logic", () => {
                 new Response(JSON.stringify({ data: "test" }), {
                     status: 200,
                     statusText: "OK",
-                    headers: mockHeaders
-                })
+                    headers: mockHeaders,
+                }),
             );
 
             await fetcherImpl({
@@ -329,8 +329,8 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
@@ -338,9 +338,9 @@ describe("Redacting Logic", () => {
                 expect.objectContaining({
                     responseHeaders: expect.toContainHeaders({
                         "set-cookie": "[REDACTED]",
-                        "content-type": "application/json"
-                    })
-                })
+                        "content-type": "application/json",
+                    }),
+                }),
             );
         });
 
@@ -355,8 +355,8 @@ describe("Redacting Logic", () => {
                 new Response(JSON.stringify({ data: "test" }), {
                     status: 200,
                     statusText: "OK",
-                    headers: mockHeaders
-                })
+                    headers: mockHeaders,
+                }),
             );
 
             await fetcherImpl({
@@ -367,8 +367,8 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
@@ -376,9 +376,9 @@ describe("Redacting Logic", () => {
                 expect.objectContaining({
                     responseHeaders: expect.toContainHeaders({
                         authorization: "[REDACTED]",
-                        "content-type": "application/json"
-                    })
-                })
+                        "content-type": "application/json",
+                    }),
+                }),
             );
         });
 
@@ -393,8 +393,8 @@ describe("Redacting Logic", () => {
                 new Response(JSON.stringify({ error: "Unauthorized" }), {
                     status: 401,
                     statusText: "Unauthorized",
-                    headers: mockHeaders
-                })
+                    headers: mockHeaders,
+                }),
             );
 
             await fetcherImpl({
@@ -405,8 +405,8 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "error",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.error).toHaveBeenCalledWith(
@@ -414,9 +414,9 @@ describe("Redacting Logic", () => {
                 expect.objectContaining({
                     responseHeaders: expect.toContainHeaders({
                         "www-authenticate": "[REDACTED]",
-                        "content-type": "application/json"
-                    })
-                })
+                        "content-type": "application/json",
+                    }),
+                }),
             );
         });
     });
@@ -435,17 +435,17 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
                     queryParameters: expect.objectContaining({
-                        api_key: "[REDACTED]"
-                    })
-                })
+                        api_key: "[REDACTED]",
+                    }),
+                }),
             );
         });
 
@@ -462,17 +462,17 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
                     queryParameters: expect.objectContaining({
-                        token: "[REDACTED]"
-                    })
-                })
+                        token: "[REDACTED]",
+                    }),
+                }),
             );
         });
 
@@ -489,17 +489,17 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
                     queryParameters: expect.objectContaining({
-                        access_token: "[REDACTED]"
-                    })
-                })
+                        access_token: "[REDACTED]",
+                    }),
+                }),
             );
         });
 
@@ -516,17 +516,17 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
                     queryParameters: expect.objectContaining({
-                        password: "[REDACTED]"
-                    })
-                })
+                        password: "[REDACTED]",
+                    }),
+                }),
             );
         });
 
@@ -543,17 +543,17 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
                     queryParameters: expect.objectContaining({
-                        secret: "[REDACTED]"
-                    })
-                })
+                        secret: "[REDACTED]",
+                    }),
+                }),
             );
         });
 
@@ -570,17 +570,17 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
                     queryParameters: expect.objectContaining({
-                        session_id: "[REDACTED]"
-                    })
-                })
+                        session_id: "[REDACTED]",
+                    }),
+                }),
             );
         });
 
@@ -594,15 +594,15 @@ describe("Redacting Logic", () => {
                 queryParameters: {
                     page: "1",
                     limit: "10",
-                    sort: "name"
+                    sort: "name",
                 },
                 responseType: "json",
                 maxRetries: 0,
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
@@ -611,9 +611,9 @@ describe("Redacting Logic", () => {
                     queryParameters: expect.objectContaining({
                         page: "1",
                         limit: "10",
-                        sort: "name"
-                    })
-                })
+                        sort: "name",
+                    }),
+                }),
             );
         });
 
@@ -627,15 +627,15 @@ describe("Redacting Logic", () => {
                 queryParameters: {
                     author: "john",
                     authenticate: "false",
-                    authorization_level: "user"
+                    authorization_level: "user",
                 },
                 responseType: "json",
                 maxRetries: 0,
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
@@ -644,9 +644,9 @@ describe("Redacting Logic", () => {
                     queryParameters: expect.objectContaining({
                         author: "john",
                         authenticate: "false",
-                        authorization_level: "user"
-                    })
-                })
+                        authorization_level: "user",
+                    }),
+                }),
             );
         });
 
@@ -662,15 +662,15 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    queryParameters: undefined
-                })
+                    queryParameters: undefined,
+                }),
             );
         });
 
@@ -687,8 +687,8 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
@@ -696,9 +696,9 @@ describe("Redacting Logic", () => {
                 expect.objectContaining({
                     queryParameters: expect.objectContaining({
                         API_KEY: "[REDACTED]",
-                        Token: "[REDACTED]"
-                    })
-                })
+                        Token: "[REDACTED]",
+                    }),
+                }),
             );
         });
     });
@@ -716,15 +716,15 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    url: "https://[REDACTED]@example.com/api"
-                })
+                    url: "https://[REDACTED]@example.com/api",
+                }),
             );
         });
 
@@ -740,15 +740,15 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    url: "https://example.com/api?api_key=[REDACTED]&page=1"
-                })
+                    url: "https://example.com/api?api_key=[REDACTED]&page=1",
+                }),
             );
         });
 
@@ -764,15 +764,15 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    url: "https://example.com/api?token=[REDACTED]"
-                })
+                    url: "https://example.com/api?token=[REDACTED]",
+                }),
             );
         });
 
@@ -788,15 +788,15 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    url: "https://example.com/api?username=user&password=[REDACTED]"
-                })
+                    url: "https://example.com/api?username=user&password=[REDACTED]",
+                }),
             );
         });
 
@@ -812,15 +812,15 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    url: "https://example.com/api?page=1&limit=10&sort=name"
-                })
+                    url: "https://example.com/api?page=1&limit=10&sort=name",
+                }),
             );
         });
 
@@ -836,15 +836,15 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    url: "https://example.com/api?author=john&authenticate=false&page=1"
-                })
+                    url: "https://example.com/api?author=john&authenticate=false&page=1",
+                }),
             );
         });
 
@@ -860,15 +860,15 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    url: "https://example.com/api?token=[REDACTED]#section"
-                })
+                    url: "https://example.com/api?token=[REDACTED]#section",
+                }),
             );
         });
 
@@ -884,15 +884,15 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    url: "https://example.com/api?api%5Fkey=[REDACTED]"
-                })
+                    url: "https://example.com/api?api%5Fkey=[REDACTED]",
+                }),
             );
         });
 
@@ -908,15 +908,15 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    url: "https://example.com/api"
-                })
+                    url: "https://example.com/api",
+                }),
             );
         });
 
@@ -932,15 +932,15 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    url: "https://example.com/api?"
-                })
+                    url: "https://example.com/api?",
+                }),
             );
         });
 
@@ -956,15 +956,15 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    url: "https://example.com/api?api_key=[REDACTED]&token=[REDACTED]&page=1"
-                })
+                    url: "https://example.com/api?api_key=[REDACTED]&token=[REDACTED]&page=1",
+                }),
             );
         });
 
@@ -980,15 +980,15 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    url: "https://[REDACTED]@example.com/api?token=[REDACTED]"
-                })
+                    url: "https://[REDACTED]@example.com/api?token=[REDACTED]",
+                }),
             );
         });
 
@@ -1004,15 +1004,15 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    url: "https://example.com/api?page=1&limit=10&sort=name&filter=value"
-                })
+                    url: "https://example.com/api?page=1&limit=10&sort=name&filter=value",
+                }),
             );
         });
 
@@ -1028,15 +1028,15 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    url: "https://example.com/api?flag&token=[REDACTED]"
-                })
+                    url: "https://example.com/api?flag&token=[REDACTED]",
+                }),
             );
         });
 
@@ -1052,15 +1052,15 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    url: "https://[REDACTED]@host.com/api"
-                })
+                    url: "https://[REDACTED]@host.com/api",
+                }),
             );
         });
 
@@ -1076,15 +1076,15 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    url: "https://example.com/api?email=user@example.com"
-                })
+                    url: "https://example.com/api?email=user@example.com",
+                }),
             );
         });
 
@@ -1100,15 +1100,15 @@ describe("Redacting Logic", () => {
                 logging: {
                     level: "debug",
                     logger: mockLogger,
-                    silent: false
-                }
+                    silent: false,
+                },
             });
 
             expect(mockLogger.debug).toHaveBeenCalledWith(
                 "Making HTTP request",
                 expect.objectContaining({
-                    url: "https://[REDACTED]@example.com/users/@username"
-                })
+                    url: "https://[REDACTED]@example.com/users/@username",
+                }),
             );
         });
     });

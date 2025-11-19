@@ -2,12 +2,12 @@ import type { Schema } from "../../Schema.js";
 
 export function property<RawKey extends string, RawValue, ParsedValue>(
     rawKey: RawKey,
-    valueSchema: Schema<RawValue, ParsedValue>
+    valueSchema: Schema<RawValue, ParsedValue>,
 ): Property<RawKey, RawValue, ParsedValue> {
     return {
         rawKey,
         valueSchema,
-        isProperty: true
+        isProperty: true,
     };
 }
 
